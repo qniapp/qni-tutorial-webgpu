@@ -58,3 +58,30 @@ visible SVG の寸法はセル + stroke (base は 34px)。WebGPU の外枠はセ
 - gmktec / Chromium 152 / AMD rdna-3 で DPR 1/2 の実マウス hover を確認。50% と 180° を持つ別々の円で旧書式の値が表示された。console/page error なし。
 - live のストレス 200/500/1600 を各 3 回、各 2 秒のスクロールと 20 hover で測定し `/tmp/qtw-qc-stress.json` に保存。GPU API 呼び出し / wasm 転送は全実行 0。
 - 検証中、scroll/focus のタイミングで tooltip が消える競合を見つけた。共有 tooltip を画面内の active circle に追従させるよう修正し、scroll 後の keyboard tooltip の回帰テストを追加した。比較画像は WebGPU 初期化・focus によるスクロールが落ち着いてから再撮影する。
+
+## 最終の公開実機検証 / 完了 (08:28 JST)
+
+修正コミット `20a722e3e7f265d7286ebdd89d7f9171be1f724d`。[Pages 38004194014](https://github.com/qniapp/qni-tutorial-webgpu/actions/runs/38004194014) 成功、build 2m26s / deploy 10s。fetch/rebase は各 push 前に実施。
+
+DPR 1 と 2 は Chromium 自体に `--force-device-scale-factor=1/2` を指定。併用フラグは `--enable-unsafe-webgpu --enable-features=Vulkan --use-angle=vulkan`。ホスト gmktec、Chromium 152.0.7977.82、AMD rdna-3。公開ページで circle #2 の +0.70711、+50.0000%、+0.00° と、circle #7 の -0.70711、+50.0000%、+180.00° を実マウス hover で確認。両 DPR と全ストレス実行の console/page errors は 0。
+
+比較対象の本文円だけ `data-size=64` に変更し、埋め込みは H 回路に変更して同じ 50% の円を比較した。円盤 #92BFDB、外枠 #6F6E69、位相線 #100F0F、背景 #FFFCF0 の正確な RGB が両画像に存在することを検証。1px の青い rim は DPR 1 ではアンチエイリアスで混色し、DPR 2 では両方に #4385BE の不透明画素もある。SVG と SDF は端の AA が異なるが、半径・色・上向き位相の見た目は一致する。SVG は外半径 32、内半径 31、円盤半径 **21.92031**、比率 **0.70710678**。画素から推定した WebGPU 円盤半径は DPR 1:22.5、DPR 2:22.0 (量子化込み、差 1 CSS px 未満)。本文の本来の base サイズを変更して公開したわけではない。
+
+公開 URL:
+
+- https://qniapp.github.io/qni-tutorial-webgpu/h_gate/
+- https://qniapp.github.io/qni-tutorial-webgpu/stress-qubit-circle/?n=1600
+
+### Live ストレス結果
+
+各 n で独立した browser context を 3 回。以下は 3 回の中央値。スクロールは各約 2 秒、hover は各 20 回。
+
+| n | define→最終 upgrade ms | paint proxy ms | JS heap MiB | CDP DOM nodes | scroll median/p95 ms | hover median/p95 ms |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 200 | 6.0 | 14.2 | 1.46 | 1,858 | 16.7 / 16.7 | 1.4 / 1.8 |
+| 500 | 15.3 | 22.6 | 2.22 | 4,558 | 16.7 / 16.7 | 2.0 / 2.5 |
+| 1600 | 37.5 | 70.4 | 2.85 | 14,458 | 16.7 / 16.8 | 4.1 / 4.9 |
+
+paint は upgrade 終了から二段 rAF までの layout/paint proxy であり、実際の GPU 実行時間ではない。hover は renderer が実マウス pointerover を受けた時刻から、表示された tooltip を確認する次の rAF までで、OS/入力転送遅延は含まない。heap は CDP Performance.getMetrics の JSHeapUsedSize、強制 GC なし。native DOM のバイト数は含まない。CDP DOM nodes は一時的な parser ノードも含み、実際の DOM element 数も JSON に保存。全 9 実行で WebGPU requestAdapter / wasm resource が **0**。1600 個の初回構築は約 38ms、paint proxy は約 70ms に増えるが、その後のスクロールは 60Hz 相当で維持された。
+
+保存物: `/tmp/qtw-qc-live.json`、`/tmp/qtw-qc-stress.json`、`/tmp/qtw-qc-compare-dpr1.png`、`/tmp/qtw-qc-compare-dpr2.png`。ハーネスは `/tmp/qtw-qc-measure.mjs`、画像検証は `/tmp/qtw-qc-images.py`。比較画像は目視確認済み。中間画像を削除し、開始したサーバー/ブラウザーは全て停止。最後の対象テスト 6/6 成功。約 24 分に達する前に結果をコミット・push して終了する。
