@@ -28,6 +28,9 @@ test('wide notes occupy the right margin and share the superscript counter', asy
   expect(geometry.noteCounter).toBe('counter(margin-note-counter)')
   expect(geometry.labelCounter).toBe(geometry.noteCounter)
   expect(geometry.counterIncrement).toBe('margin-note-counter 1')
+  const credit = page.locator('figure .margin-note a')
+  await expect(credit).toHaveCSS('color', 'rgb(113, 113, 122)')
+  await expect(credit).toHaveCSS('text-decoration-line', 'none')
 })
 
 for (const width of [390, 639, 640, 767, 768]) {

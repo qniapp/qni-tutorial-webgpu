@@ -24,6 +24,8 @@ const inputId = `margin-note-${id}`
     margin: 16px;
     width: 91.666667%;
   }
+  /* Original image credits live in a Tailwind not-prose figure. */
+  figure .margin-note a { color: inherit; text-decoration: none; }
   .margin-note--numbered { counter-increment: margin-note-counter; }
   .margin-note__input { display: none; }
   .margin-note__toggle:checked + .margin-note { display: block; }
