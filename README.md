@@ -31,7 +31,15 @@ Stop any manual server on port 4322 before testing. Playwright starts and stops 
 
 The Pages workflow checks out that SHA, uses upstream `rust-toolchain.toml`, installs the wasm32 target, restores the Cargo cache, and downloads a cached, checksum-verified Trunk binary and caches Trunk's helper tools. It builds the embed into `public/qni-webgpu/`, then uses the official `withastro/action` to build/upload the site and `actions/deploy-pages` to deploy. Set repository Pages source to **GitHub Actions**. The workflow itself has not yet run remotely.
 
-All internal links and assets use Astro's `BASE_URL`. `qni-webgpu-circuit` creates a shadow-DOM canvas, imports the bundle only on connection, and destroys its runner on disconnect. Attributes: `circuit` (JSON), `width`/`height` (pixels), and `show-state-panel="false"`. CSS can size the host or use `--qni-webgpu-circuit-width` and `--qni-webgpu-circuit-height` when the corresponding attributes are absent.
+All internal links and assets use Astro's `BASE_URL`. `qni-webgpu-circuit` creates a shadow-DOM canvas and destroys its runner on disconnect. Circuit pages preload the modules/wasm and start streaming compilation and an adapter warm-up in the head; element connection reuses that initialization. Japanese loading progress shows percentages only for known uncompressed totals, otherwise downloaded MB and initialization stages. Attributes: `circuit` (JSON), `width`/`height` (pixels), and `show-state-panel="false"`. CSS can size the host or use `--qni-webgpu-circuit-width` and `--qni-webgpu-circuit-height` when the corresponding attributes are absent.
+
+## Load measurement
+
+```sh
+node /path/to/qni-tutorial-webgpu/scripts/measure-load.mjs https://qniapp.github.io/qni-tutorial-webgpu/h_gate/ /tmp/qtw-live.json 5
+```
+
+The same command accepts a local preview URL. Each run uses a fresh browser context for cold load and a reload for warm load. Defaults use system `/usr/bin/chromium` with hardware Vulkan WebGPU; `QTW_HEADED=1` enables headed mode and `QTW_SWIFTSHADER=1` explicitly selects SwiftShader when hardware is unavailable. Use the same flags before and after. JSON includes Resource Timing sizes, startup phases, adapter info, and medians. First-frame timing is a submit/animation-frame proxy, not an exact display timestamp. See [the measurements and build comparisons](docs/load-performance.md) for results, caveats, and check outcomes.
 
 ## Migration scope
 

@@ -79,13 +79,14 @@ try {
         if (pipelines?.length) performance.mark('qni:pipelines-ready', { startTime: pipelines.at(-1).end })
         return {
           adapter: window.__qtw.adapter, streaming: window.__qtw.streaming,
+          gpuCalls: { adapter: calls.adapter ?? [], device: calls.device ?? [] },
           wasmRequests: resources.length,
           wasm: r ? { duration: r.responseEnd - r.requestStart, transferSize: r.transferSize, encodedBodySize: r.encodedBodySize, decodedBodySize: r.decodedBodySize } : null,
           phases: {
             download: r ? r.responseEnd - r.requestStart : null,
             compileInstantiate: mark('qni:compile-end') === null ? null : mark('qni:compile-end') - mark('qni:compile-start'),
             postDownloadInit: mark('qni:wasm-instantiated') === null || !r ? null : mark('qni:wasm-instantiated') - r.responseEnd,
-            adapterDevice: sum('adapter') === null ? null : sum('adapter') + (sum('device') ?? 0),
+            adapterDevice: calls.adapter?.length ? calls.adapter.at(-1).end - calls.adapter.at(-1).start + (sum('device') ?? 0) : null,
             shaderPipelineCalls: sum('pipeline'),
             shaderPipelineSpan: pipelines?.length ? pipelines.at(-1).end - pipelines[0].start : null,
             firstFrame: window.__qtw.firstFrame, ready: mark('qni:ready'),

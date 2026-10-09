@@ -1,9 +1,10 @@
 type EmbedHandle = { destroy(): void }
+type LoadProgress = { stage: string; loaded: number; total: number | null }
 type EmbedModule = {
   startEmbed(
     canvas: HTMLCanvasElement,
     circuit: string,
-    settings: { showStatePanel: boolean },
+    settings: { showStatePanel: boolean; onProgress?: (progress: LoadProgress) => void },
   ): Promise<EmbedHandle>
 }
 
@@ -117,7 +118,19 @@ class QniWebgpuCircuit extends HTMLElement {
     try {
       const circuit = this.getAttribute('circuit') ?? '{"cols":[]}'
       JSON.parse(circuit)
-      const settings = { showStatePanel: this.getAttribute('show-state-panel') !== 'false' }
+      const settings = {
+        showStatePanel: this.getAttribute('show-state-panel') !== 'false',
+        onProgress: ({ stage, loaded, total }: LoadProgress) => {
+          if (!current()) return
+          const stages: Record<string, string> = {
+            compile: 'コンパイル中…', gpu: 'GPU 初期化中…', prepare: '準備中…',
+          }
+          const download = total
+            ? `ダウンロード中… ${Math.min(100, Math.floor(loaded / total * 100))}%`
+            : `ダウンロード中… ${(loaded / 1048576).toFixed(1)} MB`
+          this.setState('loading', stages[stage] ?? download)
+        },
+      }
       const module = await import(
         /* @vite-ignore */ `${import.meta.env.BASE_URL}qni-webgpu/qni-embed.mjs`
       ) as EmbedModule

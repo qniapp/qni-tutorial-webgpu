@@ -44,8 +44,9 @@ test('built H-gate page loads the real WebGPU runner under the Pages base path',
   await element.locator('canvas').screenshot({ path: testInfo.outputPath('h-gate-canvas.png') })
   await page.screenshot({ path: testInfo.outputPath('h-gate-page.png'), fullPage: true })
   console.log('Real embed verification:', JSON.stringify({ ...webgpu, ...result, consoleErrors, pageErrors, notFound }))
-  expect({ ...webgpu, ...result, consoleErrors, pageErrors, notFound })
-    .toEqual({ present: true, adapter: true, started: true, amplitudes: [1, 0, 0, 0], consoleErrors: [], pageErrors: [], notFound: [] })
+  const wasmRequests = await page.evaluate(() => performance.getEntriesByType('resource').filter(r => r.name.endsWith('qni-web_bg.wasm')).length)
+  expect({ ...webgpu, ...result, consoleErrors, pageErrors, notFound, wasmRequests })
+    .toEqual({ present: true, adapter: true, started: true, amplitudes: [1, 0, 0, 0], consoleErrors: [], pageErrors: [], notFound: [], wasmRequests: 1 })
 })
 
 test('index links and local assets respect the Pages base path', async ({ page }) => {

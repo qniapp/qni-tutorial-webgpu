@@ -6,6 +6,7 @@ type MockState = {
   live: number
   maxLive: number
   release: (() => void)[]
+  progress?: (value: { stage: string; loaded: number; total: number | null }) => void
 }
 
 declare global {
@@ -22,6 +23,7 @@ const mockModule = `
   export async function startEmbed(canvas, circuit, settings) {
     const mock = window.__qniMock;
     const id = mock.calls.length;
+    mock.progress = settings.onProgress;
     mock.calls.push({ circuit, showStatePanel: settings.showStatePanel, url: new URL(import.meta.url).pathname });
     if (window.__qniFail) throw new Error('mock GPU failure');
     mock.live++;
@@ -188,6 +190,25 @@ test('missing WebGPU shows a Japanese message without importing a fallback', asy
     const shadow = document.querySelector('qni-webgpu-circuit')!.shadowRoot!
     return { message: shadow.querySelector('[role="status"]')!.textContent, hidden: shadow.querySelector('canvas')!.hidden, calls: window.__qniMock.calls.length }
   })) }).toEqual({ requests: [], message: 'このブラウザーはWebGPUに対応していません。', hidden: true, calls: 0 })
+})
+
+test('shows Japanese progress with an honest unknown compressed total', async ({ page }) => {
+  await boot(page, { held: true })
+  await page.waitForFunction(() => window.__qniMock.release.length === 1)
+  const messages = await page.evaluate(() => {
+    const status = document.querySelector('qni-webgpu-circuit')!.shadowRoot!.querySelector('[role="status"]')!
+    return [
+      { stage: 'download', loaded: 50, total: 100 },
+      { stage: 'download', loaded: 1048576, total: null },
+      { stage: 'compile', loaded: 0, total: null },
+      { stage: 'gpu', loaded: 0, total: null },
+      { stage: 'prepare', loaded: 0, total: null },
+    ].map(value => {
+      window.__qniMock.progress!(value)
+      return status.textContent
+    })
+  })
+  expect(messages).toEqual(['ダウンロード中… 50%', 'ダウンロード中… 1.0 MB', 'コンパイル中…', 'GPU 初期化中…', '準備中…'])
 })
 
 for (const failure of ['import', 'parse', 'GPU'] as const) {
