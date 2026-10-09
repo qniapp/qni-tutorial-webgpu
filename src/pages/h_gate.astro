@@ -1,16 +1,14 @@
 ---
 import TutorialLayout from '../layouts/TutorialLayout.astro'
 import QwHGate from '../components/QwHGate.astro'
+import Sidenote from '../components/Sidenote.astro'
 const base = import.meta.env.BASE_URL
 ---
 <TutorialLayout title="H ゲート" description="シンプルな重ね合わせ状態を作る" section="QPU 命令その 1" hasCircuit>
   <p>
     H ゲート <QwHGate /> はフランスの数学者、ジャック・サロモン・アダマール (Jacques Salomon
-    Hadamard, 1865 - 1963) の名前を冠したゲートで、別名アダマールゲートとも呼びます。
+    Hadamard, 1865 - 1963) の名前を冠したゲートで、別名アダマールゲートとも呼びます<Sidenote id="h-gate" numbered>英語では「ハダマードゲート (Hadamard gate)」と言います。日本語の「アダマールゲート」は、フランス語の元々の発音 (Hadamard の最初の h と最後の d を発音しない) に近いカタカナ表記です。</Sidenote>。
   </p>
-  <aside class="note">
-    <p>英語では「ハダマードゲート (Hadamard gate)」と言います。日本語の「アダマールゲート」は、フランス語の元々の発音 (Hadamard の最初の h と最後の d を発音しない) に近いカタカナ表記です。</p>
-  </aside>
   <p>H はシンプルな重ね合わせ状態を作ります。 |0⟩ または |1⟩ に作用させると、次のように大きさの等しい重ねあわせ状態を作ります。</p>
   <div class="static-diagram" aria-label="H ゲートによる状態の変化">
     <p>H|0⟩ = (|0⟩ + |1⟩) / √2</p>
@@ -21,12 +19,9 @@ const base = import.meta.env.BASE_URL
   <p>H は QPU 独自の命令です。量子ビットだけが持つ重ね合わせ状態を作るという性質を持つので、従来の論理演算には H ゲートに対応するものはありません。</p>
 
   <h2>ハンズオン</h2>
-  <p>H を |0⟩ と |1⟩ に適用して、重ね合わせ状態が作られることを確認しましょう。 |0⟩ は最初から回路にセットされていますが、|1⟩ を作るにはどうしたらいいでしょうか? (ヒント: X ゲートを使います)</p>
+  <p>H を |0⟩ と |1⟩ に適用して、重ね合わせ状態が作られることを確認しましょう。 |0⟩ は最初から回路にセットされていますが、|1⟩ を作るにはどうしたらいいでしょうか? (ヒント: X ゲートを使います)<Sidenote id="circuit-help">パレットから H ゲートを回路へドラッグしてください。現時点では H と X 以外のゲートも表示されます。回路は保存されません。</Sidenote></p>
   <qni-webgpu-circuit circuit='{"cols":[["|0>"]]}' height="640"></qni-webgpu-circuit>
   <noscript><p>回路を操作するには JavaScript を有効にしてください。</p></noscript>
-  <aside class="note">
-    <p>パレットから H ゲートを回路へドラッグしてください。現時点では H と X 以外のゲートも表示されます。回路は保存されません。</p>
-  </aside>
 
   <h2>逆演算</h2>
   <p>H を続けて 2 回適用するとどうなるでしょうか? 直感的には分かりづらいですが、そんな時には Qni で試してみましょう! 実際に H を 2 個連続して置くと、|0⟩ も |1⟩ もそれぞれ元の状態に戻ります。つまり、H も X ゲートと同様にそれ自身を打ち消す効果を持っているので、それ自身の逆演算です。</p>
@@ -37,10 +32,9 @@ const base = import.meta.env.BASE_URL
   </div>
 
   <h2>H ゲートを回転として見る</h2>
-  <p>H を回転として見ると、H はブロッホ球の X 軸と Z 軸の中間 (黒い矢印) を軸とした 180 度の回転となります。たとえば北極の |0⟩ 状態に H を適用すると、赤い矢印に沿って X の文字の部分まで回転します。もう一度適用すると、青い矢印に沿って 180 度回転し元の位置に戻ります (逆演算)。</p>
+  <p>H を回転として見ると、H はブロッホ球の X 軸と Z 軸の中間 (黒い矢印) を軸とした 180 度の回転となります。たとえば北極の |0⟩ 状態に H を適用すると、赤い矢印に沿って X の文字の部分まで回転します。もう一度適用すると、青い矢印に沿って 180 度回転し元の位置に戻ります (逆演算)<Sidenote id="h-gate-rotation">H ゲートの回転 (画像クレジット: <a href="https://physics.stackexchange.com/questions/313959/visual-interpretation-on-the-bloch-sphere-when-hadamard-gate-is-applied-twice">Physics Stack Exchange</a>)</Sidenote>。</p>
   <figure>
     <img src={`${base}images/bloch_H0.png`} alt="ブロッホ球上で H ゲートを 2 回適用したときの回転" width="360" height="360" loading="lazy" />
-    <figcaption>H ゲートの回転。画像クレジット: <a href="https://physics.stackexchange.com/questions/313959/visual-interpretation-on-the-bloch-sphere-when-hadamard-gate-is-applied-twice">Physics Stack Exchange</a></figcaption>
   </figure>
 
   <h2>任意の重ね合わせ状態に H ゲートを適用</h2>
@@ -62,5 +56,5 @@ const base = import.meta.env.BASE_URL
   <details><summary>量子ビットに H ゲートを 2 回連続して適用するとどうなる?</summary><p>元に戻る</p></details>
   <details><summary>H ゲートは何の効果を持ち、それ自身の何であると言う?</summary><p>それ自身を打ち消す効果を持ち、それ自身の逆演算であると言う。</p></details>
 
-  <aside class="note"><p>前のページ: X ゲート (量子 NOT)。次のページ: PHASE ゲート。どちらもまだ移植していません。</p></aside>
+  <p>関連ページ<Sidenote id="related-pages">前のページ: X ゲート (量子 NOT)。次のページ: PHASE ゲート。どちらもまだ移植していません。</Sidenote></p>
 </TutorialLayout>

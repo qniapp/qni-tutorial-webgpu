@@ -1,0 +1,61 @@
+---
+interface Props {
+  /** Unique within the page, so each label toggles only its own note. */
+  id: string
+  numbered?: boolean
+}
+const { id, numbered = false } = Astro.props
+const inputId = `margin-note-${id}`
+---
+<label for={inputId} class:list={['margin-note__toggle', { 'margin-note--numbered': numbered, 'margin-note__toggle--unnumbered': !numbered }]} aria-label="注釈を開閉"></label><input type="checkbox" id={inputId} class="margin-note__toggle margin-note__input" /><span class="margin-note"><slot /></span>
+
+<style is:global>
+  /* Ported from qni apps/tutorial/css/margin_note.css. No JavaScript needed. */
+  body { counter-reset: margin-note-counter; }
+  .margin-note {
+    position: relative;
+    font-size: 14px;
+    line-height: 20px;
+    color: #71717a;
+    display: none;
+    vertical-align: baseline;
+    float: left;
+    clear: both;
+    margin: 16px;
+    width: 91.666667%;
+  }
+  .margin-note--numbered { counter-increment: margin-note-counter; }
+  .margin-note__input { display: none; }
+  .margin-note__toggle:checked + .margin-note { display: block; }
+  label.margin-note__toggle::after {
+    position: relative;
+    font-size: 14px;
+    line-height: 20px;
+    border-radius: 4px;
+    padding-inline: 2px;
+    background: #e0f2fe;
+    top: -8px;
+    vertical-align: baseline;
+    content: '…';
+  }
+  label.margin-note--numbered::after { content: counter(margin-note-counter); }
+  label.margin-note--numbered + input + .margin-note::before {
+    position: relative;
+    top: -8px;
+    padding-right: 4px;
+    content: counter(margin-note-counter);
+  }
+  @media (min-width: 640px) {
+    .margin-note {
+      display: block;
+      vertical-align: middle;
+      float: right;
+      clear: right;
+      margin: 0 -50% 20px 0;
+      padding-left: 48px;
+      width: 50%;
+    }
+    label.margin-note__toggle::after { padding-inline: 0; background: transparent; }
+    label.margin-note__toggle--unnumbered::after { display: none; }
+  }
+</style>

@@ -48,7 +48,9 @@ The Japanese prose, section order, Bloch rotation image/credit, and review quest
 - `qubit_circle`, animated transition arrows, and decorative `<h-gate>` icons: static formulas or textual amplitude values replace them.
 - The H/X-only palette, one-wire/five-step constraints, and old inspector: the current unrestricted WebGPU editor replaces them.
 - Orbit scheduling and image-backed flashcards: native `<details>` questions replace them; no learning history is saved.
-- Margin-note layout and links to unmigrated X/PHASE pages: inline notes and plain-text navigation replace them.
+- Links to unmigrated X/PHASE pages: plain-text navigation replaces them.
+
+Margin notes use `src/components/Sidenote.astro`, ported from the original tutorial's CSS and Liquid tags. Supply a page-unique `id` and use `numbered` for automatic superscript numbering. Place the component inside a prose paragraph, not in a separate block. Notes appear in the right margin from 640px; below that width, tap the blue-backed number or ellipsis to open/close the note. This works without JavaScript. The reserved margin starts at 640px rather than the original 768px to avoid overflow between those breakpoints. `tests/sidenote.spec.ts` covers placement, typography, breakpoint behavior, and toggling.
 
 Multiple simultaneous embeds, shared GPUDevice, device-loss recovery, and per-instance caches remain upstream follow-ups. This scaffold contains only one embed. Target browser/device testing is still required.
 

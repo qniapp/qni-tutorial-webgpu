@@ -45,7 +45,7 @@ const base = import.meta.env.BASE_URL
       {section && <p class="section-label">{section}</p>}
       <h1>{title}</h1>
       <p class="lede">{description}</p>
-      <slot />
+      <div class="content-with-margin"><slot /></div>
     </main>
     <footer>
       <a href={base}>ページ一覧</a>
@@ -85,15 +85,24 @@ const base = import.meta.env.BASE_URL
   p, li { font-size: 16px; line-height: 28px; }
   p { max-width: 76ch; margin: 16px 0; }
   .lede { color: var(--muted); font-size: 20px; line-height: 28px; margin-bottom: 32px; }
-  .note, .static-diagram { max-width: 76ch; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-2); padding: 16px 24px; margin: 24px 0; }
-  .note p, .static-diagram p { margin: 8px 0; }
-  qni-webgpu-circuit { margin: 24px 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .static-diagram { max-width: 76ch; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-2); padding: 16px 24px; margin: 24px 0; }
+  .static-diagram p { margin: 8px 0; }
+  qni-webgpu-circuit { clear: both; margin: 24px 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
   figure { max-width: 640px; margin: 24px 0; }
   figure img { display: block; width: 100%; height: auto; }
   figcaption, footer p { color: var(--muted); font-size: 14px; line-height: 20px; }
   details { max-width: 76ch; border-bottom: 1px solid var(--border); padding: 16px 0; }
   summary { cursor: pointer; line-height: 28px; }
   footer { border-top: 1px solid var(--border); }
+  /* Reserve a right margin for notes. Start at the note breakpoint so the
+     original's 640-767px negative margin cannot cause horizontal overflow. */
+  @media (min-width: 640px) {
+    .content-with-margin > p,
+    .content-with-margin > ul,
+    .content-with-margin > figure,
+    .content-with-margin > .static-diagram,
+    .content-with-margin > details { width: 58.333333%; margin-right: auto; }
+  }
   @media (max-width: 640px) {
     .site-header, main, footer { padding-inline: 16px; }
     h1 { font-size: 30px; line-height: 36px; }
