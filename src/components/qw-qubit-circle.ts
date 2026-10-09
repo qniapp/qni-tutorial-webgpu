@@ -119,7 +119,12 @@ if (!customElements.get('qw-qubit-circle')) {
   document.addEventListener('focusin', event => { const circle = targetCircle(event.target); if (circle) showTooltip(circle) })
   document.addEventListener('focusout', event => { if (targetCircle(event.target) === active) hideTooltip() })
   document.addEventListener('keydown', event => { if (event.key === 'Escape') hideTooltip() })
-  document.addEventListener('scroll', hideTooltip, true)
+  document.addEventListener('scroll', () => {
+    if (!active) return
+    const rect = active.getBoundingClientRect()
+    if (rect.bottom >= 0 && rect.top <= innerHeight) showTooltip(active)
+    else hideTooltip()
+  }, true)
   performance.mark('qw-qc-define-start')
   customElements.define('qw-qubit-circle', QwQubitCircle)
   performance.mark('qw-qc-last-connected', { startTime: lastConnectedTime || performance.now() })

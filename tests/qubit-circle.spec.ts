@@ -48,6 +48,8 @@ test('keyboard focus, row flags, mutation and Escape work with the shared popup'
   await expect(page.getByRole('tooltip')).not.toContainText('振幅:')
   await circle.evaluate(e => { e.setAttribute('data-amplitude-real', '-1'); e.setAttribute('data-amplitude-imag', '0') })
   await expect(page.getByRole('tooltip')).toHaveText('位相: +180.00°')
+  await page.evaluate(() => window.scrollTo(0, 50))
+  await expect(page.getByRole('tooltip')).toBeVisible()
   await page.keyboard.press('Escape')
   await expect(page.getByRole('tooltip')).toBeHidden()
 })

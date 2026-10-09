@@ -31,7 +31,7 @@
 
 ## 実装 / 対象テスト (08:13 JST)
 
-同じ教材作業ツリーで別タスクの Sidenote 編集が進行していたため、`/home/yasuhito/Work/qni-tutorial-webgpu-worktrees/feat/qubit-circle` に分離した。この文書は指定された元の docs パスにも同期している。別タスクの変更は取り込まない。
+同じ教材作業ツリーで別タスクの Sidenote 編集が進行していたため、`/home/yasuhito/Work/qni-tutorial-webgpu-worktrees/feat/qubit-circle` に分離した。この文書は指定された元の docs パスにも同期している。別タスクの未コミット変更はステージしない。公開済みの Sidenote は rebase で保持し、H ページの import の競合だけ両方を残して解決した。
 
 | 旧属性 / 指定 | 新要素での扱い |
 | --- | --- |
@@ -51,3 +51,10 @@
 visible SVG の寸法はセル + stroke (base は 34px)。WebGPU の外枠はセル半径の外にも stroke/2 出るため、その縁を切らず描く。SVG は 4 図形、共有 CSS 一枚、document の委譲イベントだけ。属性更新は既存 SVG の数値を変更する。aria-label は全値を含み、Tab focus / Escape にも対応。tooltip は一つだけ遅延生成し、位置は画面内に収める。実数・虚数は小数 5 桁、確率 4 桁、位相 2 桁で旧書式を維持。描画の probability は WebGPU と同様 0-1 に clamp するが、tooltip は元の振幅の確率を表示する。
 
 型チェック、Astro ビルド、新規 4 件 + 既存 inline H 2 件の **6/6 テスト成功**。属性変更、科学記数法、i、1-i、不正値、丸い位相線の方向・長さ、共有 tooltip、focus/Escape、旧 H ページの 24 個を確認した。ストレスページはナビから非リンクで `?n=200|500|1600`、WebGPU をロードしない。define/最後の connectedCallback と二段 rAF の paint proxy を記録する。
+
+## 公開 / 初回実機測定 (08:22 JST)
+
+- `1b046594048ae969332bde6b38fb79720f76ba9f` を fetch/rebase 後に公開。[Pages 38003458206](https://github.com/qniapp/qni-tutorial-webgpu/actions/runs/38003458206) 成功、build 2m33s / deploy 8s。
+- gmktec / Chromium 152 / AMD rdna-3 で DPR 1/2 の実マウス hover を確認。50% と 180° を持つ別々の円で旧書式の値が表示された。console/page error なし。
+- live のストレス 200/500/1600 を各 3 回、各 2 秒のスクロールと 20 hover で測定し `/tmp/qtw-qc-stress.json` に保存。GPU API 呼び出し / wasm 転送は全実行 0。
+- 検証中、scroll/focus のタイミングで tooltip が消える競合を見つけた。共有 tooltip を画面内の active circle に追従させるよう修正し、scroll 後の keyboard tooltip の回帰テストを追加した。比較画像は WebGPU 初期化・focus によるスクロールが落ち着いてから再撮影する。
