@@ -1,0 +1,212 @@
+import { expect, test, type Page } from '@playwright/test'
+
+type MockState = {
+  calls: { circuit: string; showStatePanel: boolean; url: string }[]
+  destroyed: number[]
+  live: number
+  maxLive: number
+  release: (() => void)[]
+}
+
+declare global {
+  interface Window {
+    __qniMock: MockState
+    __qniHeld: boolean
+    __qniFail: boolean
+    __qniElement?: HTMLElement
+  }
+}
+
+const embedPath = '/qni-tutorial-webgpu/qni-webgpu/qni-embed.mjs'
+const mockModule = `
+  export async function startEmbed(canvas, circuit, settings) {
+    const mock = window.__qniMock;
+    const id = mock.calls.length;
+    mock.calls.push({ circuit, showStatePanel: settings.showStatePanel, url: new URL(import.meta.url).pathname });
+    if (window.__qniFail) throw new Error('mock GPU failure');
+    mock.live++;
+    mock.maxLive = Math.max(mock.maxLive, mock.live);
+    if (window.__qniHeld) await new Promise(resolve => mock.release.push(resolve));
+    let destroyed = false;
+    return { destroy() {
+      if (destroyed) throw new Error('duplicate destroy');
+      destroyed = true;
+      mock.destroyed.push(id);
+      mock.live--;
+    } };
+  }
+`
+
+async function boot(page: Page, options: { gpu?: boolean; held?: boolean; importFails?: boolean } = {}) {
+  const requests: string[] = []
+  await page.addInitScript(({ gpu, held }) => {
+    Object.defineProperty(navigator, 'gpu', { configurable: true, value: gpu ? {} : undefined })
+    window.__qniMock = { calls: [], destroyed: [], live: 0, maxLive: 0, release: [] }
+    window.__qniHeld = held
+    window.__qniFail = false
+  }, { gpu: options.gpu !== false, held: options.held ?? false })
+  await page.route('**/qni-embed.mjs', async route => {
+    requests.push(new URL(route.request().url()).pathname)
+    await route.fulfill({
+      status: options.importFails ? 500 : 200,
+      contentType: 'text/javascript',
+      body: options.importFails ? '' : mockModule,
+    })
+  })
+  await page.goto('/qni-tutorial-webgpu/h_gate/')
+  await page.waitForFunction(() => customElements.get('qni-webgpu-circuit'))
+  return requests
+}
+
+async function running(page: Page) {
+  await page.locator('qni-webgpu-circuit[data-state="running"]').waitFor()
+}
+
+async function snapshot(page: Page) {
+  return page.evaluate(() => {
+    const element = document.querySelector('qni-webgpu-circuit')!
+    return {
+      state: (element as HTMLElement).dataset.state,
+      calls: window.__qniMock.calls,
+      destroyed: window.__qniMock.destroyed,
+      live: window.__qniMock.live,
+      maxLive: window.__qniMock.maxLive,
+    }
+  })
+}
+
+test('uses the deployed base URL and exposes an accessible canvas', async ({ page }) => {
+  const requests = await boot(page)
+  await running(page)
+  const accessibility = await page.evaluate(() => {
+    const shadow = document.querySelector('qni-webgpu-circuit')!.shadowRoot!
+    return {
+      open: shadow.mode,
+      focusable: shadow.querySelector('canvas')!.tabIndex,
+      label: shadow.querySelector('canvas')!.getAttribute('aria-label'),
+      role: shadow.querySelector('[role="status"]')!.getAttribute('role'),
+      live: shadow.querySelector('[role="status"]')!.getAttribute('aria-live'),
+    }
+  })
+  expect({ requests, ...(await snapshot(page)), accessibility }).toEqual({
+    requests: [embedPath], state: 'running',
+    calls: [{ circuit: '{"cols":[["|0>"]]}', showStatePanel: true, url: embedPath }],
+    destroyed: [], live: 1, maxLive: 1,
+    accessibility: { open: 'open', focusable: 0, label: '量子回路シミュレーター', role: 'status', live: 'polite' },
+  })
+})
+
+test('disconnect destroys the runner and reconnect starts a new one', async ({ page }) => {
+  await boot(page)
+  await running(page)
+  const idle = await page.evaluate(() => {
+    window.__qniElement = document.querySelector('qni-webgpu-circuit') as HTMLElement
+    window.__qniElement.remove()
+    return { state: window.__qniElement.dataset.state, live: window.__qniMock.live }
+  })
+  await page.evaluate(() => document.body.append(window.__qniElement!))
+  await running(page)
+  const state = await snapshot(page)
+  expect({ idle, state: state.state, calls: state.calls.length, destroyed: state.destroyed, live: state.live, maxLive: state.maxLive })
+    .toEqual({ idle: { state: 'idle', live: 0 }, state: 'running', calls: 2, destroyed: [0], live: 1, maxLive: 1 })
+})
+
+test('serializes reconnect behind pending startup and destroys its stale handle', async ({ page }) => {
+  await boot(page, { held: true })
+  await page.waitForFunction(() => window.__qniMock.release.length === 1)
+  const pending = await page.evaluate(() => {
+    const element = document.querySelector('qni-webgpu-circuit')!
+    element.remove()
+    document.body.append(element)
+    return { calls: window.__qniMock.calls.length, state: (element as HTMLElement).dataset.state }
+  })
+  await page.evaluate(() => window.__qniMock.release.shift()!())
+  await page.waitForFunction(() => window.__qniMock.release.length === 1)
+  await page.evaluate(() => window.__qniMock.release.shift()!())
+  await running(page)
+  const state = await snapshot(page)
+  expect({ pending, calls: state.calls.length, destroyed: state.destroyed, live: state.live, maxLive: state.maxLive, state: state.state })
+    .toEqual({ pending: { calls: 1, state: 'loading' }, calls: 2, destroyed: [0], live: 1, maxLive: 1, state: 'running' })
+})
+
+test('disconnect during pending startup cleans up without restarting', async ({ page }) => {
+  await boot(page, { held: true })
+  await page.waitForFunction(() => window.__qniMock.release.length === 1)
+  await page.evaluate(() => {
+    window.__qniElement = document.querySelector('qni-webgpu-circuit') as HTMLElement
+    window.__qniElement.remove()
+    window.__qniMock.release.shift()!()
+  })
+  await page.waitForFunction(() => window.__qniMock.destroyed.length === 1)
+  expect(await page.evaluate(() => ({ state: window.__qniElement!.dataset.state, calls: window.__qniMock.calls.length, live: window.__qniMock.live, destroyed: window.__qniMock.destroyed })))
+    .toEqual({ state: 'idle', calls: 1, live: 0, destroyed: [0] })
+})
+
+test('circuit and settings changes restart with the latest values and default circuit', async ({ page }) => {
+  await boot(page)
+  await running(page)
+  await page.evaluate(() => {
+    const element = document.querySelector('qni-webgpu-circuit')!
+    element.removeAttribute('circuit')
+    element.setAttribute('show-state-panel', 'false')
+  })
+  await running(page)
+  const state = await snapshot(page)
+  expect(state).toEqual({
+    state: 'running',
+    calls: [
+      { circuit: '{"cols":[["|0>"]]}', showStatePanel: true, url: embedPath },
+      { circuit: '{"cols":[]}', showStatePanel: false, url: embedPath },
+    ],
+    destroyed: [0], live: 1, maxLive: 1,
+  })
+})
+
+test('dimension changes resize without restarting', async ({ page }) => {
+  await boot(page)
+  await running(page)
+  await page.evaluate(() => {
+    const element = document.querySelector('qni-webgpu-circuit')!
+    element.setAttribute('width', '320')
+    element.setAttribute('height', '240')
+  })
+  expect(await page.evaluate(() => {
+    const element = document.querySelector('qni-webgpu-circuit')!
+    const canvas = element.shadowRoot!.querySelector('canvas')!
+    return {
+      width: element.getBoundingClientRect().width, height: element.getBoundingClientRect().height,
+      canvasMatches: canvas.width === Math.round(320 * devicePixelRatio) && canvas.height === Math.round(240 * devicePixelRatio),
+      calls: window.__qniMock.calls.length, destroyed: window.__qniMock.destroyed,
+    }
+  })).toEqual({ width: 320, height: 240, canvasMatches: true, calls: 1, destroyed: [] })
+})
+
+test('missing WebGPU shows a Japanese message without importing a fallback', async ({ page }) => {
+  const requests = await boot(page, { gpu: false })
+  await page.locator('qni-webgpu-circuit[data-state="unsupported"]').waitFor()
+  expect({ requests, ...(await page.evaluate(() => {
+    const shadow = document.querySelector('qni-webgpu-circuit')!.shadowRoot!
+    return { message: shadow.querySelector('[role="status"]')!.textContent, hidden: shadow.querySelector('canvas')!.hidden, calls: window.__qniMock.calls.length }
+  })) }).toEqual({ requests: [], message: 'このブラウザーはWebGPUに対応していません。', hidden: true, calls: 0 })
+})
+
+for (const failure of ['import', 'parse', 'GPU'] as const) {
+  test(`${failure} failure exposes a Japanese error and logs the cause`, async ({ page }) => {
+    const errors: string[] = []
+    page.on('console', message => { if (message.type() === 'error') errors.push(message.text()) })
+    await boot(page, { importFails: failure === 'import' })
+    if (failure !== 'import') {
+      await running(page)
+      await page.evaluate(kind => {
+        window.__qniFail = kind === 'GPU'
+        document.querySelector('qni-webgpu-circuit')!.setAttribute('circuit', kind === 'parse' ? '{' : '{"cols":[]}')
+      }, failure)
+    }
+    await page.locator('qni-webgpu-circuit[data-state="error"]').waitFor()
+    expect({
+      message: await page.locator('qni-webgpu-circuit').locator('[role="status"]').textContent(),
+      logged: errors.some(error => error.includes('量子回路の起動に失敗しました。')),
+      live: (await snapshot(page)).live,
+    }).toEqual({ message: '量子回路を起動できませんでした。', logged: true, live: 0 })
+  })
+}

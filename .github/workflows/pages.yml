@@ -1,0 +1,89 @@
+name: Deploy Astro to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Read pinned WebGPU commit
+        id: webgpu
+        shell: bash
+        run: echo "ref=$(tr -d '\r\n' < qni-webgpu.ref)" >> "$GITHUB_OUTPUT"
+      - name: Check out WebGPU source
+        uses: actions/checkout@v7
+        with:
+          repository: qniapp/qni-webgpu
+          ref: ${{ steps.webgpu.outputs.ref }}
+          path: .qni-webgpu-source
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 9.15.9
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: |
+            pnpm-lock.yaml
+            .qni-webgpu-source/apps/web/pnpm-lock.yaml
+      - name: Install upstream Rust toolchain and wasm target
+        run: |
+          env -C .qni-webgpu-source rustup show active-toolchain
+          env -C .qni-webgpu-source rustup target add wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: .qni-webgpu-source/apps/web -> target
+      - name: Cache prebuilt Trunk
+        id: trunk-cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.local/bin/trunk
+            ~/.cache/trunk
+          key: trunk-${{ runner.os }}-${{ runner.arch }}-0.21.14-${{ hashFiles('.qni-webgpu-source/apps/web/Cargo.lock') }}
+      - name: Install prebuilt Trunk
+        if: steps.trunk-cache.outputs.cache-hit != 'true'
+        env:
+          TRUNK_VERSION: 0.21.14
+        run: |
+          archive=trunk-x86_64-unknown-linux-gnu.tar.gz
+          release="https://github.com/trunk-rs/trunk/releases/download/v${TRUNK_VERSION}"
+          curl -fsSL "$release/$archive" -o "$RUNNER_TEMP/$archive"
+          digest=$(curl -fsSL "$release/$archive.sha256" | awk '{print $1}')
+          echo "$digest  $RUNNER_TEMP/$archive" | sha256sum --check
+          mkdir -p "$HOME/.local/bin"
+          tar -xzf "$RUNNER_TEMP/$archive" -C "$HOME/.local/bin" trunk
+      - name: Add Trunk to PATH
+        run: echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+      - name: Build pinned WebGPU bundle
+        run: bash scripts/fetch-qni-webgpu.sh "$GITHUB_WORKSPACE/.qni-webgpu-source"
+      - name: Build Astro and upload Pages artifact
+        uses: withastro/action@v6
+        with:
+          node-version: 24
+          build-cmd: pnpm run typecheck && pnpm run build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

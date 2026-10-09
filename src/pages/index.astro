@@ -1,0 +1,15 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="Qni Tutorial" description="量子回路をブラウザで試す WebGPU 実験版">
+  <p>旧 Qni Tutorial の内容を、Astro と Qni WebGPU に少しずつ移しています。</p>
+  <h2>ページ一覧</h2>
+  <ul>
+    <li><a href={`${base}h_gate/`}>H ゲート</a>：シンプルな重ね合わせ状態を作る</li>
+  </ul>
+  <aside class="note">
+    <p>WebGPU が使える Windows / macOS の Chrome と Edge、macOS の Safari が対象です。</p>
+    <p>回路はページを読み込み直すと初期状態に戻ります。</p>
+  </aside>
+</TutorialLayout>

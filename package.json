@@ -1,0 +1,20 @@
+{
+  "name": "qni-tutorial-webgpu",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "packageManager": "pnpm@9.15.9",
+  "engines": { "node": ">=22.12.0" },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "typecheck": "tsc --noEmit",
+    "test": "playwright test"
+  },
+  "dependencies": { "astro": "7.3.8" },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "typescript": "6.0.3"
+  }
+}
