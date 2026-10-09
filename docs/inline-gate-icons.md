@@ -37,7 +37,7 @@
 
 ## WebGPU の見た目と選択肢
 
-- 正式な字形は `apps/web/assets/icons/*.svg`。Geist 由来のパスを抽出し、対応 PNG を `build.rs` でアルファ/RLE/SDF に変換して `gate_icon_alpha.rs` を生成する。`src/icons/svg_icon.rs`、`sdf_icon.rs` が描画し、本体の形状は `gate_body.rs`。文字・本体色は `colors.rs`、通常 UI フォントとフォールバックは `app.rs`。
+- 正式な字形は `apps/web/assets/icons/*.svg`。`scripts/extract-gate-svg.py` が Geist (H は Regular 400) のパスを抽出し、rsvg-convert または ImageMagick で同名 PNG も生成する。対応 PNG を `build.rs` でアルファ/RLE/SDF に変換して `gate_icon_alpha.rs` を生成する。`src/icons/svg_icon.rs`、`sdf_icon.rs` が描画し、本体の形状は `gate_body.rs`。文字・本体色は `colors.rs`、通常 UI フォントとフォールバックは `app.rs`。
 - H の角丸比は Rust の 6px/40px = 0.15。本体 `#3AA99F` は Flexoki cyan-400、字形 `#FFFCF0` は paper。SVG の字形をそのまま使えば、ブラウザーフォントの違いを避けて埋め込みと合わせられる。
 
 | 選択肢 | 利点 | 制約・判断 |
@@ -58,3 +58,38 @@
 - `h_gate.astro` の最初の説明文に一つだけ挿入した。手描きの H や代替フォントは使っていない。本体の CSS だけを Rust の形状/色に合わせた。
 - 型チェック、Astro ビルド、Node 22 による対象の **2 テスト**が成功。アクセシブルなベクター、非登録タグ、16px/1em、行高以内、baseline の CSS、色を確認。
 - 最初のテストは Node 型の未導入を避けるよう修正。Astro の SSR では import.meta.url が出力側になるため、ビルドの作業ディレクトリー基準でピンを読むよう修正した。いずれも修正後のビルド/テストが成功。
+
+## 公開記録 (07:50 JST)
+
+- 実装コミット `46738ef855b164f6b6f639b711b20af446e713c4` を fetch/rebase 後に通常 push。
+- [Pages 実行 38001127068](https://github.com/qniapp/qni-tutorial-webgpu/actions/runs/38001127068) が成功。ビルド 2 分 35 秒、公開 11 秒。ピンを変更せず、既存の二種類の WebGPU ビルドと本文 SVG を公開した。
+- 続いて実機 Chromium で DPR 1/2 の行内配置・基線・色を測定した。
+
+## 実機の公開検証と完了記録 (07:59 JST)
+
+対象: [公開 H ゲート教材](https://qniapp.github.io/qni-tutorial-webgpu/h_gate/)。ホスト `gmktec`、Chromium **152.0.7977.82**、GPU vendor `amd` / architecture `rdna-3`。`--enable-unsafe-webgpu --enable-features=Vulkan --use-angle=vulkan` と、各ケースに `--force-device-scale-factor=1/2` を使用。
+
+| 確認項目 | DPR 1 | DPR 2 |
+| --- | --- | --- |
+| 本文のフォント / アイコン寸法 (CSS px) | 16 / 16×16 | 16 / 16×16 |
+| 行高 (CSS px) | 28 | 28 |
+| アイコン下端 - 実測した基線 (CSS px) | +2 | +2 |
+| 行の範囲内 | 成功 | 成功 |
+| 本体色 / 埋め込み H の画像中の色 | 両方 RGB 58,169,159 | 両方 RGB 58,169,159 |
+| 埋め込み canvas バックバッファー | 1070×606 | 2140×1212 |
+| console error / page error | 0 / 0 | 0 / 0 |
+
+H 字形と角丸、色が同じ系列であることを比較画像でも確認した。1em の小さな Regular 字形は DPR 1 では通常のサブピクセルのアンチエイリアスになり、DPR 2 では線の内側に paper 色の不透明ピクセルも現れる。画像を引き伸ばした CSS ではなく、実際にベクターを各 DPI で描画した。比較画像の拡大パネルは検査用の nearest-neighbor 拡大であり、製品の描画方式ではない。スクリーンショットは整数画素に切り出されるため、幅 16 CSS px の要素でも端の余白を含む 17/34 画素の画像になる。
+
+最初の検証ハーネスでは本文のスクロール前の座標で撮影して範囲外になったため、測定と撮影のスクロール位置を揃えた。また Playwright の context-only DPR エミュレーションは wasm 側の解像度と一致しなかったため、Chromium 自体の device scale factor も揃えて再実行した。最終ケースでは上記のバックバッファーと DPR の一致を確認済み。
+
+保存物:
+
+- `/tmp/qtw-inline-live.json`: 寸法、基線、ピン、実機 GPU、エラー、ピクセル色の比較。
+- `/tmp/qtw-inline-compare-dpr1.png`
+- `/tmp/qtw-inline-compare-dpr2.png`
+- `/tmp/qtw-inline-verify.mjs`: 最終検証のハーネス。
+
+最終の対象テストは新規 2 件＋既存コンポーネント 16 件の **18/18 成功**。型チェックと Astro ビルドも成功。開始したテスト用サーバーとブラウザーは終了済み。比較画像二枚は依頼どおり保持し、検査用の中間画像は削除した。保護された二つのチェックアウト、廃止予定の worktree、ピンには変更を加えていない。
+
+次の段階は H 以外の Astro 図記号と、属性で変化する `qubit-circle` の API 設計。今回の制限時間内では一つの H 図記号の試作だけに留めた。
