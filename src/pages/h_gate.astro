@@ -36,8 +36,9 @@ const base = import.meta.env.BASE_URL
   </div>
 
   <h2>H ゲートを回転として見る</h2>
-  <p>H を回転として見ると、H はブロッホ球の X 軸と Z 軸の中間 (黒い矢印) を軸とした 180 度の回転となります。たとえば北極の |0⟩ 状態に H を適用すると、赤い矢印に沿って X の文字の部分まで回転します。もう一度適用すると、青い矢印に沿って 180 度回転し元の位置に戻ります (逆演算)<Sidenote id="h-gate-rotation">H ゲートの回転 (画像クレジット: <a href="https://physics.stackexchange.com/questions/313959/visual-interpretation-on-the-bloch-sphere-when-hadamard-gate-is-applied-twice">Physics Stack Exchange</a>)</Sidenote>。</p>
+  <p>H を回転として見ると、H はブロッホ球の X 軸と Z 軸の中間 (黒い矢印) を軸とした 180 度の回転となります。たとえば北極の |0⟩ 状態に H を適用すると、赤い矢印に沿って X の文字の部分まで回転します。もう一度適用すると、青い矢印に沿って 180 度回転し元の位置に戻ります (逆演算)。</p>
   <figure>
+    <Sidenote id="h-gate-rotation">H ゲートの回転 (画像クレジット: <a href="https://physics.stackexchange.com/questions/313959/visual-interpretation-on-the-bloch-sphere-when-hadamard-gate-is-applied-twice">physics.stackexchange.com</a>)</Sidenote>
     <img src={`${base}images/bloch_H0.png`} alt="ブロッホ球上で H ゲートを 2 回適用したときの回転" width="360" height="360" loading="lazy" />
   </figure>
 
