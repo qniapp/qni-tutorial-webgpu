@@ -1,5 +1,9 @@
 # 「Qni WebGPU で開く」 follow-up
 
+## Current status - 2026-10-09 19:53 JST
+
+**Complete and live.** The full app is hosted alongside the tutorial at `https://qniapp.github.io/qni-tutorial-webgpu/app/`, using the same pinned source as embeds. Each link opens the current committed circuit in a real noopener tab. All local targeted tests, four live popup cases, Pages deployment and all four upstream #47 checks passed. Historical investigation/blocker entries below are retained as checkpoints, not outstanding work.
+
 ## Status - 2026-10-09 19:13 JST
 
 - Bounded Step 4 started at 19:13 JST: 27-minute limit, ship/checkpoint around 19:36 JST. Fetch/rebase before each normal push; no force/merge/comments. No new PR unless a substantial upstream URL-support change is necessary.
@@ -39,3 +43,29 @@
 - Milestone 19:44 JST: both optimized pinned artifacts built locally; standalone uses the APP_URL-derived public path, and generated `public/app/` is ignored rather than committed. Fixed the concrete Trunk `NO_COLOR=1` incompatibility by unsetting NO_COLOR, matching the existing embed build. Typecheck and all **16 targeted component tests** passed under Node 22, including exact label, safe attributes, encoding and current export on four activation events.
 - Real local hardware clicks under the exact Pages base path passed four popup cases: H-gate initial state, multi-X, multi-Bell, and multi-H edited by an actual palette H drag (HH). Each new tab reached ready, restored matching circuit columns, matched GPU state, had `window.opener === null`, and loaded every same-origin resource under the app base path. Zero console/page/Table.grow errors. Raw `/tmp/qtw-app-link-local.json`. Inspected standalone and widget screenshots; footer link is separate from the canvas and visible without overlaying controls.
 - Grep proof: `rg -n '(export )?const APP_URL\\s*=' src scripts` reports only `src/components/qni-webgpu-app-url.ts:3`. Upstream #47 checks on fd9e3c2: qiskit-backend, tui, web-preflight passed; web still running. Publishing tutorial dual-build/link/pin next.
+- Milestone 19:46 JST: tutorial implementation/pin commit `ee6da1e445f491a9ce5071d78413ba64bc0a84c8` fetched/rebased and normally pushed. [Pages run 37919619852](https://github.com/qniapp/qni-tutorial-webgpu/actions/runs/37919619852) targets that exact commit and builds both products from `fd9e3c245da2d040da398f2f64eca1e737cedfba`. Watching deployment with an eight-minute cap, then running the same real-click hardware verifier against live Pages.
+- Milestone 19:49 JST: Pages run **37919619852 succeeded**, build **2m39s**, deploy **10s**. Actual CI logs show both embed and standalone use cached Binaryen **123**, wasm-bindgen **0.2.129**, and the existing `-Oz --enable-bulk-memory --enable-nontrapping-float-to-int` flags. Standalone is now live at `https://qniapp.github.io/qni-tutorial-webgpu/app/` from the same fd9e3c2 pin as the embed.
+
+## Live new-tab verification
+
+Node 22.23.2, hardware Chromium 152.0.7977.82, AMD RDNA-3, flags `--enable-unsafe-webgpu --enable-features=Vulkan --use-angle=vulkan`. These were real anchor clicks, not direct navigation or window.open.
+
+| Source/action | Restored app circuit | GPU state matches | Ready / noopener / base-path assets |
+| --- | --- | --- | --- |
+| h_gate link | Initial write-zero circuit | Yes | All passed |
+| multi-3 X link | X plus write-zero on wire 1 | Yes | All passed |
+| multi-3 Bell link | H, then control + X | Yes | All passed |
+| multi-3 H edited with a real palette drag | HH, not the initial H attribute | Yes | All passed |
+
+Each popup reached `__eguiReady`, stayed under `/qni-tutorial-webgpu/app/`, restored matching circuit columns from its **own normalized URL**, and matched the embed's on-demand GPU readback. All same-origin resources resolved below the app path; `window.opener` was null. **Zero console errors, zero page errors, no Table.grow.** Test-only readback never runs from the production link handler.
+
+Raw results: `/tmp/qtw-app-link-live.json`; local results `/tmp/qtw-app-link-local.json`; verifier `/tmp/qtw-app-link-verify.mjs`; live log `/tmp/qtw-app-link-live.log`; CI provenance `/tmp/qtw-app-pages-ci.log`. The app rewrites its URL to its native raw-JSON hash after load; links initially use the required fully encoded hash.
+
+Current vs initial: links export the **current committed circuit** on activation; uncommitted drag previews are intentionally not exported. Initial/last-valid metadata is a fallback only during startup or when a runner is unavailable. Future destination switch is in the single APP_URL constant; when retiring this temporary host, the now-unneeded standalone publishing can also be removed. Static Pages cannot host the optional external Qiskit backend; local WebGPU mode, editor persistence and URL restoration work normally.
+
+## Final checkpoint
+
+- Upstream/pin: `fd9e3c245da2d040da398f2f64eca1e737cedfba`; tutorial implementation: `ee6da1e445f491a9ce5071d78413ba64bc0a84c8`. No new PR; #47 is the existing upstream PR.
+- #47 workflow [37918759156](https://github.com/qniapp/qni-webgpu/actions/runs/37918759156) passed all four checks on fd9e3c2: qiskit-backend **14s**, tui **23s**, web-preflight **31s**, web **11m45s**. Binaryen 123 remains pinned.
+- APP_URL grep found exactly one source definition. Both pushes used fetch/rebase; no protected checkout, force push, merge or comments. Final changes are this results document only. Local server stopped, all browsers closed, inspected screenshots removed.
+- Nothing remains for the requested local-WebGPU link flow. Limitations: no external Qiskit server on static Pages; activation exports committed edits rather than live uncommitted previews; popup blockers or unsupported WebGPU browsers remain normal browser constraints.
