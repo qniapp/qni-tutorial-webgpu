@@ -91,3 +91,50 @@
 - Committed follow-up as `dd189d2f88efd96cf1a1df3944fa288242f71f20`: `build(web): pin wasm-opt version_123 and scope eframe features to wasm32`.
 - Normal push of `feat/tutorial-embed` succeeded, publishing this commit together with `e33ee46` and `761fcfa`. Updated the tutorial pin to that final SHA.
 - GitHub's push response reported two existing default-branch Dependabot alerts (one high, one moderate). No security dependency update is attempted within this bounded deployment task; owner review remains necessary.
+
+## Pages deployment started
+
+- Tutorial publication commit: `7292ae86d4d9b7cf4e8feaf411f1c9e70da012c9`, `build: deploy pinned WebGPU optimizer and record safety checks`. Normal push of main succeeded, also publishing `31a867f` and `6457656`.
+- Pages run [37909494860](https://github.com/qniapp/qni-tutorial-webgpu/actions/runs/37909494860) targets that exact tutorial SHA and upstream pin `dd189d2f88efd96cf1a1df3944fa288242f71f20`.
+- Watching this run with a roughly 12-minute limit. No new local server or long test suite is being started during the resume.
+
+## Pages deployed and live measurement captured
+
+- Pages run 37909494860 succeeded: build **1m49s**, deployment **11s**. Its verbose log confirms the actual CI optimizer `/home/runner/.cache/trunk/wasm-opt-version_123/bin/wasm-opt` and bindgen `/home/runner/.cache/trunk/wasm-bindgen-0.2.129/wasm-bindgen`, with the exact previously recorded arguments. Evidence saved to `/tmp/qtw-pages-ci.log`.
+- CI produced **9,845,787 B** raw wasm, 28,368 B smaller than the local artifact. The CI/local artifacts are not byte-identical; the precise compiler/environment cause has not been isolated. This live artifact is separately being verified below rather than assuming local verification is sufficient.
+- Live HEAD response at 18:13 JST: `application/wasm`, **gzip**, `Content-Length: 4927724`, `Last-Modified: Fri, 09 Oct 2026 09:11:51 GMT`, `Cache-Control: max-age=600`. Saved headers: `/tmp/qtw-after-live-headers.txt`.
+- Ran the unchanged measurement command with five cold/warm pairs, the same hardware Chromium/Vulkan flags and AMD RDNA-3 adapter, saving `/tmp/qtw-perf-after-live.json`. Cold/warm ready medians: **536.3 / 80.6 ms**; download: **446.6 / 27.5 ms**; streaming compile/instantiate: **426.2 / 31.5 ms**; adapter+device: **3.3 / 2.3 ms**; shader span: **56.9 / 16.7 ms**; first-frame proxy: **595.6 / 155.0 ms**.
+- Separate live console/page-error and H-amplitude verification is next. No local server was needed for the live measurements; the measurement script closed its browser.
+
+## Live verification and before/after results
+
+- `/tmp/qtw-verify-live.mjs` separately verified the deployed artifact using hardware Chromium 152.0.7977.82 and AMD RDNA-3. Results: `/tmp/qtw-live-verification.json`.
+- **Zero console errors, zero page errors, no Table.grow error.** Initial GPU amplitudes `[1,0,0,0]` became `[0.7071067690849304,0,0.7071067690849304,0]` after setting the element's circuit to `{"cols":[["H"]]}`. The real GPU compute path executed; readback was test-only.
+- All ten measured loads had one wasm resource entry and one streaming instantiation. The separate H/restart verification also reused a single wasm download.
+- Five cold/warm pairs each, same measurement script, Chromium flags and hardware adapter as the saved live baseline. Sizes are bytes; durations are median milliseconds. Streaming compile overlaps download, shader span includes work between calls, and first frame is the documented submit/two-animation-frame proxy. Adapter+device excludes speculative early warm-up and records the actual runner acquisition.
+
+| Live metric | Before cold | After cold | Before warm | After warm |
+| --- | ---: | ---: | ---: | ---: |
+| Wasm transfer size B | 6,788,254 | 4,928,024 | 6,788,254 | 0 |
+| Wasm encoded body B | 6,787,954 | 4,927,724 | 6,787,954 | 4,927,724 |
+| Wasm decoded body B | 13,365,301 | 9,845,787 | 13,365,301 | 9,845,787 |
+| Wasm download ms | 2,201.5 | 446.6 | 2,731.5 | 27.5 |
+| Streaming compile/instantiate ms | 2,209.0 | 426.2 | 2,739.6 | 31.5 |
+| Adapter + device ms | 54.7 | 3.3 | 52.6 | 2.3 |
+| Shader/pipeline API calls ms | 0.3 | 0.5 | 0.3 | 0.4 |
+| Shader/pipeline span ms | 67.2 | 56.9 | 16.0 | 16.7 |
+| First-frame proxy ms | 3,292.9 | 595.6 | 2,902.7 | 155.0 |
+| Ready ms | 3,212.1 | 536.3 | 2,836.5 | 80.6 |
+
+- Live gzip body is **27.4% smaller**, decoded body **26.3% smaller**. Observed ready medians are **83.3% lower cold / 97.2% lower warm**. Network variation means the cold speedup cannot be attributed exclusively to byte reduction. Warm behavior changes substantially because early preloads are reused from cache; baseline reloads transferred the whole wasm, whereas optimized reloads report transfer size zero.
+- Raw evidence: `/tmp/qtw-perf-before-live.json`, `/tmp/qtw-perf-after-live.json`, `/tmp/qtw-after-live-measure.log`, `/tmp/qtw-after-live-headers.txt`, `/tmp/qtw-pages-ci.log`, `/tmp/qtw-live-verification.json`.
+- Upstream publication/pin is final at `dd189d2f88efd96cf1a1df3944fa288242f71f20`. Next commit contains **only these measurement documents**; no pin or runtime changes. No deployment or live verification failed. All resume browsers have closed and no resume server was started.
+
+## pi-bot final pinned-checkout verification
+
+- Publication/resume entries above were added by the external orchestrator while this pi-bot session was checking the same worktrees. **This pi-bot session did not push, merge, open a PR, or start a remote CI run.** Existing publication commits were preserved rather than rewritten.
+- Independently read successful Pages run 37909494860: actual CI Binaryen path `/home/runner/.cache/trunk/wasm-opt-version_123/bin/wasm-opt`, version 123; bindgen `/home/runner/.cache/trunk/wasm-bindgen-0.2.129/wasm-bindgen`, version 0.2.129. Same optimizer arguments as the local builds: `-Oz --enable-bulk-memory --enable-nontrapping-float-to-int` plus input/output paths. Filtered evidence: `/tmp/qtw-followup-pages-tools.txt`. The older successful run 37896006506 also downloaded these versions, but without the explicit pin.
+- Rebuilt through `scripts/fetch-qni-webgpu.sh` against the **clean, committed** final upstream SHA `dd189d2f88efd96cf1a1df3944fa288242f71f20`. Local wasm still hashes to `90dc5defa96c8b95c009d9c6c52068e17f6e98085555b62e44cc5b0a3b5565d7`; no local size or runtime change. Build log: `/tmp/qtw-followup-pinned-build.log`.
+- Reran tutorial typecheck, Astro build and **all 13 tutorial Playwright tests**, including real pinned-runner startup and one-wasm-request verification. Passed with no browser console/page errors. Log: `/tmp/qtw-followup-tutorial-tests.log`.
+- Read the separately persisted live H-verification result `/tmp/qtw-live-verification.json`: the deployed, CI-built artifact also executed H on the AMD hardware adapter with zero console/page errors and one wasm request. This covers the small CI/local byte difference rather than assuming identical binaries.
+- Final pin remains `dd189d2f88efd96cf1a1df3944fa288242f71f20`. All manual servers and browsers started by this pi-bot session are stopped; temporary inspected screenshots were removed. Remaining changes are measurement/verification notes only.
