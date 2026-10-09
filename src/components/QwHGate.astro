@@ -1,0 +1,26 @@
+---
+import { execFileSync } from 'node:child_process'
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
+
+// Read the exact pinned object, independent of a concurrent checkout/repin.
+const ref = readFileSync(resolve('qni-webgpu.ref'), 'utf8').trim()
+if (!/^[a-f0-9]{40}$/.test(ref)) throw new Error('Invalid qni-webgpu.ref')
+const source = process.env.QNI_WEBGPU_SOURCE ?? resolve('.qni-webgpu-source')
+const svg = execFileSync('git', ['-C', source, 'show', `${ref}:apps/web/assets/icons/h.svg`], { encoding: 'utf8' })
+  .replace('<svg ', '<svg aria-hidden="true" focusable="false" ')
+---
+<qw-h-gate role="img" aria-label="H ゲート" title="H ゲート" data-source-sha={ref} set:html={svg}></qw-h-gate>
+<style>
+  qw-h-gate {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin-inline: 0.125em;
+    vertical-align: -0.125em;
+    border-radius: 0.15em; /* Rust gate_body: corner radius 6 / gate size 40. */
+    background: #3AA99F; /* Flexoki cyan-400: Colors::box_fill. */
+    color: #FFFCF0; /* Flexoki paper: Colors::label. */
+  }
+  qw-h-gate :global(svg) { display: block; width: 100%; height: 100%; }
+</style>

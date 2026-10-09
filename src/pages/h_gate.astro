@@ -1,10 +1,11 @@
 ---
 import TutorialLayout from '../layouts/TutorialLayout.astro'
+import QwHGate from '../components/QwHGate.astro'
 const base = import.meta.env.BASE_URL
 ---
 <TutorialLayout title="H ゲート" description="シンプルな重ね合わせ状態を作る" section="QPU 命令その 1" hasCircuit>
   <p>
-    H ゲートはフランスの数学者、ジャック・サロモン・アダマール (Jacques Salomon
+    H ゲート <QwHGate /> はフランスの数学者、ジャック・サロモン・アダマール (Jacques Salomon
     Hadamard, 1865 - 1963) の名前を冠したゲートで、別名アダマールゲートとも呼びます。
   </p>
   <aside class="note">
