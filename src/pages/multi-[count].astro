@@ -1,0 +1,25 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+export function getStaticPaths() {
+  return [1, 3, 7].map(count => ({ params: { count: String(count) } }))
+}
+const count = Number(Astro.params.count)
+const circuits = [
+  { name: 'H: 重ね合わせ', cols: [['H', '|0>']] },
+  { name: 'X: ビット反転', cols: [['X', '|0>']] },
+  { name: 'Bell: H + CNOT', cols: [['H', '|0>'], ['•', 'X']] },
+  { name: 'Y: 位相付き反転', cols: [['Y', '|0>', '|0>']] },
+  { name: 'Z: 位相反転', cols: [['H', '|0>'], ['Z']] },
+  { name: 'S: 四分の一回転', cols: [['H', '|0>', '|0>'], ['S']] },
+  { name: 'T: 八分の一回転', cols: [['H', '|0>'], ['T']] },
+].slice(0, count)
+---
+<TutorialLayout title={`${count} 個の独立した量子回路`} description="複数の WebGPU 回路の独立性と性能を確認するページ" section="性能検証" hasCircuit>
+  <p>各回路を個別に操作できます。回路や操作状態は共有せず、WebAssembly と GPUDevice のみを共有します。</p>
+  <nav aria-label="埋め込み数"><a href={`${import.meta.env.BASE_URL}multi-1/`}>1 個</a> / <a href={`${import.meta.env.BASE_URL}multi-3/`}>3 個</a> / <a href={`${import.meta.env.BASE_URL}multi-7/`}>7 個</a></nav>
+  {circuits.map((circuit, index) => <section>
+    <h2>{index + 1}. {circuit.name}</h2>
+    <qni-webgpu-circuit id={`circuit-${index}`} circuit={JSON.stringify({ cols: circuit.cols })} height="480"></qni-webgpu-circuit>
+  </section>)}
+  <noscript><p>回路を操作するには JavaScript を有効にしてください。</p></noscript>
+</TutorialLayout>

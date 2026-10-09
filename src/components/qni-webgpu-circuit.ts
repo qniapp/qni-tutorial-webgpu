@@ -1,10 +1,10 @@
-type EmbedHandle = { destroy(): void }
+type EmbedHandle = { destroy(): void; readStateVector(): Promise<Float32Array> }
 type LoadProgress = { stage: string; loaded: number; total: number | null }
 type EmbedModule = {
   startEmbed(
     canvas: HTMLCanvasElement,
     circuit: string,
-    settings: { showStatePanel: boolean; onProgress?: (progress: LoadProgress) => void },
+    settings: { showStatePanel: boolean; onProgress?: (progress: LoadProgress) => void; onDeviceLost?: () => void },
   ): Promise<EmbedHandle>
 }
 
@@ -40,6 +40,12 @@ class QniWebgpuCircuit extends HTMLElement {
     this.canvas = shadow.querySelector('canvas')!
     this.status = shadow.querySelector('[role="status"]')!
     this.resizeObserver = new ResizeObserver(() => this.resizeCanvas())
+  }
+
+  /** Test-only on-demand GPU readback scoped to this element. */
+  async readStateVector() {
+    if (!this.runner) throw new Error('Circuit runner is not ready')
+    return this.runner.readStateVector()
   }
 
   connectedCallback() {
@@ -120,6 +126,12 @@ class QniWebgpuCircuit extends HTMLElement {
       JSON.parse(circuit)
       const settings = {
         showStatePanel: this.getAttribute('show-state-panel') !== 'false',
+        onDeviceLost: () => {
+          if (!current()) return
+          ++this.generation
+          this.destroyRunner()
+          this.setState('error', 'GPU との接続が失われました。ページを再読み込みしてください。')
+        },
         onProgress: ({ stage, loaded, total }: LoadProgress) => {
           if (!current()) return
           const stages: Record<string, string> = {
