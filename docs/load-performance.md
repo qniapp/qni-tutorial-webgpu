@@ -1,6 +1,6 @@
 # H-gate load performance
 
-Measured on 2026-10-09. No deployment or push was performed.
+Measured on 2026-10-09. Initial local measurements were completed before pushing. The optimized site was subsequently deployed with authorization and measured live; see the live results below and [the progress/safety notes](perf-notes.md).
 
 ## Method
 
@@ -10,7 +10,7 @@ node /path/to/qni-tutorial-webgpu/scripts/measure-load.mjs URL /tmp/results.json
 
 Each of five runs creates a fresh Chromium context (empty HTTP cache), navigates once for cold results, then reloads in the same context for warm results. One browser process is shared, so OS/driver and engine caches are not reset. Browser: `/usr/bin/chromium`, headless, flags `--enable-unsafe-webgpu --enable-features=Vulkan --use-angle=vulkan`. Hardware adapter info: vendor `amd`, architecture `rdna-3`; device and description were empty. PCI reports AMD Strix Halo Radeon 8050S/8060S graphics. No SwiftShader was used for measurements.
 
-The script injects Performance API marks/measures around actual WebGPU acquisition and shader/pipeline methods, plus `WebAssembly.instantiateStreaming`, before page scripts execute. The embed also publishes stable wasm-fetch, wasm-instantiated and runner marks. The existing live deployment lacks those embed marks; injected instrumentation still measures the live APIs and ready state.
+The script injects Performance API marks/measures around actual WebGPU acquisition and shader/pipeline methods, plus `WebAssembly.instantiateStreaming`, before page scripts execute. The embed also publishes stable wasm-fetch, wasm-instantiated and runner marks. The baseline live deployment lacked those embed marks; injected instrumentation still measured the live APIs and ready state.
 
 Definitions and limitations:
 
@@ -30,20 +30,21 @@ Instrumentation was committed before the baseline: upstream `e33ee46`, tutorial 
 
 - `/tmp/qtw-perf-before.json`: local raw baseline.
 - `/tmp/qtw-perf-before-gzip.json`: local gzip baseline.
-- `/tmp/qtw-perf-before-live.json`: current Pages deployment.
+- `/tmp/qtw-perf-before-live.json`: pre-optimization Pages deployment.
+- `/tmp/qtw-perf-after-live.json`: deployed optimized Pages results, five cold/warm pairs.
 - `/tmp/qtw-perf-after-local.json`: final local raw results.
 - `/tmp/qtw-perf-after-local-gzip.json`: final local gzip results.
 - `/tmp/qtw-perf-O3-webgpu-only-local.json`: final feature graph with `-O3`.
 - `/tmp/qtw-size-report.json`: exact compressed-size comparisons.
 - `/tmp/qtw-twiggy-top.txt`, `/tmp/qtw-twiggy-symbols.txt`: size attribution.
 
-## Pages compression
+## Baseline Pages compression
 
 ```sh
 curl -sI -H 'Accept-Encoding: gzip, br, zstd' https://qniapp.github.io/qni-tutorial-webgpu/qni-webgpu/qni-web_bg.wasm
 ```
 
-Pages served `Content-Type: application/wasm`, `Content-Encoding: gzip`, `Content-Length: 6787954`, `Vary: Accept-Encoding`, `Cache-Control: max-age=600`. Browser Resource Timing: transfer size **6,788,254 B**, encoded body **6,787,954 B**, decoded body **13,365,301 B** (cold and reload). Brotli/zstd were offered but gzip was selected. Live cold/warm median ready: **3,212.1 / 2,836.5 ms**; wasm download: **2,201.5 / 2,731.5 ms**. Network variability is substantial. The rebuilt local baseline is 17,676 B larger raw than the deployed binary, so live and local binaries are not byte-identical. No after-live result exists until the orchestrator deploys.
+Pages served `Content-Type: application/wasm`, `Content-Encoding: gzip`, `Content-Length: 6787954`, `Vary: Accept-Encoding`, `Cache-Control: max-age=600`. Browser Resource Timing: transfer size **6,788,254 B**, encoded body **6,787,954 B**, decoded body **13,365,301 B** (cold and reload). Brotli/zstd were offered but gzip was selected. Live cold/warm median ready: **3,212.1 / 2,836.5 ms**; wasm download: **2,201.5 / 2,731.5 ms**. Network variability is substantial. The rebuilt local baseline is 17,676 B larger raw than the deployed binary, so live and local binaries are not byte-identical. The deployed optimized results are recorded below.
 
 ## Wasm variants
 
@@ -98,11 +99,38 @@ Milliseconds; five cold/warm pairs each. Phases overlap and must not be summed.
 - An early adapter request warms the driver in parallel with download. It is not passed into Rust/wgpu; no speculative device is allocated. Rust retains its own adapter/device acquisition.
 - Fetch progress is streamed into a Response and then wasm-bindgen. Same-origin identity responses show percentage; compressed/unknown/CORS totals show decoded MB. Japanese stages: ダウンロード中, コンパイル中, GPU 初期化中, 準備中. Stale lifecycle callbacks are ignored.
 - Shared initialization can retry after failure; new regression tests cover single fetch, compression accounting, retry, UI stages, and real preload reuse.
-- Normal release profile unchanged. Japanese/Geist/Hack fonts and screen reader remain. No persistence/image codec features were removed. `rustc --target wasm32-unknown-unknown --print cfg` already reports `panic="abort"`; no new panic policy was introduced. Native unit tests still pass, but native graphics backends are not a supported web-app deployment target.
-- Passed: Rust fmt; wasm32 clippy with `-D warnings`; 417 library tests; no pending snapshots; standalone Trunk release build; optimized embed build; 185 Node preflight tests plus 3 loader tests; 63 GPU kernel tests; typechecks; 6 BDD scenarios; all 294 upstream Playwright tests (including 5 embed tests); all 13 tutorial Playwright tests; upstream documentation lint; diff whitespace checks.
+- Normal release profile unchanged. Japanese/Geist/Hack fonts and screen reader remain. No persistence/image codec features were removed. `rustc --target wasm32-unknown-unknown --print cfg` already reports `panic="abort"`; no new panic policy was introduced. Native unit tests still pass. The follow-up scopes the eframe reduction to wasm32 and preserves the original native graphics/default-font features; native GUI startup was not claimed as verified.
+- Passed: Rust fmt; wasm32 clippy with `-D warnings`; 417 library tests; no pending snapshots; standalone Trunk release build; optimized embed build; 188 Node preflight tests after the follow-up plus 3 loader tests; 63 GPU kernel tests; typechecks; 6 BDD scenarios; all 294 upstream Playwright tests (including 5 embed tests); all 13 tutorial Playwright tests; upstream documentation lint; diff whitespace checks.
 - Hardware Chromium also rendered the standalone release with `__eguiReady=true` and no page errors. Tutorial and standalone screenshots were visually checked and removed.
 - One denied-adapter test expected a removed WebGL surface error. It now verifies the actual WebGPU-only adapter error, not a weakened alternative match.
 - One Node 26.10 V8 compilation crash occurred during preflight. The final preflight passes under the documented Node 22 LTS toolchain (22.23.2); use Node 22 for these checks.
 - Independent reviews were attempted but the delegation tool required unavailable Herdr environment variables. A manual correctness/coverage/complexity review was completed instead. The referenced `agent-kit/AGENTS.MD` is also absent from this workspace.
 
-Upstream commits: `e33ee46` (instrumentation), `761fcfa1929f4ce0ce8f436500c507f8eb0b49c5` (optimized loader/build). The tutorial pin is the final upstream SHA. The orchestrator must push upstream before deploying the tutorial pin, then rerun the same measurement against Pages. All manually started servers and browsers are stopped at completion. No protected checkout was modified.
+Upstream commits: `e33ee46` (instrumentation), `761fcfa1929f4ce0ce8f436500c507f8eb0b49c5` (optimized loader/build), `dd189d2f88efd96cf1a1df3944fa288242f71f20` (Binaryen pin and wasm32-only scope). The final pin is `dd189d2f88efd96cf1a1df3944fa288242f71f20`. Both branches were published with authorization; Pages deployment and live verification succeeded. All manually started servers and browsers are stopped. No protected checkout was modified.
+
+## Deployed live results - 2026-10-09
+
+[Pages run 37909494860](https://github.com/qniapp/qni-tutorial-webgpu/actions/runs/37909494860) deployed tutorial commit `7292ae86d4d9b7cf4e8feaf411f1c9e70da012c9`, using the final upstream pin above. CI build took 1m49s and deploy took 11s. The same measurement script ran five cold/warm pairs against `https://qniapp.github.io/qni-tutorial-webgpu/h_gate/`, with the same hardware Chromium/Vulkan flags and AMD RDNA-3 adapter as the live baseline.
+
+Pages serves `Content-Type: application/wasm`, **`Content-Encoding: gzip`**, **`Content-Length: 4927724`**, `Cache-Control: max-age=600`. Raw CI wasm is **9,845,787 B**, versus local **9,874,155 B**; the small compiler/environment difference has not been isolated, and these binaries are not assumed byte-identical.
+
+| Live metric | Before cold | After cold | Before warm | After warm |
+| --- | ---: | ---: | ---: | ---: |
+| Wasm transfer size B | 6,788,254 | 4,928,024 | 6,788,254 | 0 |
+| Wasm encoded body B | 6,787,954 | 4,927,724 | 6,787,954 | 4,927,724 |
+| Wasm decoded body B | 13,365,301 | 9,845,787 | 13,365,301 | 9,845,787 |
+| Wasm download ms | 2,201.5 | 446.6 | 2,731.5 | 27.5 |
+| Streaming compile/instantiate ms | 2,209.0 | 426.2 | 2,739.6 | 31.5 |
+| Adapter + device ms | 54.7 | 3.3 | 52.6 | 2.3 |
+| Shader/pipeline API calls ms | 0.3 | 0.5 | 0.3 | 0.4 |
+| Shader/pipeline span ms | 67.2 | 56.9 | 16.0 | 16.7 |
+| First-frame proxy ms | 3,292.9 | 595.6 | 2,902.7 | 155.0 |
+| Ready ms | 3,212.1 | 536.3 | 2,836.5 | 80.6 |
+
+Sizes and phases are medians, with the overlap/proxy caveats from the method section. The live gzip body shrank **27.4%**, raw body **26.3%**. Observed ready medians fell **83.3% cold / 97.2% warm**. Network variation contributes to the cold difference; it cannot all be attributed to wasm shrinkage. Early preloads now reuse the browser cache on reload (transfer size zero), whereas baseline reloads transferred the full wasm.
+
+Every measured load had one wasm resource entry and one streaming instantiation. A separate live verification collected **zero console/page errors and no Table.grow error**, then changed the real GPU amplitudes from `[1,0,0,0]` to `[0.7071067690849304,0,0.7071067690849304,0]` using H. The H/restart check also reused one wasm download. Readback was test-only.
+
+CI verbose logs confirm Binaryen **123** at `/home/runner/.cache/trunk/wasm-opt-version_123/bin/wasm-opt`, using `-Oz --enable-bulk-memory --enable-nontrapping-float-to-int`, and wasm-bindgen **0.2.129** at `/home/runner/.cache/trunk/wasm-bindgen-0.2.129/wasm-bindgen`. Bindgen uses `--target=web --no-typescript`; no explicit reference-types/weak-refs options are added. Tool provenance, #4228 evidence, native feature preservation, and the old-PATH rejection probe are detailed in [perf-notes.md](perf-notes.md).
+
+Evidence: `/tmp/qtw-perf-after-live.json`, `/tmp/qtw-after-live-headers.txt`, `/tmp/qtw-pages-ci.log`, `/tmp/qtw-live-verification.json`. The final measurement update is docs-only and does not change the upstream pin.
