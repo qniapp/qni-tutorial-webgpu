@@ -1,0 +1,17 @@
+qw-qubit-circle {
+  display: inline-block;
+  position: relative;
+  width: var(--qw-qc-box, 34px);
+  height: var(--qw-qc-box, 34px);
+  margin: 4px 14px 4px 0;
+  vertical-align: middle;
+}
+qw-qubit-circle > svg { display: block; width: 100%; height: 100%; background: #FFFCF0; }
+qw-qubit-circle [data-part="disc"] { fill: #92BFDB; }
+qw-qubit-circle [data-part="rim"] { stroke: #4385BE; }
+qw-qubit-circle [data-part="phase"] { stroke: #100F0F; }
+qw-qubit-circle:hover svg > *, qw-qubit-circle:focus-visible svg > * { filter: brightness(0.9); }
+qw-qubit-circle:focus-visible { outline: 2px solid #24837B; outline-offset: 3px; }
+qw-qubit-circle::after { content: '|' attr(data-ket) '⟩'; position: absolute; right: -12px; bottom: -3px; font: 10px/10px monospace; color: #100F0F; }
+#qw-qubit-circle-tooltip { position: fixed; z-index: 1000; pointer-events: none; white-space: pre-line; background: #FFFCF0; color: #100F0F; border: 1px solid #6F6E69; border-radius: 6px; padding: 8px 12px; font: 13px/1.6 sans-serif; box-shadow: 0 3px 12px #100F0F26; max-width: calc(100vw - 40px); }
+#qw-qubit-circle-tooltip[hidden] { display: none; }

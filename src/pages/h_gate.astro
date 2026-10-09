@@ -2,6 +2,8 @@
 import TutorialLayout from '../layouts/TutorialLayout.astro'
 import QwHGate from '../components/QwHGate.astro'
 import Sidenote from '../components/Sidenote.astro'
+import QwQubitCircle from '../components/QwQubitCircle.astro'
+const equal = Math.SQRT1_2
 const base = import.meta.env.BASE_URL
 ---
 <TutorialLayout title="H ゲート" description="シンプルな重ね合わせ状態を作る" section="QPU 命令その 1" hasCircuit>
@@ -13,7 +15,8 @@ const base = import.meta.env.BASE_URL
   <div class="static-diagram" aria-label="H ゲートによる状態の変化">
     <p>H|0⟩ = (|0⟩ + |1⟩) / √2</p>
     <p>H|1⟩ = (|0⟩ − |1⟩) / √2</p>
-    <p>円による振幅・位相の図は、移植まで数式で示しています。</p>
+    <div class="qc-transition"><span><QwQubitCircle amplitude={1} ket={0} /><QwQubitCircle amplitude={0} ket={1} /></span><span>→ H →</span><span><QwQubitCircle amplitude={equal} ket={0} /><QwQubitCircle amplitude={equal} ket={1} /></span></div>
+    <div class="qc-transition"><span><QwQubitCircle amplitude={0} ket={0} /><QwQubitCircle amplitude={1} ket={1} /></span><span>→ H →</span><span><QwQubitCircle amplitude={equal} ket={0} /><QwQubitCircle amplitude={-equal} ket={1} /></span></div>
   </div>
   <p>|1⟩ に対して H を適用したときのみ、|1⟩ の位相が π 変化していることに注意してください。 |0⟩ に対する H 操作は、位相の回転を含みません。</p>
   <p>H は QPU 独自の命令です。量子ビットだけが持つ重ね合わせ状態を作るという性質を持つので、従来の論理演算には H ゲートに対応するものはありません。</p>
@@ -28,7 +31,8 @@ const base = import.meta.env.BASE_URL
   <div class="static-diagram" aria-label="H ゲートを 2 回適用した状態">
     <p>H(H|0⟩) = |0⟩</p>
     <p>H(H|1⟩) = |1⟩</p>
-    <p>円と矢印による図は、移植まで数式で示しています。</p>
+    <div class="qc-transition"><span><QwQubitCircle amplitude={1} ket={0} /><QwQubitCircle amplitude={0} ket={1} /></span><span>→ H →</span><span><QwQubitCircle amplitude={equal} ket={0} /><QwQubitCircle amplitude={equal} ket={1} /></span><span>→ H →</span><span><QwQubitCircle amplitude={1} ket={0} /><QwQubitCircle amplitude={0} ket={1} /></span></div>
+    <div class="qc-transition"><span><QwQubitCircle amplitude={0} ket={0} /><QwQubitCircle amplitude={1} ket={1} /></span><span>→ H →</span><span><QwQubitCircle amplitude={equal} ket={0} /><QwQubitCircle amplitude={-equal} ket={1} /></span><span>→ H →</span><span><QwQubitCircle amplitude={0} ket={0} /><QwQubitCircle amplitude={1} ket={1} /></span></div>
   </div>
 
   <h2>H ゲートを回転として見る</h2>
@@ -42,7 +46,7 @@ const base = import.meta.env.BASE_URL
   <div class="static-diagram" aria-label="任意の状態に H ゲートを適用した振幅">
     <p>適用前: |0⟩ の振幅 −0.38268、|1⟩ の振幅 0.7855 − 0.48636i</p>
     <p>適用後: |0⟩ の振幅 0.28483 − 0.34391i、|1⟩ の振幅 −0.82603 + 0.34391i</p>
-    <p>元の円による図の値を、静的な文章で示しています。</p>
+    <div class="qc-transition"><span><QwQubitCircle amplitude={-0.38268} ket={0} /><QwQubitCircle amplitude="0.7855 - 0.48636i" ket={1} /></span><span>→ H →</span><span><QwQubitCircle amplitude="0.28483 - 0.34391i" ket={0} /><QwQubitCircle amplitude="-0.82603 + 0.34391i" ket={1} /></span></div>
   </div>
   <p>これを頭の中だけで想像するのは大変なので、さしあたっては Qni に計算をおまかせして OK です。実は、円の図だけでおおまかな変化を導き出すこともできるのですが、そのためには H ゲートを行列で表したもの (ゲートの行列表現) の知識が必要になります。詳しい方法はのちほど紹介します。</p>
 
@@ -58,3 +62,8 @@ const base = import.meta.env.BASE_URL
 
   <p>関連ページ<Sidenote id="related-pages">前のページ: X ゲート (量子 NOT)。次のページ: PHASE ゲート。どちらもまだ移植していません。</Sidenote></p>
 </TutorialLayout>
+
+<style>
+  .qc-transition { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; margin-block: 16px; }
+  .qc-transition > span { display: inline-flex; align-items: center; }
+</style>
