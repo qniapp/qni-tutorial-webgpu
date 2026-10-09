@@ -51,7 +51,7 @@ jobs:
           path: |
             ~/.local/bin/trunk
             ~/.cache/trunk
-          key: trunk-${{ runner.os }}-${{ runner.arch }}-0.21.14-${{ hashFiles('.qni-webgpu-source/apps/web/Cargo.lock') }}
+          key: trunk-${{ runner.os }}-${{ runner.arch }}-0.21.14-${{ hashFiles('.qni-webgpu-source/apps/web/Cargo.lock', '.qni-webgpu-source/apps/web/Trunk.toml') }}
       - name: Install prebuilt Trunk
         if: steps.trunk-cache.outputs.cache-hit != 'true'
         env:
