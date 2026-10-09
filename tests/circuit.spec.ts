@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
+import { APP_URL } from '../src/components/qni-webgpu-app-url'
 
 type MockState = {
   calls: { circuit: string; showStatePanel: boolean; url: string }[]
@@ -6,6 +7,7 @@ type MockState = {
   live: number
   maxLive: number
   release: (() => void)[]
+  currentCircuit?: string
   progress?: (value: { stage: string; loaded: number; total: number | null }) => void
 }
 
@@ -30,7 +32,7 @@ const mockModule = `
     mock.maxLive = Math.max(mock.maxLive, mock.live);
     if (window.__qniHeld) await new Promise(resolve => mock.release.push(resolve));
     let destroyed = false;
-    return { destroy() {
+    return { circuitJSON() { return mock.currentCircuit ?? circuit }, destroy() {
       if (destroyed) throw new Error('duplicate destroy');
       destroyed = true;
       mock.destroyed.push(id);
@@ -177,7 +179,7 @@ test('dimension changes resize without restarting', async ({ page }) => {
     const canvas = element.shadowRoot!.querySelector('canvas')!
     return {
       width: element.getBoundingClientRect().width, height: element.getBoundingClientRect().height,
-      canvasMatches: canvas.width === Math.round(320 * devicePixelRatio) && canvas.height === Math.round(240 * devicePixelRatio),
+      canvasMatches: canvas.width === Math.round(320 * devicePixelRatio) && canvas.height === Math.round((240 - 32) * devicePixelRatio),
       calls: window.__qniMock.calls.length, destroyed: window.__qniMock.destroyed,
     }
   })).toEqual({ width: 320, height: 240, canvasMatches: true, calls: 1, destroyed: [] })
@@ -229,5 +231,28 @@ for (const failure of ['import', 'parse', 'GPU'] as const) {
       logged: errors.some(error => error.includes('量子回路の起動に失敗しました。')),
       live: (await snapshot(page)).live,
     }).toEqual({ message: '量子回路を起動できませんでした。', logged: true, live: 0 })
+  })
+}
+
+test('open link has the exact label, safe new-tab attributes and encoded circuit', async ({ page }) => {
+  await boot(page)
+  await running(page)
+  const link = page.locator('qni-webgpu-circuit').getByRole('link', { name: 'Qni WebGPU で開く', exact: true })
+  expect(await link.evaluate((a: HTMLAnchorElement) => ({
+    label: a.textContent, target: a.target, rel: a.rel,
+    path: new URL(a.href).pathname, circuit: JSON.parse(decodeURIComponent(new URL(a.href).hash.slice(1))),
+  }))).toEqual({ label: 'Qni WebGPU で開く', target: '_blank', rel: 'noopener', path: new URL(APP_URL, 'http://localhost').pathname, circuit: { cols: [['|0>']] } })
+})
+
+for (const event of ['pointerdown', 'focus', 'keydown', 'click']) {
+  test(`open link exports the current circuit synchronously on ${event}`, async ({ page }) => {
+    await boot(page)
+    await running(page)
+    const current = '{"cols":[["H"],["•","X"],["S†"]]}'
+    await page.evaluate(circuit => { window.__qniMock.currentCircuit = circuit }, current)
+    const link = page.locator('qni-webgpu-circuit').getByRole('link', { name: 'Qni WebGPU で開く', exact: true })
+    await link.evaluate(a => a.addEventListener('click', e => e.preventDefault()))
+    await link.dispatchEvent(event)
+    expect(await link.evaluate((a: HTMLAnchorElement) => new URL(a.href).hash.slice(1))).toBe(encodeURIComponent(current))
   })
 }

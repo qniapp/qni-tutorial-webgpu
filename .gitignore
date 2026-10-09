@@ -2,6 +2,7 @@ node_modules/
 .astro/
 dist/
 public/qni-webgpu/
+public/app/
 .qni-webgpu-source/
 playwright-report/
 test-results/

@@ -1,4 +1,6 @@
-type EmbedHandle = { destroy(): void; readStateVector(): Promise<Float32Array> }
+import { APP_URL } from './qni-webgpu-app-url'
+
+type EmbedHandle = { destroy(): void; circuitJSON(): string; readStateVector(): Promise<Float32Array> }
 type LoadProgress = { stage: string; loaded: number; total: number | null }
 type EmbedModule = {
   startEmbed(
@@ -13,6 +15,7 @@ class QniWebgpuCircuit extends HTMLElement {
 
   private canvas: HTMLCanvasElement
   private status: HTMLDivElement
+  private openLink: HTMLAnchorElement
   private runner?: EmbedHandle
   private generation = 0
   private pending: Promise<void> = Promise.resolve()
@@ -29,16 +32,25 @@ class QniWebgpuCircuit extends HTMLElement {
           width: var(--_qni-width, var(--qni-webgpu-circuit-width, 100%));
           height: var(--_qni-height, var(--qni-webgpu-circuit-height, 640px));
         }
-        canvas { display: block; width: 100%; height: 100%; }
+        canvas { display: block; width: 100%; height: calc(100% - 32px); }
+        .open-link { position: absolute; bottom: 0; right: 12px; height: 32px;
+          display: flex; align-items: center; font-size: 14px; line-height: 20px;
+          color: #205EA6; /* Flexoki blue-600; text-sm, h-8, right-3 */ }
+        .open-link:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
         canvas:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
         [role="status"] { position: absolute; inset: 1rem; pointer-events: none; }
         [hidden] { display: none; }
       </style>
       <canvas tabindex="0" aria-label="量子回路シミュレーター"></canvas>
       <div role="status" aria-live="polite" aria-atomic="true"></div>
+      <a class="open-link" target="_blank" rel="noopener" title="現在の回路を新しいタブで開きます">Qni WebGPU で開く</a>
     `
     this.canvas = shadow.querySelector('canvas')!
     this.status = shadow.querySelector('[role="status"]')!
+    this.openLink = shadow.querySelector('.open-link')!
+    for (const event of ['pointerdown', 'focus', 'keydown', 'click', 'auxclick']) {
+      this.openLink.addEventListener(event, () => this.updateOpenLink())
+    }
     this.resizeObserver = new ResizeObserver(() => this.resizeCanvas())
   }
 
@@ -50,6 +62,7 @@ class QniWebgpuCircuit extends HTMLElement {
 
   connectedCallback() {
     this.updateSize()
+    this.updateOpenLink()
     this.resizeObserver.observe(this)
     this.restart()
   }
@@ -70,6 +83,17 @@ class QniWebgpuCircuit extends HTMLElement {
     }
   }
 
+  private updateOpenLink() {
+    let circuit = this.getAttribute('circuit') ?? '{"cols":[]}'
+    // Synchronous metadata export preserves normal anchor/new-tab behavior.
+    // During startup/failure the initial circuit remains useful and accessible.
+    if (this.runner) {
+      try { circuit = this.runner.circuitJSON() }
+      catch { return } // Retain the last valid link if the runner is unavailable.
+    }
+    this.openLink.href = `${APP_URL}#${encodeURIComponent(circuit)}`
+  }
+
   private updateSize() {
     for (const name of ['width', 'height']) {
       const value = this.getAttribute(name)
@@ -87,7 +111,7 @@ class QniWebgpuCircuit extends HTMLElement {
     const { width, height } = this.getBoundingClientRect()
     const scale = window.devicePixelRatio || 1
     const w = Math.max(1, Math.round(width * scale))
-    const h = Math.max(1, Math.round(height * scale))
+    const h = Math.max(1, Math.round((height - 32) * scale))
     if (this.canvas.width !== w) this.canvas.width = w
     if (this.canvas.height !== h) this.canvas.height = h
   }
@@ -109,6 +133,7 @@ class QniWebgpuCircuit extends HTMLElement {
     const generation = ++this.generation
     this.destroyRunner()
     this.setState('loading', '読み込み中…')
+    this.updateOpenLink()
     // Queue even reconnects behind unresolved startup. A stale handle must be
     // destroyed before startEmbed can use this same canvas again.
     this.pending = this.pending.then(() => this.start(generation))
@@ -154,6 +179,7 @@ class QniWebgpuCircuit extends HTMLElement {
       }
       this.runner = runner
       this.setState('running')
+      this.updateOpenLink()
     } catch (error) {
       console.error('量子回路の起動に失敗しました。', error)
       if (current()) this.setState('error', '量子回路を起動できませんでした。')
