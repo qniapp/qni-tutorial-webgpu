@@ -1,0 +1,19 @@
+---
+interface Props { kind: 'probability' | 'amplitude' | 'argument'; xLabel?: string; yLabel?: string; classical?: boolean }
+const {kind,xLabel = 'p₀',yLabel = 'p₁',classical = false} = Astro.props
+---
+<div class="state-plot" data-state-plot={kind} data-classical={classical} data-original-image>
+  <svg viewBox="0 0 360 300" tabindex="0" role="slider" aria-label={kind==='argument'?'複素振幅の偏角':kind==='amplitude'?'量子ビットの振幅':'確率的ビットの確率'} aria-valuemin={kind==='amplitude'?-Math.PI:0} aria-valuemax={kind==='probability'?1:kind==='amplitude'?Math.PI:Math.PI/2} aria-valuenow="0.5">
+    {kind!=='amplitude' && <><path d="M40 260 H325 M40 260 V25" class="axis" />
+    <text x="240" y="282">{xLabel}</text><text x="16" y="24">{yLabel}</text></>}
+    <g data-plot-content></g>
+  </svg>
+</div>
+<script>import './state-plot'</script>
+<style>
+  .state-plot { width:min(100%,440px); margin:auto; }
+  svg { display:block; width:100%; height:auto; touch-action:none; cursor:crosshair; }
+  svg:focus-visible { outline:2px solid #3AA99F; outline-offset:4px; }
+  svg :global(text) { fill:#6F6E69; font:14px system-ui,sans-serif; }
+  .axis { fill:none; stroke:#6F6E69; stroke-width:1; }
+</style>

@@ -189,3 +189,36 @@ normalized比較はembed内部を除く。原文mini_qniの外側にある「Qni
 ### 13:56 最終チェックポイント
 
 この再開でqubit/phase/circle_notation/cpu_vs_qpu_operations/write_operation/indexの6ページを公開検証。各1440/390で本文diff0、counts/Orbit属性一致、errors0、overflowなし。7画像の公開original/ours SHA256一致は `/tmp/qtw-port-image-hashes.json`。既存と共有の差 (paper色、書体、サイドバー、MathJax、native UI) は引き継ぎ、旧UI操作記述の差は各節に記録した。WRITEの静的図も目視で確認、glyphはnativeのket/Geistで旧SVGとは異なる。型チェック/buildと関連49 tests成功。最終commitは検証記録のみで通常push。次はx_gate、その後既存h_gateを飛ばしてphase_gate、さらにmeasurement_operation。未解決STOP質問なし。13:58前に終了し、新規ページは開始しない。
+
+
+## 13:57 画像・対話化方針の遡及適用 (公開確認待ち)
+
+本文の既存テキストノードは変更せず、画像/静的figureだけ置換。新しい図の文字は元画像のラベルや数式で、本文diffは `[data-original-image]` の図内容を除いて比較する。旧画像は参照資産として残すが対象ページでは使わない。Orbit markup/attachmentsは維持する。
+
+| ページ | 置換 |
+| --- | --- |
+| qpu | 画像なし。既存本文/Orbitを維持 |
+| what_qpu_do_faster | matrix_multiplication / qpu_operations_matrix_and_state_vector / state_vector_norm1 / reversible_matrix_multiplication PNG4枚 -> 実MathJax行列・ベクトル・逆演算式 |
+| quantum_circuit | 論文図2枚は引用説明との整合性のため保持、質問に列挙 |
+| qni_intro | 旧UI操作GIF2枚を保持、質問に列挙。既存native回路2つは対話可能 |
+| p_bit | p_bit_graph / c_bit_and_p_bit -> pointer/矢印キーで確率を変えられるSVG graph。Wikipedia/YouTube複合図は質問として保持 |
+| superposition | 既に元のqubit-circleで対話tooltipあり、画像なし |
+| h_gate | bloch_H0 -> 原文タグbloch-displayのH回転図 (赤/青経路、黒xz軸、x/y/ket)、drag/矢印キーで視点変更 |
+| qubit | p0p1_graph / qbit_circular_state -> 対話SVG確率線/振幅円。bloch_sphere -> bloch-display、視点変更可能 |
+| phase | amplitude_amplification_overview -> 2組の16 qubit-circle。状態をclick/Enterすると選択状態の位相反転・増幅表示が切り替わる。画像の無注記数値は視覚を再現した正規化した例値で、Grover simulationではない |
+| circle_notation | argument_of_complex -> 対話SVG偏角図、pointer/矢印キーで角度変化 |
+| cpu_vs_qpu_operations | logic_gates_and_not -> 対話SVG AND/NOT、click/Enterで0/1と出力変化 |
+| write_operation | 初期化WRITE0-H-Y / WRITE1-Z-Hの静的回路 -> 同じ命令のnative editable embed2つ。残り本文・円・WRITE glyph維持 |
+| index | 旧Grover UI screenshotを保持、質問に列挙。block付きnative回路は既に対話可能 |
+
+### 置換を判断しなかった質問 (ファイル / ページ / 内容)
+
+- `public/images/quantum-circuit/feynman_full_adder.png` / quantum_circuit: Feynman 1986論文の引用。「掲載されている図の抜粋」という本文のまま自作回路へ置換してよいか? そのまま保持。
+- `public/images/quantum-circuit/quantum_circuit_diagram_example.jpeg` / quantum_circuit: Zhengほかの論文引用回路。引用のまま自作表示へ置換してよいか? そのまま保持。
+- `public/images/qni-intro/qni_live_programming.gif` / qni_intro: 旧paletteから命令を追加する操作。native操作の録画に差し替えるには元本文が指すUIとの確認が必要。保持。
+- `public/images/qni-intro/qni_step_execution.gif` / qni_intro: 旧ステップ選択/途中状態を確認する操作。nativeには同じ操作・UIがあるか、本文据え置きで置換してよいか? 保持。
+- `public/images/p-bit/wikipedia_youtube_cat.png` / p_bit: Wikipedia/YouTube猫の実例、binary、確率グラフの複合画像。グラフ部分だけ自作に分離し、媒体画像を残してよいか? 保持。
+- `public/images/introduction/qni_screenshot_grover.png` / index: 旧Grover editor全体のUI screenshot。native Grover回路へ置換すると本文のサービス紹介画面と違うため、保持。
+- Orbitの `question-attachments` / `answer-attachments` (h_gate, superposition, phase, circle_notation, p_bit, quantum_circuit): 元の円/図PNG URL。Orbit attachmentは画像URLなので、独自interactive elementをそのまま入れられない。Orbit markupを維持したまま自作static SVGのURLに変えてよいか? 今回は保持。
+
+typecheck/build、関連39/39 tests成功。interactive keyboard/marking/logic、MathJax errors0、幅390/1440のoverflowなしをテスト。公開比較を追記する。

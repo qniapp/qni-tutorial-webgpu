@@ -1,0 +1,17 @@
+---
+interface Props { kind:'matrix'|'qpu'|'norm'|'reversible' }
+const {kind}=Astro.props
+const matrix=String.raw`\begin{pmatrix}\ddots & & \\ & \ddots & \\ & & \ddots\end{pmatrix}`
+const vector=String.raw`\begin{pmatrix}\vdots\\\vdots\\\vdots\end{pmatrix}`
+const labels=kind==='qpu'?['QPU命令','量子ビットの状態']:['巨大な行列','巨大なベクトル']
+const tex=kind==='reversible'
+ ? String.raw`\begin{gathered} A ${vector}\ \longrightarrow\ ${vector} \\ A' ${vector}\ \longrightarrow\ ${vector}\\ \text{元に戻る}\end{gathered}`
+ : kind==='norm'
+ ? String.raw`${matrix}${vector}\ \longrightarrow\ \underbrace{${vector}}_{\text{二乗和は必ず1}}`
+ : String.raw`\underbrace{${matrix}}_{\text{${labels[0]}}}\times\underbrace{${vector}}_{\text{${labels[1]}}}\ \xrightarrow{\text{更新}}\ ${vector}`
+---
+<div class="matrix-illustration" data-original-image>{'\\['+tex+'\\]'}</div>
+<style>
+.matrix-illustration { max-width:100%; overflow:auto; text-align:center; padding:12px 0; }
+.matrix-illustration :global(mjx-container) { margin:12px 0; }
+</style>

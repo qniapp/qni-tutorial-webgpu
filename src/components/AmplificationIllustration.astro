@@ -1,0 +1,25 @@
+<div data-amplification-diagram data-original-image>
+  <div class="states">
+    {Array.from({length:16},(_,i)=><qubit-circle data-amplitude={i===15?'-0.25':'0.25'} data-ket={String(i)} data-size="base" data-hide-ket data-show-popup-amplitude data-show-popup-probability data-show-popup-phase tabindex="0" role="button" aria-label={`状態${i}をマークする`}></qubit-circle>)}
+  </div>
+  <div class="states">
+    {Array.from({length:16},(_,i)=><qubit-circle data-amplitude={i===15?'-0.98':String(Math.sqrt((1-0.98**2)/15))} data-ket={String(i)} data-size="base" data-hide-ket data-show-popup-amplitude data-show-popup-probability data-show-popup-phase tabindex="0" role="button" aria-label={`状態${i}をマークする`}></qubit-circle>)}
+  </div>
+</div>
+<script>
+for(const root of document.querySelectorAll('[data-amplification-diagram]')) {
+  const mark=(index:number)=>{
+    root.querySelectorAll('.states').forEach((row,r)=>row.querySelectorAll('qubit-circle').forEach((circle,i)=>circle.setAttribute('data-amplitude',i===index?(r?'-0.98':'-0.25'):(r?String(Math.sqrt((1-0.98**2)/15)):'0.25'))))
+  }
+  root.querySelectorAll<HTMLElement>('qubit-circle').forEach((circle,i)=>{
+    circle.addEventListener('click',()=>mark(i%16))
+    circle.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();mark(i%16)}})
+  })
+}
+</script>
+<style>
+.states { display:grid; grid-template-columns:repeat(8,32px); gap:8px; width:max-content; max-width:100%; margin:24px auto; padding:12px; border:1px solid #DAD8CE; border-radius:12px; }
+.states :global(qubit-circle) { margin:0; cursor:pointer; }
+.states :global(qubit-circle:focus-visible) { outline:2px solid #3AA99F; outline-offset:3px; }
+@media(max-width:400px) { .states { gap:4px; padding:8px; } }
+</style>

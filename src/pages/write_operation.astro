@@ -6,7 +6,7 @@ import Sidenote from '../components/Sidenote.astro'
 import Ket from '../components/Ket.astro'
 const base = import.meta.env.BASE_URL
 ---
-<TutorialLayout title="WRITE 命令" description="量子ビットの初期化とリセット" section="QPU 命令その 1" hasMath>
+<TutorialLayout title="WRITE 命令" description="量子ビットの初期化とリセット" section="QPU 命令その 1" hasMath hasCircuit>
 
 
 <p>
@@ -17,44 +17,12 @@ const base = import.meta.env.BASE_URL
 
 <div class="my-5 flex flex-col items-center md:mr-auto md:w-7/12">
   <div>量子ビットを <Ket label="0" /> に初期化してからゲートを配置</div>
-  <quantum-circuit>
-    <circuit-step>
-      <circuit-dropzone>
-        <write-gate data-value="0"></write-gate>
-      </circuit-dropzone>
-    </circuit-step>
-    <circuit-step>
-      <circuit-dropzone>
-        <h-gate></h-gate>
-      </circuit-dropzone>
-    </circuit-step>
-    <circuit-step>
-      <circuit-dropzone>
-        <y-gate></y-gate>
-      </circuit-dropzone>
-    </circuit-step>
-  </quantum-circuit>
+  <div data-original-image><qni-webgpu-circuit circuit={'{"cols":[["|0>"],["H"],["Y"]]}'}></qni-webgpu-circuit></div>
 </div>
 
 <div class="my-5 flex flex-col items-center md:mr-auto md:w-7/12">
   <div>量子ビットを <Ket label="1" /> に初期化してからゲートを配置</div>
-  <quantum-circuit>
-    <circuit-step>
-      <circuit-dropzone>
-        <write-gate data-value="1"></write-gate>
-      </circuit-dropzone>
-    </circuit-step>
-    <circuit-step>
-      <circuit-dropzone>
-        <z-gate></z-gate>
-      </circuit-dropzone>
-    </circuit-step>
-    <circuit-step>
-      <circuit-dropzone>
-        <h-gate></h-gate>
-      </circuit-dropzone>
-    </circuit-step>
-  </quantum-circuit>
+  <div data-original-image><qni-webgpu-circuit circuit={'{"cols":[["|1>"],["Z"],["H"]]}'}></qni-webgpu-circuit></div>
 </div>
 
 <p>

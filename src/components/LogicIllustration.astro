@@ -1,0 +1,20 @@
+<div data-logic-illustration data-original-image>
+<svg viewBox="0 0 520 180" tabindex="0" role="button" aria-label="ANDとNOTの入力を切り替える">
+  <g fill="#100F0F" font-family="system-ui,sans-serif" font-size="14"><text x="8" y="18" fill="#AF3029">入力</text><text x="205" y="18" fill="#205EA6">出力</text><text x="280" y="18" fill="#AF3029">入力</text><text x="470" y="18" fill="#205EA6">出力</text>
+  <text x="12" y="73" data-a>0</text><text x="12" y="127" data-b>1</text><text x="222" y="102" data-and>0</text><text x="285" y="100" data-not-in>0</text><text x="490" y="100" data-not-out>1</text><text x="86" y="102">AND</text><text x="374" y="102">NOT</text></g>
+  <g fill="none" stroke="#6F6E69" stroke-width="2"><path d="M35 70H75 M35 124H75 M75 50H120A48 48 0 0 1 120 146H75Z M168 98H210 M305 98H350 M350 50L435 98L350 146Z M450 98H480"/><circle cx="443" cy="98" r="7"/></g>
+</svg>
+</div>
+<script>
+for(const root of document.querySelectorAll('[data-logic-illustration]')) {
+  let a=0,b=1
+  const render=()=>{for(const [selector,value]of [['[data-a]',a],['[data-b]',b],['[data-and]',a&b],['[data-not-in]',a],['[data-not-out]',1-a]] as const)root.querySelector(selector)!.textContent=String(value)}
+  const svg=root.querySelector('svg')!
+  svg.addEventListener('click',e=>{const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;const pos=p.matrixTransform(svg.getScreenCTM()!.inverse());if(pos.x<260&&pos.y>100)b=1-b;else a=1-a;render()})
+  svg.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();a=1-a;render()}})
+}
+</script>
+<style>
+svg { display:block; width:100%; height:auto; cursor:pointer; }
+svg:focus-visible { outline:2px solid #3AA99F; outline-offset:4px; }
+</style>

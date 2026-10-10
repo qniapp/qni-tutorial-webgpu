@@ -1,0 +1,14 @@
+---
+interface Props { rotation?: boolean }
+const {rotation=false}=Astro.props
+---
+<div class="bloch-illustration" data-original-image>
+  <bloch-display data-mode={rotation?'h-rotation':'sphere'} data-x="0" data-y="0" data-z="1"></bloch-display>
+</div>
+<script>import './bloch-display'</script>
+<style>
+.bloch-illustration { max-width:100%; width:360px; margin:auto; }
+:global(bloch-display) { display:block; width:100%; touch-action:none; }
+:global(bloch-display svg) { display:block; width:100%; height:auto; cursor:grab; }
+:global(bloch-display svg:focus-visible) { outline:2px solid #3AA99F; outline-offset:4px; }
+</style>

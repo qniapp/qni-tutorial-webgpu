@@ -1,4 +1,6 @@
 ---
+import BlochIllustration from '../components/BlochIllustration.astro'
+import StatePlot from '../components/StatePlot.astro'
 import TutorialLayout from '../layouts/TutorialLayout.astro'
 import Sidenote from '../components/Sidenote.astro'
 import Ket from '../components/Ket.astro'
@@ -46,7 +48,7 @@ const base = import.meta.env.BASE_URL
 <p>が成り立ち、確率的ビットが取りうるすべての状態を表す次のグラフが得られるのでした。</p>
 
 <figure>
-  <img src={`${base}images/p0p1_graph.png`} class="h-auto w-full" />
+  <StatePlot kind="probability" />
 </figure>
 
 <h2>振幅</h2>
@@ -68,7 +70,7 @@ const base = import.meta.env.BASE_URL
 </p>
 
 <figure>
-  <img src={`${base}images/qbit_circular_state.png`} class="h-auto w-full" />
+  <StatePlot kind="amplitude" />
 </figure>
 
 <p>
@@ -88,7 +90,7 @@ const base = import.meta.env.BASE_URL
 </p>
 
 <figure>
-  <img src={`${base}images/bloch_sphere.png`} class="h-auto w-full" />
+  <BlochIllustration />
 </figure>
 
 <p>
