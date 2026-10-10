@@ -179,7 +179,7 @@ test('dimension changes resize without restarting', async ({ page }) => {
     const canvas = element.shadowRoot!.querySelector('canvas')!
     return {
       width: element.getBoundingClientRect().width, height: element.getBoundingClientRect().height,
-      canvasMatches: canvas.width === Math.round(320 * devicePixelRatio) && canvas.height === Math.round((240 - 32) * devicePixelRatio),
+      canvasMatches: canvas.width === Math.round(252 * devicePixelRatio) && canvas.height === Math.round(128 * devicePixelRatio),
       calls: window.__qniMock.calls.length, destroyed: window.__qniMock.destroyed,
     }
   })).toEqual({ width: 320, height: 240, canvasMatches: true, calls: 1, destroyed: [] })
@@ -237,11 +237,11 @@ for (const failure of ['import', 'parse', 'GPU'] as const) {
 test('open link has the exact label, safe new-tab attributes and encoded circuit', async ({ page }) => {
   await boot(page)
   await running(page)
-  const link = page.locator('qni-webgpu-circuit').getByRole('link', { name: 'Qni WebGPU で開く', exact: true })
+  const link = page.locator('qni-webgpu-circuit').getByRole('link', { name: 'Qniで開く', exact: true })
   expect(await link.evaluate((a: HTMLAnchorElement) => ({
     label: a.textContent, target: a.target, rel: a.rel,
     path: new URL(a.href).pathname, circuit: JSON.parse(decodeURIComponent(new URL(a.href).hash.slice(1))),
-  }))).toEqual({ label: 'Qni WebGPU で開く', target: '_blank', rel: 'noopener', path: new URL(APP_URL, 'http://localhost').pathname, circuit: { cols: [['|0>']] } })
+  }))).toEqual({ label: 'Qniで開く', target: '_blank', rel: 'noopener', path: new URL(APP_URL, 'http://localhost').pathname, circuit: { cols: [['|0>']] } })
 })
 
 for (const event of ['pointerdown', 'focus', 'keydown', 'click']) {
@@ -250,7 +250,7 @@ for (const event of ['pointerdown', 'focus', 'keydown', 'click']) {
     await running(page)
     const current = '{"cols":[["H"],["•","X"],["S†"]]}'
     await page.evaluate(circuit => { window.__qniMock.currentCircuit = circuit }, current)
-    const link = page.locator('qni-webgpu-circuit').getByRole('link', { name: 'Qni WebGPU で開く', exact: true })
+    const link = page.locator('qni-webgpu-circuit').getByRole('link', { name: 'Qniで開く', exact: true })
     await link.evaluate(a => a.addEventListener('click', e => e.preventDefault()))
     await link.dispatchEvent(event)
     expect(await link.evaluate((a: HTMLAnchorElement) => new URL(a.href).hash.slice(1))).toBe(encodeURIComponent(current))

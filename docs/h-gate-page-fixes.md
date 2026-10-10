@@ -100,3 +100,47 @@ Node 22 の型チェック、Astro build、対象 **9/9 テスト成功**。1440
 実装 **01fc5537d7c0212c1e61ff16a2ee869498d1a5b0**、Pages **38013641012** 成功 (build2分10秒 / deploy10秒)。gmktec Chromium152 / Vulkan / unsafe WebGPUで、context DPRと `--force-device-scale-factor` を両方1/2に揃えて公開再検証した。DPR2の本文glyph coreは **#FFFFFF (29 pixels)**、図は **#FFFCF0 (64 pixels)**。DPR1はantialiasingがかかるため本文の最明glyph pixelは **RGB181,223,219 (#B5DFDB)**、opaque white pixelは0。図DPR1の最明pixelはRGB230,242,230。bodyは両DPRとも実pixel **#3AA99F**。
 
 公開前の同じDPRのfigure cropとのraw pixel差分は **DPR1=0 / DPR2=0**。本文は36/96 pixelsだけ変化し、変更されたpixelsをglyph採色に使ってpage cornerを除外した。16/24px寸法、背景色、pinは不変。両browserともconsole/page errors0。保存: `/tmp/qtw-hwhite-{inline,figure}-dpr{1,2}.png`、`/tmp/qtw-hwhite.json`、比較元 `/tmp/qtw-hwhite-before-{inline,figure}-dpr{1,2}.png`。cropを目視確認済み。起動browserはfinallyで停止、test serverも終了。最終文書push後のdocs-only deployは待たず終了する。
+
+## 原文との一致 (追加物の削除)
+
+### 範囲 / 削除一覧 (2026-10-10 10:55 JST)
+
+独立した feat/ket-notation / origin/main ad39e16 から開始。更新2の期限は28分。qni origin/main acf87bfa の h_gate.html をgit showで読み、live rendered text/elementと照合。beforeのraw HTML/blocksは `/tmp/qtw-strip-before.json`。比較では語や句読点を変えず、HTML/Liquidの改行とMathJax分割nodeの空白のみ除去する。
+
+| 何を / 場所 | 原文にない理由 / 処置 |
+| --- | --- |
+| ハンズオン circuit-help sidenote3文 (ドラッグ方法、全palette、保存されない旨) | 原文79-82はヒントだけ。note削除 |
+| noscript「回路を操作するには JavaScript を有効にしてください」 | 原文にはない。削除 |
+| 任意状態図「適用前」「適用後」振幅の2段落 | 原文236-254は円/矢印/Hのみ。削除 |
+| 「復習」headingと文章向け調整の説明 | 原文は見出し/説明なしでOrbit。削除 |
+| details/summary7個の代替復習UI、改変質問/答え | 原文のOrbitタグ/全属性/5 attachments/clozeをそのまま復元。外部moduleも原文と同じ |
+| 「関連ページ」paragraphと未移植説明note | 原文にはない。削除。原文のprev/nextはlayout footer |
+| 状態図3個の追加aria-label | 原文wrapperにない。削除 |
+| Bloch画像の追加alt説明 | 原文は画像とcredit noteのみ。altを空にした |
+| linkの追加title tooltip | 原文mini_qni_filterのanchorにない。削除 |
+
+元からある2 sidenotes、4 headings、Bloch画像/credit、3組の円/矢印、19 H /24 circles /12 ketsを維持。qc-figure/qc-transitionは原文の図用div群のCSS移植で、新規図や背景tileではない。文字/labelを含まないため残す。circuit置換/linkは許可された差分。
+
+### 欠落一覧 / 共有layoutの判断
+
+- beforeの欠落: Orbit reviewarea/7 prompts/5 attachment画像/cloze。今回原文どおり復元し、創作していない。
+- afterの欠落: `_layouts/page.html:46` が挿入する `_includes/footer.html` のprev「X ゲート (量子 NOT)」/next「PHASE ゲート」リンク。先のページは未移植で今回は追加せず、normalized本文diffの許容欠落として列挙。
+- 原文のsidebar/mobile navigation/GitHub icon/help templates等の共有layoutは未移植。別ページも変える作業ではないので保留。
+- 現行共有header「Qni Tutorial」「実験版」、footer「ページ一覧」「WebGPU 対応ブラウザで使う実験版です。回路の変更は保存されません。」、header/heading/ledeの装飾/幅/色は原文と異なる。h_gate専用追加ではないので削除しない。明示されたbranding更新とembed frame移管だけ共有部も変更した。
+
+### visible branding変更の全一覧
+
+| file:line | before → after |
+| --- | --- |
+| src/components/qni-webgpu-circuit.ts:55 | Qni WebGPU で開く → **Qniで開く** (更新2 no-space) |
+| src/layouts/TutorialLayout.astro:19 | title suffix Qni Tutorial WebGPU → Qni Tutorial |
+| src/layouts/TutorialLayout.astro:58 | header Qni Tutorial WebGPU → Qni Tutorial |
+| src/pages/index.astro:7 | Astro と Qni WebGPU に少しずつ移しています → Astro と Qni に少しずつ移しています |
+
+aria/alt/meta/loading/no-WebGPU/error/device-lost stringsも監査したが、他にこのbrandingはない。技術名WebGPU/GPUを説明する日本語messagesはそのまま。`rg -n 'Qni WebGPU' src public` は0、bundle JS/MJS/HTMLとwasm stringsも該当0。上流から来る未変更の該当brandingはない。コード名/tag/APP_URL/パス/pinは維持。
+
+### 原文の青いボタン
+
+手書きh_gate旧embedにlinkはないため、許可された追加linkの外観はphase_gateの原文mini_qniに合わせる。一次資料 `_plugins/mini_qni_filter.rb:97-104`、`css/mini_qni.css:1-8`。frame border2px #0EA5E9/padding32px/corners6,6,6,0/bg#FAFAFA、tab #0EA5E9/padding8px16px/bottom corners6px、anchor white/16px/500/28px、span margin-right8px、24×24 external-link SVG。pathは原文そのまま。tabはframe左下にgap0で接続。rel=noopener/current-circuit exportと/app/先は維持。
+
+before `/tmp/qtw-btn-before-{1440,390}.png` と原文phaseのcomputed stylesを取得済み。typecheck/build成功、本文snapshot/元Orbit/branding/button/Canvas resize/link export等の関連30/30 tests成功。公開後の比較を追記する。

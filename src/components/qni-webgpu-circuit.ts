@@ -32,18 +32,27 @@ class QniWebgpuCircuit extends HTMLElement {
           width: var(--_qni-width, var(--qni-webgpu-circuit-width, 100%));
           height: var(--_qni-height, var(--qni-webgpu-circuit-height, 640px));
         }
-        canvas { display: block; width: 100%; height: calc(100% - 32px); }
-        .open-link { position: absolute; bottom: 0; right: 12px; height: 32px;
-          display: flex; align-items: center; font-size: 14px; line-height: 20px;
-          color: #205EA6; /* Flexoki blue-600; text-sm, h-8, right-3 */ }
+        .frame { box-sizing: border-box; position: relative; height: calc(100% - 44px);
+          padding: 32px; border: 2px solid #0EA5E9; border-radius: 6px 6px 6px 0;
+          background: #FAFAFA; color: #404040; overflow: hidden; }
+        .frame, .open-tab { font: 400 16px/28px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'; }
+        canvas { display: block; width: 100%; height: 100%; }
+        .open-tab { box-sizing: border-box; width: fit-content; padding: 8px 16px;
+          background: #0EA5E9; color: #404040; border: 0 solid #E5E7EB; border-radius: 0 0 6px 6px; }
+        .open-link { display: flex; flex-direction: row; color: #FFFFFF;
+          font-weight: 500; text-decoration: none; border: 0 solid #E5E7EB; }
+        .open-link span { margin-right: 8px; }
+        .open-link svg { display: block; flex: none; }
         .open-link:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
         canvas:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
         [role="status"] { position: absolute; inset: 1rem; pointer-events: none; }
         [hidden] { display: none; }
       </style>
-      <canvas tabindex="0" aria-label="量子回路シミュレーター"></canvas>
-      <div role="status" aria-live="polite" aria-atomic="true"></div>
-      <a class="open-link" target="_blank" rel="noopener" title="現在の回路を新しいタブで開きます">Qni WebGPU で開く</a>
+      <div class="frame">
+        <canvas tabindex="0" aria-label="量子回路シミュレーター"></canvas>
+        <div role="status" aria-live="polite" aria-atomic="true"></div>
+      </div>
+      <div class="open-tab"><a class="open-link" target="_blank" rel="noopener"><span>Qniで開く</span><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 9L21 3M21 3H15M21 3L13 11M10 5H7.8C6.11984 5 5.27976 5 4.63803 5.32698C4.07354 5.6146 3.6146 6.07354 3.32698 6.63803C3 7.27976 3 8.11984 3 9.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21H14.2C15.8802 21 16.7202 21 17.362 20.673C17.9265 20.3854 18.3854 19.9265 18.673 19.362C19 18.7202 19 17.8802 19 16.2V14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
     `
     this.canvas = shadow.querySelector('canvas')!
     this.status = shadow.querySelector('[role="status"]')!
@@ -108,10 +117,10 @@ class QniWebgpuCircuit extends HTMLElement {
   }
 
   private resizeCanvas() {
-    const { width, height } = this.getBoundingClientRect()
+    const { width, height } = this.canvas.getBoundingClientRect()
     const scale = window.devicePixelRatio || 1
     const w = Math.max(1, Math.round(width * scale))
-    const h = Math.max(1, Math.round((height - 32) * scale))
+    const h = Math.max(1, Math.round(height * scale))
     if (this.canvas.width !== w) this.canvas.width = w
     if (this.canvas.height !== h) this.canvas.height = h
   }

@@ -12,7 +12,7 @@ const base = import.meta.env.BASE_URL
     Hadamard, 1865 - 1963) の名前を冠したゲートで、別名アダマールゲートとも呼びます<Sidenote id="h-gate" numbered>英語では「ハダマードゲート (Hadamard gate)」と言います。日本語の「アダマールゲート」は、フランス語の元々の発音 (Hadamard の最初の h と最後の d を発音しない) に近いカタカナ表記です。</Sidenote>。
   </p>
   <p><h-gate></h-gate> はシンプルな重ね合わせ状態を作ります。 <Ket label="0" /> または <Ket label="1" /> に作用させると、次のように大きさの等しい重ねあわせ状態を作ります。</p>
-  <div class="qc-figure" aria-label="H ゲートによる状態の変化">
+  <div class="qc-figure">
     <div class="qc-transition"><span><qubit-circle data-amplitude="1" data-ket="0"></qubit-circle><qubit-circle data-amplitude="0" data-ket="1"></qubit-circle></span><span class="qc-operation"><Fragment set:html={transitionArrow} /><h-gate></h-gate></span><span><qubit-circle data-amplitude={equal} data-ket="0"></qubit-circle><qubit-circle data-amplitude={equal} data-ket="1"></qubit-circle></span></div>
     <div class="qc-transition"><span><qubit-circle data-amplitude="0" data-ket="0"></qubit-circle><qubit-circle data-amplitude="1" data-ket="1"></qubit-circle></span><span class="qc-operation"><Fragment set:html={transitionArrow} /><h-gate></h-gate></span><span><qubit-circle data-amplitude={equal} data-ket="0"></qubit-circle><qubit-circle data-amplitude={-equal} data-ket="1"></qubit-circle></span></div>
   </div>
@@ -20,13 +20,12 @@ const base = import.meta.env.BASE_URL
   <p><h-gate></h-gate> は QPU 独自の命令です。量子ビットだけが持つ重ね合わせ状態を作るという性質を持つので、従来の論理演算には H ゲートに対応するものはありません。</p>
 
   <h2>ハンズオン</h2>
-  <p><h-gate></h-gate> を <Ket label="0" /> と <Ket label="1" /> に適用して、重ね合わせ状態が作られることを確認しましょう。 <Ket label="0" /> は最初から回路にセットされていますが、<Ket label="1" /> を作るにはどうしたらいいでしょうか? (ヒント: X ゲートを使います)<Sidenote id="circuit-help">パレットから H ゲートを回路へドラッグしてください。現時点では H と X 以外のゲートも表示されます。回路は保存されません。</Sidenote></p>
+  <p><h-gate></h-gate> を <Ket label="0" /> と <Ket label="1" /> に適用して、重ね合わせ状態が作られることを確認しましょう。 <Ket label="0" /> は最初から回路にセットされていますが、<Ket label="1" /> を作るにはどうしたらいいでしょうか? (ヒント: X ゲートを使います)</p>
   <qni-webgpu-circuit circuit='{"cols":[["|0>"]]}' height="640"></qni-webgpu-circuit>
-  <noscript><p>回路を操作するには JavaScript を有効にしてください。</p></noscript>
 
   <h2>逆演算</h2>
   <p><h-gate></h-gate> を続けて 2 回適用するとどうなるでしょうか? 直感的には分かりづらいですが、そんな時には Qni で試してみましょう! 実際に <h-gate></h-gate> を 2 個連続して置くと、<Ket label="0" /> も <Ket label="1" /> もそれぞれ元の状態に戻ります。つまり、<h-gate></h-gate> も X ゲートと同様にそれ自身を打ち消す効果を持っているので、それ自身の逆演算です。</p>
-  <div class="qc-figure qc-figure-scroll" aria-label="H ゲートを 2 回適用した状態">
+  <div class="qc-figure qc-figure-scroll">
     <div class="qc-transition"><span><qubit-circle data-amplitude="1" data-ket="0"></qubit-circle><qubit-circle data-amplitude="0" data-ket="1"></qubit-circle></span><span class="qc-operation"><Fragment set:html={transitionArrow} /><h-gate></h-gate></span><span><qubit-circle data-amplitude={equal} data-ket="0"></qubit-circle><qubit-circle data-amplitude={equal} data-ket="1"></qubit-circle></span><span class="qc-operation"><Fragment set:html={transitionArrow} /><h-gate></h-gate></span><span><qubit-circle data-amplitude="1" data-ket="0"></qubit-circle><qubit-circle data-amplitude="0" data-ket="1"></qubit-circle></span></div>
     <div class="qc-transition"><span><qubit-circle data-amplitude="0" data-ket="0"></qubit-circle><qubit-circle data-amplitude="1" data-ket="1"></qubit-circle></span><span class="qc-operation"><Fragment set:html={transitionArrow} /><h-gate></h-gate></span><span><qubit-circle data-amplitude={equal} data-ket="0"></qubit-circle><qubit-circle data-amplitude={-equal} data-ket="1"></qubit-circle></span><span class="qc-operation"><Fragment set:html={transitionArrow} /><h-gate></h-gate></span><span><qubit-circle data-amplitude="0" data-ket="0"></qubit-circle><qubit-circle data-amplitude="1" data-ket="1"></qubit-circle></span></div>
   </div>
@@ -35,29 +34,26 @@ const base = import.meta.env.BASE_URL
   <p><h-gate></h-gate> を回転として見ると、<h-gate></h-gate> はブロッホ球の X 軸と Z 軸の中間 (黒い矢印) を軸とした 180 度の回転となります。たとえば北極の <Ket label="0" /> 状態に <h-gate></h-gate> を適用すると、赤い矢印に沿って X の文字の部分まで回転します。もう一度適用すると、青い矢印に沿って 180 度回転し元の位置に戻ります (逆演算)。</p>
   <figure>
     <Sidenote id="h-gate-rotation">H ゲートの回転 (画像クレジット: <a href="https://physics.stackexchange.com/questions/313959/visual-interpretation-on-the-bloch-sphere-when-hadamard-gate-is-applied-twice">physics.stackexchange.com</a>)</Sidenote>
-    <img src={`${base}images/bloch_H0.png`} alt="ブロッホ球上で H ゲートを 2 回適用したときの回転" width="360" height="360" loading="lazy" />
+    <img src={`${base}images/bloch_H0.png`} alt="" width="360" height="360" loading="lazy" />
   </figure>
 
   <h2>任意の重ね合わせ状態に H ゲートを適用</h2>
   <p>次のように振幅の大きさと位相の異なる重ね合わせ状態に H ゲートを適用した場合、その変化はどのように理解するとよいでしょうか?</p>
-  <div class="qc-figure" aria-label="任意の状態に H ゲートを適用した振幅">
-    <p>適用前: |0⟩ の振幅 −0.38268、|1⟩ の振幅 0.7855 − 0.48636i</p>
-    <p>適用後: |0⟩ の振幅 0.28483 − 0.34391i、|1⟩ の振幅 −0.82603 + 0.34391i</p>
+  <div class="qc-figure">
     <div class="qc-transition"><span><qubit-circle data-amplitude="-0.38268" data-ket="0"></qubit-circle><qubit-circle data-amplitude="0.7855 - 0.48636i" data-ket="1"></qubit-circle></span><span class="qc-operation"><Fragment set:html={transitionArrow} /><h-gate></h-gate></span><span><qubit-circle data-amplitude="0.28483 - 0.34391i" data-ket="0"></qubit-circle><qubit-circle data-amplitude="-0.82603 + 0.34391i" data-ket="1"></qubit-circle></span></div>
   </div>
   <p>これを頭の中だけで想像するのは大変なので、さしあたっては Qni に計算をおまかせして OK です。実は、円の図だけでおおまかな変化を導き出すこともできるのですが、そのためには H ゲートを行列で表したもの (ゲートの行列表現) の知識が必要になります。詳しい方法はのちほど紹介します。</p>
 
-  <h2>復習</h2>
-  <p>元の復習問題を文章向けに調整しています。問いを選ぶと答えが開きます。</p>
-  <details><summary>重ね合わせ状態を作る量子ゲートの名前は?</summary><p>H ゲート</p></details>
-  <details><summary>H ゲートの作用は?</summary><p>重ね合わせ状態を作る</p></details>
-  <details><summary>H ゲートの別名は?</summary><p>アダマールゲート</p></details>
-  <details><summary>|0⟩ に H ゲートを適用するとどうなる?</summary><p>|0⟩ と |1⟩ の等しい重ね合わせができる</p></details>
-  <details><summary>|1⟩ に H ゲートを適用するとどうなる?</summary><p>|0⟩ と |1⟩ の等しい重ね合わせができ、|1⟩ のみ位相が反転する</p></details>
-  <details><summary>量子ビットに H ゲートを 2 回連続して適用するとどうなる?</summary><p>元に戻る</p></details>
-  <details><summary>H ゲートは何の効果を持ち、それ自身の何であると言う?</summary><p>それ自身を打ち消す効果を持ち、それ自身の逆演算であると言う。</p></details>
-
-  <p>関連ページ<Sidenote id="related-pages">前のページ: X ゲート (量子 NOT)。次のページ: PHASE ゲート。どちらもまだ移植していません。</Sidenote></p>
+  <orbit-reviewarea color="blue">
+    <orbit-prompt question="重ね合わせ状態を作る量子ゲートの名前は?" answer="H ゲート"></orbit-prompt>
+    <orbit-prompt question="H ゲートの作用は?" answer="重ね合わせ状態を作る"></orbit-prompt>
+    <orbit-prompt question="H ゲートの別名は?" answer="アダマールゲート"></orbit-prompt>
+    <orbit-prompt question="H ゲートを適用するとどうなる?" question-attachments="https://qniapp.github.io/qni/images/superposition-100-0.png" answer="|0⟩ と |1⟩ の等しい重ね合わせができる" answer-attachments="https://qniapp.github.io/qni/images/superposition-50-50.png"></orbit-prompt>
+    <orbit-prompt question="H ゲートを適用するとどうなる?" question-attachments="https://qniapp.github.io/qni/images/superposition-0-100.png" answer="|0⟩ と |1⟩ の等しい重ね合わせができ、|1⟩ のみ位相が反転する" answer-attachments="https://qniapp.github.io/qni/images/superposition-minus-state.png"></orbit-prompt>
+    <orbit-prompt question="量子ビットに H ゲートを 2 回連続して適用するとどうなる?" answer="元に戻る" answer-attachments="https://qniapp.github.io/qni/images/h-gate-reversibility.png"></orbit-prompt>
+    <orbit-prompt cloze="H ゲートは{それ自身を打ち消す}効果を持っていることから、H ゲートはそれ自身の{逆演算}であると言う"></orbit-prompt>
+  </orbit-reviewarea>
+  <script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
 </TutorialLayout>
 
 <style>

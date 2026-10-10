@@ -16,7 +16,7 @@ const base = import.meta.env.BASE_URL
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
-    <title>{title} | Qni Tutorial WebGPU</title>
+    <title>{title} | Qni Tutorial</title>
     {hasMath && <Fragment>
       <script is:inline>
         window.MathJax = {
@@ -55,7 +55,7 @@ const base = import.meta.env.BASE_URL
   </head>
   <body>
     <header class="site-header">
-      <a href={base}>Qni Tutorial WebGPU</a>
+      <a href={base}>Qni Tutorial</a>
       <span>実験版</span>
     </header>
     <main>
@@ -106,7 +106,7 @@ const base = import.meta.env.BASE_URL
   .lede { color: var(--muted); font-size: 20px; line-height: 28px; margin-bottom: 32px; }
   .static-diagram { max-width: 76ch; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-2); padding: 16px 24px; margin: 24px 0; }
   .static-diagram p { margin: 8px 0; }
-  qni-webgpu-circuit { clear: both; margin: 24px 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  qni-webgpu-circuit { clear: both; margin: 24px 0; }
   figure { max-width: 640px; margin: 24px 0; }
   figure img { display: block; width: 100%; height: auto; }
   figcaption, footer p { color: var(--muted); font-size: 14px; line-height: 20px; }
