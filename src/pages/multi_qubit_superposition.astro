@@ -1,0 +1,73 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="重ね合わせ状態" description="複数量子ビットでの重ね合わせ" section="複数量子ビット" hasMath hasCircuit>
+
+
+<p>
+  1 量子ビットの場合と同じく、複数量子ビットでも重ね合わせ状態を取ることができます。 ここでは 3
+  量子ビットのいろいろな状態を考えてみましょう。
+</p>
+
+<p>
+  次の状態では <Ket label="2" /> が確率 100% なので、3 量子ビットすべてを測定すると必ず <Ket label="2" />
+  が得られます。 <Ket label="2" /> 以外の確率はすべて 0% なので、これは重ね合わせ状態でありません。
+</p>
+
+<div class="my-5 overflow-x-auto">
+  <div class="flex flex-row space-x-2">
+    <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    <qubit-circle data-amplitude="0" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+  </div>
+</div>
+
+<qni-webgpu-circuit palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\"],[1,\"X\",1],[\"Measure\",\"Measure\",\"Measure\"]]}"}></qni-webgpu-circuit>
+
+<p>
+  次は <Ket label="0" />, <Ket label="2" />, <Ket label="4" />, <Ket label="6" /> がそれぞれ確率 25%
+  の重ね合わせ状態にあります。 3 量子ビットすべてを測定すると <Ket label="0" />, <Ket label="2" />, <Ket label="4" />,
+  <Ket label="6" /> のいずれかが確率 25% ずつ (つまり 1/4 の確率) で得られます。
+  重ね合わせではすべての確率を足すと必ず 100%
+  になり、この場合もそうなっていることを確認してください。
+</p>
+
+<div class="my-5 overflow-x-auto">
+  <div class="flex flex-row space-x-2">
+    <qubit-circle data-amplitude="0.5" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+  </div>
+</div>
+
+<qni-webgpu-circuit palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\"],[\"{重ね合わせ状態の生成\"],[1,\"H\",\"H\"],[\"}\"],[\"Measure\",\"Measure\",\"Measure\"]]}"}></qni-webgpu-circuit>
+
+<p>
+  最後はそれぞれの確率が異なり、さらに位相も異なる例です。
+  今までの例と同じく、それぞれの確率に応じて <Ket label="0" /> 〜 <Ket label="7" />
+  のいずれかが測定でき、すべての確率を足し合わせると 100% になります。
+</p>
+
+<div class="my-5 overflow-x-auto">
+  <div class="flex flex-row space-x-2">
+    <qubit-circle data-amplitude="0.42678 - 0.17678i" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 - 0.07322i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 + 0.42678i" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.07322 + 0.17678i" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.42678 + 0.17678i" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 + 0.07322i" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 - 0.42678i" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.07322 - 0.17678i" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+  </div>
+</div>
+
+<p>
+  ここから分かるように、位相<Sidenote id="multi_qubit_superposition-note-1" numbered>位相の意味や使い途については<a href={`${base}phase/`}
+    >位相</a
+  >を参照。</Sidenote>と確率はそれぞれ独立した量子ビットのプロパティなので、
+  お互いに関係なく任意の値を取ることができます。
+</p>
+
+<qni-webgpu-circuit palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\"],[\"{重ね合わせ状態の生成\"],[\"H\",\"H\",\"H\"],[\"P(π_4)\",\"P(π_2)\",\"P(π)\"],[\"Rx(π_2)\"],[\"}\"],[\"Measure\",\"Measure\",\"Measure\"]]}"}></qni-webgpu-circuit>
+
+</TutorialLayout>
+<style>
+ .my-5 { margin-block:20px; } .flex { display:flex; } .flex-row { flex-direction:row; }
+ .flex-col { flex-direction:column; } .justify-center { justify-content:center; } .space-x-2 { gap:8px; }
+ .overflow-x-auto { overflow-x:auto; } .flex :global(qubit-circle) { flex:none; margin-right:0; }
+ @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>

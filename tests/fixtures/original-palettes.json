@@ -62,5 +62,7 @@
   "no_cloning_theorem": [],
   "gate_combination": [["H", "X"], ["X^½"]],
   "quantum_key_distribution": [],
-  "bb84_protocol": []
+  "bb84_protocol": [],
+  "multi_qubit_circle_notation": [],
+  "multi_qubit_superposition": [[], [], []]
 }

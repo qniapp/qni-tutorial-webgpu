@@ -402,10 +402,31 @@ pinを **3cce38bd9ad4e53a6e23e9be7cc79ef97ed630b6** に更新。clean detached `
 
 結果 `/tmp/qtw-port-{quantum_key_distribution,bb84_protocol}.json`、original/ours/compare screenshots `/tmp/qtw-port-<slug>-<original|ours|compare>-{1440,390}.png`。公開1440/390×DPR1/2でもprose glyph全Boldを再確認し、BB84図のH2個がRegular24pxのままであることを確認。metadata `/tmp/qtw-newpage-glyphs.json`、本文crop `/tmp/qtw-<slug>-prose-<width>-dpr<dpr>.png`、個別12倍nearest `/tmp/qtw-<slug>-<tag>-<width>-dpr<dpr>-zoom.png`。目視でWRITE0の斜線/MEASUREMENT meter・H/Xの太さを確認。全8 loads errors0。引用文・原文の安全性/盗聴率の説明は編集していない。
 
-### bb84_circuit / BB84 回路 (STOP、未移植)
+### bb84_circuit / BB84 回路 (#53 待ち、SKIP、未移植)
 
 次ページの原文acf87bfをgit showで調査。original JSONは `Measure>aliceX` / `Measure>aliceH` / `Measure>eveX` / `Measure>bobH` に測定結果を代入し、`X<aliceX` / `H<aliceH` / `X<eveX` / `H<bobH` を変数値1のときだけ実行する。元paletteはなしなので将来の移植時は `[]`。
 
 公開3cce38b nativeで原文JSONをそのまま新しいqni-webgpu-circuitに渡すE2E reproduction: `data-state=error`、`invalid circuit JSON: expected {"cols":[...]} with supported gates`。既存2embedはrunningのまま。native decoderはnamed measurement/condition modelを持たないため、原文の説明・回路を一致させるには#52以外の上流変更が必要。**https://github.com/qniapp/qni-webgpu/issues/53** に報告し、standing STOP ruleで停止する。条件を削って無条件gateで代用することも、本文を書き換えることもしていない。Astroページ/PORTED link未作成。
 
 Artifacts `/tmp/qtw-bb84-flag-repro.{json,png}`、harness `/tmp/qtw-bb84-flag-repro.mjs`、原文snapshot `/tmp/qtw-next-bb84-circuit.html`。upstream code変更なし。今回新規移植はsidebar順に **4ページ**、全公開検証完了。
+
+## 16:55 sidebar継続 / #53 待ちページをSKIP
+
+高宮さん承認: bb84_circuitは **#53 待ち** としてSKIPし、後続の条件付きgateが必要なページも同様にSKIPする。#52 native clippingは記録のみ。保持画像5項目とPHASE/MEASUREMENT本文は引き続き変更しない。
+
+### multi_qubit_circle_notation / 状態ベクトル表示 (公開確認待ち)
+
+原文acf87bfの本文・3組のketリスト・12circleを移植。binary ket 00/01/10/11を元TeXのままMathJaxで表示。circle popupで確率/振幅/位相を確認できる。
+- 置換画像/削除credit: なし (画像0)。
+- palette / step0 / #52: embed0、対象外。
+- questions: 新規なし。
+
+### multi_qubit_superposition / 重ね合わせ状態 (公開確認待ち)
+
+原文acf87bfの3状態例・circle24・ket・note1、3個の実験回路JSONとblockラベルをそのまま移植。circle popupのamp/phaseを保持。
+- 置換画像/削除credit: なし (画像0)。
+- palette: 原文3embedにpaletteなし、すべて `[]`。
+- #52 clipping: 公開1440/390で追記。
+- questions: 新規なし。本文の確率・位相の説明は変更しない。
+
+型チェック/build成功、新規2ページの構造・全amplitude・MathJax・元palette・sidebarを含む63/63 tests。

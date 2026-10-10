@@ -1,0 +1,72 @@
+{
+  "title": "状態ベクトル表示",
+  "slug": "multi_qubit_circle_notation",
+  "description": "複数の量子ビットの可視化",
+  "sidenotes": [],
+  "images": [],
+  "orbitPrompts": 0,
+  "orbit": [],
+  "circuits": [],
+  "amplitudes": [
+    {
+      "amplitude": "0",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "1",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "1",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "7",
+      "size": "lg"
+    }
+  ]
+}

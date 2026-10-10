@@ -16,12 +16,14 @@ import noCloning from './fixtures/no_cloning_theorem-original.json' with { type:
 import combinations from './fixtures/gate_combination-original.json' with { type: 'json' }
 import qkd from './fixtures/quantum_key_distribution-original.json' with { type: 'json' }
 import bb84 from './fixtures/bb84_protocol-original.json' with { type: 'json' }
+import multiCircle from './fixtures/multi_qubit_circle_notation-original.json' with { type: 'json' }
+import multiSuperposition from './fixtures/multi_qubit_superposition-original.json' with { type: 'json' }
 const replaced = new Set(['rotation-by-pi-around-x-axis.png','matrix_multiplication.png','qpu_operations_matrix_and_state_vector.png','state_vector_norm1.png','reversible_matrix_multiplication.png','p_bit_graph.png','c_bit_and_p_bit.png','p0p1_graph.png','qbit_circular_state.png','bloch_sphere.png','amplitude_amplification_overview.png','argument_of_complex.png','logic_gates_and_not.png'])
-for (const fixture of [qpu, faster, pbit, superposition, qubit, phase, notation, cpu, write, intro, x, phaseGate, measurement, noCloning, combinations, qkd, bb84]) for (const width of [1440, 390]) {
+for (const fixture of [qpu, faster, pbit, superposition, qubit, phase, notation, cpu, write, intro, x, phaseGate, measurement, noCloning, combinations, qkd, bb84, multiCircle, multiSuperposition]) for (const width of [1440, 390]) {
   test(`${fixture.slug} preserves original structure at ${width}px`, async ({ page }) => {
     await page.setViewportSize({width,height:1000})
     await page.goto(`/qni-tutorial-webgpu/${fixture.slug ? fixture.slug + '/' : ''}`)
-    if (['what_qpu_do_faster','superposition','qubit','phase','circle_notation','write_operation','x_gate','phase_gate','measurement_operation','gate_combination','bb84_protocol'].includes(fixture.slug)) await page.waitForFunction(() => document.documentElement.dataset.mathjax === 'ready')
+    if (['what_qpu_do_faster','superposition','qubit','phase','circle_notation','write_operation','x_gate','phase_gate','measurement_operation','gate_combination','bb84_protocol','multi_qubit_circle_notation','multi_qubit_superposition'].includes(fixture.slug)) await page.waitForFunction(() => document.documentElement.dataset.mathjax === 'ready')
     await expect(page.locator('main h1')).toHaveText(fixture.title)
     await expect(page.locator('.lede')).toHaveText(fixture.description)
     await expect(page.locator('main .margin-note')).toHaveCount(fixture.sidenotes.length)

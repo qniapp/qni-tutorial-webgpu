@@ -1,0 +1,212 @@
+{
+  "title": "重ね合わせ状態",
+  "slug": "multi_qubit_superposition",
+  "description": "複数量子ビットでの重ね合わせ",
+  "sidenotes": [
+    "multi_qubit_superposition-note-1"
+  ],
+  "images": [],
+  "orbitPrompts": 0,
+  "orbit": [],
+  "circuits": [
+    {
+      "cols": [
+        [
+          "|0>",
+          "|0>",
+          "|0>"
+        ],
+        [
+          1,
+          "X",
+          1
+        ],
+        [
+          "Measure",
+          "Measure",
+          "Measure"
+        ]
+      ]
+    },
+    {
+      "cols": [
+        [
+          "|0>",
+          "|0>",
+          "|0>"
+        ],
+        [
+          "{重ね合わせ状態の生成"
+        ],
+        [
+          1,
+          "H",
+          "H"
+        ],
+        [
+          "}"
+        ],
+        [
+          "Measure",
+          "Measure",
+          "Measure"
+        ]
+      ]
+    },
+    {
+      "cols": [
+        [
+          "|0>",
+          "|0>",
+          "|0>"
+        ],
+        [
+          "{重ね合わせ状態の生成"
+        ],
+        [
+          "H",
+          "H",
+          "H"
+        ],
+        [
+          "P(π_4)",
+          "P(π_2)",
+          "P(π)"
+        ],
+        [
+          "Rx(π_2)"
+        ],
+        [
+          "}"
+        ],
+        [
+          "Measure",
+          "Measure",
+          "Measure"
+        ]
+      ]
+    }
+  ],
+  "amplitudes": [
+    {
+      "amplitude": "0",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "1",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "7",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.5",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.5",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.5",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.5",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "7",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.42678 - 0.17678i",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 - 0.07322i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 + 0.42678i",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.07322 + 0.17678i",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.42678 + 0.17678i",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 + 0.07322i",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 - 0.42678i",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.07322 - 0.17678i",
+      "ket": "7",
+      "size": "lg"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="状態ベクトル表示" description="複数の量子ビットの可視化" section="複数量子ビット" hasMath>
+
+
+<p>
+  複数の量子ビットを使うと、たくさんの状態を表すことができます。 たとえば 2
+  量子ビットを並べると、それぞれの量子ビットは <Ket label="0" /> および <Ket label="1" />
+  の状態を持つことができるため、その組合わせは次の 4 通りになります。
+</p>
+
+<ul>
+  <li><Ket label="0" /> と <Ket label="0" /></li>
+  <li><Ket label="0" /> と <Ket label="1" /></li>
+  <li><Ket label="1" /> と <Ket label="0" /></li>
+  <li><Ket label="1" /> と <Ket label="1" /></li>
+</ul>
+
+<p>
+  スペースを節約するために、<Ket label="0" /> と <Ket label="0" /> のように量子ビットを並べたものを <Ket label="00" />
+  とまとめて書くことにしましょう。 すると、先ほどの 4 通りは次のように書けます。
+</p>
+
+<ul>
+  <li><Ket label="0" /> と <Ket label="0" /> → <Ket label="00" /></li>
+  <li><Ket label="0" /> と <Ket label="1" /> → <Ket label="01" /></li>
+  <li><Ket label="1" /> と <Ket label="0" /> → <Ket label="10" /></li>
+  <li><Ket label="1" /> と <Ket label="1" /> → <Ket label="11" /></li>
+</ul>
+
+<p>
+  ここで、書き直した中身の数字を 2 進数として見てみます。 すると、先ほどの 4
+  通りはさらに次のように書き換えることができます。
+</p>
+
+<ul>
+  <li><Ket label="0" /> と <Ket label="0" /> → <Ket label="00" /> (2 進数) → <Ket label="0" /> (10 進数)</li>
+  <li><Ket label="0" /> と <Ket label="1" /> → <Ket label="01" /> (2 進数) → <Ket label="1" /> (10 進数)</li>
+  <li><Ket label="1" /> と <Ket label="0" /> → <Ket label="10" /> (2 進数) → <Ket label="2" /> (10 進数)</li>
+  <li><Ket label="1" /> と <Ket label="1" /> → <Ket label="11" /> (2 進数) → <Ket label="3" /> (10 進数)</li>
+</ul>
+
+<p>
+  つまり、2 量子ビット使うと <Ket label="0" />, <Ket label="1" />, <Ket label="2" />, <Ket label="3" /> という 4
+  つの状態を表すことができます。 これは、Qni の状態ベクトル表示では次のように 4 つの円のうち、どれか
+  1 つを塗り潰した状態として表せます。
+</p>
+
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="flex flex-row space-x-2">
+    <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+  </div>
+</div>
+
+<p>
+  さらに 3 量子ビットに増やすと円の数はどうなるでしょうか? 1 量子ビットでは円が 2 つ、2
+  量子ビットでは円が 4 つだったので、単純に円 6 個と考えるのは間違いです。 先ほどと同様に 3 桁の 2
+  進数を考えると、3 量子ビットでは <Ket label="0" /> から <Ket label="7" /> まで 8
+  通りの状態を表すことができます。 つまり、3 量子ビットを状態ベクトルとして表示すると丸が 8
+  個になります。
+</p>
+
+<div class="my-5 flex flex-col overflow-x-auto">
+  <div class="flex flex-row space-x-2">
+    <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    <qubit-circle data-amplitude="0" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+  </div>
+</div>
+
+<p>
+  このようにビット数を増やすと表せる状態 (数)
+  が倍々になっていく現象は、実は古典ビットでもまったく同じです。 古典ビットは 0 と 1
+  の値を持つので、3 桁の 2 進数で考えると 0 から 7 まで 8 通りの数を表せるからです。
+  しかし複数の量子ビットでは、次に紹介するように 1
+  量子ビットの場合と同じく重ね合わせ状態を持つことができるという大きな違いがあります。
+</p>
+
+</TutorialLayout>
+<style>
+ .my-5 { margin-block:20px; } .flex { display:flex; } .flex-row { flex-direction:row; }
+ .flex-col { flex-direction:column; } .justify-center { justify-content:center; } .space-x-2 { gap:8px; }
+ .overflow-x-auto { overflow-x:auto; } .flex :global(qubit-circle) { flex:none; margin-right:0; }
+ @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>
