@@ -40,7 +40,7 @@ for token, name in [('Y','y'),('Z','z'),('S','s'),('S†','sdagger'),('T','t'),(
     element.set('focusable', 'false')
     if token == 'P':
         for path in element.iter('{http://www.w3.org/2000/svg}path'):
-            path.set('stroke-width', '3')
+            path.set('stroke-width', '2.25')
     elif token in ('0','1'):
         element.set('data-outline-emboldened', 'true')
         for path in element.iter('{http://www.w3.org/2000/svg}path'):

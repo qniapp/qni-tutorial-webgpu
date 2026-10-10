@@ -307,7 +307,7 @@ central20%-80%のROIでbackground->foreground RGB projectionのalpha総和を16�
 
 8ページ×1440/390 (x_gate/phase_gate/measurement_operation/quantum_circuit/qni_intro/cpu_vs_qpu_operations/write_operation/h_gate) の公開再確認も本文diff0/本文TeX diff0/Orbit一致/errors0/overflowなし、embed running/GPU正常。JSON `/tmp/qtw-shape-content-<slug>.json`。原文PHASEだけ既知の旧script errorを別記録。円形修正commit **0b22f99** / Pages **38027988482** の結果はそのまま有効。native canvas Xは既に円＋で変更・新規qni-webgpu問題なし。
 
-## PR #50 pin / palette / credit / 全inline Bold (公開確認待ち)
+## PR #50 pin / palette / credit / 全inline Bold (公開確認、390px native clippingでSTOP)
 
 pinを **3cce38bd9ad4e53a6e23e9be7cc79ef97ed630b6** に更新。clean detached `verify/tutorial-palettes` からBinaryen123でembed/standalone再build。nativeは起動・circuit reload時step0、短いpaletteに応じて回路が上へ移動しstate panelは下側に固定される。upstream変更なし。
 
@@ -330,9 +330,15 @@ pinを **3cce38bd9ad4e53a6e23e9be7cc79ef97ed630b6** に更新。clean detached `
 
 置換画像credit削除は **h_gate: physics.stackexchange.com** と **x_gate: qiskit.org** の括弧内citation。元の回転説明は保持。全ported sourceを再検索し他に置換画像creditなし。Feynman/Zhengの引用画像や旧UI GIF/screenshotなど保持画像の引用・creditは維持する。
 
-全inline glyphにprose/diagram共通context判定を適用。Y/Z/S/S†/T/T†/√X/Rx/Ry/Rz/QFT/QFT†はpinの元SVG生成recipeをそのまま使用し、Geist Bold outlineのみへ切り替える。H/Xは既存Bold維持。Pは元の斜線Φのgeometryを保持してstroke2->3、CONTROL/SWAP/MEASUREMENTもproseだけ太いprimitive。WRITEはslashed-zeroを失わないようMono Regularの輪郭を48font unitsでembolden (pinはMono Boldを持たない)。`scripts/extract-inline-glyphs.py` で生成し上流ファイルに書き込まない。figure/palette/connected circuit/native embedはRegularのまま。今後のページでも自動適用。
+全inline glyphにprose/diagram共通context判定を適用。Y/Z/S/S†/T/T†/√X/Rx/Ry/Rz/QFT/QFT†はpinの元SVG生成recipeをそのまま使用し、Geist Bold outlineのみへ切り替える。H/Xは既存Bold維持。Pは元の斜線Φのgeometryを保持してstroke2->2.25、CONTROL/SWAP/MEASUREMENTもproseだけ太いprimitive。WRITEはslashed-zeroを失わないようMono Regularの輪郭を48font unitsでembolden (pinはMono Boldを持たない)。`scripts/extract-inline-glyphs.py` で生成し上流ファイルに書き込まない。figure/palette/connected circuit/native embedはRegularのまま。今後のページでも自動適用。
 
-型チェック/build成功、78/78 targeted tests。palette parse/[]/absence/invalid/type/restart、全19tag×1440/390×DPR1/2のprose Bold・diagram Regular・reconnect、保持画像creditを確認。公開確認を追記する。
+型チェック/build成功、78/78 targeted tests。palette parse/[]/absence/invalid/type/restart、全19tag×1440/390×DPR1/2のprose Bold・diagram Regular・reconnect、保持画像creditを確認。公開commit **45cc5b45fdc50f72a847bde3fe0c3883d5a116a4**、Pages **38029961911** success。
+
+9ページ×1440/390、12embed×2 = **24起動**: 全running、errors0、document overflowなし、palette属性がsource fixtureと一致。GPU readbackがfirst WRITEのone-hot (write_operation 2つ目だけ |1⟩、他は |0⟩ / |00⟩) とnorm1を確認しstep0で開始していることを実証。qni_introの2つ目は診断時だけstate panelを有効化してreadbackし、falseへ復元した。早いframeの `state vector not ready` はframe完成までbounded retryで待つ。結果 `/tmp/qtw-pr50-live.json`、各embed screenshot `/tmp/qtw-pr50-<slug>-<index>-{1440,390}.png`。
+
+ただしnativeの390px layoutは未達。`phase` の9-entry paletteはHの左端とRZの右端がclip、`index` の後続MEASUREMENTも右端外。CNOT target自体は見える。hostのframeはpadding0でcanvasに全面を渡しているためtoken/host余白の問題ではない。upstream **https://github.com/qniapp/qni-webgpu/issues/52** に報告。native修正の承認が必要なため、共通ルールどおり **次ページ移植をSTOP**。scaleでnative UIを縮小する回避策は入れていない。upstream code変更なし。
+
+公開bundleの19tagをprose/figureの16px specimenで実際にrenderし、1440/390×DPR1/2 cropを目視確認。`/tmp/qtw-allbold-live.json`、`/tmp/qtw-allbold-compare-{1440,390}-dpr{1,2}.png` (3倍nearest)、個別 `/tmp/qtw-allbold-<tag>-<width>-dpr<dpr>-{before,after}.png`。未登場のfuture tagはlive DOMへspecimenを挿入したもので、元本文への追加ではない。Pの最初のstroke3案は16pxで穴が潰れたためstroke2.25へ補正しcounterを保持する。図・nativeには補正を適用しない。補正後buildと27 targeted tests成功。
 
 ### 今後の移植で必須
 

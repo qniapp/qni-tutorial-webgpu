@@ -23,6 +23,8 @@ for (const dpr of [1,2]) for (const width of [1440,390]) {
         const gate = page.locator(`#glyph-prose ${tag}`)
         expect(await gate.evaluate(e => e.querySelector('svg') !== null)).toBe(true)
         if (!['measurement-gate','control-gate','swap-gate'].includes(tag)) expect(await gate.locator('svg[data-font-weight="700"]').count()).toBe(1)
+        // A 3px non-scaling stroke closes the Phi counter at 16px.
+        if (tag === 'phase-gate') await expect(gate.locator('path')).toHaveAttribute('stroke-width', '2.25')
         await gate.evaluate(e => document.querySelector('#glyph-figure')!.append(e))
         await expect(gate).toHaveCount(0)
         expect(await page.locator(`#glyph-figure ${tag}`).last().getAttribute('data-glyph')).toBe('regular')
