@@ -1,9 +1,9 @@
 ---
-interface Props { rotation?: boolean }
-const {rotation=false}=Astro.props
+interface Props { rotation?: boolean; axis?: 'h'|'x' }
+const {rotation=false,axis='h'}=Astro.props
 ---
 <div class="bloch-illustration" data-original-image>
-  <bloch-display data-mode={rotation?'h-rotation':'sphere'} data-x="0" data-y="0" data-z="1"></bloch-display>
+  <bloch-display data-mode={rotation?axis+'-rotation':'sphere'} data-x="0" data-y="0" data-z="1"></bloch-display>
 </div>
 <script>import './bloch-display'</script>
 <style>

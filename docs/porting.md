@@ -168,11 +168,11 @@ normalized比較はembed内部を除く。原文mini_qniの外側にある「Qni
 
 公開1440/390: normalized本文diff0、TeX入力diff0、Orbit属性・要素数一致、errors0、overflowなし、画像SHA256一致、sidebarリンク正常。counts={"hGate": 0, "qubitCircle": 10, "kets": 0, "steps": 0, "dropzones": 0, "x": 0, "phase": 0, "write": 0, "control": 0, "swap": 0, "measurement": 0, "math": 0, "embeds": 0, "images": 1, "orbitPrompts": 8, "orbitAreas": 1, "sidenotes": 2}。commit **270af6355545ed6e65d8223003152515a8eedbbb**、Pages **38023868027** success。PNG `/tmp/qtw-port-cpu_vs_qpu_operations-compare-{1440,390}.png`、JSON `/tmp/qtw-port-cpu_vs_qpu_operations.json`。
 
-## 12. X ゲート (`x_gate`) - 次回移植対象 (旧pinではcircuit-block PR 待ち)
+## 12. X ゲート (`x_gate`) - 移植・公開確認待ち (旧pinの保留を解消)
 
 原文x_gate.html:254は `{重ね合わせ状態の準備` / `}` を含む。13:27のPR #49 merge承認後、pin更新とindexを完了。機能待ちは解除済みだが、13:58の終了期限のため今回このページは開始しない。h_gateは移植済みなので再実装しない。
 
-## 13. PHASE ゲート (`phase_gate`) - Xの次の移植対象 (旧pinではcircuit-block PR 待ち)
+## 13. PHASE ゲート (`phase_gate`) - 移植・公開確認待ち (旧pinの保留を解消)
 
 原文phase_gate.html:155は `{重ね合わせ` / `}` を含む。新pin検証は完了したが、終了期限のため次回Xの後で再開する。h_gateは既存移植済みなので再実装不要。
 
@@ -191,7 +191,7 @@ normalized比較はembed内部を除く。原文mini_qniの外側にある「Qni
 この再開でqubit/phase/circle_notation/cpu_vs_qpu_operations/write_operation/indexの6ページを公開検証。各1440/390で本文diff0、counts/Orbit属性一致、errors0、overflowなし。7画像の公開original/ours SHA256一致は `/tmp/qtw-port-image-hashes.json`。既存と共有の差 (paper色、書体、サイドバー、MathJax、native UI) は引き継ぎ、旧UI操作記述の差は各節に記録した。WRITEの静的図も目視で確認、glyphはnativeのket/Geistで旧SVGとは異なる。型チェック/buildと関連49 tests成功。最終commitは検証記録のみで通常push。次はx_gate、その後既存h_gateを飛ばしてphase_gate、さらにmeasurement_operation。未解決STOP質問なし。13:58前に終了し、新規ページは開始しない。
 
 
-## 13:57 画像・対話化方針の遡及適用 (公開確認待ち)
+## 13:57 画像・対話化方針の遡及適用 (公開検証完了)
 
 本文の既存テキストノードは変更せず、画像/静的figureだけ置換。新しい図の文字は元画像のラベルや数式で、本文diffは `[data-original-image]` の図内容を除いて比較する。旧画像は参照資産として残すが対象ページでは使わない。Orbit markup/attachmentsは維持する。
 
@@ -222,3 +222,13 @@ normalized比較はembed内部を除く。原文mini_qniの外側にある「Qni
 - Orbitの `question-attachments` / `answer-attachments` (h_gate, superposition, phase, circle_notation, p_bit, quantum_circuit): 元の円/図PNG URL。Orbit attachmentは画像URLなので、独自interactive elementをそのまま入れられない。Orbit markupを維持したまま自作static SVGのURLに変えてよいか? 今回は保持。
 
 typecheck/build、関連39/39 tests成功。interactive keyboard/marking/logic、MathJax errors0、幅390/1440のoverflowなしをテスト。公開比較を追記する。
+
+遡及公開検証: commit **8e861d82a26cd4ece6a2112b8e1605e149ebf90c**、Pages **38026390052** success。13ページ×1440/390=26 loads、本文diff0/本文TeX diff0、Orbit属性一致、errors0、overflowなし、全embed running/GPU readback成功。変更した図の内部は旧image同様本文diffから除外し、置換前後のcountsは差分としてJSONに保持。`/tmp/qtw-policy-<slug>.json`、`/tmp/qtw-port-<slug>-{original,ours}-{1440,390}.png`。
+
+### X/PHASEの今回の実装
+
+X: 本文・ket・20円・Orbit9・注釈1を保持。旧simulator2つは同じJSON (初期WRITE0、block付き重ね合わせ準備) のnative embedへ。rotation-by-pi-around-x-axis.pngはbloch-displayのX軸π回転経路と対話視点へ置換し、図クレジットを保持。原文のtransition/arrow SVGを使い、x/y/z-gateは既存original tagの軽量glyph。bodyに説明追加なし。旧UI差: 原文Xだけのpalette/inspectorの配置はnative full paletteと異なるが、Xを置く/2回作用させる操作は同じ。
+
+PHASE: 本文・22円・Orbit4・注釈2、6個の角度付きphase-gate図を保持。block付き原文JSONのnative embed1。旧初期化scriptは存在しないcircle-notation-P-cへsetAmplitudesする死んだ処理で、移植後の明示振幅円には不要なので除去 (本文不変)。旧UI差/質問: 本文「ゲートをクリックし、popupの角度icon」をnativeの角度editor操作に合わせて今後書き換えてよいか? 今回は文言据え置き。Orbit attachment PNG URLも据え置き。
+
+h_gateとwrite_operationは既に移植済みなので順序上再実装しない。型チェック/build、関連36/36 tests成功。公開比較を追記する。

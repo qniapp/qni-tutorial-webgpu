@@ -1,0 +1,257 @@
+---
+import transitionSvg from '../assets/qubit-transition-arrow.svg?raw'
+import BlochIllustration from '../components/BlochIllustration.astro'
+import minusSvg from '../assets/cpu-minus.svg?raw'
+import arrowSvg from '../assets/cpu-arrow-right.svg?raw'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="X ゲート (量子 NOT)" description="演算ペアの入れ替え" section="QPU 命令その 1" hasMath hasCircuit>
+
+
+<p>
+  X ゲート <x-gate></x-gate> は従来の NOT 演算に似た働きをします。 NOT 演算は、0
+  に適用するとビットが反転して 1 になり、逆に 1 に適用すると 0 になるのでした。つまり、NOT 演算は
+  &quot;0 と 1 を入れ替える&quot; という働きをします。
+</p>
+
+<div class="flex justify-center md:mr-auto md:w-7/12">
+  <ul class="mx-auto !w-auto p-0 text-2xl">
+    <li class="flex flex-row items-center">
+      <span>NOT 0</span> <span class="diagram-arrow size-4" set:html={arrowSvg}></span> <span>1</span>
+    </li>
+    <li class="flex flex-row items-center">
+      <span>NOT 1</span> <span class="diagram-arrow size-4" set:html={arrowSvg}></span> <span>0</span>
+    </li>
+  </ul>
+</div>
+
+<p>
+  <x-gate></x-gate> は NOT 演算の量子版で、量子ビットの <Ket label="0" /> と <Ket label="1" />
+  を入れ替えます。 図で表すと、次のような "円の入れ替え" の働きをします。
+</p>
+
+<div class="my-5 flex justify-center overflow-x-auto md:mr-auto md:w-7/12">
+  <div class="flex flex-col">
+    <div class="mb-4 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="1" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+
+      <div class="relative h-8 w-16">
+        <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+          <Fragment set:html={transitionSvg} />
+        </div>
+        <x-gate class="qpu-operation-sm absolute inset-0 m-auto"></x-gate>
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+    </div>
+
+    <div class="flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+
+      <div class="relative h-8 w-16">
+        <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+          <Fragment set:html={transitionSvg} />
+        </div>
+        <x-gate class="qpu-operation-sm absolute inset-0 m-auto"></x-gate>
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="1" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
+  X ゲートを回路に置いて、<Ket label="0" /> と <Ket label="1" /> が入れ替わることを確認しましょう。
+</div>
+
+<qni-webgpu-circuit circuit={"{\"cols\":[[\"|0>\"]]}"}></qni-webgpu-circuit>
+
+<p>
+  <x-gate></x-gate> が従来の NOT
+  演算と異なるのは、重ね合わせ状態にある量子ビットに作用できる点です。 たとえば、次の <Ket label="0" /> と
+  <Ket label="1" /> の重ね合わせ状態にある量子ビットを考えましょう。
+</p>
+
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="flex flex-row space-x-2">
+    <qubit-circle data-amplitude="-0.20015 + 0.44444i" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.67819 - 0.54997i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+  </div>
+</div>
+
+<p>
+  これに <x-gate></x-gate> を適用すると、<Ket label="0" /> と <Ket label="1" /> の内容を交換します。
+  これはまさに、先ほど見た "<Ket label="0" /> と <Ket label="1" /> の入れ換え" という効果です。
+</p>
+
+<div class="my-5 flex justify-center overflow-x-auto md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center space-x-4">
+    <div class="flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="-0.20015 + 0.44444i" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.67819 - 0.54997i" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+
+      <div class="relative h-8 w-16">
+        <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+          <Fragment set:html={transitionSvg} />
+        </div>
+        <x-gate class="qpu-operation-sm absolute inset-0 m-auto"></x-gate>
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0.67819 - 0.54997i" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.20015 + 0.44444i" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>
+  <x-gate></x-gate> を続けて 2 回適用するとどうなるでしょうか? 図から分かるように、 <Ket label="0" />
+  と <Ket label="1" /> が 2 度入れ替わることで元の状態に戻ります。 つまり、量子 NOT
+  ゲートはそれ自身を打ち消す効果を持っています。数学ではこれを、「量子 NOT
+  ゲートはそれ自身の逆演算である」と言います。
+</p>
+
+<div
+  class="my-5 flex justify-center overflow-x-auto md:mr-auto md:w-7/12 lg:justify-start lg:justify-center"
+>
+  <div class="flex flex-col items-end space-y-4 lg:flex-row lg:items-center lg:space-y-0">
+    <div class="flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="-0.20015 + 0.44444i" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.67819 - 0.54997i" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+
+      <div class="relative h-8 w-16">
+        <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+          <Fragment set:html={transitionSvg} />
+        </div>
+        <x-gate class="qpu-operation-sm absolute inset-0 m-auto"></x-gate>
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0.67819 - 0.54997i" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.20015 + 0.44444i" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+
+      <div class="relative h-8 w-16">
+        <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+          <Fragment set:html={transitionSvg} />
+        </div>
+        <x-gate class="qpu-operation-sm absolute inset-0 m-auto"></x-gate>
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="-0.20015 + 0.44444i" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.67819 - 0.54997i" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
+  <ul class="my-0 !w-full list-disc px-4 !pb-0">
+    <li>
+      重ね合わせ状態の量子ビットに <x-gate></x-gate> を適用し、<Ket label="0" /> と <Ket label="1" />
+      が入れ替わることを確認しましょう。
+    </li>
+    <li><x-gate></x-gate> を 2 回適用すると元に戻ることを確認しましょう</li>
+  </ul>
+</div>
+
+<qni-webgpu-circuit circuit={"{\"cols\":[[\"{重ね合わせ状態の準備\"],[\"|0>\"],[\"H\"],[\"Ry(3π_4)\"],[\"P(31π_17)\"],[\"}\"]]}"}></qni-webgpu-circuit>
+
+<p>
+  「X ゲート」の名前の由来は、量子ビット状態をブロッホ球で表すと量子 NOT ゲートは X
+  軸を中心とした回転操作の一種だからです。
+</p>
+
+<figure class="not-prose">
+  <Sidenote id="x-gate">X ゲートは X 軸を中心に π (180度) 回転する操作 (画像クレジット:
+  <a href="https://qiskit.org/textbook/ch-states/single-qubit-gates.html#xgate">qiskit.org</a>)</Sidenote>
+  <BlochIllustration rotation axis="x" />
+</figure>
+
+<p>
+  同様に、Y 軸で回転する Y ゲート <y-gate></y-gate>、Z 軸で回転する Z ゲート <z-gate></z-gate> も存在します。さまざまなゲートの回転については、他のゲートを学んだ後で詳しく説明します。
+</p>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt cloze="古典の NOT 演算では、NOT 0 → {1} になる"></orbit-prompt>
+  <orbit-prompt cloze="古典の NOT 演算では、NOT 1 → {0} になる"></orbit-prompt>
+  <orbit-prompt
+    question="0 → 1, 1 → 0 という作用を持つ CPU 演算は?"
+    answer="NOT 演算"
+  ></orbit-prompt>
+  <orbit-prompt question="古典の NOT 演算に対応する量子ゲートは?" answer="X ゲート"></orbit-prompt>
+  <orbit-prompt
+    question="X ゲートを適用するとどうなる?"
+    question-attachments="https://qniapp.github.io/qni/images/superposition-100-0.png"
+    answer="|0⟩ と |1⟩ が入れ替わる"
+    answer-attachments="https://qniapp.github.io/qni/images/superposition-0-100.png"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="X ゲートを適用するとどうなる?"
+    question-attachments="https://qniapp.github.io/qni/images/superposition-0-100.png"
+    answer="|0⟩ と |1⟩ が入れ替わる"
+    answer-attachments="https://qniapp.github.io/qni/images/superposition-100-0.png"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="X ゲートを適用するとどうなる?"
+    question-attachments="https://qniapp.github.io/qni/images/superposition_phase.png"
+    answer="|0⟩ と |1⟩ が入れ替わる"
+    answer-attachments="https://qniapp.github.io/qni/images/superposition_phase_reversed.png"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="量子ビットに X ゲートを 2 回連続して適用するとどうなる?"
+    answer="元に戻る"
+    answer-attachments="https://qniapp.github.io/qni/images/x-gate-reversibility.png"
+  ></orbit-prompt>
+  <orbit-prompt
+    cloze="X ゲートは{それ自身を打ち消す}効果を持っていることから、X ゲートはそれ自身の{逆演算}であると言う"
+  ></orbit-prompt>
+</orbit-reviewarea>
+
+<script>import "../components/circuit-display"</script>
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .relative { position:relative; } .absolute { position:absolute; } .inset-0 { inset:0; } .m-auto { margin:auto; }
+  .h-8 { height:32px; } .w-16 { width:64px; } .text-zinc-300 { color:#DAD8CE; }
+  .h-8 :global(svg) { width:100%; height:100%; }
+  .relative.h-8 :global(x-gate.qpu-operation-sm) { font-size:24px; width:24px; height:24px; }
+  .items-center > :global(phase-gate) { font-size:32px; }
+  .mb-4 { margin-bottom:16px; } .space-y-4 { row-gap:16px; } .items-end { align-items:flex-end; }
+  ul.text-2xl .diagram-arrow { margin-inline:8px; }
+  .text-2xl { font-size:24px; line-height:32px; } .mx-auto { margin-inline:auto; } .p-0 { padding:0; }
+  .p-4 { padding:16px; } .border-l-4 { border-left:4px solid #60A5FA; } .bg-blue-50 { background:#EFF6FF; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>

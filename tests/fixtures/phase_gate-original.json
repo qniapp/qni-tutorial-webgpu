@@ -1,0 +1,160 @@
+{
+  "title": "PHASE ゲート",
+  "slug": "phase_gate",
+  "description": "位相を直接操作する",
+  "sidenotes": [
+    "phase-gate",
+    "phase-and-amplitude-norm"
+  ],
+  "images": [],
+  "orbitPrompts": 4,
+  "orbit": [
+    {
+      "cloze": "PHASE ゲートは重ね合わせ状態にある量子ビットの {|1⟩} の{位相}を{回転}させる"
+    },
+    {
+      "question": "PHASE ゲート π/4 を適用するとどうなる?",
+      "question-attachments": "https://qniapp.github.io/qni/images/superposition-50-50.png",
+      "answer": "|1⟩ の位相が π/4 回転する",
+      "answer-attachments": "https://qniapp.github.io/qni/images/superposition-50-50-phase¼π.png"
+    },
+    {
+      "question": "PHASE ゲート π/4 の逆演算は?",
+      "answer": "PHASE ゲート -π/4"
+    },
+    {
+      "question": "PHASE ゲート -π/2 の逆演算は?",
+      "answer": "PHASE ゲート π/2"
+    }
+  ],
+  "circuits": [
+    {
+      "cols": [
+        [
+          "{重ね合わせ"
+        ],
+        [
+          "|0>"
+        ],
+        [
+          "H"
+        ],
+        [
+          "}"
+        ]
+      ]
+    }
+  ],
+  "amplitudes": [
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.5 + 0.5i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.2706 - 0.65328i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.92388",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.38268",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.92388",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.2706 + 0.2706i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "1",
+      "size": "lg"
+    }
+  ]
+}

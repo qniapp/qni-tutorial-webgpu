@@ -1,0 +1,187 @@
+{
+  "title": "X ゲート (量子 NOT)",
+  "slug": "x_gate",
+  "description": "演算ペアの入れ替え",
+  "sidenotes": [
+    "x-gate"
+  ],
+  "images": [
+    "images/rotation-by-pi-around-x-axis.png"
+  ],
+  "orbitPrompts": 9,
+  "orbit": [
+    {
+      "cloze": "古典の NOT 演算では、NOT 0 → {1} になる"
+    },
+    {
+      "cloze": "古典の NOT 演算では、NOT 1 → {0} になる"
+    },
+    {
+      "question": "0 → 1, 1 → 0 という作用を持つ CPU 演算は?",
+      "answer": "NOT 演算"
+    },
+    {
+      "question": "古典の NOT 演算に対応する量子ゲートは?",
+      "answer": "X ゲート"
+    },
+    {
+      "question": "X ゲートを適用するとどうなる?",
+      "question-attachments": "https://qniapp.github.io/qni/images/superposition-100-0.png",
+      "answer": "|0⟩ と |1⟩ が入れ替わる",
+      "answer-attachments": "https://qniapp.github.io/qni/images/superposition-0-100.png"
+    },
+    {
+      "question": "X ゲートを適用するとどうなる?",
+      "question-attachments": "https://qniapp.github.io/qni/images/superposition-0-100.png",
+      "answer": "|0⟩ と |1⟩ が入れ替わる",
+      "answer-attachments": "https://qniapp.github.io/qni/images/superposition-100-0.png"
+    },
+    {
+      "question": "X ゲートを適用するとどうなる?",
+      "question-attachments": "https://qniapp.github.io/qni/images/superposition_phase.png",
+      "answer": "|0⟩ と |1⟩ が入れ替わる",
+      "answer-attachments": "https://qniapp.github.io/qni/images/superposition_phase_reversed.png"
+    },
+    {
+      "question": "量子ビットに X ゲートを 2 回連続して適用するとどうなる?",
+      "answer": "元に戻る",
+      "answer-attachments": "https://qniapp.github.io/qni/images/x-gate-reversibility.png"
+    },
+    {
+      "cloze": "X ゲートは{それ自身を打ち消す}効果を持っていることから、X ゲートはそれ自身の{逆演算}であると言う"
+    }
+  ],
+  "circuits": [
+    {
+      "cols": [
+        [
+          "|0>"
+        ]
+      ]
+    },
+    {
+      "cols": [
+        [
+          "{重ね合わせ状態の準備"
+        ],
+        [
+          "|0>"
+        ],
+        [
+          "H"
+        ],
+        [
+          "Ry(3π_4)"
+        ],
+        [
+          "P(31π_17)"
+        ],
+        [
+          "}"
+        ]
+      ]
+    }
+  ],
+  "amplitudes": [
+    {
+      "amplitude": "1",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "0",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "1",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "0",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "1",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "1",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "-0.20015 + 0.44444i",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.67819 - 0.54997i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.20015 + 0.44444i",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.67819 - 0.54997i",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.67819 - 0.54997i",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "-0.20015 + 0.44444i",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "-0.20015 + 0.44444i",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.67819 - 0.54997i",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.67819 - 0.54997i",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "-0.20015 + 0.44444i",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "-0.20015 + 0.44444i",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.67819 - 0.54997i",
+      "ket": "1",
+      "size": "base"
+    }
+  ]
+}

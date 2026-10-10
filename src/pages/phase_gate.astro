@@ -1,0 +1,189 @@
+---
+import minusSvg from '../assets/cpu-minus.svg?raw'
+import arrowSvg from '../assets/cpu-arrow-right.svg?raw'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="PHASE ゲート" description="位相を直接操作する" section="QPU 命令その 1" hasMath hasCircuit>
+
+
+<p>
+  PHASE ゲート <phase-gate></phase-gate> はその名の通り<Sidenote id="phase-gate" numbered>phase:
+  相、位相、フェーズ</Sidenote>、位相を操作するゲートです。
+  重ね合わせ状態にある量子ビットに適用することで、指定した角度だけ <Ket label="1" />
+  の位相を回転できます。
+</p>
+
+<div class="my-5 flex overflow-x-auto md:mr-auto md:w-7/12">
+  <div class="flex flex-col">
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.7071067811865476" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+      <div class="flex flex-row items-center">
+        <span class="diagram-arrow size-6" set:html={minusSvg}></span>
+        <phase-gate data-angle="π/4"></phase-gate>
+        <span class="diagram-arrow size-6" set:html={arrowSvg}></span>
+      </div>
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5 + 0.5i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+    </div>
+
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.7071067811865476" data-ket="1" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+      <div class="flex flex-row items-center">
+        <span class="diagram-arrow size-6" set:html={minusSvg}></span>
+        <phase-gate data-angle="π/2"></phase-gate>
+        <span class="diagram-arrow size-6" set:html={arrowSvg}></span>
+      </div>
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.7071067811865476i" data-ket="1" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+    </div>
+
+    <div class="flex flex-row items-center space-x-1">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.7071067811865476" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+      <div class="flex flex-row items-center">
+        <span class="diagram-arrow size-6" set:html={minusSvg}></span>
+        <phase-gate data-angle="13π/8"></phase-gate>
+        <span class="diagram-arrow size-6" set:html={arrowSvg}></span>
+      </div>
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.2706 - 0.65328i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>
+  <phase-gate></phase-gate> は角度を示すパラメータを必ず 1 つ持ちます。 たとえば、位相を π/2
+  回転する <phase-gate></phase-gate> は上に π/2 が付きます。文中では PHASE(π/2)
+  などとパラメータを付けて書きます。
+</p>
+
+<p>
+  <phase-gate></phase-gate> は <Ket label="0" /> に何の変化も与えないことに注意してください。 また <phase-gate></phase-gate> は <Ket label="1" />
+  の位相のみを回転するので、振幅の大きさにも影響は与えません。また回転する角度は振幅の大きさの影響を受けません<Sidenote id="phase-and-amplitude-norm" numbered>量子ビットの振幅の大きさと位相は独立したパラメータである、ということを思い出しましょう (<a
+    href="https://qniapp.github.io/qni/circle_notation.html"
+    >状態ベクトル表示</a
+  >を参照)。</Sidenote>。
+</p>
+
+<div class="my-5 flex overflow-x-auto md:mr-auto md:w-7/12">
+  <div class="flex flex-col">
+    <div class="flex flex-row items-center space-x-1">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0.92388" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.38268" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+      <div class="flex flex-row items-center">
+        <span class="diagram-arrow size-6" set:html={minusSvg}></span>
+        <phase-gate data-angle="π/4"></phase-gate>
+        <span class="diagram-arrow size-6" set:html={arrowSvg}></span>
+      </div>
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0.92388" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.2706 + 0.2706i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>
+  マイナスの角度を指定することで、位相を逆方向に回転できます。 たとえば PHASE(π/2)
+  に対するマイナス回転の PHASE(-π/2) を作ることができます。 位相を π/2 回転した後 -π/2
+  すると元に戻るので、 PHASE(π/2) と PHASE(-π/2) はお互いに逆演算です。
+</p>
+
+<div class="my-5 flex overflow-x-auto">
+  <div class="flex flex-col">
+    <div class="flex flex-row items-center space-x-1">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.7071067811865476" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+      <div class="flex flex-row items-center">
+        <span class="diagram-arrow size-6" set:html={minusSvg}></span>
+        <phase-gate data-angle="π/2"></phase-gate>
+        <span class="diagram-arrow size-6" set:html={arrowSvg}></span>
+      </div>
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.7071067811865476i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+      <div class="flex flex-row items-center">
+        <span class="diagram-arrow size-6" set:html={minusSvg}></span>
+        <phase-gate data-angle="-π/2"></phase-gate>
+        <span class="diagram-arrow size-6" set:html={arrowSvg}></span>
+      </div>
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.7071067811865476" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+    </div>
+  </div>
+
+  
+</div>
+
+<h2>ハンズオン</h2>
+
+<p>
+  <phase-gate></phase-gate> を重ね合わせ状態に適用して、<Ket label="1" /> の位相を回転してみましょう。<phase-gate></phase-gate> の角度はデフォルトで π/2
+  にセットされています。変更するには、回路上に配置した <phase-gate></phase-gate>
+  をクリックし、ポップアップメニューから角度のアイコンをクリックしてください。
+</p>
+
+<qni-webgpu-circuit circuit={"{\"cols\":[[\"{重ね合わせ\"],[\"|0>\"],[\"H\"],[\"}\"]]}"}></qni-webgpu-circuit>
+
+<orbit-reviewarea color="blue" class="mt-5">
+  <orbit-prompt
+    cloze="PHASE ゲートは重ね合わせ状態にある量子ビットの {|1⟩} の{位相}を{回転}させる"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="PHASE ゲート π/4 を適用するとどうなる?"
+    question-attachments="https://qniapp.github.io/qni/images/superposition-50-50.png"
+    answer="|1⟩ の位相が π/4 回転する"
+    answer-attachments="https://qniapp.github.io/qni/images/superposition-50-50-phase¼π.png"
+  ></orbit-prompt>
+  <orbit-prompt question="PHASE ゲート π/4 の逆演算は?" answer="PHASE ゲート -π/4"></orbit-prompt>
+  <orbit-prompt question="PHASE ゲート -π/2 の逆演算は?" answer="PHASE ゲート π/2"></orbit-prompt>
+</orbit-reviewarea>
+
+<script>import "../components/circuit-display"</script>
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .relative { position:relative; } .absolute { position:absolute; } .inset-0 { inset:0; } .m-auto { margin:auto; }
+  .h-8 { height:32px; } .w-16 { width:64px; } .text-zinc-300 { color:#DAD8CE; }
+  .h-8 :global(svg) { width:100%; height:100%; }
+  .relative.h-8 :global(x-gate.qpu-operation-sm) { font-size:24px; width:24px; height:24px; }
+  .items-center > :global(phase-gate) { font-size:32px; }
+  .mb-4 { margin-bottom:16px; } .space-y-4 { row-gap:16px; } .items-end { align-items:flex-end; }
+  .text-2xl { font-size:24px; line-height:32px; } .mx-auto { margin-inline:auto; } .p-0 { padding:0; }
+  .p-4 { padding:16px; } .border-l-4 { border-left:4px solid #60A5FA; } .bg-blue-50 { background:#EFF6FF; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>
