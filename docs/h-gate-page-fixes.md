@@ -166,3 +166,7 @@ GPU診断readbackで初期[1,0,0,0]、H後[0.7071067690849304,0,0.70710676908493
 DPR1/2の公開before raw cropsを先に保存。typecheck/buildと関連6/6 tests成功。公開後、8x nearest crops、glyph color/coverage、figure raw pixel diffを追記する。
 
 同じ作業の更新により、embed frameのpadding32pxを **0px** に変更した。blue border2pxと左下「Qniで開く」tabは維持。canvasの実getBoundingClientRectに基づくDPR resizeは既存のまま、寸法testを316×192 (host320×240) に更新し、frame内縁4辺とtabのgap0をtestした。11:12に旧paddingありのbefore screenshotを1440/390pxで取得済み。型チェック/build、Bold/frame/link/本文等の関連28/28 tests成功。header/footer/shared layoutには触れていない。
+
+11:16の更新でタイトル下の横線だけ共有layout変更が許可された。原文 `_layouts/page.html:35` の `mb-10 border-b border-zinc-200 pb-10` は単独hrではなくdivのbottom border。これを page-title-block として移植した。borderは1px solid #E4E4E7、padding-bottom40px / margin-bottom40px / margin-top0、content全幅。既存タイトルfontを変えず、原文inline H1 rowの1px gapを補正して H1 bottom→line=73px / line→first paragraph=41px に揃えた。header「実験版」/footerは不変。型チェック/buildとdivider/Bold等9/9関連tests成功。
+
+原文のdesktop content幅1120pxに対し現行shared mainの内幅は1072px、mobileは双方358px。横線は双方のcontent全幅100%とし、横線だけの許可を超えるmain/sidebarの幅変更はしない。computed styles/実寸をJSONに残す。

@@ -59,9 +59,11 @@ const base = import.meta.env.BASE_URL
       <span>実験版</span>
     </header>
     <main>
-      {section && <p class="section-label">{section}</p>}
-      <h1>{title}</h1>
-      <p class="lede">{description}</p>
+      <div class="page-title-block">
+        {section && <p class="section-label">{section}</p>}
+        <h1>{title}</h1>
+        <p class="lede">{description}</p>
+      </div>
       <div class="content-with-margin"><slot /></div>
     </main>
     <footer>
@@ -104,6 +106,12 @@ const base = import.meta.env.BASE_URL
   p, li { font-size: 16px; line-height: 28px; }
   p { max-width: 76ch; margin: 16px 0; }
   .lede { color: var(--muted); font-size: 20px; line-height: 28px; margin-bottom: 32px; }
+  /* Original page.html: mb-10 border-b border-zinc-200 pb-10.
+     Its inline H1 row adds 1px before mt-1; preserve that visual gap
+     without changing our existing title font or the site header/footer. */
+  .page-title-block { border: 0 solid #E4E4E7; border-bottom-width: 1px; padding-bottom: 40px; margin-bottom: 40px; }
+  .page-title-block h1 { margin-bottom: 0; }
+  .page-title-block .lede { margin-top: 5px; margin-bottom: 0; }
   .static-diagram { max-width: 76ch; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-2); padding: 16px 24px; margin: 24px 0; }
   .static-diagram p { margin: 8px 0; }
   qni-webgpu-circuit { clear: both; margin: 24px 0; }
