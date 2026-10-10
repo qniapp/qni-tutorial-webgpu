@@ -22,6 +22,9 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) > phase-gate[data-
 }
 /* Original circuit_step/dropzone.css: sm=640px. The no-rotation table stays
    vertical on mobile. Preserve original sizes, spacing and SVG transforms. */
+quantum-circuit { display: flex; flex-direction: column; align-items: center; width: max-content; }
+circuit-dropzone[data-operation-name='write-gate'] .circuit-wires [part='wire-input'] { transform: scaleX(0.75) translateX(-33.3%); }
+circuit-dropzone[data-operation-name='write-gate'] .circuit-wires [part='wire-output'] { transform: scaleX(0.75) translateX(33.3%); }
 circuit-step { position: relative; display: flex; align-items: center; justify-content: center; flex-direction: row-reverse; gap: 16px; padding: 0 32px; }
 circuit-step.no-rotation { flex-direction: column; align-items: flex-start; gap: 0; padding: 0; }
 circuit-step.no-rotation[class~='!py-4'] { padding-block: 16px; }
@@ -41,10 +44,13 @@ circuit-dropzone[data-output-wire-quantum] .circuit-wires [part='wire-output'] {
 circuit-dropzone[data-connect-top] .circuit-wires [part='connect-top'],
 circuit-dropzone[data-connect-bottom] .circuit-wires [part='connect-bottom'] { display: block; }
 @media (min-width: 640px) {
+  quantum-circuit { flex-direction: row; }
   circuit-step { flex-direction: column; padding: 32px 0; }
   circuit-step.no-rotation { gap: 16px; }
   circuit-dropzone { width: 48px; height: 32px; }
   circuit-dropzone > :not(.circuit-wires) { left: 8px; top: 0; }
   circuit-dropzone > .circuit-wires { transform: none; }
   .circuit-wires [part='wire-input'], .circuit-wires [part='wire-output'] { transform: none; }
+  circuit-dropzone[data-operation-name='write-gate'] .circuit-wires [part='wire-input'],
+  circuit-dropzone[data-operation-name='write-gate'] .circuit-wires [part='wire-output'] { transform: scaleX(0.33); }
 }

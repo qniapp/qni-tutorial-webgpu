@@ -1,0 +1,144 @@
+---
+import minusSvg from '../assets/cpu-minus.svg?raw'
+import arrowSvg from '../assets/cpu-arrow-right.svg?raw'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="WRITE 命令" description="量子ビットの初期化とリセット" section="QPU 命令その 1" hasMath>
+
+
+<p>
+  WRITE 命令 <write-gate data-value="0"></write-gate> <write-gate data-value="1"></write-gate> は量子ビットの状態を <Ket label="0" /> または <Ket label="1" /> に初期化する命令です。
+  実は今まで断りなく何度か使ってきましたが、使いかたは簡単です。通常は回路の先頭に <write-gate data-value="0"></write-gate> や <write-gate data-value="1"></write-gate> を置くことで量子ビットを <Ket label="0" /> や <Ket label="1" /> に初期化します。
+  続けて H ゲートなどの QPU 命令を置いていくことで量子プログラムを記述します。
+</p>
+
+<div class="my-5 flex flex-col items-center md:mr-auto md:w-7/12">
+  <div>量子ビットを <Ket label="0" /> に初期化してからゲートを配置</div>
+  <quantum-circuit>
+    <circuit-step>
+      <circuit-dropzone>
+        <write-gate data-value="0"></write-gate>
+      </circuit-dropzone>
+    </circuit-step>
+    <circuit-step>
+      <circuit-dropzone>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+    </circuit-step>
+    <circuit-step>
+      <circuit-dropzone>
+        <y-gate></y-gate>
+      </circuit-dropzone>
+    </circuit-step>
+  </quantum-circuit>
+</div>
+
+<div class="my-5 flex flex-col items-center md:mr-auto md:w-7/12">
+  <div>量子ビットを <Ket label="1" /> に初期化してからゲートを配置</div>
+  <quantum-circuit>
+    <circuit-step>
+      <circuit-dropzone>
+        <write-gate data-value="1"></write-gate>
+      </circuit-dropzone>
+    </circuit-step>
+    <circuit-step>
+      <circuit-dropzone>
+        <z-gate></z-gate>
+      </circuit-dropzone>
+    </circuit-step>
+    <circuit-step>
+      <circuit-dropzone>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+    </circuit-step>
+  </quantum-circuit>
+</div>
+
+<p>
+  <write-gate data-value="0"></write-gate> や <write-gate data-value="1"></write-gate>
+  は量子ビットの状態を強制的にリセットするので、逆演算を持ちません。
+  つまり量子ビットの状態がどんな状態にあっても、たとえば <write-gate data-value="0"></write-gate>
+  を置いた時点で振幅の大きさと位相の情報は破壊され、<Ket label="0" /> に初期化されます。
+  これは元に戻すのに必要な情報を損失していることになるため、<write-gate data-value="0"></write-gate> と <write-gate data-value="1"></write-gate> はどちらも非可逆です。
+</p>
+
+<div class="my-5 flex overflow-x-auto md:mr-auto md:w-7/12">
+  <div class="flex flex-col">
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="-0.38268" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.7855 - 0.48636i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+      <div class="flex flex-row items-center">
+        <span class="diagram-arrow size-6" set:html={minusSvg}></span>
+        <write-gate data-value="0"></write-gate>
+        <span class="diagram-arrow size-6" set:html={arrowSvg}></span>
+      </div>
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="1" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+    </div>
+
+    <div class="flex flex-row items-center space-x-1">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0.28483 - 0.34391i" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.82603 + 0.34391i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+      <div class="flex flex-row items-center">
+        <span class="diagram-arrow size-6" set:html={minusSvg}></span>
+        <write-gate data-value="1"></write-gate>
+        <span class="diagram-arrow size-6" set:html={arrowSvg}></span>
+      </div>
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+    </div>
+  </div>
+</div>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="量子ビットの状態を強制的に初期化する量子ゲートの名前は?"
+    answer="WRITE ゲート"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="WRITE ゲートの作用は?"
+    answer="量子ビットの状態を強制的に |0⟩ や |1⟩ に初期化する"
+  ></orbit-prompt>
+  <orbit-prompt
+    cloze="WRITE ゲートが量子ビットを強制的に初期化する際、量子ビットの{振幅の大きさ}と{位相}の情報を破壊する"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="WRITE ゲートが逆演算を持たないのはなぜか?"
+    answer="WRITE ゲートは振幅の大きさと位相の情報を破壊するので、逆演算で元に戻すための情報が失われるため"
+  ></orbit-prompt>
+</orbit-reviewarea>
+
+<script>import "../components/circuit-display"</script>
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>

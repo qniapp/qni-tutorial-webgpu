@@ -1,0 +1,68 @@
+{
+  "title": "WRITE 命令",
+  "slug": "write_operation",
+  "description": "量子ビットの初期化とリセット",
+  "sidenotes": [],
+  "images": [],
+  "orbitPrompts": 4,
+  "orbit": [
+    {
+      "question": "量子ビットの状態を強制的に初期化する量子ゲートの名前は?",
+      "answer": "WRITE ゲート"
+    },
+    {
+      "question": "WRITE ゲートの作用は?",
+      "answer": "量子ビットの状態を強制的に |0⟩ や |1⟩ に初期化する"
+    },
+    {
+      "cloze": "WRITE ゲートが量子ビットを強制的に初期化する際、量子ビットの{振幅の大きさ}と{位相}の情報を破壊する"
+    },
+    {
+      "question": "WRITE ゲートが逆演算を持たないのはなぜか?",
+      "answer": "WRITE ゲートは振幅の大きさと位相の情報を破壊するので、逆演算で元に戻すための情報が失われるため"
+    }
+  ],
+  "circuits": [],
+  "amplitudes": [
+    {
+      "amplitude": "-0.38268",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7855 - 0.48636i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "1",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.28483 - 0.34391i",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.82603 + 0.34391i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "1",
+      "ket": "1",
+      "size": "lg"
+    }
+  ]
+}

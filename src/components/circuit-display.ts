@@ -41,6 +41,21 @@ if (!customElements.get('write-gate')) customElements.define('write-gate', class
   }
 })
 if (!customElements.get('circuit-step')) customElements.define('circuit-step', class extends HTMLElement {})
+// Bare, authored circuit-step diagrams only. JSON/editor embeds use
+// qni-webgpu-circuit instead, so this element never owns simulation state.
+if (!customElements.get('quantum-circuit')) customElements.define('quantum-circuit', class extends HTMLElement {
+  connectedCallback() {
+    let quantum = false
+    for (const zone of this.querySelectorAll('circuit-dropzone')) {
+      const operation = [...zone.children].find(e => e.localName.endsWith('-gate'))
+      if (!operation) continue
+      zone.setAttribute('data-operation-name', operation.localName)
+      if (quantum) zone.setAttribute('data-input-wire-quantum', '')
+      quantum = operation.localName !== 'measurement-gate'
+      if (quantum) zone.setAttribute('data-output-wire-quantum', '')
+    }
+  }
+})
 if (!customElements.get('circuit-dropzone')) customElements.define('circuit-dropzone', class extends HTMLElement {
   connectedCallback() {
     if (!this.querySelector('.circuit-wires')) {

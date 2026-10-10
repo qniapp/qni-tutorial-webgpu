@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 import original from './fixtures/original-navigation.json' with { type: 'json' }
 
-const ported = new Set(['', 'h_gate', 'qpu', 'what_qpu_do_faster', 'quantum_circuit', 'qni_intro', 'p_bit', 'superposition', 'qubit', 'phase', 'circle_notation', 'cpu_vs_qpu_operations'])
+const ported = new Set(['', 'h_gate', 'qpu', 'what_qpu_do_faster', 'quantum_circuit', 'qni_intro', 'p_bit', 'superposition', 'qubit', 'phase', 'circle_notation', 'cpu_vs_qpu_operations', 'write_operation'])
 
 test('sidebar has the original chapters and page order', async ({ page }) => {
   await page.goto('/qni-tutorial-webgpu/h_gate/')
