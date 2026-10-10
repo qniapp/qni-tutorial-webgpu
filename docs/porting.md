@@ -484,3 +484,7 @@ KetPairsの公開pointer選択を1440/390×DPR1/2×3ページで確認し、各8
 phase/index/qubit/qni_intro(2)/x_gate(2)の **7embed** を390pxで個別に目視し、phase9-token paletteの5+4 wrap、index/qni_intro末尾Measure、qubit末尾Rz/Ry、x_gate末尾Pまで可視でclipなし。画像 `/tmp/qtw-pr54-after-<slug>-<index>-390.png`、比較beforeも同prefix-beforeで保存。GPU readbackで全7件norm1/one-hot初期状態を確認 (`/tmp/qtw-pr54-after.json`)。qni_introの非表示state panelは診断時だけ有効化し、falseへ戻してから画像保存した。native canvasのhost縮小はしていない。
 
 最終全suite **144 tests passed (3.1m)**、typecheck/build成功。今回初めて全suiteを通した際に発見した旧仕様のtest (置換済みH画像、削除済み画像credit、indexの旧note ID/外部link、図24pxの物理寸法固定) も現仕様へ更新し、本文は未変更。所有browser/serverは終了、次ページ移植は未着手。#53待ちは変更なし。
+
+## 2026-10-11 PR #56 pin / 条件付きBB84再開
+
+pinを **f819e353a6e0f4249331d048abe9763d7a464432** (PR #56) に更新。clean detached `verify/tutorial-conditional` からBinaryen123でembed/standalone再build。既存25ページ/22embedの原文・回路JSON・paletteは未変更。まずpinのみ公開し、既存embedのrunning/step0/errorsと条件付きgateのlive動作を確認してからbb84_circuitを復帰する。06:54 hard stop。
