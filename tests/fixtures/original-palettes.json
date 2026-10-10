@@ -66,5 +66,6 @@
   "multi_qubit_circle_notation": [],
   "multi_qubit_superposition": [[], [], []],
   "multi_qubit_operation": [[], [], []],
-  "operator_pair": []
+  "operator_pair": [],
+  "random_byte_generator": [[], []]
 }

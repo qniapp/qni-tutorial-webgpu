@@ -1,0 +1,371 @@
+{
+  "title": "ランダムバイトジェネレータ",
+  "slug": "random_byte_generator",
+  "description": "H ゲートを複数量子ビットに適用",
+  "sidenotes": [
+    "quantum-random-generator",
+    "multi-qubit-operation",
+    "h-gate"
+  ],
+  "images": [
+    "images/H_bit1_ket_pair.png",
+    "images/H_bit2_ket_pair.png",
+    "images/H_bit3_ket_pair.png"
+  ],
+  "orbitPrompts": 0,
+  "orbit": [],
+  "circuits": [
+    {
+      "cols": [
+        [
+          "|0>",
+          "|0>",
+          "|0>",
+          "|0>",
+          "|0>",
+          "|0>",
+          "|0>",
+          "|0>"
+        ],
+        [
+          "H"
+        ],
+        [
+          1,
+          "H"
+        ],
+        [
+          1,
+          1,
+          "H"
+        ],
+        [
+          1,
+          1,
+          1,
+          "H"
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          "H"
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          "H"
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          "H"
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          "H"
+        ],
+        [
+          "Measure",
+          "Measure",
+          "Measure",
+          "Measure",
+          "Measure",
+          "Measure",
+          "Measure",
+          "Measure"
+        ]
+      ]
+    },
+    {
+      "cols": [
+        [
+          "|0>",
+          "|0>",
+          "|0>",
+          "|0>",
+          "|0>",
+          "|0>",
+          "|0>",
+          "|0>"
+        ],
+        [
+          "H",
+          "H",
+          "H",
+          "H",
+          "H",
+          "H",
+          "H",
+          "H"
+        ],
+        [
+          "Measure",
+          "Measure",
+          "Measure",
+          "Measure",
+          "Measure",
+          "Measure",
+          "Measure",
+          "Measure"
+        ]
+      ]
+    }
+  ],
+  "amplitudes": [
+    {
+      "amplitude": "1",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "7",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "7",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "7",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.5",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.5",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.5",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.5",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "7",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.5",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.5",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.5",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.5",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "7",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "7",
+      "size": "lg"
+    }
+  ]
+}

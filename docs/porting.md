@@ -431,14 +431,14 @@ Artifacts `/tmp/qtw-bb84-flag-repro.{json,png}`、harness `/tmp/qtw-bb84-flag-re
 
 型チェック/build成功、新規2ページの構造・全amplitude・MathJax・元palette・sidebarを含む63/63 tests。公開commit **5dedf200b54a41f901bfc088dd604765e0ee6d0e**、Pages **38036334988** success。1440/390本文diff0/TeX diff0/counts一致/errors0/overflowなし。状態ベクトルはcircle12/ket47、重ね合わせはcircle24/ket13/note1/embed3。全embed running、norm1/one-hot |000⟩でstep0確認。JSON `/tmp/qtw-port-<slug>.json`、original/ours screenshot `/tmp/qtw-port-<slug>-<original|ours>-{1440,390}.png`。clip detailを最終checkpointへ記録する。
 
-### multi_qubit_operation / 複数量子ビットでの演算 (公開確認待ち)
+### multi_qubit_operation / 複数量子ビットでの演算 (公開確認完了)
 
 原文3つのX演算例、前後circle48と実験embed3を保持。`X_bit1_ket_pair.png` / `X_bit2_ket_pair.png` / `X_bit3_ket_pair.png` は新規 `KetPairs.astro` の色付きペア/双方向arrow/MathJax ketへ置換。各circleをクリック・キーボードfocusするとXOR partnerを同時highlightし、対応するbinary番号をscreen readerへ伝える。これは演算ペアの図示であり、色を量子確率と偽らない。元のbefore/after amplitude図とGPU実験はそのまま。
 - 削除credit: なし (原画像credit行なし)。
 - palette: 原文全3embedにpaletteなし、すべて `[]`。
 - questions: 新規なし。#52 clipのみ確認して記録。
 
-### operator_pair / 演算ペア (公開確認待ち)
+### operator_pair / 演算ペア (公開確認完了)
 
 `ket_label_in_binary.png` / `bit1_ket_pair.png` / `bit2_ket_pair.png` / `bit3_ket_pair.png` を同じ `KetPairs.astro` に置換。8個の空円/decimal ket/binary ket、およびbit1/2/3の同色pairを再現。画像相当のlabel/TeXはdata-original-image内として本文diffからだけ除外する。初期pair色は原文と同じ対応、selectionはpointer/keyboard両対応。
 - 削除credit: なし (原画像credit行なし)。
@@ -446,3 +446,15 @@ Artifacts `/tmp/qtw-bb84-flag-repro.{json,png}`、harness `/tmp/qtw-bb84-flag-re
 - questions: 新規なし。
 
 型チェック/build成功、73/73 tests。原文body構造/circle48/元JSON・palette・MathJaxに加え、bit1/2/3のXORペア選択、keyboard Enter、mobile overflow、画像7点不使用を確認。
+
+公開commit **454a6969b179bc1d9e1215cdc1b304a34413c543**、Pages **38036870830** success。1440/390で本文diff0/本文TeX diff0/errors0/overflowなし。元bodyのcircle48/TeX・3回路JSONは維持、画像3/4->0、新illustrationのMathJax ketは演算+24、演算ペア+64。意図したimage-equivalent count差として記録する (元count一致と偽らない)。3embed running/norm1/|000⟩でstep0確認。JSON `/tmp/qtw-port-<slug>.json`、native crops `/tmp/qtw-native-multi_qubit_operation-<0..2>-{1440,390}.png`。
+
+### random_byte_generator / ランダムバイトジェネレータ (公開確認待ち)
+
+原文の8量子ビット回路2個・before/after circle48・注3・本文を保持。`H_bit1_ket_pair.png` / `H_bit2_ket_pair.png` / `H_bit3_ket_pair.png` をKetPairsのH-labelled pair図に置換し、pointer/keyboardで演算pairをhighlightできる。Hは図ラベルRegular、色はpairを示すだけで確率を捏造しない。元の実際のamplitude変化は別のcircle48とGPU回路で確認する。
+- 削除credit: なし (原画像にcredit行なし)。
+- palette: 元2embedにpaletteなし、両方 `[]`。
+- #52 clip: 公開で記録する。8wire/256状態のsceneでもclippingはSKIP/STOPにしない。
+- questions: シミュレータ測定を物理的な量子乱数と同一視しないという既存MEASUREMENTの注記を引き継ぐ。原文は変更しない。
+
+型チェック/build、53/53 targeted tests成功。KetPairsをresponsive幅にして390でも8つのket/circleが一度に見えるようにし、arrowのviewBoxとpaddingを同じ比率で追従させる。小さなprose gateのBold/図Regularは共通layoutが維持する。

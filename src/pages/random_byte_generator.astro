@@ -1,0 +1,167 @@
+---
+import KetPairs from '../components/KetPairs.astro'
+import dividerSvg from '../assets/diagram-divider.svg?raw'
+import downSvg from '../assets/diagram-down.svg?raw'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="ランダムバイトジェネレータ" description="H ゲートを複数量子ビットに適用" section="複数量子ビット" hasMath hasCircuit>
+
+
+<p>
+  量子乱数ジェネレータ<Sidenote id="quantum-random-generator" numbered><a
+    href={`${base}measurement_operation/`}
+    >MEASUREMENT 命令</a
+  >を参照</Sidenote>は 1 ビットの乱数 0 または 1 を生成するものでした。
+  より大きな乱数を生成するにはどうしたらよいでしょうか? 今回は 8 個の量子ビットを使って、1 バイト (=
+  8 ビット, 0 から 255 まで) の乱数を生成する回路を紹介します。
+</p>
+
+<p>
+  次の回路は、1 ビット目から 8 ビット目それぞれに H
+  ゲートを適用し、最後にすべてのビットを測定します。 測定すると 0 から 255 までの数のうちどれか 1
+  つをランダムに出力します。
+</p>
+
+<qni-webgpu-circuit palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"H\"],[1,\"H\"],[1,1,\"H\"],[1,1,1,\"H\"],[1,1,1,1,\"H\"],[1,1,1,1,1,\"H\"],[1,1,1,1,1,1,\"H\"],[1,1,1,1,1,1,1,\"H\"],[\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\"]]}"}></qni-webgpu-circuit>
+
+<p>
+  大筋としてこれがどのように動作しているか、状態ベクトル表示を使って調べてみましょう。 H
+  ゲートを全ビットに適用した時点の状態ベクトルを見ると、<Ket label="0" /> から <Ket label="255" />
+  それぞれの確率は等しく 0.390625% (100 / 256 %) になります。 これを測定することで、<Ket label="0" /> から
+  <Ket label="255" /> のうちどれか 1 つがランダムに出力されます。
+</p>
+
+<h2>等しい重ね合わせができる仕組み</h2>
+
+<p>
+  なぜ等しい重ね合わせ状態ができるか、H ゲートを 1
+  つずつ適用した時の状態ベクトルを詳しく見てみましょう。 以下では、スペースの都合上 3
+  量子ビットまでを見て行きます。
+</p>
+
+<p>
+  初期状態で 1 ビット目に H ゲートを適用すると、複数量子ビットにゲートを適用したときのルール<Sidenote id="multi-qubit-operation" numbered><a href={`${base}multi_qubit_operation/`}
+    >複数量子ビットでの演算</a
+  >を参照</Sidenote>より、隣同士の円それぞれのペア に対して H ゲートが適用されます。
+</p>
+
+<figure>
+  <KetPairs bit={1} swap gate="H" />
+</figure>
+
+<p>
+  H ゲートはシンプルな重ね合わせを作る命令で、<Ket label="0" /> の確率を等しく <Ket label="0" /> と <Ket label="1" />
+  に割り振ります<Sidenote id="h-gate" numbered><a href={`${base}h_gate/`}>H ゲート</a>参照</Sidenote>。 ここでは 4 つのペアのうち、最初のペアの左側の円だけが確率 100% を持っています。
+  そこで最初のペアだけが 50% の重ね合わせ状態となり、ほかのペアは変化しません。
+</p>
+
+<div class="my-5 flex overflow-x-auto">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-2">
+      <qubit-circle data-amplitude="1" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="mb-4 flex flex-col items-center space-y-2">
+      <span class="diagram-arrow" set:html={dividerSvg}></span>
+      <div>H ゲートを 1 ビット目に適用</div>
+      <span class="diagram-arrow mb-8" set:html={downSvg}></span>
+    </div>
+
+    <div class="mb-4 flex flex-row items-center space-x-2">
+      <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.7071067811865476" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div>
+
+<p>
+  ここで 2 ビット目に H ゲートを適用すると、2 つ離れた円同士のペアそれぞれに H
+  ゲートが適用されます。
+</p>
+
+<figure>
+  <KetPairs bit={2} swap gate="H" />
+</figure>
+
+<p>
+  ここでは 4 つのペアのうち、「<Ket label="0" /> と <Ket label="2" />」、「<Ket label="1" /> と <Ket label="3" />」のペアの左側の円が確率 50% を持っています。 そこでこれらのペアだけが 25%
+  の重ね合わせ状態となり、ほかのペアは変化しません。
+</p>
+
+<div class="my-5 flex overflow-x-auto">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-2">
+      <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.7071067811865476" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="mb-4 flex flex-col items-center space-y-2">
+      <span class="diagram-arrow" set:html={dividerSvg}></span>
+      <div>H ゲートを 2 ビット目に適用</div>
+      <span class="diagram-arrow mb-8" set:html={downSvg}></span>
+    </div>
+
+    <div class="mb-4 flex flex-row items-center space-x-2">
+      <qubit-circle data-amplitude="0.5" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div>
+
+<p>
+  同様に 3 ビット目に H ゲートを適用すると、4 つ離れた円同士のペアについて、全ペアの左の円が確率 25%
+  を持っているので、すべての円が等しく 12.5% の重ね合わせ状態となります。
+</p>
+
+<figure>
+  <KetPairs bit={3} swap gate="H" />
+</figure>
+
+<div class="my-5 flex overflow-x-auto">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-2">
+      <qubit-circle data-amplitude="0.5" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      <span class="diagram-arrow" set:html={dividerSvg}></span>
+      <div>H ゲートを 3 ビット目に適用</div>
+      <span class="diagram-arrow mb-8" set:html={downSvg}></span>
+    </div>
+
+    <div class="mb-4 flex flex-row items-center space-x-2">
+      <qubit-circle data-amplitude="0.3535533905932738" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div>
+
+<p>
+  同じプロセスを 4 ビット目、5 ビット目、… と続けていくことで、最終的にすべての円が等しく確率
+  0.390625% (100/256 %) を持つようになります。
+</p>
+
+<h2>回路をコンパクトにする</h2>
+
+<p>
+  最初の回路で 1 ビット目から 8 ビット目まで置いた H
+  ゲートは、それぞれが置かれたビットのみに作用します。 つまり、異なるビットに置いた H
+  ゲートはそれぞれ他のゲートとは独立して実行されるので、可能な限り左に詰めることで他のゲートと同時に実行できます。
+  このことを使うと、先ほどの回路は次のようにかなりコンパクトに書き直せます。
+</p>
+
+<qni-webgpu-circuit palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"H\",\"H\",\"H\",\"H\",\"H\",\"H\",\"H\",\"H\"],[\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\"]]}"}></qni-webgpu-circuit>
+
+<p>
+  多くの量子アルゴリズムでは、最初の準備段階として、均一な重ね合わせ状態をこのように縦に並べた H
+  ゲートで作ります。 非常によく使うパターンですので覚えておきましょう。
+</p>
+
+</TutorialLayout>
+<style>
+  .my-5 { margin-block:20px; } .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-y-2 { gap:8px; }
+  .mb-8 { margin-bottom:32px; } .overflow-auto, .overflow-x-auto { overflow:auto; } .mb-4 { margin-bottom:16px; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  .diagram-arrow { display:inline-flex; width:24px; height:24px; color:#A3A3A3; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+</style>
