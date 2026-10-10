@@ -7,7 +7,7 @@ for (const width of [1440, 390]) {
     await expect(page.locator('h-gate')).toHaveCount(19)
     await expect(page.locator('p h-gate')).toHaveCount(12)
     await expect(page.locator('.qc-operation h-gate')).toHaveCount(7)
-    expect(await page.locator('.qc-operation h-gate').evaluateAll(es => es.every(e => e.getBoundingClientRect().width === 24 && getComputedStyle(e).color === 'rgb(255, 252, 240)' && getComputedStyle(e).backgroundColor === 'rgb(58, 169, 159)'))).toBe(true)
+    expect(await page.locator('.qc-operation h-gate').evaluateAll(es => es.every(e => getComputedStyle(e).fontSize === '24px' && e.getBoundingClientRect().width <= 24 && getComputedStyle(e).color === 'rgb(255, 252, 240)' && getComputedStyle(e).backgroundColor === 'rgb(58, 169, 159)'))).toBe(true)
     expect(await page.locator('p h-gate').evaluateAll(es => es.every(e => e.getBoundingClientRect().width === 16 && getComputedStyle(e).color === 'rgb(255, 252, 240)' && e.getAttribute('data-glyph') === 'bold' && getComputedStyle(e).backgroundColor === 'rgb(58, 169, 159)'))).toBe(true)
     expect(await page.locator('.qc-transition').first().evaluate(e => getComputedStyle(e).justifyContent)).toBe('center')
     await expect(page.locator('qubit-circle')).toHaveCount(24)

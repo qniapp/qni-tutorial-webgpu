@@ -36,11 +36,8 @@ test('built H-gate page loads the real WebGPU runner under the Pages base path',
     }
     throw new Error('Runner did not produce a GPU state vector')
   })
-  await page.locator('figure img').scrollIntoViewIfNeeded()
-  await page.waitForFunction(() => {
-    const image = document.querySelector<HTMLImageElement>('figure img')!
-    return image.complete && image.naturalWidth > 0
-  })
+  await page.locator('bloch-display svg').scrollIntoViewIfNeeded()
+  await expect(page.locator('bloch-display svg')).toBeVisible()
   await element.locator('canvas').screenshot({ path: testInfo.outputPath('h-gate-canvas.png') })
   await page.screenshot({ path: testInfo.outputPath('h-gate-page.png'), fullPage: true })
   console.log('Real embed verification:', JSON.stringify({ ...webgpu, ...result, consoleErrors, pageErrors, notFound }))
@@ -55,7 +52,7 @@ test('index links and local assets respect the Pages base path', async ({ page }
     body: 'export async function startEmbed() { return {destroy(){}} }',
   }))
   await page.goto('/qni-tutorial-webgpu/')
-  const links = await page.locator('a[href]').evaluateAll(elements => elements.map(element => element.getAttribute('href')))
+  const links = await page.locator('a[href^="/"]').evaluateAll(elements => elements.map(element => element.getAttribute('href')))
   await page.goto('/qni-tutorial-webgpu/h_gate/')
   const assets = await page.locator('img[src], link[rel="icon"]').evaluateAll(elements => elements.map(element => element.getAttribute('src') ?? element.getAttribute('href')))
   expect([...links, ...assets].every(url => url?.startsWith('/qni-tutorial-webgpu/'))).toBe(true)

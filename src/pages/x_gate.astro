@@ -124,7 +124,7 @@ const base = import.meta.env.BASE_URL
 
 <div
   class="my-5 flex justify-center overflow-x-auto md:mr-auto md:w-7/12 lg:justify-start lg:justify-center"
->
+><fit-content>
   <div class="flex flex-col items-end space-y-4 lg:flex-row lg:items-center lg:space-y-0">
     <div class="flex flex-row items-center space-x-2">
       <div class="flex flex-row space-x-2">
@@ -154,7 +154,7 @@ const base = import.meta.env.BASE_URL
       </div>
     </div>
   </div>
-</div>
+</fit-content></div>
 
 <div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
   <ul class="my-0 !w-full list-disc px-4 !pb-0">
@@ -247,6 +247,7 @@ const base = import.meta.env.BASE_URL
   .flex :global(qubit-circle) { margin-right:0; flex:none; }
   :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
   .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .justify-center :global(fit-content > .fitted-content) { margin-inline:auto; }
   .list-decimal { list-style-type:decimal; }
   table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
   th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }

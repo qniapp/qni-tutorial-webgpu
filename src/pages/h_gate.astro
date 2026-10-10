@@ -26,10 +26,10 @@ const base = import.meta.env.BASE_URL
 
   <h2>逆演算</h2>
   <p><h-gate></h-gate> を続けて 2 回適用するとどうなるでしょうか? 直感的には分かりづらいですが、そんな時には Qni で試してみましょう! 実際に <h-gate></h-gate> を 2 個連続して置くと、<Ket label="0" /> も <Ket label="1" /> もそれぞれ元の状態に戻ります。つまり、<h-gate></h-gate> も X ゲートと同様にそれ自身を打ち消す効果を持っているので、それ自身の逆演算です。</p>
-  <div class="qc-figure qc-figure-scroll">
+  <div class="qc-figure qc-figure-scroll"><fit-content>
     <div class="qc-transition"><span><qubit-circle data-amplitude="1" data-ket="0"></qubit-circle><qubit-circle data-amplitude="0" data-ket="1"></qubit-circle></span><span class="qc-operation"><Fragment set:html={transitionArrow} /><h-gate></h-gate></span><span><qubit-circle data-amplitude={equal} data-ket="0"></qubit-circle><qubit-circle data-amplitude={equal} data-ket="1"></qubit-circle></span><span class="qc-operation"><Fragment set:html={transitionArrow} /><h-gate></h-gate></span><span><qubit-circle data-amplitude="1" data-ket="0"></qubit-circle><qubit-circle data-amplitude="0" data-ket="1"></qubit-circle></span></div>
     <div class="qc-transition"><span><qubit-circle data-amplitude="0" data-ket="0"></qubit-circle><qubit-circle data-amplitude="1" data-ket="1"></qubit-circle></span><span class="qc-operation"><Fragment set:html={transitionArrow} /><h-gate></h-gate></span><span><qubit-circle data-amplitude={equal} data-ket="0"></qubit-circle><qubit-circle data-amplitude={-equal} data-ket="1"></qubit-circle></span><span class="qc-operation"><Fragment set:html={transitionArrow} /><h-gate></h-gate></span><span><qubit-circle data-amplitude="0" data-ket="0"></qubit-circle><qubit-circle data-amplitude="1" data-ket="1"></qubit-circle></span></div>
-  </div>
+  </fit-content></div>
 
   <h2>H ゲートを回転として見る</h2>
   <p><h-gate></h-gate> を回転として見ると、<h-gate></h-gate> はブロッホ球の X 軸と Z 軸の中間 (黒い矢印) を軸とした 180 度の回転となります。たとえば北極の <Ket label="0" /> 状態に <h-gate></h-gate> を適用すると、赤い矢印に沿って X の文字の部分まで回転します。もう一度適用すると、青い矢印に沿って 180 度回転し元の位置に戻ります (逆演算)。</p>

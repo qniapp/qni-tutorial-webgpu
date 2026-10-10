@@ -472,3 +472,11 @@ Artifacts `/tmp/qtw-bb84-flag-repro.{json,png}`、harness `/tmp/qtw-bb84-flag-re
 KetPairsの公開pointer選択を1440/390×DPR1/2×3ページで確認し、各8button・pair2選択 (binary-only図は1選択) とresponsive幅350pxを確認。SVGのX/HはRegular図ラベル。screenshots `/tmp/qtw-pairs-<slug>-<width>-dpr<dpr>{,-selected}.png`、metadata `/tmp/qtw-pairs-live-interaction.json`。目視でcircle8/ket全番号・binary ketの視認性・双方向arrow・focus色を確認。原文比較 `/tmp/qtw-port-<slug>-compare-{1440,390}.png`。画像置換に元credit行がなかったため今回の削除creditは全5ページ **なし**。
 
 今回の新規移植 **5ページ**。次はmulti_qubit_phase_gate。時間制限のため未着手、未検証ページをpushしていない。
+
+## 2026-10-10 PR #54 / 本文内scroll (公開確認待ち)
+
+ユーザー追加指示により移植は再開せず、pinを **dba8ed696f366af78c714ae956683b44777386e8** (PR #54) に更新。clean detached `verify/tutorial-narrow` からBinaryen123でembed/standalone再build。本文/TeX/回路JSON/palette/creditは未変更。
+
+実WebGPU Chromiumで25ページ×390/1440を1ページずつ再現。beforeは13ページ22箇所 (幅別23件、50ケース中14ケース) に横/縦inner scroll。4列circle wrap、自然幅に応じた静的関係図/数式fit、binary labelのcell幅修正でlocal-after 50ケースすべてinner scroll0/overflow0/errors0、全embed running。回帰testはred→green、typecheck/build成功。全箇所のpage/element/原因/fix/before-after screenshotを [content-overflow.md](./content-overflow.md) に記録。スクロールを単に隠す修正やnative canvasの縮小はしていない。
+
+公開deploy後に同じ全ページ監査とPR #54対象7embedの390px画像を再確認する。主要画像 `/tmp/qtw-noscroll-{before,after}.png`。

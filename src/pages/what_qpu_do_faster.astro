@@ -168,12 +168,12 @@ const base = import.meta.env.BASE_URL
 
 <p>ここで測定を行うと、それぞれの成分が二乗され、確率 (\(\%\)) として解釈されます。</p>
 
-<p class="overflow-auto">{String.raw`
+<p class="overflow-auto"><fit-content>{String.raw`
   $$\begin{bmatrix} 0 \\ 0.5 \\ 0 \\ 0 \\ 0.707 \\ 0 \\ 0.5 \\ 0 \end{bmatrix} \longrightarrow
   \begin{bmatrix} 0^2 \\ (0.5)^2 \\ 0^2 \\ 0^2 \\ (0.707)^2 \\ 0^2 \\ (0.5)^2 \\ 0^2 \end{bmatrix}
   \longrightarrow \begin{bmatrix} 0\% \\ 25\% \\ 0\% \\ 0\% \\ 50\% \\ 0\% \\ 25\% \\ 0\%
   \end{bmatrix}$$
-`}</p>
+`}</fit-content></p>
 
 <p>
   そしてそれぞれの確率に従って、その成分だけを 1 とするベクトルが出力されます。
