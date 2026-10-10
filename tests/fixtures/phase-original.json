@@ -1,0 +1,69 @@
+{
+  "title": "位相",
+  "slug": "phase",
+  "description": "量子ビットの持つ角度パラメータ",
+  "sidenotes": [
+    "grover"
+  ],
+  "images": [
+    "images/amplitude_amplification_overview.png"
+  ],
+  "orbitPrompts": 3,
+  "orbit": [
+    {
+      "question": "時計の針のような線は何を表す?",
+      "question-attachments": "https://qniapp.github.io/qni/images/superposition_phase.png",
+      "answer": "位相"
+    },
+    {
+      "question": "量子ビットを測定すると、その確率と位相はどうなる?",
+      "question-attachments": "https://qniapp.github.io/qni/images/superposition_phase.png",
+      "answer": "破壊される",
+      "answer-attachments": "https://qniapp.github.io/qni/images/superposition-0-100.png"
+    },
+    {
+      "cloze": "位相の主な用途は{データのエンコード}と{確率の間接的な操作}である"
+    }
+  ],
+  "circuits": [
+    {
+      "cols": [
+        [
+          "|0>"
+        ]
+      ]
+    }
+  ],
+  "amplitudes": [
+    {
+      "amplitude": "-0.20015 + 0.44444i",
+      "ket": "0",
+      "size": "xl"
+    },
+    {
+      "amplitude": "0.67819 - 0.54997i",
+      "ket": "1",
+      "size": "xl"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "xl"
+    },
+    {
+      "amplitude": "-0.7071067811865476i",
+      "ket": "1",
+      "size": "xl"
+    },
+    {
+      "amplitude": "0.5 + 0.5i",
+      "ket": "0",
+      "size": "xl"
+    },
+    {
+      "amplitude": "0.5 - 0.5i",
+      "ket": "1",
+      "size": "xl"
+    }
+  ]
+}

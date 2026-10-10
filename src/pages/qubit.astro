@@ -1,0 +1,153 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="量子ビット" description="量子ビットと確率的ビットとの主な違い" section="量子ビット" hasMath hasCircuit>
+
+
+<p>量子ビットは、確率的ビットと非常によく似ています。主な違いは 2 つだけです。</p>
+
+<ul class="list-decimal">
+  <li>
+    確率のかわりに振幅 (amplitude) という値を使って状態を表現します。
+    確率は正の値を持ちますが、振幅は負の値も持ちます。
+  </li>
+  <li>
+    振幅は測定中に 2 乗され確率となります<Sidenote id="amplitude-prob" numbered><a
+      href={`${base}what_qpu_do_faster/`}
+      >QPU は何が得意?</a
+    >
+    で紹介した測定で、確率を求めるために 2 乗の計算をしたことを思い出してください。</Sidenote>。 つまり「振幅の 2 乗 = 確率」です。
+  </li>
+</ul>
+
+<p>
+  Qni の円表示では、振幅は確率を表す青い円の半径を表します。 円の面積は半径の 2 乗 x π、つまり振幅の
+  2 乗かける π なので、青い円の面積は確率に正比例します。
+</p>
+
+<div class="my-5 flex justify-center space-x-2 md:mr-auto md:w-7/12">
+  <qubit-circle data-amplitude="0.8944271909999159" data-ket="0" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.4472135954999579" data-ket="1" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+</div>
+
+<h2>確率</h2>
+
+<p>
+  最初に、確率的ビットが取り得る状態をおさらいしてみましょう
+  (コイントスの例を使ったことを思い出してください)。 ビットが 0 の状態をコインの表、ビットが 1
+  の状態をコインの裏とし、それぞれの確率を \(p_0,\ p_1\) とします。 表と裏の確率を足すと必ず 1
+  になり、またそれぞれの確率は 0 から 1 の間ですから、
+</p>
+
+<p class="overflow-auto">$$p_0 + p_1 = 1\qquad (0 \leq p_0 \leq 1,\ 0 \leq p_1 \leq 1)$$</p>
+
+<p>が成り立ち、確率的ビットが取りうるすべての状態を表す次のグラフが得られるのでした。</p>
+
+<figure>
+  <img src={`${base}images/p0p1_graph.png`} class="h-auto w-full" />
+</figure>
+
+<h2>振幅</h2>
+
+<p>
+  次は振幅を持つ量子ビットの取り得る状態をグラフにしてみましょう。 振幅は 2
+  乗すると確率になるのですから、ビットが <Ket label="0" /> となる確率の振幅を \(a_0\)、ビットが <Ket label="1" /> となる確率の振幅を \(a_1\) とすると、\(a_0^2 = p_0,\ a_1^2 = p_1\) が成り立ちます。
+  これを先ほどの式に入れると、
+</p>
+
+<p class="overflow-x-auto">{String.raw`
+  \begin{split} &p_0 + p_1 = 1 \\ \\ \Longrightarrow\ &a_0^2 + a_1^2 = 1\qquad (-1 \leq a_0 \leq 1,\
+  -1 \leq a_1 \leq 1) \end{split}
+`}</p>
+
+<p>
+  となり、このグラフは半径 1 の円になります。つまり、量子ビットの状態はこの円のうちの 1
+  点となります。
+</p>
+
+<figure>
+  <img src={`${base}images/qbit_circular_state.png`} class="h-auto w-full" />
+</figure>
+
+<p>
+  これを見て分かる通り、量子ビットが確率的ビットに比べて決定的に違うのは、振幅は負の値を持ち得ることです。
+  ここでは「量子ビットは確率的ビットよりもさらに広い範囲の情報を表現できそうだ」ということを視覚的に理解してもらえれば十分です。
+</p>
+
+<h2>振幅は複素数</h2>
+
+<p>
+  実は、振幅は一般には複素数の値を取ります。
+  ここでは複素数の詳しい説明や計算は省きますが、この場合に量子ビットが取りうる状態を図にすると半径 1
+  の球表面になります。 これをブロッホ球<Sidenote id="bloch-sphere" numbered>ブロッホ球の名前はスイス出身の物理学者、<a
+    href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A7%E3%83%AA%E3%83%83%E3%82%AF%E3%82%B9%E3%83%BB%E3%83%96%E3%83%AD%E3%83%83%E3%83%9B"
+    >フェリックス・ブロッホ</a
+  >に由来します。</Sidenote>と呼びます。
+</p>
+
+<figure>
+  <img src={`${base}images/bloch_sphere.png`} class="h-auto w-full" />
+</figure>
+
+<p>
+  これをひらたく言えば、1 量子ビットの状態は地球上のとある 1 点として表せることになります
+  (東京とか、ニューヨークとか、南極とかあなたの好きな場所をどこでも思い浮かべて OK です)。
+  この場合、状態 <Ket label="0" /> は北極点、状態 <Ket label="1" /> は南極点にそれぞれ対応します。
+</p>
+
+<p>
+  量子コンピュータが唯一得意な計算は、回転をあらわす行列をベクトルに掛けることでした<Sidenote id="qubit-note-3" numbered><a href={`${base}what_qpu_do_faster/`}>QPU は何が得意?</a> を参照。</Sidenote>。
+  これを地球で考えると、地球上のある点を回転操作で別の位置に移動させることに相当します。
+  これはたとえば、南極点 <Ket label="1" />
+  にいるペンギンの位置をベクトルとして表したとき、そのベクトルに球面上の回転を表す行列をかけることで、ペンギンを北極やハワイなど好きな場所に移動させることに相当します。
+</p>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    cloze="確率的ビットでは確率でビットの状態を表す。量子ビットでは{振幅}でビットの状態を表す"
+  ></orbit-prompt>
+  <orbit-prompt cloze="量子ビットの振幅は、一般に{複素数}の値をとる"></orbit-prompt>
+  <orbit-prompt
+    cloze="1 量子ビットの状態は、{半径 1 の球面}上のある 1 点として表せる"
+  ></orbit-prompt>
+  <orbit-prompt
+    cloze="1 量子ビットの状態を球面上の 1 点として視覚化した図を{ブロッホ球}と呼ぶ"
+  ></orbit-prompt>
+  <orbit-prompt cloze={String.raw`ブロッホ球では、状態 $|0\rangle$ は{北極点}に対応する`}></orbit-prompt>
+  <orbit-prompt cloze={String.raw`ブロッホ球では、状態 $|1\rangle$ は{南極点}に対応する`}></orbit-prompt>
+</orbit-reviewarea>
+
+<h2>ブロッホ球で実験</h2>
+
+<p>
+  Qni にはちょうど、1 量子ビットの状態を球上の点として表示する「ブロッホ球」命令があります。
+  これを使って、量子ビットのいろんな状態を見てみましょう。
+</p>
+
+<p>
+  下の量子回路には、すでにいくつかの QPU 命令が置いてあります。 それぞれの QPU
+  命令は、量子ビットに対する異なる回転操作を表しています。
+  ブロッホ球を回路上のいろんな場所に置いてみることで、それぞれの命令によってどんな回転が起こるか推測してみましょう。
+</p>
+
+<qni-webgpu-circuit circuit={"{\"cols\":[[\"|0>\"],[\"X\"],[\"Rx(π/2)\"],[\"Rz(π/2)\"],[\"Ry(π/2)\"]]}"}></qni-webgpu-circuit>
+
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>

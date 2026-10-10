@@ -1,0 +1,69 @@
+{
+  "title": "量子ビット",
+  "slug": "qubit",
+  "description": "量子ビットと確率的ビットとの主な違い",
+  "sidenotes": [
+    "amplitude-prob",
+    "bloch-sphere",
+    "qubit-note-3"
+  ],
+  "images": [
+    "images/p0p1_graph.png",
+    "images/qbit_circular_state.png",
+    "images/bloch_sphere.png"
+  ],
+  "orbitPrompts": 6,
+  "orbit": [
+    {
+      "cloze": "確率的ビットでは確率でビットの状態を表す。量子ビットでは{振幅}でビットの状態を表す"
+    },
+    {
+      "cloze": "量子ビットの振幅は、一般に{複素数}の値をとる"
+    },
+    {
+      "cloze": "1 量子ビットの状態は、{半径 1 の球面}上のある 1 点として表せる"
+    },
+    {
+      "cloze": "1 量子ビットの状態を球面上の 1 点として視覚化した図を{ブロッホ球}と呼ぶ"
+    },
+    {
+      "cloze": "ブロッホ球では、状態 $|0\\rangle$ は{北極点}に対応する"
+    },
+    {
+      "cloze": "ブロッホ球では、状態 $|1\\rangle$ は{南極点}に対応する"
+    }
+  ],
+  "circuits": [
+    {
+      "cols": [
+        [
+          "|0>"
+        ],
+        [
+          "X"
+        ],
+        [
+          "Rx(π/2)"
+        ],
+        [
+          "Rz(π/2)"
+        ],
+        [
+          "Ry(π/2)"
+        ]
+      ]
+    }
+  ],
+  "amplitudes": [
+    {
+      "amplitude": "0.8944271909999159",
+      "ket": "0",
+      "size": "xl"
+    },
+    {
+      "amplitude": "0.4472135954999579",
+      "ket": "1",
+      "size": "xl"
+    }
+  ]
+}

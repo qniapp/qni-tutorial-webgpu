@@ -1,0 +1,124 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="位相" description="量子ビットの持つ角度パラメータ" section="量子ビット" hasMath hasCircuit>
+
+
+<p>Qni で円の中にある時計の針のようなものは、量子ビットが持つ位相という角度データを表します。</p>
+
+<div class="mt-5 mb-8 flex justify-center space-x-2 md:mr-auto md:w-7/12">
+  <qubit-circle data-amplitude="-0.20015 + 0.44444i" data-ket="0" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.67819 - 0.54997i" data-ket="1" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+</div>
+
+<p>
+  位相は量子ビットが持つある種の回転を表します。 位相は反時計まわりの方向に回転し、-2π (-360°) から
+  2π (360°) までの値を取ることができます。
+</p>
+
+<p>
+  量子コンピュータによる計算では、<Ket label="0" /> の位相と <Ket label="1" /> の位相差 (相対位相)
+  のみが意味を持ちます。 つまり、<Ket label="0" /> の位相を基準とした <Ket label="1" />
+  の回転角度のみを考えます。 たとえば、以下の 2 つの状態では位相の差はどちらも π/2
+  なので、見た目は違いますが同じ状態を表しています。
+</p>
+
+<div class="mt-5 mb-8 overflow-auto md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center space-x-4">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.7071067811865476i" data-ket="1" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <span>=</span>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.5 + 0.5i" data-ket="0" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5 - 0.5i" data-ket="1" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div>
+
+<p>
+  確率と位相は、量子ビットが持つまったく独立した 2 つのプロパティです。
+  言い換えれば量子ビットは、確率という 0 〜 1 の大きさを表すプロパティと、位相という -2π 〜
+  2πの角度を表すプロパティを持ち、それぞれ独立して調整できます。
+</p>
+
+<p>
+  量子ビットを測定すると、確率と位相はどちらも破壊され、量子ビットは <Ket label="0" /> または <Ket label="1" />
+  の状態になります。 このとき確率は <Ket label="0" /> または <Ket label="1" />
+  が出てくる可能性に直接影響する一方で、位相は直接的には影響しません。
+  では、位相はいったい何に使えるのでしょうか?
+</p>
+
+<p>
+  ひとつは、データのエンコードです。
+  <a href={`${base}p_bit/`}>確率的ビット</a
+  >の説明では、データをバイナリに変換して確率に埋め込むテクニックを紹介しました。
+  同様に、データをうまく -2π 〜 2 π の間の数値に変換することで、位相に埋め込むことができます。
+  もちろん、量子ビットを測定すると位相は破壊されるので、埋め込んだデータをそのまま取り出すことはできませんが、測定しなければそのデータを計算に使えます。
+</p>
+
+<p>
+  位相のもうひとつの用途は、確率の間接的な操作です。 後に紹介する量子探索アルゴリズム<Sidenote id="grover" numbered>グローバーのアルゴリズム。アルゴリズムの特長は「<a href={base}>はじめに</a
+  >」の電話帳の例を参照。</Sidenote>では、探索するリスト内の大量のアイテムのうち、見つけ出したい目的のアイテムにマークをつけ、このアイテムが測定で浮かび上がるように確率を上昇させます。
+  このマークをつけるという操作は、目的のアイテムだけ位相を 180
+  度逆向きにするという方法で実現します。
+</p>
+
+<figure>
+  <img src={`${base}images/amplitude_amplification_overview.png`} class="h-auto w-full" />
+</figure>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="時計の針のような線は何を表す?"
+    question-attachments="https://qniapp.github.io/qni/images/superposition_phase.png"
+    answer="位相"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="量子ビットを測定すると、その確率と位相はどうなる?"
+    question-attachments="https://qniapp.github.io/qni/images/superposition_phase.png"
+    answer="破壊される"
+    answer-attachments="https://qniapp.github.io/qni/images/superposition-0-100.png"
+  ></orbit-prompt>
+  <orbit-prompt cloze="位相の主な用途は{データのエンコード}と{確率の間接的な操作}である">
+  </orbit-prompt>
+</orbit-reviewarea>
+
+<h2>確率と位相を QPU 命令で操作してみよう</h2>
+
+<p>
+  いくつかの QPU 命令で、量子ビットの確率と位相を変更できます。 回路に QPU
+  命令をドラッグアンドドロップすることで、<Ket label="0" /> と <Ket label="1" />
+  の確率や位相が変化するのを見てみましょう。
+  それぞれの命令が何をしているかは、まだ気にしなくてかまいません。
+</p>
+
+<p>
+  ここで確認しておきたいのは、QPU
+  命令が確率や位相を変化させ、命令の種類によってその変化が異なるという点です。
+  命令によっては確率がまったく変化しないかわりに、位相だけを回転させるものもあります。
+  またはその逆や、両方を変化させるものもあります。
+</p>
+
+<qni-webgpu-circuit circuit={'{"cols":[["|0>"]]}'}></qni-webgpu-circuit>
+
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>
