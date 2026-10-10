@@ -381,7 +381,7 @@ pinを **3cce38bd9ad4e53a6e23e9be7cc79ef97ed630b6** に更新。clean detached `
 
 結果 `/tmp/qtw-port-{no_cloning_theorem,gate_combination}.json`、original/ours/compare screenshots `/tmp/qtw-port-<slug>-<original|ours|compare>-{1440,390}.png`、mobile冒頭detail `/tmp/qtw-combination-top-390.png`。
 
-### quantum_key_distribution / 量子鍵配送 (公開確認待ち)
+### quantum_key_distribution / 量子鍵配送 (公開確認完了)
 
 原文acf87bfの本文・注2・Bennett/Brassard論文引用を保持して移植。
 - 置換/削除credit: なし。画像0。
@@ -389,7 +389,7 @@ pinを **3cce38bd9ad4e53a6e23e9be7cc79ef97ed630b6** に更新。clean detached `
 - prose X/H/WRITE0/MEASUREMENTは共通Bold。本文の安全性説明は原文のまま。
 - questions: 新規の画像/旧UI問題なし。
 
-### bb84_protocol / BB84 プロトコル (公開確認待ち)
+### bb84_protocol / BB84 プロトコル (公開確認完了)
 
 原文acf87bfの全段落・箇条書き・注4、送信状態4パターン図を同じoriginal tagsで移植。qubit-circle16のamplitude/ket/sizeを保持し、popupで振幅・確率・位相を確認できる。図のH2個はRegular24px、prose H/MEASUREMENTはBold。元SVG minus/arrowを維持する。
 - 置換/削除credit: なし。元からcustom components、画像0。
@@ -397,3 +397,15 @@ pinを **3cce38bd9ad4e53a6e23e9be7cc79ef97ed630b6** に更新。clean detached `
 - questions: 原文の「最終チェック1,000文字の約半分500文字が一致しない」の計数モデルは今後確認したい。本文は編集せず保持し、数値と矛盾する独自interactive盗聴demoを追加していない。
 
 型チェック/build、新規2ページ1440/390構造・amp16・ket・figure/prose・sidebarを含む61/61 tests。
+
+公開commit **0b116ff7ddc0a74a6d17ba96a9aa6dc430a1181f**、Pages **38032000168** success。原文/live1440/390とも本文diff0・TeX diff0・element counts一致・errors0・overflowなし。量子鍵配送はX/H/WRITE/MEASUREMENT各1・note2・Math0、BB84プロトコルはH20/MEASUREMENT3/qubit-circle16/ket22・note4。いずれもembed0/画像0/Orbit0。元の4パターン図はcircle振幅/phaseをtooltipで調べられる。
+
+結果 `/tmp/qtw-port-{quantum_key_distribution,bb84_protocol}.json`、original/ours/compare screenshots `/tmp/qtw-port-<slug>-<original|ours|compare>-{1440,390}.png`。公開1440/390×DPR1/2でもprose glyph全Boldを再確認し、BB84図のH2個がRegular24pxのままであることを確認。metadata `/tmp/qtw-newpage-glyphs.json`、本文crop `/tmp/qtw-<slug>-prose-<width>-dpr<dpr>.png`、個別12倍nearest `/tmp/qtw-<slug>-<tag>-<width>-dpr<dpr>-zoom.png`。目視でWRITE0の斜線/MEASUREMENT meter・H/Xの太さを確認。全8 loads errors0。引用文・原文の安全性/盗聴率の説明は編集していない。
+
+### bb84_circuit / BB84 回路 (STOP、未移植)
+
+次ページの原文acf87bfをgit showで調査。original JSONは `Measure>aliceX` / `Measure>aliceH` / `Measure>eveX` / `Measure>bobH` に測定結果を代入し、`X<aliceX` / `H<aliceH` / `X<eveX` / `H<bobH` を変数値1のときだけ実行する。元paletteはなしなので将来の移植時は `[]`。
+
+公開3cce38b nativeで原文JSONをそのまま新しいqni-webgpu-circuitに渡すE2E reproduction: `data-state=error`、`invalid circuit JSON: expected {"cols":[...]} with supported gates`。既存2embedはrunningのまま。native decoderはnamed measurement/condition modelを持たないため、原文の説明・回路を一致させるには#52以外の上流変更が必要。**https://github.com/qniapp/qni-webgpu/issues/53** に報告し、standing STOP ruleで停止する。条件を削って無条件gateで代用することも、本文を書き換えることもしていない。Astroページ/PORTED link未作成。
+
+Artifacts `/tmp/qtw-bb84-flag-repro.{json,png}`、harness `/tmp/qtw-bb84-flag-repro.mjs`、原文snapshot `/tmp/qtw-next-bb84-circuit.html`。upstream code変更なし。今回新規移植はsidebar順に **4ページ**、全公開検証完了。
