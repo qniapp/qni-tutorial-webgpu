@@ -25,7 +25,7 @@ const base = import.meta.env.BASE_URL
   つをランダムに出力します。
 </p>
 
-<qni-webgpu-circuit palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"H\"],[1,\"H\"],[1,1,\"H\"],[1,1,1,\"H\"],[1,1,1,1,\"H\"],[1,1,1,1,1,\"H\"],[1,1,1,1,1,1,\"H\"],[1,1,1,1,1,1,1,\"H\"],[\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\"]]}"}></qni-webgpu-circuit>
+<qni-webgpu-circuit palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"H\"],[1,\"H\"],[1,1,\"H\"],[1,1,1,\"H\"],[1,1,1,1,\"H\"],[1,1,1,1,1,\"H\"],[1,1,1,1,1,1,\"H\"],[1,1,1,1,1,1,1,\"H\"],[\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\"]]}"} max-wire-count="1"></qni-webgpu-circuit>
 
 <p>
   大筋としてこれがどのように動作しているか、状態ベクトル表示を使って調べてみましょう。 H
@@ -149,7 +149,7 @@ const base = import.meta.env.BASE_URL
   このことを使うと、先ほどの回路は次のようにかなりコンパクトに書き直せます。
 </p>
 
-<qni-webgpu-circuit palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"H\",\"H\",\"H\",\"H\",\"H\",\"H\",\"H\",\"H\"],[\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\"]]}"}></qni-webgpu-circuit>
+<qni-webgpu-circuit palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"H\",\"H\",\"H\",\"H\",\"H\",\"H\",\"H\",\"H\"],[\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\",\"Measure\"]]}"} max-wire-count="1"></qni-webgpu-circuit>
 
 <p>
   多くの量子アルゴリズムでは、最初の準備段階として、均一な重ね合わせ状態をこのように縦に並べた H

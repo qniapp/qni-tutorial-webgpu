@@ -520,3 +520,46 @@ phase_bit{1,2,3}_ket_pair.pngの3枚を、元の4色pairとPHASE双方向arc/Mat
 prose H/X/MEASUREMENT Bold16px、PHASE図label RegularとXOR pair選択を、新3ページ×1440/390×DPR1/2で公開確認。`/tmp/qtw-pr56-glyphs.json`、`/tmp/qtw-pr56-<slug>-<width>-dpr<dpr>-{glyphs,selected}.png`。最終 **158 tests passed (4.4m)**、build/typecheck成功。条件付きembedのrunning/step0/flag exportと適用/skip/未定義のGPU動作を `tests/bb84-conditional.spec.ts` に固定した。
 
 build運用注意: `pnpm build` はnative WASMを再buildしない。pin変更時は必ずclean pinned sourceを `bash scripts/fetch-qni-webgpu.sh <source>` に渡してembed/standaloneを生成し、その後 `QNI_WEBGPU_SOURCE=<source> pnpm build` する。今回も最終local/public確認はその手順で生成したPR #56 bundleで行った。
+
+## 2026-10-11 PR #55 / max-wire-count 前提作業 (07:04 checkpoint)
+
+中断したSWAP/CNOT/SWAPパズルの未公開draftはstashに保持し、先に既存28ページを更新。pin **785c8b786c9eb0b7cb48d435d8215aaf45177ea1**、clean source `verify/tutorial-wire-limit` からembed/standaloneをBinaryen123で実際に再buildした。PR #56のnamed conditional gatesを含む履歴であることも確認。
+
+`qni-webgpu-circuit` の `max-wire-count` を正の整数としてparseし、`startEmbed` の `maxWireCount` に渡す。属性なしはsettings key自体を省略する。変更/削除で旧runnerを破棄して再起動し、不正値は起動せず既存error UIを使う。本文/JSON/palette/creditは未変更。
+
+元 `origin/main:apps/tutorial/<slug>.html` と `_plugins/mini_qni_filter.rb` を照合。直接HTMLは1、mini_qni filterの実装は2。WRITEの元HTMLにはmax属性がないが、直接HTMLの1という指定と元の1wire図に従った。未移植 `decrement_circuit` の直接図には4が明記されているため、移植時に元属性を照合する。値はページ内embed順。
+
+| ページ | max-wire-count |
+| --- | --- |
+| index | 2 |
+| qpu | embedなし |
+| what_qpu_do_faster | embedなし |
+| quantum_circuit | embedなし |
+| qni_intro | 2, 1 |
+| p_bit | embedなし |
+| superposition | embedなし |
+| qubit | 2 |
+| phase | 1 |
+| circle_notation | embedなし |
+| cpu_vs_qpu_operations | embedなし |
+| h_gate | 1 |
+| x_gate | 1, 1 |
+| phase_gate | 2 |
+| write_operation | 1, 1 |
+| measurement_operation | 1 |
+| no_cloning_theorem | embedなし |
+| gate_combination | 1, 1 |
+| quantum_key_distribution | embedなし |
+| bb84_protocol | embedなし |
+| bb84_circuit | 1 |
+| multi_qubit_circle_notation | embedなし |
+| multi_qubit_superposition | 1, 1, 1 |
+| multi_qubit_operation | 1, 1, 1 |
+| operator_pair | embedなし |
+| random_byte_generator | 1, 1 |
+| multi_qubit_phase_gate | 1 |
+| partial_measurement | embedなし |
+
+fixture `tests/fixtures/original-wire-limits.json` と各ページ属性の回帰テストを追加。parserの整数化・省略・変更・不正値も含め **45 tests passed**、build/typecheck成功。実WebGPU Chromiumのlocal確認は全24embed×390/1440=48開始すべてrunning/step0/GPU norm1/errors0。全28ページ×2幅=56ケースでshadow DOMを含むHTML内横/縦scroll0/document overflow0/errors0。`/tmp/qtw-pr55-existing.json`、`/tmp/qtw-scroll-pr55-local.json` と同prefixの全ページ/全embed画像。読み込んだ既存3/8wire回路をmax=1で切り詰めていないこともGPU dimensionで確認。
+
+native canvasのpan/clipはHTML scrollとは区別し、hostを縮小せずnote-onlyとして高宮さんの判断待ち。公開commit/Pagesと公開48/56ケース確認は次のcheckpointに記録する。

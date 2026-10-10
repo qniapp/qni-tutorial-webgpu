@@ -1,0 +1,17 @@
+{
+  "index": [2],
+  "qni_intro": [2, 1],
+  "qubit": [2],
+  "h_gate": [1],
+  "x_gate": [1, 1],
+  "phase": [1],
+  "phase_gate": [2],
+  "write_operation": [1, 1],
+  "measurement_operation": [1],
+  "gate_combination": [1, 1],
+  "multi_qubit_superposition": [1, 1, 1],
+  "multi_qubit_operation": [1, 1, 1],
+  "random_byte_generator": [1, 1],
+  "bb84_circuit": [1],
+  "multi_qubit_phase_gate": [1]
+}

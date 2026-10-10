@@ -17,12 +17,12 @@ const base = import.meta.env.BASE_URL
 
 <div class="my-5 flex flex-col items-center md:mr-auto md:w-7/12">
   <div>量子ビットを <Ket label="0" /> に初期化してからゲートを配置</div>
-  <div data-original-image><qni-webgpu-circuit palette={"[]"} circuit={'{"cols":[["|0>"],["H"],["Y"]]}'}></qni-webgpu-circuit></div>
+  <div data-original-image><qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={'{"cols":[["|0>"],["H"],["Y"]]}'}></qni-webgpu-circuit></div>
 </div>
 
 <div class="my-5 flex flex-col items-center md:mr-auto md:w-7/12">
   <div>量子ビットを <Ket label="1" /> に初期化してからゲートを配置</div>
-  <div data-original-image><qni-webgpu-circuit palette={"[]"} circuit={'{"cols":[["|1>"],["Z"],["H"]]}'}></qni-webgpu-circuit></div>
+  <div data-original-image><qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={'{"cols":[["|1>"],["Z"],["H"]]}'}></qni-webgpu-circuit></div>
 </div>
 
 <p>

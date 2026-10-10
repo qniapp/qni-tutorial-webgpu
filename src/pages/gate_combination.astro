@@ -50,7 +50,7 @@ const base = import.meta.env.BASE_URL
   π 回転) ができれば成功です。
 </p>
 
-<qni-webgpu-circuit palette='["H","X"]' circuit={"{\"cols\":[[\"{重ね合わせ\"],[\"|0>\"],[\"H\"],[\"}\"]]}"}></qni-webgpu-circuit>
+<qni-webgpu-circuit max-wire-count="1" palette='["H","X"]' circuit={"{\"cols\":[[\"{重ね合わせ\"],[\"|0>\"],[\"H\"],[\"}\"]]}"}></qni-webgpu-circuit>
 
 <p>
   ボブは秘密のテクニックを使って、まったく新しいゲートを作り出すこともできます。 たとえば H ゲートと
@@ -105,7 +105,7 @@ const base = import.meta.env.BASE_URL
   ここでは <Ket label="0" /> が <Ket label="1" /> になれば成功です。
 </p>
 
-<qni-webgpu-circuit palette='["X^½"]' circuit={"{\"cols\":[[\"|0>\"]]}"}></qni-webgpu-circuit>
+<qni-webgpu-circuit max-wire-count="1" palette='["X^½"]' circuit={"{\"cols\":[[\"|0>\"]]}"}></qni-webgpu-circuit>
 
 <p>
   なぜ、平方根 X ゲートを 2 回適用すると X ゲートになるのでしょうか?

@@ -25,7 +25,7 @@ const base = import.meta.env.BASE_URL
   </div>
 </div>
 
-<qni-webgpu-circuit palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\"],[1,\"X\",1],[\"Measure\",\"Measure\",\"Measure\"]]}"}></qni-webgpu-circuit>
+<qni-webgpu-circuit palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\"],[1,\"X\",1],[\"Measure\",\"Measure\",\"Measure\"]]}"} max-wire-count="1"></qni-webgpu-circuit>
 
 <p>
   次は <Ket label="0" />, <Ket label="2" />, <Ket label="4" />, <Ket label="6" /> がそれぞれ確率 25%
@@ -41,7 +41,7 @@ const base = import.meta.env.BASE_URL
   </div>
 </div>
 
-<qni-webgpu-circuit palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\"],[\"{重ね合わせ状態の生成\"],[1,\"H\",\"H\"],[\"}\"],[\"Measure\",\"Measure\",\"Measure\"]]}"}></qni-webgpu-circuit>
+<qni-webgpu-circuit palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\"],[\"{重ね合わせ状態の生成\"],[1,\"H\",\"H\"],[\"}\"],[\"Measure\",\"Measure\",\"Measure\"]]}"} max-wire-count="1"></qni-webgpu-circuit>
 
 <p>
   最後はそれぞれの確率が異なり、さらに位相も異なる例です。
@@ -62,7 +62,7 @@ const base = import.meta.env.BASE_URL
   お互いに関係なく任意の値を取ることができます。
 </p>
 
-<qni-webgpu-circuit palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\"],[\"{重ね合わせ状態の生成\"],[\"H\",\"H\",\"H\"],[\"P(π_4)\",\"P(π_2)\",\"P(π)\"],[\"Rx(π_2)\"],[\"}\"],[\"Measure\",\"Measure\",\"Measure\"]]}"}></qni-webgpu-circuit>
+<qni-webgpu-circuit palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\"],[\"{重ね合わせ状態の生成\"],[\"H\",\"H\",\"H\"],[\"P(π_4)\",\"P(π_2)\",\"P(π)\"],[\"Rx(π_2)\"],[\"}\"],[\"Measure\",\"Measure\",\"Measure\"]]}"} max-wire-count="1"></qni-webgpu-circuit>
 
 </TutorialLayout>
 <style>

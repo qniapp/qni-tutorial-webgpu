@@ -4,6 +4,7 @@ import { APP_URL } from '../src/components/qni-webgpu-app-url'
 type MockState = {
   calls: { circuit: string; showStatePanel: boolean; url: string }[]
   paletteCalls: { present: boolean; palette?: string[] }[]
+  wireCalls: { present: boolean; value?: number }[]
   destroyed: number[]
   live: number
   maxLive: number
@@ -27,6 +28,7 @@ const mockModule = `
     const mock = window.__qniMock;
     const id = mock.calls.length;
     mock.progress = settings.onProgress;
+    mock.wireCalls.push({ present: Object.hasOwn(settings, 'maxWireCount'), value: settings.maxWireCount });
     mock.paletteCalls.push({ present: Object.hasOwn(settings, 'palette'), palette: settings.palette });
     mock.calls.push({ circuit, showStatePanel: settings.showStatePanel, url: new URL(import.meta.url).pathname });
     if (window.__qniFail) throw new Error('mock GPU failure');
@@ -47,7 +49,7 @@ async function boot(page: Page, options: { gpu?: boolean; held?: boolean; import
   const requests: string[] = []
   await page.addInitScript(({ gpu, held }) => {
     Object.defineProperty(navigator, 'gpu', { configurable: true, value: gpu ? {} : undefined })
-    window.__qniMock = { calls: [], paletteCalls: [], destroyed: [], live: 0, maxLive: 0, release: [] }
+    window.__qniMock = { calls: [], paletteCalls: [], wireCalls: [], destroyed: [], live: 0, maxLive: 0, release: [] }
     window.__qniHeld = held
     window.__qniFail = false
   }, { gpu: options.gpu !== false, held: options.held ?? false })
@@ -284,6 +286,32 @@ test('palette JSON reaches startEmbed, [] hides it and absence omits the option'
   }
   expect((await snapshot(page)).maxLive).toBe(1)
 })
+
+test('max-wire-count forwards integers, restarts on change and omits absent settings', async ({ page }) => {
+  await boot(page)
+  await running(page)
+  expect(await page.evaluate(() => window.__qniMock.wireCalls.at(-1))).toEqual({ present: true, value: 1 })
+  for (const value of ['4', ' 02 ', null]) {
+    await page.locator('qni-webgpu-circuit').evaluate((element, value) => {
+      if (value === null) element.removeAttribute('max-wire-count')
+      else element.setAttribute('max-wire-count', value)
+    }, value)
+    await running(page)
+    expect(await page.evaluate(() => window.__qniMock.wireCalls.at(-1))).toEqual(value === null ? { present: false } : { present: true, value: Number(value) })
+  }
+  expect((await snapshot(page)).maxLive).toBe(1)
+})
+
+for (const value of ['', '0', '-1', '1.5', '2foo', 'NaN', '9007199254740992']) {
+  test(`rejects invalid max-wire-count ${JSON.stringify(value)}`, async ({ page }) => {
+    await boot(page)
+    await running(page)
+    await page.locator('qni-webgpu-circuit').evaluate((element, value) => element.setAttribute('max-wire-count', value), value)
+    await page.locator('qni-webgpu-circuit[data-state="error"]').waitFor()
+    expect((await snapshot(page)).calls).toHaveLength(1)
+    expect((await snapshot(page)).live).toBe(0)
+  })
+}
 
 for (const palette of ['not-json', 'null', '"H"', '["H",1]']) {
   test(`rejects invalid palette ${palette} without starting a new runner`, async ({ page }) => {

@@ -6,12 +6,12 @@ type EmbedModule = {
   startEmbed(
     canvas: HTMLCanvasElement,
     circuit: string,
-    settings: { showStatePanel: boolean; palette?: string[]; onProgress?: (progress: LoadProgress) => void; onDeviceLost?: () => void },
+    settings: { showStatePanel: boolean; palette?: string[]; maxWireCount?: number; onProgress?: (progress: LoadProgress) => void; onDeviceLost?: () => void },
   ): Promise<EmbedHandle>
 }
 
 class QniWebgpuCircuit extends HTMLElement {
-  static observedAttributes = ['circuit', 'palette', 'show-state-panel', 'width', 'height']
+  static observedAttributes = ['circuit', 'palette', 'show-state-panel', 'max-wire-count', 'width', 'height']
 
   private canvas: HTMLCanvasElement
   private status: HTMLDivElement
@@ -170,8 +170,18 @@ class QniWebgpuCircuit extends HTMLElement {
         }
         palette = parsed
       }
+      const rawMaxWireCount = this.getAttribute('max-wire-count')
+      let maxWireCount: number | undefined
+      if (rawMaxWireCount !== null) {
+        const value = rawMaxWireCount.trim()
+        maxWireCount = Number.parseInt(value, 10)
+        if (!/^\d+$/.test(value) || !Number.isSafeInteger(maxWireCount) || maxWireCount < 1) {
+          throw new TypeError('max-wire-count must be a positive integer')
+        }
+      }
       const settings = {
         ...(palette === undefined ? {} : { palette }),
+        ...(maxWireCount === undefined ? {} : { maxWireCount }),
         showStatePanel: this.getAttribute('show-state-panel') !== 'false',
         onDeviceLost: () => {
           if (!current()) return
