@@ -1,0 +1,20 @@
+{
+  "title": "SWAP パズル",
+  "slug": "swap_from_cnots",
+  "description": "CNOT から SWAP を作るには?",
+  "sidenotes": [],
+  "images": [],
+  "orbitPrompts": 0,
+  "orbit": [],
+  "circuits": [
+    {
+      "cols": [
+        [
+          "|0>",
+          "|1>"
+        ]
+      ]
+    }
+  ],
+  "amplitudes": []
+}

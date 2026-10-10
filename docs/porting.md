@@ -562,4 +562,26 @@ build運用注意: `pnpm build` はnative WASMを再buildしない。pin変更�
 
 fixture `tests/fixtures/original-wire-limits.json` と各ページ属性の回帰テストを追加。parserの整数化・省略・変更・不正値も含め **45 tests passed**、build/typecheck成功。実WebGPU Chromiumのlocal確認は全24embed×390/1440=48開始すべてrunning/step0/GPU norm1/errors0。全28ページ×2幅=56ケースでshadow DOMを含むHTML内横/縦scroll0/document overflow0/errors0。`/tmp/qtw-pr55-existing.json`、`/tmp/qtw-scroll-pr55-local.json` と同prefixの全ページ/全embed画像。読み込んだ既存3/8wire回路をmax=1で切り詰めていないこともGPU dimensionで確認。
 
-native canvasのpan/clipはHTML scrollとは区別し、hostを縮小せずnote-onlyとして高宮さんの判断待ち。公開commit/Pagesと公開48/56ケース確認は次のcheckpointに記録する。
+native canvasのpan/clipはHTML scrollとは区別し、hostを縮小せずnote-onlyとして高宮さんの判断待ち。公開commit **b80759fb1b5e744fbc856453d1199f03eb4066ea**、Pages **38090061738 success**。公開24embed×2幅=48開始すべてrunning/step0/norm1/errors0/max属性一致、公開28ページ×2幅=56監査でHTML内横/縦scroll0/document overflow0/errors0。`/tmp/qtw-pr55-existing.json`、`/tmp/qtw-scroll-pr55-public.json`。前提の公開確認を終えてからstashしたdraftを復元した。
+
+## 2026-10-11 SWAP系列 / CPHASE STOP (07:22 checkpoint)
+
+### swap_gate / SWAP ゲート
+
+元の2回路JSONと本文を保持。画像置換/credit削除なし。palette `[[],[]]`、直接HTMLのmax-wire-count `[1,1]`。有効SWAPと別列の無効SWAPをそのまま残す。1440/390の本文/TeX diff0/errors0、2embed×2幅のrunning/step0/norm1。新たなHTML scroll修正なし、nativeのgate/state panelは390でも可視。
+
+### cnot_gate / CNOT ゲート
+
+`2qubits_bit2_ket_pair.png` 1枚を4状態/2色/decimal・2bit binary MathJax labelを持つinteractive KetPairsに置換。選択はXOR 2、例えば1と3。元画像にはcredit行なし、credit削除なし。共通componentにqubits=2を追加し、既存8状態図のdefault=3を維持。元16 amplitude circles、note1、3回路JSON、本文/TeXを保持。図labelはRegular、prose glyphはBold。palette `[[],[],[]]`、直接HTMLのmax-wire-count `[1,1,1]`。1440/390の本文/TeX diff0/errors0、3embed×2幅のrunning/step0/norm1。4列図が自然幅256pxで収まりHTML inner scrollなし。画像→図の差としてket label8個追加。390では最初の長い回路の後半gateがnative canvasで右clip、state panelは可視。nativeの変更/host縮小なし。
+
+### swap_from_cnots / SWAP パズル
+
+元のキーボードの説明/本文と初期2wire JSONを保持。画像置換/credit削除なし。palette `[["X","•","Measure"]]`、直接HTMLのmax-wire-count `[1]`。1440/390の本文/TeX diff0/errors0、embed×2幅のrunning/step0/norm1。HTML scroll修正なし、390でpalette/gate/state panel可視。native上限1でも元から存在する2wireを切り詰めず、既存wireへの編集を許す。
+
+### 確認とSTOP
+
+新3ページのoriginal/local 1440/390比較、12開始、390/1440×DPR1/2のprose Bold・図Regular・XOR選択を確認。`/tmp/qtw-port-{swap_gate,cnot_gate,swap_from_cnots}.json`、original/ours全ページ画像、`/tmp/qtw-swap-new-<slug>-<index>-<width>.png`、`/tmp/qtw-swap-<slug>-<width>-dpr<dpr>-{glyphs,selected}.png`。GPU最終vectorではSWAP、3-CNOT SWAP、Bell状態、control+PHASE、単独PHASE、3種類のCZが期待値と一致。
+
+次のCPHASEでは、元の「同角度PHASE 3個はCCPHASEと等価」というハンズオンがnativeで成立しない。実GPUでは独立PHASEとして7状態が回転するため、上流修正が必要なSTOP。issue **https://github.com/qniapp/qni-webgpu/issues/57**、再現/期待値/実画面は [cphase-blocker.md](cphase-blocker.md)。未公開draftは `/tmp/qtw-blocked-cphase/` に退避し、route/fixture/TOCから除外。本文の改変・別ゲートへの置換・上流修正はしていない。CPHASE/entanglement以降は公開せず、次回は#57解決確認から再開する。
+
+新3ページの質問: 追加なし。既存の保持画像/PHASE・MEASUREMENT本文に関する質問は未変更。全native clip/panはnote-onlyとして高宮さんの判断待ち。公開commit/Pages、全31ページ/30embedの最終再確認は次のcheckpointに記録する。

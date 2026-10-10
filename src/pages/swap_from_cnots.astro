@@ -1,0 +1,74 @@
+---
+import dividerSvg from '../assets/diagram-divider.svg?raw'
+import downSvg from '../assets/diagram-down.svg?raw'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="SWAP パズル" description="CNOT から SWAP を作るには?" section="QPU 命令その 2" hasMath hasCircuit>
+
+
+<p>
+  いつもならとっくに寝ているはずの時間ですが、アリスは自宅ガレージで量子フーリエ変換回路の調整にいそしんでいます。
+  明日は小学校の量子コンピュータクラブの発表会で、自慢の量子プログラムをみんなの前でお披露目するからです。
+</p>
+
+<p>「そっちはどんな調子?」</p>
+
+<p>
+  同じクラブのボブから、チャットが飛び込みました。
+  返信しようとした瞬間、アリスは飲んでいた牛乳をカスタムキーボードの上にこぼしてしまいました。
+  これは自作量子コンピュータを操作するための特製キーボードで、 量子ゲートを入力するための CNOT や
+  SWAP といった特別なキーが並んでいます。
+</p>
+
+<p>「あっ、SWAP キーが動かなくなっちゃった!」</p>
+
+<p>SWAP キーが動かなければ、明日のデモはできません。 幸いなことに、CNOT キーはまだ生きています。</p>
+
+<h2>問題: CNOT から SWAP を作るには?</h2>
+
+<p>
+  CNOT を何度か組合わせて SWAP と同じ働きをする量子回路を作ってください。 完成したら MEASUREMENT
+  命令を使って、確かにビットが入れ替わっていることを確認してください。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[\"X\", \"•\", \"Measure\"]"} circuit={"{\"cols\":[[\"|0>\",\"|1>\"]]}"}></qni-webgpu-circuit>
+
+
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .relative { position:relative; } .absolute { position:absolute; } .inset-0 { inset:0; } .m-auto { margin:auto; }
+  .h-12 { height:48px; } .w-12 { width:48px; } .h-12 :global(svg) { width:100%; height:100%; }
+  .text-purple-500 { color:#A855F7; } .font-bold { font-weight:700; }
+  .h-8 { height:32px; } .w-16 { width:64px; } .text-zinc-300 { color:#DAD8CE; }
+  .h-8 :global(svg) { width:100%; height:100%; }
+  .relative.h-8 :global(x-gate.qpu-operation-sm), .relative :global(measurement-gate.qpu-operation-sm) { font-size:24px; width:24px; height:24px; }
+  .items-center > :global(phase-gate) { font-size:32px; }
+  .mb-4 { margin-bottom:16px; } .space-y-4 { row-gap:16px; } .items-end { align-items:flex-end; }
+  .text-2xl { font-size:24px; line-height:32px; } .mx-auto { margin-inline:auto; } .p-0 { padding:0; }
+  .p-4 { padding:16px; } .border-l-4 { border-left:4px solid #60A5FA; } .bg-blue-50 { background:#EFF6FF; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>

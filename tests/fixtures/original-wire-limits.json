@@ -13,5 +13,8 @@
   "multi_qubit_operation": [1, 1, 1],
   "random_byte_generator": [1, 1],
   "bb84_circuit": [1],
-  "multi_qubit_phase_gate": [1]
+  "multi_qubit_phase_gate": [1],
+  "swap_gate": [1, 1],
+  "cnot_gate": [1, 1, 1],
+  "swap_from_cnots": [1]
 }

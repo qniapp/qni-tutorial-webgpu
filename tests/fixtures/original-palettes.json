@@ -70,5 +70,8 @@
   "random_byte_generator": [[], []],
   "bb84_circuit": [[]],
   "multi_qubit_phase_gate": [["P(π/4)"]],
-  "partial_measurement": []
+  "partial_measurement": [],
+  "swap_gate": [[], []],
+  "cnot_gate": [[], [], []],
+  "swap_from_cnots": [["X", "•", "Measure"]]
 }

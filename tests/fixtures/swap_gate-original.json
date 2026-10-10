@@ -1,0 +1,48 @@
+{
+  "title": "SWAP ゲート",
+  "slug": "swap_gate",
+  "description": "量子ビットの交換",
+  "sidenotes": [],
+  "images": [],
+  "orbitPrompts": 0,
+  "orbit": [],
+  "circuits": [
+    {
+      "cols": [
+        [
+          "|0>",
+          "|1>"
+        ],
+        [
+          "Swap",
+          "Swap"
+        ],
+        [
+          "Measure",
+          "Measure"
+        ]
+      ]
+    },
+    {
+      "cols": [
+        [
+          "|0>",
+          "|1>"
+        ],
+        [
+          "Swap",
+          1
+        ],
+        [
+          1,
+          "Swap"
+        ],
+        [
+          "Measure",
+          "Measure"
+        ]
+      ]
+    }
+  ],
+  "amplitudes": []
+}

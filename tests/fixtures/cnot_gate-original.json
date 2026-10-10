@@ -1,0 +1,160 @@
+{
+  "title": "CNOT ゲート",
+  "slug": "cnot_gate",
+  "description": "条件付き X ゲート",
+  "sidenotes": [
+    "operation-pair"
+  ],
+  "images": [
+    "images/2qubits_bit2_ket_pair.png"
+  ],
+  "orbitPrompts": 0,
+  "orbit": [],
+  "circuits": [
+    {
+      "cols": [
+        [
+          "|1>",
+          "|0>"
+        ],
+        [
+          "•",
+          "X"
+        ],
+        [
+          "Measure",
+          "Measure"
+        ],
+        [
+          "|0>",
+          "|0>"
+        ],
+        [
+          "•",
+          "X"
+        ],
+        [
+          "Measure",
+          "Measure"
+        ]
+      ]
+    },
+    {
+      "cols": [
+        [
+          "|0>",
+          "|0>"
+        ],
+        [
+          "H"
+        ],
+        [
+          "•",
+          "X"
+        ]
+      ]
+    },
+    {
+      "cols": [
+        [
+          "|1>",
+          "|0>"
+        ],
+        [
+          "•",
+          "X"
+        ],
+        [
+          "•",
+          "X"
+        ],
+        [
+          "Measure",
+          "Measure"
+        ]
+      ]
+    }
+  ],
+  "amplitudes": [
+    {
+      "amplitude": "1",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "3",
+      "size": "lg"
+    }
+  ]
+}
