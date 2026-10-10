@@ -491,15 +491,15 @@ pinを **f819e353a6e0f4249331d048abe9763d7a464432** (PR #56) に更新。clean d
 
 pin commit **0a59435eb4664361cf5817dceba1846b3c628c82**、Pages **38087743083 success**。既存22embed×390/1440 = **44起動すべてrunning/step0/norm1/errors0**。`/tmp/qtw-pr56-existing.json`、画像 `/tmp/qtw-pr56-existing-<slug>-<index>-<width>.png`。pin時の全144test成功。公開standaloneで条件1→適用、0→skip、未定義→skip、同名変数は最新の先行測定を読む、未来の測定は先読みしない、元BB84全回路がload/norm1/8状態のone-hotになることをGPU readbackで確認。`/tmp/qtw-pr56-behavior.json` / `/tmp/qtw-pr56-conditional-<case>.png`。全8 named tokensを維持。simulationはGPU-only。
 
-### bb84_circuit / BB84 回路 (公開確認待ち)
+### bb84_circuit / BB84 回路 (公開確認完了)
 
 #53待ちを解除。原文の3wire/全39cols JSONをそのまま保持し、Measure>aliceX/aliceH/eveX/bobH、X<aliceX/eveX、H<aliceH/bobHを削除・無条件化しない。原文prose・TeX unchanged、画像/Orbitなし、credit削除なし、palette **[]**。本文H8/X4/MEASUREMENT4はBold、nativeはRegular。note2/ket15/embed1を保持。local original比較1440/390でtext diff0/TeX diff0/counts一致/errors0。native内の長い回路/block label/8-state gridのclip/panはnote only。原文の「イブの確率/ボブの不一致約半分」のmodel説明は既存質問として保持し、書き換えない。
 
-### multi_qubit_phase_gate / PHASE ゲート (公開確認待ち)
+### multi_qubit_phase_gate / PHASE ゲート (公開確認完了)
 
 phase_bit{1,2,3}_ket_pair.pngの3枚を、元の4色pairとPHASE双方向arc/MathJax ketを持つinteractive KetPairsへ置換。focus/pointer/keyboardでXOR pairを選択する。元画像にcredit行なし、削除creditなし。図labelはRegular、共通prose Bold規則を維持。元amplitude circle **52**、body ket/TeX、note0/Orbit0、3wire JSONを保持。palette **["P(π/4)"]**。8circle before/after 6列は共通4列grid wrapで390のHTML inner scrollを防ぐ。local1440/390でtext diff0/本文TeX diff0/errors0/overflowなし、intentional counts差は画像3→0/diagram ket +24。native state gridは横pan/clip、host canvasを縮小しない。
 
-### partial_measurement / 1 ビット測定 (公開確認待ち)
+### partial_measurement / 1 ビット測定 (公開確認完了)
 
 元の20circle、紫の確率4labelと2本の測定分岐説明図、ket8/TeX、本文を保持。元SVGのdivider/down arrowを使い、確率labelをcircle中心へgridで配置。画像置換なし、credit削除なし、embed/palette/Orbit/noteなし。local1440/390でtext diff0/TeX diff0/counts一致/errors0/overflowなし。native clip/step0は対象外。物理乱数とシミュレータの区別の既存質問は変更しない。
 
@@ -512,3 +512,11 @@ phase_bit{1,2,3}_ket_pair.pngの3枚を、元の4色pairとPHASE双方向arc/Mat
 - random_byte_generator: embed2。逐次Hの後半H/Measureが右でclip、compact回路は全8wire gate可視。両state panelの下端がclip。
 
 画像 `/tmp/qtw-pr56-existing-<slug>-<index>-390.png`、8embed contact `/tmp/qtw-pr56-recheck-390-contact.png`。これはnative rendering/panであり、computed overflow auto/scrollを持つHTML/MathJaxのinner scrollとは別。指示どおりnative変更・host縮小はせずnoteのみ。全ページのHTML内横/縦scroll回帰を再実行する。次はswap_gate、未着手。
+
+公開commit **235e63d3947d0c15d1ba53be654f57e49a4f2edd**、Pages **38088666612 success**。新3ページすべてoriginal/live1440/390のtext diff0/本文TeX diff0/errors0、BBC/partialのcounts一致、PHASEのintentional画像置換差を確認。BBCとPHASEの各2幅native開始はrunning/GPU norm1/one-hot初期状態、BBCは8状態・全8 named tokensを保持。`/tmp/qtw-port-{bb84_circuit,multi_qubit_phase_gate,partial_measurement}.json`、全ページ画像 `/tmp/qtw-port-<slug>-{original,ours}-{1440,390}.png`。既存の保持画像・PHASE/MEASUREMENT本文・creditは未編集。
+
+公開 **28ページ×390/1440 = 56ケース**を実WebGPU Chromeで1ページずつ監査し、computed overflow auto/scrollのHTML内横/縦scroll0/document overflow0/errors0、全embed running。`/tmp/qtw-scroll-pr56-after.json`、画像 `/tmp/qtw-scroll-pr56-after-<slug>-<width>.png`。embedのない再確認2ページの390画像も同prefixで保存。native pan/clipは上記note-onlyのまま保持。
+
+prose H/X/MEASUREMENT Bold16px、PHASE図label RegularとXOR pair選択を、新3ページ×1440/390×DPR1/2で公開確認。`/tmp/qtw-pr56-glyphs.json`、`/tmp/qtw-pr56-<slug>-<width>-dpr<dpr>-{glyphs,selected}.png`。最終 **158 tests passed (4.4m)**、build/typecheck成功。条件付きembedのrunning/step0/flag exportと適用/skip/未定義のGPU動作を `tests/bb84-conditional.spec.ts` に固定した。
+
+build運用注意: `pnpm build` はnative WASMを再buildしない。pin変更時は必ずclean pinned sourceを `bash scripts/fetch-qni-webgpu.sh <source>` に渡してembed/standaloneを生成し、その後 `QNI_WEBGPU_SOURCE=<source> pnpm build` する。今回も最終local/public確認はその手順で生成したPR #56 bundleで行った。
