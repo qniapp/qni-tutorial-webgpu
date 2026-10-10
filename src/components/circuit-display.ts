@@ -1,6 +1,7 @@
 // Display-only original Qni tags. No editor state, drag/drop or simulation.
 import './circuit-display.css'
 import plus from '../assets/gates/plus.svg?raw'
+import boldPlus from '../assets/plus-bold.svg?raw'
 import phase from '../assets/gates/p.svg?raw'
 import y from '../assets/gates/y.svg?raw'
 import z from '../assets/gates/z.svg?raw'
@@ -19,7 +20,12 @@ const icons: Record<string, string> = {
 for (const [tag, icon] of Object.entries(icons)) {
   if (!customElements.get(tag)) customElements.define(tag, class extends HTMLElement {
     connectedCallback() {
-      if (!this.querySelector('svg')) this.innerHTML = icon
+      if (tag === 'x-gate') {
+        const prose = this.closest('p') !== null && this.closest('figure, circuit-step, circuit-dropzone, .qc-operation, [data-original-image]') === null
+        const glyph = prose ? 'bold' : 'regular'
+        if (this.dataset.glyph !== glyph || !this.querySelector('svg')) this.innerHTML = prose ? boldPlus : icon
+        this.dataset.glyph = glyph
+      } else if (!this.querySelector('svg')) this.innerHTML = icon
       this.querySelector('svg')?.setAttribute('aria-hidden', 'true')
       // Native meter strokes scale with its 48px viewBox, unlike the old
       // non-scaling SVG strokes. Keep the geometry but use native scaling.

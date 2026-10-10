@@ -282,3 +282,14 @@ x_gate / phase_gate / measurement_operation / quantum_circuit / qni_intro / cpu_
 - `/tmp/qtw-shape-content-<slug>.json`: 本文/TeX/Orbit/起動結果
 
 本文/header/footer/pin/upstreamは不変。original regular font -> native Geist / 旧green -> native #3AA99Fなど既承認差はそのまま保持。SVG glyphの太さやサイズはnative assets、手続き的primitiveはnativeの48px viewBoxを基準にした。形状修正と測定ページの未完検証を完了し、今回新規ページ移植は行わない。
+
+
+## 14:42 追加: 本文inline XのBold Plus (公開確認待ち)
+
+円形修正は完了済みで再実装しない。変更前の公開x_gateを1440/390×DPR1/2で採取し、inline/figureの個別PNGと本文cropを保存した。初期errors0。
+
+`extract-inline-h.py --glyph plus` を追加し、pin **e8a39cc** `apps/web/assets/Geist-Bold.ttf` の実Bold +輪郭をnative同様48px/0.62em・bounding-box中央配置で生成。新asset `src/assets/plus-bold.svg` はfont weight700。SVG strokeで元のRegularを膨らませず、H同様の真のBold輪郭。生成はfontToolsだけで行い、build/runtimeにPythonやfont downloadは不要。
+
+`x-gate` はp内のproseでのみBold、figure/circuit-step/circuit-dropzone/qc-operation/data-original-image内はRegular。再接続でcontextを再評価する。円radius50%、16px、paper #FFFCF0 / fill #3AA99F、位置は不変。table/transition/palette/connected circuit/native embedのglyphはRegularのまま。本文/header/footer/pin/upstream不変。
+
+型チェック/build成功、42/42 tests。DPR1/2×1440/390の新規4件はprose Bold・figure Regular・サイズ/色/円・reconnectのBold->Regular->Boldを確認。before JSON `/tmp/qtw-xbold-before.json`。公開比較を追記する。
