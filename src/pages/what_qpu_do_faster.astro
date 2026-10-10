@@ -138,7 +138,7 @@ const base = import.meta.env.BASE_URL
 
 <orbit-reviewarea color="blue">
   <orbit-prompt
-    question="次のベクトルの二乗和はいくつ? $$\begin{bmatrix} 0 \\ 1 \\ 2 \end{bmatrix}$$"
+    question={String.raw`次のベクトルの二乗和はいくつ? $$\begin{bmatrix} 0 \\ 1 \\ 2 \end{bmatrix}$$`}
     answer="$0^2 + 1^2 + 2^2 = 5$"
   ></orbit-prompt>
   <orbit-prompt
@@ -209,7 +209,7 @@ const base = import.meta.env.BASE_URL
 <orbit-reviewarea color="blue">
   <orbit-prompt cloze="量子コンピュータからベクトルを取り出す操作を{測定}と呼ぶ"></orbit-prompt>
   <orbit-prompt
-    question="状態 $\begin{bmatrix} 0.5 \\ 0.707 \\ 0 \\ 0.5 \end{bmatrix}$ を測定し、ベクトル $\begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}$ が出てくる確率は何パーセントか?"
+    question={String.raw`状態 $\begin{bmatrix} 0.5 \\ 0.707 \\ 0 \\ 0.5 \end{bmatrix}$ を測定し、ベクトル $\begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}$ が出てくる確率は何パーセントか?`}
     answer="25%"
   ></orbit-prompt>
 </orbit-reviewarea>

@@ -13,6 +13,8 @@ for (const fixture of [qpu, faster]) for (const width of [1440, 390]) {
     await expect(page.locator('main img')).toHaveCount(fixture.images.length)
     for (const image of fixture.images) await expect(page.locator(`main img[src="/qni-tutorial-webgpu/${image}"]`)).toHaveCount(1)
     await expect(page.locator('main orbit-prompt')).toHaveCount(fixture.orbitPrompts)
+    const prompts = await page.locator('main orbit-prompt').evaluateAll(es => es.map(e => Object.fromEntries([...e.attributes].filter(a => !a.name.startsWith('data-astro-')).map(a => [a.name, a.value.replace(/\s+/g, '')]))))
+    expect(prompts).toEqual(fixture.orbit.map(p => Object.fromEntries(Object.entries(p).map(([k,v]) => [k,v.replace(/\s+/g, '')]))))
     await expect(page.locator('main qni-webgpu-circuit')).toHaveCount(0)
     await expect(page.locator('.toc-static [aria-current="page"]')).toHaveAttribute('href', `/qni-tutorial-webgpu/${fixture.slug}/`)
     expect(await page.locator('main').textContent()).not.toMatch(/\{%|endnmargin_note/)
