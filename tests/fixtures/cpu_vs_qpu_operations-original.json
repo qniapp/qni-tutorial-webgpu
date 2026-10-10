@@ -1,0 +1,99 @@
+{
+  "title": "CPU 命令との違い",
+  "slug": "cpu_vs_qpu_operations",
+  "description": "量子コンピュータ版 論理演算",
+  "sidenotes": [
+    "disentangle",
+    "uncomputation"
+  ],
+  "images": [
+    "images/logic_gates_and_not.png"
+  ],
+  "orbitPrompts": 8,
+  "orbit": [
+    {
+      "question": "CPU 論理演算が入力と出力に取ることのできる値は?",
+      "answer": "0 と 1"
+    },
+    {
+      "question": "古典コンピュータの AND ゲートは、入力と出力の数はそれぞれいくつ?",
+      "answer": "入力が2つ、出力が1つ"
+    },
+    {
+      "question": "QPU 命令の入力と出力は何か?",
+      "answer": "1 量子ビット"
+    },
+    {
+      "cloze": "QPU 命令は入力した量子ビットの{確率(振幅の大きさの2乗)}と{位相}に作用する"
+    },
+    {
+      "question": "QPU 命令の入力と出力は何か?",
+      "answer": "1 量子ビット"
+    },
+    {
+      "question": "非可逆な CPU 命令を 1 つ挙げよ",
+      "answer": "AND, OR, NAND, XOR など"
+    },
+    {
+      "question": "古典 AND ゲートはなぜ非可逆か?",
+      "answer": "出力の 1 ビットから入力の 2 ビットを一意に復元できないから"
+    },
+    {
+      "question": "QPU 命令はなぜほとんどが可逆か?",
+      "answer": "逆演算を行う命令が存在するから"
+    }
+  ],
+  "circuits": [],
+  "amplitudes": [
+    {
+      "amplitude": "-0.20015 + 0.44444i",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.67819 - 0.54997i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.67819 - 0.54997i",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.20015 + 0.44444i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.20015 + 0.44444i",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.67819 - 0.54997i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.67819 - 0.54997i",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.20015 + 0.44444i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.67819 - 0.54997i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.20015 + 0.44444i",
+      "ket": "0",
+      "size": "lg"
+    }
+  ]
+}

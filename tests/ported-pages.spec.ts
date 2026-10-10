@@ -5,7 +5,9 @@ import pbit from './fixtures/p_bit-original.json' with { type: 'json' }
 import superposition from './fixtures/superposition-original.json' with { type: 'json' }
 import qubit from './fixtures/qubit-original.json' with { type: 'json' }
 import phase from './fixtures/phase-original.json' with { type: 'json' }
-for (const fixture of [qpu, faster, pbit, superposition, qubit, phase]) for (const width of [1440, 390]) {
+import notation from './fixtures/circle_notation-original.json' with { type: 'json' }
+import cpu from './fixtures/cpu_vs_qpu_operations-original.json' with { type: 'json' }
+for (const fixture of [qpu, faster, pbit, superposition, qubit, phase, notation, cpu]) for (const width of [1440, 390]) {
   test(`${fixture.slug} preserves original structure at ${width}px`, async ({ page }) => {
     await page.setViewportSize({width,height:1000})
     await page.goto(`/qni-tutorial-webgpu/${fixture.slug}/`)

@@ -1,0 +1,164 @@
+---
+import minusSvg from '../assets/cpu-minus.svg?raw'
+import arrowSvg from '../assets/cpu-arrow-right.svg?raw'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="CPU 命令との違い" description="量子コンピュータ版 論理演算" section="QPU 命令その 1">
+
+
+<p>
+  QPU 命令は、CPU で実行される AND や NOT, OR といった命令 (論理演算) の量子ビット版です。 QPU
+  命令と CPU 命令には、次の大きな違いがあります。
+</p>
+
+<h2>QPU 命令は重ね合わせ状態に作用できる</h2>
+
+<p>
+  CPU 論理演算は 0 または 1 のみを入力・出力します。 0 と 1 は古典 1 ビットで表せる値のすべてです。
+</p>
+
+<figure>
+  <img src={`${base}images/logic_gates_and_not.png`} class="h-auto w-full" />
+</figure>
+
+<p>
+  一方で QPU 命令は量子ビットを入出力します。 量子ビットは 0 と 1 だけでなく、0 と 1 の確率
+  (重ね合わせ) を持つことができ、また位相という角度データも持つのでした。 QPU
+  命令は量子ビットの持つ確率と位相の両方に作用します。
+</p>
+
+<div class="my-5 flex overflow-x-auto">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="-0.20015 + 0.44444i" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.67819 - 0.54997i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-6" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-sm text-white">QPU命令</span>
+      <span class="diagram-arrow size-6" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.67819 - 0.54997i" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.20015 + 0.44444i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div>
+
+<h2>QPU 命令の大部分は逆方向の命令 (逆演算) を持つ</h2>
+
+<p>
+  AND などの CPU 命令では、出力の 1 ビットから入力の 2 ビットを知ることはできません。 たとえば、AND
+  の出力が 0 だった場合には、入力は 00/01/10 の 3 通りで、どれか 1 つに特定することはできません。
+  これを「AND は非可逆である」と言います。
+</p>
+
+<p>
+  一方でほとんどの QPU 命令は可逆です。 つまりある QPU 命令に対応する逆命令 (逆演算)
+  を適用することで、出力の量子ビットから元々の入力された量子ビットを得ることができます
+</p>
+
+<div class="my-5 flex overflow-x-auto">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="-0.20015 + 0.44444i" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.67819 - 0.54997i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">命令</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.67819 - 0.54997i" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.20015 + 0.44444i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">逆演算</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.67819 - 0.54997i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.20015 + 0.44444i" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div>
+
+<p>後に詳しく見ていきますが、逆演算は量子プログラミングでひんぱんに使うテクニックの 1 つです。</p>
+
+<p>
+  たとえば量子ビット同士をもつれさせるいくつかの QPU
+  命令の後に逆演算を施すと、もつれた量子ビットを元通りに戻すことができます。
+  この量子ビットをもつれさせる/ほどくという操作は、量子プログラミングの基本的なテクニックです<Sidenote id="disentangle" numbered><a href="https://qniapp.github.io/qni/entanglement.html">量子もつれ</a>と<a
+    href="https://qniapp.github.io/qni/disentangle.html"
+    >もつれをほどく</a
+  >で説明しています。</Sidenote>。
+</p>
+
+<p>
+  逆演算は実行中にぐちゃぐちゃになった量子ビットの状態をリセットして、元の初期状態に戻すのにも使えます。
+  たとえばある処理内の一時変数として使った量子ビットを、処理が終了した後リセットして 0
+  に戻し、再利用する場合などです<Sidenote id="uncomputation" numbered><a
+    href="https://qniapp.github.io/qni/multiplication_circuit.html"
+    >かけ算回路</a
+  >で説明しています。</Sidenote>。
+</p>
+
+<p>これらのテクニックの基本となる、代表的な QPU 命令と逆演算を具体的に見ていきましょう。</p>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="CPU 論理演算が入力と出力に取ることのできる値は?"
+    answer="0 と 1"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="古典コンピュータの AND ゲートは、入力と出力の数はそれぞれいくつ?"
+    answer="入力が2つ、出力が1つ"
+  ></orbit-prompt>
+  <orbit-prompt question="QPU 命令の入力と出力は何か?" answer="1 量子ビット"></orbit-prompt>
+  <orbit-prompt cloze="QPU 命令は入力した量子ビットの{確率(振幅の大きさの2乗)}と{位相}に作用する">
+  </orbit-prompt>
+  <orbit-prompt question="QPU 命令の入力と出力は何か?" answer="1 量子ビット"></orbit-prompt>
+  <orbit-prompt
+    question="非可逆な CPU 命令を 1 つ挙げよ"
+    answer="AND, OR, NAND, XOR など"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="古典 AND ゲートはなぜ非可逆か?"
+    answer="出力の 1 ビットから入力の 2 ビットを一意に復元できないから"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="QPU 命令はなぜほとんどが可逆か?"
+    answer="逆演算を行う命令が存在するから"
+  ></orbit-prompt>
+</orbit-reviewarea>
+
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>

@@ -1,0 +1,125 @@
+{
+  "title": "状態ベクトル表示",
+  "slug": "circle_notation",
+  "description": "量子ビットの振幅や確率、位相の円表示",
+  "sidenotes": [
+    "circle_notation-note-1",
+    "q-bit-1",
+    "magnitude"
+  ],
+  "images": [
+    "images/argument_of_complex.png"
+  ],
+  "orbitPrompts": 8,
+  "orbit": [
+    {
+      "cloze": "量子コンピュータが持つ量子ビット全体の状態を{状態ベクトル}と呼ぶ"
+    },
+    {
+      "cloze": "Qni では{円}を並べることで状態ベクトルを表現する"
+    },
+    {
+      "cloze": "振幅は、量子ビットの測定結果に影響する{重み}を表す"
+    },
+    {
+      "cloze": "振幅は、状態ベクトルの円それぞれの{確率}と{位相}の両方を 1 つの値で表す"
+    },
+    {
+      "cloze": "状態ベクトルの円の確率は、振幅の{大きさ}の 2 乗"
+    },
+    {
+      "cloze": "振幅の{大きさ}は、状態ベクトルの青い円の{半径}で表される"
+    },
+    {
+      "cloze": "状態ベクトルの円の位相は、振幅の{偏角}"
+    },
+    {
+      "question": "振幅 $a + bi$ の偏角を図で表すと?",
+      "answer": "",
+      "answer-attachments": "https://qniapp.github.io/qni/images/argument_of_complex.png"
+    }
+  ],
+  "circuits": [],
+  "amplitudes": [
+    {
+      "amplitude": "1",
+      "ket": "0",
+      "size": "xl"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "xl"
+    },
+    {
+      "amplitude": "0",
+      "ket": "0",
+      "size": "xl"
+    },
+    {
+      "amplitude": "1",
+      "ket": "1",
+      "size": "xl"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "xl"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "1",
+      "size": "xl"
+    },
+    {
+      "amplitude": "0.8944271909999159",
+      "ket": "0",
+      "size": "xl"
+    },
+    {
+      "amplitude": "0.4472135954999579",
+      "ket": "1",
+      "size": "xl"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "xl"
+    },
+    {
+      "amplitude": "0.5 + 0.5i",
+      "ket": "1",
+      "size": "xl"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "xl"
+    },
+    {
+      "amplitude": "0.7071067811865476i",
+      "ket": "1",
+      "size": "xl"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "xl"
+    },
+    {
+      "amplitude": "-0.7071067811865476",
+      "ket": "1",
+      "size": "xl"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "xl"
+    },
+    {
+      "amplitude": "-0.7071067811865476",
+      "ket": "1",
+      "size": "xl"
+    }
+  ]
+}

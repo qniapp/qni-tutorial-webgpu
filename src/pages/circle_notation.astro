@@ -1,0 +1,158 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="状態ベクトル表示" description="量子ビットの振幅や確率、位相の円表示" section="量子ビット" hasMath>
+
+
+<p>
+  量子コンピュータが持つ量子ビット全体の状態を状態ベクトルと呼びます。
+  状態ベクトルを使えば、量子コンピュータのある時点での状態をベクトル 1 つで表すことができます。
+  一般にベクトルとは数を並べたものですが、本チュートリアルでは円の並びで状態ベクトルを表現します。
+  ここでは、状態ベクトルの正しい読み方、特に量子ビットが持つ振幅や確率、位相の概念が円としてどう表されるか詳しく見ていきましょう。
+</p>
+
+<h2>振幅</h2>
+
+<p>
+  振幅は、量子ビットの円それぞれの「重み」を表す値です。
+  重みは量子ビットの測定に関わる値で、測定によって <Ket label="0" /> や <Ket label="1" />
+  が出る可能性を表すものです。 たとえば確率は、<Ket label="0" /> または <Ket label="1" />
+  が測定される可能性を直接的に表した値です。 また位相は、<Ket label="0" /> や <Ket label="1" />
+  が測定される確率を間接的に操作できます<Sidenote id="circle_notation-note-1" numbered><a href={`${base}phase/`}>位相</a>を参照。</Sidenote>。 円それぞれに割り当てられた振幅は、確率と位相の両方を 1 つの値で表します。
+</p>
+
+<h2>振幅と確率の関係</h2>
+
+<p>
+  量子ビットを測定した時に 0 または 1 を得る確率は、 <Ket label="0" /> と <Ket label="1" /> それぞれの振幅の 2
+  乗を計算することによって求められるのでした。 振幅は一般に複素数であるため<Sidenote id="q-bit-1" numbered><a href={`${base}qubit/`}>量子ビット</a>を参照</Sidenote>、より正しくは「確率は振幅の大きさ<Sidenote id="magnitude" numbered>{String.raw`ある振幅 (複素数) \(\alpha = a +
+  bi\) について、その大きさ \(|\alpha|\) は \(\sqrt{a^2 + b^2}\)
+  で計算できます。確率は振幅の大きさの 2 乗なので、\(| \alpha|^2 = a^2 + b^2\) となります。`}</Sidenote> (magnitude) の 2 乗」と言えます。
+  状態ベクトル表示では、青く塗りつぶされた円の半径は振幅の大きさを表すので、その面積 (半径 x 半径 x
+  π) はその確率に正比例します。
+  状態ベクトルの円にマウスオーバーすると、それぞれの振幅と確率をポップアップ表示します。
+  下の円それぞれにマウスオーバーして、たしかに振幅の大きさの 2
+  乗が確率と等しくなっていることを確認しましょう。
+</p>
+
+<div class="flex flex-col justify-start">
+  <div class="flex flex-row space-x-2"><qubit-circle data-amplitude="1" data-ket="0" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle></div>
+  <div class="flex flex-row space-x-2">
+    <qubit-circle data-amplitude="0" data-ket="0" data-size="xl" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="1" data-size="xl" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+  </div>
+  <div class="flex flex-row space-x-2">
+    <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.7071067811865476" data-ket="1" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+  </div>
+  <div class="flex flex-row space-x-2">
+    <qubit-circle data-amplitude="0.8944271909999159" data-ket="0" data-size="xl" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.4472135954999579" data-ket="1" data-size="xl" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+  </div>
+</div>
+
+<h2>振幅と位相の関係</h2>
+
+<p>
+  状態ベクトルの円それぞれの位相は、複素数である振幅の偏角を表します。 偏角とは振幅の値 (複素数)
+  \(\alpha = a + bi\) の \(a\) と \(b\) によって決まる次の角度です。
+</p>
+
+<figure>
+  <img src={`${base}images/argument_of_complex.png`} class="h-auto w-full" />
+</figure>
+
+<p>
+  たとえば下の π/4 の <Ket label="1" /> のポップアップを見ると、振幅が \(0.5 + 0.5i\) となっています。
+  \(a\) と \(b\) はそれぞれ \(0.5\) と等しいので、上の図で考えると偏角は確かに π/4 (45°)
+  となります。 余裕のある人は、ほかの偏角と振幅も確認してみましょう。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <table>
+    <thead>
+      <tr>
+        <th>偏角</th>
+        <th>円表示</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="align-middle">π/4</td>
+        <td>
+          <div class="flex flex-row space-x-2">
+            <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5 + 0.5i" data-ket="1" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="align-middle">π/2</td>
+        <td>
+          <div class="flex flex-row space-x-2">
+            <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="xl" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.7071067811865476i" data-ket="1" data-size="xl" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="align-middle">π</td>
+        <td>
+          <div class="flex flex-row space-x-2">
+            <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.7071067811865476" data-ket="1" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="align-middle">3π/2</td>
+        <td>
+          <div class="flex flex-row space-x-2">
+            <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="xl" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.7071067811865476" data-ket="1" data-size="xl" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt cloze="量子コンピュータが持つ量子ビット全体の状態を{状態ベクトル}と呼ぶ">
+  </orbit-prompt>
+  <orbit-prompt cloze="Qni では{円}を並べることで状態ベクトルを表現する"> </orbit-prompt>
+  <orbit-prompt cloze="振幅は、量子ビットの測定結果に影響する{重み}を表す"> </orbit-prompt>
+  <orbit-prompt cloze="振幅は、状態ベクトルの円それぞれの{確率}と{位相}の両方を 1 つの値で表す">
+  </orbit-prompt>
+  <orbit-prompt cloze="状態ベクトルの円の確率は、振幅の{大きさ}の 2 乗"> </orbit-prompt>
+  <orbit-prompt cloze="振幅の{大きさ}は、状態ベクトルの青い円の{半径}で表される"> </orbit-prompt>
+  <orbit-prompt cloze="状態ベクトルの円の位相は、振幅の{偏角}"> </orbit-prompt>
+  <orbit-prompt
+    question="振幅 $a + bi$ の偏角を図で表すと?"
+    answer=""
+    answer-attachments="https://qniapp.github.io/qni/images/argument_of_complex.png"
+  ></orbit-prompt>
+</orbit-reviewarea>
+
+<h2>まとめ</h2>
+
+<p>
+  状態ベクトル表示から読み取れる振幅と確率、位相の関係を紹介しました。
+  測定結果に影響する「円の重み」が振幅であり、振幅から確率と位相という独立した 2
+  つのプロパティが得られます。
+  状態ベクトル表示は確率を青色の円の半径、位相を時計の針の角度として表示します。
+</p>
+
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>
