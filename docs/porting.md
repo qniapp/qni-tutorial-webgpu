@@ -593,3 +593,13 @@ native canvasのpan/clipはHTML scrollとは区別し、hostを縮小せずnote-
 | swap_from_cnots | 1 | [X, •, Measure] |
 
 公開全31ページ/30embedの追加統合監査は `/tmp/qtw-scroll-shipping-public.json` に1ページずつ保存する。62ケースを対象にHTML/shadow DOMのscrollとGPU step0/norm1/max属性を同時確認し、途中結果も保存する。07:28のhard stopを優先し、最終完了数は実行log `/tmp/qtw-shipping-public-audit.log` とこのJSONで確認する。前提の既存28ページ/24embedは公開56/48ケース完了、新3ページは公開6/12ケース完了済み。CPHASEは#57解決待ちのSTOPであり未公開。
+
+## 2026-10-11 BB84 本文の明示的訂正 (07:39 checkpoint)
+
+高宮さんの明示的な例外許可により、`bb84_protocol` の4文と `bb84_circuit` の3文だけを訂正。07:29に `gh pr list -R qniapp/qni --state all` とbb84/イブ/250のsearchを再実行し、OPENの **[qniapp/qni #572](https://github.com/qniapp/qni/pull/572)** を発見した。authorはyasuhito、head **fbe76c9bbe348bf8ec8cafa8e125dfc56ab911b3**。PR diffを取得し、全7文の文言をそのまま採用した。07:25時点の未発見情報より後の確認結果である。
+
+PRの `{% qpu_operation h %}` は既存 `<h-gate>`、`{% ket 0/1 %}` は既存 `<Ket label="0/1" />` に対応させた。literal Unicode ketや別TeX表記は導入しない。guaranteeを高確率の判断へ、唯一の攻撃を可能な攻撃の一つへ、H適用分の推測50%/全体75%、チェック不一致25%/1,000文字中約250文字へ変更。元の「置こる」もPRどおり「起こる」とする。
+
+7文のbefore/after・PR/head・旧本文/TeX・旧source SHA256を `tests/fixtures/bb84-text-corrections.json` に保存。変更後sourceからその7文だけを逆変換して旧SHAと一致するテストにより、本文以外のHTML/JSON/設定/style/importも無変更と保証する。表示本文は旧全文に許可差分だけを適用して比較し、MathJaxはprotocol22式のまま、circuit16式→18式 (新しいket2個のみ) を許可する。画像/credit/palette/max-wire-count/回路/既存の質問は変更しない。
+
+最終 **201 tests passed (3.5m)**、build/typecheck成功。実WebGPU Chromeのoriginal/local390/1440で許可分以外の本文/TeX diff0/errors0。shadow DOMを含むHTML内横/縦scroll0/document横overflow0、BBCのGPU初期状態も確認。両ページ×2幅×DPR1/2で新しいHのprose Bold16pxと既存ket表示を実画面で確認。`/tmp/qtw-port-bb84_{protocol,circuit}.json`、`/tmp/qtw-scroll-bb84-text-local.json`、`/tmp/qtw-bb84-text-<slug>-<width>-dpr<dpr>[-kets].png`。公開commit/Pagesとlive4ケースの再確認は次のcheckpointに記録する。
