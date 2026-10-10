@@ -236,8 +236,35 @@ h_gateとwrite_operationは既に移植済みなので順序上再実装しな�
 
 X/PHASE公開: commit **5209ad0c17565986077362f5be000f29a77a536e**、Pages **38026924659** success。両幅で本文diff0/本文TeX diff0、Orbit属性一致、ours errors0、overflowなし、embed running/GPU vector正常。Xはcircle20/ket14/x-gate12/embed2/Orbit9/注釈1/画像0/bloch-display1。PHASEはcircle22/ket4/phase-gate14/embed1/Orbit4/注釈2/画像0。原文PHASEサイトだけ旧死んだscriptの `Cannot read properties of null (reading 'setAmplitudes')` が発生し、oursにはない。原文のエラーとしてJSONに分離して保持。Hの赤青/黒矢印追加も再度両幅で確認。`/tmp/qtw-port-{x_gate,phase_gate,h_gate}.json`、compare PNGを保存。
 
-## 15. MEASUREMENT 命令 (`measurement_operation`) - 移植・公開確認待ち
+## 15. MEASUREMENT 命令 (`measurement_operation`) - 移植・公開検証完了
 
 本文、14 qubit-circle、ket、Orbit8・注釈2を維持。原文のtransition/branch-arrow SVGをそのまま使い、measurement-gateは元タグの軽量native glyph。旧simulatorは同じ `{"cols":[["|0>"],["H"],["Measure"]]}` のnative editable embedへ置換。元図は最初からcustom elementsなのでPNG置換なし。旧UI差: inspector/run-circuit-button/circle-notation配置はnative toolbar/state windowとは異なる。本文の「原理的に予測できない乱数」は物理量子測定の説明であり、ブラウザシミュレータは物理乱数源ではないが、忠実移植のため本文は変更しない。後で説明を更新してよいか質問として残す。
 
 typecheck/build成功。全体test runは工具35s timeoutで29件まで成功して中断 (テスト失敗ではない)。owned orphan previewを停止し、measurementの両幅2/2 targeted testsを再実行成功。既存36/36 regressionsはX/PHASEで成功。公開比較を追記する。新規ページはこれで終了し、次はno_cloning_theorem。
+
+
+### MEASUREMENT 最終公開確認 (14:26)
+
+Pages **38027299761** success。commit **f8f1d1a2e30ff3d69f254bb1720c24b6b2575b42**。1440/390で本文・TeX diff0、Orbit属性/counts一致、ours/original errors0、overflowなし。h2/circle14/ket9/write5/measurement9/embed1/Orbit8/注釈2、画像0。native embed running、GPU測定後one-hot stateをreadback。PNG `/tmp/qtw-port-measurement_operation-compare-{1440,390}.png`、JSON `/tmp/qtw-port-measurement_operation.json`。
+
+## 14:26 gate形状の優先修正 (公開確認待ち)
+
+公開x_gateを最小の本文x-gate1個で再現:16×16px、radius2.4pxで角丸矩形。`/tmp/qtw-shape-before.mjs` が実Chromiumでred、local `gate-shapes.spec.ts` の両幅もredを確認した。原因は `circuit-display.css` がx/y/zを同じrectangular selectorにしていたこと。glyphの選択とページCSSは正しい。
+
+| 元タグ | before -> after / 照合結果 |
+| --- | --- |
+| x-gate | radius0.15emの角丸矩形 -> radius50%の円。本文/図/connected circuitすべて同じselector。glyphは正しいPlusのまま |
+| swap-gate | diagonal端butt -> round cap/join。元のstroke4/viewBox48・native endpoints(12,36)/(36,12)は維持 |
+| measurement-gate | 旧SVG path pivot r1.875 + stroke3 (外周3.375) -> native filled circle r3.5。arc/needle/透明body/紫/48px基準のscaled strokes維持 |
+| control-gate | 透明body、center(24,24) r8のfilled dot、nativeと一致。変更なし |
+| phase-gate | 円+Φ。角度ラベル位置・native p.svgと一致。変更なし |
+| write-gate | 透明body、ket bracket位置/stroke2、Geist Mono 0/1、nativeと一致。変更なし |
+| h-gate | rect radius0.15em (GATE_SIZE40でnative radius6)、Regular/Bold proseの既承認選択、nativeH glyph。変更なし |
+| y-gate / z-gate | 同じrect family、native Geist glyph。変更なし |
+| bloch-display | gate-sized glyphでなく独自図の360px sphere。球面/grid/軸を保持、今回形変更なし |
+
+Native reference: qni-webgpu **e8a39cc** `apps/web/src/icons/gate_body.rs` / `gate_glyphs.rs`。Xは `circle_filled` + `GateGlyph::Plus`。`x.svg` の文字XはこのGateKind::Xの描画には使わない。コピーしたplus/y/z/p/digit0/digit1 SVG6枚は同commitのassetsとbyte一致。原文はgit show origin/mainのpackages/elements CSS/iconを参照した。
+
+公開native embedを検証ブラウザ内でWRITE0-X回路にして確認し、Xは40px円＋、GPU stateは|1⟩。両幅canvas PNG `/tmp/qtw-shape-native-x-before-{1440,390}.png`。qni-webgpu本体の問題は見つからず、上流変更なし。
+
+shape before JSON `/tmp/qtw-shapes-before.json`、各element `/tmp/qtw-shape-before-{original,ours}-<page>-<tag>-{1440,390}.png`。Original PHASEだけ既知の死んだsetAmplitudes script errorあり、ours errors0。修正後build/typecheck、関連37/37 tests成功。全9 gate種類のbody family/サイズ/primitive regressionを追加した。公開比較を追記する。

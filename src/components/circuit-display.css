@@ -2,8 +2,8 @@ x-gate, y-gate, z-gate, phase-gate, write-gate, measurement-gate, control-gate, 
   position: relative; display: inline-block; width: 1em; height: 1em; flex: none;
   vertical-align: -0.125em; color: #FFFCF0;
 }
-x-gate, y-gate, z-gate { background: #3AA99F; border-radius: 0.15em; }
-phase-gate { background: #3AA99F; border-radius: 50%; }
+y-gate, z-gate { background: #3AA99F; border-radius: 0.15em; }
+x-gate, phase-gate { background: #3AA99F; border-radius: 50%; }
 x-gate > svg, y-gate > svg, z-gate > svg, phase-gate > svg,
 write-gate > svg, measurement-gate > svg, control-gate > svg, swap-gate > svg {
   display: block; width: 100%; height: 100%;

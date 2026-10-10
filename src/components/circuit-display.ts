@@ -13,7 +13,7 @@ const svg = (content: string) => `<svg viewBox="0 0 48 48" aria-hidden="true" fo
 const icons: Record<string, string> = {
   'x-gate': plus, 'y-gate': y, 'z-gate': z, 'phase-gate': phase,
   'control-gate': svg('<circle cx="24" cy="24" r="8" fill="currentColor"/>'),
-  'swap-gate': svg('<path d="M12 36 36 12M12 12l24 24" fill="none" stroke="currentColor" stroke-width="4"/>'),
+  'swap-gate': svg('<path d="M12 36 36 12M12 12l24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>'),
   'measurement-gate': meter,
 }
 for (const [tag, icon] of Object.entries(icons)) {
@@ -23,7 +23,18 @@ for (const [tag, icon] of Object.entries(icons)) {
       this.querySelector('svg')?.setAttribute('aria-hidden', 'true')
       // Native meter strokes scale with its 48px viewBox, unlike the old
       // non-scaling SVG strokes. Keep the geometry but use native scaling.
-      if (tag === 'measurement-gate') this.querySelectorAll('[vector-effect]').forEach(e => e.removeAttribute('vector-effect'))
+      if (tag === 'measurement-gate') {
+        this.querySelectorAll('[vector-effect]').forEach(e => e.removeAttribute('vector-effect'))
+        // Native draw_meter_icon uses a filled pivot of radius 3.5, rather
+        // than the legacy 1.875-radius path with an outset stroke.
+        const icon = this.querySelector('svg')!
+        const legacyPivot = icon.querySelector('path[fill="currentColor"]')
+        if (legacyPivot) {
+          const pivot = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
+          for (const [name, value] of Object.entries({ cx:'24.625', cy:'33.5', r:'3.5', fill:'currentColor' })) pivot.setAttribute(name, value)
+          legacyPivot.replaceWith(pivot)
+        }
+      }
       this.setAttribute('role', 'img')
       this.setAttribute('aria-label', tag.replace('-gate', '') + ' ゲート')
     }
