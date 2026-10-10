@@ -2,7 +2,9 @@
 
 順序は `src/data/toc.ts`。原文は qniapp/qni origin/main `acf87bfa9b377ca37ff2f9f733a9011cbf34be1d` の `apps/tutorial` を git show で参照する。未対応機能が必要なページでは判断を利用者に返し、そのページと後続ページを移植しない。
 
-## 1. はじめに (`index` / サイトルート) - 移植・公開確認待ち
+## 1. はじめに (`index` / サイトルート) - 移植・公開検証完了
+
+公開1440/390: 本文diff0、TeX diff0、Orbit属性/counts一致、errors0、overflowなし、sidebar rootリンク正常。embed1 running、画像1、Orbit9 (area1)、注釈6、gate/circle/ket0 (embed内部は除外)。GPU one-hot norm1、Qniで開くのexported JSONに `{量子もつれ` / `}` が残ることも両幅で確認。commit **c8bbfcd89f78996c66e5da126b72cdf16892c074**、Pages **38025511738** success。PNG `/tmp/qtw-port-index-compare-{1440,390}.png`、JSON `/tmp/qtw-port-index.json`。
 
 13:27承認とPR #49 mergeにより保留解除。新pin e8a39ccを再build/deployした後、既存h_gate/qni_intro/qubit/phase/multi-3を1440/390で確認し、10 loads / 16 embeds running、GPU vector finite/norm1、errors0。Pages **38024913238**、pin commit **caed094**、JSON `/tmp/qtw-pin-e8a39cc.json`。
 
@@ -166,13 +168,13 @@ normalized比較はembed内部を除く。原文mini_qniの外側にある「Qni
 
 公開1440/390: normalized本文diff0、TeX入力diff0、Orbit属性・要素数一致、errors0、overflowなし、画像SHA256一致、sidebarリンク正常。counts={"hGate": 0, "qubitCircle": 10, "kets": 0, "steps": 0, "dropzones": 0, "x": 0, "phase": 0, "write": 0, "control": 0, "swap": 0, "measurement": 0, "math": 0, "embeds": 0, "images": 1, "orbitPrompts": 8, "orbitAreas": 1, "sidenotes": 2}。commit **270af6355545ed6e65d8223003152515a8eedbbb**、Pages **38023868027** success。PNG `/tmp/qtw-port-cpu_vs_qpu_operations-compare-{1440,390}.png`、JSON `/tmp/qtw-port-cpu_vs_qpu_operations.json`。
 
-## 12. X ゲート (`x_gate`) - 旧pinではcircuit-block PR 待ち
+## 12. X ゲート (`x_gate`) - 次回移植対象 (旧pinではcircuit-block PR 待ち)
 
-原文x_gate.html:254は `{重ね合わせ状態の準備` / `}` を含む。13:27のPR #49 merge承認後、pin更新とindexの後に再開予定。h_gateは移植済みなので再実装しない。
+原文x_gate.html:254は `{重ね合わせ状態の準備` / `}` を含む。13:27のPR #49 merge承認後、pin更新とindexを完了。機能待ちは解除済みだが、13:58の終了期限のため今回このページは開始しない。h_gateは移植済みなので再実装しない。
 
-## 13. PHASE ゲート (`phase_gate`) - 旧pinではcircuit-block PR 待ち
+## 13. PHASE ゲート (`phase_gate`) - Xの次の移植対象 (旧pinではcircuit-block PR 待ち)
 
-原文phase_gate.html:155は `{重ね合わせ` / `}` を含む。新pinの検証後に再開する。
+原文phase_gate.html:155は `{重ね合わせ` / `}` を含む。新pin検証は完了したが、終了期限のため次回Xの後で再開する。h_gateは既存移植済みなので再実装不要。
 
 ## 14. WRITE 命令 (`write_operation`) - 移植・公開検証完了
 
@@ -183,3 +185,7 @@ normalized比較はembed内部を除く。原文mini_qniの外側にある「Qni
 ## PR #49 pin更新 - 公開検証完了
 
 13:27承認に従いpinを **e8a39cc529636a508183e931c5caae65ee69b1b8** に更新。別のclean detached upstream worktreeでembed/standaloneを再buildし、Binaryen123を維持。index移植前に公開の既存embedを確認した。Pages **38024913238** success、10 loads / 16 embeds running、norm1/finite、errors0。JSON `/tmp/qtw-pin-e8a39cc.json`。
+
+### 13:56 最終チェックポイント
+
+この再開でqubit/phase/circle_notation/cpu_vs_qpu_operations/write_operation/indexの6ページを公開検証。各1440/390で本文diff0、counts/Orbit属性一致、errors0、overflowなし。7画像の公開original/ours SHA256一致は `/tmp/qtw-port-image-hashes.json`。既存と共有の差 (paper色、書体、サイドバー、MathJax、native UI) は引き継ぎ、旧UI操作記述の差は各節に記録した。WRITEの静的図も目視で確認、glyphはnativeのket/Geistで旧SVGとは異なる。型チェック/buildと関連49 tests成功。最終commitは検証記録のみで通常push。次はx_gate、その後既存h_gateを飛ばしてphase_gate、さらにmeasurement_operation。未解決STOP質問なし。13:58前に終了し、新規ページは開始しない。
