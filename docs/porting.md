@@ -168,11 +168,11 @@ normalized比較はembed内部を除く。原文mini_qniの外側にある「Qni
 
 公開1440/390: normalized本文diff0、TeX入力diff0、Orbit属性・要素数一致、errors0、overflowなし、画像SHA256一致、sidebarリンク正常。counts={"hGate": 0, "qubitCircle": 10, "kets": 0, "steps": 0, "dropzones": 0, "x": 0, "phase": 0, "write": 0, "control": 0, "swap": 0, "measurement": 0, "math": 0, "embeds": 0, "images": 1, "orbitPrompts": 8, "orbitAreas": 1, "sidenotes": 2}。commit **270af6355545ed6e65d8223003152515a8eedbbb**、Pages **38023868027** success。PNG `/tmp/qtw-port-cpu_vs_qpu_operations-compare-{1440,390}.png`、JSON `/tmp/qtw-port-cpu_vs_qpu_operations.json`。
 
-## 12. X ゲート (`x_gate`) - 移植・公開確認待ち (旧pinの保留を解消)
+## 12. X ゲート (`x_gate`) - 移植・公開検証完了 (旧pinの保留を解消)
 
 原文x_gate.html:254は `{重ね合わせ状態の準備` / `}` を含む。13:27のPR #49 merge承認後、pin更新とindexを完了。機能待ちは解除済みだが、13:58の終了期限のため今回このページは開始しない。h_gateは移植済みなので再実装しない。
 
-## 13. PHASE ゲート (`phase_gate`) - 移植・公開確認待ち (旧pinの保留を解消)
+## 13. PHASE ゲート (`phase_gate`) - 移植・公開検証完了 (旧pinの保留を解消)
 
 原文phase_gate.html:155は `{重ね合わせ` / `}` を含む。新pin検証は完了したが、終了期限のため次回Xの後で再開する。h_gateは既存移植済みなので再実装不要。
 
@@ -232,3 +232,12 @@ X: 本文・ket・20円・Orbit9・注釈1を保持。旧simulator2つは同じJ
 PHASE: 本文・22円・Orbit4・注釈2、6個の角度付きphase-gate図を保持。block付き原文JSONのnative embed1。旧初期化scriptは存在しないcircle-notation-P-cへsetAmplitudesする死んだ処理で、移植後の明示振幅円には不要なので除去 (本文不変)。旧UI差/質問: 本文「ゲートをクリックし、popupの角度icon」をnativeの角度editor操作に合わせて今後書き換えてよいか? 今回は文言据え置き。Orbit attachment PNG URLも据え置き。
 
 h_gateとwrite_operationは既に移植済みなので順序上再実装しない。型チェック/build、関連36/36 tests成功。公開比較を追記する。
+
+
+X/PHASE公開: commit **5209ad0c17565986077362f5be000f29a77a536e**、Pages **38026924659** success。両幅で本文diff0/本文TeX diff0、Orbit属性一致、ours errors0、overflowなし、embed running/GPU vector正常。Xはcircle20/ket14/x-gate12/embed2/Orbit9/注釈1/画像0/bloch-display1。PHASEはcircle22/ket4/phase-gate14/embed1/Orbit4/注釈2/画像0。原文PHASEサイトだけ旧死んだscriptの `Cannot read properties of null (reading 'setAmplitudes')` が発生し、oursにはない。原文のエラーとしてJSONに分離して保持。Hの赤青/黒矢印追加も再度両幅で確認。`/tmp/qtw-port-{x_gate,phase_gate,h_gate}.json`、compare PNGを保存。
+
+## 15. MEASUREMENT 命令 (`measurement_operation`) - 移植・公開確認待ち
+
+本文、14 qubit-circle、ket、Orbit8・注釈2を維持。原文のtransition/branch-arrow SVGをそのまま使い、measurement-gateは元タグの軽量native glyph。旧simulatorは同じ `{"cols":[["|0>"],["H"],["Measure"]]}` のnative editable embedへ置換。元図は最初からcustom elementsなのでPNG置換なし。旧UI差: inspector/run-circuit-button/circle-notation配置はnative toolbar/state windowとは異なる。本文の「原理的に予測できない乱数」は物理量子測定の説明であり、ブラウザシミュレータは物理乱数源ではないが、忠実移植のため本文は変更しない。後で説明を更新してよいか質問として残す。
+
+typecheck/build成功。全体test runは工具35s timeoutで29件まで成功して中断 (テスト失敗ではない)。owned orphan previewを停止し、measurementの両幅2/2 targeted testsを再実行成功。既存36/36 regressionsはX/PHASEで成功。公開比較を追記する。新規ページはこれで終了し、次はno_cloning_theorem。

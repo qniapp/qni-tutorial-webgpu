@@ -1,0 +1,193 @@
+---
+import transitionSvg from '../assets/qubit-transition-arrow.svg?raw'
+import branchSvg from '../assets/qubit-transition-branch-arrow.svg?raw'
+import BlochIllustration from '../components/BlochIllustration.astro'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="MEASUREMENT 命令" description="量子ビットから 0 または 1 を読み出す" section="QPU 命令その 1" hasMath hasCircuit>
+
+
+<p>
+  MEASUREMENT 命令 <measurement-gate></measurement-gate> は量子ビットから 0 または 1 (<Ket label="0" /> または
+  <Ket label="1" />) の値を読み出します。 この読み出す操作 (Measurement) を測定または観測と呼びます <Sidenote id="measurement" numbered>本チュートリアルでは全体を通して Measurement の訳語に測定を使います。</Sidenote>。 量子コンピュータの計算結果を何らかの形で利用するには、必ず <measurement-gate></measurement-gate> を実行する必要があります。
+</p>
+
+<h2>単純な状態の測定</h2>
+
+<p>
+  量子ビット状態が <Ket label="0" /> または <Ket label="1" /> の場合に <measurement-gate></measurement-gate>
+  を作用させた結果は次の通りです。 それぞれ測定すると、そのまま同じ <Ket label="0" /> と <Ket label="1" />
+  が返されます。
+</p>
+
+<div class="my-5 flex justify-center overflow-x-auto md:mr-auto md:w-7/12">
+  <div class="flex flex-col">
+    <div class="mb-8 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="1" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+
+      <div class="relative h-8 w-16">
+        <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+          <Fragment set:html={transitionSvg} />
+        </div>
+        <measurement-gate class="qpu-operation-sm absolute inset-0 m-auto"></measurement-gate>
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="1" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+    </div>
+
+    <div class="flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+
+      <div class="relative h-8 w-16">
+        <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+          <Fragment set:html={transitionSvg} />
+        </div>
+        <measurement-gate class="qpu-operation-sm absolute inset-0 m-auto"></measurement-gate>
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2>重ね合わせ状態の測定</h2>
+
+<p>
+  量子ビットが重ね合わせ状態にある場合、0 と 1 が出る確率は <Ket label="0" /> と <Ket label="1" /> の確率
+  (青い円の面積 = 振幅の大きさの 2 乗) に応じて決まります。
+  このように、測定の結果にはランダム性があります。
+</p>
+
+<div class="my-5 flex justify-center overflow-x-auto md:mr-auto md:w-7/12">
+  <div class="flex flex-col">
+    <div class="flex flex-row items-center space-x-4">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0.25 + 0.43301i" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.43301 - 0.75i" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+
+      <div class="flex flex-col items-end">
+        <span class="text-xs font-bold text-purple-500">25%</span>
+        <div class="relative h-12 w-12">
+          <Fragment set:html={branchSvg} />
+          <measurement-gate class="qpu-operation-sm absolute inset-0 m-auto"></measurement-gate>
+        </div>
+        <span class="text-xs font-bold text-purple-500">75%</span>
+      </div>
+
+      <div class="flex flex-col space-y-4">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle data-amplitude="1" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+        </div>
+        <div class="flex flex-row space-x-2">
+          <qubit-circle data-amplitude="0" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>
+  測定によって量子ビットの振幅の大きさと位相の情報は破壊されるので、<measurement-gate></measurement-gate>
+  は <write-gate data-value="0"></write-gate> や <write-gate data-value="1"></write-gate> と同じく逆演算を持ちません。
+  また、位相と振幅の大きさは互いに独立したパラメータなので、位相の値は測定結果にまったく何の影響も及ぼしません。
+</p>
+
+<h2>量子乱数ジェネレータ</h2>
+
+<p>
+  <measurement-gate></measurement-gate> とこれまでに学んだ <write-gate data-value="0"></write-gate> や <write-gate data-value="1"></write-gate>、<h-gate></h-gate>
+  を組合わせることで、最初の量子アプリケーション「量子乱数ジェネレータ」を作ることができます。 <write-gate data-value="0"></write-gate> で <Ket label="0" /> に初期化した量子ビットを <h-gate></h-gate>
+  で重ね合わせ状態にし、<measurement-gate></measurement-gate> で測定することで 0 または 1
+  をランダムに得ることができます。
+</p>
+
+<qni-webgpu-circuit circuit={"{\"cols\":[[\"|0>\"],[\"H\"],[\"Measure\"]]}"}></qni-webgpu-circuit>
+
+<p>
+  重ね合わせ状態を測定して得られる量子乱数は、従来のコンピュータで計算的に生成する疑似乱数と異なり、原理的にまったく予測できない完璧な乱数です。
+  単なる乱数生成と言ってもその用途は広く、セキュリティ分野での安全な暗号鍵の生成はもちろん、モンテカルロ法といった乱数を使ったアルゴリズムの速度や精度向上にもつながります。
+  実際に、量子乱数の生成はすでにサービス化もされています<Sidenote id="quantum-origin" numbered><a
+    href="https://www.quantumbusinessmagazine.com/post/cambrid"
+    >Cambridge Quantum社、量子乱数生成サービス「Quantum Origin」を発表</a
+  ></Sidenote>。
+</p>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="量子ビットから 0 または 1 を読み出す QPU 命令は?"
+    answer="MEASUREMENT ゲート"
+  ></orbit-prompt>
+  <orbit-prompt
+    cloze="量子ビットから 0 または 1 を読み出す操作を{測定}または{観測}と呼ぶ"
+  ></orbit-prompt>
+  <orbit-prompt cloze="|0⟩ を測定すると {100}% の確率で |0⟩ が得られる"></orbit-prompt>
+  <orbit-prompt cloze="|1⟩ を測定すると {100}% の確率で |1⟩ が得られる"></orbit-prompt>
+  <orbit-prompt
+    question="測定して |0⟩ が得られる確率は?"
+    question-attachments="https://qniapp.github.io/qni/images/superposition-50-50.png"
+    answer="50%"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="測定して |1⟩ が得られる確率は?"
+    question-attachments="https://qniapp.github.io/qni/images/superposition-50-50.png"
+    answer="50%"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="1 ビットの乱数を生成する回路はどのように構成できるか?"
+    answer="H ゲートと MEASUREMENT ゲート"
+    answer-attachments="https://qniapp.github.io/qni/images/random_bit_generator_circuit.png"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="量子ビットを測定して得られる乱数にはどんな特徴があるか?"
+    answer="原理的にまったく予測できない完璧な乱数"
+  ></orbit-prompt>
+</orbit-reviewarea>
+
+<script>import "../components/circuit-display"</script>
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .relative { position:relative; } .absolute { position:absolute; } .inset-0 { inset:0; } .m-auto { margin:auto; }
+  .h-12 { height:48px; } .w-12 { width:48px; } .h-12 :global(svg) { width:100%; height:100%; }
+  .text-purple-500 { color:#A855F7; } .font-bold { font-weight:700; }
+  .h-8 { height:32px; } .w-16 { width:64px; } .text-zinc-300 { color:#DAD8CE; }
+  .h-8 :global(svg) { width:100%; height:100%; }
+  .relative.h-8 :global(x-gate.qpu-operation-sm), .relative :global(measurement-gate.qpu-operation-sm) { font-size:24px; width:24px; height:24px; }
+  .items-center > :global(phase-gate) { font-size:32px; }
+  .mb-4 { margin-bottom:16px; } .space-y-4 { row-gap:16px; } .items-end { align-items:flex-end; }
+  .text-2xl { font-size:24px; line-height:32px; } .mx-auto { margin-inline:auto; } .p-0 { padding:0; }
+  .p-4 { padding:16px; } .border-l-4 { border-left:4px solid #60A5FA; } .bg-blue-50 { background:#EFF6FF; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>
