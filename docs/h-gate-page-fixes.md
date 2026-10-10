@@ -78,3 +78,13 @@ Node 22 の型チェック、Astro build、対象 **9/9 テスト成功**。1440
 `h-gate` は共有の小さな custom element に変更。Vite の virtual module がビルド時にピンから SVG を git show し、その SVG を一回バンドルする。bare `<h-gate></h-gate>` と動的に追加したタグも描画できる。HTML 全体の postprocess と別の runtime 経路を作るより単純で、glyph の追加 fetch や外部 font は不要。`qubit-circle` は従来の軽量 renderer を原名に登録した。ASTRO wrapper も HGate / QubitCircle に改名したが、h_gate は wrapper を使わず原名の bare tags だけを使う。CSS、tooltip ID、performance marks、型、tests も prefix を除去。
 
 `rg 'qw-|Qw' src tests` は **0件**。古い測定文書内の prefix は履歴であり、現行 API は `h-gate`、`qubit-circle`、`mjx-container`。型チェック、Astro build、新規 ket 2件 + 関連9件の **11/11 テスト成功**。1440/390px で12 ket の値・順番、無変更の plain kets、19 H / 24 circles、bare H の動的挿入、tooltip、透明な円外側を確認。
+
+### 公開確認 / 完了 (10:00 JST)
+
+実装 `8480f853f71cf50a1e6bb75db8b4bb5b65141060`、Pages **38010652084** 成功。実機で font の native line metrics がゼロで bbox が2pxになることを検出し、CSS に CHTML 相当の上下 padding を追加。修正 `18e89384b0c6e6985f54a40f34039676ae1b479d`、Pages **38011139595** 成功 (build 2分26秒 / deploy 11秒)。公開 font license は `fonts/MathJax-OFL.txt`。修正後 build と関連 **11/11 tests** を再実行して成功。
+
+最終 gmktec Chromium 152 / AMD rdna-3 の1440px・390px比較で、両ページとも ket=12、原文と移植後の H=19、circles=24。原文 ket bbox=22.296875×21px、移植後=22.3125×21.09375px、同じ19.12px font と glyph。自然な文字列の subpixel advance と CHTML の個別 glyph padding による差は幅0.015625px。目視で glyph、間隔、括弧を比較した。移植後は両幅で overflow なし、MathJax JS なし、実際の mouse hover で shared tooltip の +0.70711 / +50.0000% / +0.00° を確認。
+
+最終4比較ケースは **console/page errors 0**。ただし冷起動の原文には既知の `https://qniapp.github.io/favicon.ico` 404 がある。これを修正したとは主張せず、cold baseline の error を JSON に残し、同じ browser context を温めた後の再比較が0であることを記録した。移植後の cold/warm はともに0。404を隠す route/mock は使用していない。
+
+保存: `/tmp/qtw-ket-compare-1440.png`、`/tmp/qtw-ket-compare-390.png`、`/tmp/qtw-ket.json`。拡大 crop は `/tmp/qtw-ket-crops-{1440,390}.png`、個別 crop は `/tmp/qtw-ket-crop-{original,ours}-{1440,390}.png`。最初の診断は `/tmp/qtw-ket-first.json`。開始した browser は finally で停止、test server も終了。ピン f4cd605 は変更していない。文書の最終 push 後の docs-only deploy は時間制限のため待たず終了する。
