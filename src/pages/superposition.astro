@@ -1,0 +1,140 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="重ね合わせ状態" description="円表示による重ね合わせ状態の視覚化" section="量子ビット" hasMath>
+
+
+<p>Qni では、1 ビットでの 0 と 1 の重ね合わせ状態を次のように 2 つの円で表示します。</p>
+
+<div class="my-5 flex flex-row items-center justify-center md:mr-auto md:w-7/12">
+  <div class="flex flex-row space-x-2">
+    <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="xl" data-show-popup-probability></qubit-circle> <qubit-circle data-amplitude="0.7071067811865476" data-ket="1" data-size="xl" data-show-popup-probability></qubit-circle>
+  </div>
+</div>
+
+<p>
+  2 個の円はそれぞれ古典ビット 0 (左) と 1 (右)
+  を表しており、内側の円の面積はそれぞれの確率を表しています。 この状態ではどちらも五分五分なので、0
+  と 1 がそれぞれ 50% の確率で重ね合っていると読みます。
+  円の上にマウスポインタをホバーすることで、これらの確率を表示できます。
+</p>
+
+<div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
+  これからは古典ビット 0 と 1 をそれぞれ記号 <Ket label="0" /> と <Ket label="1" /> で表します。
+  これらは量子力学や量子コンピュータでよく使われる記号で、「ディラックのケット
+  (または単にケット)」と呼ばれます。 後に詳しく説明しますが、現時点では 0 と 1
+  の状態を区別するための単なるラベルと考えて大丈夫です。
+</div>
+
+<p>
+  <Ket label="0" /> と <Ket label="1" /> の確率は、合計が 100%
+  という条件さえ満たせば好きな値を取ることができます。
+  たとえば、次のようなさまざまな状態のバリエーションが考えられます。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <table>
+    <thead>
+      <tr>
+        <th>確率</th>
+        <th>円表示</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="align-middle"><Ket label="0" /> が 100%</td>
+        <td>
+          <div class="flex flex-row space-x-2">
+            <qubit-circle data-amplitude="1.0" data-ket="0" data-size="xl" data-show-popup-probability></qubit-circle> <qubit-circle data-amplitude="0.0" data-ket="1" data-size="xl" data-show-popup-probability></qubit-circle>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="align-middle"><Ket label="1" /> が 100%</td>
+        <td>
+          <div class="flex flex-row space-x-2">
+            <qubit-circle data-amplitude="0.0" data-ket="0" data-size="xl" class="magnitude-lime" data-show-popup-probability></qubit-circle> <qubit-circle data-amplitude="1.0" data-ket="1" data-size="xl" class="magnitude-lime" data-show-popup-probability></qubit-circle>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="align-middle"><Ket label="0" /> と <Ket label="1" /> が 50%</td>
+        <td>
+          <div class="flex flex-row space-x-2">
+            <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="xl" data-show-popup-probability></qubit-circle> <qubit-circle data-amplitude="0.7071067811865476" data-ket="1" data-size="xl" data-show-popup-probability></qubit-circle>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="align-middle"><Ket label="0" /> が 80%, <Ket label="1" /> が 20%</td>
+        <td>
+          <div class="flex flex-row space-x-2">
+            <qubit-circle data-amplitude="0.8944271909999159" data-ket="0" data-size="xl" class="magnitude-lime" data-show-popup-probability></qubit-circle> <qubit-circle data-amplitude="0.4472135954999579" data-ket="1" data-size="xl" class="magnitude-lime" data-show-popup-probability></qubit-circle>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  表の 1 行目と 2 行目は、古典ビットと同じ状態を表しています。 <Ket label="0" /> が 100% または <Ket label="1" /> が 100% の状態では重ね合わせは生じていないため、それぞれ古典ビット 0 と 1
+  でも表現できるからです。 <Ket label="0" /> が 100% の状態を、単に状態 <Ket label="0" /> と呼びます。同様に、<Ket label="1" /> が 100% の状態を状態 <Ket label="1" /> と呼びます。
+</p>
+
+<p>
+  表の 3 行目と 4 行目は重ね合わせ状態にあります。 これらを測定すると確率の情報 (内側の円)
+  は破壊され、状態 <Ket label="0" /> または <Ket label="1" /> に変化します。
+  つまり、重ね合わせ状態にあるビットを測定すると、古典ビット 0 または 1
+  で表すことのできる状態に変化します。
+</p>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt cloze="Qni の円表示において、内側の円の{面積}は 0 または 1 の確率を表す">
+  </orbit-prompt>
+  <orbit-prompt cloze={String.raw`ビットの状態 0 は記号 {$|0\rangle$} で表せる`}> </orbit-prompt>
+  <orbit-prompt cloze={String.raw`ビットの状態 1 は記号 {$|1\rangle$} で表せる`}> </orbit-prompt>
+  <orbit-prompt
+    question="古典ビット 0 を Qni の円表示で表すと?"
+    answer-attachments="https://qniapp.github.io/qni/images/superposition-100-0.png"
+    answer=""
+  >
+  </orbit-prompt>
+  <orbit-prompt
+    question="古典ビット 1 を Qni の円表示で表すと?"
+    answer-attachments="https://qniapp.github.io/qni/images/superposition-0-100.png"
+    answer=""
+  >
+  </orbit-prompt>
+  <orbit-prompt cloze={String.raw`記号 $|0\rangle$ や $|1\rangle$ などをディラックの{ケット}と呼ぶ`}>
+  </orbit-prompt>
+  <orbit-prompt
+    question="この状態を測定すると、何%の確率でどんな状態になる?"
+    question-attachments="https://qniapp.github.io/qni/images/superposition-50-50.png"
+    answer={String.raw`50%の確率で $|0\rangle$ または $|1\rangle$`}
+  ></orbit-prompt>
+</orbit-reviewarea>
+
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+</TutorialLayout>
+<style>
+  figure[class~='!w-full'] { width: 100%; max-width: none; }
+  .my-5 { margin-block: 20px; }
+  .flex { display: flex; }
+  .flex-row { flex-direction: row; }
+  .items-center { align-items: center; }
+  .justify-center { justify-content: center; }
+  .space-x-2 { gap: 8px; }
+  .flex :global(qubit-circle) { margin-right: 0; flex: none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill: #84CC16; }
+  .border-l-4 { border-left: 4px solid #60A5FA; background: #EFF6FF; padding: 16px; font-size: 16px; line-height: 28px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 24px; }
+  th { text-align: left; padding: 0 8px 8px; border-bottom: 1px solid #DAD8CE; }
+  td { padding: 8px; border-bottom: 1px solid #DAD8CE; }
+  th:first-child, td:first-child { padding-left: 0; }
+  td.align-middle { vertical-align: middle; }
+  @media (min-width:768px) { .my-5 { width: 58.333333%; margin-right: auto; } }
+</style>

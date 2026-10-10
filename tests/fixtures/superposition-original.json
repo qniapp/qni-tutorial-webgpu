@@ -1,0 +1,37 @@
+{
+  "title": "重ね合わせ状態",
+  "slug": "superposition",
+  "description": "円表示による重ね合わせ状態の視覚化",
+  "sidenotes": [],
+  "images": [],
+  "orbitPrompts": 7,
+  "orbit": [
+    {
+      "cloze": "Qni の円表示において、内側の円の{面積}は 0 または 1 の確率を表す"
+    },
+    {
+      "cloze": "ビットの状態 0 は記号 {$|0\\rangle$} で表せる"
+    },
+    {
+      "cloze": "ビットの状態 1 は記号 {$|1\\rangle$} で表せる"
+    },
+    {
+      "question": "古典ビット 0 を Qni の円表示で表すと?",
+      "answer-attachments": "https://qniapp.github.io/qni/images/superposition-100-0.png",
+      "answer": ""
+    },
+    {
+      "question": "古典ビット 1 を Qni の円表示で表すと?",
+      "answer-attachments": "https://qniapp.github.io/qni/images/superposition-0-100.png",
+      "answer": ""
+    },
+    {
+      "cloze": "記号 $|0\\rangle$ や $|1\\rangle$ などをディラックの{ケット}と呼ぶ"
+    },
+    {
+      "question": "この状態を測定すると、何%の確率でどんな状態になる?",
+      "question-attachments": "https://qniapp.github.io/qni/images/superposition-50-50.png",
+      "answer": "50%の確率で $|0\\rangle$ または $|1\\rangle$"
+    }
+  ]
+}

@@ -1,11 +1,13 @@
 import { expect, test } from '@playwright/test'
 import qpu from './fixtures/qpu-original.json' with { type: 'json' }
 import faster from './fixtures/what_qpu_do_faster-original.json' with { type: 'json' }
-for (const fixture of [qpu, faster]) for (const width of [1440, 390]) {
+import pbit from './fixtures/p_bit-original.json' with { type: 'json' }
+import superposition from './fixtures/superposition-original.json' with { type: 'json' }
+for (const fixture of [qpu, faster, pbit, superposition]) for (const width of [1440, 390]) {
   test(`${fixture.slug} preserves original structure at ${width}px`, async ({ page }) => {
     await page.setViewportSize({width,height:1000})
     await page.goto(`/qni-tutorial-webgpu/${fixture.slug}/`)
-    if (fixture.slug === 'what_qpu_do_faster') await page.waitForFunction(() => document.documentElement.dataset.mathjax === 'ready')
+    if (fixture.slug === 'what_qpu_do_faster' || fixture.slug === 'superposition') await page.waitForFunction(() => document.documentElement.dataset.mathjax === 'ready')
     await expect(page.locator('main h1')).toHaveText(fixture.title)
     await expect(page.locator('.lede')).toHaveText(fixture.description)
     await expect(page.locator('main .margin-note')).toHaveCount(fixture.sidenotes.length)

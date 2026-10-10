@@ -1,0 +1,57 @@
+{
+  "title": "確率的ビット",
+  "slug": "p_bit",
+  "description": "確率的性質を持つビットの重ね合わせ状態と測定",
+  "sidenotes": [
+    "what-qpu-do-faster",
+    "classical-bit",
+    "probability-100",
+    "probablity-data"
+  ],
+  "images": [
+    "images/p-bit/p_bit_graph.png",
+    "images/p-bit/c_bit_and_p_bit.png",
+    "images/p-bit/wikipedia_youtube_cat.png"
+  ],
+  "orbitPrompts": 10,
+  "orbit": [
+    {
+      "cloze": "量子力学と古典力学の対比から、従来のビットを{古典ビット}と呼ぶ"
+    },
+    {
+      "question": "1 つの古典ビットが持ちうる状態はいくつ?",
+      "answer": "2 つ (0 と 1)"
+    },
+    {
+      "question": "1 つの古典ビットから取り出せる値はいくつ?",
+      "answer": "2 つ (0 と 1)"
+    },
+    {
+      "cloze": "「60%で0」のように確率的な状態を持つビットを{確率的ビット}と呼ぶ"
+    },
+    {
+      "cloze": "確率的に 0 または 1 を持つ状態を{重ね合わせ状態}と呼ぶ"
+    },
+    {
+      "question": "1 つの確率的ビットが持ちうる状態はいくつ?",
+      "answer": "無限大"
+    },
+    {
+      "question": "1 つの確率的ビットを測定して取り出せる値は何?",
+      "answer": "0 または 1"
+    },
+    {
+      "question": "1 つの確率的ビットが持ちうる状態を、横軸 0 の確率、縦軸 1 の確率とそれぞれ取ると、どんなグラフになる?",
+      "answer-attachments": "https://qniapp.github.io/qni/images/p-bit/p_bit_graph.png",
+      "answer": "線分"
+    },
+    {
+      "question": "古典ビットよりも確率的ビットの方が強力な理由を、それぞれが取りうる状態の数に着目して説明すると?",
+      "answer": "古典ビットは 2 通りの状態しか持てないのに対し、確率的ビットは無限大通りの状態を持てる"
+    },
+    {
+      "question": "大きなデータを 1 つの確率的ビットに埋め込む方法は?",
+      "answer": "データの 2 進表現を、確率的ビットが 0 となる確率の値にエンコードする"
+    }
+  ]
+}
