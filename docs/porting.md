@@ -584,4 +584,12 @@ native canvasのpan/clipはHTML scrollとは区別し、hostを縮小せずnote-
 
 次のCPHASEでは、元の「同角度PHASE 3個はCCPHASEと等価」というハンズオンがnativeで成立しない。実GPUでは独立PHASEとして7状態が回転するため、上流修正が必要なSTOP。issue **https://github.com/qniapp/qni-webgpu/issues/57**、再現/期待値/実画面は [cphase-blocker.md](cphase-blocker.md)。未公開draftは `/tmp/qtw-blocked-cphase/` に退避し、route/fixture/TOCから除外。本文の改変・別ゲートへの置換・上流修正はしていない。CPHASE/entanglement以降は公開せず、次回は#57解決確認から再開する。
 
-新3ページの質問: 追加なし。既存の保持画像/PHASE・MEASUREMENT本文に関する質問は未変更。全native clip/panはnote-onlyとして高宮さんの判断待ち。公開commit/Pages、全31ページ/30embedの最終再確認は次のcheckpointに記録する。
+新3ページの質問: 追加なし。既存の保持画像/PHASE・MEASUREMENT本文に関する質問は未変更。全native clip/panはnote-onlyとして高宮さんの判断待ち。公開commit **2f71ca310214fa8e80ab93cebe37db87f2811fd2**、Pages **38091269521 success**。CPHASEを除いた最終 **195 tests passed (1.9m)**、build/typecheck成功。公開新3ページの1440/390 original比較も本文/TeX diff0/errors0、12開始のGPU初期状態を再確認。公開DPR1/2のBold/Regularとpair選択も確認済み。SWAPの無効回路を実GPU Chrome390でdragして正しい同列SWAPへ修正し、`Qniで開く` が修正済みJSONを出すことを確認 (`/tmp/qtw-swap-quiz-drag.{json,png}`)。
+
+| 新ページ | max-wire-count (embed順) | palette (embed順) |
+| --- | --- | --- |
+| swap_gate | 1, 1 | [], [] |
+| cnot_gate | 1, 1, 1 | [], [], [] |
+| swap_from_cnots | 1 | [X, •, Measure] |
+
+公開全31ページ/30embedの追加統合監査は `/tmp/qtw-scroll-shipping-public.json` に1ページずつ保存する。62ケースを対象にHTML/shadow DOMのscrollとGPU step0/norm1/max属性を同時確認し、途中結果も保存する。07:28のhard stopを優先し、最終完了数は実行log `/tmp/qtw-shipping-public-audit.log` とこのJSONで確認する。前提の既存28ページ/24embedは公開56/48ケース完了、新3ページは公開6/12ケース完了済み。CPHASEは#57解決待ちのSTOPであり未公開。
