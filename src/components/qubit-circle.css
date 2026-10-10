@@ -1,0 +1,11 @@
+qubit-circle { display: inline-block; position: relative; width: var(--qc-box, 34px); height: var(--qc-box, 34px); margin: 4px 14px 4px 0; vertical-align: middle; }
+qubit-circle > svg { display: block; width: 100%; height: 100%; }
+qubit-circle [data-part="surface"] { fill: #FFFCF0; }
+qubit-circle [data-part="disc"] { fill: #92BFDB; }
+qubit-circle [data-part="rim"] { stroke: #4385BE; }
+qubit-circle [data-part="phase"] { stroke: #100F0F; }
+qubit-circle:hover svg > :not([data-part="surface"]), qubit-circle:focus-visible svg > :not([data-part="surface"]) { filter: brightness(0.9); }
+qubit-circle:focus-visible { outline: 2px solid #24837B; outline-offset: 3px; }
+qubit-circle::after { content: '|' attr(data-ket) '⟩'; position: absolute; right: -12px; bottom: -3px; font: 10px/10px monospace; color: #100F0F; }
+#qubit-circle-tooltip { position: fixed; z-index: 1000; pointer-events: none; white-space: pre-line; background: #FFFCF0; color: #100F0F; border: 1px solid #6F6E69; border-radius: 6px; padding: 8px 12px; font: 13px/1.6 sans-serif; box-shadow: 0 3px 12px #100F0F26; max-width: calc(100vw - 40px); }
+#qubit-circle-tooltip[hidden] { display: none; }

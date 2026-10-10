@@ -52,3 +52,29 @@ Node 22 の型チェック、Astro build、対象 **9/9 テスト成功**。1440
 最終撮影の四つのケースは **console error 0 / page error 0**。移植版は AMD rdna-3 の実機 GPU を確認。Chromium152.0.7977.82、`--enable-unsafe-webgpu --enable-features=Vulkan --use-angle=vulkan --force-device-scale-factor=1`。以前観測した旧サイト root favicon の404は文書と JSON に識別情報を残した。
 
 成果物: `/tmp/qtw-hfix.json`、`/tmp/qtw-hfix-compare-1440.png`、`/tmp/qtw-hfix-compare-390.png`。原文/移植版個別の section PNG も `/tmp/qtw-hfix-original-{1440,390}.png`、`/tmp/qtw-hfix-ours-{1440,390}.png` に保持。検証スクリプト `/tmp/qtw-hfix-verify.mjs`。比較画像は依頼どおり保持し、再現/画素検査用の中間画像を削除。開始したブラウザーと対象テストのサーバーは終了した。型チェック、Astro build、9対象テストが成功。各 push 前に fetch/rebase を行い、約24分に達する前に最終文書を push して終了する。
+
+## Ket 表記
+
+### 調査と命名の更新 (2026-10-10 09:37 JST)
+
+作業は独立した `feat/ket-notation` worktree、分岐元 `5cd9362`。更新された依頼に従い prefix を廃止し、今後は原文のタグ名を直接書く。今回の時間制限は更新から25分。
+
+原文の `{% ket 0 %}` は **Qni の登録 custom element ではない**。`apps/tutorial/_plugins/ket_tag.rb:11-12` が `\(|0\rangle\)` を出力し、`_layouts/default.html:15-17` の MathJax `tex-mml-chtml.js` が **`<mjx-container jax="CHTML">`** にする。elements package に ket element はない。MathJax CHTML の内部は mjx-math / mjx-mo / mjx-mn / mjx-c と、スクリーンリーダー向け MathML。SVG ではなく、TeX font の glyph を CSS の疑似要素で描画する。
+
+実機原文で font-size=119.5% (本文16pxに対して19.12px)、bar幅0.278em、数字幅0.5em、angle幅0.389em を確認。bar は U+007C、angle は U+27E9。数字は upright、MathJax Main Regular。original ket の幅は22.296875px。円の右下のケットは qubit-circle の CSS 由来で、別用途。
+
+### 原文との対応 / 実装 (09:46 JST)
+
+| 位置 | 原文の行 / 値 | 個数 |
+| --- | --- | ---: |
+| 重ね合わせの導入 | 21:0、1 | 2 |
+| 位相の注意書き | 65:1、1 / 66:0 | 3 |
+| ハンズオン | 79:0、1 / 80:0 / 81:1 | 4 |
+| 逆演算の本文 | 143:0、1 | 2 |
+| 回転として見る本文 | 213:0 | 1 |
+
+原文12 / 移植前0 / 移植後12。原文が Liquid で mark up した箇所だけ `mjx-container` にし、任意振幅の説明の plain-text kets、復習問題、circle の labels、circuit JSON は変えない。bare な `<mjx-container jax="CHTML" role="math" aria-label="ケット 0">|0⟩</mjx-container>` は共有 CSS と原文と同じ MathJax_Main-Regular.woff (34,160 bytes、無改変、SIL OFL 1.1 同梱) だけで描画する。MathJax JS、Shadow DOM、SVG、element 登録は不要。TeX エンジンではないため任意の LaTeX は解釈せず、今回の literal basis-ket に対応する。
+
+`h-gate` は共有の小さな custom element に変更。Vite の virtual module がビルド時にピンから SVG を git show し、その SVG を一回バンドルする。bare `<h-gate></h-gate>` と動的に追加したタグも描画できる。HTML 全体の postprocess と別の runtime 経路を作るより単純で、glyph の追加 fetch や外部 font は不要。`qubit-circle` は従来の軽量 renderer を原名に登録した。ASTRO wrapper も HGate / QubitCircle に改名したが、h_gate は wrapper を使わず原名の bare tags だけを使う。CSS、tooltip ID、performance marks、型、tests も prefix を除去。
+
+`rg 'qw-|Qw' src tests` は **0件**。古い測定文書内の prefix は履歴であり、現行 API は `h-gate`、`qubit-circle`、`mjx-container`。型チェック、Astro build、新規 ket 2件 + 関連9件の **11/11 テスト成功**。1440/390px で12 ket の値・順番、無変更の plain kets、19 H / 24 circles、bare H の動的挿入、tooltip、透明な円外側を確認。

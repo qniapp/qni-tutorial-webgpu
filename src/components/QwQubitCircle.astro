@@ -1,8 +1,0 @@
----
-interface Props { amplitude: string | number; ket: number; size?: string }
-const { amplitude, ket, size = 'base' } = Astro.props
----
-<qw-qubit-circle data-amplitude={amplitude} data-ket={ket} data-size={size} data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qw-qubit-circle>
-<script>
-  import './qw-qubit-circle'
-</script>

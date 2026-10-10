@@ -1,0 +1,19 @@
+@font-face {
+  font-family: 'TutorialMathJaxMain';
+  src: url('../assets/fonts/MathJax_Main-Regular.woff') format('woff');
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+}
+/* The original Liquid ket tag renders MathJax CHTML, not a Qni element.
+   These bare containers use its original TeX font and 119.5% scale. */
+mjx-container[jax="CHTML"] {
+  font-family: 'TutorialMathJaxMain', serif;
+  font-size: 119.5%;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 0;
+  letter-spacing: normal;
+  word-spacing: normal;
+  white-space: nowrap;
+}

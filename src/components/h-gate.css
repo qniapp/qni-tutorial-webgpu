@@ -1,0 +1,2 @@
+h-gate { display: inline-block; width: 1em; height: 1em; margin-inline: 0.125em; vertical-align: -0.125em; border-radius: 0.15em; background: #3AA99F; color: #FFFCF0; }
+h-gate > svg { display: block; width: 100%; height: 100%; }

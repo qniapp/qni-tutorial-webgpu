@@ -10,7 +10,7 @@ import TutorialLayout from '../layouts/TutorialLayout.astro'
   const count = [200, 500, 1600].includes(requested) ? requested : 200
   const fragment = document.createDocumentFragment()
   for (let i = 0; i < count; i++) {
-    const circle = document.createElement('qw-qubit-circle')
+    const circle = document.createElement('qubit-circle')
     const magnitude = (i % 9) / 8, phase = (i % 16) * Math.PI / 8
     circle.dataset.amplitudeReal = String(magnitude * Math.cos(phase))
     circle.dataset.amplitudeImag = String(magnitude * Math.sin(phase))
@@ -18,9 +18,9 @@ import TutorialLayout from '../layouts/TutorialLayout.astro'
     fragment.append(circle)
   }
   document.getElementById('stress-circles')!.append(fragment)
-  await import('../components/qw-qubit-circle')
+  await import('../components/qubit-circle')
   document.documentElement.dataset.qcReady = String(count)
-  requestAnimationFrame(() => requestAnimationFrame(() => performance.mark('qw-qc-painted')))
+  requestAnimationFrame(() => requestAnimationFrame(() => performance.mark('qc-painted')))
 </script>
 <style>
   #stress-circles { display: grid; grid-template-columns: repeat(auto-fill, minmax(56px, 1fr)); gap: 10px; }

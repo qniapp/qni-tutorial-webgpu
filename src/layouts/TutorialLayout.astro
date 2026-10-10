@@ -53,6 +53,9 @@ const base = import.meta.env.BASE_URL
     </footer>
     <script>
       import '../components/qni-webgpu-circuit'
+      import '../components/h-gate'
+      if (document.querySelector('qubit-circle')) import('../components/qubit-circle')
+      import '../components/ket.css'
     </script>
   </body>
 </html>

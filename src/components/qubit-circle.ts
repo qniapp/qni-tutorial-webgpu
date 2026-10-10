@@ -1,4 +1,4 @@
-import './qw-qubit-circle.css'
+import './qubit-circle.css'
 
 const number = '[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:[eE][+-]?\\d+)?'
 const realPattern = new RegExp(`^${number}$`)
@@ -15,17 +15,17 @@ export function parseAmplitude(value: string): [number, number] | null {
 }
 const signed = (value: number, digits: number) => `${value >= 0 ? '+' : ''}${value.toFixed(digits)}`
 let tooltip: HTMLDivElement | undefined
-let active: QwQubitCircle | undefined
+let active: QubitCircle | undefined
 let lastConnectedTime = 0
 function hideTooltip() {
   active?.removeAttribute('aria-describedby')
   active = undefined
   if (tooltip) tooltip.hidden = true
 }
-function showTooltip(circle: QwQubitCircle) {
+function showTooltip(circle: QubitCircle) {
   if (!tooltip) {
     tooltip = document.createElement('div')
-    tooltip.id = 'qw-qubit-circle-tooltip'
+    tooltip.id = 'qubit-circle-tooltip'
     tooltip.setAttribute('role', 'tooltip')
     document.body.append(tooltip)
   }
@@ -40,9 +40,9 @@ function showTooltip(circle: QwQubitCircle) {
   tooltip.style.left = `${x}px`
   tooltip.style.top = `${y}px`
 }
-const targetCircle = (target: EventTarget | null) => target instanceof Element ? target.closest<QwQubitCircle>('qw-qubit-circle') : null
+const targetCircle = (target: EventTarget | null) => target instanceof Element ? target.closest<QubitCircle>('qubit-circle') : null
 
-export class QwQubitCircle extends HTMLElement {
+export class QubitCircle extends HTMLElement {
   static observedAttributes = ['data-amplitude', 'data-amplitude-real', 'data-amplitude-imag', 'data-ket', 'data-qubit-count', 'data-size', 'data-hide-phase', 'data-show-popup-header', 'data-show-popup-amplitude', 'data-show-popup-probability', 'data-show-popup-phase', 'data-dark-mode', 'data-popup-template-id']
   private parts?: SVGElement[]
   private real = 0
@@ -81,7 +81,7 @@ export class QwQubitCircle extends HTMLElement {
     const magnitude = Math.min(1, Math.hypot(this.real, this.imag)), fill = inner * magnitude
     const phase = Math.atan2(this.imag, this.real)
     const [svg, surface, disc, rim, needle, outline] = this.parts!
-    this.style.setProperty('--qw-qc-box', `${box}px`)
+    this.style.setProperty('--qc-box', `${box}px`)
     svg!.setAttribute('viewBox', `0 0 ${box} ${box}`)
     for (const circle of [surface!, disc!, rim!, outline!]) { circle.setAttribute('cx', String(center)); circle.setAttribute('cy', String(center)) }
     surface!.setAttribute('r', String(radius))
@@ -114,7 +114,7 @@ export class QwQubitCircle extends HTMLElement {
   }
 }
 
-if (!customElements.get('qw-qubit-circle')) {
+if (!customElements.get('qubit-circle')) {
   document.addEventListener('pointerover', event => { const circle = targetCircle(event.target); if (circle && circle !== active) showTooltip(circle) })
   document.addEventListener('pointerout', event => { const circle = targetCircle(event.target); if (circle && circle === active && targetCircle(event.relatedTarget) !== circle) hideTooltip() })
   document.addEventListener('focusin', event => { const circle = targetCircle(event.target); if (circle) showTooltip(circle) })
@@ -126,8 +126,8 @@ if (!customElements.get('qw-qubit-circle')) {
     if (rect.bottom >= 0 && rect.top <= innerHeight) showTooltip(active)
     else hideTooltip()
   }, true)
-  performance.mark('qw-qc-define-start')
-  customElements.define('qw-qubit-circle', QwQubitCircle)
-  performance.mark('qw-qc-last-connected', { startTime: lastConnectedTime || performance.now() })
-  performance.mark('qw-qc-define-end')
+  performance.mark('qc-define-start')
+  customElements.define('qubit-circle', QubitCircle)
+  performance.mark('qc-last-connected', { startTime: lastConnectedTime || performance.now() })
+  performance.mark('qc-define-end')
 }
