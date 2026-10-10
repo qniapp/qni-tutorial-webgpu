@@ -57,6 +57,7 @@ test('narrow screens open and close the drawer without layout shift', async ({ p
   await expect(drawer).toBeVisible()
   await expect(button).toHaveAttribute('aria-expanded', 'true')
   await expect(drawer.locator('[aria-current="page"]')).toHaveText('H ゲート')
+  await expect(drawer.getByRole('button', { name: '目次を閉じる' })).toBeFocused()
   expect(await page.locator('main').boundingBox()).toEqual(before)
   await page.keyboard.press('Escape')
   await expect(drawer).toBeHidden()
