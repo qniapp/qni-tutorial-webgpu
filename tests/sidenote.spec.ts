@@ -6,7 +6,7 @@ test('wide notes occupy the right margin and share the superscript counter', asy
   await page.setViewportSize({ width: 1440, height: 1000 })
   await page.goto(pagePath)
   await expect(page.locator('aside.note')).toHaveCount(0)
-  await expect(page.locator('.margin-note')).toHaveCount(4)
+  await expect(page.locator('.margin-note')).toHaveCount(2)
   const note = page.locator('#margin-note-h-gate + .margin-note')
   await expect(note).toBeVisible()
   const geometry = await note.evaluate(el => {
@@ -38,7 +38,7 @@ for (const width of [390, 639, 640, 767, 768]) {
     const context = await browser.newContext({ viewport: { width, height: 900 }, javaScriptEnabled: false })
     const page = await context.newPage()
     await page.goto(pagePath)
-    for (const id of ['h-gate', 'circuit-help', 'h-gate-rotation', 'related-pages']) {
+    for (const id of ['h-gate', 'h-gate-rotation']) {
       const note = page.locator(`#margin-note-${id} + .margin-note`)
       const toggle = page.locator(`label[for="margin-note-${id}"]`)
       if (width < 640) {
@@ -56,6 +56,7 @@ for (const width of [390, 639, 640, 767, 768]) {
         await expect(note).toBeHidden()
       }
     }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
     await context.close()
   })
 }

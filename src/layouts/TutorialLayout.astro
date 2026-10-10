@@ -1,4 +1,6 @@
 ---
+import Sidebar from '../components/Sidebar.astro'
+
 interface Props {
   title: string
   description: string
@@ -54,7 +56,23 @@ const base = import.meta.env.BASE_URL
     </script>}
   </head>
   <body>
+    <div class="page-shell">
+    <aside class="sidebar">
+      <Sidebar variant="static" />
+    </aside>
+    <dialog class="toc-drawer" id="toc-drawer" aria-label="目次">
+      <div class="toc-drawer-panel">
+        <button type="button" class="toc-close" aria-label="目次を閉じる">
+          <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M6 18 18 6M6 6l12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+        </button>
+        <Sidebar variant="drawer" />
+      </div>
+    </dialog>
+    <div class="page-column">
     <header class="site-header">
+      <button type="button" class="toc-open" aria-label="目次を開く" aria-controls="toc-drawer" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+      </button>
       <a href={base}>Qni Tutorial</a>
       <span>実験版</span>
     </header>
@@ -70,7 +88,10 @@ const base = import.meta.env.BASE_URL
       <a href={base}>ページ一覧</a>
       <p>WebGPU 対応ブラウザで使う実験版です。回路の変更は保存されません。</p>
     </footer>
+    </div>
+    </div>
     <script>
+      import '../components/toc-drawer'
       import '../components/qni-webgpu-circuit'
       import '../components/h-gate'
       if (document.querySelector('qubit-circle')) import('../components/qubit-circle')
@@ -130,6 +151,41 @@ const base = import.meta.env.BASE_URL
     .content-with-margin > .static-diagram,
     .content-with-margin > details { width: 58.333333%; margin-right: auto; }
   }
+  /* Original page.html: md (768px) fixed w-64 sidebar; below it a menu
+     button opens an off-canvas drawer (here a modal <dialog>). */
+  .sidebar { display: none; }
+  .toc-open { display: none; }
+  @media (min-width: 768px) {
+    .page-shell { display: grid; grid-template-columns: 256px minmax(0, 1fr); }
+    .sidebar {
+      display: block; position: sticky; top: 0; height: 100vh; overflow-y: auto;
+      border-right: 1px solid var(--border);
+    }
+  }
+  @media (max-width: 767.98px) {
+    .toc-open {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px; margin: -8px 8px -8px -8px; padding: 0;
+      border: 0; border-radius: 6px; background: none; color: var(--muted); cursor: pointer;
+    }
+    .toc-open:hover { background: var(--bg-2); color: var(--text); }
+    .toc-open:focus-visible, .toc-close:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+    .site-header > a { margin-right: auto; }
+    html:has(.toc-drawer[open]) { overflow: hidden; }
+  }
+  .toc-drawer {
+    margin: 0; padding: 0; border: 0;
+    width: min(320px, calc(100vw - 56px)); max-width: none; height: 100dvh; max-height: none;
+    background: var(--bg); color: var(--text);
+  }
+  .toc-drawer::backdrop { background: rgb(16 15 15 / 0.5); }
+  .toc-drawer-panel { height: 100%; overflow-y: auto; }
+  .toc-close {
+    position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; margin: 8px 8px 0 auto; padding: 0;
+    border: 0; border-radius: 6px; background: var(--bg); color: var(--muted); cursor: pointer;
+  }
+  .toc-close:hover { background: var(--bg-2); color: var(--text); }
   @media (max-width: 640px) {
     .site-header, main, footer { padding-inline: 16px; }
     h1 { font-size: 30px; line-height: 36px; }

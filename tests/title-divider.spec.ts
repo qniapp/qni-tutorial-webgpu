@@ -10,7 +10,7 @@ for (const width of [1440, 390]) {
     })
     expect(actual).toEqual({ topColor:'rgb(228, 228, 231)', topWidth:'0px', topStyle:'solid', bottomColor:'rgb(228, 228, 231)', bottomWidth:'1px', bottomStyle:'solid', marginTop:'0px', marginBottom:'40px', paddingBottom:'40px', h1ToLine:73, lineToParagraph:41, fullWidth:true })
     await expect(page.locator('.site-header span')).toHaveText('実験版')
-    await expect(page.locator('body > footer p')).toContainText('WebGPU 対応ブラウザ')
+    await expect(page.locator('footer p')).toContainText('WebGPU 対応ブラウザ')
   })
 }
 test('index also gets the shared divider', async ({ page }) => {

@@ -7,7 +7,7 @@ for (const width of [1440, 390]) {
     await page.goto('/qni-tutorial-webgpu/h_gate/')
     await page.waitForFunction(() => document.documentElement.dataset.mathjax === 'ready')
     expect(await page.locator('.content-with-margin').evaluate(e => Array.from(e.children).filter(n => ['p','h2','figure'].includes(n.localName)).map(n => ({ tag: n.localName, text: (n as HTMLElement).innerText.replace(/\s+/g, '') })))).toEqual(original[width === 1440 ? '1440' : '390'])
-    await expect(page.locator('details, noscript, .qc-figure p, .qc-figure[aria-label]')).toHaveCount(0)
+    await expect(page.locator('main details, noscript, .qc-figure p, .qc-figure[aria-label]')).toHaveCount(0)
     await expect(page.locator('orbit-reviewarea[color="blue"]')).toHaveCount(1)
     await expect(page.locator('orbit-prompt')).toHaveCount(7)
     await expect(page.locator('qni-webgpu-circuit').getByRole('link', { name: 'Qniで開く', exact: true })).toHaveCount(1)

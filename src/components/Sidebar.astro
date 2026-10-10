@@ -1,0 +1,79 @@
+---
+import { isPorted, toc } from '../data/toc'
+
+interface Props {
+  /** Distinguishes the desktop sidebar from the mobile drawer copy. */
+  variant: 'static' | 'drawer'
+}
+const { variant } = Astro.props
+const base = import.meta.env.BASE_URL
+const href = (slug: string) => (slug === '' ? base : `${base}${slug}/`)
+const current = Astro.url.pathname
+---
+<nav class={`toc toc-${variant}`} aria-label="目次">
+  {toc.map(chapter => (
+    <details open={chapter.pages.some(page => href(page.slug) === current)}>
+      <summary>{chapter.title}</summary>
+      <ul>
+        {chapter.pages.map(page => {
+          const label = page.label ?? page.title
+          if (!isPorted(page.slug)) {
+            return (
+              <li>
+                <span class="toc-item toc-unported" data-original-title={page.title} data-slug={page.slug}>
+                  <span class="toc-label">{label}</span>
+                  <span class="toc-badge">未移植</span>
+                </span>
+              </li>
+            )
+          }
+          const isCurrent = href(page.slug) === current
+          return (
+            <li>
+              <a class="toc-item" href={href(page.slug)} aria-current={isCurrent ? 'page' : undefined} data-original-title={page.title} data-slug={page.slug}>
+                <span class="toc-label">{label}</span>
+              </a>
+            </li>
+          )
+        })}
+      </ul>
+    </details>
+  ))}
+</nav>
+<style>
+  /* Original navigation.html: blue bold chapter headings, pl-4 pr-2 py-2 text-sm
+     items, rounded-md, current item highlighted. Colors use the site's Flexoki palette. */
+  .toc { padding: 24px 12px 56px; }
+  details { border: 0; padding: 0; max-width: none; }
+  summary {
+    display: flex; align-items: center; gap: 4px;
+    padding: 8px; border-radius: 6px;
+    color: var(--link); font-size: 14px; line-height: 20px; font-weight: 700; letter-spacing: 0.025em;
+    list-style: none; cursor: pointer;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after {
+    content: ''; margin-left: auto; width: 6px; height: 6px;
+    border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+    transform: rotate(-45deg); transition: transform 0.15s;
+  }
+  details[open] > summary::after { transform: rotate(45deg); }
+  summary:hover { background: var(--bg-2); }
+  ul { list-style: none; margin: 0 0 8px; padding: 0; }
+  li { font-size: 14px; line-height: 20px; }
+  .toc-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 8px 8px 16px; border-radius: 6px;
+    font-weight: 500; text-decoration: none;
+  }
+  a.toc-item { color: var(--muted); }
+  a.toc-item:hover { color: var(--text); background: var(--bg-2); }
+  a.toc-item[aria-current='page'] { color: var(--text); background: #DDE7F1; }
+  .toc-label { flex: 1; min-width: 0; }
+  /* Unported pages: visible for the chapter structure, but inert. */
+  .toc-unported { color: #B7B5AC; cursor: default; }
+  .toc-badge {
+    flex: none; padding: 0 6px; border: 1px solid var(--border); border-radius: 9999px;
+    color: var(--muted); font-size: 11px; line-height: 16px; font-weight: 500;
+  }
+</style>
