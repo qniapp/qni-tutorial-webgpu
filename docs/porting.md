@@ -247,7 +247,7 @@ typecheck/build成功。全体test runは工具35s timeoutで29件まで成功�
 
 Pages **38027299761** success。commit **f8f1d1a2e30ff3d69f254bb1720c24b6b2575b42**。1440/390で本文・TeX diff0、Orbit属性/counts一致、ours/original errors0、overflowなし。h2/circle14/ket9/write5/measurement9/embed1/Orbit8/注釈2、画像0。native embed running、GPU測定後one-hot stateをreadback。PNG `/tmp/qtw-port-measurement_operation-compare-{1440,390}.png`、JSON `/tmp/qtw-port-measurement_operation.json`。
 
-## 14:26 gate形状の優先修正 (公開確認待ち)
+## 14:26 gate形状の優先修正 (公開検証完了)
 
 公開x_gateを最小の本文x-gate1個で再現:16×16px、radius2.4pxで角丸矩形。`/tmp/qtw-shape-before.mjs` が実Chromiumでred、local `gate-shapes.spec.ts` の両幅もredを確認した。原因は `circuit-display.css` がx/y/zを同じrectangular selectorにしていたこと。glyphの選択とページCSSは正しい。
 
@@ -267,4 +267,18 @@ Native reference: qni-webgpu **e8a39cc** `apps/web/src/icons/gate_body.rs` / `ga
 
 公開native embedを検証ブラウザ内でWRITE0-X回路にして確認し、Xは40px円＋、GPU stateは|1⟩。両幅canvas PNG `/tmp/qtw-shape-native-x-before-{1440,390}.png`。qni-webgpu本体の問題は見つからず、上流変更なし。
 
-shape before JSON `/tmp/qtw-shapes-before.json`、各element `/tmp/qtw-shape-before-{original,ours}-<page>-<tag>-{1440,390}.png`。Original PHASEだけ既知の死んだsetAmplitudes script errorあり、ours errors0。修正後build/typecheck、関連37/37 tests成功。全9 gate種類のbody family/サイズ/primitive regressionを追加した。公開比較を追記する。
+shape before JSON `/tmp/qtw-shapes-before.json`、各element `/tmp/qtw-shape-before-{original,ours}-<page>-<tag>-{1440,390}.png`。Original PHASEだけ既知の死んだsetAmplitudes script errorあり、ours errors0。修正後build/typecheck、関連37/37 tests成功。全9 gate種類のbody family/サイズ/primitive regressionを追加した。Y/Zのpalette形状も追加した4件のshape testsを再実行し4/4成功。
+
+公開commit **0b22f9974d23aceba6d2e9ab9c7d93aa55087471**、Pages **38027988482** success。gmktec Chromium152 / WebGPU Vulkan / DPR1+2、1440/390でelement screenshotsを採取。20 snapshots×2DPRでours errors0、全Xはsquare box / radius50%。native canvasのXは両幅ともcircle+Plus、GPU vector |1⟩。qni-webgpuのshape問題なし。
+
+x_gate / phase_gate / measurement_operation / quantum_circuit / qni_intro / cpu_vs_qpu_operations / write_operation / h_gateの8ページ×2幅で本文diff0、本文TeX diff0、Orbit属性一致、errors0、overflowなし、全embed running/GPU vector正常。既知の原文PHASEだけsetAmplitudes null errorあり、oursにはない。実変更のないH/Y/Z/PHASE/CONTROL/WRITEのbefore/after element pixelsもdiff0。
+
+保存:
+- `/tmp/qtw-shape-elements-compare-{1440,390}.png`: Original / Before / Afterの10列別glyph比較 (4倍nearest)
+- `/tmp/qtw-shape-{before,after}-<original|ours>-<page>-<tag>-{1440,390}.png`: 個別element
+- `/tmp/qtw-shape-page-<slug>-compare-{1440,390}.png`: 全ページside-by-side
+- `/tmp/qtw-shape-native-x-{before,after}-{1440,390}.png`: native circleとPlus
+- `/tmp/qtw-shapes-{before,after,after-dpr2}.json`: glyph geometry/CSS、GPU vector、errors
+- `/tmp/qtw-shape-content-<slug>.json`: 本文/TeX/Orbit/起動結果
+
+本文/header/footer/pin/upstreamは不変。original regular font -> native Geist / 旧green -> native #3AA99Fなど既承認差はそのまま保持。SVG glyphの太さやサイズはnative assets、手続き的primitiveはnativeの48px viewBoxを基準にした。形状修正と測定ページの未完検証を完了し、今回新規ページ移植は行わない。
