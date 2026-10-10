@@ -660,3 +660,19 @@ indexとbb84_circuitを両幅で目視。PRの32px block padding、2px rule、24
 | bb84_circuit 1440 | [before](images/pr58-before-bb84_circuit-1440.png) | [PR58](images/pr58-local-bb84_circuit-1440.png) |
 
 公開後に同じ全ページ監査と4スクリーンショットを再確認し、commit/Pagesを次のcheckpointに記録する。
+
+
+### PR58 08:41 公開 checkpoint
+
+公開commit **0d90c985225eb71938f42dade6687c0066b8c974**、Pages **38095623411 success**。公開全35移行ページの70ケース、41 embedの82起動を再確認し、HTML/shadow DOM内の横/縦scrollbar、document横overflow、console/page errors=0、running / step0 / norm1。palette/max属性は元のまま。本文・原回路・画像置換・creditsは変更なし。
+
+ナビゲーション外の multi-1 / multi-3 / multi-7 / stress-qubit-circle も390/1440で確認した。追加8ケースのscroll/errors=0、11追加embed×2幅=22起動はrunning / step0 / norm1。これらのstep0は原first-columnのH/X/Yに応じたGPU確率と照合 (H等は0/1の各0.5、X/Yは1)。合計 **全39 builtページ・78ケース、全52 embed・104起動**。追加のローカル/公開比較も成功。資料は `/tmp/qtw-scroll-pr58-public.json`、`/tmp/qtw-pr58-public-audit.log`、`/tmp/qtw-pr58-extra-{local,public}.json`。
+
+公開index / bb84_circuitの390/1440を目視し、ローカル新pinと同じ余白・label/rule・state panel配置を確認。画像とstep0資料: `/tmp/qtw-pr58-public-blocks.json`。
+
+| ページ | 公開390 | 公開1440 |
+| --- | --- | --- |
+| index | [画像](images/pr58-public-index-390.png) | [画像](images/pr58-public-index-1440.png) |
+| bb84_circuit | [画像](images/pr58-public-bb84_circuit-390.png) | [画像](images/pr58-public-bb84_circuit-1440.png) |
+
+新たな本文scroll修正・質問・上流変更なし。#57/#59保留ページの移植は再開していない。owned preview 4340と検証browserを終了し、08:47より前に終了する。
