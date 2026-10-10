@@ -640,3 +640,23 @@ PRの `{% qpu_operation h %}` は既存 `<h-gate>`、`{% ket 0/1 %}` は既存 `
 公開全 **35ページ×390/1440=70ケース、0 failures**。本文/shadow DOM内の横/縦scrollbar、document横overflow、console/page errorsはすべて0。全 **41 embed×2幅=82起動**でrunning / step0 / norm1 / 原max-wire-count属性を確認。統合資料は `/tmp/qtw-scroll-bell-public.json`、`/tmp/qtw-bell-public-audit.log`。新ページ比較は `/tmp/qtw-port-{entanglement,disentangle,entanglement_operation,discriminating_bell_states}.json`、図/再実行は `/tmp/qtw-bell-glyphs.json`、最終11 GPU結果は `/tmp/qtw-bell-behavior.json`。
 
 今後の再開点は superdense_coding_circuit の **#59 待ち**。cphase は高宮さん指示の **#57 待ち / SKIP** を継続する。今セッションのowned 4339 previewと全検証browserは終了した。
+
+
+## 2026-10-11 PR #58 circuit-block padding (08:47 hard stop)
+
+高宮さん指定の **[qni-webgpu PR #58](https://github.com/qniapp/qni-webgpu/pull/58)** により、`qni-webgpu.ref` を **958ee0d1a188701ca8ab2069d16868995564f38c** に更新。移植はやり直さず、本文・原JSON・palette・max-wire-count・glyph・画像置換・credits・ページ構造は変更していない。cphaseは#57待ち、superdense_coding_circuitは#59待ちのまま。
+
+clean detached `/home/yasuhito/Work/qni-webgpu-worktrees/verify/tutorial-block-padding` の指定refから `scripts/fetch-qni-webgpu.sh` でembedとstandaloneを実際に再buildし、その後Astro build。Binaryen123 / -Oz / bulk-memory / nontrapping-float-to-intを維持。GPU-only、CPU/WebGL fallbackなし。build/typecheck/diff-check成功、**221 tests passed (4.1m)**。
+
+実 Chromium / AMD WebGPUで全 **35ページ×390/1440=70ケース、0 failures**。HTML/shadow DOM内の横/縦scrollbar、document横overflow、console/page errorsは0。全 **41 embed×2幅=82起動** はrunning、step0/norm1、原max属性を維持。資料: `/tmp/qtw-scroll-pr58-local.json`、`/tmp/qtw-pr58-local-audit.log`。
+
+indexとbb84_circuitを両幅で目視。PRの32px block padding、2px rule、24px label band、28px label line-height、58px circuit shiftの描画を確認。上/下のlabelとruleの間隔、およびstate panelとの分離を確認した。native内部clip/panは許可された範囲であり、問題・STOP理由にはしない。スクリーンショットとstep0確認: `/tmp/qtw-pr58-{before,local}-blocks.json`。
+
+| ページ・幅 | 更新前公開 | 更新後ローカル |
+| --- | --- | --- |
+| index 390 | [before](images/pr58-before-index-390.png) | [PR58](images/pr58-local-index-390.png) |
+| index 1440 | [before](images/pr58-before-index-1440.png) | [PR58](images/pr58-local-index-1440.png) |
+| bb84_circuit 390 | [before](images/pr58-before-bb84_circuit-390.png) | [PR58](images/pr58-local-bb84_circuit-390.png) |
+| bb84_circuit 1440 | [before](images/pr58-before-bb84_circuit-1440.png) | [PR58](images/pr58-local-bb84_circuit-1440.png) |
+
+公開後に同じ全ページ監査と4スクリーンショットを再確認し、commit/Pagesを次のcheckpointに記録する。
