@@ -92,3 +92,7 @@ Node 22 の型チェック、Astro build、対象 **9/9 テスト成功**。1440
 ### 実 MathJax への移行 (2026-10-10)
 
 上記の手書き CHTML / font shim は履歴。現在は原文と同じ TeX を `Ket.astro` で出力し、実 MathJax 3.2.2 を math ページだけで self-hosted/defer 読込する。shim、font、専用ライセンスは削除済み。設定、配信方式の比較、公開計測と検証は [mathjax.md](./mathjax.md) を参照。
+
+### 本文 inline H の白色化 (2026-10-10 10:33 JST)
+
+既存の `p h-gate` / `.qc-operation h-gate` の本文・図の区別を共有 component CSS で使い、本文12個の glyph のみ #FFFFFF にした。bare なタグにも自動で適用され、新しい属性は不要。図7個 (24px) と非本文の他サイズは #FFFCF0 のまま、body #3AA99F、SVG、寸法、pin は変更しない。図を p 内に置いた場合も `.qc-operation` が優先する。型チェック、Astro build、本文/図の色・動的 bare tag・32px 非本文サイズ等の関連6/6 tests が成功。公開前の DPR1/2 crops と採色用 JSON を保存済み。公開後に実 Chromium で再撮影・pixel 採色する。
