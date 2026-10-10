@@ -96,3 +96,7 @@ Node 22 の型チェック、Astro build、対象 **9/9 テスト成功**。1440
 ### 本文 inline H の白色化 (2026-10-10 10:33 JST)
 
 既存の `p h-gate` / `.qc-operation h-gate` の本文・図の区別を共有 component CSS で使い、本文12個の glyph のみ #FFFFFF にした。bare なタグにも自動で適用され、新しい属性は不要。図7個 (24px) と非本文の他サイズは #FFFCF0 のまま、body #3AA99F、SVG、寸法、pin は変更しない。図を p 内に置いた場合も `.qc-operation` が優先する。型チェック、Astro build、本文/図の色・動的 bare tag・32px 非本文サイズ等の関連6/6 tests が成功。公開前の DPR1/2 crops と採色用 JSON を保存済み。公開後に実 Chromium で再撮影・pixel 採色する。
+
+実装 **01fc5537d7c0212c1e61ff16a2ee869498d1a5b0**、Pages **38013641012** 成功 (build2分10秒 / deploy10秒)。gmktec Chromium152 / Vulkan / unsafe WebGPUで、context DPRと `--force-device-scale-factor` を両方1/2に揃えて公開再検証した。DPR2の本文glyph coreは **#FFFFFF (29 pixels)**、図は **#FFFCF0 (64 pixels)**。DPR1はantialiasingがかかるため本文の最明glyph pixelは **RGB181,223,219 (#B5DFDB)**、opaque white pixelは0。図DPR1の最明pixelはRGB230,242,230。bodyは両DPRとも実pixel **#3AA99F**。
+
+公開前の同じDPRのfigure cropとのraw pixel差分は **DPR1=0 / DPR2=0**。本文は36/96 pixelsだけ変化し、変更されたpixelsをglyph採色に使ってpage cornerを除外した。16/24px寸法、背景色、pinは不変。両browserともconsole/page errors0。保存: `/tmp/qtw-hwhite-{inline,figure}-dpr{1,2}.png`、`/tmp/qtw-hwhite.json`、比較元 `/tmp/qtw-hwhite-before-{inline,figure}-dpr{1,2}.png`。cropを目視確認済み。起動browserはfinallyで停止、test serverも終了。最終文書push後のdocs-only deployは待たず終了する。
