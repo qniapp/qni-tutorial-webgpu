@@ -62,11 +62,15 @@ const base = import.meta.env.BASE_URL
 </TutorialLayout>
 
 <style>
-  .qc-figure { width: fit-content; max-width: 100%; margin-block: 24px; }
-  .qc-transition { display: flex; align-items: center; gap: 10px; margin-block: 24px; }
+  .qc-figure { max-width: 100%; margin-block: 24px; }
+  .qc-transition { display: flex; align-items: center; justify-content: center; gap: 8px; margin-block: 24px; }
   .qc-transition > span { display: inline-flex; flex: none; align-items: center; white-space: nowrap; }
+  .qc-transition > span:not(.qc-operation) { gap: 8px; }
+  .qc-transition :global(qw-qubit-circle) { margin-right: 0; }
   .qc-figure-scroll { overflow-x: auto; }
+  .qc-figure-scroll .qc-transition { justify-content: flex-start; }
+  @media (min-width: 640px) { .qc-figure:not(.qc-figure-scroll) { width: 58.333333%; } }
   .qc-operation { position: relative; width: 64px; height: 32px; justify-content: center; color: #DAD8CE; }
   .qc-operation > :global(svg) { position: absolute; width: 64px; height: 13px; }
-  .qc-operation :global(qw-h-gate) { font-size: 32px; z-index: 1; }
+  .qc-operation :global(qw-h-gate) { font-size: 24px; z-index: 1; }
 </style>
