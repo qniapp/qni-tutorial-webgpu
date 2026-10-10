@@ -338,7 +338,13 @@ pinを **3cce38bd9ad4e53a6e23e9be7cc79ef97ed630b6** に更新。clean detached `
 
 ただしnativeの390px layoutは未達。`phase` の9-entry paletteはHの左端とRZの右端がclip、`index` の後続MEASUREMENTも右端外。CNOT target自体は見える。hostのframeはpadding0でcanvasに全面を渡しているためtoken/host余白の問題ではない。upstream **https://github.com/qniapp/qni-webgpu/issues/52** に報告。native修正の承認が必要なため、共通ルールどおり **次ページ移植をSTOP**。scaleでnative UIを縮小する回避策は入れていない。upstream code変更なし。
 
-公開bundleの19tagをprose/figureの16px specimenで実際にrenderし、1440/390×DPR1/2 cropを目視確認。`/tmp/qtw-allbold-live.json`、`/tmp/qtw-allbold-compare-{1440,390}-dpr{1,2}.png` (3倍nearest)、個別 `/tmp/qtw-allbold-<tag>-<width>-dpr<dpr>-{before,after}.png`。未登場のfuture tagはlive DOMへspecimenを挿入したもので、元本文への追加ではない。Pの最初のstroke3案は16pxで穴が潰れたためstroke2.25へ補正しcounterを保持する。図・nativeには補正を適用しない。補正後buildと27 targeted tests成功。
+公開bundleの19tagをprose/figureの16px specimenで実際にrenderし、1440/390×DPR1/2 cropを目視確認。`/tmp/qtw-allbold-live.json`、`/tmp/qtw-allbold-compare-{1440,390}-dpr{1,2}.png` (3倍nearest)、個別 `/tmp/qtw-allbold-<tag>-<width>-dpr<dpr>-{before,after}.png`。未登場のfuture tagはlive DOMへspecimenを挿入したもので、元本文への追加ではない。Pの最初のstroke3案は16pxで穴が潰れたためstroke2.25へ補正しcounterを保持する。図・nativeには補正を適用しない。補正後buildと27 targeted tests成功。補正commit **7f8f03713ccdb172e7fdbaa480e5d227949e1aab**、Pages **38030527912** success。DPR1/2公開zoom cropでPhi counterが残ることを目視確認 (`/tmp/qtw-allbold-phase-gate-compare-{1440,390}-dpr{1,2}.png`)。
+
+原文/liveの8ページ×1440/390再比較: 許可された2つのcredit括弧以外の本文diff0、本文TeX diff0、Orbit一致、ours errors0/overflowなし。JSON `/tmp/qtw-pr50-content-<slug>.json` にauthorizedCreditRemovalsを明示し、未編集のoriginal textも保持。原文PHASEのみ旧script errorを別記録。
+
+390px全12embedのsettled-frame contact `/tmp/qtw-pr50-embeds-390-contact.png` でも確認。追加でqubitのRz/Ry、qni_introの2つ目のMeasure、x_gateの2つ目のPが右側でclipすることをissue #52へ追記。全24embedのGPU readback後にframeが落ち着いてから再撮影した。1440側の短いpalette/全回路は可視。390pxの可視性は未達のまま、upstream修正なし、新規ページ移植 **0**。次ページは引き続きno_cloning_theorem、その次gate_combination。
+
+将来のページでpage-local importを忘れてもBoldが有効になるよう `TutorialLayout.astro` が共通display tagsを登録する。ゲートを持たないqpuページ上の19tag specimen×4条件でも登録・prose Bold・diagram Regularをテストする。
 
 ### 今後の移植で必須
 

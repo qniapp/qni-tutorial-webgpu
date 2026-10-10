@@ -6,7 +6,8 @@ for (const dpr of [1,2]) for (const width of [1440,390]) {
     test.use({ deviceScaleFactor: dpr })
     test('all current and future original-tag prose glyphs bold, diagrams regular', async ({ page }) => {
       await page.setViewportSize({ width, height: 1000 })
-      await page.goto('/qni-tutorial-webgpu/quantum_circuit/')
+      // No page-local gate script: the shared layout owns registration.
+      await page.goto('/qni-tutorial-webgpu/qpu/')
       await page.waitForFunction(() => customElements.get('write-gate'))
       await page.evaluate(tags => {
         const prose = document.createElement('p'); prose.id = 'glyph-prose'
