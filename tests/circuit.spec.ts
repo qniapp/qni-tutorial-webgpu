@@ -3,6 +3,7 @@ import { APP_URL } from '../src/components/qni-webgpu-app-url'
 
 type MockState = {
   calls: { circuit: string; showStatePanel: boolean; url: string }[]
+  paletteCalls: { present: boolean; palette?: string[] }[]
   destroyed: number[]
   live: number
   maxLive: number
@@ -26,6 +27,7 @@ const mockModule = `
     const mock = window.__qniMock;
     const id = mock.calls.length;
     mock.progress = settings.onProgress;
+    mock.paletteCalls.push({ present: Object.hasOwn(settings, 'palette'), palette: settings.palette });
     mock.calls.push({ circuit, showStatePanel: settings.showStatePanel, url: new URL(import.meta.url).pathname });
     if (window.__qniFail) throw new Error('mock GPU failure');
     mock.live++;
@@ -45,7 +47,7 @@ async function boot(page: Page, options: { gpu?: boolean; held?: boolean; import
   const requests: string[] = []
   await page.addInitScript(({ gpu, held }) => {
     Object.defineProperty(navigator, 'gpu', { configurable: true, value: gpu ? {} : undefined })
-    window.__qniMock = { calls: [], destroyed: [], live: 0, maxLive: 0, release: [] }
+    window.__qniMock = { calls: [], paletteCalls: [], destroyed: [], live: 0, maxLive: 0, release: [] }
     window.__qniHeld = held
     window.__qniFail = false
   }, { gpu: options.gpu !== false, held: options.held ?? false })
@@ -264,5 +266,32 @@ for (const event of ['pointerdown', 'focus', 'keydown', 'click']) {
     await link.evaluate(a => a.addEventListener('click', e => e.preventDefault()))
     await link.dispatchEvent(event)
     expect(await link.evaluate((a: HTMLAnchorElement) => new URL(a.href).hash.slice(1))).toBe(encodeURIComponent(current))
+  })
+}
+
+test('palette JSON reaches startEmbed, [] hides it and absence omits the option', async ({ page }) => {
+  await boot(page)
+  await running(page)
+  expect(await page.evaluate(() => window.__qniMock.paletteCalls.at(-1))).toEqual({ present: true, palette: ['H', 'X'] })
+  for (const palette of ['["|0>","P(π/4)","Measure"]', '[]', null]) {
+    await page.evaluate(value => {
+      const element = document.querySelector('qni-webgpu-circuit')!
+      if (value === null) element.removeAttribute('palette')
+      else element.setAttribute('palette', value)
+    }, palette)
+    await running(page)
+    expect(await page.evaluate(() => window.__qniMock.paletteCalls.at(-1))).toEqual(palette === null ? { present: false } : { present: true, palette: JSON.parse(palette) })
+  }
+  expect((await snapshot(page)).maxLive).toBe(1)
+})
+
+for (const palette of ['not-json', 'null', '"H"', '["H",1]']) {
+  test(`rejects invalid palette ${palette} without starting a new runner`, async ({ page }) => {
+    await boot(page)
+    await running(page)
+    await page.locator('qni-webgpu-circuit').evaluate((element, value) => element.setAttribute('palette', value), palette)
+    await page.locator('qni-webgpu-circuit[data-state="error"]').waitFor()
+    expect((await snapshot(page)).calls).toHaveLength(1)
+    expect((await snapshot(page)).live).toBe(0)
   })
 }

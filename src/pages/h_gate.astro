@@ -22,7 +22,7 @@ const base = import.meta.env.BASE_URL
 
   <h2>ハンズオン</h2>
   <p><h-gate></h-gate> を <Ket label="0" /> と <Ket label="1" /> に適用して、重ね合わせ状態が作られることを確認しましょう。 <Ket label="0" /> は最初から回路にセットされていますが、<Ket label="1" /> を作るにはどうしたらいいでしょうか? (ヒント: X ゲートを使います)</p>
-  <qni-webgpu-circuit circuit='{"cols":[["|0>"]]}' height="640"></qni-webgpu-circuit>
+  <qni-webgpu-circuit palette={"[\"H\",\"X\"]"} circuit='{"cols":[["|0>"]]}' height="640"></qni-webgpu-circuit>
 
   <h2>逆演算</h2>
   <p><h-gate></h-gate> を続けて 2 回適用するとどうなるでしょうか? 直感的には分かりづらいですが、そんな時には Qni で試してみましょう! 実際に <h-gate></h-gate> を 2 個連続して置くと、<Ket label="0" /> も <Ket label="1" /> もそれぞれ元の状態に戻ります。つまり、<h-gate></h-gate> も X ゲートと同様にそれ自身を打ち消す効果を持っているので、それ自身の逆演算です。</p>
@@ -34,7 +34,7 @@ const base = import.meta.env.BASE_URL
   <h2>H ゲートを回転として見る</h2>
   <p><h-gate></h-gate> を回転として見ると、<h-gate></h-gate> はブロッホ球の X 軸と Z 軸の中間 (黒い矢印) を軸とした 180 度の回転となります。たとえば北極の <Ket label="0" /> 状態に <h-gate></h-gate> を適用すると、赤い矢印に沿って X の文字の部分まで回転します。もう一度適用すると、青い矢印に沿って 180 度回転し元の位置に戻ります (逆演算)。</p>
   <figure>
-    <Sidenote id="h-gate-rotation">H ゲートの回転 (画像クレジット: <a href="https://physics.stackexchange.com/questions/313959/visual-interpretation-on-the-bloch-sphere-when-hadamard-gate-is-applied-twice">physics.stackexchange.com</a>)</Sidenote>
+    <Sidenote id="h-gate-rotation">H ゲートの回転</Sidenote>
     <BlochIllustration rotation />
   </figure>
 

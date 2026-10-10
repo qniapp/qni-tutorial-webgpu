@@ -6,12 +6,12 @@ type EmbedModule = {
   startEmbed(
     canvas: HTMLCanvasElement,
     circuit: string,
-    settings: { showStatePanel: boolean; onProgress?: (progress: LoadProgress) => void; onDeviceLost?: () => void },
+    settings: { showStatePanel: boolean; palette?: string[]; onProgress?: (progress: LoadProgress) => void; onDeviceLost?: () => void },
   ): Promise<EmbedHandle>
 }
 
 class QniWebgpuCircuit extends HTMLElement {
-  static observedAttributes = ['circuit', 'show-state-panel', 'width', 'height']
+  static observedAttributes = ['circuit', 'palette', 'show-state-panel', 'width', 'height']
 
   private canvas: HTMLCanvasElement
   private status: HTMLDivElement
@@ -161,7 +161,17 @@ class QniWebgpuCircuit extends HTMLElement {
     try {
       const circuit = this.getAttribute('circuit') ?? '{"cols":[]}'
       JSON.parse(circuit)
+      const rawPalette = this.getAttribute('palette')
+      let palette: string[] | undefined
+      if (rawPalette !== null) {
+        const parsed: unknown = JSON.parse(rawPalette)
+        if (!Array.isArray(parsed) || !parsed.every(token => typeof token === 'string')) {
+          throw new TypeError('palette must be a JSON array of gate token strings')
+        }
+        palette = parsed
+      }
       const settings = {
+        ...(palette === undefined ? {} : { palette }),
         showStatePanel: this.getAttribute('show-state-panel') !== 'false',
         onDeviceLost: () => {
           if (!current()) return

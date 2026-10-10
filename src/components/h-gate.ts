@@ -1,10 +1,11 @@
 import { svg, pin } from 'virtual:h-gate-icon'
 import './h-gate.css'
 import boldSvg from '../assets/h-bold.svg?raw'
+import { isInlineProse } from './inline-glyph-context'
 
 export class HGate extends HTMLElement {
   connectedCallback() {
-    const inline = this.closest('p') !== null && this.closest('.qc-operation') === null
+    const inline = isInlineProse(this)
     const glyph = inline ? 'bold' : 'regular'
     if (this.dataset.glyph !== glyph || !this.querySelector('svg')) {
       this.innerHTML = inline ? boldSvg : svg

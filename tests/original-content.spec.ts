@@ -2,11 +2,11 @@ import { expect, test } from '@playwright/test'
 import original from './fixtures/h-gate-original.json' with { type: 'json' }
 
 for (const width of [1440, 390]) {
-  test(`H original sentences, headings, image credit and restored Orbit at ${width}px`, async ({ page }) => {
+  test(`H original sentences, headings, authorized image credit removal and restored Orbit at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 1100 })
     await page.goto('/qni-tutorial-webgpu/h_gate/')
     await page.waitForFunction(() => document.documentElement.dataset.mathjax === 'ready')
-    expect(await page.locator('.content-with-margin').evaluate(e => Array.from(e.children).filter(n => ['p','h2','figure'].includes(n.localName)).map(n => ({ tag: n.localName, text: [...n.querySelectorAll<HTMLElement>('[data-original-image]')].reduce((text, diagram) => text.replace(diagram.innerText, ''), (n as HTMLElement).innerText).replace(/\s+/g, '') })))).toEqual(original[width === 1440 ? '1440' : '390'])
+    expect(await page.locator('.content-with-margin').evaluate(e => Array.from(e.children).filter(n => ['p','h2','figure'].includes(n.localName)).map(n => ({ tag: n.localName, text: [...n.querySelectorAll<HTMLElement>('[data-original-image]')].reduce((text, diagram) => text.replace(diagram.innerText, ''), (n as HTMLElement).innerText).replace(/\s+/g, '') })))).toEqual(original[width === 1440 ? '1440' : '390'].map(item => ({ ...item, text: item.text.replace('(画像クレジット:physics.stackexchange.com)', '') })))
     await expect(page.locator('main details, noscript, .qc-figure p, .qc-figure[aria-label]')).toHaveCount(0)
     await expect(page.locator('orbit-reviewarea[color="blue"]')).toHaveCount(1)
     await expect(page.locator('orbit-prompt')).toHaveCount(7)

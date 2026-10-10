@@ -75,7 +75,7 @@ const base = import.meta.env.BASE_URL
   X ゲートを回路に置いて、<Ket label="0" /> と <Ket label="1" /> が入れ替わることを確認しましょう。
 </div>
 
-<qni-webgpu-circuit circuit={"{\"cols\":[[\"|0>\"]]}"}></qni-webgpu-circuit>
+<qni-webgpu-circuit palette={"[\"X\"]"} circuit={"{\"cols\":[[\"|0>\"]]}"}></qni-webgpu-circuit>
 
 <p>
   <x-gate></x-gate> が従来の NOT
@@ -166,7 +166,7 @@ const base = import.meta.env.BASE_URL
   </ul>
 </div>
 
-<qni-webgpu-circuit circuit={"{\"cols\":[[\"{重ね合わせ状態の準備\"],[\"|0>\"],[\"H\"],[\"Ry(3π_4)\"],[\"P(31π_17)\"],[\"}\"]]}"}></qni-webgpu-circuit>
+<qni-webgpu-circuit palette={"[\"X\"]"} circuit={"{\"cols\":[[\"{重ね合わせ状態の準備\"],[\"|0>\"],[\"H\"],[\"Ry(3π_4)\"],[\"P(31π_17)\"],[\"}\"]]}"}></qni-webgpu-circuit>
 
 <p>
   「X ゲート」の名前の由来は、量子ビット状態をブロッホ球で表すと量子 NOT ゲートは X
@@ -174,8 +174,7 @@ const base = import.meta.env.BASE_URL
 </p>
 
 <figure class="not-prose">
-  <Sidenote id="x-gate">X ゲートは X 軸を中心に π (180度) 回転する操作 (画像クレジット:
-  <a href="https://qiskit.org/textbook/ch-states/single-qubit-gates.html#xgate">qiskit.org</a>)</Sidenote>
+  <Sidenote id="x-gate">X ゲートは X 軸を中心に π (180度) 回転する操作</Sidenote>
   <BlochIllustration rotation axis="x" />
 </figure>
 

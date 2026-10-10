@@ -1,11 +1,10 @@
-x-gate, y-gate, z-gate, phase-gate, write-gate, measurement-gate, control-gate, swap-gate {
+:is(x-gate, y-gate, z-gate, phase-gate, write-gate, measurement-gate, control-gate, swap-gate, s-gate, s-dagger-gate, t-gate, t-dagger-gate, rnot-gate, rx-gate, ry-gate, rz-gate, qft-gate, qft-dagger-gate) {
   position: relative; display: inline-block; width: 1em; height: 1em; flex: none;
   vertical-align: -0.125em; color: #FFFCF0;
 }
-y-gate, z-gate { background: #3AA99F; border-radius: 0.15em; }
+y-gate, z-gate, s-gate, s-dagger-gate, t-gate, t-dagger-gate, rnot-gate, rx-gate, ry-gate, rz-gate, qft-gate, qft-dagger-gate { background: #3AA99F; border-radius: 0.15em; }
 x-gate, phase-gate { background: #3AA99F; border-radius: 50%; }
-x-gate > svg, y-gate > svg, z-gate > svg, phase-gate > svg,
-write-gate > svg, measurement-gate > svg, control-gate > svg, swap-gate > svg {
+:is(x-gate, y-gate, z-gate, phase-gate, write-gate, measurement-gate, control-gate, swap-gate, s-gate, s-dagger-gate, t-gate, t-dagger-gate, rnot-gate, rx-gate, ry-gate, rz-gate, qft-gate, qft-dagger-gate) > svg {
   display: block; width: 100%; height: 100%;
 }
 control-gate, swap-gate { color: #3AA99F; }

@@ -59,7 +59,7 @@ const base = import.meta.env.BASE_URL
   それぞれのツールの名前と使い方を見て行きましょう。
 </p>
 
-<qni-webgpu-circuit circuit={"{\"cols\":[[\"|0>\"]]}"}></qni-webgpu-circuit>
+<qni-webgpu-circuit palette={"[\"H\",\"X\",\"Y\",\"Z\"]"} circuit={"{\"cols\":[[\"|0>\"]]}"}></qni-webgpu-circuit>
 
 <h3>命令パレット</h3>
 <p>
@@ -91,7 +91,7 @@ const base = import.meta.env.BASE_URL
   後で説明しますが、量子回路エディタはステップ実行やブレークポイントといったデバッグにも使えます。
 </p>
 
-<qni-webgpu-circuit show-state-panel="false" height="400" circuit={"{\"cols\":[[\"|0>\",\"|0>\"],[\"H\"],[\"•\",\"X\"],[\"Measure\"],[1,\"Measure\"]]}"}></qni-webgpu-circuit>
+<qni-webgpu-circuit palette={"[]"} show-state-panel="false" height="400" circuit={"{\"cols\":[[\"|0>\",\"|0>\"],[\"H\"],[\"•\",\"X\"],[\"Measure\"],[1,\"Measure\"]]}"}></qni-webgpu-circuit>
 
 <h3>状態ベクトル表示</h3>
 <p>
