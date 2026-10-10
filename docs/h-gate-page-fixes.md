@@ -170,3 +170,20 @@ DPR1/2の公開before raw cropsを先に保存。typecheck/buildと関連6/6 tes
 11:16の更新でタイトル下の横線だけ共有layout変更が許可された。原文 `_layouts/page.html:35` の `mb-10 border-b border-zinc-200 pb-10` は単独hrではなくdivのbottom border。これを page-title-block として移植した。borderは1px solid #E4E4E7、padding-bottom40px / margin-bottom40px / margin-top0、content全幅。既存タイトルfontを変えず、原文inline H1 rowの1px gapを補正して H1 bottom→line=73px / line→first paragraph=41px に揃えた。header「実験版」/footerは不変。型チェック/buildとdivider/Bold等9/9関連tests成功。
 
 原文のdesktop content幅1120pxに対し現行shared mainの内幅は1072px、mobileは双方358px。横線は双方のcontent全幅100%とし、横線だけの許可を超えるmain/sidebarの幅変更はしない。computed styles/実寸をJSONに残す。
+
+#### 3項目の最終公開検証 (11:28 JST)
+
+コミット: Bold **4c7500347cf6c91adfe5cfe94a6435f8faefd279**、frame **ba49972e0d3cd8053f6c38c20d4ffb02a0e41845**、divider **b9d81b095e8dd4ef414d284ceb42575e21ec222c**。最終実装Pages **38016650187** 成功 (build2分41秒 / deploy10秒)。このdeploy後にまとめてgmktec Chromium152/Vulkan/unsafe WebGPUで検証し、DPRはcontextとforce-device-scale-factorを両方1/2にした。最終sourceの関連 **31/31 tests**、typecheck/build成功。
+
+| DPR | glyph before→after 最明RGB | glyph mean RGB before→after | effective coverage before→after |
+| --- | --- | --- | --- |
+| 1 | 181,223,219 → 230,242,230 | 142.11,205.97,200.00 → 191.89,225.72,213.94 | 6.010% → 9.562% |
+| 2 | 255,255,255 → **255,252,240** | 181.86,223.18,219.38 → 207.28,231.94,220.19 | 5.896% → 9.469% |
+
+DPR2のopaque paper coreは68pixels。glyph採色はcorner背景を除く中央20%-80% ROIで、body/foreground間のRGB projectionからalphaを推定し、sum(alpha)/(16×16×DPR²)をcoverageとした。meanはalpha>1/255のglyph pixelの非加重平均。**figureのbefore/after raw pixel差分はDPR1=0 / DPR2=0**。nearest-neighbor8xを目視し、実Boldの方が16pxで読み取りやすいことを確認した。
+
+frameは1440/390px×DPR1/2の4ケースすべてcanvas-inner edgeのleft/right/top/bottom=0、tab gap=0/left offset=0、canvas buffer=round(CSS size×DPR)、page overflowなし。H診断readbackは[0.7071067690849304,0,0.7071067690849304,0]。production CPU fallback/readback追加はなし。
+
+dividerは原文/移植×1440/390の4ケースでbottom border1px solid RGB228,228,231、margin-top0/margin-bottom40/padding-bottom40、H1→line73px /line→paragraph41px。実装を原文同様border-bottomにしたため、border-topは双方0px solid (colorは同色)。widthはdesktop原文1120 /移植1072px、mobile双方358pxで、どちらもcontent全幅。header/footerは変更しない。原文cold favicon404は別記録、最終比較のconsole/page errorsは0。移植Bold/frameのcold検証も0。
+
+保存: `/tmp/qtw-hbold-inline-dpr{1,2}-{before,after}.png` (8x)、`/tmp/qtw-hbold-compare.png`、`/tmp/qtw-hbold-figure-dpr{1,2}.png`、`/tmp/qtw-hbold.json`。frameは `/tmp/qtw-frame-{before,after}-{1440,390}.png` と `/tmp/qtw-frame.json` (DPR2追加写真も保存)。dividerは `/tmp/qtw-hr-compare-{1440,390}.png` と `/tmp/qtw-hr.json`。最初のdivider cropはstartup focus後のscrollとclip座標が食い違ったharness問題で、document座標/fullPage撮影に直して再取得・目視確認した。browserはfinallyで停止、test serverも終了。通常push後にcleanで終了し、docs-only deployは待たない。
