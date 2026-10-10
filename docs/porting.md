@@ -351,3 +351,28 @@ pinを **3cce38bd9ad4e53a6e23e9be7cc79ef97ed630b6** に更新。clean detached `
 - 各embedの元paletteを毎回sourceで確認しtoken syntaxのJSON属性を明示する。元paletteなしは`[]`、standalone用のFull defaultはtutorialに流用しない。
 - 自作interactive/custom部品に置換した画像のcreditだけ削除する。保持画像のcredit・引用は保持する。credit以外の本文は編集しない。
 - 小さなprose glyphは共通Bold、figure/connected circuit/native embedはRegular。DPR1/2 cropと1440/390のstep0・全gateの可視性を毎回公開で確認する。
+
+## 15:27 owner決定 / sidebar再開
+
+高宮さん承認: **#52の390px native clippingはSTOP対象から除外**。ページごとのclip箇所を記録し、nativeは別作業で修正される。保持画像・PHASE/MEASUREMENT本文は変更しない。原文に合わせられないページ、または#52以外のupstream変更が必要な場合だけSTOP。以下はこの承認後の新規移植。
+
+### no_cloning_theorem / CLONE 命令!? (公開確認待ち)
+
+原文source acf87bfをgit showで取得し本文そのまま移植。注2、PNG1、Orbit0、embed0。proofリンクは未移植なので原サイトへ、p_bitは移植先へ。
+
+- 置換: なし。`images/p-bit/wikipedia_youtube_cat.png` は混合メディア図の保持対象なので元画像を保持。
+- 削除credit: なし。
+- palette / step0 / #52: embedなし、対象外。
+- questions: 同じWikipedia/YouTube/猫画像の図を保持する既存の内容方針を引き継ぐ。新規本文変更要求なし。
+
+### gate_combination / 組合わせゲート (公開確認待ち)
+
+原文source acf87bfをgit showで取得し全文・12等式図・ket3・Orbit8をそのまま移植。gate図は元のcircuit-dropzone/h-gate/x-gate/phase-gate/rnot-gateを使用、display-only Regular。新規upstream機能不要。JSON block `{重ね合わせ`/`}`を保持した実験embed2。
+
+- 置換: 元からcustom-tagの等式図を同じtagのdisplay-only部品で描画。画像の置換なし。
+- 削除credit: なし。
+- palette: embed1 `["H","X"]`、embed2 `["X^½"]`。原文の各手書きpaletteを再確認。
+- questions: Orbit answer-attachmentsのHH/HXH/2rnots/rnot_gate_decomposition/X_gate_decompositionは既存の画像URL制約として保持。自作部品への置換はしない。
+- #52 clipping: 公開1440/390で確認して追記する。
+
+型チェック/build成功。新規2ページ1440/390構造・画像・Orbit・MathJax・sidebar、将来tag/元palette、display部品を含む55/55 tests。

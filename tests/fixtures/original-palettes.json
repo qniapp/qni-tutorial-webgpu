@@ -58,5 +58,7 @@
   ],
   "measurement_operation": [
     []
-  ]
+  ],
+  "no_cloning_theorem": [],
+  "gate_combination": [["H", "X"], ["X^½"]]
 }

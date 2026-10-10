@@ -1,0 +1,16 @@
+{
+  "title": "CLONE 命令!?",
+  "slug": "no_cloning_theorem",
+  "description": "禁じられた QPU 命令",
+  "sidenotes": [
+    "no-cloning-theorem-proof",
+    "no_cloning_theorem-note-2"
+  ],
+  "images": [
+    "images/p-bit/wikipedia_youtube_cat.png"
+  ],
+  "orbitPrompts": 0,
+  "orbit": [],
+  "circuits": [],
+  "amplitudes": []
+}
