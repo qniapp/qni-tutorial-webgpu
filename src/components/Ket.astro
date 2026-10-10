@@ -1,0 +1,6 @@
+---
+interface Props { label: string | number }
+const { label } = Astro.props
+const tex = String.raw`\(|${label}\rangle\)`
+---
+{tex}

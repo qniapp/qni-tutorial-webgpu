@@ -3,6 +3,7 @@ node_modules/
 dist/
 public/qni-webgpu/
 public/app/
+public/mathjax/
 .qni-webgpu-source/
 playwright-report/
 test-results/

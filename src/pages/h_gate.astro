@@ -1,37 +1,38 @@
 ---
 import TutorialLayout from '../layouts/TutorialLayout.astro'
 import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
 import transitionArrow from '../assets/qubit-transition-arrow.svg?raw'
 const equal = Math.SQRT1_2
 const base = import.meta.env.BASE_URL
 ---
-<TutorialLayout title="H ゲート" description="シンプルな重ね合わせ状態を作る" section="QPU 命令その 1" hasCircuit>
+<TutorialLayout title="H ゲート" description="シンプルな重ね合わせ状態を作る" section="QPU 命令その 1" hasCircuit hasMath>
   <p>
     H ゲート <h-gate></h-gate> はフランスの数学者、ジャック・サロモン・アダマール (Jacques Salomon
     Hadamard, 1865 - 1963) の名前を冠したゲートで、別名アダマールゲートとも呼びます<Sidenote id="h-gate" numbered>英語では「ハダマードゲート (Hadamard gate)」と言います。日本語の「アダマールゲート」は、フランス語の元々の発音 (Hadamard の最初の h と最後の d を発音しない) に近いカタカナ表記です。</Sidenote>。
   </p>
-  <p><h-gate></h-gate> はシンプルな重ね合わせ状態を作ります。 <mjx-container jax="CHTML" role="math" aria-label="ケット 0">|0⟩</mjx-container> または <mjx-container jax="CHTML" role="math" aria-label="ケット 1">|1⟩</mjx-container> に作用させると、次のように大きさの等しい重ねあわせ状態を作ります。</p>
+  <p><h-gate></h-gate> はシンプルな重ね合わせ状態を作ります。 <Ket label="0" /> または <Ket label="1" /> に作用させると、次のように大きさの等しい重ねあわせ状態を作ります。</p>
   <div class="qc-figure" aria-label="H ゲートによる状態の変化">
     <div class="qc-transition"><span><qubit-circle data-amplitude="1" data-ket="0"></qubit-circle><qubit-circle data-amplitude="0" data-ket="1"></qubit-circle></span><span class="qc-operation"><Fragment set:html={transitionArrow} /><h-gate></h-gate></span><span><qubit-circle data-amplitude={equal} data-ket="0"></qubit-circle><qubit-circle data-amplitude={equal} data-ket="1"></qubit-circle></span></div>
     <div class="qc-transition"><span><qubit-circle data-amplitude="0" data-ket="0"></qubit-circle><qubit-circle data-amplitude="1" data-ket="1"></qubit-circle></span><span class="qc-operation"><Fragment set:html={transitionArrow} /><h-gate></h-gate></span><span><qubit-circle data-amplitude={equal} data-ket="0"></qubit-circle><qubit-circle data-amplitude={-equal} data-ket="1"></qubit-circle></span></div>
   </div>
-  <p><mjx-container jax="CHTML" role="math" aria-label="ケット 1">|1⟩</mjx-container> に対して <h-gate></h-gate> を適用したときのみ、<mjx-container jax="CHTML" role="math" aria-label="ケット 1">|1⟩</mjx-container> の位相が π 変化していることに注意してください。 <mjx-container jax="CHTML" role="math" aria-label="ケット 0">|0⟩</mjx-container> に対する <h-gate></h-gate> 操作は、位相の回転を含みません。</p>
+  <p><Ket label="1" /> に対して <h-gate></h-gate> を適用したときのみ、<Ket label="1" /> の位相が π 変化していることに注意してください。 <Ket label="0" /> に対する <h-gate></h-gate> 操作は、位相の回転を含みません。</p>
   <p><h-gate></h-gate> は QPU 独自の命令です。量子ビットだけが持つ重ね合わせ状態を作るという性質を持つので、従来の論理演算には H ゲートに対応するものはありません。</p>
 
   <h2>ハンズオン</h2>
-  <p><h-gate></h-gate> を <mjx-container jax="CHTML" role="math" aria-label="ケット 0">|0⟩</mjx-container> と <mjx-container jax="CHTML" role="math" aria-label="ケット 1">|1⟩</mjx-container> に適用して、重ね合わせ状態が作られることを確認しましょう。 <mjx-container jax="CHTML" role="math" aria-label="ケット 0">|0⟩</mjx-container> は最初から回路にセットされていますが、<mjx-container jax="CHTML" role="math" aria-label="ケット 1">|1⟩</mjx-container> を作るにはどうしたらいいでしょうか? (ヒント: X ゲートを使います)<Sidenote id="circuit-help">パレットから H ゲートを回路へドラッグしてください。現時点では H と X 以外のゲートも表示されます。回路は保存されません。</Sidenote></p>
+  <p><h-gate></h-gate> を <Ket label="0" /> と <Ket label="1" /> に適用して、重ね合わせ状態が作られることを確認しましょう。 <Ket label="0" /> は最初から回路にセットされていますが、<Ket label="1" /> を作るにはどうしたらいいでしょうか? (ヒント: X ゲートを使います)<Sidenote id="circuit-help">パレットから H ゲートを回路へドラッグしてください。現時点では H と X 以外のゲートも表示されます。回路は保存されません。</Sidenote></p>
   <qni-webgpu-circuit circuit='{"cols":[["|0>"]]}' height="640"></qni-webgpu-circuit>
   <noscript><p>回路を操作するには JavaScript を有効にしてください。</p></noscript>
 
   <h2>逆演算</h2>
-  <p><h-gate></h-gate> を続けて 2 回適用するとどうなるでしょうか? 直感的には分かりづらいですが、そんな時には Qni で試してみましょう! 実際に <h-gate></h-gate> を 2 個連続して置くと、<mjx-container jax="CHTML" role="math" aria-label="ケット 0">|0⟩</mjx-container> も <mjx-container jax="CHTML" role="math" aria-label="ケット 1">|1⟩</mjx-container> もそれぞれ元の状態に戻ります。つまり、<h-gate></h-gate> も X ゲートと同様にそれ自身を打ち消す効果を持っているので、それ自身の逆演算です。</p>
+  <p><h-gate></h-gate> を続けて 2 回適用するとどうなるでしょうか? 直感的には分かりづらいですが、そんな時には Qni で試してみましょう! 実際に <h-gate></h-gate> を 2 個連続して置くと、<Ket label="0" /> も <Ket label="1" /> もそれぞれ元の状態に戻ります。つまり、<h-gate></h-gate> も X ゲートと同様にそれ自身を打ち消す効果を持っているので、それ自身の逆演算です。</p>
   <div class="qc-figure qc-figure-scroll" aria-label="H ゲートを 2 回適用した状態">
     <div class="qc-transition"><span><qubit-circle data-amplitude="1" data-ket="0"></qubit-circle><qubit-circle data-amplitude="0" data-ket="1"></qubit-circle></span><span class="qc-operation"><Fragment set:html={transitionArrow} /><h-gate></h-gate></span><span><qubit-circle data-amplitude={equal} data-ket="0"></qubit-circle><qubit-circle data-amplitude={equal} data-ket="1"></qubit-circle></span><span class="qc-operation"><Fragment set:html={transitionArrow} /><h-gate></h-gate></span><span><qubit-circle data-amplitude="1" data-ket="0"></qubit-circle><qubit-circle data-amplitude="0" data-ket="1"></qubit-circle></span></div>
     <div class="qc-transition"><span><qubit-circle data-amplitude="0" data-ket="0"></qubit-circle><qubit-circle data-amplitude="1" data-ket="1"></qubit-circle></span><span class="qc-operation"><Fragment set:html={transitionArrow} /><h-gate></h-gate></span><span><qubit-circle data-amplitude={equal} data-ket="0"></qubit-circle><qubit-circle data-amplitude={-equal} data-ket="1"></qubit-circle></span><span class="qc-operation"><Fragment set:html={transitionArrow} /><h-gate></h-gate></span><span><qubit-circle data-amplitude="0" data-ket="0"></qubit-circle><qubit-circle data-amplitude="1" data-ket="1"></qubit-circle></span></div>
   </div>
 
   <h2>H ゲートを回転として見る</h2>
-  <p><h-gate></h-gate> を回転として見ると、<h-gate></h-gate> はブロッホ球の X 軸と Z 軸の中間 (黒い矢印) を軸とした 180 度の回転となります。たとえば北極の <mjx-container jax="CHTML" role="math" aria-label="ケット 0">|0⟩</mjx-container> 状態に <h-gate></h-gate> を適用すると、赤い矢印に沿って X の文字の部分まで回転します。もう一度適用すると、青い矢印に沿って 180 度回転し元の位置に戻ります (逆演算)。</p>
+  <p><h-gate></h-gate> を回転として見ると、<h-gate></h-gate> はブロッホ球の X 軸と Z 軸の中間 (黒い矢印) を軸とした 180 度の回転となります。たとえば北極の <Ket label="0" /> 状態に <h-gate></h-gate> を適用すると、赤い矢印に沿って X の文字の部分まで回転します。もう一度適用すると、青い矢印に沿って 180 度回転し元の位置に戻ります (逆演算)。</p>
   <figure>
     <Sidenote id="h-gate-rotation">H ゲートの回転 (画像クレジット: <a href="https://physics.stackexchange.com/questions/313959/visual-interpretation-on-the-bloch-sphere-when-hadamard-gate-is-applied-twice">physics.stackexchange.com</a>)</Sidenote>
     <img src={`${base}images/bloch_H0.png`} alt="ブロッホ球上で H ゲートを 2 回適用したときの回転" width="360" height="360" loading="lazy" />
