@@ -179,7 +179,7 @@ test('dimension changes resize without restarting', async ({ page }) => {
     const canvas = element.shadowRoot!.querySelector('canvas')!
     return {
       width: element.getBoundingClientRect().width, height: element.getBoundingClientRect().height,
-      canvasMatches: canvas.width === Math.round(252 * devicePixelRatio) && canvas.height === Math.round(128 * devicePixelRatio),
+      canvasMatches: canvas.width === Math.round(316 * devicePixelRatio) && canvas.height === Math.round(192 * devicePixelRatio),
       calls: window.__qniMock.calls.length, destroyed: window.__qniMock.destroyed,
     }
   })).toEqual({ width: 320, height: 240, canvasMatches: true, calls: 1, destroyed: [] })
@@ -233,6 +233,16 @@ for (const failure of ['import', 'parse', 'GPU'] as const) {
     }).toEqual({ message: '量子回路を起動できませんでした。', logged: true, live: 0 })
   })
 }
+
+test('canvas fills the blue frame inside its border and the tab stays attached', async ({ page }) => {
+  await boot(page)
+  await running(page)
+  expect(await page.locator('qni-webgpu-circuit').evaluate(e => {
+    const s = e.shadowRoot!, frame = s.querySelector('.frame')!, canvas = s.querySelector('canvas')!, tab = s.querySelector('.open-tab')!
+    const f = frame.getBoundingClientRect(), c = canvas.getBoundingClientRect(), t = tab.getBoundingClientRect(), b = parseFloat(getComputedStyle(frame).borderWidth)
+    return { left: c.left - f.left - b, right: f.right - b - c.right, top: c.top - f.top - b, bottom: f.bottom - b - c.bottom, tabGap: t.top - f.bottom, tabLeft: t.left - f.left, buffer: canvas.width === Math.round(c.width * devicePixelRatio) && canvas.height === Math.round(c.height * devicePixelRatio) }
+  })).toEqual({ left: 0, right: 0, top: 0, bottom: 0, tabGap: 0, tabLeft: 0, buffer: true })
+})
 
 test('open link has the exact label, safe new-tab attributes and encoded circuit', async ({ page }) => {
   await boot(page)

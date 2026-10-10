@@ -33,7 +33,7 @@ class QniWebgpuCircuit extends HTMLElement {
           height: var(--_qni-height, var(--qni-webgpu-circuit-height, 640px));
         }
         .frame { box-sizing: border-box; position: relative; height: calc(100% - 44px);
-          padding: 32px; border: 2px solid #0EA5E9; border-radius: 6px 6px 6px 0;
+          padding: 0; border: 2px solid #0EA5E9; border-radius: 6px 6px 6px 0;
           background: #FAFAFA; color: #404040; overflow: hidden; }
         .frame, .open-tab { font: 400 16px/28px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'; }
         canvas { display: block; width: 100%; height: 100%; }

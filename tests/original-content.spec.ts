@@ -13,7 +13,7 @@ for (const width of [1440, 390]) {
     await expect(page.locator('qni-webgpu-circuit').getByRole('link', { name: 'Qniで開く', exact: true })).toHaveCount(1)
     expect(await page.locator('qni-webgpu-circuit .open-link').evaluate(e => ({ color:getComputedStyle(e).color, weight:getComputedStyle(e).fontWeight, size:getComputedStyle(e).fontSize }))).toEqual({color:'rgb(255, 255, 255)',weight:'500',size:'16px'})
     expect(await page.locator('qni-webgpu-circuit .open-tab').evaluate(e => ({ color:getComputedStyle(e).backgroundColor, padding:getComputedStyle(e).padding, radius:getComputedStyle(e).borderRadius }))).toEqual({color:'rgb(14, 165, 233)',padding:'8px 16px',radius:'0px 0px 6px 6px'})
-    expect(await page.locator('qni-webgpu-circuit .frame').evaluate(e => ({ color:getComputedStyle(e).borderColor, border:getComputedStyle(e).borderWidth, padding:getComputedStyle(e).padding, radius:getComputedStyle(e).borderRadius }))).toEqual({color:'rgb(14, 165, 233)',border:'2px',padding:'32px',radius:'6px 6px 6px 0px'})
+    expect(await page.locator('qni-webgpu-circuit .frame').evaluate(e => ({ color:getComputedStyle(e).borderColor, border:getComputedStyle(e).borderWidth, padding:getComputedStyle(e).padding, radius:getComputedStyle(e).borderRadius }))).toEqual({color:'rgb(14, 165, 233)',border:'2px',padding:'0px',radius:'6px 6px 6px 0px'})
   })
 }
 for (const path of ['', 'h_gate/', 'multi-3/']) {

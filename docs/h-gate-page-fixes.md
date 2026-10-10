@@ -164,3 +164,5 @@ GPU診断readbackで初期[1,0,0,0]、H後[0.7071067690849304,0,0.70710676908493
 生成は `QNI_WEBGPU_SOURCE=... python3 scripts/extract-inline-h.py` (fonttools必要)。`src/assets/h-bold.svg` は生成物なので手動編集しない。ビルド時は既存SVGとしてバンドルし、Python/fonttools/runtime font download/strokeは不要。connectedCallbackで p 内かつ qc-operation外だけBoldを選び、図/他contextは既存Regular SVGをそのまま使う。再parent時も再判定する。header「実験版」、footer、shared layout、16/24px寸法、body#3AA99Fは変更なし。
 
 DPR1/2の公開before raw cropsを先に保存。typecheck/buildと関連6/6 tests成功。公開後、8x nearest crops、glyph color/coverage、figure raw pixel diffを追記する。
+
+同じ作業の更新により、embed frameのpadding32pxを **0px** に変更した。blue border2pxと左下「Qniで開く」tabは維持。canvasの実getBoundingClientRectに基づくDPR resizeは既存のまま、寸法testを316×192 (host320×240) に更新し、frame内縁4辺とtabのgap0をtestした。11:12に旧paddingありのbefore screenshotを1440/390pxで取得済み。型チェック/build、Bold/frame/link/本文等の関連28/28 tests成功。header/footer/shared layoutには触れていない。
