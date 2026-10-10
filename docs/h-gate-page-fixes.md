@@ -44,3 +44,11 @@ Node 22 の型チェック、Astro build、対象 **9/9 テスト成功**。1440
 比較画像を吟味して図の左寄せと H のサイズ差を修正した。原文の直書き H は実測 **24px** (本文 Liquid H は16px)。通常の図は本文列の中央、circle 間隔は原文の8px、逆演算の長い図だけ左から図内スクロールを維持する。背景/形状/個数を検証した9テストにサイズ・中央寄せの回帰検証を加えた。
 
 旧サイトのみ散発的な 404 console error があり、別途調べたところ `https://qniapp.github.io/favicon.ico` の不在だった。旧 Qni チェックアウトや root Pages はこのタスクで変更しない。移植先のエラーとは区別して JSON に記録する。
+
+## 最終公開・完了記録 (09:31 JST)
+
+位置・サイズ修正 `ae4828538b4484edde016b5391c6f944d084f8d7` の [Pages 38009141674](https://github.com/qniapp/qni-tutorial-webgpu/actions/runs/38009141674) が成功 (build 2m48s、deploy 9s)。1440px と390pxの原文/公開版を再撮影し、比較 PNG を再度目視確認した。H は双方19 (本文12/図7)、移植前1。24円、枠線/gray boxなし、追加数式なし、ページの横はみ出しなし。各 viewport の8円の外側を画素確認し、全16点がページ背景 RGB255,252,240 と一致。SVG の角が透明で、ゼロ円の内側が paper であることは対象テストでも検証済み。
+
+最終撮影の四つのケースは **console error 0 / page error 0**。移植版は AMD rdna-3 の実機 GPU を確認。Chromium152.0.7977.82、`--enable-unsafe-webgpu --enable-features=Vulkan --use-angle=vulkan --force-device-scale-factor=1`。以前観測した旧サイト root favicon の404は文書と JSON に識別情報を残した。
+
+成果物: `/tmp/qtw-hfix.json`、`/tmp/qtw-hfix-compare-1440.png`、`/tmp/qtw-hfix-compare-390.png`。原文/移植版個別の section PNG も `/tmp/qtw-hfix-original-{1440,390}.png`、`/tmp/qtw-hfix-ours-{1440,390}.png` に保持。検証スクリプト `/tmp/qtw-hfix-verify.mjs`。比較画像は依頼どおり保持し、再現/画素検査用の中間画像を削除。開始したブラウザーと対象テストのサーバーは終了した。型チェック、Astro build、9対象テストが成功。各 push 前に fetch/rebase を行い、約24分に達する前に最終文書を push して終了する。
