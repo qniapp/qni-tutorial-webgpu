@@ -54,7 +54,14 @@ test('narrow screens open and close the drawer without layout shift', async ({ p
   await expect(page.locator('.sidebar')).toBeHidden()
   const button = page.getByRole('button', { name: '目次を開く' })
   await expect(button).toHaveAttribute('aria-expanded', 'false')
-  const before = await page.locator('main').boundingBox()
+  // Native startup can move viewport focus; measure the document layout,
+  // not the viewport-relative position changed by click auto-scrolling.
+  const layout = () => page.locator('main').evaluate(e => {
+    const r = e.getBoundingClientRect()
+    return { x: r.x + scrollX, y: r.y + scrollY, width: r.width, height: r.height }
+  })
+  await page.waitForFunction(() => document.documentElement.dataset.mathjax === 'ready')
+  const before = await layout()
 
   await button.click()
   const drawer = page.getByRole('dialog', { name: '目次' })
@@ -62,7 +69,7 @@ test('narrow screens open and close the drawer without layout shift', async ({ p
   await expect(button).toHaveAttribute('aria-expanded', 'true')
   await expect(drawer.locator('[aria-current="page"]')).toHaveText('H ゲート')
   await expect(drawer.getByRole('button', { name: '目次を閉じる' })).toBeFocused()
-  expect(await page.locator('main').boundingBox()).toEqual(before)
+  expect(await layout()).toEqual(before)
   await page.keyboard.press('Escape')
   await expect(drawer).toBeHidden()
   await expect(button).toHaveAttribute('aria-expanded', 'false')

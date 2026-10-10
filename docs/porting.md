@@ -2,7 +2,13 @@
 
 順序は `src/data/toc.ts`。原文は qniapp/qni origin/main `acf87bfa9b377ca37ff2f9f733a9011cbf34be1d` の `apps/tutorial` を git show で参照する。未対応機能が必要なページでは判断を利用者に返し、そのページと後続ページを移植しない。
 
-## 1. はじめに (`index` / サイトルート) - circuit-block PR 待ち・未移植
+## 1. はじめに (`index` / サイトルート) - 移植・公開確認待ち
+
+13:27承認とPR #49 mergeにより保留解除。新pin e8a39ccを再build/deployした後、既存h_gate/qni_intro/qubit/phase/multi-3を1440/390で確認し、10 loads / 16 embeds running、GPU vector finite/norm1、errors0。Pages **38024913238**、pin commit **caed094**、JSON `/tmp/qtw-pin-e8a39cc.json`。
+
+原文indexの本文・6注釈・PNG1・Orbit9を維持。「量子もつれ」block tokenを含む原文JSONをそのままnative embedへ置換し、Qniで開くを維持。既存の実験版トップ本文は原文へ置換し、header/footerは変更しない。旧UI記述: Qniの原文スクリーンショットと元palette3個の見た目はnative editorと異なる。原文リンクqniapp.netやGitHub案内もそのまま保持。型チェック/build、関連49/49テスト成功。注釈PNGには元のmax-width100%を適用。native canvas focusによるページ自動scrollをhostのpreventScrollで抑止し、sidebar testはMathJax完了後のdocument座標でlayout shiftを測定する。
+
+以下は旧pin時点の履歴 (質問は解決済み)。
 
 12:30の指示更新: 高宮さんがこのページの保留を決定。別ストリームのqni-webgpu circuit-block PRを待ち、今回indexは変更しない。「QPUとは」から再開し、以後もcircuit-blockページだけは保留して次に進んでよい。以下は12:19時点の停止記録。
 
@@ -40,7 +46,7 @@
 
 これは移植完了比較ではないので、normalized本文diff・完了版compare画像・成功したembedの結果は作っていない。製品コードに変更がないためtypecheck/buildや移植テストの追加も行っていない。ブラウザはfinallyで停止し、サーバーは起動していない。今回はcheckpointのdocsだけを通常pushする。ページの移植deployはない。
 
-### 高宮さんへの質問 (未決定)
+### 高宮さんへの質問 (旧pin時点、13:27に解決済み)
 
 **この回路の「量子もつれ」グループ注釈をどう扱いますか?**
 
@@ -174,6 +180,6 @@ normalized比較はembed内部を除く。原文mini_qniの外側にある「Qni
 
 公開1440/390: 本文/TeX diff0、Orbit属性・counts一致、errors0、overflowなし。h2、circle8、ket7、step6/dropzone6、write13、Orbit4、画像/注釈/embed0。元のbare quantum-circuitもstatic図なのでembed数から除外して比較。commit **1b81d79**、Pages **38024512712** success。PNG `/tmp/qtw-port-write_operation-compare-{1440,390}.png`、JSON `/tmp/qtw-port-write_operation.json`。
 
-## PR #49 pin更新 - 公開検証待ち
+## PR #49 pin更新 - 公開検証完了
 
-13:27承認に従いpinを **e8a39cc529636a508183e931c5caae65ee69b1b8** に更新。別のclean detached upstream worktreeでembed/standaloneを再buildし、Binaryen123を維持。index移植前に公開の既存embedを確認する。
+13:27承認に従いpinを **e8a39cc529636a508183e931c5caae65ee69b1b8** に更新。別のclean detached upstream worktreeでembed/standaloneを再buildし、Binaryen123を維持。index移植前に公開の既存embedを確認した。Pages **38024913238** success、10 loads / 16 embeds running、norm1/finite、errors0。JSON `/tmp/qtw-pin-e8a39cc.json`。

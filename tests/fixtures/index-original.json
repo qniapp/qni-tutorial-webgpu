@@ -1,0 +1,85 @@
+{
+  "title": "はじめに",
+  "slug": "",
+  "description": "実践による量子コンピュータプログラミング",
+  "sidenotes": [
+    "preskill",
+    "grover",
+    "shor",
+    "qni",
+    "index-note-5",
+    "qni-github"
+  ],
+  "images": [
+    "images/introduction/qni_screenshot_grover.png"
+  ],
+  "orbitPrompts": 9,
+  "orbit": [
+    {
+      "question": "**量子コンピュータ**の名前の由来は?",
+      "answer": "動作原理が量子力学に基づくことから名付けられた"
+    },
+    {
+      "question": "現在のコンピュータを、量子コンピュータとの対比で何と呼ぶ?",
+      "answer": "古典コンピュータ"
+    },
+    {
+      "question": "量子コンピュータでビットの格納に使われる量子を 1 つ挙げると?",
+      "answer": "原子 or 電子 or 光子"
+    },
+    {
+      "cloze": "90 年代に提案された、量子コンピュータ向けの代表的なアルゴリズムは{量子探索}と{量子因数分解}"
+    },
+    {
+      "question": "量子探索の主な用途は?",
+      "answer": "リスト検索"
+    },
+    {
+      "question": "量子探索アルゴリズムの別名は?",
+      "answer": "グローバーのアルゴリズム"
+    },
+    {
+      "question": "量子因数分解アルゴリズムの別名は?",
+      "answer": "ショアのアルゴリズム"
+    },
+    {
+      "question": "量子因数分解によって脅威を受ける分野は何か?",
+      "answer": "インターネット・セキュリティ"
+    },
+    {
+      "question": "量子コンピュータシミュレータ *Qni* の読みは?",
+      "answer": "キューニ"
+    }
+  ],
+  "circuits": [
+    {
+      "cols": [
+        [
+          "|0>",
+          "|0>"
+        ],
+        [
+          "{量子もつれ"
+        ],
+        [
+          "H"
+        ],
+        [
+          "•",
+          "X"
+        ],
+        [
+          "}"
+        ],
+        [
+          "Measure"
+        ],
+        [
+          1,
+          "Measure"
+        ]
+      ]
+    }
+  ],
+  "amplitudes": []
+}

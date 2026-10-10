@@ -1,12 +1,213 @@
 ---
 import TutorialLayout from '../layouts/TutorialLayout.astro'
 import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
 const base = import.meta.env.BASE_URL
 ---
-<TutorialLayout title="Qni Tutorial" description="量子回路をブラウザで試す WebGPU 実験版">
-  <p>旧 Qni Tutorial の内容を、Astro と Qni に少しずつ移しています<Sidenote id="webgpu-support">WebGPU が使える Windows / macOS の Chrome と Edge、macOS の Safari が対象です。回路はページを読み込み直すと初期状態に戻ります。</Sidenote>。</p>
-  <h2>ページ一覧</h2>
-  <ul>
-    <li><a href={`${base}h_gate/`}>H ゲート</a>：シンプルな重ね合わせ状態を作る</li>
-  </ul>
+<TutorialLayout title="はじめに" description="実践による量子コンピュータプログラミング" section="イントロダクション" hasCircuit>
+
+
+<p>
+  1980 年代初頭に量子コンピュータのアイディアは生まれました<Sidenote id="preskill" numbered>John Preskill,
+  <a href="https://arxiv.org/abs/2106.10522" class="italic">Quantum computing 40 years later</a>
+  (2021) </Sidenote>。
+  そのきっかけの一つとなった、かの大物理学者ファインマンの「自然をシミュレーションしたければ、量子力学の原理でコンピュータを作らなくてはならない」という言葉はあまりにも有名です。
+</p>
+
+<p>
+  量子力学の原理でコンピュータを作るとはどういうことでしょうか?
+  量子コンピュータと従来のコンピュータの大きな違いは、情報の単位であるビットの実装方式にあります。
+  ノートパソコンやスマホから最新のゲーム機、世界最速のスパコンといった従来のコンピュータの内部構造は、古典物理学、より正確には電磁気学で説明できます。
+  これは、ビットが電磁気学に基いた基本素子である、コンデンサとして実装されているからです。
+  一方で量子コンピュータは原子や電子、光子といった量子をビットとして使います。
+</p>
+
+<p>
+  量子をビットとして使う目的は、計算の高速化です。 量子の不思議な振舞いを利用することで、ミクロな
+  "自然" のシミュレーション (原子や分子といった量子系のシミュレーション)
+  に必要な膨大な計算を高速化できるのでは? というのが、ファインマンのもともとのアイデアです。
+</p>
+
+<p>
+  このアイデアをきっかけに、従来のさまざまな計算を高速化できる、量子コンピュータ向けのアルゴリズム探しが始まりました。
+  そして 1990 年代には、量子探索<Sidenote id="grover" numbered>開発者であるコンピュータ科学者、ロブ・グローバーの名前にちなんで、グローバーのアルゴリズムとしても知られています。Lov
+  K. Grover,
+  <a href="https://arxiv.org/abs/quant-ph/9605043" class="italic"
+    >A fast quantum mechanical algorithm for database search</a
+  >
+  (1996)</Sidenote>と量子因数分解<Sidenote id="shor" numbered>開発者である数学者、ピーター・ショアの名前にちなんで、ショアのアルゴリズムとしても知られています。Peter
+  W. Shor,
+  <a href="https://arxiv.org/abs/quant-ph/9508027" class="italic"
+    >Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum
+    Computer</a
+  >
+  (1995)</Sidenote>という最も有望で代表的な量子コンピュータアルゴリズムの 2
+  つが開発されました。
+</p>
+
+<p>
+  量子探索の威力を理解するために、昔ながらの電話帳で特定の電話番号に一致する名前を検索することを考えてみましょう。電話帳の登録件数が
+  1 万件だとすると、平均してその半分の 5,000 件には目を通さなければ目的の名前にはたどり着きません。
+  一方、量子探索アルゴリズムでは、たった 100 回の検索で十分です。 もし量子コンピュータが量子探索で
+  5,000 回の推測をしたならば、実に 2,500 万件の電話帳を検索できます。
+  このように、量子探索アルゴリズムは巨大なリストの中から特定のアイテムを効率的に検索できます。
+</p>
+
+<p>
+  量子因数分解アルゴリズムは、セキュリティに対して脅威 (株価の下落を含む)
+  をもたらすものです。というのも、インターネット・セキュリティの最も一般的な方式である公開鍵暗号は、特定の数学問題（長さ数百桁の数の因数分解など）を事実上解くことが不可能であることに依存しているためです。
+  量子アルゴリズムは、最もよく知られた古典的なアルゴリズムよりも指数関数的に速くこのタスクを実行できるため、現代の暗号のいくつかの形式は、暗号解読者を阻止できません。
+</p>
+
+<p>
+  このように 1990
+  年代から有望なアルゴリズムがあるにもかかわらず、量子コンピュータ自体については、まだまだ誤解されて伝わっているのが現状です。
+  これは、量子アルゴリズムの並外れた強力さと、「量子」という言葉が持つ神秘性によるものかもしれません。
+  現在の量子コンピュータはまだまだ未熟で不安定であるにもかかわらず、スパコンを凌駕する実用的な量子コンピュータがすでに稼動しているかのように誤解させるネットニュースも少なくありません。
+  極端な例としては、「量子重ね合わせ」「量子もつれ」といったキャッチーなキーワードを濫用した、量子とは無関係な怪しいビジネスすら存在します。
+</p>
+
+<p>
+  量子コンピュータの正しい知識が広まらない原因の 1 つは、その敷居が高すぎることです。
+  クラウド越しに本物の量子コンピュータを使える現在でさえ、量子コンピュータの初級コンテンツは不足しています。
+  好奇心旺盛なプログラマが量子コンピュータを勉強しようと、うっかり専門の教科書や大学の講義スライドに手を出してしまい、そこにぎっしり詰まった高度な物理学や数学を前に挫折してしまった例も多いはずです。
+</p>
+
+<p>
+  Python や JavaScript などのプログラミング解説書には、高度な数式はひとつも出てきません。
+  ならば、量子コンピュータプログラミングにも、もっとそんな従来的スタイルのガイドブックやチュートリアルがあってもいいのではないのでしょうか?
+</p>
+
+<p>
+  実際に、量子コンピュータプログラミングを学ぶのに複雑な数学を理解する必要はありません。
+  今までやってきたプログラミングと同様に、量子コンピュータの命令やアルゴリズムがどのように動作するかの感覚をつかむだけでよいのです。
+  基本的な命令とアルゴリズムを理解したら、必要に応じて、次のレベルに進むための数学を少しずつ学んでいきましょう。
+  このことを念頭に置いて、本チュートリアルでは、必要な場合以外は数学的な専門用語を避け、実用的な観点から量子コンピュータプログラミングを紹介します。
+</p>
+
+<p>
+  このチュートリアルは、量子コンピュータプログラミングの実践的入門です。特長として、我々が開発するオープンソースな量子コンピュータシミューレータ
+  Qni (キューニ)<Sidenote id="qni">
+  <img
+    src={`${base}images/introduction/qni_screenshot_grover.png`}
+    class="my-2 border border-neutral-300"
+  />
+  Qni は量子プログラミング環境を提供する Web サービスです。<a href="https://qniapp.net/"
+    >https://qniapp.net</a
+  >
+  で誰でも無料で利用できます。</Sidenote> をそこかしこで使っています。
+  以下のようにチュートリアル中に埋め込まれた Qni で、学んだことをすぐ実験できるようになっています。
+</p>
+
+<qni-webgpu-circuit circuit={"{\"cols\":[[\"|0>\",\"|0>\"],[\"{量子もつれ\"],[\"H\"],[\"•\",\"X\"],[\"}\"],[\"Measure\"],[1,\"Measure\"]]}"}></qni-webgpu-circuit>
+
+<p>
+  Qni
+  を使えば、シミュレータ上であれこれ実験を重ねることで、量子コンピュータプログラミングの直感的感覚を養うことができます。
+  操作結果はリアルタイムに表示されるので、実機を使った演習よりもずっと効率的であり、教育的でもあります。
+  より高度な量子アルゴリズムや量子情報といった専門分野を勉強する際にも、Qni
+  は電卓がわりとしてちょっとした計算にも役立ちます。
+</p>
+
+<p>
+  チュートリアルのもう一つの特長は、チュートリアル中に確認クイズ<Sidenote id="index-note-5" numbered>Andy Matuschak
+  氏によるオープンソースの無料学習ツール
+  <a href="https://withorbit.com/">Orbit</a> を利用しています。クイズ機能を利用する場合は
+  <a href="https://withorbit.com/terms">Orbit の利用規約及びプライバシー・ポリシー</a
+  >を確認してください。</Sidenote>が埋め込まれていることです。
+  クイズでは、それぞれの記事のポイントを 1 問 1 答形式で出題します。
+  一度解いたクイズは、忘却曲線に沿った適切なタイミング (数時間から数日、数ヶ月、時には数年後!)
+  で復習クイズとして再び出題されます。
+  これによって、読者は比較的少ない労力で学んだことを深く内面化できる仕組みになっています。
+  もちろん、クイズに答えずにこのチュートリアルを読み進めることもできますが、ぜひ試してみてください。
+</p>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="**量子コンピュータ**の名前の由来は?"
+    answer="動作原理が量子力学に基づくことから名付けられた"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="現在のコンピュータを、量子コンピュータとの対比で何と呼ぶ?"
+    answer="古典コンピュータ"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="量子コンピュータでビットの格納に使われる量子を 1 つ挙げると?"
+    answer="原子 or 電子 or 光子"
+  ></orbit-prompt>
+  <orbit-prompt
+    cloze="90 年代に提案された、量子コンピュータ向けの代表的なアルゴリズムは{量子探索}と{量子因数分解}"
+  ></orbit-prompt>
+  <orbit-prompt question="量子探索の主な用途は?" answer="リスト検索"></orbit-prompt>
+  <orbit-prompt question="量子探索アルゴリズムの別名は?" answer="グローバーのアルゴリズム">
+  </orbit-prompt>
+  <orbit-prompt
+    question="量子因数分解アルゴリズムの別名は?"
+    answer="ショアのアルゴリズム"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="量子因数分解によって脅威を受ける分野は何か?"
+    answer="インターネット・セキュリティ"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="量子コンピュータシミュレータ *Qni* の読みは?"
+    answer="キューニ"
+  ></orbit-prompt>
+</orbit-reviewarea>
+
+<p>
+  このチュートリアルは Qni と同様に GitHub でオープンに開発<Sidenote id="qni-github" numbered>GitHub の
+  Qni プロジェクトページ: <a href="https://github.com/qniapp/">https://github.com/qniapp/</a></Sidenote>しており、読者からのフィードバックを歓迎しています。
+</p>
+
+<ul>
+  <li>
+    <a href="https://github.com/qniapp/qni/issues?q=is%3Aissue+is%3Aopen+label%3Atutorial"
+      >質問する</a
+    >
+    ─ 読んでも分からなかったことは、お気軽に GitHub まで
+  </li>
+  <li>
+    <a href="https://github.com/qniapp/qni/labels/tutorial%20typo">問題を報告する</a> ─ typo
+    やレイアウト崩れ等の問題はお知らせください
+  </li>
+  <li>
+    <a href="https://github.com/qniapp/qni/pulls">著者に加わる</a> ─ 新しい記事の追加などは Pull
+    Request をお願いします
+  </li>
+</ul>
+
+<p>
+  本チュートリアルでは、読者からのフィードバックを元にアップデートを続けていくことで、最新のトピックにも対応しつつ、初心者にも優しい内容を充実させていく予定です。
+</p>
+
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
 </TutorialLayout>
+<style>
+  :global(.margin-note img) { display:block; max-width:100%; height:auto; }
+  .my-2 { margin-top:8px; margin-bottom:8px; }
+  .border { border:1px solid #D4D4D4; }
+  .italic { font-style:italic; }
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>
