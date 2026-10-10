@@ -629,3 +629,14 @@ PRの `{% qpu_operation h %}` は既存 `<h-gate>`、`{% ket 0/1 %}` は既存 `
 原回路は `{"cols":[...],"title":"Superdense Coding"}`。この完全なJSONを実GPU embedに渡すと `invalid circuit JSON` で起動エラー。最小の `{"cols":[["|0>"]],"title":"Superdense Coding"}` もerror、titleなしだけ同じGPUでrunning。上流parserはcols直後に `}` を要求するためtitleを受理しない。**[qni-webgpu #59](https://github.com/qniapp/qni-webgpu/issues/59)**、[superdense-blocker.md](superdense-blocker.md)、[再現画面](images/superdense-title.png) に記録。
 
 これは#57ではない上流変更が必要な停止条件。title削除・JSON書換えの回避策は公開せず、ページ/TOC/fixtureは除外、draftは `/tmp/qtw-blocked-superdense/` に保持。teleportation以降には進まない。公開commit/Pagesと公開検証は次のcheckpointに記録する。
+
+
+### 08:27 公開検証完了 checkpoint
+
+公開commit **4db9d0065a2afb6d317fd694ccc3f08ea31b4f3a**、Pages **38094755071 success**。build/typecheck/diff-check成功、保留superdenseを除いた最終 **221 tests passed (3.9m)**。通常fetch/rebase/push、author Yasuhito Takamiya、force-pushなし。
+
+公開の新4ページ×390/1440は本文/TeXの原文比較diff0、errors0。公開DPR1/2 (16ケース) のRegular図ラベル、4区画の対応、Bell図の3状態、実行ボタン12回のGPU再起動とstep0/norm1・原JSON不変も確認。テストで追加したmock再実行は編集済みJSONの保持も確認している。画像置換2件以外の原文・sidenotes・表・circle amplitudes・原回路は変更しない。
+
+公開全 **35ページ×390/1440=70ケース、0 failures**。本文/shadow DOM内の横/縦scrollbar、document横overflow、console/page errorsはすべて0。全 **41 embed×2幅=82起動**でrunning / step0 / norm1 / 原max-wire-count属性を確認。統合資料は `/tmp/qtw-scroll-bell-public.json`、`/tmp/qtw-bell-public-audit.log`。新ページ比較は `/tmp/qtw-port-{entanglement,disentangle,entanglement_operation,discriminating_bell_states}.json`、図/再実行は `/tmp/qtw-bell-glyphs.json`、最終11 GPU結果は `/tmp/qtw-bell-behavior.json`。
+
+今後の再開点は superdense_coding_circuit の **#59 待ち**。cphase は高宮さん指示の **#57 待ち / SKIP** を継続する。今セッションのowned 4339 previewと全検証browserは終了した。
