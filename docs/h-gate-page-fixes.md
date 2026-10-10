@@ -156,3 +156,11 @@ GPU診断readbackで初期[1,0,0,0]、H後[0.7071067690849304,0,0.70710676908493
 原文cold warm-upの既知favicon404はcoldOriginalErrorsに記録。最初の比較ではharnessがlegacy custom elementsをcloneNodeしてconstructorのnotNull assertionを誘発したので、DOMをcloneせずrendered textからfooterを引く方法に修正して再実行した。原文/製品bugを隠すroute/mockは使用していない。
 
 保存: `/tmp/qtw-strip-compare-{1440,390}.png`、`/tmp/qtw-strip.json` (raw/normalized全文、textDiffs、element順、runtime branding audit)。ボタンは `/tmp/qtw-btn-before-{1440,390}.png`、`/tmp/qtw-btn-after-{1440,390}.png`、`/tmp/qtw-btn-compare-{1440,390}.png`、`/tmp/qtw-btn.json` (computed style comparisons)。30/30関連tests、typecheck/build成功。browser/server終了、pin不変、通常push後にmain/worktreeをcleanにして終了する。最終docs-only deployは待たない。
+
+### Inline H を paper / Geist Bold に戻す (2026-10-10 11:09 JST)
+
+本文glyphを #FFFFFF から #FFFCF0 に戻し、実 **Geist Bold 700** outlineにした。origin/masterの `scripts/extract-gate-svg.py` は単字Regular、48×48 viewBox、em基準0.62scale。Bold variant SVGはないが `apps/web/assets/Geist-Bold.ttf` があるため、同じscale/centeringでHを抽出した。使用fontは変更していないpin f4cd605のもの。
+
+生成は `QNI_WEBGPU_SOURCE=... python3 scripts/extract-inline-h.py` (fonttools必要)。`src/assets/h-bold.svg` は生成物なので手動編集しない。ビルド時は既存SVGとしてバンドルし、Python/fonttools/runtime font download/strokeは不要。connectedCallbackで p 内かつ qc-operation外だけBoldを選び、図/他contextは既存Regular SVGをそのまま使う。再parent時も再判定する。header「実験版」、footer、shared layout、16/24px寸法、body#3AA99Fは変更なし。
+
+DPR1/2の公開before raw cropsを先に保存。typecheck/buildと関連6/6 tests成功。公開後、8x nearest crops、glyph color/coverage、figure raw pixel diffを追記する。
