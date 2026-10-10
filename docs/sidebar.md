@@ -63,5 +63,11 @@ qniapp/qni `acf87bfa9b377ca37ff2f9f733a9011cbf34be1d` の `apps/tutorial` (`git 
 
 ## 検証
 
-- ローカル: typecheck、build、関連 9 spec で 50/50 (新規 `tests/sidebar.spec.ts` 5 件: 原文順序、現在ページ、未移植方針、drawer 開閉、desktop sticky)。
-- 公開後の確認結果は下に追記する。
+- ローカル: typecheck、build、関連 9 spec で 50/50 (新規 `tests/sidebar.spec.ts` 5 件: 原文順序、現在ページと 36px 行・40px ピッチ、未移植方針、drawer 開閉と close ボタンへの focus、desktop sticky)。
+- コミット: `5f5bc96` (サイドバー本体)、`b2c264e` (初回公開検証で、drawer を開いたときの focus が scroll 可能な panel に入っていた。Chromium は scroll container を focusable とみなすため、close ボタンに `autofocus` を指定)、`b3449d8` (原文比較で行ピッチが 36px だったため、原文 `space-y-1` に合わせて 40px に修正)。最終 Pages run **38018106609** 成功 (build 2分35秒、deploy 9秒)。
+- 公開版 (2026-10-10 11:50 JST): gmktec Chromium 152.0.7977.82、`--enable-unsafe-webgpu --enable-features=Vulkan --use-angle=vulkan --force-device-scale-factor=1`。
+  - 1440px: sidebar 256px sticky、menu ボタン非表示。15 章 / 68 項目で、章順・件数とも原文の公開ページと一致。移植済みのリンクは 2 件、未移植は 66 件。現在ページ「H ゲート」の背景は rgb(221,231,241) (原文は rgb(219,234,254))。初期展開は「QPU 命令その 1」のみ。
+  - 390px: sidebar 非表示。drawer の幅は 320px、modal。開くと aria-expanded が false から true になり、focus は close ボタンへ移り、`main` の位置は変化しない。Escape でも backdrop クリックでも閉じ、aria-expanded は false に戻る。
+  - 両幅で h_gate の embed の H readback は [0.7071067690849304, 0, 0.7071067690849304, 0]。h-gate 19 個、qubit-circle 24 個、ket 12 個。横 overflow なし。header は「実験版」のまま。console/page errors は 0。原文側では既知の cold favicon 404 のみ。
+  - 保存先: `/tmp/qtw-sidebar-1440.png`、`/tmp/qtw-sidebar-390-closed.png`、`/tmp/qtw-sidebar-390-open.png`、`/tmp/qtw-sidebar-compare-1440.png` (左が原文、右が移植版。各ページの左 520px)、`/tmp/qtw-sidebar-original-1440.png`、`/tmp/qtw-sidebar.json`。
+- 残る差異: 原文のサイドバー上部にある Qni Tutorial ロゴ欄はない (サイトの header が担当し、header は変更しない方針)。章を折りたためる点と「未移植」バッジは意図的な差異。
