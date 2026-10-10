@@ -473,10 +473,14 @@ KetPairsの公開pointer選択を1440/390×DPR1/2×3ページで確認し、各8
 
 今回の新規移植 **5ページ**。次はmulti_qubit_phase_gate。時間制限のため未着手、未検証ページをpushしていない。
 
-## 2026-10-10 PR #54 / 本文内scroll (公開確認待ち)
+## 2026-10-10 PR #54 / 本文内scroll (公開確認完了)
 
 ユーザー追加指示により移植は再開せず、pinを **dba8ed696f366af78c714ae956683b44777386e8** (PR #54) に更新。clean detached `verify/tutorial-narrow` からBinaryen123でembed/standalone再build。本文/TeX/回路JSON/palette/creditは未変更。
 
 実WebGPU Chromiumで25ページ×390/1440を1ページずつ再現。beforeは13ページ22箇所 (幅別23件、50ケース中14ケース) に横/縦inner scroll。4列circle wrap、自然幅に応じた静的関係図/数式fit、binary labelのcell幅修正でlocal-after 50ケースすべてinner scroll0/overflow0/errors0、全embed running。回帰testはred→green、typecheck/build成功。全箇所のpage/element/原因/fix/before-after screenshotを [content-overflow.md](./content-overflow.md) に記録。スクロールを単に隠す修正やnative canvasの縮小はしていない。
 
-公開deploy後に同じ全ページ監査とPR #54対象7embedの390px画像を再確認する。主要画像 `/tmp/qtw-noscroll-{before,after}.png`。
+公開commit **5ee202e90ed7c064f52727c15c107612d11a1553**、Pages **38039509444** success。公開版で同じ25ページ×390/1440 = **50ケースすべてinner scroll0/document overflow0/errors0** を確認。全embed running、`/tmp/qtw-scroll-after.json`、全ページ・全修正箇所のbefore/after画像を保存。主要画像 `/tmp/qtw-noscroll-{before,after}.png`。
+
+phase/index/qubit/qni_intro(2)/x_gate(2)の **7embed** を390pxで個別に目視し、phase9-token paletteの5+4 wrap、index/qni_intro末尾Measure、qubit末尾Rz/Ry、x_gate末尾Pまで可視でclipなし。画像 `/tmp/qtw-pr54-after-<slug>-<index>-390.png`、比較beforeも同prefix-beforeで保存。GPU readbackで全7件norm1/one-hot初期状態を確認 (`/tmp/qtw-pr54-after.json`)。qni_introの非表示state panelは診断時だけ有効化し、falseへ戻してから画像保存した。native canvasのhost縮小はしていない。
+
+最終全suite **144 tests passed (3.1m)**、typecheck/build成功。今回初めて全suiteを通した際に発見した旧仕様のtest (置換済みH画像、削除済み画像credit、indexの旧note ID/外部link、図24pxの物理寸法固定) も現仕様へ更新し、本文は未変更。所有browser/serverは終了、次ページ移植は未着手。#53待ちは変更なし。

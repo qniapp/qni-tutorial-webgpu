@@ -45,4 +45,4 @@
 
 主要before `/tmp/qtw-noscroll-before.png`、after `/tmp/qtw-noscroll-after.png`。全ページfull-page screenshotsは `/tmp/qtw-scroll-{before,after}-<slug>-{390,1440}.png` (indexはindex)。本文内scrollと、interactive native editor内のstate-grid pan/zoomは別の機構である。nativeはその機能・表示を削除しない。
 
-PR #54対象の390px screenshotは `/tmp/qtw-pr54-{before,after}-<slug>-<embed index>-390.png`。対象はphase(1)、index(1)、qubit(1)、qni_intro(2)、x_gate(2)の計7embed。公開deploy/最終確認はdocs/porting.mdに追記する。
+PR #54対象の390px screenshotは `/tmp/qtw-pr54-{before,after}-<slug>-<embed index>-390.png`。対象はphase(1)、index(1)、qubit(1)、qni_intro(2)、x_gate(2)の計7embed。公開commit `5ee202e90ed7c064f52727c15c107612d11a1553`、Pages **38039509444 success**。公開afterも全50ケースinner scroll0/document overflow0/errors0。7embedのpalette/gate/panelを目視しclipなし、全7件GPU norm1/one-hot初期状態。全144test green、typecheck/build成功。公開JSON `/tmp/qtw-scroll-after.json` / `/tmp/qtw-pr54-after.json`、native比較contact `/tmp/qtw-pr54-before-after-contact.png`。checkpointはdocs/porting.md。
