@@ -1,0 +1,168 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="Qni 入門" description="QPU シミュレータ Qni の使い方" section="イントロダクション" hasCircuit>
+
+
+<p>
+  本チュートリアルでは、量子コンピュータシミュレータ Qni を使います。
+  なぜ、実機ではなくシミュレータを使うのでしょう?
+  現在、さまざまな実機の量子コンピュータがクラウド経由で利用可能ですが、残念ながら次の理由により初心者の学習にはあまり向いていません。
+</p>
+
+<ul>
+  <li>
+    <strong>待ち時間がかかる</strong> -
+    実機でのプログラムはキューイングシステム経由で実行されるので、結果を得るまでに数分かかります。
+  </li>
+  <li>
+    <strong>計算結果が合わない</strong> -
+    実機は計算エラーが少なからず発生するため、小規模なプログラムであっても正しい結果が返ってきません。
+  </li>
+  <li>
+    <strong>お金がかかる</strong> -
+    ほとんどの実機は有料であるため、学習のための実験や試行錯誤には気軽に使えません。
+  </li>
+</ul>
+
+<p>
+  そこで本チュートリアルでは、プログラミング環境としてこれらの問題を解決できる Qni を使います。
+  唯一の問題は、Qni で扱える量子ビット数は 16
+  量子ビットで、実機よりも少なくなってしまいまうことです<Sidenote id="qubit-real-vs-simulator" numbered>実機の量子ビット数は数十 〜 1,000 量子ビット程度です。</Sidenote>。
+  しかしこのチュートリアルの方針は、大きなシステムに焦点を当てるのではなく、小さいシステムを詳細に説明することで、量子コンピュータの最も基本的で興味深く、時に不思議な動作を説明することです。
+  小さい量子コンピュータの考え方を学ぶことで、より大きな量子コンピュータがどのように、そしてなぜ強力であるかを感じることができるようになります。
+</p>
+
+<p>
+  何より Qni は自分専用かつ無料で使えるので、実機と違って好きなだけ使い倒すことができます。
+  またリアルタイムに実行結果が返ってきますので、初心者にとって重要なトライアル &
+  エラーにもってこいです。 そして真の量子コンピュータ (エラーゼロの理想的な量子コンピュータ)
+  と同じ動きをしますので、教科書通りの実行結果を得ることができます。
+</p>
+
+<p>
+  初心者にとって Qni
+  が最適なもうひとつの理由は、グラフィカルにプログラミングできることです。ほとんどの量子コンピュータでは、プログラミングに
+  Python などの量子計算ライブラリを使います。量子コンピュータを始めるためにはまず Python
+  と専用ライブラリを勉強して、、、とこれは中々大変です。 一方 Qni では、GUI
+  によって直接量子回路を編集したり実行したりできるので、最初のハードルは大幅に低くなります。
+</p>
+
+<h2>Qni のユーザインタフェース</h2>
+<p>これから Qni をひんぱんに使いますので、使いかたについて少し時間をとって確認してください。</p>
+
+<p>
+  チュートリアル中には次のように Qni がいたる所に埋め込まれています。
+  これを操作することで、学んだことをその場ですぐに実験できるようになっています。
+  それぞれのツールの名前と使い方を見て行きましょう。
+</p>
+
+<qni-webgpu-circuit circuit={"{\"cols\":[[\"|0>\"]]}"}></qni-webgpu-circuit>
+
+<h3>命令パレット</h3>
+<p>
+  量子回路に配置する QPU 命令の並んだツールです。
+  ここからドラッグアンドドロップで量子回路に命令を置いていくことで、量子プログラムを記述できます。
+  それぞれの QPU 命令の働きについては、後の項目でそれぞれ詳しく紹介します。
+</p>
+
+<div
+  class="instruction-palette"
+>
+  <palette-dropzone>
+    <h-gate></h-gate>
+  </palette-dropzone>
+  <palette-dropzone>
+    <x-gate></x-gate>
+  </palette-dropzone>
+  <palette-dropzone>
+    <y-gate></y-gate>
+  </palette-dropzone>
+  <palette-dropzone>
+    <z-gate></z-gate>
+  </palette-dropzone>
+</div>
+
+<h3>量子回路エディタ</h3>
+<p>
+  量子回路を表示したり編集したりするためのエディタです。
+  後で説明しますが、量子回路エディタはステップ実行やブレークポイントといったデバッグにも使えます。
+</p>
+
+<qni-webgpu-circuit show-state-panel="false" height="400" circuit={"{\"cols\":[[\"|0>\",\"|0>\"],[\"H\"],[\"•\",\"X\"],[\"Measure\"],[1,\"Measure\"]]}"}></qni-webgpu-circuit>
+
+<h3>状態ベクトル表示</h3>
+<p>
+  量子ビットの状態を視覚的に表示します。表示の読み方や使い方については、<a
+    href="https://qniapp.github.io/qni/circle_notation.html"
+    >状態ベクトル表示</a
+  >で詳しく説明します。
+</p>
+
+<div class="state-vector-example">
+  <div class="flex flex-col">
+    <div class="circle-row">
+      <qubit-circle data-amplitude="0.42678 - 0.17678i" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 - 0.07322i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 + 0.42678i" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.07322 + 0.17678i" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.42678 + 0.17678i" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 +
+      0.07322i" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 - 0.42678i" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.07322 - 0.17678i" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div>
+
+<h2>ライブプログラミングによる開発</h2>
+<p>
+  Qni の一番の特徴はそのリアルタイム性です。QPU
+  命令をドラッグして好きな場所に動かすだけで、実行結果をリアルタイムに描画します。これによって、命令の働きや編集結果を素早く確認できます。
+</p>
+
+<figure class="not-prose">
+  <Sidenote id="qni-live-programming">リアルタイムに量子ビットの状態変化を表示</Sidenote>
+  <img
+    src={`${base}images/qni-intro/qni_live_programming.gif`}
+    class="h-auto w-full border border-neutral-300"
+  />
+</figure>
+
+<p>
+  デバッグも簡単です。プログラムの途中状態を確認したい場合には、量子回路の任意の場所にマウスポインタをホバーするだけでその箇所での状態ベクトルを表示できます。
+  これはいわゆるステップ実行として使うことができます。
+</p>
+
+<p>
+  また、量子回路の任意の場所をクリックすることで、その場所にブレークポイント (濃い紫の線)
+  をセットできます。
+  プログラム中の異なる地点での状態ベクトルの変化を確認するには、基準となる地点にブレークポイントを設定しておき、別の場所にマウスポインタをホバーするだけです。
+</p>
+
+<figure class="not-prose">
+  <Sidenote id="qni-breakpoint">ブレークポイントによる量子回路のデバッグ</Sidenote>
+  <img
+    src={`${base}images/qni-intro/qni_step_execution.gif`}
+    class="h-auto w-full border border-neutral-300"
+  />
+</figure>
+
+<h2>動かして学ぶ</h2>
+
+<p>
+  本チュートリアルは触って動かせる Qni
+  を読書体験に埋め込むことで、最短ルートで量子コンピュータの基本を学べることを目指しています。
+  Python
+  やエディタなど他の言語やツールを行ったり来たりしなくても、ブラウザだけで量子コンピュータプログラミング体験を完結できるよう設計されています。
+  これによって、「説明を読む → 自分で実験する → 実行結果を理解する」の学習ループをタイトに回せます。
+  この「動かして学ぶ」というアプローチは、(著者の経験上)
+  量子コンピュータプログラミングのような高度なトピックでも途中で挫折せず、楽しく継続的に学べる良い方法です。
+</p>
+
+<script>import "../components/circuit-display"</script>
+</TutorialLayout>
+<style>
+  .instruction-palette { display: flex; width: fit-content; gap: 8px; border: 2px solid #E5E5E5; border-bottom-width: 4px; border-radius: 12px; background: white; padding: 20px 16px; margin-block: 20px; }
+  .instruction-palette :global(palette-dropzone) { display: inline-block; width: 32px; height: 32px; }
+  .instruction-palette :global(h-gate), .instruction-palette :global(x-gate), .instruction-palette :global(y-gate), .instruction-palette :global(z-gate) { font-size: 32px; margin: 0; }
+  .state-vector-example { overflow: auto; margin-block: 20px; }
+  .circle-row { display: flex; align-items: center; gap: 8px; }
+  .circle-row :global(qubit-circle) { flex: none; margin-right: 0; }
+  @media (min-width:768px) { .state-vector-example { width: 58.333333%; margin-right: auto; } }
+</style>

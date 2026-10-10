@@ -1,0 +1,37 @@
+import {expect,test} from '@playwright/test'
+import circuits from './fixtures/qni-intro-circuits.json' with {type:'json'}
+for (const width of [1440,390]) {
+  test(`original circuit table and read-only wiring at ${width}px`,async({page})=>{
+    await page.setViewportSize({width,height:1000});await page.goto('/qni-tutorial-webgpu/quantum_circuit/')
+    await expect(page.locator('main h1')).toHaveText('量子回路')
+    await expect(page.locator('main table tbody tr')).toHaveCount(11)
+    await expect(page.locator('main circuit-step')).toHaveCount(6)
+    await expect(page.locator('main circuit-dropzone')).toHaveCount(14)
+    await expect(page.locator('main orbit-prompt')).toHaveCount(6)
+    await expect(page.locator('main img')).toHaveCount(2)
+    await expect(page.locator('main .margin-note')).toHaveCount(2)
+    const geometry=await page.locator('main circuit-step').evaluateAll(es=>es.map(e=>e.getBoundingClientRect().height))
+    expect(geometry).toEqual(width===1440?[80,128,112,80,80,128]:[96,144,128,96,96,144])
+    await expect(page.locator('main circuit-dropzone .circuit-wires')).toHaveCount(14)
+    expect(await page.locator('.circuit-wires [id]').count()).toBe(0)
+    await expect(page.locator('main x-gate > svg')).toHaveCount(3)
+    expect(await page.locator('main circuit-dropzone').evaluateAll(es=>es.every(e=>getComputedStyle(e.firstElementChild!).pointerEvents==='none'))).toBe(true)
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
+    await expect(page.locator('.toc-static [aria-current="page"]')).toHaveAttribute('href','/qni-tutorial-webgpu/quantum_circuit/')
+  })
+  test(`Qni intro preserves two circuits and amplitude examples at ${width}px`,async({page})=>{
+    await page.setViewportSize({width,height:1000});await page.goto('/qni-tutorial-webgpu/qni_intro/')
+    await expect(page.locator('main h1')).toHaveText('Qni 入門')
+    expect(await page.locator('main qni-webgpu-circuit').evaluateAll(es=>es.map(e=>JSON.parse(e.getAttribute('circuit')!)))).toEqual(circuits)
+    await expect(page.locator('main qubit-circle')).toHaveCount(8)
+    await expect(page.locator('main .margin-note')).toHaveCount(3)
+    await expect(page.locator('main img')).toHaveCount(2)
+    await expect(page.locator('main palette-dropzone')).toHaveCount(4)
+    await expect(page.locator('main .instruction-palette h-gate > svg')).toHaveCount(1)
+    await expect(page.locator('main .instruction-palette x-gate > svg')).toHaveCount(1)
+    await expect(page.locator('main .instruction-palette y-gate > svg')).toHaveCount(1)
+    await expect(page.locator('main .instruction-palette z-gate > svg')).toHaveCount(1)
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
+    await expect(page.locator('.toc-static [aria-current="page"]')).toHaveAttribute('href','/qni-tutorial-webgpu/qni_intro/')
+  })
+}

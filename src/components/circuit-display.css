@@ -1,0 +1,50 @@
+x-gate, y-gate, z-gate, phase-gate, write-gate, measurement-gate, control-gate, swap-gate {
+  position: relative; display: inline-block; width: 1em; height: 1em; flex: none;
+  vertical-align: -0.125em; color: #FFFCF0;
+}
+x-gate, y-gate, z-gate { background: #3AA99F; border-radius: 0.15em; }
+phase-gate { background: #3AA99F; border-radius: 50%; }
+x-gate > svg, y-gate > svg, z-gate > svg, phase-gate > svg,
+write-gate > svg, measurement-gate > svg, control-gate > svg, swap-gate > svg {
+  display: block; width: 100%; height: 100%;
+}
+control-gate, swap-gate { color: #3AA99F; }
+measurement-gate { color: #5E409D; }
+write-gate { color: #6F6E69; }
+write-gate > svg + svg { position: absolute; inset: 0; color: #AF3029; }
+write-gate[data-value='1'] > svg + svg { color: #205EA6; }
+phase-gate[data-angle]::before {
+  content: attr(data-angle); position: absolute; left: 50%; bottom: 100%;
+  transform: translateX(-50%); white-space: nowrap; font: 12px/16px system-ui, sans-serif; color: #6F6E69;
+}
+circuit-dropzone[data-connect-top]:not([data-connect-bottom]) > phase-gate[data-angle]::before {
+  top: 100%; bottom: auto;
+}
+/* Original circuit_step/dropzone.css: sm=640px. The no-rotation table stays
+   vertical on mobile. Preserve original sizes, spacing and SVG transforms. */
+circuit-step { position: relative; display: flex; align-items: center; justify-content: center; flex-direction: row-reverse; gap: 16px; padding: 0 32px; }
+circuit-step.no-rotation { flex-direction: column; align-items: flex-start; gap: 0; padding: 0; }
+circuit-step.no-rotation[class~='!py-4'] { padding-block: 16px; }
+circuit-dropzone { position: relative; display: block; width: 32px; height: 48px; flex: none; }
+circuit-dropzone > :not(.circuit-wires) {
+  position: absolute; z-index: 1; left: 0; top: 8px; margin: 0; font-size: 32px;
+}
+circuit-wires { display: none; }
+circuit-dropzone > .circuit-wires { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; transform: rotate(90deg); }
+circuit-step.no-rotation > circuit-dropzone > .circuit-wires { transform: none; }
+.circuit-wires [part='wire-input'], .circuit-wires [part='wire-output'] { color: #DAD8CE; }
+circuit-dropzone[data-input-wire-quantum] .circuit-wires [part='wire-input'],
+circuit-dropzone[data-output-wire-quantum] .circuit-wires [part='wire-output'] { color: #100F0F; }
+.circuit-wires [part='wire-input'] { transform: translateX(-25%) scaleX(1.5); transform-origin: left; }
+.circuit-wires [part='wire-output'] { transform: translateX(25%) scaleX(1.5); transform-origin: right; }
+.circuit-wires [part='connect-top'], .circuit-wires [part='connect-bottom'] { display: none; color: #3AA99F; transform-origin: center; transform: scaleY(1.8); }
+circuit-dropzone[data-connect-top] .circuit-wires [part='connect-top'],
+circuit-dropzone[data-connect-bottom] .circuit-wires [part='connect-bottom'] { display: block; }
+@media (min-width: 640px) {
+  circuit-step { flex-direction: column; padding: 32px 0; }
+  circuit-step.no-rotation { gap: 16px; }
+  circuit-dropzone { width: 48px; height: 32px; }
+  circuit-dropzone > :not(.circuit-wires) { left: 8px; top: 0; }
+  circuit-dropzone > .circuit-wires { transform: none; }
+  .circuit-wires [part='wire-input'], .circuit-wires [part='wire-output'] { transform: none; }
+}
