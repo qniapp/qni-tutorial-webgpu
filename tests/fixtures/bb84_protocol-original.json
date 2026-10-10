@@ -1,0 +1,97 @@
+{
+  "title": "BB84 プロトコル",
+  "slug": "bb84_protocol",
+  "description": "量子力学を利用して暗号鍵の盗聴を検出する",
+  "sidenotes": [
+    "alice-bob",
+    "measurement-operation",
+    "qkd_trick",
+    "no-cloning-theorem"
+  ],
+  "images": [],
+  "orbitPrompts": 0,
+  "orbit": [],
+  "circuits": [],
+  "amplitudes": [
+    {
+      "amplitude": "1",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "1",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "1",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "0",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "1",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "0",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "1",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "0",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "1",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "-0.7071067811865476",
+      "ket": "1",
+      "size": "base"
+    }
+  ]
+}

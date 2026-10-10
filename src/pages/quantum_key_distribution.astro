@@ -1,0 +1,39 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="量子鍵配送" description="安全に暗号鍵を共有するためのプロトコル" section="量子暗号通信">
+
+
+<p>
+  インターネットショッピングやチャットアプリなど、安全な通信を前提としたサービスが増えています。
+  通信を安全に行うには、暗号鍵と呼ばれる秘密の長い文字列を使って、送受信するデータを暗号化します。
+  たとえば、買物サイトとの通信を暗号化するには、お客さんと買物サイト側で最初に同じ暗号鍵を共有する必要があります。
+  暗号鍵を知らずに 2 者間の通信を盗み見ることは不可能です。
+</p>
+
+<p>
+  一方で、暗号鍵をどのようにして安全に共有するかという問題が残ります。
+  これは、暗号鍵を共有するための通信を盗聴しようとする悪者がそこらじゅうにいるためです。
+</p>
+
+<p>
+  暗号鍵を量子技術で共有する仕組みを、量子鍵配送と呼びます。
+  現在の通信では、暗号鍵を暗号アルゴリズムによって "隠して"
+  インターネットなどで送りますが、量子コンピュータの進化によっては簡単に暗号鍵を取り出せる可能性があります<Sidenote id="factoring" numbered><a href={base}>はじめに</a>で紹介した量子因数分解を使います。</Sidenote>。
+  量子鍵配送は、量子力学の原理によって暗号鍵の盗聴を検出できるようにするものです。
+  これによって、今後どんなに高速な量子コンピュータが登場しても、原理的に鍵の安全性を保証することができます。
+</p>
+
+<p>
+  ここまでに習った <x-gate></x-gate> <h-gate></h-gate> <write-gate data-value="0"></write-gate> <measurement-gate></measurement-gate> だけを使って、この量子鍵配送の仕組みを作ることができます。
+  チャールズ・ベネットとジル・ブラッサールによって 1984 年に発明された BB84 プロトコル<Sidenote id="bb84" numbered>Charles H. Bennett, Gilles Brassard,
+  <a href="https://arxiv.org/abs/2003.06557" class="italic"
+    >Quantum cryptography: Public key distribution and coin tossing</a
+  >
+  (1984)</Sidenote>は、量子鍵配送の代表的な方法の 1 つです。 以降では実際に BB84
+  プロトコルを動かしてみることで、量子暗号の仕組みを理解しましょう。
+</p>
+
+</TutorialLayout>

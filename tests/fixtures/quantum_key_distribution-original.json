@@ -1,0 +1,14 @@
+{
+  "title": "量子鍵配送",
+  "slug": "quantum_key_distribution",
+  "description": "安全に暗号鍵を共有するためのプロトコル",
+  "sidenotes": [
+    "factoring",
+    "bb84"
+  ],
+  "images": [],
+  "orbitPrompts": 0,
+  "orbit": [],
+  "circuits": [],
+  "amplitudes": []
+}

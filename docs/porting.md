@@ -356,7 +356,7 @@ pinを **3cce38bd9ad4e53a6e23e9be7cc79ef97ed630b6** に更新。clean detached `
 
 高宮さん承認: **#52の390px native clippingはSTOP対象から除外**。ページごとのclip箇所を記録し、nativeは別作業で修正される。保持画像・PHASE/MEASUREMENT本文は変更しない。原文に合わせられないページ、または#52以外のupstream変更が必要な場合だけSTOP。以下はこの承認後の新規移植。
 
-### no_cloning_theorem / CLONE 命令!? (公開確認待ち)
+### no_cloning_theorem / CLONE 命令!? (公開確認完了)
 
 原文source acf87bfをgit showで取得し本文そのまま移植。注2、PNG1、Orbit0、embed0。proofリンクは未移植なので原サイトへ、p_bitは移植先へ。
 
@@ -365,7 +365,7 @@ pinを **3cce38bd9ad4e53a6e23e9be7cc79ef97ed630b6** に更新。clean detached `
 - palette / step0 / #52: embedなし、対象外。
 - questions: 同じWikipedia/YouTube/猫画像の図を保持する既存の内容方針を引き継ぐ。新規本文変更要求なし。
 
-### gate_combination / 組合わせゲート (公開確認待ち)
+### gate_combination / 組合わせゲート (公開確認完了)
 
 原文source acf87bfをgit showで取得し全文・12等式図・ket3・Orbit8をそのまま移植。gate図は元のcircuit-dropzone/h-gate/x-gate/phase-gate/rnot-gateを使用、display-only Regular。新規upstream機能不要。JSON block `{重ね合わせ`/`}`を保持した実験embed2。
 
@@ -373,6 +373,27 @@ pinを **3cce38bd9ad4e53a6e23e9be7cc79ef97ed630b6** に更新。clean detached `
 - 削除credit: なし。
 - palette: embed1 `["H","X"]`、embed2 `["X^½"]`。原文の各手書きpaletteを再確認。
 - questions: Orbit answer-attachmentsのHH/HXH/2rnots/rnot_gate_decomposition/X_gate_decompositionは既存の画像URL制約として保持。自作部品への置換はしない。
-- #52 clipping: 公開1440/390で確認して追記する。
+- #52 clipping: 短い2回路はいずれも1440/390で全gate可視。新規clipなし。
 
 型チェック/build成功。新規2ページ1440/390構造・画像・Orbit・MathJax・sidebar、将来tag/元palette、display部品を含む55/55 tests。
+
+公開commit **8c6cd0a78a919c39dd1870224194e8f26eea67c0**、Pages **38031560473** success。原文/live1440/390とも本文diff0・TeX diff0・element counts一致・ours errors0・overflowなし。CLONEはnote2/PNG1、組合わせはH26/X6/PHASE11/√X12/dropzone56/ket3/embed2/Orbit8。両embed running、GPU norm1/one-hot |0⟩でstep0確認。Regular図、√XのSVG・wire、元のangle文字も目視確認。元UIとnative embedの見た目は意図した置換。
+
+結果 `/tmp/qtw-port-{no_cloning_theorem,gate_combination}.json`、original/ours/compare screenshots `/tmp/qtw-port-<slug>-<original|ours|compare>-{1440,390}.png`、mobile冒頭detail `/tmp/qtw-combination-top-390.png`。
+
+### quantum_key_distribution / 量子鍵配送 (公開確認待ち)
+
+原文acf87bfの本文・注2・Bennett/Brassard論文引用を保持して移植。
+- 置換/削除credit: なし。画像0。
+- palette / step0 / #52: embedなし、対象外。
+- prose X/H/WRITE0/MEASUREMENTは共通Bold。本文の安全性説明は原文のまま。
+- questions: 新規の画像/旧UI問題なし。
+
+### bb84_protocol / BB84 プロトコル (公開確認待ち)
+
+原文acf87bfの全段落・箇条書き・注4、送信状態4パターン図を同じoriginal tagsで移植。qubit-circle16のamplitude/ket/sizeを保持し、popupで振幅・確率・位相を確認できる。図のH2個はRegular24px、prose H/MEASUREMENTはBold。元SVG minus/arrowを維持する。
+- 置換/削除credit: なし。元からcustom components、画像0。
+- palette / step0 / #52: embedなし、対象外。
+- questions: 原文の「最終チェック1,000文字の約半分500文字が一致しない」の計数モデルは今後確認したい。本文は編集せず保持し、数値と矛盾する独自interactive盗聴demoを追加していない。
+
+型チェック/build、新規2ページ1440/390構造・amp16・ket・figure/prose・sidebarを含む61/61 tests。
