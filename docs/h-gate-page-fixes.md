@@ -88,3 +88,7 @@ Node 22 の型チェック、Astro build、対象 **9/9 テスト成功**。1440
 最終4比較ケースは **console/page errors 0**。ただし冷起動の原文には既知の `https://qniapp.github.io/favicon.ico` 404 がある。これを修正したとは主張せず、cold baseline の error を JSON に残し、同じ browser context を温めた後の再比較が0であることを記録した。移植後の cold/warm はともに0。404を隠す route/mock は使用していない。
 
 保存: `/tmp/qtw-ket-compare-1440.png`、`/tmp/qtw-ket-compare-390.png`、`/tmp/qtw-ket.json`。拡大 crop は `/tmp/qtw-ket-crops-{1440,390}.png`、個別 crop は `/tmp/qtw-ket-crop-{original,ours}-{1440,390}.png`。最初の診断は `/tmp/qtw-ket-first.json`。開始した browser は finally で停止、test server も終了。ピン f4cd605 は変更していない。文書の最終 push 後の docs-only deploy は時間制限のため待たず終了する。
+
+### 実 MathJax への移行 (2026-10-10)
+
+上記の手書き CHTML / font shim は履歴。現在は原文と同じ TeX を `Ket.astro` で出力し、実 MathJax 3.2.2 を math ページだけで self-hosted/defer 読込する。shim、font、専用ライセンスは削除済み。設定、配信方式の比較、公開計測と検証は [mathjax.md](./mathjax.md) を参照。
