@@ -67,5 +67,8 @@
   "multi_qubit_superposition": [[], [], []],
   "multi_qubit_operation": [[], [], []],
   "operator_pair": [],
-  "random_byte_generator": [[], []]
+  "random_byte_generator": [[], []],
+  "bb84_circuit": [[]],
+  "multi_qubit_phase_gate": [["P(π/4)"]],
+  "partial_measurement": []
 }

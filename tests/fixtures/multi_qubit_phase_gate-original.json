@@ -1,0 +1,297 @@
+{
+  "title": "PHASE ゲート",
+  "slug": "multi_qubit_phase_gate",
+  "description": "複数量子ビットに PHASE ゲートを適用すると?",
+  "sidenotes": [],
+  "images": [
+    "images/phase_bit1_ket_pair.png",
+    "images/phase_bit2_ket_pair.png",
+    "images/phase_bit3_ket_pair.png"
+  ],
+  "orbitPrompts": 0,
+  "orbit": [],
+  "circuits": [
+    {
+      "cols": [
+        [
+          "{重ね合わせ状態の準備"
+        ],
+        [
+          "|0>",
+          "|0>",
+          "|0>"
+        ],
+        [
+          "H",
+          "H",
+          "H"
+        ],
+        [
+          "}"
+        ]
+      ]
+    }
+  ],
+  "amplitudes": [
+    {
+      "amplitude": "0.92388",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.38268",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.92388",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.2706 + 0.2706i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "7",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.25 + 0.25i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.25 + 0.25i",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.25 + 0.25i",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.25 + 0.25i",
+      "ket": "7",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "7",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.25 + 0.25i",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.25 + 0.25i",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.125",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.25 + 0.25i",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.25 + 0.25i",
+      "ket": "7",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "7",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.3535533905932738",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.25 + 0.25i",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.25 + 0.25i",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.25 + 0.25i",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.25 + 0.25i",
+      "ket": "7",
+      "size": "lg"
+    }
+  ]
+}

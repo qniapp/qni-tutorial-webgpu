@@ -1,0 +1,112 @@
+{
+  "title": "1 ビット測定",
+  "slug": "partial_measurement",
+  "description": "複数量子ビットのうち 1 量子ビットのみを測定する",
+  "sidenotes": [],
+  "images": [],
+  "orbitPrompts": 0,
+  "orbit": [],
+  "circuits": [],
+  "amplitudes": [
+    {
+      "amplitude": "0.577349980514419",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.577349980514419",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.577349980514419",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.577349980514419",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.577349980514419",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.577349980514419",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "1",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.577349980514419",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.577349980514419",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.577349980514419",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "3",
+      "size": "lg"
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="BB84 回路" description="量子鍵配送を量子回路として実装" section="量子暗号通信" hasMath hasCircuit>
+
+
+<p>
+  BB84 プロトコルを量子回路として動かしてみましょう。
+  今回の回路は、アリス、イブ、ボブそれぞれが操作する量子ビットを表現するために、ワイヤが 3
+  本あります。 一番上がアリスの量子ビット、真ん中がイブ、三番目がボブの量子ビットを表します。
+</p>
+
+<p>
+  アリスは暗号鍵の 1 ビット分を表す量子ビットに <Ket label="0" /> または <Ket label="1" />
+  状態をセットし、ボブに送ろうとします。 イブはアリスとボブの中間 (真ん中のワイヤ)
+  で量子ビットを横取りし盗聴 <measurement-gate></measurement-gate>
+  した後、アリスになりすまして偽装した量子ビットをボブに送ります。
+  ボブは受け取った量子ビットにランダムに <h-gate></h-gate> を適用してから測定します。
+</p>
+
+<p>ランダムにゲートを適用するために、今回は Qni の新たな機能を使います。</p>
+
+<ul>
+  <li>
+    <measurement-gate></measurement-gate> の上の文字列は、測定で得られた 0 または 1
+    を指定した変数にセットすることを表します。たとえば `aliceX` とラベルの付いた <measurement-gate></measurement-gate> が <Ket label="1" /> を測定した場合、変数 `aliceX` の値は 1 となります。
+  </li>
+  <li>
+    <x-gate></x-gate> や <h-gate></h-gate> の上の文字列は変数名を意味し、変数の値が 1
+    だった時のみゲートを適用することを意味します。 たとえば `aliceX` とラベルの付いた <x-gate></x-gate> は、同じく `aliceX` とラベルの付いた <measurement-gate></measurement-gate>
+    の測定結果が <Ket label="1" /> だった時のみ適用されます。
+  </li>
+</ul>
+
+<p>以上を頭に入れて、BB84 回路の動作をひとつひとつ確認していきましょう。</p>
+
+<qni-webgpu-circuit palette={"[]"} circuit={"{\"cols\":[[\"{送信内容を決める2つの乱数を生成\"],[\"|0>\"],[\"H\"],[\"Measure>aliceX\"],[\"|0>\"],[\"H\"],[\"Measure>aliceH\"],[\"}\"],[\"|0>\"],[\"{|1⟩をセット\"],[\"X<aliceX\"],[\"}\"],[\"Bloch\"],[\"{Hを適用\"],[\"H<aliceH\"],[\"}\"],[\"Bloch\"],[\"Swap\",\"Swap\"],[\"{🕶イブ\"],[1,\"Measure>eveX\"],[1,\"|0>\"],[1,\"X<eveX\"],[1,\"Bloch\"],[\"}\"],[1],[\"{Hのための乱数を生成\"],[1,1,\"|0>\"],[1,1,\"H\"],[1,1,\"Measure>bobH\"],[\"}\"],[1,\"Swap\",\"Swap\"],[\"{Hを適用\"],[1,1,\"H<bobH\"],[\"}\"],[1,1,\"Bloch\"],[\"{測定\"],[1,1,\"Measure\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<h2>アリス</h2>
+
+<p>
+  アリスはまず、盗聴を検出するための仕掛けを施した量子ビット <Ket label="0" /> または <Ket label="1" />
+  を作るためのランダム値を 2 つ作ります。 最初に、状態 <Ket label="0" /> または <Ket label="1" />
+  を決めるため、量子乱数ジェネレータ<Sidenote id="measurement-operation" numbered><a
+    href={`${base}measurement_operation/`}
+    >MEASUREMENT 命令</a
+  >を参照</Sidenote>で 0 または 1 を作り、変数
+  <code>aliceX</code> にセットします。同様に、<h-gate></h-gate>
+  を適用する/しないをランダムに決めるための変数
+  <code>aliceH</code> をもう一つの量子乱数ジェネレータでセットします。
+</p>
+
+<p>
+  次に、このランダムな値 0 または 1 を持つ 2 つの変数 <code>aliceX</code> と
+  <code>aliceH</code> を使って、暗号鍵の 1 ビット分を作ります。 <Ket label="0" />
+  に初期化した量子ビットに対して、<code>aliceX == 1</code> の場合だけ <x-gate></x-gate>
+  を適用します。 これによって、アリスの量子ビットはランダムに <Ket label="0" /> または <Ket label="1" />
+  の状態を持ちます。 同様に、ランダムな変数 <code>aliceH</code> の値が 1 だった場合に <h-gate></h-gate> を適用します。 できあがった量子ビットを (イブにすぐ横取りされてしまうものの)
+  ボブへと送ります。
+</p>
+
+<p>
+  アリスが送信する量子ビットの状態は、左から 2 つめのブロッホ球で確認できます。 「<Ket label="0" /> または
+  <Ket label="1" />」の 2 通りと、「<h-gate></h-gate> を適用する/しない」の 2 通りがあるので、計 \(2
+  \times 2 = 4\) 通りの状態を取りうることを確認してください。
+</p>
+
+<h2>イブ</h2>
+
+<p>
+  イブは横取りした量子ビットを盗聴し、ボブへ偽装した量子ビットを送ります。
+  しかしイブはクローン禁止定理<Sidenote id="no-cloning-theorem" numbered><a
+    href={`${base}no_cloning_theorem/`}
+    >CLONE 命令!?</a
+  >を参照</Sidenote>によりアリスの量子ビットを複製できないため、測定して量子ビット状態を壊す以外に量子ビットの状態を推定することはできません。
+  さらにアリスが <Ket label="0" /> と <Ket label="1" /> のどちらを送ったのか、さらに <h-gate></h-gate>
+  を適用したかどうかが測定結果からは分からないため、測定結果は 1/2 の確率でしか当たりません。
+  また横取りによってボブに量子ビットが届かないと盗聴行為がすぐにバレてしまうため、測定結果と同じビットを
+  <x-gate></x-gate> で作ってボブへと送ります。
+</p>
+
+<p>
+  イブが送信する量子ビットの状態は、左から 3
+  つめのブロッホ球で確認できます。アリスが送る量子ビットの状態は 4 通りなので、およそ 3/4
+  の確率でアリスの送った状態と異なる量子ビットをボブに送ることになります。
+</p>
+
+<h2>ボブ</h2>
+
+<p>
+  ボブは BB84 プロトコルに従ってランダムに <h-gate></h-gate>
+  を適用し、アリスからの量子ビットを測定します。 そして <h-gate></h-gate>
+  を適用した/しないがアリスと一致する量子ビットのうち、半分の測定結果を突き合わせ、等しいかどうかを確認します。
+  このとき、イブが盗聴した影響でその約半分に不一致が置こるため、イブの盗聴が判明します。
+</p>
+
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .relative { position:relative; } .absolute { position:absolute; } .inset-0 { inset:0; } .m-auto { margin:auto; }
+  .h-12 { height:48px; } .w-12 { width:48px; } .h-12 :global(svg) { width:100%; height:100%; }
+  .text-purple-500 { color:#A855F7; } .font-bold { font-weight:700; }
+  .h-8 { height:32px; } .w-16 { width:64px; } .text-zinc-300 { color:#DAD8CE; }
+  .h-8 :global(svg) { width:100%; height:100%; }
+  .relative.h-8 :global(x-gate.qpu-operation-sm), .relative :global(measurement-gate.qpu-operation-sm) { font-size:24px; width:24px; height:24px; }
+  .items-center > :global(phase-gate) { font-size:32px; }
+  .mb-4 { margin-bottom:16px; } .space-y-4 { row-gap:16px; } .items-end { align-items:flex-end; }
+  .text-2xl { font-size:24px; line-height:32px; } .mx-auto { margin-inline:auto; } .p-0 { padding:0; }
+  .p-4 { padding:16px; } .border-l-4 { border-left:4px solid #60A5FA; } .bg-blue-50 { background:#EFF6FF; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>

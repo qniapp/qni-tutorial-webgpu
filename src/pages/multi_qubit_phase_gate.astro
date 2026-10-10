@@ -1,0 +1,178 @@
+---
+import minusSvg from '../assets/cpu-minus.svg?raw'
+import arrowSvg from '../assets/cpu-arrow-right.svg?raw'
+import KetPairs from '../components/KetPairs.astro'
+import dividerSvg from '../assets/diagram-divider.svg?raw'
+import downSvg from '../assets/diagram-down.svg?raw'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="PHASE ゲート" description="複数量子ビットに PHASE ゲートを適用すると?" section="複数量子ビット" hasMath hasCircuit>
+
+
+<p>
+  複数量子ビットの練習として、PHASE ゲートを適用した場合を考えてみましょう。 考え方としては H
+  ゲートとまったく同じで、PHASE ゲートを置いたビット番号によって
+  ゲートを作用させるペアを決めてから、それぞれのペアに PHASE ゲートを適用します。
+</p>
+
+<p>
+  注意するのは、PHASE ゲートは左側の円は変化させず、右側の円の位相のみに作用する点です。
+  ペアに作用させる場合にも、このルールは同じです。
+</p>
+
+<div class="my-5 flex overflow-x-auto md:mr-auto md:w-7/12">
+  <div class="flex flex-col">
+    <div class="flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0.92388" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.38268" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+
+      <div class="flex flex-row items-center">
+        <span class="diagram-arrow size-6" set:html={minusSvg}></span>
+        <phase-gate data-angle="π/4"></phase-gate>
+        <span class="diagram-arrow size-6" set:html={arrowSvg}></span>
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0.92388" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.2706 + 0.2706i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2>PHASE ゲートを 1 ビット目に置いた場合</h2>
+
+<p>
+  PHASE ゲートを 1 ビット目に置くと、PHASE ゲートは「<Ket label="0" /> と <Ket label="1" />」、「<Ket label="2" /> と
+  <Ket label="3" />」、「<Ket label="4" /> と <Ket label="5" />」、「<Ket label="6" /> と <Ket label="7" />」
+  それぞれのペアに対して作用します。
+</p>
+
+<figure>
+  <KetPairs bit={1} swap gate="PHASE" />
+</figure>
+
+<p>PHASE ゲートはペアの右側の位相にしか作用しないので、全体では円の半分のみに作用します。</p>
+
+<div class="my-5 flex overflow-x-auto">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-2">
+      <qubit-circle data-amplitude="0.3535533905932738" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      <span class="diagram-arrow size-6" set:html={dividerSvg}></span>
+      <div>PHASE(π/4) ゲートを 1 ビット目に適用</div>
+      <span class="diagram-arrow size-6 mb-8" set:html={downSvg}></span>
+    </div>
+
+    <div class="mb-4 flex flex-row items-center space-x-2">
+      <qubit-circle data-amplitude="0.3535533905932738" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25 + 0.25i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25 + 0.25i" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25 + 0.25i" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25 + 0.25i" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div>
+
+<h2>PHASE ゲートを 2 ビット目に置いた場合</h2>
+
+<p>
+  PHASE ゲートを 2 ビット目に適用する場合、ペアは「<Ket label="0" /> と <Ket label="2" />」、「<Ket label="1" /> と <Ket label="3" />」、「<Ket label="4" /> と <Ket label="6" />」、「<Ket label="5" /> と <Ket label="7" />」になります。
+</p>
+
+<figure>
+  <KetPairs bit={2} swap gate="PHASE" />
+</figure>
+
+<p>ここでもやはり PHASE ゲートは円の半分のみに作用します。</p>
+
+<div class="my-5 flex overflow-x-auto">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-2">
+      <qubit-circle data-amplitude="0.3535533905932738" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      <span class="diagram-arrow size-6" set:html={dividerSvg}></span>
+      <div>PHASE(π/4) ゲートを 2 ビット目に適用</div>
+      <span class="diagram-arrow size-6 mb-8" set:html={downSvg}></span>
+    </div>
+
+    <div class="mb-4 flex flex-row items-center space-x-2">
+      <qubit-circle data-amplitude="0.3535533905932738" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25 + 0.25i" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25 + 0.25i" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.125" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25 + 0.25i" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25 + 0.25i" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div>
+
+<h2>PHASE ゲートを 3 ビット目に置いた場合</h2>
+
+<p>
+  PHASE ゲートをビット 3 に適用する場合、ペアは「<Ket label="0" /> と <Ket label="4" />」、「<Ket label="1" /> と <Ket label="5" />」、「<Ket label="2" /> と <Ket label="6" />」、「<Ket label="3" /> と <Ket label="7" />」になります。
+</p>
+
+<figure>
+  <KetPairs bit={3} swap gate="PHASE" />
+</figure>
+
+<p>ここでもやはり PHASE ゲートは円の半分のみに作用します。</p>
+
+<div class="my-5 flex overflow-x-auto">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-2">
+      <qubit-circle data-amplitude="0.3535533905932738" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="mb-4 flex flex-col items-center space-y-2">
+      <span class="diagram-arrow size-6" set:html={dividerSvg}></span>
+      <div>PHASE(π/4) ゲートを 3 ビット目に適用</div>
+      <span class="diagram-arrow size-6 mb-8" set:html={downSvg}></span>
+    </div>
+
+    <div class="mb-4 flex flex-row items-center space-x-2">
+      <qubit-circle data-amplitude="0.3535533905932738" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25 + 0.25i" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25 + 0.25i" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25 + 0.25i" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25 + 0.25i" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div>
+
+<p>最後に、PHASE ゲートの回路の各ビットに置くことで実際に確認しておきましょう。</p>
+
+<qni-webgpu-circuit palette={"[\"P(π/4)\"]"} circuit={"{\"cols\":[[\"{重ね合わせ状態の準備\"],[\"|0>\",\"|0>\",\"|0>\"],[\"H\",\"H\",\"H\"],[\"}\"]]}"}></qni-webgpu-circuit>
+
+
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .relative { position:relative; } .absolute { position:absolute; } .inset-0 { inset:0; } .m-auto { margin:auto; }
+  .h-12 { height:48px; } .w-12 { width:48px; } .h-12 :global(svg) { width:100%; height:100%; }
+  .text-purple-500 { color:#A855F7; } .font-bold { font-weight:700; }
+  .h-8 { height:32px; } .w-16 { width:64px; } .text-zinc-300 { color:#DAD8CE; }
+  .h-8 :global(svg) { width:100%; height:100%; }
+  .relative.h-8 :global(x-gate.qpu-operation-sm), .relative :global(measurement-gate.qpu-operation-sm) { font-size:24px; width:24px; height:24px; }
+  .items-center > :global(phase-gate) { font-size:32px; }
+  .mb-4 { margin-bottom:16px; } .space-y-4 { row-gap:16px; } .items-end { align-items:flex-end; }
+  .text-2xl { font-size:24px; line-height:32px; } .mx-auto { margin-inline:auto; } .p-0 { padding:0; }
+  .p-4 { padding:16px; } .border-l-4 { border-left:4px solid #60A5FA; } .bg-blue-50 { background:#EFF6FF; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>

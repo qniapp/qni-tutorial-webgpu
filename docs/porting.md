@@ -488,3 +488,27 @@ phase/index/qubit/qni_intro(2)/x_gate(2)の **7embed** を390pxで個別に目�
 ## 2026-10-11 PR #56 pin / 条件付きBB84再開
 
 pinを **f819e353a6e0f4249331d048abe9763d7a464432** (PR #56) に更新。clean detached `verify/tutorial-conditional` からBinaryen123でembed/standalone再build。既存25ページ/22embedの原文・回路JSON・paletteは未変更。まずpinのみ公開し、既存embedのrunning/step0/errorsと条件付きgateのlive動作を確認してからbb84_circuitを復帰する。06:54 hard stop。
+
+pin commit **0a59435eb4664361cf5817dceba1846b3c628c82**、Pages **38087743083 success**。既存22embed×390/1440 = **44起動すべてrunning/step0/norm1/errors0**。`/tmp/qtw-pr56-existing.json`、画像 `/tmp/qtw-pr56-existing-<slug>-<index>-<width>.png`。pin時の全144test成功。公開standaloneで条件1→適用、0→skip、未定義→skip、同名変数は最新の先行測定を読む、未来の測定は先読みしない、元BB84全回路がload/norm1/8状態のone-hotになることをGPU readbackで確認。`/tmp/qtw-pr56-behavior.json` / `/tmp/qtw-pr56-conditional-<case>.png`。全8 named tokensを維持。simulationはGPU-only。
+
+### bb84_circuit / BB84 回路 (公開確認待ち)
+
+#53待ちを解除。原文の3wire/全39cols JSONをそのまま保持し、Measure>aliceX/aliceH/eveX/bobH、X<aliceX/eveX、H<aliceH/bobHを削除・無条件化しない。原文prose・TeX unchanged、画像/Orbitなし、credit削除なし、palette **[]**。本文H8/X4/MEASUREMENT4はBold、nativeはRegular。note2/ket15/embed1を保持。local original比較1440/390でtext diff0/TeX diff0/counts一致/errors0。native内の長い回路/block label/8-state gridのclip/panはnote only。原文の「イブの確率/ボブの不一致約半分」のmodel説明は既存質問として保持し、書き換えない。
+
+### multi_qubit_phase_gate / PHASE ゲート (公開確認待ち)
+
+phase_bit{1,2,3}_ket_pair.pngの3枚を、元の4色pairとPHASE双方向arc/MathJax ketを持つinteractive KetPairsへ置換。focus/pointer/keyboardでXOR pairを選択する。元画像にcredit行なし、削除creditなし。図labelはRegular、共通prose Bold規則を維持。元amplitude circle **52**、body ket/TeX、note0/Orbit0、3wire JSONを保持。palette **["P(π/4)"]**。8circle before/after 6列は共通4列grid wrapで390のHTML inner scrollを防ぐ。local1440/390でtext diff0/本文TeX diff0/errors0/overflowなし、intentional counts差は画像3→0/diagram ket +24。native state gridは横pan/clip、host canvasを縮小しない。
+
+### partial_measurement / 1 ビット測定 (公開確認待ち)
+
+元の20circle、紫の確率4labelと2本の測定分岐説明図、ket8/TeX、本文を保持。元SVGのdivider/down arrowを使い、確率labelをcircle中心へgridで配置。画像置換なし、credit削除なし、embed/palette/Orbit/noteなし。local1440/390でtext diff0/TeX diff0/counts一致/errors0/overflowなし。native clip/step0は対象外。物理乱数とシミュレータの区別の既存質問は変更しない。
+
+### 既存複数bit 390px 再確認 (note only)
+
+- multi_qubit_circle_notation: embedなし。本文4列wrapを維持。
+- multi_qubit_superposition: embed3。gate/Measureは可視、全3state panelで8×1のcircle gridが横pan/clip。
+- multi_qubit_operation: embed3。末尾Xは3回路とも可視、全3state panelは同じ横pan/clip。
+- operator_pair: embedなし。MathJax binary labelとinteractive図にHTML scrollなし。
+- random_byte_generator: embed2。逐次Hの後半H/Measureが右でclip、compact回路は全8wire gate可視。両state panelの下端がclip。
+
+画像 `/tmp/qtw-pr56-existing-<slug>-<index>-390.png`、8embed contact `/tmp/qtw-pr56-recheck-390-contact.png`。これはnative rendering/panであり、computed overflow auto/scrollを持つHTML/MathJaxのinner scrollとは別。指示どおりnative変更・host縮小はせずnoteのみ。全ページのHTML内横/縦scroll回帰を再実行する。次はswap_gate、未着手。

@@ -1,6 +1,6 @@
 ---
 import Ket from './Ket.astro'
-interface Props { bit?: number; swap?: boolean; labelsOnly?: boolean; gate?: 'X' | 'H' }
+interface Props { bit?: number; swap?: boolean; labelsOnly?: boolean; gate?: 'X' | 'H' | 'PHASE' }
 const { bit = 1, swap = false, labelsOnly = false, gate = 'X' } = Astro.props
 const mask = 2 ** (bit - 1)
 const pairs = Array.from({length:8}, (_,i)=>i).filter(i=>(i & mask)===0)
