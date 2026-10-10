@@ -449,7 +449,7 @@ Artifacts `/tmp/qtw-bb84-flag-repro.{json,png}`、harness `/tmp/qtw-bb84-flag-re
 
 公開commit **454a6969b179bc1d9e1215cdc1b304a34413c543**、Pages **38036870830** success。1440/390で本文diff0/本文TeX diff0/errors0/overflowなし。元bodyのcircle48/TeX・3回路JSONは維持、画像3/4->0、新illustrationのMathJax ketは演算+24、演算ペア+64。意図したimage-equivalent count差として記録する (元count一致と偽らない)。3embed running/norm1/|000⟩でstep0確認。JSON `/tmp/qtw-port-<slug>.json`、native crops `/tmp/qtw-native-multi_qubit_operation-<0..2>-{1440,390}.png`。
 
-### random_byte_generator / ランダムバイトジェネレータ (公開確認待ち)
+### random_byte_generator / ランダムバイトジェネレータ (公開確認完了)
 
 原文の8量子ビット回路2個・before/after circle48・注3・本文を保持。`H_bit1_ket_pair.png` / `H_bit2_ket_pair.png` / `H_bit3_ket_pair.png` をKetPairsのH-labelled pair図に置換し、pointer/keyboardで演算pairをhighlightできる。Hは図ラベルRegular、色はpairを示すだけで確率を捏造しない。元の実際のamplitude変化は別のcircle48とGPU回路で確認する。
 - 削除credit: なし (原画像にcredit行なし)。
@@ -458,3 +458,17 @@ Artifacts `/tmp/qtw-bb84-flag-repro.{json,png}`、harness `/tmp/qtw-bb84-flag-re
 - questions: シミュレータ測定を物理的な量子乱数と同一視しないという既存MEASUREMENTの注記を引き継ぐ。原文は変更しない。
 
 型チェック/build、53/53 targeted tests成功。KetPairsをresponsive幅にして390でも8つのket/circleが一度に見えるようにし、arrowのviewBoxとpaddingを同じ比率で追従させる。小さなprose gateのBold/図Regularは共通layoutが維持する。
+
+公開commit **dc87b3daa80efc22eea0fbc367a7ac2493cd8339**、Pages **38037319710** success。1440/390で本文diff0/本文TeX diff0/errors0/overflowなし。circle48/note3/embed2・元の8wire JSONを維持、画像3->0、image-equivalent ket +24 (body ket11 -> total35)。2embed running、256次元GPU状態・norm1・one-hot |00000000⟩でstep0確認。
+
+全8embed×1440/390 = 16起動を公開で再確認した。`/tmp/qtw-multi-scenes.json` は全step0/norm1、palette=[]、running。native screenshots `/tmp/qtw-scene-<slug>-<index>-{1440,390}.png`、390 contact `/tmp/qtw-multi-scenes-390-contact.png`。#52 notes:
+- multi_qubit_superposition: 390px全3embedの状態パネルが横scroll。embed3はRx/末尾Measureとblockラベルが右側でclip。embed1/2のgate自体は可視。
+- multi_qubit_operation: 390px全3embedでRx/末尾X/blockの右端がclip、状態パネルも横scroll。
+- random_byte_generator: 390px逐次Hのembed1で右側のH/Measureがclip、compact embed2の全8wire gateは可視。状態パネルは両幅とも下端でclipするため#52のnative height/layout記録に含める。1440pxでは全gateが可視。
+- multi_qubit_circle_notation / operator_pair: native embedなし。
+
+高宮さん決定どおりこれらのclipを理由に停止・本文変更・native code変更はしない。保持画像5項目、PHASE/MEASUREMENT本文は未編集。#53条件付きgateは今回の5ページに存在せず、bb84_circuitは引き続き **#53 待ち / SKIP**。
+
+KetPairsの公開pointer選択を1440/390×DPR1/2×3ページで確認し、各8button・pair2選択 (binary-only図は1選択) とresponsive幅350pxを確認。SVGのX/HはRegular図ラベル。screenshots `/tmp/qtw-pairs-<slug>-<width>-dpr<dpr>{,-selected}.png`、metadata `/tmp/qtw-pairs-live-interaction.json`。目視でcircle8/ket全番号・binary ketの視認性・双方向arrow・focus色を確認。原文比較 `/tmp/qtw-port-<slug>-compare-{1440,390}.png`。画像置換に元credit行がなかったため今回の削除creditは全5ページ **なし**。
+
+今回の新規移植 **5ページ**。次はmulti_qubit_phase_gate。時間制限のため未着手、未検証ページをpushしていない。
