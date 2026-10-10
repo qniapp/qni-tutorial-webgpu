@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 
 test('H prose icon is accessible, pinned and vector-only with no legacy registration', async ({ page }) => {
   await page.goto('/qni-tutorial-webgpu/h_gate/')
-  const icon = page.getByRole('img', { name: 'H ゲート', exact: true })
+  const icon = page.getByRole('img', { name: 'H ゲート', exact: true }).first()
   expect(await icon.evaluate(e => ({
     tag: e.localName, pin: e.getAttribute('data-source-sha'),
     title: e.getAttribute('title'), svg: e.querySelectorAll('svg path').length,
@@ -13,7 +13,7 @@ test('H prose icon is accessible, pinned and vector-only with no legacy registra
 
 test('H prose icon stays within its text line and follows the font size', async ({ page }) => {
   await page.goto('/qni-tutorial-webgpu/h_gate/')
-  const icon = page.getByRole('img', { name: 'H ゲート', exact: true })
+  const icon = page.getByRole('img', { name: 'H ゲート', exact: true }).first()
   expect(await icon.evaluate(e => {
     const rect = e.getBoundingClientRect(), style = getComputedStyle(e), parent = getComputedStyle(e.parentElement!)
     return { square: rect.width === rect.height, emSized: Math.abs(rect.width - parseFloat(parent.fontSize)) < 0.1,

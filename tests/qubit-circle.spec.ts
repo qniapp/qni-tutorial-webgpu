@@ -14,7 +14,7 @@ test('small light DOM circles use Rust geometry and one shared tooltip', async (
     phaseX: Number(e.querySelector('[data-part=phase]')!.getAttribute('x2')), phaseY: Number(e.querySelector('[data-part=phase]')!.getAttribute('y2')),
     label: e.getAttribute('aria-label'), role: e.getAttribute('role'),
   }))
-  expect(shape).toMatchObject({ shadow: false, nodes: 5, radius: '15', outline: '16', role: 'img' })
+  expect(shape).toMatchObject({ shadow: false, nodes: 6, radius: '15', outline: '16', role: 'img' })
   expect(shape.phaseX).toBeCloseTo(5)
   expect(shape.phaseY).toBeCloseTo(8)
   expect(shape.label).toContain('振幅 +0.60000 +0.80000i')

@@ -50,7 +50,7 @@ export class QwQubitCircle extends HTMLElement {
   private valid = true
   connectedCallback() {
     if (!this.parts) {
-      this.innerHTML = '<svg aria-hidden="true" focusable="false"><circle data-part="disc"/><circle data-part="rim" fill="none"/><line data-part="phase" stroke-linecap="round"/><circle data-part="outline" fill="none"/></svg>'
+      this.innerHTML = '<svg aria-hidden="true" focusable="false"><circle data-part="surface"/><circle data-part="disc"/><circle data-part="rim" fill="none"/><line data-part="phase" stroke-linecap="round"/><circle data-part="outline" fill="none"/></svg>'
       this.parts = Array.from(this.querySelectorAll<SVGElement>('svg, svg > *'))
       this.setAttribute('role', 'img')
       if (!this.hasAttribute('tabindex')) this.tabIndex = 0
@@ -80,10 +80,11 @@ export class QwQubitCircle extends HTMLElement {
     const stroke = size <= 16 ? 1 : 2, radius = size / 2, inner = radius - stroke / 2, box = size + stroke, center = box / 2
     const magnitude = Math.min(1, Math.hypot(this.real, this.imag)), fill = inner * magnitude
     const phase = Math.atan2(this.imag, this.real)
-    const [svg, disc, rim, needle, outline] = this.parts!
+    const [svg, surface, disc, rim, needle, outline] = this.parts!
     this.style.setProperty('--qw-qc-box', `${box}px`)
     svg!.setAttribute('viewBox', `0 0 ${box} ${box}`)
-    for (const circle of [disc!, rim!, outline!]) { circle.setAttribute('cx', String(center)); circle.setAttribute('cy', String(center)) }
+    for (const circle of [surface!, disc!, rim!, outline!]) { circle.setAttribute('cx', String(center)); circle.setAttribute('cy', String(center)) }
+    surface!.setAttribute('r', String(radius))
     disc!.setAttribute('r', String(fill))
     rim!.setAttribute('r', String(Math.max(0, fill - 0.5))); rim!.setAttribute('stroke-width', '1'); rim!.style.display = fill >= 1.5 ? '' : 'none'
     needle!.setAttribute('x1', String(center)); needle!.setAttribute('y1', String(center))
