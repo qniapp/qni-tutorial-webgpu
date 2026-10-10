@@ -9,6 +9,7 @@ for (const width of [1440, 390]) {
     await expect(page.locator('qubit-circle svg')).toHaveCount(24)
     const kets = page.locator('mjx-container[jax="CHTML"]')
     await expect(kets).toHaveCount(12)
+    expect(await kets.first().evaluate(e => e.getBoundingClientRect().height)).toBeCloseTo(21.12, 0)
     expect(await kets.allTextContents()).toEqual(['|0⟩','|1⟩','|1⟩','|1⟩','|0⟩','|0⟩','|1⟩','|0⟩','|1⟩','|0⟩','|1⟩','|0⟩'])
     await expect(page.locator('.qc-figure mjx-container, details mjx-container')).toHaveCount(0)
     expect(await kets.first().evaluate(e => ({

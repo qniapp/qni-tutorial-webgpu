@@ -12,7 +12,10 @@ mjx-container[jax="CHTML"] {
   font-size: 119.5%;
   font-style: normal;
   font-weight: normal;
+  display: inline-block;
   line-height: 0;
+  /* MathJax fonts deliberately have zero native line metrics. */
+  padding: calc(0.75em + 1px) 0 calc(0.25em + 1px);
   letter-spacing: normal;
   word-spacing: normal;
   white-space: nowrap;
