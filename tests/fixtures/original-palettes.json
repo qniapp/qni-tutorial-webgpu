@@ -73,5 +73,9 @@
   "partial_measurement": [],
   "swap_gate": [[], []],
   "cnot_gate": [[], [], []],
-  "swap_from_cnots": [["X", "•", "Measure"]]
+  "swap_from_cnots": [["X", "•", "Measure"]],
+  "entanglement": [[]],
+  "disentangle": [[], [], [], [], [], [], []],
+  "entanglement_operation": [[], [], []],
+  "discriminating_bell_states": []
 }

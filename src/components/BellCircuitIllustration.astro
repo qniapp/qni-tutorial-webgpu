@@ -1,0 +1,44 @@
+---
+const stages = ['初期化', 'H を適用', 'CNOT を適用']
+---
+<div class="bell-illustration" data-original-image>
+  <div class="columns">
+    {stages.map((stage, index) => <button type="button" data-stage={index} aria-label={stage} aria-pressed={index === 2 ? 'true' : 'false'}>
+      <circuit-step class="no-rotation">
+        <circuit-dropzone data-input-wire-quantum={index > 0 ? '' : undefined} data-output-wire-quantum data-connect-bottom={index === 2 ? '' : undefined}>
+          {index === 0 ? <write-gate data-value="0"></write-gate> : index === 1 ? <h-gate></h-gate> : <control-gate></control-gate>}
+        </circuit-dropzone>
+        <circuit-dropzone data-input-wire-quantum={index > 0 ? '' : undefined} data-output-wire-quantum data-connect-top={index === 2 ? '' : undefined}>
+          {index === 0 ? <write-gate data-value="0"></write-gate> : index === 2 ? <x-gate></x-gate> : null}
+        </circuit-dropzone>
+      </circuit-step>
+    </button>)}
+  </div>
+  <div class="states">
+    {[Math.SQRT1_2, 0, 0, Math.SQRT1_2].map((amplitude, index) => <qubit-circle data-amplitude={amplitude} data-ket={index} data-size="xs" data-show-popup-amplitude data-show-popup-probability></qubit-circle>)}
+  </div>
+</div>
+<script>
+  const vectors = [[1, 0, 0, 0], [Math.SQRT1_2, Math.SQRT1_2, 0, 0], [Math.SQRT1_2, 0, 0, Math.SQRT1_2]]
+  for (const diagram of document.querySelectorAll<HTMLElement>('.bell-illustration')) {
+    for (const button of diagram.querySelectorAll<HTMLButtonElement>('button')) {
+      const select = () => {
+        diagram.querySelectorAll('button').forEach(other => other.setAttribute('aria-pressed', String(other === button)))
+        diagram.querySelectorAll('qubit-circle').forEach((circle, index) => circle.setAttribute('data-amplitude', String(vectors[Number(button.dataset.stage)][index])))
+      }
+      button.addEventListener('click', select)
+      button.addEventListener('focus', select)
+    }
+  }
+</script>
+<style>
+  .bell-illustration { width:100%; max-width:180px; padding-block:4px; }
+  .columns { display:flex; justify-content:center; gap:4px; }
+  button { padding:2px; border:1px solid transparent; background:transparent; color:inherit; border-radius:4px; cursor:pointer; }
+  button[aria-pressed='true'] { border-color:#0EA5E9; }
+  button:focus-visible { outline:2px solid #0EA5E9; outline-offset:1px; }
+  .columns :global(circuit-step) { flex-direction:column; gap:0; padding:0; }
+  .columns :global(circuit-dropzone) { width:32px; height:48px; }
+  .columns :global(circuit-dropzone > :not(.circuit-wires)) { left:0; top:8px; font-size:32px; }
+  .states { display:flex; justify-content:center; gap:8px; margin-block:12px; }
+</style>

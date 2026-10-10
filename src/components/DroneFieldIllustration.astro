@@ -1,0 +1,33 @@
+---
+const sections = [{label:'A', bits:'00', gate:'なし'}, {label:'B', bits:'01', gate:'Z'}, {label:'C', bits:'10', gate:'X'}, {label:'D', bits:'11', gate:'Y'}]
+---
+<div class="drone-field" data-original-image>
+  <div class="field-grid">
+    {sections.map(section => <button type="button" aria-label={`区画 ${section.label}`} aria-pressed="false" data-bits={section.bits} data-gate={section.gate}>
+      <svg viewBox="0 0 100 100" aria-hidden="true"><text x="50" y="52" text-anchor="middle" dominant-baseline="middle">{section.label}</text></svg>
+    </button>)}
+  </div>
+  <div class="selection" role="status" aria-live="polite"></div>
+</div>
+<script>
+  for (const diagram of document.querySelectorAll<HTMLElement>('.drone-field')) {
+    for (const button of diagram.querySelectorAll<HTMLButtonElement>('button')) {
+      const select = () => {
+        diagram.querySelectorAll('button').forEach(other => other.setAttribute('aria-pressed', String(button === other)))
+        diagram.querySelector<HTMLElement>('[role="status"]')!.textContent = `${button.getAttribute('aria-label')} / ${button.dataset.bits} / ${button.dataset.gate}`
+      }
+      button.addEventListener('click', select)
+      button.addEventListener('focus', select)
+    }
+  }
+</script>
+<style>
+  .drone-field { width:100%; max-width:512px; }
+  .field-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:2px; padding:2px; background:#100F0F; }
+  button { display:block; width:100%; padding:0; border:0; color:#100F0F; background:#FFFCF0; cursor:pointer; }
+  button[aria-pressed='true'] { background:#EFF6FF; }
+  button:focus-visible { outline:3px solid #0EA5E9; outline-offset:-3px; }
+  svg { display:block; width:100%; aspect-ratio:1; }
+  text { fill:currentColor; font:400 24px system-ui,sans-serif; }
+  .selection { min-height:24px; margin-top:8px; font:400 14px/24px system-ui,sans-serif; }
+</style>

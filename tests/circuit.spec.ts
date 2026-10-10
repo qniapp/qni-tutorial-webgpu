@@ -287,6 +287,30 @@ test('palette JSON reaches startEmbed, [] hides it and absence omits the option'
   expect((await snapshot(page)).maxLive).toBe(1)
 })
 
+test('original run button replays the current edited circuit with one live runner', async ({ page }) => {
+  await boot(page)
+  await running(page)
+  const element = page.locator('qni-webgpu-circuit')
+  const button = element.getByRole('button', { name: '量子回路を実行' })
+  await expect(button).toBeHidden()
+  await element.evaluate(element => element.setAttribute('run-button', ''))
+  await expect(button).toBeVisible()
+  expect((await snapshot(page)).calls).toHaveLength(1)
+  const current = '{"cols":[["|1>"],["Measure"]]}'
+  await page.evaluate(value => { window.__qniMock.currentCircuit = value }, current)
+  await button.click()
+  await running(page)
+  expect((await snapshot(page)).calls.at(-1)?.circuit).toBe(current)
+  expect((await snapshot(page)).calls).toHaveLength(2)
+  await button.click()
+  await running(page)
+  expect((await snapshot(page)).calls).toHaveLength(3)
+  expect((await snapshot(page)).maxLive).toBe(1)
+  await element.evaluate(element => element.removeAttribute('run-button'))
+  await expect(button).toBeHidden()
+  expect((await snapshot(page)).calls).toHaveLength(3)
+})
+
 test('max-wire-count forwards integers, restarts on change and omits absent settings', async ({ page }) => {
   await boot(page)
   await running(page)

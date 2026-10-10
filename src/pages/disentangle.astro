@@ -1,0 +1,121 @@
+---
+import dividerSvg from '../assets/diagram-divider.svg?raw'
+import downSvg from '../assets/diagram-down.svg?raw'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="もつれをほどく" description="量子もつれ状態を元に戻す回路" section="超密度符号化" hasMath hasCircuit>
+
+
+<p>
+  量子もつれ状態は、ほどいてもつれのない状態に戻すことができます。
+  元に戻すには、量子もつれを作る回路の逆演算となる回路を作ります。
+  逆演算回路を作るために、元の量子回路をもう一度よく見てみましょう。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <qni-webgpu-circuit max-wire-count="1" palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\"],[\"{もつれを作る\"],[\"H\"],[\"•\",\"X\"],[\"}\"]]}"}></qni-webgpu-circuit>
+</div>
+
+<p>
+  まず、右側の CNOT を消すことを考えます。 CNOT の逆演算は CNOT なので<Sidenote id="cnot-inverse" numbered><a href={`${base}cnot_gate/`}>CNOT ゲート</a>を参照</Sidenote>、CNOT を次のように 2
+  つ並べます。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <qni-webgpu-circuit max-wire-count="1" palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\"],[\"H\"],[\"•\",\"X\"],[\"•\",\"X\"]]}"}></qni-webgpu-circuit>
+</div>
+
+<p>すると CNOT 2 個が消え、H ゲート 1 つだけの回路になります。</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <qni-webgpu-circuit max-wire-count="1" palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\"],[\"H\"]]}"}></qni-webgpu-circuit>
+</div>
+
+<p>
+  こうなると後は簡単です。 H ゲートの逆演算は H ゲートなので<Sidenote id="h-inverse" numbered><a
+    href={`${base}h_gate/`}
+    >H ゲート</a
+  >を参照</Sidenote>、H ゲートを並べます。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <qni-webgpu-circuit max-wire-count="1" palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\"],[\"H\"],[\"H\"]]}"}></qni-webgpu-circuit>
+</div>
+
+すると 2 個の H ゲートが消え、もつれ回路は消えました。
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <qni-webgpu-circuit max-wire-count="1" palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\"]]}"}></qni-webgpu-circuit>
+</div>
+
+<p>
+  以上をまとめると、量子もつれ状態を作ってから逆演算回路によってもつれをほどく量子回路は次のようになります。
+  真ん中の CNOT 2 つが消え、次に H ゲート 2
+  つが消えることで確かに逆演算になっていることが分かります。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <qni-webgpu-circuit max-wire-count="1" palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\"],[\"{もつれを作る\"],[\"H\"],[\"•\",\"X\"],[\"}\"],[1],[\"{もつれをほどく\"],[\"•\",\"X\"],[\"H\"],[\"}\"]]}"}></qni-webgpu-circuit>
+</div>
+
+<p>
+  量子もつれを作る H と CNOT の量子回路をベル回路<Sidenote id="bell" numbered>物理学者ジョン・スチュアート・ベルに由来します。ベルは量子もつれが存在することを決定付けることとなったベルの不等式とベル実験の考案者として有名です。</Sidenote>と呼び、ベル回路によってできる量子もつれ状態をベル状態またはベルペアと呼びます。
+  ベル状態をほどいて元に戻す回路を逆ベル回路と呼びます。
+  つまりこの量子回路は、ベル回路の後に逆ベル回路を並べたものです。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <qni-webgpu-circuit max-wire-count="1" palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\"],[\"{ベル回路\"],[\"H\"],[\"•\",\"X\"],[\"}\"],[1],[\"{逆ベル回路\"],[\"•\",\"X\"],[\"H\"],[\"}\"]]}"}></qni-webgpu-circuit>
+</div>
+
+<div class="my-5 flex flex-col items-center md:mr-auto md:w-7/12">
+  <div class="flex flex-row space-x-2">
+    <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.7071067811865476" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+  </div>
+  <span class="mt-4">ベル状態 (ベルペア)</span>
+</div>
+
+<p>
+  逆ベル回路の使いみちは、もつれをほどくことで、もつれに対して行ったゲート操作の結果を取り出すことです。
+  もつれに対して行うゲート操作については、次の節で詳しく説明します。
+</p>
+
+
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .relative { position:relative; } .absolute { position:absolute; } .inset-0 { inset:0; } .m-auto { margin:auto; }
+  .h-12 { height:48px; } .w-12 { width:48px; } .h-12 :global(svg) { width:100%; height:100%; }
+  .text-purple-500 { color:#A855F7; } .font-bold { font-weight:700; }
+  .h-8 { height:32px; } .w-16 { width:64px; } .text-zinc-300 { color:#DAD8CE; }
+  .h-8 :global(svg) { width:100%; height:100%; }
+  .relative.h-8 :global(x-gate.qpu-operation-sm), .relative :global(measurement-gate.qpu-operation-sm) { font-size:24px; width:24px; height:24px; }
+  .items-center > :global(phase-gate) { font-size:32px; }
+  .mb-4 { margin-bottom:16px; } .space-y-4 { row-gap:16px; } .items-end { align-items:flex-end; }
+  .text-2xl { font-size:24px; line-height:32px; } .mx-auto { margin-inline:auto; } .p-0 { padding:0; }
+  .p-4 { padding:16px; } .border-l-4 { border-left:4px solid #60A5FA; } .bg-blue-50 { background:#EFF6FF; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>

@@ -1,0 +1,281 @@
+{
+  "title": "もつれを操作する",
+  "slug": "entanglement_operation",
+  "description": "もつれた量子ビットをまとめて操作",
+  "sidenotes": [
+    "entanglement-operation"
+  ],
+  "images": [],
+  "orbitPrompts": 0,
+  "orbit": [],
+  "circuits": [
+    {
+      "cols": [
+        [
+          "|0>",
+          "|0>"
+        ],
+        [
+          "{ベル回路"
+        ],
+        [
+          "H"
+        ],
+        [
+          "•",
+          "X"
+        ],
+        [
+          "}"
+        ],
+        [
+          "X"
+        ],
+        [
+          "{逆ベル回路"
+        ],
+        [
+          "•",
+          "X"
+        ],
+        [
+          "H"
+        ],
+        [
+          "}"
+        ],
+        [
+          "Measure",
+          "Measure"
+        ]
+      ]
+    },
+    {
+      "cols": [
+        [
+          "|0>",
+          "|0>"
+        ],
+        [
+          "{ベル回路"
+        ],
+        [
+          "H"
+        ],
+        [
+          "•",
+          "X"
+        ],
+        [
+          "}"
+        ],
+        [
+          "P(π)"
+        ],
+        [
+          "{逆ベル回路"
+        ],
+        [
+          "•",
+          "X"
+        ],
+        [
+          "H"
+        ],
+        [
+          "}"
+        ],
+        [
+          "Measure",
+          "Measure"
+        ]
+      ]
+    },
+    {
+      "cols": [
+        [
+          "|0>",
+          "|0>"
+        ],
+        [
+          "{ベル回路"
+        ],
+        [
+          "H"
+        ],
+        [
+          "•",
+          "X"
+        ],
+        [
+          "}"
+        ],
+        [
+          "X"
+        ],
+        [
+          "P(π)"
+        ],
+        [
+          "{逆ベル回路"
+        ],
+        [
+          "•",
+          "X"
+        ],
+        [
+          "H"
+        ],
+        [
+          "}"
+        ],
+        [
+          "Measure",
+          "Measure"
+        ]
+      ]
+    }
+  ],
+  "amplitudes": [
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "1",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "3",
+      "size": "lg"
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+---
+import dividerSvg from '../assets/diagram-divider.svg?raw'
+import downSvg from '../assets/diagram-down.svg?raw'
+import BellCircuitIllustration from '../components/BellCircuitIllustration.astro'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="量子もつれ" description="量子ビットの間にリンクを作る" section="QPU 命令その 2" hasMath hasCircuit>
+
+
+<p>
+  <a href={`${base}cnot_gate/`}>CNOT ゲートの説明</a>で作った量子回路<Sidenote id="entanglement-note-1"><BellCircuitIllustration />量子もつれ状態を作る量子回路</Sidenote>は、実は量子もつれと呼ばれる量子ビットの状態を作っています。
+  量子もつれは重ね合わせ状態と同じく、古典ビットにはなく量子ビットだけが取れる状態で、QPU
+  での計算に欠かせない強力な道具の 1 つです。
+</p>
+
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="flex flex-row space-x-2">
+    <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.7071067811865476" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+  </div>
+</div>
+
+<p>
+  なぜこの状態がもつれと呼ばれるのか、細かく見ていきましょう。 ビット 1 のみを測定すると、<a
+    href={`${base}partial_measurement/`}
+    >1 ビット測定</a
+  >のルールに従って 50% の確率で 0、残り 50% の確率で 1 が得られます。 もし 0 が得られた場合、ビット
+  2 は測定しなくても 0 であることが確定しています。 なぜならば、元々の重ね合わせは <Ket label="0" />
+  または <Ket label="3" /> (2 進数で表すと <Ket label="00" /> または <Ket label="11" />) だったので、ビット 1 が 0
+  だった場合にはビット 2 も 0 (<Ket label="00" />) であることが自動的に分かるからです。
+  同様に、もし先にビット 2 を測定した場合も、その結果によってビット 1 の値が確定します。
+  これは、ビット 1 とビット 2 の間に量子もつれという見えないリンクが生まれていることを意味します。
+</p>
+
+<p>
+  以下の回路でビット 1 とビット 2 のもつれを作って確認できます。
+  右下の実行ボタンを何度クリックしても、測定結果は 0 と 0 または 1 と 1 になり、ビット 1 と 2
+  の値は必ず同じになります。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette="[]" run-button circuit={"{\"cols\":[[\"|0>\",\"|0>\"],[\"H\"],[\"•\",\"X\"],[\"Measure\"],[1,\"Measure\"]]}"}></qni-webgpu-circuit>
+
+<p>
+  量子もつれのどこが興味深いのでしょう? たとえば量子ビット 2
+  つがそれぞれおはじきくらいの大きさのチップに埋め込まれているとして、上の回路でもつれさせたあと測定せずにアリス、ボブに
+  1 つずつ持たせるとします。 そしてアリスは島根県、ボブは岐阜県へバスで移動します。
+  百キロ以上離れている 2 人ですが、2 つの量子ビットはもつれたままの状態にあります。
+  ここで島根県のアリスが自分の量子ビットを測定して 0 が出たとします。
+  次にボブが岐阜県で自分の量子ビットを測定すると、(島根にいるアリスの結果と同じ) 必ず 0 が出ます。
+  このように、どんなに離れていても測定結果が連動するというのが量子もつれの特徴です。
+</p>
+
+<p>
+  この不思議な遠隔作用は、あのアインシュタインを始めとする 20
+  世紀初期の物理学者達を大いに悩ませました。
+  しかし、本チュートリアルではこれを「量子ビットがもともと持つ性質」としてそのまま受け入れることとします。
+  つまり、量子力学や哲学的な深い洞察は避け、単なる量子ビットのいち機能として使っていきます。
+</p>
+
+<p>
+  量子もつれは、異なる量子ビット同士をリンクさせたグループを作ります。 そしてそのグループに対して
+  QPU 命令を適用することで、一つの命令で一度にたくさんの量子ビットの値を操作できます。
+  これから紹介していく量子アルゴリズムはすべて、この量子もつれと重ね合わせを何らかの形で使っています。
+</p>
+
+
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .relative { position:relative; } .absolute { position:absolute; } .inset-0 { inset:0; } .m-auto { margin:auto; }
+  .h-12 { height:48px; } .w-12 { width:48px; } .h-12 :global(svg) { width:100%; height:100%; }
+  .text-purple-500 { color:#A855F7; } .font-bold { font-weight:700; }
+  .h-8 { height:32px; } .w-16 { width:64px; } .text-zinc-300 { color:#DAD8CE; }
+  .h-8 :global(svg) { width:100%; height:100%; }
+  .relative.h-8 :global(x-gate.qpu-operation-sm), .relative :global(measurement-gate.qpu-operation-sm) { font-size:24px; width:24px; height:24px; }
+  .items-center > :global(phase-gate) { font-size:32px; }
+  .mb-4 { margin-bottom:16px; } .space-y-4 { row-gap:16px; } .items-end { align-items:flex-end; }
+  .text-2xl { font-size:24px; line-height:32px; } .mx-auto { margin-inline:auto; } .p-0 { padding:0; }
+  .p-4 { padding:16px; } .border-l-4 { border-left:4px solid #60A5FA; } .bg-blue-50 { background:#EFF6FF; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>

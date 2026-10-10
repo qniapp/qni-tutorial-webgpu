@@ -605,3 +605,27 @@ PRの `{% qpu_operation h %}` は既存 `<h-gate>`、`{% ket 0/1 %}` は既存 `
 最終 **201 tests passed (3.5m)**、build/typecheck成功。実WebGPU Chromeのoriginal/local390/1440で許可分以外の本文/TeX diff0/errors0。shadow DOMを含むHTML内横/縦scroll0/document横overflow0、BBCのGPU初期状態も確認。両ページ×2幅×DPR1/2で新しいHのprose Bold16pxと既存ket表示を実画面で確認。`/tmp/qtw-port-bb84_{protocol,circuit}.json`、`/tmp/qtw-scroll-bb84-text-local.json`、`/tmp/qtw-bb84-text-<slug>-<width>-dpr<dpr>[-kets].png`。公開commit **99f03891453343ebef8186399fc7077ea98beaeb**、Pages **38092316574 success**。公開2ページ×390/1440=4ケースすべて許可分以外の本文/TeX diff0/errors0。shadow DOMを含むHTML内横/縦scroll0/document横overflow0、BBCは2幅ともrunning・GPU norm1・初期one-hot8状態。Hのprose Bold16pxと既存ket表記を公開2ページ×2幅×DPR1/2でも確認。`/tmp/qtw-port-bb84_{protocol,circuit}.json` (commit99f0389)、`/tmp/qtw-scroll-bb84-text-public.json`、`/tmp/qtw-bb84-text-glyphs.json` と同prefixの公開画面。native pan/clipは従来どおりnote-only、host拡縮や上流変更なし。
 
 旧本文の差分を一括で無視するのではなく、7文の完全一致whitelistとket2個の追加だけを許可する。原文との比較の例外はこの2ページ/7文に限定する。BB84の確率に関する従来の質問はこの明示的な訂正で解消し、他の保持画像/本文/ネイティブclippingに関する質問は未変更。
+
+
+## 2026-10-11 量子もつれ / 超密度符号化 (08:30 hard stop)
+
+高宮さんの明示指示により **cphase: #57 待ち / SKIP**。#57 の解決はこの後のページを進める前提ではなくなった。ただし同じ CCPHASE 動作が必要な後続ページも #57 待ちとして SKIP する。今回の4ページは同角度 PHASE の複数配置を使わず、#57 に依存しない。sidebar 順に entanglement → disentangle → entanglement_operation → discriminating_bell_states を移植。
+
+| ページ | 画像置換 | 削除クレジット | 原 palette (embed順) | max-wire-count (embed順) | scroll修正 / 質問 |
+| --- | --- | --- | --- | --- | --- |
+| entanglement | sidenote の entanglement_circuit.png → 自作の3段階 Bell 回路 / 4状態の対話図。初期化、H、CNOTを選択可能 | なし (元画像に記載なし) | [] | 1 | 3列32px幅と自然高でsidenote内に収める。追加質問なし |
+| disentangle | 画像なし。元の7 authored HTML circuitsを原JSONのままinteractive embed化 | なし | [] ×7 | 1 ×7 | 元の流れ・3 sidenotes・4 circlesを維持。追加質問なし |
+| entanglement_operation | 画像なし。28 circles、1 sidenote、2表、元PHASE/Z/X/Y図と矢印を維持 | なし | [] ×3 | 1 ×3 | static PHASE図はRegular。本文ゲート名は原文の文字のまま。追加質問なし |
+| discriminating_bell_states | drone_field_abcd.png → 自作4区画対話SVG (A/B/C/Dと00/01/10/11、なし/Z/X/Yの対応) | なし (元画像に記載なし) | embedなし | embedなし | minmax(0,1fr)の2×2自然サイズ図。追加質問なし |
+
+各 max は元の `apps/tutorial/<slug>.html` の `data-max-wire-count` を個別照合した。今回すべてdirect HTMLの1であり、mini_qni-filterの2やdecrement_circuitの4を一括適用していない。max1で元の2-wire回路を切り詰めない。palette の原文指定は全11回路でなしなので []。旧Qni UI画像は今回の4ページにはなく、既存の保留質問・保持画像・creditsは変更しない。prose glyphは既存Bold判定を継続し、data-original-image内とstatic diagram / native labelsはRegular。
+
+原文で実行ボタンを含むentanglementのembedにのみ、右下のoptional `run-button` を追加した。同期 `circuitJSON()` で現在の編集済み回路を得て、既存のdestroy/start queueを用いてGPU-onlyで再起動する。既存embedはattributeなしでボタン非表示。mock testで再実行・current JSON・同時live runner=1・attribute removal時に再起動しないことを確認。実GPUでも390/1440、DPR1/2で各3回再実行し、原回路不変・running・step0/norm1を確認。実行ボタンはcanvas外の既存44px footer内で、native描画を覆わない。上流変更なし、CPU/WebGL fallbackなし。
+
+ローカル原文比較は4ページ×1440/390で本文/TeX diff0、errors0。自作画像の追加図要素はdata-original-image内だけを比較から除外し、元sidenoteのcaptionは比較対象に残す。HTML/shadow DOMの横/縦scrollbar、document横overflowは8ケースとも0。DPR1/2のRegular図ラベルと対話状態を確認。全11 embed×2幅=22起動はrunning、step0/norm1。最終GPU確率も7個のdisentangle回路、X/Z/X+PHASEの3個のBell測定、entanglementの00/11相関を確認済み。ネイティブ内部clipは許可された範囲なのでSTOP・問題項目にしない。
+
+### 次ページでSTOP: superdense_coding_circuit / #59
+
+原回路は `{"cols":[...],"title":"Superdense Coding"}`。この完全なJSONを実GPU embedに渡すと `invalid circuit JSON` で起動エラー。最小の `{"cols":[["|0>"]],"title":"Superdense Coding"}` もerror、titleなしだけ同じGPUでrunning。上流parserはcols直後に `}` を要求するためtitleを受理しない。**[qni-webgpu #59](https://github.com/qniapp/qni-webgpu/issues/59)**、[superdense-blocker.md](superdense-blocker.md)、[再現画面](images/superdense-title.png) に記録。
+
+これは#57ではない上流変更が必要な停止条件。title削除・JSON書換えの回避策は公開せず、ページ/TOC/fixtureは除外、draftは `/tmp/qtw-blocked-superdense/` に保持。teleportation以降には進まない。公開commit/Pagesと公開検証は次のcheckpointに記録する。

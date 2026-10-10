@@ -1,0 +1,59 @@
+{
+  "title": "量子もつれ",
+  "slug": "entanglement",
+  "description": "量子ビットの間にリンクを作る",
+  "sidenotes": [
+    "entanglement-note-1"
+  ],
+  "images": [
+    "images/entanglement_circuit.png"
+  ],
+  "orbitPrompts": 0,
+  "orbit": [],
+  "circuits": [
+    {
+      "cols": [
+        [
+          "|0>",
+          "|0>"
+        ],
+        [
+          "H"
+        ],
+        [
+          "•",
+          "X"
+        ],
+        [
+          "Measure"
+        ],
+        [
+          1,
+          "Measure"
+        ]
+      ]
+    }
+  ],
+  "amplitudes": [
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "3",
+      "size": "lg"
+    }
+  ]
+}

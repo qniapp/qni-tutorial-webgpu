@@ -16,5 +16,8 @@
   "multi_qubit_phase_gate": [1],
   "swap_gate": [1, 1],
   "cnot_gate": [1, 1, 1],
-  "swap_from_cnots": [1]
+  "swap_from_cnots": [1],
+  "entanglement": [1],
+  "disentangle": [1, 1, 1, 1, 1, 1, 1],
+  "entanglement_operation": [1, 1, 1]
 }

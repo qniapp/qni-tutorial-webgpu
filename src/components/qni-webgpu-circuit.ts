@@ -11,11 +11,12 @@ type EmbedModule = {
 }
 
 class QniWebgpuCircuit extends HTMLElement {
-  static observedAttributes = ['circuit', 'palette', 'show-state-panel', 'max-wire-count', 'width', 'height']
+  static observedAttributes = ['circuit', 'palette', 'show-state-panel', 'max-wire-count', 'run-button', 'width', 'height']
 
   private canvas: HTMLCanvasElement
   private status: HTMLDivElement
   private openLink: HTMLAnchorElement
+  private runButton: HTMLButtonElement
   private runner?: EmbedHandle
   private generation = 0
   private pending: Promise<void> = Promise.resolve()
@@ -46,6 +47,10 @@ class QniWebgpuCircuit extends HTMLElement {
         .open-link:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
         canvas:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
         [role="status"] { position: absolute; inset: 1rem; pointer-events: none; }
+        .run-button { position:absolute; right:0; bottom:0; width:44px; height:44px; padding:10px; border:0; border-radius:50%; background:#0EA5E9; color:#FFFFFF; cursor:pointer; }
+        .run-button svg { display:block; width:24px; height:24px; }
+        .run-button:focus-visible { outline:2px solid #0EA5E9; outline-offset:2px; }
+        .run-button:disabled { cursor:wait; opacity:0.6; }
         [hidden] { display: none; }
       </style>
       <div class="frame">
@@ -54,6 +59,21 @@ class QniWebgpuCircuit extends HTMLElement {
       </div>
       <div class="open-tab"><a class="open-link" target="_blank" rel="noopener"><span>Qniで開く</span><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 9L21 3M21 3H15M21 3L13 11M10 5H7.8C6.11984 5 5.27976 5 4.63803 5.32698C4.07354 5.6146 3.6146 6.07354 3.32698 6.63803C3 7.27976 3 8.11984 3 9.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21H14.2C15.8802 21 16.7202 21 17.362 20.673C17.9265 20.3854 18.3854 19.9265 18.673 19.362C19 18.7202 19 17.8802 19 16.2V14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
     `
+    const button = document.createElement('button')
+    button.type = 'button'
+    button.className = 'run-button'
+    button.hidden = true
+    button.disabled = true
+    button.setAttribute('aria-label', '量子回路を実行')
+    button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4v16l12-8Z" fill="currentColor"/></svg>'
+    shadow.append(button)
+    this.runButton = button
+    button.addEventListener('click', () => {
+      if (!this.runner) return
+      const circuit = this.runner.circuitJSON()
+      if (this.getAttribute('circuit') === circuit) this.restart()
+      else this.setAttribute('circuit', circuit)
+    })
     this.canvas = shadow.querySelector('canvas')!
     // Native keyboard focus must not scroll the tutorial to an off-screen embed.
     const focusCanvas = this.canvas.focus.bind(this.canvas)
@@ -73,6 +93,7 @@ class QniWebgpuCircuit extends HTMLElement {
   }
 
   connectedCallback() {
+    this.runButton.hidden = !this.hasAttribute('run-button')
     this.updateSize()
     this.updateOpenLink()
     this.resizeObserver.observe(this)
@@ -88,7 +109,9 @@ class QniWebgpuCircuit extends HTMLElement {
 
   attributeChangedCallback(name: string, oldValue: string | null, value: string | null) {
     if (oldValue === value) return
-    if (name === 'width' || name === 'height') {
+    if (name === 'run-button') {
+      this.runButton.hidden = !this.hasAttribute('run-button')
+    } else if (name === 'width' || name === 'height') {
       this.updateSize()
     } else if (this.isConnected) {
       this.restart()
@@ -130,6 +153,7 @@ class QniWebgpuCircuit extends HTMLElement {
 
   private setState(state: string, message = '') {
     this.dataset.state = state
+    this.runButton.disabled = state !== 'running'
     this.status.textContent = message
     this.status.hidden = !message
     this.canvas.hidden = state === 'unsupported' || state === 'error'

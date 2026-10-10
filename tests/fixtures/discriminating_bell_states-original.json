@@ -1,0 +1,13 @@
+{
+  "title": "ベル状態の判別",
+  "slug": "discriminating_bell_states",
+  "description": "1 量子ビットで 2 古典ビット分のデータを表す",
+  "sidenotes": [],
+  "images": [
+    "images/drone_field_abcd.png"
+  ],
+  "orbitPrompts": 0,
+  "orbit": [],
+  "circuits": [],
+  "amplitudes": []
+}
