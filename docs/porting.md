@@ -284,7 +284,7 @@ x_gate / phase_gate / measurement_operation / quantum_circuit / qni_intro / cpu_
 本文/header/footer/pin/upstreamは不変。original regular font -> native Geist / 旧green -> native #3AA99Fなど既承認差はそのまま保持。SVG glyphの太さやサイズはnative assets、手続き的primitiveはnativeの48px viewBoxを基準にした。形状修正と測定ページの未完検証を完了し、今回新規ページ移植は行わない。
 
 
-## 14:42 追加: 本文inline XのBold Plus (公開確認待ち)
+## 14:42 追加: 本文inline XのBold Plus (公開検証完了)
 
 円形修正は完了済みで再実装しない。変更前の公開x_gateを1440/390×DPR1/2で採取し、inline/figureの個別PNGと本文cropを保存した。初期errors0。
 
@@ -292,4 +292,17 @@ x_gate / phase_gate / measurement_operation / quantum_circuit / qni_intro / cpu_
 
 `x-gate` はp内のproseでのみBold、figure/circuit-step/circuit-dropzone/qc-operation/data-original-image内はRegular。再接続でcontextを再評価する。円radius50%、16px、paper #FFFCF0 / fill #3AA99F、位置は不変。table/transition/palette/connected circuit/native embedのglyphはRegularのまま。本文/header/footer/pin/upstream不変。
 
-型チェック/build成功、42/42 tests。DPR1/2×1440/390の新規4件はprose Bold・figure Regular・サイズ/色/円・reconnectのBold->Regular->Boldを確認。before JSON `/tmp/qtw-xbold-before.json`。公開比較を追記する。
+型チェック/build成功、42/42 tests。DPR1/2×1440/390の新規4件はprose Bold・figure Regular・サイズ/色/円・reconnectのBold->Regular->Boldを確認。before JSON `/tmp/qtw-xbold-before.json`。
+
+公開commit **916ff92b857a9e9f1a0966b4d52cdb49e9ae1070**、Pages **38028720146** success。1440/390×DPR1/2でprose cropを目視確認し、proseはBold・figureはRegular、errors0。背景/紙色/サイズ/radiusは不変。図の24px Xのbefore/after pixel diffは4ケースすべて **0**。
+
+central20%-80%のROIでbackground->foreground RGB projectionのalpha総和を16×16×DPR²で割ったglyph coverage: DPR1 **3.131% -> 3.853%** (+23.1%)、DPR2 **2.603% -> 3.675%** (+41.2%)。両viewportで同じ結果。DPR2は薄いstemが明確な＋になり、DPR1もstemのcoverageが増えた。mean foregroundはDPR1 141.8/204.4/193.6 -> 161.2/212.8/201.2、DPR2は新しいantialias端が増えるため平均輝度は改善指標として扱わない。固定色はpaper #FFFCF0、人工strokeなし。
+
+保存:
+- `/tmp/qtw-xbold-compare-{1440,390}-dpr{1,2}.png`: Before/After、12倍nearest zoom
+- `/tmp/qtw-xbold-inline-{1440,390}-dpr{1,2}-{before,after}-zoom.png`: 個別zoom crop
+- `/tmp/qtw-xbold-prose-{1440,390}-dpr{1,2}-{before,after}.png`: 段落実寸crop
+- `/tmp/qtw-xbold-figure-{1440,390}-dpr{1,2}-{before,after}.png`: 変更なしのfigure crop
+- `/tmp/qtw-xbold-{before,after}.json` / `/tmp/qtw-xbold-metrics.json`: 属性・geometry・errors・測定
+
+8ページ×1440/390 (x_gate/phase_gate/measurement_operation/quantum_circuit/qni_intro/cpu_vs_qpu_operations/write_operation/h_gate) の公開再確認も本文diff0/本文TeX diff0/Orbit一致/errors0/overflowなし、embed running/GPU正常。JSON `/tmp/qtw-shape-content-<slug>.json`。原文PHASEだけ既知の旧script errorを別記録。円形修正commit **0b22f99** / Pages **38027988482** の結果はそのまま有効。native canvas Xは既に円＋で変更・新規qni-webgpu問題なし。
