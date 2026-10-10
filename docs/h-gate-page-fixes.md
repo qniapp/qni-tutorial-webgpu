@@ -144,3 +144,15 @@ aria/alt/meta/loading/no-WebGPU/error/device-lost stringsも監査したが、�
 手書きh_gate旧embedにlinkはないため、許可された追加linkの外観はphase_gateの原文mini_qniに合わせる。一次資料 `_plugins/mini_qni_filter.rb:97-104`、`css/mini_qni.css:1-8`。frame border2px #0EA5E9/padding32px/corners6,6,6,0/bg#FAFAFA、tab #0EA5E9/padding8px16px/bottom corners6px、anchor white/16px/500/28px、span margin-right8px、24×24 external-link SVG。pathは原文そのまま。tabはframe左下にgap0で接続。rel=noopener/current-circuit exportと/app/先は維持。
 
 before `/tmp/qtw-btn-before-{1440,390}.png` と原文phaseのcomputed stylesを取得済み。typecheck/build成功、本文snapshot/元Orbit/branding/button/Canvas resize/link export等の関連30/30 tests成功。公開後の比較を追記する。
+
+### 公開検証 / 完了 (11:03 JST)
+
+実装 **04e344da36f656b7ebaf14ee3557ffcc83f420e5**、Pages **38015071471** 成功 (build2分40秒 / deploy9秒)。gmktec実 Chromium152 / AMD Vulkan / unsafe WebGPU / DPR1、1440/390pxで再比較。normalized本文diffは両幅とも **delete「Xゲート(量子NOT)PHASEゲート」だけ**。原文footerを除けば全文一致。本文top-level element順も一致し、唯一許可されたembedの div→qni-webgpu-circuit 置換だけ違う。19 H /24 circles /12 kets /7 Orbit prompts維持。原文4ケースの最終console/page errors0、移植h_gate/index/multi-3のbody.innerTextに「Qni WebGPU」0。
+
+原文phaseと現在h_gateのanchor/tab/frame各10 style項目の差分 **0**、tabとframeのgap=0、leftOffset=0 (両幅)。原文と同じSVG path、文字、padding、color、radius、font size/weightを確認し、before/after/compareを目視した。Native UI/高さは許可されたembed置換の差である。390pxのnative palette/state windowが横に切れる既存制約はbefore screenshotにもあり、原文のH/XだけのUIとは異なる。上流qni-webgpuを変更できない今回の範囲ではresponsive backendは未修正として記録する。
+
+GPU診断readbackで初期[1,0,0,0]、H後[0.7071067690849304,0,0.7071067690849304,0]を両幅確認。実mouse clickで `/qni-tutorial-webgpu/app/#...` を開き、現在の `{"cols":[["|0>"],["H"]]}` がhashに渡ることを確認。通常anchor/target=_blank/rel=noopenerを維持。新たなproduction readback/CPU fallbackはない。
+
+原文cold warm-upの既知favicon404はcoldOriginalErrorsに記録。最初の比較ではharnessがlegacy custom elementsをcloneNodeしてconstructorのnotNull assertionを誘発したので、DOMをcloneせずrendered textからfooterを引く方法に修正して再実行した。原文/製品bugを隠すroute/mockは使用していない。
+
+保存: `/tmp/qtw-strip-compare-{1440,390}.png`、`/tmp/qtw-strip.json` (raw/normalized全文、textDiffs、element順、runtime branding audit)。ボタンは `/tmp/qtw-btn-before-{1440,390}.png`、`/tmp/qtw-btn-after-{1440,390}.png`、`/tmp/qtw-btn-compare-{1440,390}.png`、`/tmp/qtw-btn.json` (computed style comparisons)。30/30関連tests、typecheck/build成功。browser/server終了、pin不変、通常push後にmain/worktreeをcleanにして終了する。最終docs-only deployは待たない。
