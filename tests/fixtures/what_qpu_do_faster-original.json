@@ -1,0 +1,21 @@
+{
+  "title": "QPU は何が得意?",
+  "slug": "what_qpu_do_faster",
+  "description": "量子コンピュータの得意分野と制限",
+  "sidenotes": [
+    "qubit",
+    "state-vector-size",
+    "square-sum",
+    "matrix-inverse",
+    "rotation-matrix",
+    "amplitude"
+  ],
+  "images": [
+    "images/what-qpu-do-faster/matrix_multiplication.png",
+    "images/what-qpu-do-faster/qpu_operations_matrix_and_state_vector.png",
+    "images/what-qpu-do-faster/state_vector_norm1.png",
+    "images/what-qpu-do-faster/reversible_matrix_multiplication.png"
+  ],
+  "orbitPrompts": 12,
+  "sourceSha": "acf87bfa9b377ca37ff2f9f733a9011cbf34be1d"
+}

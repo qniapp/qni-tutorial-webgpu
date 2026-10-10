@@ -1,0 +1,11 @@
+{
+  "title": "QPU とは",
+  "slug": "qpu",
+  "description": "量子コンピュータの正しい位置付け",
+  "sidenotes": [
+    "hhl"
+  ],
+  "images": [],
+  "orbitPrompts": 4,
+  "sourceSha": "acf87bfa9b377ca37ff2f9f733a9011cbf34be1d"
+}
