@@ -24,6 +24,10 @@ test('current page is highlighted and only its chapter is open', async ({ page }
   await expect(current).toHaveAttribute('href', '/qni-tutorial-webgpu/h_gate/')
   expect(await page.locator('.sidebar details[open] > summary').allTextContents()).toEqual(['QPU 命令その 1'])
   expect(await current.evaluate(e => getComputedStyle(e).backgroundColor)).toBe('rgb(221, 231, 241)')
+  // Original space-y-1 rhythm: 36px rows, 40px pitch.
+  const rows = await page.locator('.sidebar details[open] .toc-item').evaluateAll(es => es.map(e => e.getBoundingClientRect()).map(r => ({ top: r.top, height: r.height })))
+  expect(rows.every(r => r.height === 36)).toBe(true)
+  expect(rows.slice(1).map((r, i) => r.top - rows[i].top)).toEqual(Array(rows.length - 1).fill(40))
 
   await page.goto('/qni-tutorial-webgpu/')
   await expect(page.locator('.sidebar [aria-current="page"]')).toHaveText('はじめに')

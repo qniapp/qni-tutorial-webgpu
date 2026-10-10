@@ -45,6 +45,8 @@ const current = Astro.url.pathname
      items, rounded-md, current item highlighted. Colors use the site's Flexoki palette. */
   .toc { padding: 24px 12px 56px; }
   details { border: 0; padding: 0; max-width: none; }
+  /* Original nav is space-y-1: 4px between every heading and item. */
+  details + details, li { margin-top: 4px; }
   summary {
     display: flex; align-items: center; gap: 4px;
     padding: 8px; border-radius: 6px;
@@ -59,7 +61,7 @@ const current = Astro.url.pathname
   }
   details[open] > summary::after { transform: rotate(45deg); }
   summary:hover { background: var(--bg-2); }
-  ul { list-style: none; margin: 0 0 8px; padding: 0; }
+  ul { list-style: none; margin: 0; padding: 0; }
   li { font-size: 14px; line-height: 20px; }
   .toc-item {
     display: flex; align-items: center; gap: 8px;
