@@ -1,0 +1,16 @@
+{
+  "title": "演算ペア",
+  "slug": "operator_pair",
+  "description": "複数量子ビット演算のルール",
+  "sidenotes": [],
+  "images": [
+    "images/ket_label_in_binary.png",
+    "images/bit1_ket_pair.png",
+    "images/bit2_ket_pair.png",
+    "images/bit3_ket_pair.png"
+  ],
+  "orbitPrompts": 0,
+  "orbit": [],
+  "circuits": [],
+  "amplitudes": []
+}

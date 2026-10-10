@@ -414,14 +414,14 @@ Artifacts `/tmp/qtw-bb84-flag-repro.{json,png}`、harness `/tmp/qtw-bb84-flag-re
 
 高宮さん承認: bb84_circuitは **#53 待ち** としてSKIPし、後続の条件付きgateが必要なページも同様にSKIPする。#52 native clippingは記録のみ。保持画像5項目とPHASE/MEASUREMENT本文は引き続き変更しない。
 
-### multi_qubit_circle_notation / 状態ベクトル表示 (公開確認待ち)
+### multi_qubit_circle_notation / 状態ベクトル表示 (公開確認完了)
 
 原文acf87bfの本文・3組のketリスト・12circleを移植。binary ket 00/01/10/11を元TeXのままMathJaxで表示。circle popupで確率/振幅/位相を確認できる。
 - 置換画像/削除credit: なし (画像0)。
 - palette / step0 / #52: embed0、対象外。
 - questions: 新規なし。
 
-### multi_qubit_superposition / 重ね合わせ状態 (公開確認待ち)
+### multi_qubit_superposition / 重ね合わせ状態 (公開確認完了)
 
 原文acf87bfの3状態例・circle24・ket・note1、3個の実験回路JSONとblockラベルをそのまま移植。circle popupのamp/phaseを保持。
 - 置換画像/削除credit: なし (画像0)。
@@ -429,4 +429,20 @@ Artifacts `/tmp/qtw-bb84-flag-repro.{json,png}`、harness `/tmp/qtw-bb84-flag-re
 - #52 clipping: 公開1440/390で追記。
 - questions: 新規なし。本文の確率・位相の説明は変更しない。
 
-型チェック/build成功、新規2ページの構造・全amplitude・MathJax・元palette・sidebarを含む63/63 tests。
+型チェック/build成功、新規2ページの構造・全amplitude・MathJax・元palette・sidebarを含む63/63 tests。公開commit **5dedf200b54a41f901bfc088dd604765e0ee6d0e**、Pages **38036334988** success。1440/390本文diff0/TeX diff0/counts一致/errors0/overflowなし。状態ベクトルはcircle12/ket47、重ね合わせはcircle24/ket13/note1/embed3。全embed running、norm1/one-hot |000⟩でstep0確認。JSON `/tmp/qtw-port-<slug>.json`、original/ours screenshot `/tmp/qtw-port-<slug>-<original|ours>-{1440,390}.png`。clip detailを最終checkpointへ記録する。
+
+### multi_qubit_operation / 複数量子ビットでの演算 (公開確認待ち)
+
+原文3つのX演算例、前後circle48と実験embed3を保持。`X_bit1_ket_pair.png` / `X_bit2_ket_pair.png` / `X_bit3_ket_pair.png` は新規 `KetPairs.astro` の色付きペア/双方向arrow/MathJax ketへ置換。各circleをクリック・キーボードfocusするとXOR partnerを同時highlightし、対応するbinary番号をscreen readerへ伝える。これは演算ペアの図示であり、色を量子確率と偽らない。元のbefore/after amplitude図とGPU実験はそのまま。
+- 削除credit: なし (原画像credit行なし)。
+- palette: 原文全3embedにpaletteなし、すべて `[]`。
+- questions: 新規なし。#52 clipのみ確認して記録。
+
+### operator_pair / 演算ペア (公開確認待ち)
+
+`ket_label_in_binary.png` / `bit1_ket_pair.png` / `bit2_ket_pair.png` / `bit3_ket_pair.png` を同じ `KetPairs.astro` に置換。8個の空円/decimal ket/binary ket、およびbit1/2/3の同色pairを再現。画像相当のlabel/TeXはdata-original-image内として本文diffからだけ除外する。初期pair色は原文と同じ対応、selectionはpointer/keyboard両対応。
+- 削除credit: なし (原画像credit行なし)。
+- palette / step0 / #52: embed0、対象外。
+- questions: 新規なし。
+
+型チェック/build成功、73/73 tests。原文body構造/circle48/元JSON・palette・MathJaxに加え、bit1/2/3のXORペア選択、keyboard Enter、mobile overflow、画像7点不使用を確認。

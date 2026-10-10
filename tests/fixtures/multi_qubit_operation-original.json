@@ -1,0 +1,353 @@
+{
+  "title": "複数量子ビットでの演算",
+  "slug": "multi_qubit_operation",
+  "description": "状態ベクトルのペアで計算",
+  "sidenotes": [],
+  "images": [
+    "images/X_bit1_ket_pair.png",
+    "images/X_bit2_ket_pair.png",
+    "images/X_bit3_ket_pair.png"
+  ],
+  "orbitPrompts": 0,
+  "orbit": [],
+  "circuits": [
+    {
+      "cols": [
+        [
+          "|0>",
+          "|0>",
+          "|0>"
+        ],
+        [
+          "{重ね合わせ状態の生成"
+        ],
+        [
+          "H",
+          "H",
+          "H"
+        ],
+        [
+          "P(π_4)",
+          "P(π_2)",
+          "P(π)"
+        ],
+        [
+          "Rx(π_2)"
+        ],
+        [
+          "}"
+        ],
+        [
+          "X"
+        ]
+      ]
+    },
+    {
+      "cols": [
+        [
+          "|0>",
+          "|0>",
+          "|0>"
+        ],
+        [
+          "{重ね合わせ状態の生成"
+        ],
+        [
+          "H",
+          "H",
+          "H"
+        ],
+        [
+          "P(π_4)",
+          "P(π_2)",
+          "P(π)"
+        ],
+        [
+          "Rx(π_2)"
+        ],
+        [
+          "}"
+        ],
+        [
+          1,
+          "X"
+        ]
+      ]
+    },
+    {
+      "cols": [
+        [
+          "|0>",
+          "|0>",
+          "|0>"
+        ],
+        [
+          "{重ね合わせ状態の生成"
+        ],
+        [
+          "H",
+          "H",
+          "H"
+        ],
+        [
+          "P(π_4)",
+          "P(π_2)",
+          "P(π)"
+        ],
+        [
+          "Rx(π_2)"
+        ],
+        [
+          "}"
+        ],
+        [
+          1,
+          1,
+          "X"
+        ]
+      ]
+    }
+  ],
+  "amplitudes": [
+    {
+      "amplitude": "0.42678 - 0.17678i",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 - 0.07322i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 + 0.42678i",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.07322 + 0.17678i",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.42678 + 0.17678i",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 + 0.07322i",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 - 0.42678i",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.07322 - 0.17678i",
+      "ket": "7",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 - 0.07322i",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.42678 - 0.17678i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.07322 + 0.17678i",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 + 0.42678i",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 + 0.07322i",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.42678 + 0.17678i",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.07322 - 0.17678i",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 - 0.42678i",
+      "ket": "7",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.42678 - 0.17678i",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 - 0.07322i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 + 0.42678i",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.07322 + 0.17678i",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.42678 + 0.17678i",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 + 0.07322i",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 - 0.42678i",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.07322 - 0.17678i",
+      "ket": "7",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 + 0.42678i",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.07322 + 0.17678i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.42678 - 0.17678i",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 - 0.07322i",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 - 0.42678i",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.07322 - 0.17678i",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.42678 + 0.17678i",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 + 0.07322i",
+      "ket": "7",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.42678 - 0.17678i",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 - 0.07322i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 + 0.42678i",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.07322 + 0.17678i",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.42678 + 0.17678i",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 + 0.07322i",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 - 0.42678i",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.07322 - 0.17678i",
+      "ket": "7",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.42678 + 0.17678i",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 + 0.07322i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 - 0.42678i",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.07322 - 0.17678i",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.42678 - 0.17678i",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 - 0.07322i",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 + 0.42678i",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.07322 + 0.17678i",
+      "ket": "7",
+      "size": "lg"
+    }
+  ]
+}

@@ -64,5 +64,7 @@
   "quantum_key_distribution": [],
   "bb84_protocol": [],
   "multi_qubit_circle_notation": [],
-  "multi_qubit_superposition": [[], [], []]
+  "multi_qubit_superposition": [[], [], []],
+  "multi_qubit_operation": [[], [], []],
+  "operator_pair": []
 }

@@ -1,0 +1,53 @@
+---
+import Ket from './Ket.astro'
+interface Props { bit?: number; swap?: boolean; labelsOnly?: boolean }
+const { bit = 1, swap = false, labelsOnly = false } = Astro.props
+const mask = 2 ** (bit - 1)
+const pairs = Array.from({length:8}, (_,i)=>i).filter(i=>(i & mask)===0)
+const colors = ['#EF4444','#0EA5E9','#8B5CF6','#F59E0B']
+const color = (i:number)=>colors[pairs.indexOf(i & ~mask)]
+const prefix = `ket-pairs-${swap ? 'swap' : labelsOnly ? 'labels' : 'pair'}-${bit}`
+---
+<div class="ket-pairs" data-original-image data-bit={bit} data-labels-only={labelsOnly ? 'true' : 'false'}>
+  <div class="diagram">
+    {swap && <svg class="arcs" viewBox="0 0 512 72" aria-hidden="true">
+      <defs><marker id={`${prefix}-arrow`} viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="currentColor" stroke-width="1.5" /></marker></defs>
+      {pairs.map(i=>{const a=32+i*64,b=32+(i^mask)*64;return <g><path d={`M${a} 66 Q${(a+b)/2} ${6+((i%mask)*6)} ${b} 66`} fill="none" stroke={color(i)} stroke-width="2" marker-start={`url(#${prefix}-arrow)`} marker-end={`url(#${prefix}-arrow)`}/><text x={(a+b)/2} y={14+((i%mask)*6)} text-anchor="middle">X</text></g>})}
+    </svg>}
+    <div class:list={['cells', { 'with-arcs':swap }]}>
+      {Array.from({length:8},(_,i)=><button type="button" data-index={i} aria-pressed="false" aria-label={labelsOnly ? `状態 ${i}、2進数 ${i.toString(2).padStart(3,'0')}` : `状態 ${i} と ${i^mask} の演算ペア`}>
+        <svg viewBox="0 0 48 48" aria-hidden="true"><defs><pattern id={`${prefix}-${i}`} width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><path d="M0 0V5" stroke={color(i)} stroke-width="1.5"/></pattern></defs><circle cx="24" cy="24" r="22" fill={labelsOnly ? 'none' : `url(#${prefix}-${i})`} stroke="currentColor" stroke-width="1.2"/></svg>
+        <span><Ket label={String(i)} /></span>
+        {!swap && <span class="binary"><Ket label={i.toString(2).padStart(3,'0')} /></span>}
+      </button>)}
+    </div>
+  </div>
+  <span class="announcement" role="status" aria-live="polite"></span>
+</div>
+<script>
+  for (const diagram of document.querySelectorAll<HTMLElement>('.ket-pairs')) {
+    const select = (index:number) => {
+      const bit = Number(diagram.dataset.bit)
+      const partner = diagram.dataset.labelsOnly === 'true' ? index : index ^ (2 ** (bit - 1))
+      diagram.querySelectorAll<HTMLButtonElement>('button').forEach(button => button.setAttribute('aria-pressed', String([index,partner].includes(Number(button.dataset.index)))))
+      diagram.querySelector<HTMLElement>('[role="status"]')!.textContent = `状態 ${index} (${index.toString(2).padStart(3,'0')}) / ${partner} (${partner.toString(2).padStart(3,'0')})`
+    }
+    diagram.querySelectorAll<HTMLButtonElement>('button').forEach(button=>{
+      button.addEventListener('click',()=>select(Number(button.dataset.index)))
+      button.addEventListener('focus',()=>select(Number(button.dataset.index)))
+    })
+  }
+</script>
+<style>
+ .ket-pairs { overflow-x:auto; padding:4px; }
+ .diagram { width:512px; position:relative; }
+ .cells { display:grid; grid-template-columns:repeat(8,64px); }
+ .with-arcs { padding-top:72px; } .arcs { position:absolute; top:0; width:512px; height:72px; overflow:visible; color:#100F0F; }
+ text { fill:#100F0F; font:400 16px system-ui,sans-serif; }
+ button { display:flex; flex-direction:column; align-items:center; gap:8px; border:0; background:transparent; padding:2px; color:#100F0F; font:inherit; cursor:pointer; border-radius:4px; }
+ button > svg { width:48px; height:48px; }
+ button[aria-pressed='true'] { background:#E1ECD8; outline:2px solid #66800B; outline-offset:-2px; }
+ button:focus-visible { outline:2px solid #205EA6; outline-offset:-2px; }
+ .binary { color:#087F5B; }
+ .announcement { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+</style>

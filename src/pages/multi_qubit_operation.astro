@@ -1,0 +1,164 @@
+---
+import KetPairs from '../components/KetPairs.astro'
+import dividerSvg from '../assets/diagram-divider.svg?raw'
+import downSvg from '../assets/diagram-down.svg?raw'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="複数量子ビットでの演算" description="状態ベクトルのペアで計算" section="複数量子ビット" hasMath hasCircuit>
+
+
+<p>
+  複数量子ビットに対してゲートを適用するとどうなるでしょうか? 今までは単一の量子ビットに X ゲートや
+  H
+  ゲートを適用してきましたが、複数量子ビットに適用する場合でもそれぞれのゲートの働きは変わりません。
+  しかし、ゲートを配置したビット によって、演算の対象となる状態ベクトルの円が異なってきます。
+  ゲートを 1 ビット目、2 ビット目、3
+  ビット目、、、と順番に置いていくことによって、その動作を確認してみましょう。
+</p>
+
+<h2>ゲートを 1 ビット目に置いた場合</h2>
+
+<p>
+  以降では 3 量子ビットの回路を例として考えます。この場合、状態ベクトルは \(2^3 = 8\)
+  個の円として表示されます。 この状態ベクトルに対して、X ゲートを 1 ビット目 (回路の一番上のワイヤ)
+  に適用すると、X ゲートは「<Ket label="0" /> と <Ket label="1" />」、「<Ket label="2" /> と <Ket label="3" />」、「<Ket label="4" /> と <Ket label="5" />」、「<Ket label="6" /> と <Ket label="7" />」という隣同士の円 (1 つだけ離れた円同士)
+  それぞれのペアに対して、X ゲートの動作である「円の入れ替え」を行います。
+</p>
+
+<figure>
+  <KetPairs bit={1} swap />
+</figure>
+
+<p>
+  これを具体的な状態ベクトルで見ると、次のようになります。 <Ket label="0" /> と <Ket label="1" />、<Ket label="2" />
+  と <Ket label="3" />、… それぞれのペアの左右の円が、X ゲートによって入れ替わることが分かります。
+</p>
+
+<div class="my-5 flex overflow-auto">
+  <div class="flex flex-col items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.42678 - 0.17678i" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 - 0.07322i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 + 0.42678i" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.07322 + 0.17678i" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.42678 + 0.17678i" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 + 0.07322i" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 - 0.42678i" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.07322 - 0.17678i" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      <span class="diagram-arrow" set:html={dividerSvg}></span>
+      <div>X ゲートを 1 ビット目に適用</div>
+      <span class="diagram-arrow mb-8" set:html={downSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.17678 - 0.07322i" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.42678 - 0.17678i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.07322 + 0.17678i" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 + 0.42678i" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 + 0.07322i" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.42678 + 0.17678i" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.07322 - 0.17678i" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 - 0.42678i" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div>
+
+<p>
+  この動作を Qni 上でも確認してみましょう。 下の回路で X
+  ゲートの適用前と適用後を比べてみると、たしかに隣同士の円が X
+  ゲートによって入れ替わっていることが分かります。
+</p>
+
+<qni-webgpu-circuit palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\"],[\"{重ね合わせ状態の生成\"],[\"H\",\"H\",\"H\"],[\"P(π_4)\",\"P(π_2)\",\"P(π)\"],[\"Rx(π_2)\"],[\"}\"],[\"X\"]]}"}></qni-webgpu-circuit>
+
+<h2>ゲートを 2 ビット目に置いた場合</h2>
+
+<p>
+  ゲートを置く位置を変えると、ゲートが作用する円のペアが変化します。
+  先ほどと同じ状態ベクトルに対して、X ゲートを 2 ビット目に適用すると、X ゲートは「<Ket label="0" /> と <Ket label="2" />」、「<Ket label="1" /> と <Ket label="3" />」、「<Ket label="4" /> と <Ket label="6" />」、「<Ket label="5" /> と <Ket label="7" />」という 1 つ飛ばしの円同士 (2 つ離れた円同士)
+  で作ったペアに対して、円の入れ替えを行います。
+</p>
+
+<figure>
+  <KetPairs bit={2} swap />
+</figure>
+
+<p>
+  これを状態ベクトルで見ると、次のようになります。 <Ket label="0" /> と <Ket label="2" /> や <Ket label="5" /> と <Ket label="7" /> が X ゲートによって入れ替わることが分かります。
+</p>
+
+<div class="my-5 flex overflow-auto">
+  <div class="flex flex-col items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.42678 - 0.17678i" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 - 0.07322i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 + 0.42678i" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.07322 + 0.17678i" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.42678 + 0.17678i" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 + 0.07322i" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 - 0.42678i" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.07322 - 0.17678i" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      <span class="diagram-arrow" set:html={dividerSvg}></span>
+      <div>X ゲートを 2 ビット目に適用</div>
+      <span class="diagram-arrow mb-8" set:html={downSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.17678 + 0.42678i" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.07322 + 0.17678i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.42678 - 0.17678i" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 - 0.07322i" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 - 0.42678i" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.07322 - 0.17678i" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.42678 + 0.17678i" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 + 0.07322i" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div>
+
+<p>これも Qni で実際に確認しておきましょう。</p>
+
+<qni-webgpu-circuit palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\"],[\"{重ね合わせ状態の生成\"],[\"H\",\"H\",\"H\"],[\"P(π_4)\",\"P(π_2)\",\"P(π)\"],[\"Rx(π_2)\"],[\"}\"],[1,\"X\"]]}"}></qni-webgpu-circuit>
+
+<h2>ゲートを 3 ビット目に置いた場合</h2>
+
+<p>
+  X ゲートを 3 ビット目に適用すると、4 つ離れた円同士で作ったペアに対して、円の入れ替えを行います。
+  つまり「<Ket label="0" /> と <Ket label="4" />」、「<Ket label="1" /> と <Ket label="5" />」、「<Ket label="2" /> と <Ket label="6" />」、「<Ket label="3" /> と <Ket label="7" />」のペアについて X ゲート演算が行われます。
+</p>
+
+<figure>
+  <KetPairs bit={3} swap />
+</figure>
+
+<p>これはちょうど、円の前半 4 つと後半 4 つがそっくり入れ替わった形になります。</p>
+
+<div class="my-5 flex overflow-auto">
+  <div class="flex flex-col items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.42678 - 0.17678i" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 - 0.07322i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 + 0.42678i" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.07322 + 0.17678i" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.42678 + 0.17678i" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 + 0.07322i" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 - 0.42678i" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.07322 - 0.17678i" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      <span class="diagram-arrow" set:html={dividerSvg}></span>
+      <div>X ゲートを 3 ビット目に適用</div>
+      <span class="diagram-arrow mb-8" set:html={downSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="-0.42678 + 0.17678i" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 + 0.07322i" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 - 0.42678i" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.07322 - 0.17678i" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.42678 - 0.17678i" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 - 0.07322i" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 + 0.42678i" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.07322 + 0.17678i" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div>
+
+<p>こちらも Qni で確認しておきましょう。</p>
+
+<qni-webgpu-circuit palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\"],[\"{重ね合わせ状態の生成\"],[\"H\",\"H\",\"H\"],[\"P(π_4)\",\"P(π_2)\",\"P(π)\"],[\"Rx(π_2)\"],[\"}\"],[1,1,\"X\"]]}"}></qni-webgpu-circuit>
+
+<h2>まとめ</h2>
+
+<p>複数の量子ビットにゲートを適用するには、次のように 2 段階に分けて考える必要があります。</p>
+
+<ul class="list-decimal">
+  <li>ゲートを置いたビット番号によって、ゲートを作用させるペア (演算ペア) を決める。</li>
+  <li>それぞれの演算ペアについて、ゲートを適用する</li>
+</ul>
+
+<p>
+  演算ペアの決めかたは一般に、\(n\) 番目のビットにゲートを置くと \((n - 1)^2\)
+  離れた円同士がペアとなります。 たとえば 3 ビット目にゲートを置いた場合、\((3 - 1)^2 = 4\) なので 4
+  つ離れた円同士のペアを考えれば OK です。
+</p>
+
+<p>なぜこのようになるかは、次項で詳しく説明します。</p>
+
+</TutorialLayout>
+<style>
+  .my-5 { margin-block:20px; } .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-y-2 { gap:8px; }
+  .mb-8 { margin-bottom:32px; } .overflow-auto { overflow:auto; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  .diagram-arrow { display:inline-flex; width:24px; height:24px; color:#A3A3A3; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+</style>
