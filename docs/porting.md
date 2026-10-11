@@ -1126,3 +1126,22 @@ palette **[]×3**、原HTML max-wire-count **1×3**、2/4/14-wireを切り詰め
 **amplitude_amplification_overview.png→既存自作AmplificationIllustration** (32 circles、クリック/Enter/Spaceでマーク位置を変更) へ置換。原にcredits文なし、**削除0**。component自身がqubit-circleをimportし、親にstatic circleがなくても確実に登録する。16状態図のdata-qubit-count4も明示し、0000等のariaを正しくする。値/見た目/元の未置換画像creditsは変更しない。
 
 全 **298tests (5.9m)** 成功、追加Golden全文＋exact diff guard最終2/2成功、typecheck/build/diff-check成功。原文の「今回はこの繰り返し変換」等は承認外なので変更しない。公開live確認後にsidebar順でgrover_iterationへ進む。pin ef652682c23d89427f6f39bb6bee1ec6fae9bb1e/Binaryen123/GPU-only維持、upstream変更なし。
+
+
+### 13:24 grover_iam公開live成功 / grover_iterationの丸め表記質問でSTOP
+
+**grover_iam公開完了**: **9dca24c** / **Pages38111099412 success**。公開390/1440は原文diff0/TeX diff0/console-page errors0、body/content/shadow内scroll/document横overflow0、全3起動running/step0/norm1。palette[]×3/max1×3、2/4/14-wire保持、原run-buttonなし、MathJax3.2.2/Qni/実験版/Qniで開く/1sidenote保持。prose H/MEASURE Bold、図/native Regularはlocal DPR1/2で確認。新しい文章訂正なし。
+
+公開実nativeで各幅3回路 **6/6成功**、2qubit target3=-1/100%、4qubit target15=-0.6875/47.2656%、SAT target8=-0.6875/47.2656%、他0〜15=-0.1875/3.5156%、全非零phase180°。SAT q4〜q13への確率leakage **0**、norm≈1。追加125〜133の9列まで実行し、補助を0に戻した状態で4未知bitの確率を増幅したことを確認。standalone6/local-native6/public-native6の **18/18**、`grover-iam-gpu-verification.json` に公開結果/phaseDegreesも保存。
+
+自作AmplificationIllustrationの公開DPR1/2×390/1440 **4/4**、circle登録/hover-focus確率/4bitket/Enterでマーク変更/上下32circles対応/scroll-errors0を確認。値は既存generic overviewを維持し、本文の1回折返し具体例とは混同しない。原PNGを自作対話図へ1枚置換、credits削除0。親pageにcircleタグが0でもcomponent自身のimportで動作する。図のoriginal-image marker内以外に新しい説明を足していない。
+
+資料 `/tmp/qtw-port-grover_iam.json` (public)、`/tmp/qtw-grover-iam-public-{embed-results,figure}.json`、`/tmp/qtw-scroll-grover-iam-public.json`。全298tests＋最新raw prefix/Golden/exact10列/interactive guard2/2成功、typecheck/build/diff-check成功。
+
+今回、全 **51移行ページ / 102ケース、94embed / 188起動** のpublic監査を更新し、errors/body-shadow scroll0/running/step0/norm1。追加multi1/3/7/stressの8ケース/22起動も同じ結果。合計 **全55 built pages / 110ケース、105embed / 210起動**。資料 `/tmp/qtw-scroll-grover-iam-public-full.json`、`/tmp/qtw-pr58-extra-grover-iam-public-full.json`。これは起動とレイアウトの全体監査であり、全既存回路の教育的最終挙動を今回再検証したという主張ではない。
+
+次の **grover_iteration（グロヴァー反復）** をsidebar順で確認しSTOP。原liveとlatest upstream mainの第2回路 (4qubit/2回反復) を無変更でGPU実行するとtarget15は **90.84466975183183%** (390/1440で一致)。小数第1位は **90.8%** だが、本文は **約90.9%**。これは近似値の丸め差についての質問で、回路計算が誤りだという主張ではない。第一回路の47.2656%→約47.3%、第四回反復の58.1703%→58.2%は本文と整合。
+
+**質問:「約90.9%」1か所だけを「約90.8%」へ訂正してよいか？** 原3JSONは変更しない。原liveの段落とJSON3回路が取得sourceと一致することも確認し、実段落screenshotを保存。詳細 [grover-iteration-rounding-blocker.md](grover-iteration-rounding-blocker.md)、`/tmp/qtw-grover-iteration-original-{circuits.json,gpu-results.json,prose.json}`。
+
+grover_iteration原palette[]×3/max1×3、各4-wire、画像0/削除credits0。route/fixtureなし、原本文/JSON無変更、移行後diff/scroll/step0は未実施。multiple_marked_values以降も未公開。owned preview4349/検証browser終了、main/worktreeを通常pushで同期。13:35 hard stopを守り、最後のdocs-only Pagesは終了時に報告。
