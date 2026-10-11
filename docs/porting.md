@@ -1456,7 +1456,7 @@ sourceは既存のshallow qni checkout main `5f342c2b7e3e80b0898ab0c0b9100fa2988
 - Python閉形式: c=cos(π/8)、s=sin(π/8)、c²=85.35533905932738%、s²=14.644660940672624%。原85.3553/14.6447の丸めとHの±固有状態が正しい。前回のAMD24件は歴史的証拠として保持し、今回実行したとは主張しない。
 - typecheck/build/diff-check成功。Astro buildは `QNI_WEBGPU_SOURCE=/workspace/qni/qni-webgpu pnpm build`。pin不変でWASM再buildはしない。ローカルにnative bundleはまだないため、実公開WASMはCIがpinから構築する。
 - `tests/eigenphases.spec.ts` はnavigator.gpuを明示的にundefinedにし、**unsupported状態のまま** source由来の独立Golden全文/9TeX/原2JSON/36振幅、390/1440×DPR1/2、body/content内部scrollbar0/文書横overflow0、console/page errors0を確認。原文との許可差は上記2語句だけ、TeX差0。スクリーンショット `/tmp/qtw-eigenphases-{390,1440}-dpr{1,2}.png`、390/DPR1を目視確認。native canvasの稼働状態の画像ではない。
-- 最初のPlaywrightはheadless-shellだけをinstallしたのに既存configがfull Chromium executableを指定していたため起動前に35件失敗。full Chromiumをinstallして製品変更なしで再実行、**37/37成功**（eigenphases4、mock lifecycle31、bb84 Node2）。mock lifecycleはGPU成功の証拠にしない。追加のsource/glyph guard込み **5/5成功**、最終typecheck/diff-check成功。sourceのNode guardは既存方針と同じ `.spec.mjs` に置いた。DOM regressionsは現在実行中で、完了後に別途結果を記録する。
+- 最初のPlaywrightはheadless-shellだけをinstallしたのに既存configがfull Chromium executableを指定していたため起動前に35件失敗。full Chromiumをinstallして製品変更なしで再実行、**37/37成功**（eigenphases4、mock lifecycle31、bb84 Node2）。mock lifecycleはGPU成功の証拠にしない。追加のsource/glyph guard込み **5/5成功**、最終typecheck/diff-check成功。sourceのNode guardは既存方針と同じ `.spec.mjs` に置いた。DOM regressions結果は末尾に記録した。
 
 ### 実機確認待ち — 公開eigenphasesの未実施WebGPUチェック
 
@@ -1486,3 +1486,27 @@ Python閉形式で原数値68.783766%→68.8%、68.489539%→68.5%、17.195942%�
 **質問（未承認・未適用）:** 後半図/H全体例の各6CPHASEを負角へ揃え、2block名「逆QFT」→「QFT」、本文「後半は逆 QFT 回路そのままです。」→「後半には、先に説明した QFT 回路を使います。」、まとめ「後半の逆 QFT」→「後半の QFT」にしてよいか？ 原数値/120°JSON/既刊は変えない。証拠・正確な全文置換は [qpe-sign-blocker.md](qpe-sign-blocker.md)、`tests/fixtures/qpe-sign-analysis.json`、再現は `python3 scripts/analyze-qpe-source.py ../qni/apps/tutorial/quantum_phase_estimation_circuit.html --output /tmp/qpe-sign-analysis.json`。
 
 原画像0/credits0、移植する場合はpalette[]×6/max2×1・max1×5/run-button3。今回routeは作らず、移植後checksは一切未実施。原JSON・原文無変更。同ページopen PRなし。通常push前にorigin/mainへrebaseし、force-pushしない。
+
+### eigenphases公開・非GPU確認完了 / 17:23 checkpoint
+
+**9aa03a0 / Pages38124319329 success**。ghでbuild/deploy両job成功を確認。CIがpinned embed/standaloneをビルドし公開した。これはGPUの稼働確認を意味しない。
+
+実公開URLを明示し、非GPUのGolden/source/glyph/JSON/36振幅/scroll/errors guard **5/5成功**、390/1440×DPR1/2の4case（embedはunsupportedのまま）。さらに**元実サイト `https://qniapp.github.io/qni/eigenphases.html` と公開移植ページを実Chromiumで両幅/DPR1/2の4case比較**し、本文は承認2語句だけ・他diff0、原9TeXdiff0、原2JSON一致、source独立Golden一致を確認。原文の無編集textも保存し、比較時だけ承認2語句を適用した。`tests/fixtures/eigenphases-live-verification.json` に両URL/実本文/TeX/JSON/4結果と `WebGPUExecuted:false` を保存。比較script `scripts/compare-eigenphases-original.mjs` はnavigator.gpuをundefinedにし、native稼働を試験しない。
+
+```sh
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/compare-eigenphases-original.mjs
+```
+
+最初のlocal比較中に長い回帰suiteが終了してowned previewも停止したため、移植ページへの接続がrefusedになった。previewを起動し直しlocal4/4、公開後は公開URL4/4を最初から実施した。製品/本文を修正して接続エラーを隠したものではない。資料 `/tmp/qtw-eigenphases-{live-compare,public-compare,public-tests,targeted}.log`、`/tmp/qtw-eigenphases-live-{original,ours}-{390,1440}-dpr{1,2}.png`、比較JSON。本文以外の既存paper/書体/共有layout/native UI差は維持。
+
+17:22再確認で新open **qniapp/qni#581 / head c5ccb1d3a2fac18a9fc9a431a1cd8852312fa315**。差分は今回承認2語句だけ、PR raw全文が `docs/eigenphases-approved-source.html` と **byte完全一致**。余分な修正なし、同ページの追加質問なし。quantum_phase_estimation_circuitにはPRなし。
+
+### 非GPU回帰の未解決4件（既存ページ・新機械）
+
+27specのDOM/本文/図回帰 **290件中285成功・5失敗**。eigenphases追加に伴いsidebarの固定ported集合へ新slugを加えていなかった1件はtest期待リストへ追加し、source・本文4条件・palette・wire-limit・sidebarを合わせて **8/8再検証成功**。製品sidebarは最初から正しいリンクを表示していた。
+
+残り4件は、今回変更していない既存ページの `ket.spec.ts` 寸法guard×2（期待21px高→実27px、期待font-size19.12→実19.424px）と `content-overflow.spec.ts`×2。新eigenphasesは全体overflow failure一覧に入らず、本文guardは成功。環境はNode26.8.2/Chromium153.0.8010.12/system-ui=Noto Sans Regularで、従来gmktecのChromium152と異なる。原因を環境差と断定していない。
+
+**質問:** まずgmktecと同じフォント/browser環境で再検証して切り分けてよいか？ 固定px期待値の書き換えや共有overflow CSSの一括変更は行わない。詳細・再現commandは [new-machine-layout-blocker.md](new-machine-layout-blocker.md)、原ログ `/tmp/qtw-nongpu-regressions.log`。全suite成功と偽らず、4件を未解決として引き継ぐ。最新typecheck/build/diff-checkは成功。
+
+公開eigenphasesのWebGPU4カテゴリは引き続きすべて **実機確認待ち**、上の対話監査commandでgmktecに引き継ぐ。QPEの符号fixは未承認・未適用・未公開、後続も停止。記録とsidebar期待リストだけを追加で通常pushし、hard stop17:30を守る。
