@@ -1,0 +1,94 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Ket from '../components/Ket.astro'
+import transitionSvg from '../assets/qubit-transition-arrow.svg?raw'
+---
+<TutorialLayout title="位相キックバック" description="位相回転をコントロールゲートで実行" section="量子位相推定" hasMath hasCircuit>
+
+
+<p>
+  量子位相推定の前半は<strong>位相キックバック</strong>と呼ばれるおもしろい仕組みを使っています。
+  位相キックバックの効果を知るために、次の回路を見てみましょう。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"H\",\"H\",\"H\",\"H\"],[1,1,1,1,\"|1>\"],[\"•\",1,1,1,\"P(π_4)\"],[1,\"•\",1,1,\"P(π_4)\"],[1,\"•\",1,1,\"P(π_4)\"],[1,1,\"•\",1,\"P(π_4)\"],[1,1,\"•\",1,\"P(π_4)\"],[1,1,\"•\",1,\"P(π_4)\"],[1,1,\"•\",1,\"P(π_4)\"],[1,1,1,\"•\",\"P(π_4)\"],[1,1,1,\"•\",\"P(π_4)\"],[1,1,1,\"•\",\"P(π_4)\"],[1,1,1,\"•\",\"P(π_4)\"],[1,1,1,\"•\",\"P(π_4)\"],[1,1,1,\"•\",\"P(π_4)\"],[1,1,1,\"•\",\"P(π_4)\"],[1,1,1,\"•\",\"P(π_4)\"]]}"}></qni-webgpu-circuit>
+
+<p>
+  この回路は <control-gate></control-gate> つき <phase-gate></phase-gate> を何度も実行するものです。
+  最初の 4 ビットは <control-gate></control-gate>
+  を置くための<strong>コントロールビット</strong>として使います。 最後の 1 ビットは <Ket label="1" />
+  に初期化した後、<phase-gate></phase-gate>
+  を実行するための<strong>ターゲットビット</strong>として使います。
+</p>
+
+<p>
+  実行結果は直感と反するものです。 最終的な状態ベクトルを最初の 4 ビット (コントロールビット)
+  と最後の 1 ビット (ターゲットビット) に分けて円表示すると、次のようになります。 <phase-gate></phase-gate> を実行したターゲットビットでは、状態は初期状態の <Ket label="1" />
+  からまったく変化していません。 一方で <control-gate></control-gate> に使った 4
+  つのコントロールビットは、<phase-gate></phase-gate> を実行していないにもかかわらず、きれいに位相が
+  π/4 刻みで回転しています。
+</p>
+
+<div class="my-5">
+  <div class="flex flex-col space-y-4">
+    <div class="flex flex-col">
+      <span
+        ><strong
+          >最初の 4 ビット (<control-gate></control-gate> を置いたコントロールビット):</strong
+        ></span
+      >
+      <div class="circle-row">
+        <qubit-circle data-amplitude="0.25" data-ket="0" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 + 0.17678i" data-ket="1" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+        <qubit-circle data-amplitude="0.25i" data-ket="2" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 + 0.17678i" data-ket="3" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.25" data-ket="4" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 - 0.17678i" data-ket="5" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.25i" data-ket="6" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 - 0.17678i" data-ket="7" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25" data-ket="8" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 + 0.17678i" data-ket="9" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25i" data-ket="10" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 + 0.17678i" data-ket="11" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.25" data-ket="12" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 -
+        0.17678i" data-ket="13" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.25i" data-ket="14" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 - 0.17678i" data-ket="15" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+    </div>
+    <div class="flex flex-col">
+      <span
+        ><strong
+          >最後の 1 ビット (<phase-gate></phase-gate> を置いたターゲットビット):</strong
+        ></span
+      >
+      <div class="flex flex-row space-x-2">
+        <qubit-circle data-amplitude="0" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>
+  このように、位相回転の効果がなぜかコントロールビット側で起こるのが位相キックバックの効果です。
+  この現象は、ターゲットビットで位相回転したつもりが、その効果がコントロールビット側にはね返る (=
+  キックバックされる) と解釈できます。 たとえば今回のように <control-gate></control-gate>
+  を置くビットをずらしながら規則的に何度も位相キックバックすると、コントロールビット側に位相回転が蓄積され、位相回転のパターンを作ることができます。
+</p>
+
+<p>
+  位相キックバックを起こすには、固有状態を考える必要があります。 <phase-gate></phase-gate>
+  の固有状態の 1 つは <Ket label="1" /> で、その固有位相は <phase-gate></phase-gate>
+  の回転角と同じ、ということを思い出してください。 <phase-gate></phase-gate>
+  を置いた量子ビットの初期状態は、その固有状態である <Ket label="1" /> で初期化しました。
+  こうしておくと、コントロールビット側にキックバックが起こり固有位相分 (= 今回は π/4)
+  の位相回転が起こります。
+</p>
+
+<h2>量子位相推定回路での位相キックバック</h2>
+
+<p>
+  量子位相推定回路の前半は、位相キックバックそのものです。
+  量子位相推定によって固有位相を取り出したい QPU 命令を前回と同じ <h-gate></h-gate> だとします。
+  この時、位相キックバックを起こすためにターゲットビット側の初期状態を <h-gate></h-gate>
+  の固有位相 π に対応する <h-gate></h-gate> の固有状態にセットします。
+  こうすることでコントロールビットに π 刻みの回転パターンが書き込まれます。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"H\",\"H\",\"H\",\"H\"],[\"{Hの固有状態を準備\"],[1,1,1,1,\"|0>\"],[1,1,1,1,\"Ry(5π/4)\"],[\"}\"],[1],[\"{H の固有位相 (π) を繰り返しキックバック\"],[\"•\",1,1,1,\"H\"],[1,\"•\",1,1,\"H\"],[1,\"•\",1,1,\"H\"],[1,1,\"•\",1,\"H\"],[1,1,\"•\",1,\"H\"],[1,1,\"•\",1,\"H\"],[1,1,\"•\",1,\"H\"],[1,1,1,\"•\",\"H\"],[1,1,1,\"•\",\"H\"],[1,1,1,\"•\",\"H\"],[1,1,1,\"•\",\"H\"],[1,1,1,\"•\",\"H\"],[1,1,1,\"•\",\"H\"],[1,1,1,\"•\",\"H\"],[1,1,1,\"•\",\"H\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+</TutorialLayout>
+<style>
+
+.my-5 {margin-block:20px}.mb-8 {margin-bottom:32px}.mb-10 {margin-bottom:40px}.flex {display:flex}.flex-row {flex-direction:row}.flex-col {flex-direction:column}.items-center {align-items:center}.justify-center {justify-content:center}.space-x-2 {gap:8px}.space-y-4 {gap:16px}.relative {position:relative}.absolute {position:absolute}.inset-0 {inset:0}.m-auto {margin:auto}.h-8 {height:32px}.w-16 {width:64px}.text-zinc-300 {color:#DAD8CE}.transition-arrow {display:flex;width:100%;height:100%}.transition-arrow :global(svg) {width:100%;height:100%}.relative :global(h-gate) {width:24px;height:24px;font-size:24px}.flex :global(qubit-circle),.circle-row :global(qubit-circle) {margin-right:0;flex:none}
+.circle-row {display:grid;grid-template-columns:repeat(8,32px);gap:8px;width:max-content;max-width:100%}
+@media(max-width:600px) {.circle-row {grid-template-columns:repeat(4,32px)}}
+@media(min-width:768px) {[class~='md:w-7/12'] {width:58.333333%;margin-right:auto}}
+</style>

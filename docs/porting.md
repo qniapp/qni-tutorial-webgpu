@@ -1575,3 +1575,42 @@ QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-q
 ```
 
 これは実runner.readStateVectorを使う対話監査。最後の列/測定列の選択、native toolbar操作と外観・全gate可視はGUI上で手動確認してEnter/yes、signed状態/norm/測定one-hot/replay/JSON復元/errors/scrollはassert。結果 `/tmp/qtw-quantum_phase_estimation_circuit-gpu/result.json` とstep0/final PNG。scriptのsyntaxだけこの箱で検査、GPU成功は主張しない。既存 `new-machine-layout-blocker.md` の4回帰は未修正・引き継ぎ、期待値緩和なし。
+
+### QPE公開・非GPU確認完了
+
+**30388f3 / Pages38128273411 success**。18:27にghでbuild/deploy成功確認。公開URLを明示してsource2件＋390/1440×DPR1/2本文/TeX/JSON/4円/glyph/scroll/errors4件 **6/6成功**。元実サイトとの公開4case比較で、承認2本文・14JSON cellだけ、原4TeXdiff0・他本文diff0。`tests/fixtures/qpe-public-nongpu-verification.json` は両実URL・原/移植本文・TeX・JSON・比較結果、WebGPUExecuted:falseを保存。script command: `QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/compare-qpe-original.mjs quantum_phase_estimation_circuit`。
+
+実機確認待ち5カテゴリは未実施のまま。GPU結果であると偽らない。18:15最新main `6e214f1a3e9e229375528c913c7905e1f1b263c1` と原QPE/phase source一致を確認、18:26全open PR0件。
+
+## phase_kickback: 本文/JSON/数値無変更で移植（QPEの次）
+
+原2JSON **18/25列、各5-wire**、palette **[]×2**、max-wire-count **1×2**、原run-buttonなし、block名/spacing/Ry(5π/4)も無変更。元18円の振幅・ket・baseサイズを維持。最初の16円はdesktop8列/mobile4列の自然gridで折り返し、円の縮小/clip/zoom/本文内scrollなし。最初16円には4bit aria幅を明示。
+
+旧simulatorをnative embed2へ、元circle tagsは既存qubit-circleで表示。画像0/画像置換0/削除credits0/sidenote0/Orbit0。本文gate Bold、図Regular、MathJax/共有header/footer/pin不変。原/fixed fixturesは6回路の承認QPEと区別した `phase_kickback-{original,fixed}.json`、diff=[]。`tests/phase-kickback-source.spec.mjs` は全JSON完全一致・18/25列・5-wire・max1/no-runを固定する。
+
+### Python解析
+
+同じ `python3 scripts/analyze-qpe-approved.py` のphase式で、controls1/2/4/8回、全15回を確認。
+
+- Pπ/4例: index16+jのamp=(1/4)exp(iπj/4)、他0。各6.25%、π/4=45°刻み、周期8。ターゲットは|1⟩不変。原斜め成分±0.17678は±1/(4√2)の5桁表示。
+- H例: ターゲット(-s,c)、Hの固有位相π。indexjのamp=−s(−1)^j/4、index16+jのamp=c(−1)^j/4。各controlのp=1/16、ターゲットのpはs²/c²=14.64466/85.35534%、π刻みの位相。全32signed参照値をanalysis fixtureに保存。
+
+### 非GPU検査・実機確認待ち
+
+local本文/原4ket-TeX/原2JSON/18円の実サイト比較は390/1440×DPR1/2 **4/4一致**、未承認編集0。非GPUページguard4/4でbody/content/Shadow内部scroll0/文書横overflow0/console-page errors0、unsupported状態、原palette/max/no-run/Bold確認。390/DPR1の円gridと全文を目視。QPEとともにtypecheck/build成功（同じ固定distで検査）。既存ページの全体回帰は現在実行中、結果は終了時に別記録。
+
+以下すべて **実機確認待ち**（両幅/DPR1/2、2embed）: running/step0/norm≈1/実palette非表示/元5-wire保持、最終全32signed GPU readbackを解析と照合、undo/redoのみ・trashなし/旧位置無効果/元JSON復元、native Regular/全gate可視/稼働時body-content-shadow scroll0/横overflow0。run-buttonは原にないので追加/試験しない。
+
+```sh
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs phase_kickback
+```
+
+実GPU desktopの対話監査（最後の列選択・toolbar外観/編集/可視性は手動確認、signed readback/norm/JSON復元/errors/scrollはassert）。`/tmp/qtw-phase_kickback-gpu/result.json` とPNG。CPU fallback/製品readback/上流変更なし。
+
+### 次qpe_outputの別判断でSTOP
+
+次ページを読み、承認済みQPEの後半QFTと矛盾する逆QFT呼称5か所、周期2（正しくは周波数2、周期8）についてSTOPした。**qpe_outputは未移植・未公開、原文/16円/原TeX無変更、shor_hsp以降も停止。** 原画像/credits/回路0、palette/maxは該当なし。
+
+Pythonで同じπ/4ランプは負Fourier→k2/100%/45°、既刊の正逆QFT→k14/100%/315°、周期8/周波数2、720/16=45°、Hの8→180°を確認。`scripts/analyze-qpe-output-source.py` / `tests/fixtures/qpe-output-blocker-analysis.json`、GPUExecuted:false。
+
+**質問（未承認・未適用）:** description・本文・式の逆QFT呼称5か所をQFTへ、`周期 2 が得られます。 周期が 2 ということは`を`周波数 2 が得られます。 周波数が 2 ということは`へ訂正してよいか？ 正確な5置換・別語句・TeX差は [qpe-output-sign-blocker.md](qpe-output-sign-blocker.md)。今回のQPE option Aをこの別ページへ勝手に拡張しない。

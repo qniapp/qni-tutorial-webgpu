@@ -1,0 +1,91 @@
+{
+  "GPUExecuted": false,
+  "sourceSHA256": "421489783ef03a6fdcde1391b2379bebb12efb8bb0aaf97bdf62314c38d0a751",
+  "fourierResults": [
+    {
+      "sign": -1,
+      "peak": 2,
+      "probability": 1.0,
+      "inferredDegrees": 45.0
+    },
+    {
+      "sign": 1,
+      "peak": 14,
+      "probability": 1.0,
+      "inferredDegrees": 315.0
+    }
+  ],
+  "periodSamples": 8.0,
+  "frequencyOver16Samples": 2.0,
+  "full16IntervalsDegrees": 720.0,
+  "phaseDegrees": 45.0,
+  "HOutput8Degrees": 180.0,
+  "fourierNameOccurrences": 5,
+  "circles": [
+    [
+      0.25,
+      0.0
+    ],
+    [
+      0.17678,
+      0.17678
+    ],
+    [
+      0.0,
+      0.25
+    ],
+    [
+      -0.17678,
+      0.17678
+    ],
+    [
+      -0.25,
+      0.0
+    ],
+    [
+      -0.17678,
+      -0.17678
+    ],
+    [
+      0.0,
+      -0.25
+    ],
+    [
+      0.17678,
+      -0.17678
+    ],
+    [
+      0.25,
+      0.0
+    ],
+    [
+      0.17678,
+      0.17678
+    ],
+    [
+      0.0,
+      0.25
+    ],
+    [
+      -0.17678,
+      0.17678
+    ],
+    [
+      -0.25,
+      0.0
+    ],
+    [
+      -0.17678,
+      -0.17678
+    ],
+    [
+      0.0,
+      -0.25
+    ],
+    [
+      0.17678,
+      -0.17678
+    ]
+  ],
+  "decision": "STOP: 5 inverse-QFT names and period2 require separate approval"
+}
