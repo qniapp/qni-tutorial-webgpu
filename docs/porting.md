@@ -803,3 +803,16 @@ sidebar順で復帰。原7 JSON/本文/TeXを無訂正で保持。原図6個のm
 ### 次ページ superposition_quantum_logicでSTOP
 
 原26-column/5-wire circuitは正常に動くが、原文の式・脚注・真理値表・入力組・d/e説明と一致しない。原回路は `(a OR NOT b) AND c`、e=1の低3bitは4/5/7。脚注の `a || !b && c` は別の述語になり、入力(1,0,0)で違いを実GPU再現した。高宮さんへ原JSONを維持して説明だけ訂正する許可を質問。詳細 [superposition-logic-blocker.md](superposition-logic-blocker.md)。このページと後続はroute/fixtureを作らず未公開。第6incrementの訂正許可を他の訂正に拡張していない。#59待ち/SKIPも維持。
+
+
+### 10:15 公開最終checkpoint
+
+**quantum_logic公開 f184067ef8b78a5dc72dfdf4f61fdcf619d4dc54 / Pages38100883089 success**。新6ページすべて公開original/live390/1440比較がpassed、本文/TeX diff0。許可されたincrement末尾以外の原JSON訂正なし、画像/削除creditsなし。
+
+公開最終GPU確認: increment **13/13**、decrement〜multiplicationの原13回路 **13/13**、quantum_logic truth-table **30/30**。合計 **56/56** 成功、norm≈1。本文記載の値・負数表現・入力保存・tmp=0を確認。資料 `/tmp/qtw-{inc,arithmetic,logic}-public-behavior.json`。
+
+local/public全 **45移行ページ / 90ケース、81 embed / 162起動** はrunning/step0/norm1、console/page errors0、HTML/shadow DOM横/縦inner scrollbar0、document横overflow0。decrementの原図5番目(0-based index5)はWRITEなしで最初のXがstep0に実行されるので、step0を常にbasis0とする旧audit仮定だけ修正し、状態1を検証した。製品変更ではない。最終状態15も別GPU照合済み。資料 `/tmp/qtw-scroll-arithmetic-final-{local,public}.json`。
+
+公開multi-1/3/7/stressも8ケース / 22起動でerrors/scroll0、running/step0/norm1。合計 **全49 builtページ / 98ケース、全92 embed / 184起動**。資料 `/tmp/qtw-pr58-extra-arithmetic-final-public.json`。公開DPR1/2の新6ページ24ケースもprose Bold/16px、native Regular確認。`/tmp/qtw-arithmetic-glyphs.json`、`/tmp/qtw-arithmetic-public-glyphs.log`。
+
+**STOP位置はsuperposition_quantum_logic、原説明の訂正許可待ち。** 論理式のgrouping・脚注・入力組・真理値表・d/eの説明を回路に合わせてよいか、高宮さんへ質問した。原回路や後続を無断変更/公開していない。CPHASEは完了済み、#59は待ち/SKIP維持。owned preview4344/検証browserは終了。main/worktreeを通常pushで同期し、最終docs-only Pages状態は終了時に報告する。
