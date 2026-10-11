@@ -1,5 +1,7 @@
 # superposition_quantum_logic: 原説明と原回路の不一致でSTOP
 
+**現在の状態: 文言確定待ち。** 2026-10-11 10:50の高宮さんの指示により、Firstmateが確定中の説明を待つ。直後の `phase_logic`（位相論理演算）も文言確定待ちとして未公開を維持する。その次の `phase_logic_combination` でも同じ式の不一致を再現し、[停止理由](phase-logic-combination-blocker.md)を記録した。
+
 2026-10-11。sidebar順のquantum_logicまで進めた後、このページの原JSONを実Chromium/AMD WebGPU standaloneで実行した。回路自体は正常に動くが、元の論理式・脚注・入力組・真理値表・d/eの説明が同じ意味になっていない。increment第6回路の1トークン以外には訂正許可がないため、このページと後続は未公開。原JSONやupstreamを変更して回避しない。
 
 原資料: qniapp/qni `apps/tutorial/superposition_quantum_logic.html`、公開原版 https://qniapp.github.io/qni/superposition_quantum_logic.html 。

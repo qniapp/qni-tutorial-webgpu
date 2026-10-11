@@ -854,3 +854,25 @@ build/typecheck/diff-check成功、既存と新ページの全 **266 tests (3.5m
 資料 `/tmp/qtw-pr61-public-{behavior,embed-behavior,interactions}.json`、`/tmp/qtw-scroll-pr61-{local,public}.json`、`/tmp/qtw-pr58-extra-pr61-{local,public}.json`、`/tmp/qtw-pr61-final-real-tests.log`、`/tmp/qtw-port-superdense_coding_circuit.json`。pan/editのDPR screenshotは `/tmp/qtw-pr61-public-pan-<width>-dpr<dpr>.png`、原回路の最終embedは `/tmp/qtw-pr61-public-embed-final-<width>-<input>.png`。本文は無訂正、metadataを落とす回避策なし。
 
 **停止位置はsuperposition_quantum_logicの原説明訂正許可待ち**。increment/decrement〜quantum_logicを再移植していない。質問は、原JSONを維持し、式/脚注・入力組・真理値表・補助bit d/e説明を原回路 `(a OR NOT b) AND c` に合わせて訂正してよいか。明示承認までこのページ以降は未公開。owned preview4345/取り残された本セッションtest preview4322/検証browserを終了。docs-only Pagesの最終状態は終了時に報告し、10:50 hard stopを守る。
+
+
+## 2026-10-11 10:50 再開指示 / 文言確定待ちと次ページの停止 (11:20 hard stop)
+
+高宮さんの指示に従い、Firstmateの確認済みの文言が届くまで、次の2ページは未公開を維持する。
+
+| ページ | 状態 |
+| --- | --- |
+| `superposition_quantum_logic`（重ね合わせ上での論理演算） | **文言確定待ち** |
+| 直後の `phase_logic`（位相論理演算） | **文言確定待ち** |
+
+どちらもroute/fixtureを作らず、確定前の文言や回路を公開していない。pin **ef652682c23d89427f6f39bb6bee1ec6fae9bb1e**、公開済みの移植と#57/#59解決は変更しない。
+
+### phase_logic_combination（位相論理演算の組合わせ）: STOP、未公開
+
+上記2ページの後、sidebar順で最初のページ。原文と原JSONをorigin/mainから取得し、公開standaloneの実Chromium/AMD WebGPUで原26列/4-wire JSONを実行した。原回路は **`(a OR NOT b) AND c`**。4/5/7だけ実振幅-0.3535533547401428、0/1/2/3/6は同じ絶対値で正、他の状態/虚部0、norm≈1、起動/page errors0。
+
+本文の文字式 **`a OR (NOT b) AND c`** は通常のAND優先順では `a OR ((NOT b) AND c)`、答は1/3/4/5/7となる。原回路と「4/5/7だけ反転」という結果説明・画像は整合するが、文字式に必要な括弧がない。このページも文言確定対象に含めるかを高宮さんへ質問し、**ここでSTOP**。原本文/原JSONを勝手に訂正したり、後続のsat以降へ進んだりしていない。
+
+画像 `phase_logic_result.png` と `quantum_logic_result.png` は旧Qniの円表示パネル2枚。再開時の自作対話的状態表示への置換方針を質問したが、今回は未置換、**削除credits0**。原paletteなしなので **[]**、原HTML max-wire-count **1** を確認した (4-wireを切り詰めない)。移行ページがないため、移行後の本文diff/390・1440のscroll/step0検証は未実施で、合格とは記録しない。
+
+詳細 [phase-logic-combination-blocker.md](phase-logic-combination-blocker.md)。証拠 `/tmp/qtw-phase-combination-original-gpu.{mjs,json,log}`、原JSON `/tmp/qtw-phase-combination-original.json`。診断用browserは終了済み、serverを新規起動していない。今回の製品変更/公開ページ追加は0、既存ページを再移植していない。docs-only checkpointを通常pushし、Pages結果は終了時に報告する。
