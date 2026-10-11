@@ -1,5 +1,7 @@
 # 位相論理演算の組合わせ: 論理式の括弧が未確定のため停止
 
+**現在の状態:** superposition_quantum_logicは承認6項目で訂正・公開済み、phase_logicの文言待機も解除済み。ただしphase_logicの原図の振幅が不正なため[そのページでSTOP](phase-logic-amplitude-blocker.md)。このページの括弧訂正は未承認で、未公開を維持する。以下は10:50時点の歴史的な診断記録。
+
 2026-10-11。`superposition_quantum_logic` と直後の `phase_logic` は、高宮さんの指示により **文言確定待ち**。Firstmateの確認済みの文言が届くまで未公開を維持する。この2ページを飛ばした最初のページ `phase_logic_combination` を調べたところ、同じ論理式の不一致があるため、ここで停止した。ページ・回路・画像は移植していない。
 
 ## 原文と回路

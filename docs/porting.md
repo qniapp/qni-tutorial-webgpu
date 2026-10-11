@@ -903,3 +903,18 @@ original liveのDOMへ承認6項目だけを診断用に適用して比較し、
 最終 **274 tests (2.4m)** 全成功。置換図の最終CSS後の承認guard2件も再実行成功。typecheck/build/diff-check成功。DPR1/2×390/1440の置換図4ケースで、32円/ket非重複/|10100⟩/12.5%/overflow0を実見確認。検証初期のwide最終列クリックが回路外に出た点とpercent表記12.5000%はharnessだけを修正。
 
 資料 `/tmp/qtw-superlogic-local-{embed-behavior,figure}.json`、`/tmp/qtw-port-superposition_quantum_logic.json`、`/tmp/qtw-scroll-superlogic-local.json`、`/tmp/qtw-superlogic-{all-tests,final-target,final-types,final-build}.log`。pin **ef652682c23d89427f6f39bb6bee1ec6fae9bb1e** 維持、embed/standaloneは前の実再ビルド済みのものを使用し、upstream/CPU fallback/本番readbackを追加していない。公開とlive確認は追記する。
+
+
+### 11:19 公開確認 / phase_logicで新たな数値ブロッカー
+
+**superposition_quantum_logic公開成功:** `9ea6016cd8ca9c34ab0139607cfdf8ae6316eed8` / **Pages38104392423 success**。390/1440の公開比較で、承認6項目を適用した原文からの**追加本文diff0・TeX diff0・console/page errors0**。原26列/5-wire JSON・palette[]・max1を維持。起動はstep0/norm1、body/content/shadow DOMの横/縦inner scrollbar/document横overflow0。実ページnativeをpanして最終列を選んだ **18/18 GPU比較成功** (原uniform＋8入力、各幅)。e=1は4/5/7だけ、d=0へ復帰、a/b/c保持。DPR1/2×390/1440の置換32円図 **4/4** でpopup振幅/12.5%/5-bit ket・非重複・overflow0確認。置換1画像/削除credits0、原ket・「答は4,5,7」・uncompute文を保持。共通prose Bold/native Regularを維持。
+
+公開資料 `/tmp/qtw-port-superposition_quantum_logic.json` (commit=public)、`/tmp/qtw-superlogic-public-{embed-behavior,figure}.json`、`/tmp/qtw-scroll-superlogic-public.json`、対応ログ。最終274tests/typecheck/build/diff-check成功。本文/脚注の待機は解除済みで、未承認の原文変更を足していない。
+
+公開live確認後、直後の **phase_logic（位相論理演算）** をsidebar順で確認し、新たなSTOP条件を再現。pAND/pOR/pNAND/pNOR/pXORの2-qubit重ね合わせ図5組は入力/出力4状態に±0.70711が入り、各図のnorm **2.0000182084** (約200%)。原pANDのWRITE直後にH×2を置く診断コピーを実GPUで走らせると `[+0.4999999702,+0.4999999702,+0.4999999702,-0.4999999702]`、norm **0.9999998808**。原の符号・論理は合うが、振幅の大きさが約√2違う。
+
+**質問: 5組・40個の図用振幅だけを符号保持で ±0.70711→±0.5 と訂正してよいか？** 1-qubit pNOTの0.70711、原6回路JSON、本文は維持する。許可なしに数値を直さず、phase_logicのroute/fixtureを作っていない。その次のphase_logic_combinationの括弧も未承認のため、このページ以降は未公開。
+
+phase_logicの原paletteは6 mini_qniすべて **["|0>","|1>","H"]**、正式pluginのmax-wire-count **2×6**。原画像amplitude_amplification_overview.pngは既存自作interactiveへの置換候補だが、STOPのため未置換/削除credits0。移行後の本文diff/390・1440のscroll/step0は未実施なので合格と記録しない。文言待機解除とは別の、**図の振幅訂正許可待ち**。[phase-logic-amplitude-blocker.md](phase-logic-amplitude-blocker.md) にoriginal live・GPU証拠と質問を記録し、phase_logic_combinationの歴史記録にも現状を付記した。
+
+owned preview4346と診断browserを終了。今回の追加公開はsuperposition_quantum_logicのみ。docs-only checkpointを通常pushして結果を終了時に報告し、11:30 hard stopを守る。
