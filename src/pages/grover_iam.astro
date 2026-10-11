@@ -1,0 +1,155 @@
+---
+import dividerSvg from '../assets/diagram-divider.svg?raw'
+import downSvg from '../assets/diagram-down.svg?raw'
+import AmplificationIllustration from '../components/AmplificationIllustration.astro'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="折り返し変換" description="位相を大きさに変換する" section="グローヴァー探索" hasMath hasCircuit>
+
+
+<p>
+  前節では、位相論理演算を使って計算結果を位相に出力する方法を見てきました。
+  たとえば充足可能性問題では、目指す論理式が true となるような変数の値 true/false
+  の組合わせを探します。
+  これを位相論理演算で計算し、論理式を満たす振幅の位相を反転することで答が求まります。
+</p>
+
+<p>
+  しかし位相に埋め込んだ計算結果は簡単には取り出せません。 結果を取り出す唯一の手段は <measurement-gate></measurement-gate> であり、測定結果は確率 (振幅の大きさ) によってのみ決まるからです。
+  そこで位相から計算結果を取り出すには、位相の反転を確率の大きさに変換する必要があります。
+</p>
+
+<p>
+  <strong>折り返し変換</strong>は位相の差を確率の差に変換するアルゴリズムです<Sidenote id="grover_iam" numbered>折り返し変換の内容と動作については、<a href="https://qniapp.github.io/qni/grover_iam_indetail.html"
+    >折り返し変換の仕組み</a
+  >で説明します。</Sidenote>。
+  論理位相演算によって反転した位相を折り返し変換にかけることで、位相反転でマークした振幅の確率を増幅させることができます。
+  この「位相反転→折り返し変換」を<strong>振幅増幅</strong>と呼び、量子探索であるグローヴァーのアルゴリズムの中心部分を担っています。
+</p>
+
+<figure>
+  <AmplificationIllustration />
+</figure>
+
+<p>今回はこの繰り返し変換を見ていきましょう。</p>
+
+<h2>折り返し変換</h2>
+
+<p>
+  まずは折り返し変換の実行例を見てみましょう。 例題として 2 量子ビットについて、<code
+    >上位ビット & 下位ビット = true</code
+  >
+  となる値を取り出すことを考えます。 2 量子ビットなので <Ket label="00" />, <Ket label="01" />, <Ket label="10" />, <Ket label="11" /> の 4 通りを考えると、このうち 上位ビット & 下位ビット = true となるのは <Ket label="11" />
+  ひとつです。 つまり折り返し変換によって <Ket label="11" /> の確率が大きくなれば成功です。
+</p>
+
+<p>これは次の 3 つのブロックを組合わせた回路として実装できます。</p>
+
+<ul>
+  <li>
+    <p><strong>重ね合わせの準備</strong></p>
+    <p>
+      最初にそれぞれの量子ビットに <h-gate></h-gate> を適用し <Ket label="00" />, <Ket label="01" />, <Ket label="10" />, <Ket label="11" /> の確率をそれぞれ等しく 25% にします。
+    </p>
+  </li>
+
+  <li>
+    <p><strong>AND の結果を位相に書き込む</strong></p>
+    <p></p>
+    <p>
+      <code>上位ビット & 下位ビット = true</code> は位相論理演算の AND (pAND)
+      ひとつで簡単に実装できます。
+    </p>
+  </li>
+
+  <li>
+    <p><strong>折り返し変換</strong></p>
+    <p>
+      以下の折り返し変換を適用すると、位相が反転した振幅の確率を増幅し、ほかの確率を減衰させることができます。
+    </p>
+  </li>
+</ul>
+
+<p>
+  以下の回路を実行すると、確かに答である <Ket label="11" /> の確率が 100% になり、それ以外は 0%
+  になっていることがわかります。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"|0>\",\"|0>\"],[\"{重ね合わせ\"],[\"H\",\"H\"],[\"}\"],[1],[\"{pAND\"],[\"•\",\"•\"],[\"}\"],[1],[\"{折り返し変換\"],[\"H\",\"H\"],[\"X\",\"X\"],[\"•\",\"•\"],[\"X\",\"X\"],[\"H\",\"H\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<h2>より大きな量子ビット数での折り返し変換</h2>
+
+<p>
+  折り返し変換の回路はほぼ形が決まっているので、量子ビットを増やしても同様に使えます。 たとえば 4
+  量子ビットの AND (答は <Ket label="1111" />) でも、単純にゲートを増やすだけで構成できます。
+  以下の回路を実行すると <Ket label="1111" /> の確率が約 47.3 % に増幅され、その他の確率は約 3.5%
+  まで減衰していることが分かります。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"{重ね合わせ\"],[\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1],[\"{pAND\"],[\"•\",\"•\",\"•\",\"•\"],[\"}\"],[1],[\"{折り返し変換\"],[\"H\",\"H\",\"H\",\"H\"],[\"X\",\"X\",\"X\",\"X\"],[\"•\",\"•\",\"•\",\"•\"],[\"X\",\"X\",\"X\",\"X\"],[\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>
+  前回の充足可能性問題を解く回路にも適用してみましょう。 先ほどと同じく 4
+  量子ビットの折り返し変換の回路の末尾に追加するだけで、答の <Ket label="00000000001000" />
+  を確率的に浮かび上がらせることができます。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"[重ね合わせ\"],[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"H\",\"H\",\"H\",\"H\"],[\"]\"],[1],[\"{一時ビット\"],[1,1,1,1,\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"}\"],[1],[\"{t1 = B4 ∨ A4\"],[1,\"X\",1,\"X\"],[1,\"•\",1,\"•\",\"X\"],[1,\"X\",1,\"X\",\"X\"],[\"}\"],[1],[\"{t2 = B4 ∨ A4 ∨ A1\"],[\"X\",1,1,1,\"X\"],[\"•\",1,1,1,\"•\",\"X\"],[\"X\",1,1,1,\"X\",\"X\"],[\"}\"],[1],[\"{t3 = ¬A1 ∨ ¬A4\"],[\"X\",\"X\"],[\"X\",\"X\"],[\"•\",\"•\",1,1,1,1,\"X\"],[\"X\",\"X\",1,1,1,1,\"X\"],[\"X\",\"X\"],[\"}\"],[1],[\"{t4 = ¬A4 ∨ B1\"],[1,\"X\"],[1,\"X\",\"X\"],[1,\"•\",\"•\",1,1,1,1,\"X\"],[1,\"X\",\"X\",1,1,1,1,\"X\"],[1,\"X\"],[\"}\"],[1],[\"{t5 = ¬A4 ∨ ¬B4\"],[1,\"X\",1,\"X\"],[1,\"X\",1,\"X\"],[1,\"•\",1,\"•\",1,1,1,1,\"X\"],[1,\"X\",1,\"X\",1,1,1,1,\"X\"],[1,\"X\",1,\"X\"],[\"}\"],[1],[\"{t6 = ¬A1 ∨ B1\"],[\"X\"],[\"X\",1,\"X\"],[\"•\",1,\"•\",1,1,1,1,1,1,\"X\"],[\"X\",1,\"X\",1,1,1,1,1,1,\"X\"],[\"X\"],[\"}\"],[1],[\"{t7 = B4 ∨ A4 ∨ B1\"],[1,1,\"X\",1,\"X\"],[1,1,\"•\",1,\"•\",1,1,1,1,1,\"X\"],[1,1,\"X\",1,\"X\",1,1,1,1,1,\"X\"],[\"}\"],[1],[\"{t8 = B4 ∨ B1\"],[1,1,\"X\",\"X\"],[1,1,\"•\",\"•\",1,1,1,1,1,1,1,\"X\"],[1,1,\"X\",\"X\",1,1,1,1,1,1,1,\"X\"],[\"}\"],[1],[\"{t9 = ¬A1 ∨ ¬B4\"],[\"X\",1,1,\"X\"],[\"X\",1,1,\"X\"],[\"•\",1,1,\"•\",1,1,1,1,1,1,1,1,\"X\"],[\"X\",1,1,\"X\",1,1,1,1,1,1,1,1,\"X\"],[\"X\",1,1,\"X\"],[\"}\"],[1],[\"{t10 = ¬A1 ∧ ¬A4 ∧ ¬B1\"],[\"X\",\"X\",\"X\"],[\"•\",\"•\",\"•\",1,1,1,1,1,1,1,1,1,1,\"X\"],[\"X\",\"X\",\"X\"],[\"}\"],[1],[\"{pAND t*\"],[1,1,1,1,1,\"•\",\"•\",\"•\",\"•\",\"•\",\"•\",\"•\",\"•\",\"•\"],[\"}\"],[1],[\"{一時ビットをアンコンピュート\"],[\"X\",\"X\",\"X\"],[\"•\",\"•\",\"•\",1,1,1,1,1,1,1,1,1,1,\"X\"],[\"X\",\"X\",\"X\"],[\"X\",1,1,\"X\"],[\"X\",1,1,\"X\",1,1,1,1,1,1,1,1,\"X\"],[\"•\",1,1,\"•\",1,1,1,1,1,1,1,1,\"X\"],[\"X\",1,1,\"X\"],[\"X\",1,1,\"X\"],[1,1,\"X\",\"X\",1,1,1,1,1,1,1,\"X\"],[1,1,\"•\",\"•\",1,1,1,1,1,1,1,\"X\"],[1,1,\"X\",\"X\"],[1,1,\"X\",1,\"X\",1,1,1,1,1,\"X\"],[1,1,\"•\",1,\"•\",1,1,1,1,1,\"X\"],[1,1,\"X\",1,\"X\"],[\"X\"],[\"X\",1,\"X\",1,1,1,1,1,1,\"X\"],[\"•\",1,\"•\",1,1,1,1,1,1,\"X\"],[\"X\",1,\"X\"],[\"X\"],[1,\"X\",1,\"X\"],[1,\"X\",1,\"X\",1,1,1,1,\"X\"],[1,\"•\",1,\"•\",1,1,1,1,\"X\"],[1,\"X\",1,\"X\"],[1,\"X\",1,\"X\"],[1,\"X\"],[1,\"X\",\"X\",1,1,1,1,\"X\"],[1,\"•\",\"•\",1,1,1,1,\"X\"],[1,\"X\",\"X\"],[1,\"X\"],[\"X\",\"X\"],[\"X\",\"X\",1,1,1,1,\"X\"],[\"•\",\"•\",1,1,1,1,\"X\"],[\"X\",\"X\"],[\"X\",\"X\"],[\"X\",1,1,1,\"X\",\"X\"],[\"•\",1,1,1,\"•\",\"X\"],[\"X\",1,1,1,\"X\"],[1,\"X\",1,\"X\",\"X\"],[1,\"•\",1,\"•\",\"X\"],[1,\"X\",1,\"X\"],[\"}\"],[1],[\"{折り返し変換\"],[\"H\",\"H\",\"H\",\"H\"],[\"X\",\"X\",\"X\",\"X\"],[\"•\",\"•\",\"•\",\"•\"],[\"X\",\"X\",\"X\",\"X\"],[\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>
+  このように、折り返し変換の使いかたはとても簡単です。
+  重ね合わせ上で位相論理演算を実行する回路の最後に、折り返し変換を追加するだけで確率を増幅できます。
+</p>
+
+<h2>まとめ</h2>
+
+<p>
+  位相に埋め込んだ計算結果を取り出すための、折り返し変換回路の使いかたを学びました。
+  位相論理演算と折り返し変換をまとめて振幅増幅と呼び、これによって確率を増幅させることで計算結果を読み出せるようにします。
+</p>
+
+<p>
+  次回は、振幅増幅を繰り返すことでさらに確率を増幅する方法を学びます。 確率を 100%
+  近くまで増幅することで、正しい答を <measurement-gate></measurement-gate>
+  によって読み出せる確実性も高まります。
+</p>
+
+
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .relative { position:relative; } .absolute { position:absolute; } .inset-0 { inset:0; } .m-auto { margin:auto; }
+  .h-12 { height:48px; } .w-12 { width:48px; } .h-12 :global(svg) { width:100%; height:100%; }
+  .text-purple-500 { color:#A855F7; } .font-bold { font-weight:700; }
+  .h-8 { height:32px; } .w-16 { width:64px; } .text-zinc-300 { color:#DAD8CE; }
+  .h-8 :global(svg) { width:100%; height:100%; }
+  .relative.h-8 :global(x-gate.qpu-operation-sm), .relative :global(measurement-gate.qpu-operation-sm) { font-size:24px; width:24px; height:24px; }
+  .items-center > :global(phase-gate) { font-size:32px; }
+  .mb-4 { margin-bottom:16px; } .space-y-4 { row-gap:16px; } .items-end { align-items:flex-end; }
+  .text-2xl { font-size:24px; line-height:32px; } .mx-auto { margin-inline:auto; } .p-0 { padding:0; }
+  .p-4 { padding:16px; } .border-l-4 { border-left:4px solid #60A5FA; } .bg-blue-50 { background:#EFF6FF; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>

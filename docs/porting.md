@@ -1082,3 +1082,47 @@ local390/1440はbody/content/shadow inner scrollbar/document横overflow/errors0�
 **質問: grover_iamの3番目の回路へ、SATと同じ10列 (38〜42/103〜107) の修正を適用してよいか？** 原3回路のpalette[]×3/max1×3、2/4/14-wireを切り詰めない予定。画像はamplitude_amplification_overview.png 1枚、未置換/credits削除0。grover_iam route/fixtureは未作成、本文/JSON無変更、移行後diff/scroll/step0は未検証。後続grover_iteration以降も未公開。
 
 owned preview4348/検証browser終了、main/worktreeを通常fetch/rebase/pushで同期。13:02 hard stopを守り、最後のdocs-only Pages状態を終了時に報告する。
+
+
+## 2026-10-11 13:05 grover_iam第三回路のt5訂正承認 / hard stop13:35
+
+高宮さんが **grover_iam第三回路のみ** にSATと同じ10列修正を明示承認。変更前にraw data-json文字列のSAT prefixを抽出し、修正前SAT raw JSONと **UTF-8 byte相当で完全一致**、cols0〜124とfixtureも完全一致と確認。proofを `grover-iam-source-prefix.json` (raw両文字列＋SHA256) に保存した。列番号はSATと同じ0-based 38〜42/103〜107。
+
+実回路は **134列 (0〜133)**、追加折り返し部は **125〜133の9列**。指示中の「135-col」は実データと1ずれるが、134列を指定した本文と原JSONに従って、余計な列は足していない。原3回路の列数は17/17/134、wire数2/4/14。追加9列も無変更で保持。
+
+### 第三回路のJSON diff
+
+| col | before | after |
+|---|---|---|
+|38|`[1,"X","X"]`|`[1,"X",1,"X"]`|
+|39|`[1,"X","X"]`|`[1,"X",1,"X"]`|
+|40|`[1,"•","•",1,1,1,1,1,"X"]`|`[1,"•",1,"•",1,1,1,1,"X"]`|
+|41|`[1,"X","X",1,1,1,1,1,"X"]`|`[1,"X",1,"X",1,1,1,1,"X"]`|
+|42|`[1,"X","X"]`|`[1,"X",1,"X"]`|
+|103|`[1,"X","X"]`|`[1,"X",1,"X"]`|
+|104|`[1,"X","X",1,1,1,1,1,"X"]`|`[1,"X",1,"X",1,1,1,1,"X"]`|
+|105|`[1,"•","•",1,1,1,1,1,"X"]`|`[1,"•",1,"•",1,1,1,1,"X"]`|
+|106|`[1,"X","X"]`|`[1,"X",1,"X"]`|
+|107|`[1,"X","X"]`|`[1,"X",1,"X"]`|
+
+第一/第二JSONは無変更。第三の他124列・labels・冗長XX・初期化・pAND・追加折り返し9列は無変更。original/fixed fixturesと `grover-iam-corrections.spec.ts` がexact diffとprefix、追加部の無変更を固定する。全本文/TeX/ket順序/1sidenote/原run-buttonなしを保持。Golden全文fixtureでguardし、raw原liveとの比較も本文diff0/TeXdiff0。
+
+### 実GPU (local準備)
+
+| 回路 | 最終結果 | standalone/実page |
+|---|---|---|
+| 2qubit AND＋折り返し | index3のみ、amp約-1、確率約100%、位相180° | 各2/2 |
+| 4qubit AND＋折り返し | index15約-0.6875/47.2656%、他約-0.1875/3.5156%、全非零位相180° | 各2/2 |
+| SAT＋折り返し (14wire) | index8約-0.6875/47.2656%、他0〜15約-0.1875/3.5156%、全非零位相180°、補助q4〜q13=0 | 各2/2 |
+
+390/1440で **standalone6/6＋実native6/6**。normは約0.99999976/0.99999960/0.99999960、本文の100%/約47.3%/約3.5%/答14bit00000000001000と一致。全vectorを読み、index16以降の確率和 **leakage=0** と確認し、補助を戻した後の追加折り返し部も評価した。実pageはnative canvasをpanして最終H列をクリックし、表示状態を読み取った。製品のGPU→CPU readback/CPU fallbackは追加しない。
+
+`tests/fixtures/grover-iam-gpu-verification.json` と `/tmp/qtw-grover-iam-{gpu-results,local-embed-results}.json`、script/logに保存。新しい本文数値・phase・answer不一致は見つかっていない。
+
+### UI/画像/palette/検証
+
+palette **[]×3**、原HTML max-wire-count **1×3**、2/4/14-wireを切り詰めない。prose H/MEASURE glyphはBold、図/nativeはRegular。MathJax3.2.2/Qni/実験版/Qniで開く維持。390/1440はbody/content/shadow inner scrollbar/document横overflow/errors0、running/step0/norm1。DPR1/2×両幅の4ケースでprose Bold/native Regular/overflow/errors0、実スクリーンショット確認。
+
+**amplitude_amplification_overview.png→既存自作AmplificationIllustration** (32 circles、クリック/Enter/Spaceでマーク位置を変更) へ置換。原にcredits文なし、**削除0**。component自身がqubit-circleをimportし、親にstatic circleがなくても確実に登録する。16状態図のdata-qubit-count4も明示し、0000等のariaを正しくする。値/見た目/元の未置換画像creditsは変更しない。
+
+全 **298tests (5.9m)** 成功、追加Golden全文＋exact diff guard最終2/2成功、typecheck/build/diff-check成功。原文の「今回はこの繰り返し変換」等は承認外なので変更しない。公開live確認後にsidebar順でgrover_iterationへ進む。pin ef652682c23d89427f6f39bb6bee1ec6fae9bb1e/Binaryen123/GPU-only維持、upstream変更なし。
