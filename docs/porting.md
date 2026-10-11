@@ -1425,3 +1425,20 @@ qft_adderの数値・回路は正しい。原3JSONは **22/52/12列/各7-wire**�
 
 
 qft_adder **346 tests/typecheck/build/diff-check成功**、固定dist fullsuite5.8分で成功。16:39確認の新 **qniapp/qni#580** (head6d25cfdedc93f95595c22b429602bf3473dbd0c4) は承認ordinal/prev_urlの2訂正と一致し、余分なinspector class順変更は採用しない。公開前にembed probeのbase設定をさらに点検し、phase名publicだけでは環境変数なしの場合local4353へ行く共通helper仕様を発見した。publicなら公開baseを選ぶようhelperを直し、各resultにbaseも明記し、今回のqft_adderだけでなく前のinside_the_qftの公開22件も実公開URLを明示して再実施する。これは検証harnessの宛先問題で、記事/数値/JSON/本番コード変更ではない。
+
+
+qft_adder **48d9a42 / Pages38122182373 success** を実公開URLで確認済み。公開native **6/6** (resultにbase=https://qniapp.github.io/qni-tutorial-webgpu/を明記)、standalone原6+stage8+localnative6+publicnative6=**26/26 signed値/確率成功**、norm≈1/errors0。公開390/1440で承認ordinalだけtextdiff0/TeXdiff0/原3JSON・title・sidenote/counts一致、DPR1/2×両幅4/4/proseBold/nativeRegular/running/step0、body/content/shadow scrollbar0/文書横overflow0、6undo/redo-only toolbars85/85/0画素・旧trash位置click URL不変。公開下部「QFT の内部」のhref=/qni-tutorial-webgpu/inside_the_qft/を両幅/DPR1/2 **4/4実click、destination inside_the_qft/・heading QFT の内部** で確認。346 tests/typecheck/build/diff-check成功。fixtureへnativePublic/toolbarsPublic/footerPublic/glyphsPublic/scrollPublic保存、資料 `/tmp/qtw-port-qft_adder.json`、`/tmp/qtw-qft-adder-public-*`、`/tmp/qtw-scroll-qft-adder-public.json`、`/tmp/qtw-pr63-toolbar-qft-adder-public.json`。
+
+inside_the_qftのpublic名probeで実際はlocalを見ていた宛先問題も解決した。実公開URLを明示して全11×両幅 **22/22 signed値成功**、承認2訂正のみ本文diff0/TeXdiff0/全counts一致、DPR4/4/gatesBold/errors0を再実施し、nativePublicにはbaseも明記、glyphsPublicも新結果で置き換えた。前の公開scroll/toolbarはすでにQTW_AUDIT_URLを明示して2幅/22件で検証済み、その結果を保持する。従来のpublic名だけの呼出を公開の証明とは扱わず、今回は実公開22＋standalone22＋local22=66/66に確認し直した。本番コード/原文/原JSONを変える必要はなかった。
+
+### 次eigenphases: 数値は正しいがunique/独自の表現について承認待ち
+
+16:44最新main・原live390/1440を確認した。原2JSON (各5列/1-wire) が一致、mini_qniの原max-wire-countは **2×2**、palette指定なし ([]×2)、run-buttonなし。元36円表示/画像0/置換0/credits削除0/sidenote0/Orbit0。同ページopen PRなし (openは#579/#580)。
+
+H=[[1,1],[1,-1]]/√2、c=cos(π/8)、s=sin(π/8)。H(c,s)=(c,s)は固有位相0、H(-s,c)=(s,-c)=-(-s,c)は固有位相π。c²×100=**85.35533905932738%**、s²×100=**14.644660940672624%** で原85.3553/14.6447は正しい。Ry(π/4)で(c,s)、Ry(5π/4)で(-s,c)を準備する原5列も正しい。X±、Y±、Zの|0⟩/|1⟩、PHASE Φの|0⟩/|1⟩はそれぞれ原表の固有位相0/π/Φに一致する。ZとPHASEは同じ固有状態を共有し、特に|0⟩はどちらも固有位相0でもある。これは異なる命令でも固有状態 (あるいは1つの固有状態/位相の組) を共有できる実例である。完全な全固有状態/位相の組によるスペクトル分解は演算を特徴付けられる。
+
+原Ry/Hの準備prefix2＋最終2、X/Y/Z/PHASEの各±またはbasis2＝計12テスト回路を実AMD WebGPU/3901440で **24/24全signed値/確率成功**、norm≈1/errors0。PHASEはΦ=π/4を実GPUで確認し、任意Φのmatrix diag(1,e^iΦ)も解析した。|0⟩はZ/Pとも+1/phase0で、|1⟩はZで-1/phaseπ、Pπ/4で(1+i)/√2/phaseπ/4。これらのテスト用回路を本文に追加しない。本番readback/CPU fallback/上流変更なし。最初のprobeはexpected配列のimportが不足したReferenceErrorだったため追加し、全24件を再実施した。数値の不一致ではない。
+
+**表現の解釈の質問:** 本文「ユニークな状態ベクトル」「独自の (固有の) 状態ベクトル」を『命令ごとに異なる固有状態』と読むと、同じ表のZとPHASEが|0⟩/|1⟩を共有する事実と食い違う。一方、単に『固有状態という特別な状態』の意味なら原文維持という選択もある。明確な数値誤りとは区別し、**原文維持で移植するか、`ユニークな状態ベクトル` → `状態ベクトル`、`独自の (固有の) 状態ベクトル` → `固有状態と呼ばれる状態ベクトル` の2語句だけを訂正するか** を質問し、承認なしに進めない。その他の本文/数値/36円/原2JSONは変えない。固有位相の説明や追加noteを書き足す提案はしない。
+
+詳細 [eigenphases-wording-question.md](eigenphases-wording-question.md)。永続 `eigenphases-wording-verification.json` に原2JSON/実live段落・table・limits/12テスト回路/解析期待値/24GPU結果を保存。**eigenphases未公開、route/移植fixture未作成、原文/JSON無変更。** 移植後のtext/TeX/scroll/DPR/toolbar/step0等は未検証、次のquantum_phase_estimation_circuit以降もSTOP。資料 `/tmp/qtw-next-eigenphases.html`、`/tmp/qtw-eigenphases-original-*`、`/tmp/qtw-eigenphases-{test-circuits,expected,gpu-results}.json`、`/tmp/qtw-eigenphases-gpu.mjs`。owned browsers終了・preview4353を停止、通常pushで記録を同期し、内容公開と記録だけのPagesを区別する。pin348992f/Binaryen123/GPU-only、hard stop16:57。

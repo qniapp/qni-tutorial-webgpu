@@ -2194,5 +2194,397 @@
       "width": 1440,
       "findings": []
     }
+  ],
+  "nativePublic": [
+    {
+      "base": "https://qniapp.github.io/qni-tutorial-webgpu/",
+      "width": 390,
+      "circuit": 0,
+      "offset": 122,
+      "norm": 1,
+      "leakage": 0,
+      "states": [
+        {
+          "i": 20,
+          "re": 1,
+          "im": 0,
+          "p": 1
+        }
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "base": "https://qniapp.github.io/qni-tutorial-webgpu/",
+      "width": 390,
+      "circuit": 1,
+      "offset": 122,
+      "norm": 0.9999996423721872,
+      "leakage": 0,
+      "states": [
+        {
+          "i": 20,
+          "re": 0.9999998211860657,
+          "im": 1.3234907214609848e-07,
+          "p": 0.9999996423721809
+        }
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "base": "https://qniapp.github.io/qni-tutorial-webgpu/",
+      "width": 390,
+      "circuit": 2,
+      "offset": 122,
+      "norm": 1,
+      "leakage": 0,
+      "states": [
+        {
+          "i": 0,
+          "re": 1,
+          "im": 0,
+          "p": 1
+        }
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "base": "https://qniapp.github.io/qni-tutorial-webgpu/",
+      "width": 1440,
+      "circuit": 0,
+      "offset": 122,
+      "norm": 1,
+      "leakage": 0,
+      "states": [
+        {
+          "i": 20,
+          "re": 1,
+          "im": 0,
+          "p": 1
+        }
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "base": "https://qniapp.github.io/qni-tutorial-webgpu/",
+      "width": 1440,
+      "circuit": 1,
+      "offset": 122,
+      "norm": 0.9999996423721872,
+      "leakage": 0,
+      "states": [
+        {
+          "i": 20,
+          "re": 0.9999998211860657,
+          "im": 1.3234907214609848e-07,
+          "p": 0.9999996423721809
+        }
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "base": "https://qniapp.github.io/qni-tutorial-webgpu/",
+      "width": 1440,
+      "circuit": 2,
+      "offset": 122,
+      "norm": 1,
+      "leakage": 0,
+      "states": [
+        {
+          "i": 0,
+          "re": 1,
+          "im": 0,
+          "p": 1
+        }
+      ],
+      "errors": [],
+      "pass": true
+    }
+  ],
+  "toolbarsPublic": [
+    {
+      "slug": "qft_adder",
+      "width": 390,
+      "index": 0,
+      "path": "/tmp/qtw-pr63-toolbar-qft-adder-public/qft_adder-390-0.png",
+      "unchanged": true,
+      "errors": [],
+      "iconPixels": [
+        85,
+        85,
+        0
+      ]
+    },
+    {
+      "slug": "qft_adder",
+      "width": 390,
+      "index": 1,
+      "path": "/tmp/qtw-pr63-toolbar-qft-adder-public/qft_adder-390-1.png",
+      "unchanged": true,
+      "errors": [],
+      "iconPixels": [
+        85,
+        85,
+        0
+      ]
+    },
+    {
+      "slug": "qft_adder",
+      "width": 390,
+      "index": 2,
+      "path": "/tmp/qtw-pr63-toolbar-qft-adder-public/qft_adder-390-2.png",
+      "unchanged": true,
+      "errors": [],
+      "iconPixels": [
+        85,
+        85,
+        0
+      ]
+    },
+    {
+      "slug": "qft_adder",
+      "width": 1440,
+      "index": 0,
+      "path": "/tmp/qtw-pr63-toolbar-qft-adder-public/qft_adder-1440-0.png",
+      "unchanged": true,
+      "errors": [],
+      "iconPixels": [
+        85,
+        85,
+        0
+      ]
+    },
+    {
+      "slug": "qft_adder",
+      "width": 1440,
+      "index": 1,
+      "path": "/tmp/qtw-pr63-toolbar-qft-adder-public/qft_adder-1440-1.png",
+      "unchanged": true,
+      "errors": [],
+      "iconPixels": [
+        85,
+        85,
+        0
+      ]
+    },
+    {
+      "slug": "qft_adder",
+      "width": 1440,
+      "index": 2,
+      "path": "/tmp/qtw-pr63-toolbar-qft-adder-public/qft_adder-1440-2.png",
+      "unchanged": true,
+      "errors": [],
+      "iconPixels": [
+        85,
+        85,
+        0
+      ]
+    }
+  ],
+  "footerPublic": [
+    {
+      "width": 390,
+      "dpr": 1,
+      "href": "/qni-tutorial-webgpu/inside_the_qft/",
+      "destination": "https://qniapp.github.io/qni-tutorial-webgpu/inside_the_qft/",
+      "heading": "QFT の内部"
+    },
+    {
+      "width": 390,
+      "dpr": 2,
+      "href": "/qni-tutorial-webgpu/inside_the_qft/",
+      "destination": "https://qniapp.github.io/qni-tutorial-webgpu/inside_the_qft/",
+      "heading": "QFT の内部"
+    },
+    {
+      "width": 1440,
+      "dpr": 1,
+      "href": "/qni-tutorial-webgpu/inside_the_qft/",
+      "destination": "https://qniapp.github.io/qni-tutorial-webgpu/inside_the_qft/",
+      "heading": "QFT の内部"
+    },
+    {
+      "width": 1440,
+      "dpr": 2,
+      "href": "/qni-tutorial-webgpu/inside_the_qft/",
+      "destination": "https://qniapp.github.io/qni-tutorial-webgpu/inside_the_qft/",
+      "heading": "QFT の内部"
+    }
+  ],
+  "glyphsPublic": [
+    {
+      "width": 390,
+      "dpr": 1,
+      "slug": "qft_adder",
+      "glyphs": [
+        {
+          "tag": "control-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "x-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "control-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "control-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "control-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "phase-gate",
+          "glyph": "bold",
+          "size": "16px"
+        }
+      ],
+      "overflow": false,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "width": 390,
+      "dpr": 2,
+      "slug": "qft_adder",
+      "glyphs": [
+        {
+          "tag": "control-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "x-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "control-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "control-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "control-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "phase-gate",
+          "glyph": "bold",
+          "size": "16px"
+        }
+      ],
+      "overflow": false,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "dpr": 1,
+      "slug": "qft_adder",
+      "glyphs": [
+        {
+          "tag": "control-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "x-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "control-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "control-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "control-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "phase-gate",
+          "glyph": "bold",
+          "size": "16px"
+        }
+      ],
+      "overflow": false,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "dpr": 2,
+      "slug": "qft_adder",
+      "glyphs": [
+        {
+          "tag": "control-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "x-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "control-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "control-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "control-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "phase-gate",
+          "glyph": "bold",
+          "size": "16px"
+        }
+      ],
+      "overflow": false,
+      "errors": [],
+      "pass": true
+    }
+  ],
+  "scrollPublic": [
+    {
+      "width": 390,
+      "findings": []
+    },
+    {
+      "width": 1440,
+      "findings": []
+    }
   ]
 }
