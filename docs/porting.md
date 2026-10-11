@@ -1510,3 +1510,68 @@ QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/compare
 **質問:** まずgmktecと同じフォント/browser環境で再検証して切り分けてよいか？ 固定px期待値の書き換えや共有overflow CSSの一括変更は行わない。詳細・再現commandは [new-machine-layout-blocker.md](new-machine-layout-blocker.md)、原ログ `/tmp/qtw-nongpu-regressions.log`。全suite成功と偽らず、4件を未解決として引き継ぐ。最新typecheck/build/diff-checkは成功。
 
 公開eigenphasesのWebGPU4カテゴリは引き続きすべて **実機確認待ち**、上の対話監査commandでgmktecに引き継ぐ。QPEの符号fixは未承認・未適用・未公開、後続も停止。記録とsidebar期待リストだけを追加で通常pushし、hard stop17:30を守る。
+
+## 2026-10-11 quantum_phase_estimation_circuit: option A承認4項目を移植 / GPUなし / hard stop18:42
+
+高宮さんが `docs/qpe-sign-blocker.md` のoption Aを明示承認。**12個のP角度を負角へ、2block名をQFTへ、後半の本文1文、まとめ1語句だけ**を変更した。`docs/qpe-original-source.html` / `docs/qpe-approved-source.html` と原/fixed fixturesを保存し、原HTMLから承認4置換だけでapproved全文に完全一致するテストを追加。原120°の2例、他本文/全4TeX/数値/4円を変更しない。
+
+### qni eng向け正確なJSON diff
+
+**circuit/column/wireはいずれも0-based、columnは原JSONのblock marker列を含む `cols` index。** circuit 0=mini H固有状態、1=入力・前半図、2=後半単独図、3=H全体例、4=120°/3bit、5=120°/4bit。
+
+| circuit | column | wire | before → after |
+|---|---:|---:|---|
+| 2 後半単独 | 0 | 0 | `{量子位相推定後半: 逆QFT` → `{量子位相推定後半: QFT` |
+| 2 | 4 | 0 | `P(π_2)` → `P(-π_2)` |
+| 2 | 5 | 0 | `P(π_4)` → `P(-π_4)` |
+| 2 | 6 | 0 | `P(π_8)` → `P(-π_8)` |
+| 2 | 8 | 1 | `P(π_2)` → `P(-π_2)` |
+| 2 | 9 | 1 | `P(π_4)` → `P(-π_4)` |
+| 2 | 11 | 2 | `P(π_2)` → `P(-π_2)` |
+| 3 H全体 | 25 | 0 | `{量子位相推定後半: 逆QFT` → `{量子位相推定後半: QFT` |
+| 3 | 29 | 0 | `P(π_2)` → `P(-π_2)` |
+| 3 | 30 | 0 | `P(π_4)` → `P(-π_4)` |
+| 3 | 31 | 0 | `P(π_8)` → `P(-π_8)` |
+| 3 | 33 | 1 | `P(π_2)` → `P(-π_2)` |
+| 3 | 34 | 1 | `P(π_4)` → `P(-π_4)` |
+| 3 | 36 | 2 | `P(π_2)` → `P(-π_2)` |
+
+差分は上記 **14cellだけ（12角+2label）**。JSON shape/列数/他tokenは不変。fixtures `quantum_phase_estimation_circuit-{original,fixed}.json`、`tests/qpe-approved-source.spec.mjs` はこの14行を独立固定し、原JSONへ14cellだけ適用したものがfixed全文と一致、120°の2JSONが完全不変と検査する。
+
+本文: `量子位相推定回路の後半は逆 QFT 回路そのままです。` → `量子位相推定回路の後半には、先に説明した QFT 回路を使います。`。まとめ: `後半の逆 QFT` → `後半の QFT`。説明追加・logの底追加・他ページの符号変更はなし。
+
+### 数値のPython計算
+
+`python3 scripts/analyze-qpe-approved.py`。これは有限Fourier和・固有ベクトル・積状態の解析式であり、回路CPU simulatorや製品fallbackではない。変更した後半のgate列は、無変更120°/4bit例の負角Fourier列と完全一致することもassert。
+
+- H固有状態(-sinπ/8,cosπ/8)の固有位相π。φ=1/2のランプに負Fourier和を適用すると **k=8の確率1（100%）**、他は丸め誤差のみ。targetの固有状態は不変、signed全体はindex8=-s、index24=c。
+- 無変更120°/3bit: k3 **68.78376625896216%→68.8%**、135°、誤差+15°。
+- 無変更120°/4bit: k5 **68.48953893117378%→68.5%**、112.5°、誤差−7.5°。k6 **17.195941564740515%→17.2%**、135°。和 **85.68548049591429%→85.7%**。
+- 3bit分解能45°、4bit22.5°、22.5×8=180°。c²/s²=85.35533905932738%/14.644660940672624%。標準のt式は原4TeXを不変に保つ。
+- 永続 `tests/fixtures/qpe-approved-analysis.json` に計算値・GPU照合用signed参照全状態を保存。最初の解析では原circle文字列内の改行をcomplexが解釈できず失敗したため、検証側だけ空白正規化した。記事値/回路修正ではない。GPUExecuted:false。
+
+### 移植・非GPU検査
+
+原6回路 **5/25/18/43/24/37列、1/5/4/5/4/5-wire**。palette **[]×6**、max-wire-count **2×1/1×5**、run-buttonは原通り最後3回路のみ。wireをtruncateしない。旧simulator/直書きdiagramをnative embed6へ置換、元からcustom-tagの4円・矢印/H図は既存部品で表示。**画像0/画像置換0/削除credits0/sidenote0/Orbit0**。prose glyph Bold、figure Regular、MathJax/Qni/実験版/共有header/footer/pin348992fは維持。
+
+最新upstream sourceを18:15にshallow fetchし、QPEとphase_kickbackの原sourceが前の取得本文と同一と確認。open PRは全0件、同ページPRなし。
+
+typecheck/build成功。`qpe-approved-source.spec.mjs` 2件と新ページの非GPU390/1440×DPR1/2 **4/4成功**。原実サイトとのlocal実ブラウザー比較4/4で、承認した2本文編集・14JSON cellだけ、他本文/原4TeXdiff0/source Golden一致。GPUはnavigator.gpu=undefined、全embed unsupportedのまま。body/content/Shadow DOM内部scrollbar0、文書横overflow0、console/page errors0、原4円/パレット/制限/run-button/本文Bold・図Regular一致。スクリーンショット `/tmp/qtw-quantum_phase_estimation_circuit-*.png`。native実稼働確認ではない。
+
+### 実機確認待ち（全6embed、390/1440×DPR1/2）
+
+以下はこの箱で一切実行していない。
+
+1. 本番native running/errors0/step0のone-hot/norm≈1、palette非表示、全gateとblock名可視、元wire保持。
+2. 全6回路の最後の有効列（測定回路は測定直前）でsigned全状態を解析fixtureと比較。特に修正H全体はcontrol8/100%、120°の3/4bit例は68.8/68.5/17.2%の測定前分布。
+3. 測定後のnorm≈1・control one-hot（H例は8）。原run-button3個のreplayがstep0へ戻ること。
+4. 実canvas toolbar undo/redoのみ、trashなし/旧位置クリック無効果、編集→undo→redo→undoで元JSON復元。
+5. 稼働時native Regular/全gate可視、両幅/DPR1/2、body/content/Shadow内scroll0/文書横overflow0。
+
+GPU desktopの正確なcommand:
+
+```sh
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs quantum_phase_estimation_circuit
+```
+
+これは実runner.readStateVectorを使う対話監査。最後の列/測定列の選択、native toolbar操作と外観・全gate可視はGUI上で手動確認してEnter/yes、signed状態/norm/測定one-hot/replay/JSON復元/errors/scrollはassert。結果 `/tmp/qtw-quantum_phase_estimation_circuit-gpu/result.json` とstep0/final PNG。scriptのsyntaxだけこの箱で検査、GPU成功は主張しない。既存 `new-machine-layout-blocker.md` の4回帰は未修正・引き継ぎ、期待値緩和なし。

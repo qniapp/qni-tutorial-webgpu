@@ -1,4 +1,6 @@
-# quantum_phase_estimation_circuit: QFT/逆QFTの符号規約でSTOP
+# quantum_phase_estimation_circuit: QFT/逆QFTの符号規約 — 解決済み
+
+2026-10-11 18時の再開指示で、高宮さんが **option A / 以下の4項目だけ** を明示承認。12角・2block名・本文1文・まとめ1語句に限定し、適用した。正確なJSON差分・検証・実機確認待ちは `porting.md` 末尾。以下は承認前の履歴であり、現在のSTOPではない。
 
 2026-10-11 17時の新機械（GPUなし）。eigenphasesの承認2語句の移植を行い、sidebar次を調査した。**このページは未移植・未公開、後続phase_kickback以降も停止。** 原文・原JSONを変更していない。17:05の `gh pr list -R qniapp/qni --state open --json number,title,headRefOid` は `[]`、同ページのopen PRなし。
 
