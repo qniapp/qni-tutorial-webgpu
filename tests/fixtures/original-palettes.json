@@ -77,5 +77,8 @@
   "entanglement": [[]],
   "disentangle": [[], [], [], [], [], [], []],
   "entanglement_operation": [[], [], []],
-  "discriminating_bell_states": []
+  "discriminating_bell_states": [],
+  "teleportation_circuit": [[], [], [], [], [], [], []],
+  "cascading_teleportation": [[]],
+  "long_distance_entanglement": [[]]
 }

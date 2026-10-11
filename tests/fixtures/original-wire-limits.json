@@ -19,5 +19,8 @@
   "swap_from_cnots": [1],
   "entanglement": [1],
   "disentangle": [1, 1, 1, 1, 1, 1, 1],
-  "entanglement_operation": [1, 1, 1]
+  "entanglement_operation": [1, 1, 1],
+  "teleportation_circuit": [1, 1, 1, 1, 1, 1, 1],
+  "cascading_teleportation": [1],
+  "long_distance_entanglement": [1]
 }

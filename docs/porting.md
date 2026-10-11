@@ -676,3 +676,26 @@ indexとbb84_circuitを両幅で目視。PRの32px block padding、2px rule、24
 | bb84_circuit | [画像](images/pr58-public-bb84_circuit-390.png) | [画像](images/pr58-public-bb84_circuit-1440.png) |
 
 新たな本文scroll修正・質問・上流変更なし。#57/#59保留ページの移植は再開していない。owned preview 4340と検証browserを終了し、08:47より前に終了する。
+
+
+## 2026-10-11 テレポーテーション系列 (09:14 hard stop)
+
+高宮さん指示で **cphase: #57 待ち / SKIP**、**superdense_coding_circuit: #59 待ち / SKIP**。#57/#59の修正をこの後のページに進む前提から外し、sidebarの次のteleportation_circuitから再開。同角度複数PHASEによるCCPHASEが必要な後続ページは引き続き#57待ちでSKIPする。今回の3ページはいずれにも依存しない。pinはPR58の958ee0d1a188701ca8ab2069d16868995564f38cを維持し、上流変更なし。
+
+| ページ | 置換 | 削除credits | palette (embed順) | max-wire-count (embed順) | scroll対応 / 質問 |
+| --- | --- | --- | --- | --- | --- |
+| teleportation_circuit | 画像なし。原7 HTML circuits、原ket6をそのままinteractive embed / 既存Ketに移行 | なし | [] ×7 | 1 ×7 | 元のoverflow-scroll/p-8 editor shellを固定サイズnative embedへ。追加質問なし |
+| cascading_teleportation | 画像なし。原HTML circuit、原display/inline TeXを維持 | なし | [] | 1 | 同上。長い日本語arrow式も自然表示、追加scroll修正なし。質問なし |
+| long_distance_entanglement | 画像なし。原HTML circuit、原display TeXとket4を維持 | なし | [] | 1 | 同上。challengeのqniapp.netリンクは原文のまま保持 (旧UI画像なし)。質問なし |
+
+各原HTMLのdata-max-wire-countを個別確認して全9個とも1。mini_qni-filterの2を流用せず、元の3/5/4-wireをmax1で切り詰めない。palette指定は9個ともなく[]。旧Qni UI画像・画像creditsは原文に存在しない。原7+1+1 JSON、block名、Bloch、Measure、classical control X/Z、P(π/4)/Tを保持。元にrun_circuit_buttonがあるteleportationの後6個、cascading、long_distanceには既存optional GPU-only再実行ボタンを付ける。prose gateは原文の文字表記で、原inline SVG gateは今回なし。既存Bold/Regular contextは維持。
+
+ローカル各ページ390/1440で本文/TeX diff0、errors0。本文/shadow DOM内の横/縦scrollbar、document横overflowは6ケースとも0。原overflow-scroll wrapperを残さず、native内部clip/panは許容範囲として問題項目にしない。新9 embed×2幅=18起動はrunning、step0/norm1。build/typecheck/diff-check成功、最終 **233 tests passed (4.3m)**。
+
+startupだけでなく原アルゴリズムの最終GPU状態も32試行で照合した。未訂正のbit反転は2番目の測定値と一致、Xだけの訂正後の位相反転は1番目の測定値と一致。X/Z訂正後は0、+、H-P(π/4)-Hの元状態をAliceに復元。2段teleportationも同じ複素状態をCarolへ復元し、long-distanceではbit1/4の一致だけでなくBellのcoherenceも確認した。fidelity≈1、norm≈1、32/32成功。standalone readbackはstate panelが描画される実利用サイズ1440×1100で実施した (小さい720pxの検証viewportではpanel未描画によるreadback未readyになったため、テスト設定を修正。native/本文は変更していない)。資料: `/tmp/qtw-teleport-behavior.{mjs,json,log}`。
+
+### 次ページでSTOP: increment_circuit / 原JSON訂正待ち
+
+最後の6番目の原JSONに `["1"]` がある。nativeではそのembedだけinvalid circuit JSON、原サイトでも `Unknown operation: 1` のpageerror。これは元JSON自体の誤記であり、最小 `["1"]` はerror、数値 `[1]` は同じGPUでrunning。**高宮さんに `["1"]` → `[1]` の訂正許可を質問して待つ**。原JSONを黙って書換えず、qni-webgpuを未知gateを受理する方向にも変更していない。[increment-blocker.md](increment-blocker.md)、[実画面](images/increment-string-one-error.png)に記録。
+
+incrementおよび後続decrementはroute/TOC/fixturesに含めず未公開。draftは `/tmp/qtw-blocked-arithmetic/`。decrementの6 authored図=4、後のHTML embed=1は個別確認済みだが、incrementでSTOPしたので公開しない。先行テレポーテーション3ページだけを公開検証してcheckpointする。
