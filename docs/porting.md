@@ -1614,3 +1614,22 @@ QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-q
 Pythonで同じπ/4ランプは負Fourier→k2/100%/45°、既刊の正逆QFT→k14/100%/315°、周期8/周波数2、720/16=45°、Hの8→180°を確認。`scripts/analyze-qpe-output-source.py` / `tests/fixtures/qpe-output-blocker-analysis.json`、GPUExecuted:false。
 
 **質問（未承認・未適用）:** description・本文・式の逆QFT呼称5か所をQFTへ、`周期 2 が得られます。 周期が 2 ということは`を`周波数 2 が得られます。 周波数が 2 ということは`へ訂正してよいか？ 正確な5置換・別語句・TeX差は [qpe-output-sign-blocker.md](qpe-output-sign-blocker.md)。今回のQPE option Aをこの別ページへ勝手に拡張しない。
+
+### phase_kickback公開・非GPU確認完了 / 18:36 checkpoint
+
+**82fcbbd / Pages38128755556 success**。ghでbuild/deploy成功を確認。公開source guard1＋390/1440×DPR1/2のDOM/本文/原4ket-TeX/JSON/18振幅/palette/max/no-run/glyph/scroll/errors4件 **5/5成功**。原実サイトと実公開URLの4case比較も未承認diff0/原TeXdiff0/原2JSON一致。`tests/fixtures/phase-kickback-public-nongpu-verification.json` に両URL・原/移植本文・TeX・JSON・4結果、WebGPUExecuted:falseを保存。
+
+```sh
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/compare-qpe-original.mjs phase_kickback
+pnpm exec playwright test tests/qpe-approved-source.spec.mjs tests/qpe-port-nongpu.spec.ts tests/phase-kickback-source.spec.mjs tests/phase-kickback-nongpu.spec.ts
+```
+
+資料 `/tmp/qtw-kickback-{local-compare,final-tests,public-tests,public-compare,pages}.log`、`/tmp/qtw-phase_kickback-live-{original,ours}-{390,1440}-dpr{1,2}.png`。WebGPUはundefinedにしたunsupported状態で、native running/norm/toolbarの成功ではない。上記実機確認待ちを変更しない。
+
+### 全非GPU回帰の結果（既存4件は未解決のまま）
+
+real-GPU/mixed spec8本を除いたDOM/本文/図・mock lifecycle・Node source guardの **344件中340成功/4失敗（2workers、5.2分）**。失敗は前回と同じ `ket.spec.ts`×2、`content-overflow.spec.ts`×2のみ。QPE/phaseページはoverflow failure一覧にない。sidebar・新palette/max契約も成功。suite開始後に追加したphase source guardを含む最終targeted5/5、公開QPE6/6・phase5/5も別途成功。typecheck/build/diff-checkと解析script成功。
+
+既存4件の原因を断定せず、共有CSS/固定寸法期待値の緩和/テストretry追加は行わない。`docs/new-machine-layout-blocker.md` の環境比較質問と原証拠を引き継ぐ。今回ログ `/tmp/qtw-qpe-nongpu-regressions.log`。全suite成功とは記録しない。
+
+QPEは承認4項目だけ、phaseは本文/JSON無変更で順に公開。qpe_outputの逆QFT5か所と周期2は未承認・原文無変更・未公開、後続も停止。最新確認18:33のopen PRは全0件。通常fetch/rebase/push（forceなし）で記録を同期し、owned preview/browserを停止してhard stop18:42を守る。
