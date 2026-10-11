@@ -1,0 +1,355 @@
+{
+  "title": "パターンの読み出し",
+  "slug": "readout_of_patterns",
+  "description": "状態ベクトルから周波数を取り出す",
+  "sidenotes": [
+    "preparewave"
+  ],
+  "images": [],
+  "orbitPrompts": 0,
+  "orbit": [],
+  "circuits": [
+    {
+      "cols": [
+        [
+          "[周波数2の状態を作る"
+        ],
+        [
+          "|0>",
+          "|0>",
+          "|0>",
+          "|0>"
+        ],
+        [
+          "H",
+          "H",
+          "H",
+          "H"
+        ],
+        [
+          "P(π_4)",
+          "P(π_2)",
+          "P(π)"
+        ],
+        [
+          "]"
+        ],
+        [
+          1
+        ],
+        [
+          "[QFT"
+        ],
+        [
+          1,
+          1,
+          1,
+          "H"
+        ],
+        [
+          1,
+          1,
+          "P(-π_2)",
+          "•"
+        ],
+        [
+          1,
+          1,
+          "H"
+        ],
+        [
+          1,
+          "P(-π_4)",
+          1,
+          "•"
+        ],
+        [
+          1,
+          "P(-π_2)",
+          "•"
+        ],
+        [
+          1,
+          "H"
+        ],
+        [
+          "P(-π_8)",
+          1,
+          1,
+          "•"
+        ],
+        [
+          "P(-π_4)",
+          1,
+          "•"
+        ],
+        [
+          "P(-π_2)",
+          "•"
+        ],
+        [
+          "H"
+        ],
+        [
+          1,
+          "Swap",
+          "Swap"
+        ],
+        [
+          "Swap",
+          1,
+          1,
+          "Swap"
+        ],
+        [
+          "}"
+        ],
+        [
+          1
+        ]
+      ]
+    }
+  ],
+  "amplitudes": [
+    {
+      "amplitude": "0.25",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 + 0.17678i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.25i",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 + 0.17678i",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.25",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 - 0.17678i",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.25i",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 - 0.17678i",
+      "ket": "7",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.25",
+      "ket": "8",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 + 0.17678i",
+      "ket": "9",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.25i",
+      "ket": "10",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 + 0.17678i",
+      "ket": "11",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.25",
+      "ket": "12",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 - 0.17678i",
+      "ket": "13",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.25i",
+      "ket": "14",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 - 0.17678i",
+      "ket": "15",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.25",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 + 0.17678i",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.25i",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 + 0.17678i",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.25",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 - 0.17678i",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.25i",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 - 0.17678i",
+      "ket": "7",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.25",
+      "ket": "8",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 + 0.17678i",
+      "ket": "9",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.25i",
+      "ket": "10",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 + 0.17678i",
+      "ket": "11",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.25",
+      "ket": "12",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.17678 - 0.17678i",
+      "ket": "13",
+      "size": "lg"
+    },
+    {
+      "amplitude": "-0.25i",
+      "ket": "14",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0.17678 - 0.17678i",
+      "ket": "15",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "0",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "lg"
+    },
+    {
+      "amplitude": "1",
+      "ket": "2",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "3",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "4",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "5",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "6",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "7",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "8",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "9",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "10",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "11",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "12",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "13",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "14",
+      "size": "lg"
+    },
+    {
+      "amplitude": "0",
+      "ket": "15",
+      "size": "lg"
+    }
+  ]
+}

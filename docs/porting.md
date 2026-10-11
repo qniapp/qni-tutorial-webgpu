@@ -1309,3 +1309,22 @@ grover_iam_indetail公開確認後に最新mainと原liveを読み、原回路�
 **提案する1か所の修正**: source `{% ket 15 %} までで位相が 2 回転しています。` → `8 個の振幅からなる 1 周期のパターンが 2 回繰り返されています。` 他の本文/45°/周波数2/6.25%/100%/JSON/48円表示は無変更。ユーザーへ承認を質問し、未承認のまま本文を変えずSTOP。同ページのopen PRなし (15:02に全open0件)。原liveの段落/原21列JSONも一致。詳細 [readout-of-patterns-endpoint-blocker.md](readout-of-patterns-endpoint-blocker.md)。
 
 **readout_of_patterns未公開、route/移植fixture未作成。** 原画像0/置換0/削除credits0、palette[]×1 (源にpaletteなし)、max-wire-count1×1、4-wire/21列/run-buttonなし、48円表示/sidenote1/Orbit0。移植後の本文diff/3901440/DPR/scroll/step0/toolbarは未検証。永続 `readout-pattern-gpu-verification.json`、資料 `/tmp/qtw-readout-pattern-*`。inverse_qft以降も停止。owned preview4352と診断browserを終了し、通常pushで記録を同期する。
+
+
+## 2026-10-11 readout_of_patterns承認済み1訂正を移植 / hard stop15:41
+
+高宮さんが **`{% ket 15 %} までで位相が 2 回転しています。` → `8 個の振幅からなる 1 周期のパターンが 2 回繰り返されています。`** だけを承認。`docs/readout-of-patterns-approved-source.html` の変更を逆に戻すと元source全文に完全一致する。ほかの本文・数値・原JSONを変更しない。旧endpointブロッカー文書は解決済みとした。
+
+`src/pages/readout_of_patterns.astro` を移植。原 **21列/4-wireの1JSON無変更**、palette **[]×1** (源にpaletteなし)、max-wire-count **1×1** (4本をtruncateしない)、原run-buttonなし。原円表示 **48個 (入力16×2/出力16)** の複素振幅/順序/data-ket/lgサイズを無変更。16個の長い列はdesktop8列/mobile4列の自然なgrid折り返しにし、円の大きさを縮小/clip/zoomせず本文内scrollを除去した。ariaの4bit ket幅を明示する。nativeの水平panは通常通り可能。
+
+画像0/自作画像置換0/credits削除0、sidenote1/Orbit0を保持。prose H/PHASE/control/SWAPはBold、native Regular、MathJax3.2.2/self-hosted/Qni/実験版/Qniで開くを維持。将来のinside_the_qftは原Qniへのリンクを維持し、未移植のrouteを捏造しない。open PRは15:12に全0件、同ページPRなし。
+
+解析: a_j=(1/4)exp(2πi·2j/16)。各 |a_j|²=1/16=**6.25%**、位相差45°/周期8/16標本に2周期。軸上±0.25/±0.25i、斜めの±1/(4√2)=±0.1767766952966369は原小数5桁±0.17678と一致。QFTのb_k=(1/16)Σ exp(2πi(2-k)j/16)=δ[k,2]、答 **|2⟩ amp+1/確率100%**、他0。等間隔の位相の平均0で振幅増幅だけでは大きさは均等のまま。端点0→15は675°だが周波数2は変えない。
+
+既存GPU結果で原準備prefix6列/全21列を390/1440全16signed実部/虚部/確率と照合、**standalone4/4**。今回の実記事nativeでも最後のSwap列へpan/クリックし、両幅で **index2 re=0.9999998807907104 / im=4.5485744948337015e-08 / p=0.9999997615814372**、他0、norm≈1/errors0、**2/2成功**。原のラベル/冗長step/Swapを削除していない。永続 `readout-pattern-gpu-verification.json` にnativeLocalを追加。
+
+ローカル390/1440の本文diffは承認1か所以外0、TeXdiffは承認で削除する|15⟩の1件だけ、それ以外0。原48円表示・全counts (変更するket15除く) /原JSON一致。errors0、running/step0/norm≈1、body/content/shadow内scrollbar0/文書横overflow0。DPR1/2×両幅4/4で6個のprose glyphすべてBold/overflow-errors0。全2ツールバーundo/redoのみ (85/85/0画素)、旧trash位置クリックでも現在回路URL不変。390スクリーンショットを目視確認した。
+
+原fixture `readout_of_patterns-original.json`、承認済み全文/TeX `readout-pattern-approved-text.json`、`tests/readout-patterns.spec.ts` は全文inverse whitelist/TeX/原JSON/48振幅/配列/制限/no-scroll/errorsを守る。資料 `/tmp/qtw-port-readout_of_patterns.json`、`/tmp/qtw-readout-pattern-local-*`、`/tmp/qtw-scroll-readout-pattern-local.json`、`/tmp/qtw-pr63-toolbar-readout-pattern-local.json`。typecheck/build/diff-check成功、固定distで全suite完了後に公開する。pin348992f/Binaryen123/GPU-only、本番readback/CPU fallback/上流変更なし。
+
+readout_of_patterns: 固定distで全suite **326tests成功**、typecheck/build/diff-check成功。承認1か所だけを反映して公開へ進む。

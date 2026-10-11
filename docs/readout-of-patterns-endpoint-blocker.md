@@ -1,6 +1,8 @@
-# readout_of_patterns: 周波数2は正しいが、端点までの回転量の表現を確認するためSTOP
+# readout_of_patterns: 端点表現の確認（解決済み）
 
-2026-10-11、hard stop15:13。grover_iam_indetailの公開live確認後、sidebar次の「パターンの読み出し」の最新main・原live・原回路を調べた。
+高宮さんが2026-10-11に以下の1か所だけの変更を承認した。`{% ket 15 %} までで位相が 2 回転しています。` → `8 個の振幅からなる 1 周期のパターンが 2 回繰り返されています。` ほかの本文・数値・原JSONは変更しない。承認済みの全文は `readout-of-patterns-approved-source.html`。以下は確認時の履歴。
+
+2026-10-11、当初のhard stop15:13。grover_iam_indetailの公開live確認後、sidebar次の「パターンの読み出し」の最新main・原live・原回路を調べた。
 
 ## 原文
 

@@ -421,5 +421,69 @@
       "errors": [],
       "pass": true
     }
+  ],
+  "nativeLocal": [
+    {
+      "width": 390,
+      "circuit": 0,
+      "offset": 122,
+      "norm": 0.9999997615814402,
+      "leakage": 0,
+      "states": [
+        {
+          "i": 2,
+          "re": 0.9999998807907104,
+          "im": 4.5485744948337015e-08,
+          "p": 0.9999997615814372
+        }
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "circuit": 0,
+      "offset": 122,
+      "norm": 0.9999997615814402,
+      "leakage": 0,
+      "states": [
+        {
+          "i": 2,
+          "re": 0.9999998807907104,
+          "im": 4.5485744948337015e-08,
+          "p": 0.9999997615814372
+        }
+      ],
+      "errors": [],
+      "pass": true
+    }
+  ],
+  "toolbarsLocal": [
+    {
+      "slug": "readout_of_patterns",
+      "width": 390,
+      "index": 0,
+      "path": "/tmp/qtw-pr63-toolbar-readout-pattern-local/readout_of_patterns-390-0.png",
+      "unchanged": true,
+      "errors": [],
+      "iconPixels": [
+        85,
+        85,
+        0
+      ]
+    },
+    {
+      "slug": "readout_of_patterns",
+      "width": 1440,
+      "index": 0,
+      "path": "/tmp/qtw-pr63-toolbar-readout-pattern-local/readout_of_patterns-1440-0.png",
+      "unchanged": true,
+      "errors": [],
+      "iconPixels": [
+        85,
+        85,
+        0
+      ]
+    }
   ]
 }

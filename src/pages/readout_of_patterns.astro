@@ -1,0 +1,147 @@
+---
+import dividerSvg from '../assets/diagram-divider.svg?raw'
+import downSvg from '../assets/diagram-down.svg?raw'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="パターンの読み出し" description="状態ベクトルから周波数を取り出す" section="量子フーリエ変換 (QFT)" hasMath hasCircuit>
+
+
+<p>
+  振幅増幅は位相に埋め込まれた情報を取り出すためのサブルーチンの 1 つでした。
+  位相の差を振幅の大きさに変換することで、位相で「マーク」を付けた値を取り出すことができます。
+</p>
+
+<p>
+  今回紹介する量子フーリエ変換 (QFT)
+  は、状態ベクトルに埋め込まれた<strong>パターン情報</strong>を取り出すためのサブルーチンです。
+  パターンとはどのようなもので、それが何の役に立つかを見ていきましょう。
+</p>
+
+<h2>パターンの例</h2>
+
+<p>
+  以下に 4 量子ビットの状態ベクトルがあります。
+  これにはあるパターンが隠されているのですが、みなさんには分かりますか?
+</p>
+
+<div class="my-5 overflow-x-auto">
+  <div class="pattern-row flex flex-row space-x-2">
+    <qubit-circle data-amplitude="0.25" data-ket="0" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 + 0.17678i" data-ket="1" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25i" data-ket="2" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 + 0.17678i" data-ket="3" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.25" data-ket="4" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 - 0.17678i" data-ket="5" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.25i" data-ket="6" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 - 0.17678i" data-ket="7" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25" data-ket="8" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 + 0.17678i" data-ket="9" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25i" data-ket="10" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 + 0.17678i" data-ket="11" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.25" data-ket="12" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 - 0.17678i" data-ket="13" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.25i" data-ket="14" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 - 0.17678i" data-ket="15" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+  </div>
+</div>
+
+<p>
+  ここに見られるパターンは、回転の繰り返しです。 左の円 <Ket label="0" /> から順に位相が 45°
+  ずつ回転していき、8 個の振幅からなる 1 周期のパターンが 2 回繰り返されています。
+  つまりここに含まれているパターン情報は、回転を 2 回繰り返しているというものです。
+</p>
+
+<h2>パターンの取り出し</h2>
+
+<p>
+  このパターン情報は、今まで見てきた方法ではうまく取り出すことができません。
+  たとえば測定を行った場合、それぞれの確率は等しく 6.25% なので、0 から 15
+  までのランダムな数が出てくるだけです。
+  また振幅増幅を使っても、それぞれの位相差は均等であるため、確率の差に変換することはできません。
+</p>
+
+<p>
+  繰り返しが 2 回であるというパターン情報は、量子フーリエ変換 (QFT) によって取り出すことができます。
+  先ほどの状態ベクトルを入力として QFT を適用すると、繰り返しの数 = 2 が次のように <Ket label="2" />
+  の確率 100% に反映されます。 そして 4 量子ビットすべてを測定することによって、2
+  を取り出すことができます。
+</p>
+
+<div class="my-5 flex overflow-x-auto">
+  <div class="flex flex-col items-center">
+    <div class="pattern-row mb-4 flex flex-row items-center space-x-2">
+      <qubit-circle data-amplitude="0.25" data-ket="0" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 + 0.17678i" data-ket="1" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25i" data-ket="2" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 + 0.17678i" data-ket="3" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.25" data-ket="4" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 - 0.17678i" data-ket="5" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.25i" data-ket="6" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 - 0.17678i" data-ket="7" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25" data-ket="8" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 + 0.17678i" data-ket="9" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25i" data-ket="10" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 + 0.17678i" data-ket="11" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.25" data-ket="12" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 - 0.17678i" data-ket="13" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.25i" data-ket="14" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 - 0.17678i" data-ket="15" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      <span class="diagram-arrow size-6" set:html={dividerSvg}></span>
+      <div>QFT</div>
+      <span class="diagram-arrow size-6 mb-8" set:html={downSvg}></span>
+    </div>
+
+    <div class="pattern-row flex flex-row items-center space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="2" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="4" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="5" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="6" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="7" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      <qubit-circle data-amplitude="0" data-ket="8" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="9" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="10" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="11" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="12" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="13" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="14" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="15" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div>
+
+<p>
+  QFT はフーリエ変換と呼ばれる幅広く使われるデータ処理ルーチンの量子版です。
+  フーリエ変換は入力に含まれる繰り返し
+  (音の波形などの信号を入力とするとき、これを<strong>周波数</strong>と呼びます)
+  を調べることができます。 QFT
+  は状態ベクトル中に位相の回転としてエンコードされた周波数をフーリエ変換によって取り出すことができます。
+</p>
+
+<h2>QFT 回路</h2>
+
+<p>
+  QFT を使って周波数を取り出す回路は次のようになります。 最初のブロックでは <h-gate></h-gate>
+  によって等しい重ね合わせを作り、続く 3 つの <phase-gate></phase-gate> によって位相の回転を 2
+  回繰り返す入力を作ります<Sidenote id="preparewave" numbered>なぜこの回路が周波数 2
+  の位相回転を作ることができるかは、<a href="https://qniapp.github.io/qni/inside_the_qft.html">QFT の内部</a>で見ていきます。</Sidenote>。 次のブロックでは QFT によって周波数を確率に変換し、最終的に <Ket label="2" /> が
+  100% の状態を作ることができます。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"[周波数2の状態を作る\"],[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"H\",\"H\",\"H\",\"H\"],[\"P(π_4)\",\"P(π_2)\",\"P(π)\"],[\"]\"],[1],[\"[QFT\"],[1,1,1,\"H\"],[1,1,\"P(-π_2)\",\"•\"],[1,1,\"H\"],[1,\"P(-π_4)\",1,\"•\"],[1,\"P(-π_2)\",\"•\"],[1,\"H\"],[\"P(-π_8)\",1,1,\"•\"],[\"P(-π_4)\",1,\"•\"],[\"P(-π_2)\",\"•\"],[\"H\"],[1,\"Swap\",\"Swap\"],[\"Swap\",1,1,\"Swap\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>
+  当面はこの QFT 回路をブラックボックスとしてこのまま使っていきます。 というのも、QFT
+  の回路にはカスタマイズできる要素はなく、いつでもパターンに沿った同じ形になるためです。
+  量子ビット数が変わっても、<h-gate></h-gate> と <control-gate></control-gate> <phase-gate></phase-gate> をこのパターンでならべ、最後に全ビットを <swap-gate></swap-gate> で入れ替えたものが QFT
+  の定型です。
+</p>
+
+
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .relative { position:relative; } .absolute { position:absolute; } .inset-0 { inset:0; } .m-auto { margin:auto; }
+  .h-12 { height:48px; } .w-12 { width:48px; } .h-12 :global(svg) { width:100%; height:100%; }
+  .text-purple-500 { color:#A855F7; } .font-bold { font-weight:700; }
+  .h-8 { height:32px; } .w-16 { width:64px; } .text-zinc-300 { color:#DAD8CE; }
+  .h-8 :global(svg) { width:100%; height:100%; }
+  .relative.h-8 :global(x-gate.qpu-operation-sm), .relative :global(measurement-gate.qpu-operation-sm) { font-size:24px; width:24px; height:24px; }
+  .items-center > :global(phase-gate) { font-size:32px; }
+  .mb-4 { margin-bottom:16px; } .space-y-4 { row-gap:16px; } .items-end { align-items:flex-end; }
+  .text-2xl { font-size:24px; line-height:32px; } .mx-auto { margin-inline:auto; } .p-0 { padding:0; }
+  .p-4 { padding:16px; } .border-l-4 { border-left:4px solid #60A5FA; } .bg-blue-50 { background:#EFF6FF; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>
+
+<style>
+ .overflow-x-auto { overflow:visible; }
+ .pattern-row { display:grid; grid-template-columns:repeat(8,48px); gap:8px; width:max-content; max-width:100%; margin-inline:auto; }
+ .flex-col.items-center { width:100%; }
+ .pattern-row :global(qubit-circle) { margin:0; }
+ @media(max-width:600px) { .pattern-row { grid-template-columns:repeat(4,48px); } }
+</style>

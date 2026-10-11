@@ -287,5 +287,8 @@
     [],
     []
   ],
-  "grover_iam_indetail": []
+  "grover_iam_indetail": [],
+  "readout_of_patterns": [
+    []
+  ]
 }
