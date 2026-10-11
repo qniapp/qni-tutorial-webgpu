@@ -86,5 +86,6 @@
   "decrement_circuit": [[], [], [], [], [], [], []],
   "addition_circuit": [[], [], []],
   "subtraction_circuit": [[], []],
-  "multiplication_circuit": [[]]
+  "multiplication_circuit": [[]],
+  "quantum_logic": [["|0>", "|1>"], ["|0>", "|1>"], ["|0>", "|1>"], ["|0>", "|1>"], ["|0>", "|1>"], ["|0>", "|1>"], [], ["|0>", "|1>"]]
 }

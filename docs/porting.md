@@ -788,3 +788,18 @@ sidebar順で復帰。原7 JSON/本文/TeXを無訂正で保持。原図6個のm
 原1 JSON/本文/TeX/筆算・uncomputationの説明を保持。元の角括弧block開始とbrace終端も書き換えない。palette **[]**、max **1**、元10-wireを保持。画像/削除credits/追加質問なし。GPU出力状態110のみ、a=2/b=3/m=6/tmp=0、norm1。nativeの10-wire canvas clip/panは許容し、scaleやupstream修正はしていない。
 
 4ページのoriginal/live390/1440は本文/TeX diff0、原circuits/counts保持、native errors0。26起動step0/norm1、本文/shadow DOMの横/縦scrollbar/document横overflow0。nativeだけの固定canvas clipは許容。本文glyphは共通Bold、diagram/nativeはRegular。原overflow-scroll editor shellを既存native frameに置換、余分なscrollfixなし。build/typecheck/diff-check成功、全 **258 tests (4.5m)** 成功。最終GPU状態は原13回路すべて照合成功。資料 `/tmp/qtw-arithmetic-source-probe.json`、`/tmp/qtw-arithmetic-{local-live,local-new,local-scroll,all-tests}.log`、`/tmp/qtw-port-<slug>.json`。公開後確認を追記する。
+
+
+### 算術4ページ公開 / quantum_logic
+
+算術4ページ **6de5af88ba96b96fc1e0558532d5003a0badb860 / Pages38100417794 success**。公開390/1440 original比較の本文/TeX diff0、8ケースscroll/errors0を確認。incrementも公開本文比較passed、公開最終GPU13/13成功。
+
+次の **quantum_logic** をsidebar順に移植。原7 mini_qniは正式pluginの `json.gsub!(/[\r\n]/, ' ')` を忠実に適用 (block labelの改行を空白へ、勝手な訂正ではない)。それに原HTML authored NOR図1個を加え、原DOM順の計8 JSON/本文/ket2/真理値表を保持。mini paletteは **["|0>","|1>"]×7**、原NOR図は **[]**。原DOM順のmaxは **[2,2,2,2,2,2,1,2]**。元3-wireを上限2でも切り詰めない。画像/削除credits/旧Qni画像/このページの追加質問なし。原calloutのmy-0/px-4/!w-full/!pb-0もCSSへ反映して原間隔を保持。
+
+390/1440のoriginal/live本文/TeX diff0、16起動running/step0/norm1、native errors0、本文/shadow DOM横/縦scrollbar/document横overflow0。実GPU truth-table **30/30**: NOTの2入力、AND/XOR/NAND/OR/OR分解/NOR2表記の4入力ずつ。論理出力が一致し、XOR対象以外の入力と、ORのuncomputation後のa,bも保持。全 **262 tests (2.4m)** 成功、最終CSS後の対象tests/typecheck/buildも成功。6新ページの390/1440 DPR1/2 **24ケース** でprose glyph Bold/16px、native Regular、表示を確認。
+
+資料 `/tmp/qtw-logic-local-behavior.json`、`/tmp/qtw-logic-{local-live,local-new,local-scroll,all-tests,final-tests}.log`、`/tmp/qtw-arithmetic-glyphs.json`。公開後確認を追記する。
+
+### 次ページ superposition_quantum_logicでSTOP
+
+原26-column/5-wire circuitは正常に動くが、原文の式・脚注・真理値表・入力組・d/e説明と一致しない。原回路は `(a OR NOT b) AND c`、e=1の低3bitは4/5/7。脚注の `a || !b && c` は別の述語になり、入力(1,0,0)で違いを実GPU再現した。高宮さんへ原JSONを維持して説明だけ訂正する許可を質問。詳細 [superposition-logic-blocker.md](superposition-logic-blocker.md)。このページと後続はroute/fixtureを作らず未公開。第6incrementの訂正許可を他の訂正に拡張していない。#59待ち/SKIPも維持。
