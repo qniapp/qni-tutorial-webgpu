@@ -1,0 +1,714 @@
+[
+  {
+    "slug": "shor_r",
+    "width": 390,
+    "dpr": 1,
+    "base": "http://127.0.0.1:4322/qni-tutorial-webgpu/",
+    "snapshots": [
+      {
+        "text": "周期を求めるには、パターンを取り出すツールであるQFTを使います。たとえば,の場合、後で実際に実行して確認しますが、の値を持つ状態ベクトルにQFTを適用し測定すると、次のような確率のピークがいくつか得られます。QFTで得られる確率のピークは、周期のヒントを与えるものです。ピークの数はちょうど周期と同じになり、0から始まって等間隔に並びます。これを測定すると0,4,8,12のうち1つだけがランダムに手に入るので、測定結果からは直接周期は得られないことに注意してください。しかし、これらは等間隔であること、またxの範囲は0〜15であることをうまく使うと、周期の候補が計算から推定できます。このの候補を出すアルゴリズムを連分数アルゴリズムと呼びます。詳細は省きますが興味のある読者は、Qiskitチュートリアル「ショアのアルゴリズム」を参照してください。https://qiskit.org/textbook/ja/ch-algorithms/shor.htmlこれは古典コンピュータで計算でき、,の場合にはの候補として2と4が得られます。測定値4、8、12を16で割って既約分数にすると、分母はそれぞれ4、2、4になります。測定値0からは有用な候補が得られないので、測定をやり直します。あとはそれぞれの候補についてとを計算して、結果が1より大きくより小さい非自明な因数かチェックします。非自明な因数が得られたら、をその因数で割ってもう一つの因数を求めます。これらは古典コンピュータで簡単にでき、の場合因数3と5がみつかるので、計算は終了です。",
+        "description": "QFTでパターンを取り出す",
+        "math": [
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "a=2",
+            "display": false
+          },
+          {
+            "tex": "2^x\\,mod(15)",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r=4",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "a=2",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r=2,4",
+            "display": false
+          },
+          {
+            "tex": "gcd(N,a^{r/2}+1)",
+            "display": false
+          },
+          {
+            "tex": "gcd(N,a^{r/2}-1)",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "N",
+            "display": false
+          },
+          {
+            "tex": "r=4",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "https://qniapp.github.io/qni/shor_r.html"
+      },
+      {
+        "text": "周期を求めるには、パターンを取り出すツールであるQFTを使います。たとえば,の場合、後で実際に実行して確認しますが、の値を持つ状態ベクトルにQFTを適用し測定すると、次のような確率のピークがいくつか得られます。QFTで得られる確率のピークは、周期のヒントを与えるものです。ピークの数はちょうど周期と同じになり、0から始まって等間隔に並びます。これを測定すると0,4,8,12のうち1つだけがランダムに手に入るので、測定結果からは直接周期は得られないことに注意してください。しかし、これらは等間隔であること、またxの範囲は0〜15であることをうまく使うと、周期の候補が計算から推定できます。このの候補を出すアルゴリズムを連分数アルゴリズムと呼びます。詳細は省きますが興味のある読者は、Qiskitチュートリアル「ショアのアルゴリズム」を参照してください。https://qiskit.org/textbook/ja/ch-algorithms/shor.htmlこれは古典コンピュータで計算でき、,の場合にはの候補として2と4が得られます。測定値4、8、12を16で割って既約分数にすると、分母はそれぞれ4、2、4になります。測定値0からは有用な候補が得られないので、測定をやり直します。あとはそれぞれの候補についてとを計算して、結果が1より大きくより小さい非自明な因数かチェックします。非自明な因数が得られたら、をその因数で割ってもう一つの因数を求めます。これらは古典コンピュータで簡単にでき、の場合因数3と5がみつかるので、計算は終了です。",
+        "description": "QFTでパターンを取り出す",
+        "math": [
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "a=2",
+            "display": false
+          },
+          {
+            "tex": "2^x\\,mod(15)",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r=4",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "a=2",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r=2,4",
+            "display": false
+          },
+          {
+            "tex": "gcd(N,a^{r/2}+1)",
+            "display": false
+          },
+          {
+            "tex": "gcd(N,a^{r/2}-1)",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "N",
+            "display": false
+          },
+          {
+            "tex": "r=4",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "http://127.0.0.1:4322/qni-tutorial-webgpu/shor_r/"
+      }
+    ],
+    "approvedTextDiffZero": true,
+    "sourceGoldenTextMatches": true,
+    "approvedTexDiffZero": true,
+    "rawTexUnchanged": true,
+    "sourceGoldenTexMatches": true,
+    "originalJSONMatches": true,
+    "approvedJSONMatches": true,
+    "fixedJSONMatches": true,
+    "WebGPUExecuted": false,
+    "approvedDescriptionMatches": true
+  },
+  {
+    "slug": "shor_r",
+    "width": 390,
+    "dpr": 2,
+    "base": "http://127.0.0.1:4322/qni-tutorial-webgpu/",
+    "snapshots": [
+      {
+        "text": "周期を求めるには、パターンを取り出すツールであるQFTを使います。たとえば,の場合、後で実際に実行して確認しますが、の値を持つ状態ベクトルにQFTを適用し測定すると、次のような確率のピークがいくつか得られます。QFTで得られる確率のピークは、周期のヒントを与えるものです。ピークの数はちょうど周期と同じになり、0から始まって等間隔に並びます。これを測定すると0,4,8,12のうち1つだけがランダムに手に入るので、測定結果からは直接周期は得られないことに注意してください。しかし、これらは等間隔であること、またxの範囲は0〜15であることをうまく使うと、周期の候補が計算から推定できます。このの候補を出すアルゴリズムを連分数アルゴリズムと呼びます。詳細は省きますが興味のある読者は、Qiskitチュートリアル「ショアのアルゴリズム」を参照してください。https://qiskit.org/textbook/ja/ch-algorithms/shor.htmlこれは古典コンピュータで計算でき、,の場合にはの候補として2と4が得られます。測定値4、8、12を16で割って既約分数にすると、分母はそれぞれ4、2、4になります。測定値0からは有用な候補が得られないので、測定をやり直します。あとはそれぞれの候補についてとを計算して、結果が1より大きくより小さい非自明な因数かチェックします。非自明な因数が得られたら、をその因数で割ってもう一つの因数を求めます。これらは古典コンピュータで簡単にでき、の場合因数3と5がみつかるので、計算は終了です。",
+        "description": "QFTでパターンを取り出す",
+        "math": [
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "a=2",
+            "display": false
+          },
+          {
+            "tex": "2^x\\,mod(15)",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r=4",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "a=2",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r=2,4",
+            "display": false
+          },
+          {
+            "tex": "gcd(N,a^{r/2}+1)",
+            "display": false
+          },
+          {
+            "tex": "gcd(N,a^{r/2}-1)",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "N",
+            "display": false
+          },
+          {
+            "tex": "r=4",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "https://qniapp.github.io/qni/shor_r.html"
+      },
+      {
+        "text": "周期を求めるには、パターンを取り出すツールであるQFTを使います。たとえば,の場合、後で実際に実行して確認しますが、の値を持つ状態ベクトルにQFTを適用し測定すると、次のような確率のピークがいくつか得られます。QFTで得られる確率のピークは、周期のヒントを与えるものです。ピークの数はちょうど周期と同じになり、0から始まって等間隔に並びます。これを測定すると0,4,8,12のうち1つだけがランダムに手に入るので、測定結果からは直接周期は得られないことに注意してください。しかし、これらは等間隔であること、またxの範囲は0〜15であることをうまく使うと、周期の候補が計算から推定できます。このの候補を出すアルゴリズムを連分数アルゴリズムと呼びます。詳細は省きますが興味のある読者は、Qiskitチュートリアル「ショアのアルゴリズム」を参照してください。https://qiskit.org/textbook/ja/ch-algorithms/shor.htmlこれは古典コンピュータで計算でき、,の場合にはの候補として2と4が得られます。測定値4、8、12を16で割って既約分数にすると、分母はそれぞれ4、2、4になります。測定値0からは有用な候補が得られないので、測定をやり直します。あとはそれぞれの候補についてとを計算して、結果が1より大きくより小さい非自明な因数かチェックします。非自明な因数が得られたら、をその因数で割ってもう一つの因数を求めます。これらは古典コンピュータで簡単にでき、の場合因数3と5がみつかるので、計算は終了です。",
+        "description": "QFTでパターンを取り出す",
+        "math": [
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "a=2",
+            "display": false
+          },
+          {
+            "tex": "2^x\\,mod(15)",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r=4",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "a=2",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r=2,4",
+            "display": false
+          },
+          {
+            "tex": "gcd(N,a^{r/2}+1)",
+            "display": false
+          },
+          {
+            "tex": "gcd(N,a^{r/2}-1)",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "N",
+            "display": false
+          },
+          {
+            "tex": "r=4",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "http://127.0.0.1:4322/qni-tutorial-webgpu/shor_r/"
+      }
+    ],
+    "approvedTextDiffZero": true,
+    "sourceGoldenTextMatches": true,
+    "approvedTexDiffZero": true,
+    "rawTexUnchanged": true,
+    "sourceGoldenTexMatches": true,
+    "originalJSONMatches": true,
+    "approvedJSONMatches": true,
+    "fixedJSONMatches": true,
+    "WebGPUExecuted": false,
+    "approvedDescriptionMatches": true
+  },
+  {
+    "slug": "shor_r",
+    "width": 1440,
+    "dpr": 1,
+    "base": "http://127.0.0.1:4322/qni-tutorial-webgpu/",
+    "snapshots": [
+      {
+        "text": "周期を求めるには、パターンを取り出すツールであるQFTを使います。たとえば,の場合、後で実際に実行して確認しますが、の値を持つ状態ベクトルにQFTを適用し測定すると、次のような確率のピークがいくつか得られます。QFTで得られる確率のピークは、周期のヒントを与えるものです。ピークの数はちょうど周期と同じになり、0から始まって等間隔に並びます。これを測定すると0,4,8,12のうち1つだけがランダムに手に入るので、測定結果からは直接周期は得られないことに注意してください。しかし、これらは等間隔であること、またxの範囲は0〜15であることをうまく使うと、周期の候補が計算から推定できます。このの候補を出すアルゴリズムを連分数アルゴリズムと呼びます。詳細は省きますが興味のある読者は、Qiskitチュートリアル「ショアのアルゴリズム」を参照してください。https://qiskit.org/textbook/ja/ch-algorithms/shor.htmlこれは古典コンピュータで計算でき、,の場合にはの候補として2と4が得られます。測定値4、8、12を16で割って既約分数にすると、分母はそれぞれ4、2、4になります。測定値0からは有用な候補が得られないので、測定をやり直します。あとはそれぞれの候補についてとを計算して、結果が1より大きくより小さい非自明な因数かチェックします。非自明な因数が得られたら、をその因数で割ってもう一つの因数を求めます。これらは古典コンピュータで簡単にでき、の場合因数3と5がみつかるので、計算は終了です。",
+        "description": "QFTでパターンを取り出す",
+        "math": [
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "a=2",
+            "display": false
+          },
+          {
+            "tex": "2^x\\,mod(15)",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r=4",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "a=2",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r=2,4",
+            "display": false
+          },
+          {
+            "tex": "gcd(N,a^{r/2}+1)",
+            "display": false
+          },
+          {
+            "tex": "gcd(N,a^{r/2}-1)",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "N",
+            "display": false
+          },
+          {
+            "tex": "r=4",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "https://qniapp.github.io/qni/shor_r.html"
+      },
+      {
+        "text": "周期を求めるには、パターンを取り出すツールであるQFTを使います。たとえば,の場合、後で実際に実行して確認しますが、の値を持つ状態ベクトルにQFTを適用し測定すると、次のような確率のピークがいくつか得られます。QFTで得られる確率のピークは、周期のヒントを与えるものです。ピークの数はちょうど周期と同じになり、0から始まって等間隔に並びます。これを測定すると0,4,8,12のうち1つだけがランダムに手に入るので、測定結果からは直接周期は得られないことに注意してください。しかし、これらは等間隔であること、またxの範囲は0〜15であることをうまく使うと、周期の候補が計算から推定できます。このの候補を出すアルゴリズムを連分数アルゴリズムと呼びます。詳細は省きますが興味のある読者は、Qiskitチュートリアル「ショアのアルゴリズム」を参照してください。https://qiskit.org/textbook/ja/ch-algorithms/shor.htmlこれは古典コンピュータで計算でき、,の場合にはの候補として2と4が得られます。測定値4、8、12を16で割って既約分数にすると、分母はそれぞれ4、2、4になります。測定値0からは有用な候補が得られないので、測定をやり直します。あとはそれぞれの候補についてとを計算して、結果が1より大きくより小さい非自明な因数かチェックします。非自明な因数が得られたら、をその因数で割ってもう一つの因数を求めます。これらは古典コンピュータで簡単にでき、の場合因数3と5がみつかるので、計算は終了です。",
+        "description": "QFTでパターンを取り出す",
+        "math": [
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "a=2",
+            "display": false
+          },
+          {
+            "tex": "2^x\\,mod(15)",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r=4",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "a=2",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r=2,4",
+            "display": false
+          },
+          {
+            "tex": "gcd(N,a^{r/2}+1)",
+            "display": false
+          },
+          {
+            "tex": "gcd(N,a^{r/2}-1)",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "N",
+            "display": false
+          },
+          {
+            "tex": "r=4",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "http://127.0.0.1:4322/qni-tutorial-webgpu/shor_r/"
+      }
+    ],
+    "approvedTextDiffZero": true,
+    "sourceGoldenTextMatches": true,
+    "approvedTexDiffZero": true,
+    "rawTexUnchanged": true,
+    "sourceGoldenTexMatches": true,
+    "originalJSONMatches": true,
+    "approvedJSONMatches": true,
+    "fixedJSONMatches": true,
+    "WebGPUExecuted": false,
+    "approvedDescriptionMatches": true
+  },
+  {
+    "slug": "shor_r",
+    "width": 1440,
+    "dpr": 2,
+    "base": "http://127.0.0.1:4322/qni-tutorial-webgpu/",
+    "snapshots": [
+      {
+        "text": "周期を求めるには、パターンを取り出すツールであるQFTを使います。たとえば,の場合、後で実際に実行して確認しますが、の値を持つ状態ベクトルにQFTを適用し測定すると、次のような確率のピークがいくつか得られます。QFTで得られる確率のピークは、周期のヒントを与えるものです。ピークの数はちょうど周期と同じになり、0から始まって等間隔に並びます。これを測定すると0,4,8,12のうち1つだけがランダムに手に入るので、測定結果からは直接周期は得られないことに注意してください。しかし、これらは等間隔であること、またxの範囲は0〜15であることをうまく使うと、周期の候補が計算から推定できます。このの候補を出すアルゴリズムを連分数アルゴリズムと呼びます。詳細は省きますが興味のある読者は、Qiskitチュートリアル「ショアのアルゴリズム」を参照してください。https://qiskit.org/textbook/ja/ch-algorithms/shor.htmlこれは古典コンピュータで計算でき、,の場合にはの候補として2と4が得られます。測定値4、8、12を16で割って既約分数にすると、分母はそれぞれ4、2、4になります。測定値0からは有用な候補が得られないので、測定をやり直します。あとはそれぞれの候補についてとを計算して、結果が1より大きくより小さい非自明な因数かチェックします。非自明な因数が得られたら、をその因数で割ってもう一つの因数を求めます。これらは古典コンピュータで簡単にでき、の場合因数3と5がみつかるので、計算は終了です。",
+        "description": "QFTでパターンを取り出す",
+        "math": [
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "a=2",
+            "display": false
+          },
+          {
+            "tex": "2^x\\,mod(15)",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r=4",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "a=2",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r=2,4",
+            "display": false
+          },
+          {
+            "tex": "gcd(N,a^{r/2}+1)",
+            "display": false
+          },
+          {
+            "tex": "gcd(N,a^{r/2}-1)",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "N",
+            "display": false
+          },
+          {
+            "tex": "r=4",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "https://qniapp.github.io/qni/shor_r.html"
+      },
+      {
+        "text": "周期を求めるには、パターンを取り出すツールであるQFTを使います。たとえば,の場合、後で実際に実行して確認しますが、の値を持つ状態ベクトルにQFTを適用し測定すると、次のような確率のピークがいくつか得られます。QFTで得られる確率のピークは、周期のヒントを与えるものです。ピークの数はちょうど周期と同じになり、0から始まって等間隔に並びます。これを測定すると0,4,8,12のうち1つだけがランダムに手に入るので、測定結果からは直接周期は得られないことに注意してください。しかし、これらは等間隔であること、またxの範囲は0〜15であることをうまく使うと、周期の候補が計算から推定できます。このの候補を出すアルゴリズムを連分数アルゴリズムと呼びます。詳細は省きますが興味のある読者は、Qiskitチュートリアル「ショアのアルゴリズム」を参照してください。https://qiskit.org/textbook/ja/ch-algorithms/shor.htmlこれは古典コンピュータで計算でき、,の場合にはの候補として2と4が得られます。測定値4、8、12を16で割って既約分数にすると、分母はそれぞれ4、2、4になります。測定値0からは有用な候補が得られないので、測定をやり直します。あとはそれぞれの候補についてとを計算して、結果が1より大きくより小さい非自明な因数かチェックします。非自明な因数が得られたら、をその因数で割ってもう一つの因数を求めます。これらは古典コンピュータで簡単にでき、の場合因数3と5がみつかるので、計算は終了です。",
+        "description": "QFTでパターンを取り出す",
+        "math": [
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "a=2",
+            "display": false
+          },
+          {
+            "tex": "2^x\\,mod(15)",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r=4",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "a=2",
+            "display": false
+          },
+          {
+            "tex": "r",
+            "display": false
+          },
+          {
+            "tex": "r=2,4",
+            "display": false
+          },
+          {
+            "tex": "gcd(N,a^{r/2}+1)",
+            "display": false
+          },
+          {
+            "tex": "gcd(N,a^{r/2}-1)",
+            "display": false
+          },
+          {
+            "tex": "N=15",
+            "display": false
+          },
+          {
+            "tex": "N",
+            "display": false
+          },
+          {
+            "tex": "r=4",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "http://127.0.0.1:4322/qni-tutorial-webgpu/shor_r/"
+      }
+    ],
+    "approvedTextDiffZero": true,
+    "sourceGoldenTextMatches": true,
+    "approvedTexDiffZero": true,
+    "rawTexUnchanged": true,
+    "sourceGoldenTexMatches": true,
+    "originalJSONMatches": true,
+    "approvedJSONMatches": true,
+    "fixedJSONMatches": true,
+    "WebGPUExecuted": false,
+    "approvedDescriptionMatches": true
+  }
+]

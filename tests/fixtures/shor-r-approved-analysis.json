@@ -1,6 +1,6 @@
 {
   "GPUExecuted": false,
-  "sourceSHA256": "0bc89b7ee78757da5bf63b3b0afb1a79b08425bf34f30544394942ed5b7dea01",
+  "sourceSHA256": "5368d949d295d20389c97d321ecbd226fbfbee13b716d98eb4aa6b418844060c",
   "Q": 16,
   "r": 4,
   "probabilities": [
@@ -121,5 +121,5 @@
     }
   ],
   "method": "Finite negative-Fourier sums per f(x) coset, sum target probabilities; exact Fraction reduction. Not CPU quantum simulation or GPU verification.",
-  "decision": "APPROVED C1/C2 only applied; no other text or graph-data changes"
+  "decision": "APPROVED C1/C2+D1/D2 only applied; no other text or graph-data changes"
 }

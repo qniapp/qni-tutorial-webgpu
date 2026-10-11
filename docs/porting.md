@@ -1944,3 +1944,30 @@ pnpm exec playwright test tests/ket.spec.ts tests/content-overflow.spec.ts
 **質問R:** 承認C1/C2 exactを維持するか、PR#587のD1/D2も追加承認するか？ 今は維持。**質問U:** U1現在値×a説明 / U2引用2021→刊行1996（arXiv初稿1995） / U3三図の位置242をket241→242 / U4 f列番号横・x行番号縦のexact案を承認するか？ 未適用・未移植、全768円の配置/+0.25/6.25%/norm1は数学で一致する。
 
 08:27 open PR再check[]。前runで未調査だったshor_fx source差は今回latest原とA-only approved sourceをwhitespace-normalized比較して一致を確認（#586 merged）。行折り返しだけでbyte一致とは称さない、追加import0・Bは却下のまま。GPU/四旧layout guardは全件実機確認待ち、SSH/GPU監査未実行。今回の公開証拠・未承認差の記録を別docs commitで通常pushし、08:45までに全push停止する。
+
+## 2026-10-12 08:40 shor_r D1/D2 exact承認 / hard stop09:05
+
+今回の依頼で高宮さんが [shor-r-original-drift-blocker.md](shor-r-original-drift-blocker.md) のD1/D2を承認。mainはcleanの646f601から通常fetch/rebase origin/main（up to date）、forceなし。**shor_r本文の2語句だけ**を変更:
+
+- D1 `を計算し、` → `を計算して、`
+- D2 `\(r = 4\) の場合には因数 3 と 5` → `\(r = 4\) の場合因数 3 と 5`
+
+`src/pages/shor_r.astro` とapproved source/goldenを2語句だけ更新。独立source guardは歴史的原SHA/C1/C2を保持し、D1/D2 literal2個を追加してexact byte guard。保存PR587 sourceはf7569b20c7d61b170d1bd90b92f84b46f043061fのgit objectと**byte一致**（SHA256 a6c4dc25864445a6c7ab8aca189c25192f7db19ab97dda5061ca65690ff355e6）をcmp確認し、hashを独立pin。更新approved sourceは最新原とwhitespaceを除いて全文一致、改行位置は違うため全文byte一致とは報告しない。
+
+**他本文/数値/18TeX/title/description/引用URL/cfa sidenote/SVG/credits/回路/palette/max-wire-count/run-button/CSS/pin不変。** SVG1・画像0・credits削除0・回路0、palette/max-wire-count/run-buttonは該当なし。**shor_u以降はreview中なので一切移植・編集・公開しない。** 旧STOP記録/証拠は歴史的資料として保存し、Rの現在の承認状態だけ解決済みと明示。
+
+### 検査
+
+- typecheck/build/diff-check成功。
+- local source1＋390/1440×DPR1/2の本文/18TeX/graph/scroll/error4：**5/5成功**。横overflow/本文・body内側scrollbars/console/page errors0。
+- 最新原実サイトとのlocal **4/4成功、raw本文とraw18TeXが全4条件で直接一致＝差0（whitelist補正なし）**。source description/JSON[]も一致。`shor-r-d12-local-verification.json`に両raw snapshotを保存。
+- 数値は前承認から差0。Python approval-source検査を再実行しsourceSHA/decisionだけ更新、既存数学結果（4peak各25%/gcd/分母等）不変。GPUなしboxでnative GPU実行/CPU quantum simulator/readbackは行わない。
+
+```sh
+pnpm typecheck
+QNI_WEBGPU_SOURCE=/workspace/qni/qni-webgpu pnpm build
+pnpm exec playwright test tests/shor-r-source.spec.mjs tests/shor-r.spec.ts
+QTW_AUDIT_URL=http://127.0.0.1:4322/qni-tutorial-webgpu/ node scripts/compare-qpe-original.mjs shor_r
+```
+
+log `/tmp/qtw-r-d12-{build,local-tests,local-compare}.log`。これらの成績を固定したうえで通常main push、Pages成功と公開5テスト/原比較4条件のraw本文・TeX差0を確認する。shor_rの後には進まない。

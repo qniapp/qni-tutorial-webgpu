@@ -11,12 +11,16 @@ const edits=[
     "あとは \\(r = 2, 4\\) それぞれの候補について \\(gcd(N, a^{r/2} + 1)\\) と \\(gcd(N, a^{r/2} - 1)\\)\n  を計算し、結果が 1 より大きく \\(N = 15\\) より小さい非自明な因数かチェックします。\n  非自明な因数が得られたら、\\(N\\) をその因数で割ってもう一つの因数を求めます。\n  これらは古典コンピュータで簡単にでき、\\(r = 4\\) の場合には因数 3 と 5 がみつかるので、計算は終了です。"
   ]
 ]
-test('Shor R exactly approved C1/C2; other text/TeX unchanged',()=>{
+test('Shor R exactly approved C1/C2+D1/D2; other text/TeX unchanged',()=>{
  const raw=readFileSync('docs/shor-r-original-source.html','utf8'),fixed=readFileSync('docs/shor-r-approved-source.html','utf8')
  expect(createHash('sha256').update(raw).digest('hex')).toBe('c3f78702445ec522ec7362d45e4809d147b2dd4fba1f4d31750fdcfb79d14b33')
  let expected=raw
  for(const [a,b] of edits){expect(expected.split(a)).toHaveLength(2);expected=expected.replace(a,b)}
+ for(const [a,b] of [['を計算し、','を計算して、'],[String.raw`\(r = 4\) の場合には因数 3 と 5`,String.raw`\(r = 4\) の場合因数 3 と 5`]]){expect(expected.split(a)).toHaveLength(2);expected=expected.replace(a,b)}
  expect(expected).toBe(fixed)
+ const latest=readFileSync('docs/shor-r-pr587-source.html','utf8')
+ expect(createHash('sha256').update(latest).digest('hex')).toBe('a6c4dc25864445a6c7ab8aca189c25192f7db19ab97dda5061ca65690ff355e6')
+ expect(fixed.replace(/\s+/g,'')).toBe(latest.replace(/\s+/g,''))
  const math=s=>Array.from(s.split('---')[2].matchAll(/\\\((.*?)\\\)/gs),m=>m[1].replace(/\s+/g,''))
  const original=math(raw),approved=math(fixed)
  expect(original.filter(x=>x==='r=4,8')).toHaveLength(1)

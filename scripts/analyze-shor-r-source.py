@@ -24,7 +24,9 @@ result={'GPUExecuted':False,'sourceSHA256':hashlib.sha256(source.encode()).hexdi
 if args.approved:
  assert 'の候補として 2 と 4 が得られます。' in source
  assert 'より小さい非自明な因数かチェックします。' in source
- result['decision']='APPROVED C1/C2 only applied; no other text or graph-data changes'
+ assert 'を計算して、結果が' in source
+ assert r'\(r = 4\) の場合因数 3 と 5' in source
+ result['decision']='APPROVED C1/C2+D1/D2 only applied; no other text or graph-data changes'
 text=json.dumps(result,ensure_ascii=False,indent=2)+'\n'
 if args.output:args.output.write_text(text)
 else:print(text)
