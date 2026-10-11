@@ -1,0 +1,177 @@
+---
+import dividerSvg from '../assets/diagram-divider.svg?raw'
+import downSvg from '../assets/diagram-down.svg?raw'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="インクリメント回路" description="重ね合わせた数に +1 する" section="算術演算" hasMath hasCircuit>
+
+
+<p>
+  量子コンピュータが従来の古典コンピュータを凌駕できると言われる理由の一つが、重ね合わせ上で演算を実行できることです。
+  たとえば、1 から 100 の数字が書かれた一山のカードがあるとします。
+  量子コンピュータの重ね合わせ演算では、この山に含まれるカードすべてに対して「数を 3
+  で割った余りを計算する」といった演算をまとめて一度に実行できます。
+  つまり量子コンピュータは計算を並列に実行できると言えます。 一方で古典コンピュータでは、カード 1
+  枚ずつに対して「数を 3 で割った余りを計算する」という計算を計 100 回繰り返す必要があります。
+  もし重ね合わせたカードが 1 万枚、100
+  万枚とどんなに増えても、量子コンピュータなら重ね合わせによって並列に計算できるため、
+  繰り返し処理が必要な古典コンピュータよりもその点では強力です。
+</p>
+
+<p>
+  では、重ね合わせに対して実行する計算は、具体的に量子回路でどのように書けるでしょうか？
+  実は基本的には、従来のデジタル回路 (古典の回路) で行うビット単位の論理演算 (AND や NOT、OR など)
+  と量子版の論理演算には大きな違いはありません。ただし、量子回路では AND や NOT
+  といった従来の論理ゲートの代わりに、<control-gate></control-gate> や <x-gate></x-gate>
+  といった量子ゲートを使うという違いがあります。
+  もう一つの違いは、量子ゲートは重ね合わせ状態を入力できる点です。
+  このため、いったん量子版の論理演算回路を作ってしまえば、重ね合わせた量子ビットの演算にも自動的に対応できます。
+</p>
+
+<h2>インクリメント (+1) 回路</h2>
+
+<p>
+  まず簡単な例として、「数字に +1 する」つまりインクリメントする回路を作ってみましょう。
+  これを量子ゲートで実現するためには、「数字に +1
+  する」という処理をビット単位での演算、つまり二進数での演算で考える必要があります。
+</p>
+
+<p>
+  まずは入力を 0 として、インクリメントして 1 を計算する回路を考えます。 これは単純に 0 → 1
+  にすればいいのですから、次のように <x-gate></x-gate> で反転させれば OK です。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"{0\"],[\"|0>\"],[\"}\"],[1],[\"{インクリメント\"],[\"X\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>
+  次は入力を 1 として、インクリメントして 2 を計算する回路を考えます。 1 を二進数で表すと 01、2
+  を二進数で表すと 10 なので、これは 01 → 10 に変換する回路と言えます。 これはつまり、ビット 0 が 1
+  であればビット 2 を反転し、その後にビット 0 を反転させれば良さそうです。 こうした「ビット 0 が 1
+  であればビット 2 を反転」という条件付き反転は、CNOT ゲートで書けます。 これと <x-gate></x-gate> によるビット 0 の反転を組合わせると、1 を 2 にインクリメントする回路は次のように書けます。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"{1\"],[\"|0>\",\"|0>\"],[\"X\"],[\"}\"],[1],[\"{インクリメント\"],[\"•\",\"X\"],[\"X\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>
+  この CNOT ゲートはビット 0 が 1 の時に一桁上のビット 1 を 1 に反転させるので、繰り上げ
+  (ビット演算では「キャリー」と呼ばれる) を計算しています。 この CNOT ゲートはビット 0 が 1
+  の時にしか発動しないため、最初の 0 を 1 にインクリメントする回路 (X ゲート 1 つの回路)
+  の機能も含んでいます。 つまり、0 または 1 をインクリメントする回路は、この CNOT と X
+  による回路ひとつで表すことができます。
+</p>
+
+<p>
+  同様にビットを増やしていくと、3 ビットまでの数 (0から7) に +1
+  する回路は、以下のように作ることができます。 入力の 1 が実際に 2
+  にインクリメントされるかどうか試してみましょう。 また、入力を作る X ゲートの配置を変えることで 0
+  から 7 までの入力を作ることができます。 こちらも実際に +1 されるかどうか試してみましょう (ビット 0
+  の X ゲートをビット 1 に移動すると 2 (二進数で 10)、ビット 2 に移動すると 4 (二進数で 100)
+  を入力できます)。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[\"X\"]"} circuit={"{\"cols\":[[\"{3ビット入力\"],[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"X\",1,1,1],[\"}\"],[1],[\"{インクリメント\"],[\"•\",\"•\",\"•\",\"X\"],[\"•\",\"•\",\"X\",1],[\"•\",\"X\",1,1],[\"X\",1,1,1],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<h2>重ね合わせを入力する</h2>
+
+<p>
+  では、この回路が重ね合わせに対応していることを確認しましょう。
+  これまで見てきたように、重ね合わせを作るには <h-gate></h-gate> を使います。
+  たとえば以下のようにビット 0 に <x-gate></x-gate>、ビット 2 に <h-gate></h-gate>
+  を置くと、1 と 5 の重ね合わせを入力できます。
+  これに対して先ほどのインクリメント回路を適用すると、1 と 5 それぞれに +1 した、2 と 6
+  の重ね合わせが出力されます。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[\"X\",\"H\"]"} circuit={"{\"cols\":[[\"{1と5の重ね合わせ\"],[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"X\",1,1,1],[1,1,\"H\",1],[\"}\"],[1],[\"{インクリメント\"],[\"•\",\"•\",\"•\",\"X\"],[\"•\",\"•\",\"X\",1],[\"•\",\"X\",1,1],[\"X\",1,1,1],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<h2>ハンズオン</h2>
+
+<p>
+  入力を作る <x-gate></x-gate> と <h-gate></h-gate>
+  の配置を変えることで、いろいろな重ね合わせに対してインクリメント回路を動作させてみましょう。
+</p>
+
+<ul>
+  <li>5 と 7 の重ね合わせを入力するにはどうしたらよいでしょうか?</li>
+  <li>0 〜 7 すべての重ね合わせを入力するにはどうしたらよいでしょうか？</li>
+</ul>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[\"X\",\"H\"]"} circuit={"{\"cols\":[[\"{3ビット入力\"],[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"X\",1,1,1],[1,1,\"H\",1],[\"}\"],[1],[\"{インクリメント\"],[\"•\",\"•\",\"•\",\"X\"],[\"•\",\"•\",\"X\",1],[\"•\",\"X\",1,1],[\"X\",1,1,1],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<h2>注意点: 重ね合わせはそのまま取り出せない</h2>
+
+<p>
+  重ね合わせ演算を入力して何らかの算術演算をすると、同様に重ね合わされた状態が出力されます。
+  注意しなければならないのは
+  (そしてすぐ忘れてしまいがちなのは)、重ね合わせはそのまま取り出せず、測定によってどれか 1
+  つの値だけしか確率的に取り出せないということです。 Qni
+  はシミュレータであるため、実行中の量子コンピュータの重ね合わせ状態を見ることができますが、通常は量子コンピュータから値を取り出すには必ず測定をしなければなりません。
+  量子回路で表すと、計算結果を取り出すには次のように <measurement-gate></measurement-gate>
+  ゲートを用いて値を取り出す必要があります。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[\"X\",\"H\"]"} circuit={"{\"cols\":[[\"{1と5の重ね合わせ\"],[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"X\",1,1,1],[1,1,\"H\",1],[\"}\"],[1],[\"{インクリメント\"],[\"•\",\"•\",\"•\",\"X\"],[\"•\",\"•\",\"X\",1],[\"•\",\"X\",1,1],[\"X\",1,1,1],[\"}\"],[1],[\"{測定\"],[\"Measure\",\"Measure\",\"Measure\",\"Measure\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>
+  「なんだ、たとえ 100,000 個の重ね合わせに並列に計算を実行できても、そのうち 1
+  個しか計算結果を取り出せないんなら、並列の意味がないじゃないか」。 そう思うかもしれません。
+</p>
+
+<p>
+  しかし、<a href={base}>はじめに</a>で紹介したグローヴァーのアルゴリズム (量子探索)
+  では、この重ね合わせ演算を次のようにうまくデータ探索に活用します。
+</p>
+
+<ul class="list-decimal">
+  <li>
+    たくさんの重ね合わせデータに対して並列に演算を行う。この演算は算術演算ではなく、「条件に合うデータ
+    (みつけたいデータ) に印をつける」という処理を並列に行う。
+  </li>
+  <li>印をつけたデータの確率を増幅させ、測定したときに印をつけたデータが出力される確率を上げる</li>
+</ul>
+
+<p>
+  つまり、グローヴァーのアルゴリズムでは「大量のデータのうち条件にあうものに印をつける」という処理に重ね合わせによる並列処理を使います。
+  2 の確率を増幅させる操作はまだ説明していませんが、これを振幅増幅と呼び後の項目で詳しく扱います。
+  それまでは、重ね合わせ上の演算テクニックについてより詳しく見ていきましょう。
+</p>
+
+
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .relative { position:relative; } .absolute { position:absolute; } .inset-0 { inset:0; } .m-auto { margin:auto; }
+  .h-12 { height:48px; } .w-12 { width:48px; } .h-12 :global(svg) { width:100%; height:100%; }
+  .text-purple-500 { color:#A855F7; } .font-bold { font-weight:700; }
+  .h-8 { height:32px; } .w-16 { width:64px; } .text-zinc-300 { color:#DAD8CE; }
+  .h-8 :global(svg) { width:100%; height:100%; }
+  .relative.h-8 :global(x-gate.qpu-operation-sm), .relative :global(measurement-gate.qpu-operation-sm) { font-size:24px; width:24px; height:24px; }
+  .items-center > :global(phase-gate) { font-size:32px; }
+  .mb-4 { margin-bottom:16px; } .space-y-4 { row-gap:16px; } .items-end { align-items:flex-end; }
+  .text-2xl { font-size:24px; line-height:32px; } .mx-auto { margin-inline:auto; } .p-0 { padding:0; }
+  .p-4 { padding:16px; } .border-l-4 { border-left:4px solid #60A5FA; } .bg-blue-50 { background:#EFF6FF; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>

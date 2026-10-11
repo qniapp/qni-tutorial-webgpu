@@ -750,3 +750,18 @@ incrementおよび後続decrementはroute/TOC/fixturesに含めず未公開。dr
 公開全 **39移行ページ / 78ケース、54 embed / 108起動** はrunning/step0/norm1、console/page errors0、HTML/shadow DOM内の横/縦scrollbar0、document横overflow0。multi-1/3/7/stressの4ページも両幅で追加確認し、8ケース / 22起動で同じ結果。合計 **全43 builtページ / 86ケース、全65 embed / 130起動**。回帰 `/tmp/qtw-scroll-pr60-public.json`、追加 `/tmp/qtw-pr58-extra-pr60-public.json`、原文比較 `/tmp/qtw-port-cphase.json`、DPR `/tmp/qtw-cphase-public-glyphs.json`。native canvasのclip/panは許容範囲。
 
 **cphaseは#57待ちではなく、解決・公開済み。** superdense #59待ち / SKIP、increment/decrement原JSON訂正許可待ちは維持し未変更。owned preview 4343と検証browserを終了。09:45 hard stopを守り、docs-only Pagesの最終状態は終了時に報告する。
+
+
+## 2026-10-11 算術演算再開 / 許可されたincrement訂正 (10:22 hard stop)
+
+CPHASEは前セッションで公開/GPU検証完了。docs-only checkpoint 43abeb3 / Pages **38099314664 success**も確認したので、移植や検証をやり直していない。pin **64b7bb5de1eaecdfcc221bfabe0ed14ffe53ca28** 維持。
+
+高宮さんが **increment_circuitの第6回路末尾だけ `["1"]` → `[1]` をAPPROVED**。その1トークンだけを訂正し、他の原JSON、本文、測定、block、gate、paletteは変えない。raw original fixtureの文字列1は残し、`tests/increment-correction.spec.ts` で逆訂正すると原6回路と完全一致することを確認。他の原文訂正への一般的な許可には拡張しない。[increment-blocker.md](increment-blocker.md) の現在状態を解決に更新。
+
+### increment_circuit
+
+元draft `/tmp/qtw-blocked-arithmetic/` を復帰し、原6 circuits、原proseのX/H/control glyph、説明と段階を保持。画像なし、削除creditsなし、旧Qni UI画像/追加質問なし。paletteを個別確認して **[[],[],["X"],["X","H"],["X","H"],["X","H"]]**、max-wire-countは **1×6**。max1でも元4-wireを切り詰めない。原editorのoverflow-scroll shellを除去し、390/1440本文/shadow DOMの横/縦inner scrollbar、document横overflowは0。prose glyphは共通Bold、native labelsはRegular。
+
+original/live390/1440の本文/TeX diff0、native errors0。原サイトの6番目だけUnknown operation:1は許可された訂正対象であり、移行後は6個すべてrunning。12起動でstep0/norm1、修正した末尾も受理される。原図/本文のその他の差はない。対象tests9件と訂正guard1件、build/typecheck/diff-check成功。
+
+最終GPU状態も13試行で確認: 0→1、1→2、4-wire入力1→2、1/5の重ね合わせ→2/6の重ね合わせ (各1/2)、最後の測定8試行は2または6のみ。13/13成功、norm≈1。資料 `/tmp/qtw-inc-local-behavior.json`、`/tmp/qtw-inc-local-new.log`、`/tmp/qtw-port-increment_circuit.json`、`/tmp/qtw-scroll-inc-local.json`。まずincrementを公開し、その後sidebar順のdecrementから進む。

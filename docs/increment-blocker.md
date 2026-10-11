@@ -1,4 +1,8 @@
-# increment_circuit: 原JSONの文字列 "1" でSTOP
+# increment_circuit: 原JSONの文字列 "1" を許可された空slotへ訂正
+
+**現在の状態: 解決。** 2026-10-11 09:44、高宮さんが第6回路末尾だけ `["1"]` → `[1]` を明示承認した。ページのその1トークンだけを訂正し、raw original fixtureは未訂正のまま保存。`tests/increment-correction.spec.ts` は6回路を比較し、変更を戻せば原JSONと完全一致することを検証する。他のJSON/本文を訂正する許可には拡張しない。最新公開・検証は [porting.md](porting.md) 末尾。
+
+以下は許可前の歴史的なSTOP記録。
 
 2026-10-11。increment_circuit と後続ページは未公開。cphase #57 / superdense_coding_circuit #59 とは別の原文訂正待ち。
 
