@@ -1347,3 +1347,14 @@ sidebar次の最新mainを確認。同ページのopen PRなし (#578は前ペ�
 ローカル390/1440本文/TeXdiff0/全counts一致/原JSON一致、errors0、running/step0/norm≈1、本文/content/shadow内scrollbar0/文書横overflow0、DPR1/2×両幅4/4。全2ツールバーundo/redoのみ85/85/0画素、旧trash位置クリック無効果。390スクリーンショットを目視確認。初期preview4354要求は既存4353を使うAstro daemonの仕様で新ポートを起動せず、ERR_CONNECTION_REFUSEDとなったためそのprobe/suiteを停止。既存4353にURLを合わせ、HTTP-ready確認後、固定distで全suiteを最初から再実行 **332tests成功**。製品の不具合や数値不一致ではなく、検証hostの指定を修正した。identity最初のprobeの旧Grover targetラベルもcase%16に直し、64件全件成功。
 
 原fixture `inverse_qft-original.json`、全文/TeX `inverse-qft-text.json`、`tests/inverse-qft.spec.ts`。資料 `/tmp/qtw-port-inverse_qft.json`、`/tmp/qtw-inverse-qft-{gpu-results,local-embed-results,local-glyphs}.json`、`/tmp/qtw-scroll-inverse-qft-local.json`、`/tmp/qtw-pr63-toolbar-inverse-qft-local.json`、`/tmp/qtw-qft-inverse-identity-*`。typecheck/build/diff-check成功。本文・回路・数値の不一致/新しい確認事項なし。pin348992f/Binaryen123/GPU-only、本番readback/CPU fallback/上流変更なし。公開へ進む。
+
+
+### inverse_qft公開確認完了 / 15:41 hard stopへ
+
+**ee4d539 / Pages38118496993 success**。公開390/1440で原本文/TeXdiff0/全counts一致/原20列4-wire JSON無変更、32円表示の振幅・順序無変更、palette[]/max-wire-count1/run-buttonなし、画像0/置換0/削除credits0/sidenote0/Orbit0。errors0、running/step0/norm≈1、body/content/shadow内scrollbar0/文書横overflow0、DPR1/2×両幅4/4、共通prose Bold (原gateタグ0)/native Regular/Qni/実験版/MathJax3.2.2/Qniで開くを維持。
+
+公開nativeの最終H(q3)を選んで、全16状態のsigned実部/虚部/各6.25%を解析a_j=(1/4)exp(2πi·2j/16)と照合 **2/2成功**。入力|2⟩100%、出力の±0.25/±0.17678等の原5桁表示・周波数2/45°/周期8も確認。standalone4/localnative2/publicnative2/両順全basisのidentity64を合わせて **72/72成功**、norm≈1/errors0。全2ツールバーundo/redoのみ85/85/0画素、旧trash位置クリック無効果。`inverse-qft-gpu-verification.json` にnativePublic/toolbarsPublic/glyphsPublicを保存。全332tests/typecheck/build/diff-check成功。
+
+資料 `/tmp/qtw-port-inverse_qft.json` (public)、`/tmp/qtw-inverse-qft-public-{embed-results,glyphs}.json`、`/tmp/qtw-scroll-inverse-qft-public.json`、`/tmp/qtw-pr63-toolbar-inverse-qft-public.json`。同ページPRなし、#578は前ページの承認1本文編集だけ。今回はreadout_of_patterns→inverse_qftをsidebar順で公開し、新しい本文/数値/JSONの不一致や判断待ちはない。
+
+次の **inside_the_qft（QFTの内部）** は、15:41 hard stopまでに原文/全数値/図/GPU/E2Eを検証して公開する時間が足りないため、route/fixtureを作成せず未着手・未公開のままにする。nextページの検証済みという主張はしない。owned preview4353/診断browserを終了し、通常pushでmain/worktreeを同期する。最後の記録だけのPagesは終了時点の状態を報告する。pin348992f/Binaryen123/GPU-only、本番readback/CPU fallback/上流変更なし。
