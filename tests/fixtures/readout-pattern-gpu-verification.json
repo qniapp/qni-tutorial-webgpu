@@ -139,7 +139,6 @@
       "columns": 6,
       "norm": 0.9999997793827633,
       "leakage": 0,
-      "target": 3,
       "states": [
         {
           "i": 0,
@@ -257,7 +256,8 @@
         585.0000048296736,
         630.0000075134348,
         675.0000096593471
-      ]
+      ],
+      "frequency": 2
     },
     {
       "width": 390,
@@ -265,7 +265,6 @@
       "columns": 21,
       "norm": 0.9999997615814402,
       "leakage": 0,
-      "target": 15,
       "states": [
         {
           "i": 2,
@@ -275,7 +274,8 @@
         }
       ],
       "errors": [],
-      "pass": true
+      "pass": true,
+      "frequency": 2
     },
     {
       "width": 1440,
@@ -283,7 +283,6 @@
       "columns": 6,
       "norm": 0.9999997793827633,
       "leakage": 0,
-      "target": 3,
       "states": [
         {
           "i": 0,
@@ -401,7 +400,8 @@
         585.0000048296736,
         630.0000075134348,
         675.0000096593471
-      ]
+      ],
+      "frequency": 2
     },
     {
       "width": 1440,
@@ -409,7 +409,6 @@
       "columns": 21,
       "norm": 0.9999997615814402,
       "leakage": 0,
-      "target": 15,
       "states": [
         {
           "i": 2,
@@ -419,7 +418,8 @@
         }
       ],
       "errors": [],
-      "pass": true
+      "pass": true,
+      "frequency": 2
     }
   ],
   "nativeLocal": [
@@ -484,6 +484,232 @@
         85,
         0
       ]
+    }
+  ],
+  "nativePublic": [
+    {
+      "width": 390,
+      "circuit": 0,
+      "offset": 122,
+      "norm": 0.9999997615814402,
+      "leakage": 0,
+      "states": [
+        {
+          "i": 2,
+          "re": 0.9999998807907104,
+          "im": 4.5485744948337015e-08,
+          "p": 0.9999997615814372
+        }
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "circuit": 0,
+      "offset": 122,
+      "norm": 0.9999997615814402,
+      "leakage": 0,
+      "states": [
+        {
+          "i": 2,
+          "re": 0.9999998807907104,
+          "im": 4.5485744948337015e-08,
+          "p": 0.9999997615814372
+        }
+      ],
+      "errors": [],
+      "pass": true
+    }
+  ],
+  "toolbarsPublic": [
+    {
+      "slug": "readout_of_patterns",
+      "width": 390,
+      "index": 0,
+      "path": "/tmp/qtw-pr63-toolbar-readout-pattern-public/readout_of_patterns-390-0.png",
+      "unchanged": true,
+      "errors": [],
+      "iconPixels": [
+        85,
+        85,
+        0
+      ]
+    },
+    {
+      "slug": "readout_of_patterns",
+      "width": 1440,
+      "index": 0,
+      "path": "/tmp/qtw-pr63-toolbar-readout-pattern-public/readout_of_patterns-1440-0.png",
+      "unchanged": true,
+      "errors": [],
+      "iconPixels": [
+        85,
+        85,
+        0
+      ]
+    }
+  ],
+  "glyphsPublic": [
+    {
+      "width": 390,
+      "dpr": 1,
+      "slug": "readout_of_patterns",
+      "glyphs": [
+        {
+          "tag": "h-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "phase-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "h-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "control-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "phase-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "swap-gate",
+          "glyph": "bold",
+          "size": "16px"
+        }
+      ],
+      "overflow": false,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "width": 390,
+      "dpr": 2,
+      "slug": "readout_of_patterns",
+      "glyphs": [
+        {
+          "tag": "h-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "phase-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "h-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "control-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "phase-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "swap-gate",
+          "glyph": "bold",
+          "size": "16px"
+        }
+      ],
+      "overflow": false,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "dpr": 1,
+      "slug": "readout_of_patterns",
+      "glyphs": [
+        {
+          "tag": "h-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "phase-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "h-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "control-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "phase-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "swap-gate",
+          "glyph": "bold",
+          "size": "16px"
+        }
+      ],
+      "overflow": false,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "dpr": 2,
+      "slug": "readout_of_patterns",
+      "glyphs": [
+        {
+          "tag": "h-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "phase-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "h-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "control-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "phase-gate",
+          "glyph": "bold",
+          "size": "16px"
+        },
+        {
+          "tag": "swap-gate",
+          "glyph": "bold",
+          "size": "16px"
+        }
+      ],
+      "overflow": false,
+      "errors": [],
+      "pass": true
     }
   ]
 }

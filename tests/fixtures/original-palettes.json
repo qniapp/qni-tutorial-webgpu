@@ -290,5 +290,8 @@
   "grover_iam_indetail": [],
   "readout_of_patterns": [
     []
+  ],
+  "inverse_qft": [
+    []
   ]
 }

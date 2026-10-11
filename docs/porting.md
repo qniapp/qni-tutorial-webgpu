@@ -1328,3 +1328,22 @@ grover_iam_indetail公開確認後に最新mainと原liveを読み、原回路�
 原fixture `readout_of_patterns-original.json`、承認済み全文/TeX `readout-pattern-approved-text.json`、`tests/readout-patterns.spec.ts` は全文inverse whitelist/TeX/原JSON/48振幅/配列/制限/no-scroll/errorsを守る。資料 `/tmp/qtw-port-readout_of_patterns.json`、`/tmp/qtw-readout-pattern-local-*`、`/tmp/qtw-scroll-readout-pattern-local.json`、`/tmp/qtw-pr63-toolbar-readout-pattern-local.json`。typecheck/build/diff-check成功、固定distで全suite完了後に公開する。pin348992f/Binaryen123/GPU-only、本番readback/CPU fallback/上流変更なし。
 
 readout_of_patterns: 固定distで全suite **326tests成功**、typecheck/build/diff-check成功。承認1か所だけを反映して公開へ進む。
+
+
+### readout_of_patterns公開確認完了
+
+**7564c97 / Pages38117749165 success**。公開390/1440で承認1訂正以外の本文diff0、TeXは承認で削除する|15⟩以外diff0、原21列/4-wire JSON無変更、48円表示・palette[]/max-wire-count1/run-buttonなしを保持。errors0、running/step0/norm≈1、body/content/shadow内scrollbar0/文書横overflow0、DPR1/2×両幅4/4/prose全6gate Bold/native Regular。公開native最終signed|2⟩ **2/2成功** (standalone4+localnative2+publicnative2=8/8)、全2ツールバーundo/redoのみ85/85/0画素、旧trash位置クリック無効果。画像置換0/削除credits0/sidenote1/Orbit0。全326tests/typecheck/build/diff-check成功。
+
+15:24に新open **qniapp/qni#578 / heade5af862adb460d9cc7740feb550d38f54f212852** を取得。承認した末尾の本文1修正と完全一致。PRのinspector class順序変更は採用せず、承認済みsourceは1本文編集だけ。inverse_qftへの変更なし。GPU fixtureの使わない旧Grover由来target診断ラベルを削除し、frequency2を明示した (GPU結果や照合条件は元から正しい)。公開結果にnativePublic/toolbarsPublic/glyphsPublicを追加した。
+
+### inverse_qft（逆QFT）本文/数値/JSON無変更で移植
+
+sidebar次の最新mainを確認。同ページのopen PRなし (#578は前ページの承認済み1修正だけ)。原 **20列/4-wireの1JSON無変更**、palette **[]×1** (源にpaletteなし)、max-wire-count **1×1**、原run-buttonなし。原 **32円表示 (入力16/出力16)** の振幅/data-ket/lgサイズ/順序を無変更。自然なdesktop8列/mobile4列gridで縮小/clip/zoomせず、4bit aria ket幅を明示。画像0/自作画像置換0/credits削除0、sidenote0/Orbit0。本文/数値/TeX無変更、共通prose Bold維持 (元gateタグ0)/native Regular、Qni/実験版/MathJax3.2.2/Qniで開くを維持。
+
+解析: 入力 **|2⟩ amp+1/確率100%**、他0。出力a_j=(1/4)exp(2πi·2j/16)、各p=**6.25%**、位相差45°/周期8、軸上±0.25/±0.25i、斜め±1/(4√2)=±0.1767766952966369 (原±0.17678の5桁表示に一致)。原QFTの12gateを逆順にし、H/SWAPは自己逆、全6CPHASE角度は負→正に反転しているので逆演算。末尾のidentity slotを含む原JSONを変更していない。
+
+実GPUで入力までの原prefix5列/全20列を390/1440照合 **4/4成功**。実記事native最終H(q3)へpan/クリックして全16signed実部/虚部/各6.25%を両幅照合 **2/2成功**、norm≈1/errors0。さらに原12gate blockを両順に合成した検証専用回路で全16basisを390/1440確認し、QFT→IQFTとIQFT→QFTの **identity64/64成功**、元basis amp+1/他0に戻ることを実GPUで確認。全70/70の証拠を `inverse-qft-gpu-verification.json` に保存。合成回路は記事に追加していない。
+
+ローカル390/1440本文/TeXdiff0/全counts一致/原JSON一致、errors0、running/step0/norm≈1、本文/content/shadow内scrollbar0/文書横overflow0、DPR1/2×両幅4/4。全2ツールバーundo/redoのみ85/85/0画素、旧trash位置クリック無効果。390スクリーンショットを目視確認。初期preview4354要求は既存4353を使うAstro daemonの仕様で新ポートを起動せず、ERR_CONNECTION_REFUSEDとなったためそのprobe/suiteを停止。既存4353にURLを合わせ、HTTP-ready確認後、固定distで全suiteを最初から再実行 **332tests成功**。製品の不具合や数値不一致ではなく、検証hostの指定を修正した。identity最初のprobeの旧Grover targetラベルもcase%16に直し、64件全件成功。
+
+原fixture `inverse_qft-original.json`、全文/TeX `inverse-qft-text.json`、`tests/inverse-qft.spec.ts`。資料 `/tmp/qtw-port-inverse_qft.json`、`/tmp/qtw-inverse-qft-{gpu-results,local-embed-results,local-glyphs}.json`、`/tmp/qtw-scroll-inverse-qft-local.json`、`/tmp/qtw-pr63-toolbar-inverse-qft-local.json`、`/tmp/qtw-qft-inverse-identity-*`。typecheck/build/diff-check成功。本文・回路・数値の不一致/新しい確認事項なし。pin348992f/Binaryen123/GPU-only、本番readback/CPU fallback/上流変更なし。公開へ進む。

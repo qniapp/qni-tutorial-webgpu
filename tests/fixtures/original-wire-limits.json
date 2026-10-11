@@ -179,5 +179,8 @@
   "grover_iam_indetail": [],
   "readout_of_patterns": [
     1
+  ],
+  "inverse_qft": [
+    1
   ]
 }
