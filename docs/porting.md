@@ -765,3 +765,26 @@ CPHASEは前セッションで公開/GPU検証完了。docs-only checkpoint 43ab
 original/live390/1440の本文/TeX diff0、native errors0。原サイトの6番目だけUnknown operation:1は許可された訂正対象であり、移行後は6個すべてrunning。12起動でstep0/norm1、修正した末尾も受理される。原図/本文のその他の差はない。対象tests9件と訂正guard1件、build/typecheck/diff-check成功。
 
 最終GPU状態も13試行で確認: 0→1、1→2、4-wire入力1→2、1/5の重ね合わせ→2/6の重ね合わせ (各1/2)、最後の測定8試行は2または6のみ。13/13成功、norm≈1。資料 `/tmp/qtw-inc-local-behavior.json`、`/tmp/qtw-inc-local-new.log`、`/tmp/qtw-port-increment_circuit.json`、`/tmp/qtw-scroll-inc-local.json`。まずincrementを公開し、その後sidebar順のdecrementから進む。
+
+
+### increment公開 / Pages成功
+
+内容 **d38338f487ae232f375e86f02030b4252f55b060**。最初のPages38099749423は新しい訂正guardのNode型importでtypecheck失敗し、未公開だった。依存を増やさず、guardを実際のpage DOM取得へ変更した **167aaa9f4290d4e532db5d13e808b41061fb9b92** / **Pages38100067128 success** で公開済み。修正後typecheck成功、実DOM訂正guardも1/1成功。原JSON訂正や製品コードの追加変更なし。
+
+### decrement_circuit
+
+sidebar順で復帰。原7 JSON/本文/TeXを無訂正で保持。原図6個のmax-wire-countを **4×6**、後のHTML embedは **1**、paletteは **[]×7**。画像/削除credits/旧Qni画像/追加質問なし。元の4-wireを保持。最後のGPU状態は、最初のincrement図が入力1→2、途中のXキャンセル/相殺4図が状態0、逆increment図が0→15 (4-bit wraparound)、最後の原HTML例が1/5→0/4 (各1/2)。原7回路すべて最終状態とnorm≈1を確認。
+
+### addition_circuit
+
+原3 JSON/本文/TeXを保持。palette **[]×3**、max **1×3**、7-wireを切り詰めない。画像/削除credits/追加質問なし。最初の2例のGPU出力は52/56各1/2、a=4/8でb=3不変。最後は35/39/103/107各1/4、低4bitのa=3/7/7/11、b=2/6との相関も保持。
+
+### subtraction_circuit
+
+原2 JSON/本文/TeX/補数表を保持。palette **[]×2**、max **1×2**、7-wireを保持。画像/削除credits/追加質問なし。GPU第1例34/36/49/51各1/4 (a=1/2/3/4)、第2例78/79/93/94各1/4、低4bit13/14/15=-3/-2/-1の確率1/4,1/2,1/4。両方とも上位入力を保持。
+
+### multiplication_circuit
+
+原1 JSON/本文/TeX/筆算・uncomputationの説明を保持。元の角括弧block開始とbrace終端も書き換えない。palette **[]**、max **1**、元10-wireを保持。画像/削除credits/追加質問なし。GPU出力状態110のみ、a=2/b=3/m=6/tmp=0、norm1。nativeの10-wire canvas clip/panは許容し、scaleやupstream修正はしていない。
+
+4ページのoriginal/live390/1440は本文/TeX diff0、原circuits/counts保持、native errors0。26起動step0/norm1、本文/shadow DOMの横/縦scrollbar/document横overflow0。nativeだけの固定canvas clipは許容。本文glyphは共通Bold、diagram/nativeはRegular。原overflow-scroll editor shellを既存native frameに置換、余分なscrollfixなし。build/typecheck/diff-check成功、全 **258 tests (4.5m)** 成功。最終GPU状態は原13回路すべて照合成功。資料 `/tmp/qtw-arithmetic-source-probe.json`、`/tmp/qtw-arithmetic-{local-live,local-new,local-scroll,all-tests}.log`、`/tmp/qtw-port-<slug>.json`。公開後確認を追記する。

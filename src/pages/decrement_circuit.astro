@@ -1,0 +1,131 @@
+---
+import dividerSvg from '../assets/diagram-divider.svg?raw'
+import downSvg from '../assets/diagram-down.svg?raw'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="デクリメント回路" description="インクリメントの逆演算" section="算術演算" hasMath hasCircuit>
+
+
+<p>
+  数に +1 する<a href={`${base}increment_circuit/`}>インクリメント回路</a>とは逆に、-1
+  するデクリメント回路を作ってみましょう。
+  今回はビット演算から考えるのではなく、「デクリメントはインクリメントの逆」という発想を使います。
+  つまり、前回に作ったインクリメント回路の逆演算回路を考えることで、デクリメント回路が作れるかどうか実験してみることにしましょう。
+</p>
+
+<p>
+  逆演算回路とは、元の回路と並べることで全体を打ち消す回路でした (<a href={`${base}disentangle/`}
+    >もつれをほどく</a
+  >の逆ベル回路を参照)。 これを作るために、元のインクリメント回路を振り返りましょう。 次は 3
+  ビットまでの数をインクリメントする回路です。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <qni-webgpu-circuit max-wire-count="4" palette={"[]"} circuit={"{\"cols\":[[\"{3ビット入力\"],[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"X\"],[\"}\"],[1],[\"{インクリメント\"],[\"•\",\"•\",\"•\",\"X\"],[\"•\",\"•\",\"X\",1],[\"•\",\"X\"],[\"X\",1,1,1],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+</div>
+
+<p>
+  まずは「インクリメント」部分の一番右の <x-gate></x-gate>から消していくことを考えます。 <x-gate></x-gate> の逆演算は <x-gate></x-gate> 自身なので、次のように <x-gate></x-gate>
+  を置きます。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <qni-webgpu-circuit max-wire-count="4" palette={"[]"} circuit={"{\"cols\":[[\"•\",\"•\",\"•\",\"X\"],[\"•\",\"•\",\"X\",1],[\"•\",\"X\"],[\"X\"],[\"X\"]]}"}></qni-webgpu-circuit>
+</div>
+
+<p>すると <x-gate></x-gate> 2 個が打ち消しあい、次の回路になります。</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <qni-webgpu-circuit max-wire-count="4" palette={"[]"} circuit={"{\"cols\":[[\"•\",\"•\",\"•\",\"X\"],[\"•\",\"•\",\"X\",1],[\"•\",\"X\"]]}"}></qni-webgpu-circuit>
+</div>
+
+<p>
+  同様に一番右の CNOT を消します。CNOT の逆演算も CNOT 自身なので、次のように CNOT を適用します。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <qni-webgpu-circuit max-wire-count="4" palette={"[]"} circuit={"{\"cols\":[[\"•\",\"•\",\"•\",\"X\"],[\"•\",\"•\",\"X\",1],[\"•\",\"X\"],[\"•\",\"X\"]]}"}></qni-webgpu-circuit>
+</div>
+
+<p>すると次のように CNOT が消えました。</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <qni-webgpu-circuit max-wire-count="4" palette={"[]"} circuit={"{\"cols\":[[\"•\",\"•\",\"•\",\"X\"],[\"•\",\"•\",\"X\",1]]}"}></qni-webgpu-circuit>
+</div>
+
+<p>
+  続くゲートもまったく同じパターンで消していくことができ、最終的にインクリメント回路をすべて消す逆演算回路は、次のようになります。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <qni-webgpu-circuit max-wire-count="4" palette={"[]"} circuit={"{\"cols\":[[\"{逆インクリメント\"],[\"X\"],[\"•\",\"X\"],[\"•\",\"•\",\"X\"],[\"•\",\"•\",\"•\",\"X\"],[\"}\"]]}"}></qni-webgpu-circuit>
+</div>
+
+<p>問題は、本当にこれがデクリメントになっているかどうかです。さっそく実験してみましょう。</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"{1と5の重ね合わせ\"],[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"X\",1,1,1],[1,1,\"H\",1],[\"}\"],[1],[\"{デクリメント?\"],[\"X\"],[\"•\",\"X\"],[\"•\",\"•\",\"X\"],[\"•\",\"•\",\"•\",\"X\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>
+  たしかに、1 と 5 の重ね合わせをデクリメントに通すと 0 と 4 の重ね合わせが得られます
+  (ほかの入力も試してみてください!)。
+</p>
+
+<p>
+  量子回路ではこのように、ある算術演算を行う回路の逆回路を作ることで、逆の算術演算を行う回路を作ることができます。
+  これは、量子ゲートの可逆性を利用したおもしろい性質です。
+</p>
+
+<p>
+  ただし逆演算回路を作るには、もとの回路が <x-gate></x-gate> や <h-gate></h-gate>
+  といった可逆なゲートのみから構成されている必要があります。 ほとんどの量子ゲートは可逆ですが、<measurement-gate></measurement-gate> や <write-gate data-value="0"></write-gate>、<write-gate data-value="1"></write-gate> は非可逆です。
+</p>
+
+<p>
+  <a href={`${base}increment_circuit/`}>インクリメント回路</a
+  >で説明したように、量子コンピュータの強力さの一因は、重ね合わせ上で演算できることです。
+  可逆なゲートは重ね合わせを入出力できるのでこれを満たしていますが、非可逆な <measurement-gate></measurement-gate> <write-gate data-value="0"></write-gate> <write-gate data-value="1"></write-gate>
+  は重ね合わせを出力できず、重ね合わせを強制的に重ね合わせのない <Ket label="0" /> または <Ket label="1" />
+  にリセットします。
+  このため、これらの非可逆なゲートは量子というよりも、従来型のコンピュータに近い命令と言えます。
+  よって、従来の算術演算を量子コンピュータ上で重ね合わせを含めて実現しようとする場合には、<measurement-gate></measurement-gate> <write-gate data-value="0"></write-gate> <write-gate data-value="1"></write-gate> を使うことはできません。
+</p>
+
+
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .relative { position:relative; } .absolute { position:absolute; } .inset-0 { inset:0; } .m-auto { margin:auto; }
+  .h-12 { height:48px; } .w-12 { width:48px; } .h-12 :global(svg) { width:100%; height:100%; }
+  .text-purple-500 { color:#A855F7; } .font-bold { font-weight:700; }
+  .h-8 { height:32px; } .w-16 { width:64px; } .text-zinc-300 { color:#DAD8CE; }
+  .h-8 :global(svg) { width:100%; height:100%; }
+  .relative.h-8 :global(x-gate.qpu-operation-sm), .relative :global(measurement-gate.qpu-operation-sm) { font-size:24px; width:24px; height:24px; }
+  .items-center > :global(phase-gate) { font-size:32px; }
+  .mb-4 { margin-bottom:16px; } .space-y-4 { row-gap:16px; } .items-end { align-items:flex-end; }
+  .text-2xl { font-size:24px; line-height:32px; } .mx-auto { margin-inline:auto; } .p-0 { padding:0; }
+  .p-4 { padding:16px; } .border-l-4 { border-left:4px solid #60A5FA; } .bg-blue-50 { background:#EFF6FF; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>

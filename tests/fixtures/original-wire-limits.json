@@ -24,5 +24,9 @@
   "cascading_teleportation": [1],
   "long_distance_entanglement": [1],
   "cphase": [1, 1, 1, 1],
-  "increment_circuit": [1, 1, 1, 1, 1, 1]
+  "increment_circuit": [1, 1, 1, 1, 1, 1],
+  "decrement_circuit": [4, 4, 4, 4, 4, 4, 1],
+  "addition_circuit": [1, 1, 1],
+  "subtraction_circuit": [1, 1],
+  "multiplication_circuit": [1]
 }

@@ -1,0 +1,138 @@
+---
+import dividerSvg from '../assets/diagram-divider.svg?raw'
+import downSvg from '../assets/diagram-down.svg?raw'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="足し算回路" description="任意の数を足す" section="算術演算" hasMath hasCircuit>
+
+
+<p>
+  これまでは、+1 や -1 のように定数を足す回路を見てきました。
+  これだけではほとんど何もできずつまらないので、任意の数を足し合わせる回路を考えてみましょう。
+</p>
+
+<p>
+  足し算というと \(a + b = c\)
+  という式をすぐに思い付きますが、これは可逆な回路として実装できません。 なぜかと言うと、 \(a\) と
+  \(b\) から \(c\) を求めることはできても、逆に \(c\) から \(a\) と \(b\)
+  を一意に求めることができないからです。 つまり足し算 \(a + b = c\)
+  に逆演算が存在しないことになり、よって可逆な回路としては実装できない (=
+  重ね合わせをそのまま出力できない) ことになります。
+</p>
+
+<p>{String.raw`
+  そのかわりに、\(a \mathrel{+}= b\) という回路を実装します。
+  これはプログラミングによく出てくる演算子で、\(a\) に \(a + b\) の結果を代入することを意味します。
+  もし \(a\) を元の値に戻したくなった場合、\(a \mathrel{-}= b\) (\(a\) に \(a - b\) の結果を代入)
+  という逆演算が存在するので、逆回路も問題なく実装できそうです。
+`}</p>
+
+<h2>足し算回路</h2>
+
+<p>{String.raw`
+  以下が \(a \mathrel{+}= b\) を実装した量子回路です。 \(a\) に 1 と 5
+  を重ね合わせた値をセットし、\(b\) には 3 をセットします。 \(a \mathrel{+}= b\) を実行すると \(a\)
+  には 4 と 8 を重ね合わせた値が残ります。 \(b\) は変化しません。
+`}</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"{a=1と5の重ね合わせ\"],[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"X\"],[1,1,\"H\"],[\"}\"],[1],[\"{b=3\"],[1,1,1,1,\"|0>\",\"|0>\",\"|0>\"],[1,1,1,1,\"X\",\"X\"],[\"}\"],[1],[\"{a+=b (a=4と8の重ね合わせ)\"],[\"•\",\"•\",\"•\",\"X\",\"•\"],[\"•\",\"•\",\"X\",1,\"•\"],[\"•\",\"X\",1,1,\"•\"],[\"X\",1,1,1,\"•\"],[1,\"•\",\"•\",\"X\",1,\"•\"],[1,\"•\",\"X\",1,1,\"•\"],[1,\"X\",1,1,1,\"•\"],[1,1,\"•\",\"X\",1,1,\"•\"],[1,1,\"X\",1,1,1,\"•\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>
+  インクリメントやデクリメント回路と大きく違う点は、b をセットするブロック (\(b = 3\))
+  が存在することです。 \(a\) の値は 7 量子ビットの下位 4 ビット、\(b\) の値は上位 3
+  ビットを使って表されていることに注意してください。 ここで \(b\) の値は 3 (二進数で 011)
+  にセットされており、また計算中は \(b\) の値はずっと変わらず 011 のままなので、\(b = 3\)
+  のブロック以降の円表示では、上位 3 ビットが必ず 011 となります。
+</p>
+
+<p>
+  このため、計算結果の見方には注意が必要です。 計算結果の \(a\) の値は 4 と 8 (二進数で 0100 と
+  1000) の重ね合わせになっているはずですが、円表示で見ると 52 と 56 (二進数で 0110100 と 0111000)
+  になっています。 これは計算結果に \(b\) の値 3 (二進数で 011)
+  もあわせて表示されているためで、これが上位 3 ビットなので二進数では 0110000 (十進数で 48)
+  が足し合わされています。 そこで \(a\) の値だけを読み取るには上位 3 ビットの 011
+  を無視するか、十進数で 48 を引いてやる必要があります。
+</p>
+
+<h2>a += b 回路の仕組み</h2>
+
+<p>
+  この回路はやや複雑に見えますが、よく見るとインクリメント回路の各ステップに <control-gate></control-gate> を足したものを、ビットをずらしながら 3 回繰り返していることがわかります。 そして、<control-gate></control-gate> は b の各ビットにかかっています。 つまりこれは、「a の各ビットに b
+  の対応するビットを条件としてインクリメント」を行う回路です。
+</p>
+
+<ul class="list-decimal">
+  <li>
+    \(b\) のビット 0 が 1 なら、\(a\) を 1 インクリメントする (= ビット 0 をインクリメントする)
+  </li>
+  <li>\(b\) のビット 1 が 1 なら、\(a\) のビット 1 をインクリメントする</li>
+  <li>\(b\) のビット 2 が 1 なら、\(a\) のビット 2 をインクリメントする</li>
+</ul>
+
+<p>{String.raw`
+  これは、ビットごとに 2 進数の足し算を行っていることになり、結果として \(a \mathrel{+}= b\)
+  が計算できます。
+`}</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"{a=1と5の重ね合わせ\"],[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"X\"],[1,1,\"H\"],[\"}\"],[1],[\"{b=3\"],[1,1,1,1,\"|0>\",\"|0>\",\"|0>\"],[1,1,1,1,\"X\",\"X\"],[\"}\"],[1],[\"{ビット0\"],[\"•\",\"•\",\"•\",\"X\",\"•\"],[\"•\",\"•\",\"X\",1,\"•\"],[\"•\",\"X\",1,1,\"•\"],[\"X\",1,1,1,\"•\"],[\"}\"],[1],[\"{ビット1\"],[1,\"•\",\"•\",\"X\",1,\"•\"],[1,\"•\",\"X\",1,1,\"•\"],[1,\"X\",1,1,1,\"•\"],[\"}\"],[1],[\"{ビット2\"],[1,1,\"•\",\"X\",1,1,\"•\"],[1,1,\"X\",1,1,1,\"•\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<h2>重ね合わせに重ね合わせを足す</h2>
+
+<p>
+  先ほどの例では \(b\) に 3 をセットしていましたが、これを重ね合わせにするとどうなるでしょうか？
+  たとえば \(a\) を 1 と 5 の重ね合わせ、\(b\) を 2 と 6
+  の組合わせにして足すと、和はどんな重ね合わせになるでしょう？
+</p>
+
+<p>1 と 5 の重ね合わせ + 2 と 6 の重ね合わせ = ???</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"{a=1と5の重ね合わせ\"],[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"X\"],[1,1,\"H\"],[\"}\"],[1],[\"{b=2と6の重ね合わせ\"],[1,1,1,1,\"|0>\",\"|0>\",\"|0>\"],[1,1,1,1,1,\"X\"],[1,1,1,1,1,1,\"H\"],[\"}\"],[1],[\"{a+=b=???\"],[\"•\",\"•\",\"•\",\"X\",\"•\"],[\"•\",\"•\",\"X\",1,\"•\"],[\"•\",\"X\",1,1,\"•\"],[\"X\",1,1,1,\"•\"],[1,\"•\",\"•\",\"X\",1,\"•\"],[1,\"•\",\"X\",1,1,\"•\"],[1,\"X\",1,1,1,\"•\"],[1,1,\"•\",\"X\",1,1,\"•\"],[1,1,\"X\",1,1,1,\"•\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>
+  上の回路の実行結果を見ると、35 (二進数で 0100011)、39 (二進数で 0100111)、103 (二進数で
+  1100111)、107 (二進数で 1101011) の重ね合わせが出力されています。 ここで \(b\) の値は 2 と 6
+  の重ね合わせ (それぞれ二進数で 010 と 110) なので、これら上位 3 ビットを無視すると、 出力結果は
+  0011, 0111, 0111, 1011 であり、ダブった値 0111 を除くと 3 通りになります。 これは十進数で 3 (= 1 +
+  2), 7 (= 1 + 6 または 5 + 2), 11 (= 5 + 6)
+  となり、重ね合わせの和がすべての通りについて出ていることが分かります。
+</p>
+
+
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .relative { position:relative; } .absolute { position:absolute; } .inset-0 { inset:0; } .m-auto { margin:auto; }
+  .h-12 { height:48px; } .w-12 { width:48px; } .h-12 :global(svg) { width:100%; height:100%; }
+  .text-purple-500 { color:#A855F7; } .font-bold { font-weight:700; }
+  .h-8 { height:32px; } .w-16 { width:64px; } .text-zinc-300 { color:#DAD8CE; }
+  .h-8 :global(svg) { width:100%; height:100%; }
+  .relative.h-8 :global(x-gate.qpu-operation-sm), .relative :global(measurement-gate.qpu-operation-sm) { font-size:24px; width:24px; height:24px; }
+  .items-center > :global(phase-gate) { font-size:32px; }
+  .mb-4 { margin-bottom:16px; } .space-y-4 { row-gap:16px; } .items-end { align-items:flex-end; }
+  .text-2xl { font-size:24px; line-height:32px; } .mx-auto { margin-inline:auto; } .p-0 { padding:0; }
+  .p-4 { padding:16px; } .border-l-4 { border-left:4px solid #60A5FA; } .bg-blue-50 { background:#EFF6FF; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>

@@ -82,5 +82,9 @@
   "cascading_teleportation": [[]],
   "long_distance_entanglement": [[]],
   "cphase": [[], [], ["P(π/4)", "•"], ["P(π)", "Z", "•"]],
-  "increment_circuit": [[], [], ["X"], ["X", "H"], ["X", "H"], ["X", "H"]]
+  "increment_circuit": [[], [], ["X"], ["X", "H"], ["X", "H"], ["X", "H"]],
+  "decrement_circuit": [[], [], [], [], [], [], []],
+  "addition_circuit": [[], [], []],
+  "subtraction_circuit": [[], []],
+  "multiplication_circuit": [[]]
 }
