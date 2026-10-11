@@ -1164,3 +1164,12 @@ clean detached checkout `verify/tutorial-toolbar` から `scripts/fetch-qni-webg
 standaloneは新ビルドでgrover_iamの3回路を390/1440で実行し **6/6**、答3/15/8、確率約100%/47.2656%/47.2656%、SAT補助q4〜q13のleakage0を再確認。全 **298tests (6.7m)**、typecheck/build/diff-check成功。
 
 永続結果 `tests/fixtures/pr63-verification.json`。資料 `/tmp/qtw-scroll-pr63-local.json`、`/tmp/qtw-pr58-extra-pr63-local.json`、`/tmp/qtw-pr63-toolbar-{before,local}-verified.json`、各ツールバー画像/一覧画像、`/tmp/qtw-pr63-actions-local.json`、`/tmp/qtw-pr63-{tests,types,build,local-standalone}.log`。公開後は同じ全ページ/全ツールバーの確認を行い、実公開結果を追記する。force-pushは使わない。
+
+
+### PR #63 公開全件確認完了 (13:53)
+
+**1240881 / Pages38112691736 success**。pin **348992f5d7926d326eaa0f678fa8d89f0894ff54** の埋め込み＋standalone再ビルドがCIでも成功し、実公開済み。公開全 **55ページ / 390・1440の110ケース / 105埋め込み210起動** でrunning/step0/norm≈1、console-page errors0、本文/内容/Shadow DOM内部scrollbar0、文書横overflow0。元の文言・回路JSON・palette・wire数・図・creditsに変更なし。
+
+公開の全 **210ツールバーでundo/redoのみ**、各矢印85画素、旧trash位置0画素。旧位置クリックで現在回路URLが変わらないことも全件確認。公開ホストでもX追加→undo→redo、旧trash無効果、history/storage副作用なし **4/4**。standaloneはPR #63の仕様どおり元のtrash操作を保持し、埋め込みだけがundo/redoのみとなる。
+
+`tests/fixtures/pr63-verification.json` に公開結果も保存。資料 `/tmp/qtw-scroll-pr63-public.json`、`/tmp/qtw-pr58-extra-pr63-public.json`、`/tmp/qtw-pr63-toolbar-public-verified.json`、実ツールバー画像/一覧画像、`/tmp/qtw-pr63-actions-public.json`。高宮さんの次の指示でhard stopを14:22へ更新し、この全件確認を最優先で完了した。次にgrover_iterationを原文の前提から解析し、承認された条件付き訂正を判断する。
