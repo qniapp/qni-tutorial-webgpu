@@ -1056,3 +1056,12 @@ PR #575が **9ed17873eeb3f278e00eaafb539c724f35918b2c** に更新。Hint4の新�
 local390/1440はbody/content/shadow inner scrollbar/document横overflow/errors0、step0/running/norm1、native内部panのみ許容。DPR1/2×両幅の4ケースはerrors/overflow0、図/native Regularを確認。pre折返しで静的式の長い行だけを表示幅へ合わせ、native canvasをscaleしていない。最初の289成功/3SAT幅失敗は修正後target6/6、最終全文guard2/2、typecheck/build/diff-check成功。全suite再実行は公開準備時に進行中で、成功数は確認後に記録する。
 
 資料 `/tmp/qtw-port-sat.json`、`/tmp/qtw-scroll-sat-final-local.json`、`/tmp/qtw-phase-two-local-glyphs.json` (SAT4ケースの再実行結果)、`/tmp/qtw-sat-{golden-tests,final-tests,final-types,approved-build}.log`。公開live確認後にsidebar順でgrover_iamへ進む。
+
+
+### 12:53 SAT初回公開と状態図登録の補正
+
+初回内容commit **078adba** / **Pages38109541877 success**。全 **292tests (6.5m)** 成功、最終全文guard2/2も成功。原のHint4追加承認以外の本文は維持し、PR9ed17873と一致。
+
+公開後の置換図E2Eでcustom element未登録を検出した。SAT原にcircle tagが0個なのでpage generatorがqubit-circle importを付けず、自作SatStateIllustrationも登録を自分でimportしていなかった。実ページのnative GPUとは別の図の問題。component自身のscriptへ **import './qubit-circle'** を追加し、親ページの偶然のimportに依存しないよう修正。原本文/JSON/図の値を変更していない。
+
+登録とpopupを実際に確かめるguardへ強化し **2/2成功**。DPR1/2×390/1440の図 **4/4成功**、状態8の-0.25/6.2500%と14bit aria、末尾16383の14個の1/振幅0へ到達、overflow/errors0。最初の図harnessはketをtooltip textContentで探したがketはaria側にあるので、実tooltip確率＋aria ketへ照合対象を修正した。caption/data attrsだけの検査で済ませない。資料 `/tmp/qtw-sat-local-figure.json`、`/tmp/qtw-sat-circle-tests.log`。登録補正を公開してから最終live確認する。

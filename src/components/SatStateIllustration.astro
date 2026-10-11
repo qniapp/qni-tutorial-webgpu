@@ -6,6 +6,7 @@
   <output aria-live="polite">0〜31 / 16384状態</output>
 </section>
 <script>
+  import './qubit-circle'
   for (const root of document.querySelectorAll<HTMLElement>('[data-sat-states]')) {
     const input=root.querySelector('input')!, output=root.querySelector('output')!, circles=root.querySelectorAll('qubit-circle')
     input.addEventListener('input',()=>{
