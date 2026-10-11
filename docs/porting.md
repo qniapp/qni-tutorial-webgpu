@@ -992,3 +992,50 @@ owned preview4347/検証browserを終了。docs-only checkpointを通常push、P
 詳細 [sat-t5-blocker.md](sat-t5-blocker.md)、資料 `/tmp/qtw-sat-t5-{diagnostic.json,gpu.mjs,gpu.json,gpu.log,gpu.png}`。原palette **[]**、原HTML max-wire-count **1**、14-wireを維持する予定。原画像2枚は未置換/credits削除0。sat_result_state_vector.pngは旧Qniのblock labels・popupを含むため、再開時の置換について確認が必要。未移植なので本文diff/390・1440 scroll/step0/prose glyph検証を合格とは記録しない。
 
 今回の製品変更とSAT公開は0。承認された本文訂正を失わないよう原稿をcommitし、従来の公開済みページを再移植していない。診断browser終了済み、server新規起動なし。docs-only checkpointを通常pushし、Pages状態を終了時に報告する。
+
+
+## 2026-10-11 12:20 t5承認 / 12:28 Hint4追加承認 / 指定PR版との同期質問で公開保留
+
+前の作業を捨てずに継続。高宮さんがSol/Opusの独立レビュー (`/tmp/qtw-sat-review-{sol,opus}.md`) の **t5計算38〜42＋uncompute103〜107だけ** を明示承認。0-based col、q2=B1→q3=B4、他のtoken/125列/14-wire/block labels/冗長XXは保持。original/fixed JSONを `tests/fixtures/sat-circuit-{original,fixed}.json` に保存し、専用testは差分index配列を完全一致で固定。
+
+### 最終JSON差分 (0-based)
+
+| col | before | after |
+|---|---|---|
+| 38 | `[1,"X","X"]` | `[1,"X",1,"X"]` |
+| 39 | `[1,"X","X"]` | `[1,"X",1,"X"]` |
+| 40 | `[1,"•","•",1,1,1,1,1,"X"]` | `[1,"•",1,"•",1,1,1,1,"X"]` |
+| 41 | `[1,"X","X",1,1,1,1,1,"X"]` | `[1,"X",1,"X",1,1,1,1,"X"]` |
+| 42 | `[1,"X","X"]` | `[1,"X",1,"X"]` |
+| 103 | `[1,"X","X"]` | `[1,"X",1,"X"]` |
+| 104 | `[1,"X","X",1,1,1,1,1,"X"]` | `[1,"X",1,"X",1,1,1,1,"X"]` |
+| 105 | `[1,"•","•",1,1,1,1,1,"X"]` | `[1,"•",1,"•",1,1,1,1,"X"]` |
+| 106 | `[1,"X","X"]` | `[1,"X",1,"X"]` |
+| 107 | `[1,"X","X"]` | `[1,"X",1,"X"]` |
+
+### 実GPU照合
+
+実Chromium/AMD WebGPUの公開standalone、pin ef652682c23d89427f6f39bb6bee1ec6fae9bb1eでfixed fixtureを実行。全16basis入力 (q0..q3=A1,A4,B1,B4) に対し、初期4Hだけtest用X/空セルへ置換し、各block末尾までの原prefixを実行。q4..q13を全て読み、計算済み項は本文式、未計算項は0と照合し、入力4bit保持とnormも確認。
+
+| 検査 | 成功 |
+|---|---|
+| t1〜t10各block末尾 | 各16/16、合計160/160 |
+| uncompute後の補助10bit=0・入力保持・符号 | 16/16 |
+| H入力の全125列 | 1/1 |
+| 合計 | **177/177** |
+
+H入力の全回路は状態0〜15のみ各約1/16、**index8だけ約-0.25**、他約+0.25、補助bit0、norm≈1で答042。結果は `tests/fixtures/sat-gpu-verification.json`、script/log `/tmp/qtw-sat-all-gpu.{mjs,log}`。最初のharnessはhash-only navigationが再bootしないため旧prefixを読んだので、caseごとにabout:blankを挟む実document navigationへ修正して再確認した。製品/CPU fallback/本番GPU readbackを変更していない。
+
+### 中断時点のSAT原稿と検証
+
+未公開Astro原稿はpalette[]/max-wire-count1、14-wireを保持。crack_the_code.jpgは元の手書きパズル画像として保持。sat_result_state_vector.pngは旧Qni labels/popupを含むため、自作SatStateIllustrationへの置換を作業中。32状態を一度に描き、rangeで全16384状態を確認できる。14bitket、振幅/確率/位相popup、index8の-0.25/6.25%を保持し、16368の零状態を切り捨てない。原にcredits文なし、削除0。これらのpage/component/test変更はworktreeに残しているが、PR文言の確認が済むまでcommit/pushで公開しない。
+
+最初の全suiteは289成功/3失敗 (SATの長いpreによる390幅1022px)。未公開原稿のpreをpre-wrap/overflow-wrapへ変更し、native canvasのscaleやclippingでは隠していない。再build後、当該3ケースを含むtarget **6/6成功** (`/tmp/qtw-sat-wrap-target.log`)。typecheck/build成功。中断前の全文比較harnessは承認paragraphのDOM patch未完了で本文diff1、390幅も未修正時の結果だったため、**本文diff/live/page GPU最終動作を合格と記録しない**。実ページの全状態確認と公開live確認は未完了。
+
+### Hint4追加承認とPR #575の相違
+
+12:28の追加指示でHint4訂正そのものは明示承認された。新説明「7,3,8=×はどの箱にも入らない」、9変数のHint4 pre、確定変数3→9、Hint1前提「ほかのヒントから」→「ヒント4から」。原285行付近の最適化説明は無変更で保持する。
+
+ただし同指示の「指定PR最終版に合わせ、相違時はPR版を使う」と、PRの現head **b0d1c105ee0edbc2d20f3f45439d595bbe2eecab** の実内容が競合。12:29〜12:35にdiff/contents/headを再確認したが、PRは旧Hint4説明・旧3-item list・旧3変数・「ほかのヒントから」のまま。**質問: PR更新を待つか、今回明示されたHint4の4訂正をPR版より優先するか？** Hint4を訂正してよいかという未承認質問ではなく、どの最終文言へ同期するかの確認。勝手に旧文言を最終版として公開しない。
+
+PRの回路JSONはfixed fixtureと全体で完全一致、10列差分も同じ。class並べ替え以外の追加回路差分なし。[sat-pr575-sync-blocker.md](sat-pr575-sync-blocker.md) に記録。**SATとgrover_iam以降は未公開**。コード作業を保存したまま、docsと確定GPU fixturesだけcheckpointする。owned preview4348/検証browserを終了。hard stopは最新の13:02を適用。

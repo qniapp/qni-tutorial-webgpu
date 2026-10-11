@@ -1,4 +1,8 @@
-# sat: t5の原回路がB4ではなくB1を使うためSTOP
+# sat: t5は10列修正を承認済み、実GPUで解決確認
+
+**現在の状態:** 2026-10-11 12:20に高宮さんがSol/Opusレビューどおりの10列だけを明示承認。original/fixed fixturesと実GPU177ケースの記録を保存した。t1〜t10各16入力・復元16入力・H全回路が一致。公開は [Hint4と指定PR版の同期確認](sat-pr575-sync-blocker.md) で保留。
+
+以下はt5承認前の歴史記録。
 
 2026-10-11。高宮さんがSATのCond2・説明・4誤字・Hint1の最適化前提を明示承認した。指定の文言だけを反映した原稿は [sat-approved-source.html](sat-approved-source.html)。Cond2の配置は指定どおりに一意に適用でき、原JSONはbyte一致のまま。
 
