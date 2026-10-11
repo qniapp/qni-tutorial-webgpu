@@ -1,0 +1,50 @@
+{
+  "n": 4,
+  "N": 16,
+  "M": 1,
+  "k": 2,
+  "sinTheta": 0.25,
+  "thetaRadians": 0.25268025514207865,
+  "thetaDegrees": 14.477512185929925,
+  "angleRadians": 1.2634012757103932,
+  "angleDegrees": 72.38756092964962,
+  "probability": 0.908447265625,
+  "percentage": 90.8447265625,
+  "roundedPercent": "90.8%",
+  "comparisonGPUPercent": 90.84466975183183,
+  "differencePercentagePoints": 5.681066816975999e-05,
+  "otherIterations": [
+    {
+      "k": 1,
+      "percentage": 47.265625
+    },
+    {
+      "k": 3,
+      "percentage": 96.13189697265625
+    },
+    {
+      "k": 4,
+      "percentage": 58.170413970947244
+    },
+    {
+      "k": 5,
+      "percentage": 12.54916787147522
+    },
+    {
+      "k": 6,
+      "percentage": 2.0380768924951513
+    },
+    {
+      "k": 7,
+      "percentage": 36.491288826800854
+    },
+    {
+      "k": 8,
+      "percentage": 83.60891748598078
+    },
+    {
+      "k": 9,
+      "percentage": 99.2181860020537
+    }
+  ]
+}

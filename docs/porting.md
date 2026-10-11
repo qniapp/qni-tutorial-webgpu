@@ -1173,3 +1173,16 @@ standaloneは新ビルドでgrover_iamの3回路を390/1440で実行し **6/6**�
 公開の全 **210ツールバーでundo/redoのみ**、各矢印85画素、旧trash位置0画素。旧位置クリックで現在回路URLが変わらないことも全件確認。公開ホストでもX追加→undo→redo、旧trash無効果、history/storage副作用なし **4/4**。standaloneはPR #63の仕様どおり元のtrash操作を保持し、埋め込みだけがundo/redoのみとなる。
 
 `tests/fixtures/pr63-verification.json` に公開結果も保存。資料 `/tmp/qtw-scroll-pr63-public.json`、`/tmp/qtw-pr58-extra-pr63-public.json`、`/tmp/qtw-pr63-toolbar-public-verified.json`、実ツールバー画像/一覧画像、`/tmp/qtw-pr63-actions-public.json`。高宮さんの次の指示でhard stopを14:22へ更新し、この全件確認を最優先で完了した。次にgrover_iterationを原文の前提から解析し、承認された条件付き訂正を判断する。
+
+
+### grover_iteration: 2回反復の解析成立、9回目の数値でSTOP (13:57)
+
+原文の「4量子ビット」「答1111」「答でない0000等」と原pAND4点から **n=4 / N=2^n=16 / M=1**。指示されたPython解析で sinθ=√(1/16)=0.250000000000000、**θ=0.252680255142079rad**、k=2なので **5θ=1.263401275710393rad**、**P=sin²(5θ)=0.908447265625000 / 90.844726562500000%**。原JSONの実GPU **90.84466975183183%** と一致し、小数第1位は90.8%。よって条件付き承認が成立した。
+
+承認された **「約90.9%」→「約90.8%」1か所だけ** の原HTMLを `docs/grover-iteration-approved-source.html` に保存。逆置換で原sourceにbyte相当の完全一致、全3JSON無変更。解析結果 `tests/fixtures/grover-iteration-analysis.json` に保存。この2反復の旧確認事項は解決済み。
+
+ただし「数値は正しく」の方針で他の反復数値も確認すると、原文の **「9回目で99.9%」** は同じ前提と不一致。k=9で **19θ=4.800924847699494rad / P9=0.992181860020537 / 99.218186002053700%**、正しい小数第1位は **99.2%**。
+
+原4反復回路の12列反復部が全て同じことを確認し、検証用にだけ同一部を5回追加した9反復をGPU実行すると、390/1440とも **99.21797226588893%**。原3反復prefixは96.1318034678925%→96.1%、原4反復は58.1703%→58.2%で本文と一致。原liveの99.9段落と3JSONも取得sourceと一致する。原回路を勝手に変更したのではなく、本文の「さらに反復」をそのまま評価した。資料 `tests/fixtures/grover-iteration-k3-k9-gpu-verification.json` と `/tmp/qtw-grover-iteration-k3-k9-*`、`/tmp/qtw-grover-iteration-original-nine-prose.json`、原段落screenshot。
+
+**STOP/追加質問:「99.9%」1か所を「99.2%」へ訂正してよいか？** 2回反復の1か所承認をこの別数値へ拡張せず、**grover_iterationは未公開**、route未作成。sidebar次のmultiple_marked_values以降も停止。原3JSONの17/29/53列、各4-wire、palette[]×3/max1×3保持、画像0/削除credits0。移行後の全文diff/scroll/step0検証は未実施。詳細 [grover-iteration-rounding-blocker.md](grover-iteration-rounding-blocker.md)。GPU-only/本番readbackなし/CPU fallbackなし、Pythonは明示された解析式の評価のみ。PR #63の公開全件確認は完了済み。
