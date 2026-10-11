@@ -1,0 +1,665 @@
+---
+import minusSvg from '../assets/cpu-minus.svg?raw'
+import arrowSvg from '../assets/cpu-arrow-right.svg?raw'
+import AmplificationIllustration from '../components/AmplificationIllustration.astro'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="位相論理演算" description="論理演算の結果を位相に出力する" section="論理演算" hasMath hasCircuit>
+
+
+<p>
+  位相論理演算は、論理演算の結果を振幅の大きさではなく位相に出力するテクニックです。
+  位相バージョンの AND, OR
+  といった論理演算は、入力として論理演算と同じく振幅を取り、出力として位相<strong>のみ</strong>を変化させます。
+  位相は <measurement-gate></measurement-gate>
+  では直接読み出せないため隠れた情報ですが、いくつかの計算で位相の値を利用できます。
+</p>
+
+<p>
+  たとえば後で紹介する<strong>振幅増幅</strong>は、位相を使った強力なテクニックの 1 つです。
+  以下のように位相論理演算によってある振幅の位相を反転 (πの回転) させ「マーク」をつけます。
+  振幅増幅は、各振幅の位相差を振幅の大きさの差に変換します。
+  これによって、マークを付けた値の確率だけを上昇させ、ほかの確率を下降させることによって、<measurement-gate></measurement-gate> で読み出しやすくします。
+</p>
+
+<figure>
+  <AmplificationIllustration />
+</figure>
+
+<h2>位相論理 NOT (pNOT)</h2>
+
+<p>
+  位相論理 NOT は 1 つの入力ビットの振幅のうち <Ket label="0" /> の位相を反転します。
+  これは普通の論理演算で 0 を NOT で反転すると 1 (true) になるためです。 <Ket label="0" />, <Ket label="1" />
+  および重ね合わせ状態に pNOT を適用した結果は次のようになります<Sidenote id="phase_prefix_p" numbered>論理 NOT と区別するために、pNOT という記号を導入します。p は phase (位相)
+  を表しています。以降では同様に、pAND, pOR, ... のように p で区別していきます。</Sidenote>。
+</p>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="1" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNOT</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="-1" data-ket="0" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNOT</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.70711" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.70711" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNOT</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="-0.70711" data-ket="0" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.70711" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<p>
+  pNOT 回路は次のように <x-gate></x-gate> と <phase-gate></phase-gate>
+  を組合わせて作ることができます。
+</p>
+
+<qni-webgpu-circuit max-wire-count="2" palette={'["|0>","|1>","H"]'} circuit={"{\"cols\":[[\"|0>\"],[\"{pNOT\"],[\"X\"],[\"P(π)\"],[\"X\"],[\"}\"]]}"}></qni-webgpu-circuit>
+
+<h2>位相論理 AND (pAND)</h2>
+
+<p>
+  位相論理 AND は、2 つの入力ビット a, b を取り <Ket label="3" /> の位相を反転させます。
+  これは、普通の論理演算で a と b がそれぞれ 1 (= 十進数で 3) のときのみ
+  <code>a AND b = 1</code> になるためです。
+</p>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="1" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pAND</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="1" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pAND</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pAND</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pAND</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-1" data-ket="3" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.5" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pAND</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.5" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.5" data-ket="3" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<p>
+  pAND 回路は次のように CPHASE<Sidenote id="cphase" numbered>π 回転の <phase-gate></phase-gate>
+  を条件付きで実行するもの。<control-gate></control-gate> 2 つで略記できる。詳しくは<a
+    href="https://qniapp.github.io/qni/cphase.html"
+    >CPHASE ゲート</a
+  >参照</Sidenote> 一個で表せます。
+</p>
+
+<qni-webgpu-circuit max-wire-count="2" palette={'["|0>","|1>","H"]'} circuit={"{\"cols\":[[\"|0>\",\"|0>\"],[\"{pAND\"],[\"•\",\"•\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<h2>位相論理 OR (pOR)</h2>
+
+<p>
+  位相論理 OR は、2 つの入力ビット a, b を取り <Ket label="1" />, <Ket label="2" />, <Ket label="3" />
+  の位相を反転させます。 これは 1, 2, 3 を二進数で表した 01, 10, 11 のそれぞれ上下 2 ビット a, b
+  について、<code>a OR b = 1</code> が成り立つためです。
+</p>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="1" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pOR</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="1" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pOR</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-1" data-ket="1" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pOR</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-1" data-ket="2" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pOR</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-1" data-ket="3" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.5" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pOR</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.5" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.5" data-ket="1" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.5" data-ket="2" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.5" data-ket="3" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<p>
+  pOR 回路は次のように π 回転の <phase-gate></phase-gate> と CPHASE を組合わせて作ることができます。
+</p>
+
+<qni-webgpu-circuit max-wire-count="2" palette={'["|0>","|1>","H"]'} circuit={"{\"cols\":[[\"|0>\",\"|0>\"],[\"{pOR\"],[\"P(π)\"],[\"•\",\"•\"],[1,\"P(π)\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<h2>位相論理 NAND (pNAND)</h2>
+
+<p>
+  位相論理 NAND は、2 つの入力ビット a, b を取り <Ket label="0" />, <Ket label="1" />, <Ket label="2" />
+  の位相を反転させます。 こうなる理由は pAND の考え方と同じく、0, 1, 2 の上下 2 ビット a, b について
+  <code>a NAND b = 1</code> が成り立つためです。
+</p>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="1" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNAND</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="-1" data-ket="0" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNAND</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-1" data-ket="1" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNAND</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-1" data-ket="2" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNAND</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.5" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNAND</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="-0.5" data-ket="0" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.5" data-ket="1" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.5" data-ket="2" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<p>pNAND 回路は以下のように作ることができます。</p>
+
+<qni-webgpu-circuit max-wire-count="2" palette={'["|0>","|1>","H"]'} circuit={"{\"cols\":[[\"|0>\",\"|0>\"],[\"{pNAND\"],[\"X\",\"X\"],[\"P(π)\"],[\"•\",\"•\"],[1,\"P(π)\"],[\"X\",\"X\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<h2>位相論理 NOR (pNOR)</h2>
+
+<p>
+  位相論理 NOR は 2 つの入力ビット a, b を取り <Ket label="0" /> の位相を反転させます。 これは「NOR = OR
+  の結果を NOT で反転させたもの」と考えると分かりやすいでしょう。
+</p>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="1" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNOR</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="-1" data-ket="0" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNOR</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNOR</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNOR</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.5" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNOR</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="-0.5" data-ket="0" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<p>pNOR 回路は以下のように作ることができます。</p>
+
+<qni-webgpu-circuit max-wire-count="2" palette={'["|0>","|1>","H"]'} circuit={"{\"cols\":[[\"|0>\",\"|0>\"],[\"{pNOR\"],[\"X\",\"X\"],[\"•\",\"•\"],[\"X\",\"X\"],[\"}\"]]}"}></qni-webgpu-circuit>
+
+<h2>位相論理 XOR (pXOR)</h2>
+
+<p>
+  位相論理 NOR は 2 つの入力ビット a, b を取り, a XOR b の結果として <Ket label="1" /> と <Ket label="2" />
+  の位相を反転させます。
+</p>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="1" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pXOR</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="1" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pXOR</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-1" data-ket="1" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pXOR</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-1" data-ket="2" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pXOR</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<fit-content><div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12" data-fit-content>
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.5" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <span class="diagram-arrow size-4" set:html={minusSvg}></span>
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pXOR</span>
+      <span class="diagram-arrow size-4" set:html={arrowSvg}></span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.5" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.5" data-ket="1" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.5" data-ket="2" data-size="lg" class="magnitude-lime" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div></fit-content>
+
+<p>
+  pXOR 回路は他の位相論理回路と異なり、入力 a, b のほかに一時ビット c を必要とします。 c は pXOR
+  計算後にアンコンピュートされ <Ket label="0" /> に戻ります。
+</p>
+
+<qni-webgpu-circuit max-wire-count="2" palette={'["|0>","|1>","H"]'} circuit={"{\"cols\":[[\"|0>\",\"|0>\"],[\"{pXOR\"],[1,1,\"|0>\"],[1,1,\"X\"],[1,1,\"H\"],[\"•\",1,\"X\"],[1,\"•\",\"X\"],[1,1,\"H\"],[1,1,\"X\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<h2>まとめ</h2>
+
+<p>
+  位相論理演算は入力として振幅を取り、出力として位相に結果を書き込みます。
+  このとき振幅の大きさは変化せず、結果が 1 となる振幅の位相のみが反転する点がポイントです。
+  結果を位相に書き込む目的は、振幅増幅のプロセスを通じて振幅の大きさを増幅することで、 <measurement-gate></measurement-gate> による測定で答を取り出しやすくすることです。
+</p>
+
+<script>import "../components/fit-content"</script>
+</TutorialLayout>
+<style>
+  .my-5[data-fit-content] { width:max-content!important; }
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .relative { position:relative; } .absolute { position:absolute; } .inset-0 { inset:0; } .m-auto { margin:auto; }
+  .h-12 { height:48px; } .w-12 { width:48px; } .h-12 :global(svg) { width:100%; height:100%; }
+  .text-purple-500 { color:#A855F7; } .font-bold { font-weight:700; }
+  .h-8 { height:32px; } .w-16 { width:64px; } .text-zinc-300 { color:#DAD8CE; }
+  .h-8 :global(svg) { width:100%; height:100%; }
+  .relative.h-8 :global(x-gate.qpu-operation-sm), .relative :global(measurement-gate.qpu-operation-sm) { font-size:24px; width:24px; height:24px; }
+  .items-center > :global(phase-gate) { font-size:32px; }
+  .mb-4 { margin-bottom:16px; } .space-y-4 { row-gap:16px; } .items-end { align-items:flex-end; }
+  .text-2xl { font-size:24px; line-height:32px; } .mx-auto { margin-inline:auto; } .p-0 { padding:0; }
+  .p-4 { padding:16px; } .border-l-4 { border-left:4px solid #60A5FA; } .bg-blue-50 { background:#EFF6FF; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:visible; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>

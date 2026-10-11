@@ -147,5 +147,16 @@
   ],
   "superposition_quantum_logic": [
     1
+  ],
+  "phase_logic": [
+    2,
+    2,
+    2,
+    2,
+    2,
+    2
+  ],
+  "phase_logic_combination": [
+    1
   ]
 }

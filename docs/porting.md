@@ -918,3 +918,32 @@ original liveのDOMへ承認6項目だけを診断用に適用して比較し、
 phase_logicの原paletteは6 mini_qniすべて **["|0>","|1>","H"]**、正式pluginのmax-wire-count **2×6**。原画像amplitude_amplification_overview.pngは既存自作interactiveへの置換候補だが、STOPのため未置換/削除credits0。移行後の本文diff/390・1440のscroll/step0は未実施なので合格と記録しない。文言待機解除とは別の、**図の振幅訂正許可待ち**。[phase-logic-amplitude-blocker.md](phase-logic-amplitude-blocker.md) にoriginal live・GPU証拠と質問を記録し、phase_logic_combinationの歴史記録にも現状を付記した。
 
 owned preview4346と診断browserを終了。今回の追加公開はsuperposition_quantum_logicのみ。docs-only checkpointを通常pushして結果を終了時に報告し、11:30 hard stopを守る。
+
+
+## 2026-10-11 11:24承認 / phase_logic・phase_logic_combination (11:54 hard stop)
+
+高宮さんが3項目を明示承認: phase_logicの5重ね合わせ図の40振幅だけ **±0.70711→±0.5**、phase_logic_combinationの文字式2か所だけ **a OR (NOT b) AND c→(a OR (NOT b)) AND c**、同ページの旧Qni円表示PNG2枚を自作対話的状態表示へ置換し該当creditsを削除。原本文/原JSONへの他の訂正は承認に含めない。両ブロッカー文書を「解決＋歴史記録」へ更新。
+
+### phase_logic（位相論理演算）
+
+5図・40振幅だけ訂正し、1-qubit pNOTの0.70711/本文/TeX/原6回路JSON/212 authored circles/2sidenotesを維持。raw fixtureの元振幅を保持し、40のindex whitelistと逆変換guardで他の振幅を無変更と確認。6 mini_qniの原palette **["|0>","|1>","H"]×6**、正式pluginのmax-wire-count **2×6**。pXORの原3-wireを切り詰めず、他は1/2-wireを維持。元のrun-buttonなしを維持。
+
+amplitude_amplification_overview.png→既存の自作 **AmplificationIllustration** (クリック/Enter/Spaceで対象をマークする) に置換。原にcredits文なし、**削除credits0**、旧Qni editor画像なし。既存置換図の意図しない狭いket重なりは図内pseudo-labelを非表示にし、状態情報はpopup/ariaに保持。28静的circle図だけ既存fit-contentで幅を合わせ、native canvasはscaleせず水平panを維持。proseのX/PHASE/MEASURE/CONTROL glyphはBold、静的図/labels/nativeはRegular。
+
+GPU最終vector **56/56** 成功 (各390/1440、pNOTの2basis+uniform、pAND/pOR/pNAND/pNOR/pXORの4basis+uniform)。位相反転はpNOT:0、pAND:3、pOR:1/2/3、pNAND:0/1/2、pNOR:0、pXOR:1/2。pXOR補助wireは0へ復帰。uniform振幅は1-wire約±1/√2、2-wire約±0.5で正規化、訂正図と一致。診断の入力H/X追加はtestのみ、製品JSONに追加しない。
+
+### phase_logic_combination（位相論理演算の組合わせ）
+
+文字式の承認された括弧だけ2か所訂正。他の本文/TeX/原26列・4-wire JSONは維持。原palette **[]**、原HTML max-wire-count **1**、4-wireを切り詰めず、原run-buttonなしを維持。
+
+phase_logic_result.png→**LogicResultIllustration(states0〜7,negative4/5/7,wireCount4)**、quantum_logic_result.png→同componentの元5-wire結果 **0/1/2/3/6/20/21/23**。原と同じ2行構成、4-wireは8列×2、5-wireは16列×2。hover/focusで振幅/確率/位相/bit ketを確認できる。画像以外に新しい説明文を足さず、原に画像credits文なしなので **削除credits0**。承認外のcreditsは削除していない。
+
+実ページのnativeをpanして最終列を選択し **18/18 GPU比較** 成功 (原uniform＋8入力、各幅)。state4/5/7だけ負、他0/1/2/3/6は正、各1/√8。dは0へuncomputeされ、a/b/c保持。固定basisの符号も正しく、norm≈1。元のBoolean5-wire結果との比較図も前ページで検証済みの結果を保持。
+
+### 共通確認
+
+390/1440で本文/TeXは**承認2括弧以外diff0**、原JSON/counts一致、console/page errors0。起動step0/norm1、body/content/shadow DOM横/縦inner scrollbar/document横overflow0、native内部panは可。DPR1/2×390/1440の8ケースでprose Bold/図Regular・errors/overflow0、狭幅の元円図と置換図を実見確認。
+
+全 **282 tests (2.9m)** 成功。最終図CSS後の4 approved全文/40振幅逆変換guard＋4原構造guard **8/8** 成功、typecheck/build/diff-check成功。初回guardがfont/ResizeObserverによる静的fit完了前の幅を測った点は、fonts.ready＋実幅pollを待つ検証へ修正し、不安定なsleepやnative clipping変更で回避していない。
+
+資料 `/tmp/qtw-phase-two-local-{behavior,glyphs}.json`、`/tmp/qtw-phase-combination-local-embed-behavior.json`、`/tmp/qtw-port-{phase_logic,phase_logic_combination}.json`、`/tmp/qtw-scroll-phase-two-local.json`、`/tmp/qtw-phase-two-{all-tests,final-target-fixed,final-types,final-build}.log`。originalを承認どおりにtest-only DOM変更して全文比較し、期待全文を2 approved-text fixturesに固定。文字式以外の本文変更を許容しない。pin **ef652682c23d89427f6f39bb6bee1ec6fae9bb1e** 維持、GPU-only、Binaryen123、upstream/CPU fallback/本番readbackなし。公開live確認後にsidebar直後のsatへ進む。

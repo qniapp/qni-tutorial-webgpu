@@ -1,0 +1,95 @@
+---
+import dividerSvg from '../assets/diagram-divider.svg?raw'
+import downSvg from '../assets/diagram-down.svg?raw'
+import LogicResultIllustration from '../components/LogicResultIllustration.astro'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="位相論理演算の組合わせ" description="複雑な位相論理演算を組み立てる" section="論理演算" hasMath hasCircuit>
+
+
+<p>
+  位相論理演算を組合せて、より複雑な論理式回路を作ってみましょう。
+  <a href={`${base}superposition_quantum_logic/`}>重ね合わせ上での論理演算</a> で見た
+  <code>(a OR (NOT b)) AND c</code> の位相版はどうなるでしょうか？
+</p>
+
+<p>
+  位相論理演算を組合わせる場合、単純に pOR や pNOT を並べるだけでは動作しません。
+  なぜならば、位相論理演算は入力としての振幅を取るものの、出力は位相に書き込むからです。
+  このため、ただ並べただけでは入力と出力が合わずうまく連結できません。
+</p>
+
+<p>
+  位相論理演算を連結するには、普通の論理演算と位相論理演算を組合わせる必要があります。
+  <code>(a OR (NOT b)) AND c</code> を例にとると、最初の 2 つの論理演算 (<code>NOT b</code>
+  とその結果を使った<code>a OR (NOT b)</code>) は普通の論理演算 NOT, OR を連結して回路を作り、
+  最後の <code>... AND c</code> の部分だけ位相論理演算 pAND にします。
+  このように最後の論理演算だけ位相論理演算にすることで入力と出力がマッチし、結果を位相に書き込むことができます。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"{a,b,c=(0,1)\"],[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"H\",\"H\",\"H\"],[\"}\"],[1],[\"{b = NOT b\"],[1,\"X\"],[\"}\"],[1],[\"{d = a OR b\"],[\"X\",\"X\"],[\"•\",\"•\",1,\"X\"],[\"X\",\"X\",1,\"X\"],[\"}\"],[1],[\"{c = c pAND d\"],[1,1,\"•\",\"•\"],[\"}\"],[1],[\"{アンコンピュート\"],[\"X\",\"X\",1,\"X\"],[\"•\",\"•\",1,\"X\"],[\"X\",\"X\"],[1,\"X\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>
+  この回路の実行結果は以下のようになります。振幅の大きさは最初の均等な重ね合わせ状態から変化せず、答の
+  4, 5, 7 のみ位相が反転していることが分かります。
+</p>
+
+<figure>
+  <LogicResultIllustration states={[0,1,2,3,4,5,6,7]} negative={[4,5,7]} wireCount={4} />
+</figure>
+
+<p>
+  <a href={`${base}superposition_quantum_logic/`}>重ね合わせ上での論理演算</a
+  >で見た、論理演算回路の結果と比べてみましょう。
+  こちらは重ね合わせになっている振幅のうち、答の振幅とそうでない振幅の区別がつきません。
+  このため、読み出す確率が均等となり、答を読み出すのにたくさんの測定が必要になるのでした。
+</p>
+
+<figure>
+  <LogicResultIllustration />
+</figure>
+
+<p>
+  位相論理版の実行結果も振幅の大きさでは区別がつかないものの、位相ではっきりと区別がつきます。
+  繰り返しになりますが、これを後で紹介する振幅増幅プロセスにかけることによって、振幅の大きさへと反映でき、答をうまく読み出すことができるようになります。
+</p>
+
+
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .relative { position:relative; } .absolute { position:absolute; } .inset-0 { inset:0; } .m-auto { margin:auto; }
+  .h-12 { height:48px; } .w-12 { width:48px; } .h-12 :global(svg) { width:100%; height:100%; }
+  .text-purple-500 { color:#A855F7; } .font-bold { font-weight:700; }
+  .h-8 { height:32px; } .w-16 { width:64px; } .text-zinc-300 { color:#DAD8CE; }
+  .h-8 :global(svg) { width:100%; height:100%; }
+  .relative.h-8 :global(x-gate.qpu-operation-sm), .relative :global(measurement-gate.qpu-operation-sm) { font-size:24px; width:24px; height:24px; }
+  .items-center > :global(phase-gate) { font-size:32px; }
+  .mb-4 { margin-bottom:16px; } .space-y-4 { row-gap:16px; } .items-end { align-items:flex-end; }
+  .text-2xl { font-size:24px; line-height:32px; } .mx-auto { margin-inline:auto; } .p-0 { padding:0; }
+  .p-4 { padding:16px; } .border-l-4 { border-left:4px solid #60A5FA; } .bg-blue-50 { background:#EFF6FF; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>
