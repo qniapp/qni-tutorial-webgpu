@@ -1933,4 +1933,14 @@ pnpm exec playwright test tests/ket.spec.ts tests/content-overflow.spec.ts
 
 新shor_rとqpe_output/shor_hspは回路0なので新規GPU項目は該当なし、diagnostic embedを勝手に追加しない。4layout failuresをnative GPU代替checkと称さず、期待値を緩和しない。今回GPU audit/SSHは実行しない。
 
-通常fetch/rebase/push（forceなし）でC1/C2 pageとe55a761の前回証拠を公開、Pages/公開URL確認後に記録。次shor_uでsummary/引用年/3つのketラベル/図のaxis説明に不一致を発見、route作成前にSTOPした。正しい回路数値/図データとexact fix案は次のblockerに保存し、shor_qft以降へ進まない。
+通常fetch/rebase/push（forceなし）でC1/C2 pageとe55a761の前回証拠を公開、Pages/公開URL確認後に記録。次shor_uでsummary/引用年/3つのketラベル/図のaxis説明に不一致を発見、route作成前にSTOPした。正しい回路数値/図データとexact fix案は [shor-u-blocker.md](shor-u-blocker.md) に保存し、shor_qft以降へ進まない。
+
+### 08:33公開確認 / 新原文との比較はSTOP（成功と混同しない）
+
+**b94fd4f / Pages38183978622 success**。parent e55a761も通常pushで公開済み、rebaseで保持、forceなし。**公開source+4条件の5/5成功**（`/tmp/qtw-r-public-tests.log`）。**非GPU全suite369/373成功、既存4失敗だけ**（`/tmp/qtw-r-nongpu-regressions.log`）、新ページ回帰なし、共有CSS/期待値無変更。
+
+しかし原PR#587（head cb5e82e8bba966b9926e8bda089248f4e9214124、08:23:47merge、latest original f7569b2）が公開比較直前に更新したC2は、承認C2と `を計算し、`→`を計算して、` と `r4の場合には因数3と5`→`r4の場合因数3と5` の**追加2語句差**を持つ。正確なbefore→after/原source別保存/API証拠/質問は [shor-r-original-drift-blocker.md](shor-r-original-drift-blocker.md)。**当方本文はC1/C2 goldenと全4条件で一致し、全18TeX/数値/description/JSON[]も最新原と一致するが、最新原とのC1/C2-only本文比較は4/4 STOP/exit1**。初期local比較08:16の4/4成功と混同せず、追加変更を黙って取り込まない。診断collect-failuresは4証拠を集めるだけ、default throw/厳格whitelist/失敗exit1を保持。`shor-r-public-original-drift-verification.json` と `shor-r-pr587-drift-analysis.json` 保存。
+
+**質問R:** 承認C1/C2 exactを維持するか、PR#587のD1/D2も追加承認するか？ 今は維持。**質問U:** U1現在値×a説明 / U2引用2021→刊行1996（arXiv初稿1995） / U3三図の位置242をket241→242 / U4 f列番号横・x行番号縦のexact案を承認するか？ 未適用・未移植、全768円の配置/+0.25/6.25%/norm1は数学で一致する。
+
+08:27 open PR再check[]。前runで未調査だったshor_fx source差は今回latest原とA-only approved sourceをwhitespace-normalized比較して一致を確認（#586 merged）。行折り返しだけでbyte一致とは称さない、追加import0・Bは却下のまま。GPU/四旧layout guardは全件実機確認待ち、SSH/GPU監査未実行。今回の公開証拠・未承認差の記録を別docs commitで通常pushし、08:45までに全push停止する。

@@ -1,0 +1,20 @@
+[
+  {
+    "grid": 0,
+    "position": 242,
+    "before": "{{ '0.25' | qubit_circle: 241, 'base' }} {{ '0' |\n        qubit_circle: 241, 'base' }}",
+    "after": "{{ '0.25' | qubit_circle: 241, 'base' }} {{ '0' |\n        qubit_circle: 242, 'base' }}"
+  },
+  {
+    "grid": 1,
+    "position": 242,
+    "before": "{{ '0' | qubit_circle: 241, 'base' }} {{ '0.25' |\n        qubit_circle: 241, 'base' }}",
+    "after": "{{ '0' | qubit_circle: 241, 'base' }} {{ '0.25' |\n        qubit_circle: 242, 'base' }}"
+  },
+  {
+    "grid": 2,
+    "position": 242,
+    "before": "{{ '0' | qubit_circle: 241, 'base' }} {{ '0' |\n        qubit_circle: 241, 'base' }}",
+    "after": "{{ '0' | qubit_circle: 241, 'base' }} {{ '0' |\n        qubit_circle: 242, 'base' }}"
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-10-12T08:30:36+09:00",
+  "PR": {
+    "headRefOid": "cb5e82e8bba966b9926e8bda089248f4e9214124",
+    "mergeCommit": {
+      "oid": "f7569b20c7d61b170d1bd90b92f84b46f043061f"
+    },
+    "mergedAt": "2026-10-11T23:23:47Z",
+    "number": 587,
+    "title": "Correct period candidates and factor check in Shor r tutorial",
+    "url": "https://github.com/qniapp/qni/pull/587"
+  },
+  "latestOriginalSHA": "f7569b20c7d61b170d1bd90b92f84b46f043061f",
+  "portSHA": "b94fd4f",
+  "extraChanges": [
+    {
+      "before": "を計算し、",
+      "after": "を計算して、"
+    },
+    {
+      "before": "\\(r = 4\\) の場合には因数 3 と 5",
+      "after": "\\(r = 4\\) の場合因数 3 と 5"
+    }
+  ],
+  "otherContentDiffZeroIgnoringWhitespace": true,
+  "publicCases": 4,
+  "approvedPortGoldenMatches": true,
+  "latestOriginalComparison": "STOP;2 extra unapproved grammar edits;exit1",
+  "publicPortTests": "5/5 passed",
+  "GPUExecuted": false,
+  "decision": "No automatic import; keep exactly C1/C2; ask owner"
+}

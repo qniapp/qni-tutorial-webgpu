@@ -1,0 +1,21 @@
+{
+  "checkedAt": "2026-10-12T08:22:00+09:00",
+  "arxivURL": "https://arxiv.org/abs/quant-ph/9511018",
+  "arxivCitationDate": "1995/11/16",
+  "crossrefURL": "https://api.crossref.org/works/10.1103/PhysRevA.54.147",
+  "doi": "10.1103/physreva.54.147",
+  "title": [
+    "Quantum networks for elementary arithmetic operations"
+  ],
+  "published": {
+    "date-parts": [
+      [
+        1996,
+        7,
+        1
+      ]
+    ]
+  },
+  "publisher": "American Physical Society (APS)",
+  "proposedCitationYear": 1996
+}

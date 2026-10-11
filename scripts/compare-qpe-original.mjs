@@ -8,6 +8,8 @@ const fixed=JSON.parse(await readFile(new URL(`../tests/fixtures/${fixtureName}.
 const originalFixture=['qpe_output','shor_hsp','shor_r'].includes(slug)?{circuits:[]}:JSON.parse(await readFile(new URL(`../tests/fixtures/${slug}-original.json`,import.meta.url)))
 const base=process.env.QTW_AUDIT_URL??'https://qniapp.github.io/qni-tutorial-webgpu/'
 const browser=await chromium.launch({args:['--no-sandbox','--disable-gpu']});const results=[]
+// Diagnostic collection does not relax any whitelist/assertion and exits nonzero.
+const comparisonFailed=result=>Object.entries(result).some(([k,v])=>(k.endsWith('Zero')||k.endsWith('Matches'))&&v!==true)
 try{
 for(const width of [390,1440])for(const dpr of [1,2]){
  const context=await browser.newContext({viewport:{width,height:1100},deviceScaleFactor:dpr}),snapshots=[]
@@ -63,8 +65,10 @@ for(const width of [390,1440])for(const dpr of [1,2]){
  if(slug==='shor_hsp')result.approvedDescriptionMatches=original.description===ours.description&&ours.description===fixed.description
  if(slug==='qpe_output')result.approvedDescriptionMatches=original.description.replace('逆QFT','QFT')===ours.description&&ours.description===fixed.description
  results.push(result)
- if(Object.entries(result).some(([k,v])=>(k.endsWith('Zero')||k.endsWith('Matches'))&&v!==true))throw Error(JSON.stringify(result))
+ if(comparisonFailed(result)&&process.env.QTW_COMPARE_COLLECT_FAILURES!=='1')throw Error(JSON.stringify(result))
  await context.close()
 }
-console.log(`PASS ${slug}: original/live text and TeX only approved diffs (4 cases)`)
+const failures=results.filter(comparisonFailed)
+if(failures.length){console.error(`STOP ${slug}: ${failures.length}/4 comparison cases failed; no additional edits are authorized`);process.exitCode=1}
+else console.log(`PASS ${slug}: original/live text and TeX only approved diffs (4 cases)`)
 }finally{await writeFile(`/tmp/qtw-${slug}-live-comparison.json`,JSON.stringify(results,null,2)+'\n');await browser.close()}

@@ -1,0 +1,212 @@
+{
+  "GPUExecuted": false,
+  "sourceSHA256": "ae827cdbdfa4b902dabe8fef3b1c740d947193a29e695c796db299bea4ae3763",
+  "circuits": [
+    {
+      "cols": [
+        [
+          "{f(x)を入れる用"
+        ],
+        [
+          "|1>",
+          "|0>",
+          "|0>",
+          "|0>"
+        ],
+        [
+          "}"
+        ],
+        [
+          1
+        ],
+        [
+          "{x=0〜15"
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          "|0>",
+          "|0>",
+          "|0>",
+          "|0>"
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          "H",
+          "H",
+          "H",
+          "H"
+        ],
+        [
+          "}"
+        ],
+        [
+          1
+        ],
+        [
+          "{左シフト mod(15)"
+        ],
+        [
+          1,
+          1,
+          "Swap",
+          "Swap",
+          "•"
+        ],
+        [
+          1,
+          "Swap",
+          "Swap",
+          1,
+          "•"
+        ],
+        [
+          "Swap",
+          "Swap",
+          1,
+          1,
+          "•"
+        ],
+        [
+          "}"
+        ],
+        [
+          1
+        ],
+        [
+          "{左シフト2回 mod(15)"
+        ],
+        [
+          1,
+          "Swap",
+          1,
+          "Swap",
+          1,
+          "•"
+        ],
+        [
+          "Swap",
+          1,
+          "Swap",
+          1,
+          1,
+          "•"
+        ],
+        [
+          "}"
+        ],
+        [
+          1
+        ]
+      ]
+    }
+  ],
+  "JSONDiff": [],
+  "palette": [
+    []
+  ],
+  "maxWireCount": [
+    1
+  ],
+  "runButtonCount": 1,
+  "imageCount": 4,
+  "circleCount": 768,
+  "stageValues": [
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2
+    ],
+    [
+      1,
+      2,
+      4,
+      8,
+      1,
+      2,
+      4,
+      8,
+      1,
+      2,
+      4,
+      8,
+      1,
+      2,
+      4,
+      8
+    ]
+  ],
+  "labelDiff": [
+    {
+      "grid": 0,
+      "position": 242,
+      "before": 241,
+      "after": 242,
+      "amplitude": 0.0
+    },
+    {
+      "grid": 1,
+      "position": 242,
+      "before": 241,
+      "after": 242,
+      "amplitude": 0.25
+    },
+    {
+      "grid": 2,
+      "position": 242,
+      "before": 241,
+      "after": 242,
+      "amplitude": 0.0
+    }
+  ],
+  "probabilityEachXPercent": 6.25,
+  "wraparound": {
+    "1000": 8,
+    "leftRotate4": 1,
+    "16mod15": 1
+  },
+  "method": "Authored numeric table amplitudes compared with pure arithmetic and classical four-bit rotation. No state-vector execution/readback.",
+  "questions": [
+    "U summary omits current-value multiplication",
+    "Arxiv linked preprint is1995 not2021",
+    "Three duplicated ket241 should be242",
+    "f columns run horizontally and x rows vertically, prose reverses directions"
+  ],
+  "decision": "STOP before shor_u route; proposed fixes need approval"
+}
