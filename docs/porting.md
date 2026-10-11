@@ -1842,3 +1842,43 @@ QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/compare
 20:23のopen PRは全0件。#585の実merged headc960caacと当方はsource文字/全TeX一致（行折り返し差だけ）、指定旧head29d5ebf2はこの第7文だけbeforeのままという比較結果を保持。行折り返しも他本文も取り込まず、元の6修正をredoしていない。
 
 次shor_fxは原sourceが変わらずA/B未承認のためSTOP継続、原文/TeX/2JSON/画像4枚/sidenote未編集・route未作成、shor_r以降へ進まない。**A/Bの正確なfix案を承認するか質問する。** 架空GPUaudit commandや未実行結果を作らない。owned preview/browser停止、temporary Playwright config削除、通常pushで公開証拠をcommitし、hard stop20:40より前に終了する。
+
+## 2026-10-11 shor_fx: Aだけ承認/B却下、hold解除 / GPUなし / hard stop21:40
+
+21:09開始、porting tail/shor-fx blockerを再読。直前の未公開hold runは `wip/shor-fx-onward` branch作成とreadだけ、未編集・未commit・未pushだった。最新依頼でhold解除、Bは却下。cleanのmain（9dcc690）へ戻り、既存workをredoせずshor_fxを移植する。open PRは21:09に全0件。**BのN以上identity文は追加しない、再度承認条件にもしない。**
+
+**唯一の本文変更A:** `\(a\,mod(N)\) を計算できるゲート U があったときに` → `現在の値を \(a\) 倍し、\(mod(N)\) した値を書き込むゲート U があったときに`。他本文/数値/元U定義/descriptionは不変。approved raw全文を保存、原SHA256 `7ce601508a9f2cc9f43f23c3a90923765cb92a53057bb0b240758e99280f11f3` と独立A literalで全文byte guard。bodyの原TeX33→34（Aのa modN1入力→aとmodN2入力）だけ、ket2も含む実MathJax入力35→36。原QPEリンクhrefだけ移植先へ解決、Qiskit sidenote/URL/textは保持。
+
+### 4画像を自作表現へ
+
+- `shor_xtimes_u.png` → owned `ShorPowerDiagram variant=repeated` SVG。8wire、初期ket0000/1000（wire順）、H4、目に見えるU9個＋ellipsis2群、青caption「U を x 回置く」を保持。U9個をx=9という計算値だと解釈しない。
+- `shor_us.png` → variant=controlled SVG。8wire/H4、U15個、control wire0/1/2/3に1/2/4/8個を保持。
+- `shor_us_and_inv_qft.png` → variant=qft SVG。同じcontrolled配置とtop4wireのQFT box/labelを保持。filenameだけを理由に逆QFTへ変更しない。
+- `shor_mod15.png` → 既存 `ShorMod15Graph` interactive SVG。元16点[1,2,4,8]×4、X0..15/f(x)0..12・青線/白中心点を保持。部品そのものは変更なし。
+
+**画像置換4/credits削除0**（元credits文なし）。全4図は旧Qni UI画像ではなく、抽象回路図3/算術グラフ1。SVG全文をviewBoxでresponsive表示、clip/内側scroll/勝手なwire/gate非表示なし。figureHはRegular400、本文H1は共通Bold。新SVGのpublic Propsは `'repeated'|'controlled'|'qft'` の固定variantのみ、既存owned-SVG境界に揃えgeometry/8wire/U配置/QFTをcalleeに封じる。汎用chartや実行U型を露出せず、3別fileの重複やnativeの未定義blackbox追加を避けた。静的図のtitle以外にUを実行するUI/量子CPU simを追加しない。
+
+原**2JSON差0**、実wire4/8を保持。**palette[[],[]] / max-wire-count[1,1] / run-button2**、original/fixed fixturesへ保存。maxを実wire数へ置換しない。header/footer/MathJax3.2.2/pin348992f/共有CSS/既存page無変更。新ページだけsidebarを有効化し、後続は未移植のまま。
+
+### Python・非GPU検査
+
+前の古典算術証拠（x0..15/pow2mod15、control回数1/2/4/8）は維持。公開用analytic fixtureはH tensor4の16signed振幅+0.25、target|1>との積では8wire/index16..31の16signed振幅+0.25（それ以外0）、norm1を純粋なproduct式で作る。`shor-fx-approved-analysis.json` はeditA approved/editB rejected/GPUExecuted:false。以前のidentity extension試算は歴史的証拠だけで、製品/公開fixtureには適用しない。
+
+```sh
+pnpm exec playwright test tests/shor-fx-source.spec.mjs tests/shor-fx.spec.ts tests/sidebar.spec.ts
+QTW_AUDIT_URL=http://127.0.0.1:4322/qni-tutorial-webgpu/ node scripts/compare-qpe-original.mjs shor_fx
+```
+
+**typecheck/build/diff-check成功、source1＋390/1440×DPR1/2の原本文/36TeX/2JSON/metadata/4SVG/図H Regular・本文H Bold/sidenote/scroll/errors4＋sidebar5の10/10成功**。body/content/Shadow DOM内部scroll0・文書横overflow0、console/page errors0。原実サイトとのlocal4case比較成功、A以外のtext/TeX/JSON差0・description不変。MathJaxのA変更を独立位置32の1→2だけwhitelist。sidenote hiddenでも作者textを除外せず比較。スクリーンショット `/tmp/qtw-shor-fx-{390,1440}-dpr{1,2}.png` / `/tmp/qtw-shor_fx-live-{original,ours}-{390,1440}-dpr{1,2}.png`、log `/tmp/qtw-fx-{tests-final,local-compare,build}.log`。非GPUなのでnative描画/全gate visibilityを実機検証したとは称さない。
+
+### 実機確認待ち（新shor_fx2回路）
+
+このboxではGPU検査を実行しない。既存real-GPU auditをshor_fxへ拡張し、新signed product fixture/原2JSONを読む。**実機確認待ち**の正確なcommand:
+
+```sh
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs shor_fx
+```
+
+real adapter/running/step0/norm、全最終signed振幅（4wire16個+0.25、8wire16..31+0.25）、2run replay、undo/redo-only/trashなし/JSON復元、Regular/all gates visible・390/1440×DPR1/2・native active-column scrollを確認する。Bは却下なのでUのfull-space identity拡張をここで要求しない。原2回路はprepだけでUを含まない。production CPU fallback/readback追加なし。
+
+通常fetch/rebase/push（forceなし）でmainへ公開しPages/公開URLを確認する。最新依頼によりholdは解除されており、空のwip branchには変更を置かずmainで継続する。次shor_rの連分数候補に数値不一致を検出したため同ページは未移植でSTOP、詳細は公開確認後に記録する。

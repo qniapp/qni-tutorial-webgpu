@@ -2,7 +2,7 @@
 import {chromium} from '@playwright/test'
 import {readFile,writeFile} from 'node:fs/promises'
 const slug=process.argv[2]??'quantum_phase_estimation_circuit'
-if(!['quantum_phase_estimation_circuit','phase_kickback','qpe_output','shor_hsp'].includes(slug))throw Error('unsupported page')
+if(!['quantum_phase_estimation_circuit','phase_kickback','qpe_output','shor_hsp','shor_fx'].includes(slug))throw Error('unsupported page')
 const fixtureName=slug==='shor_hsp'?'shor-hsp-approved':slug==='qpe_output'?'qpe-output-approved':slug+'-fixed'
 const fixed=JSON.parse(await readFile(new URL(`../tests/fixtures/${fixtureName}.json`,import.meta.url)))
 const originalFixture=['qpe_output','shor_hsp'].includes(slug)?{circuits:[]}:JSON.parse(await readFile(new URL(`../tests/fixtures/${slug}-original.json`,import.meta.url)))
@@ -41,7 +41,16 @@ for(const width of [390,1440])for(const dpr of [1,2]){
    approvedMath.splice(0,3);approvedMath.splice(14,0,{tex:'N',display:false})
   }
  }
+ if(slug==='shor_fx'){
+  const plain=s=>s.replace(/\\\(.*?\\\)/gs,'').replace(/\s+/g,'')
+  for(const [before,after] of fixed.edits)approvedText=approvedText.replace(plain(before),plain(after))
+  if(JSON.stringify(approvedMath)!==JSON.stringify(fixed.math)){
+   if(approvedMath.length!==35||approvedMath[32].tex!==String.raw`a\,mod(N)`)throw Error('Original Shor FX TeX changed outside A; STOP')
+   approvedMath.splice(32,1,{tex:'a',display:false},{tex:'mod(N)',display:false})
+  }
+ }
  const result={slug,width,dpr,base,snapshots,approvedTextDiffZero:approvedText===ours.text,sourceGoldenTextMatches:ours.text===fixed.text,approvedTexDiffZero:JSON.stringify(approvedMath)===JSON.stringify(ours.math),rawTexUnchanged:JSON.stringify(original.math)===JSON.stringify(ours.math),sourceGoldenTexMatches:JSON.stringify(ours.math)===JSON.stringify(fixed.math),originalJSONMatches:JSON.stringify(original.circuits)===JSON.stringify(originalFixture.circuits),approvedJSONMatches:JSON.stringify(approvedCircuits)===JSON.stringify(ours.circuits),fixedJSONMatches:JSON.stringify(ours.circuits)===JSON.stringify(fixed.circuits??[]),WebGPUExecuted:false}
+ if(slug==='shor_fx')result.approvedDescriptionMatches=original.description===ours.description&&ours.description===fixed.description
  if(slug==='shor_hsp')result.approvedDescriptionMatches=original.description===ours.description&&ours.description===fixed.description
  if(slug==='qpe_output')result.approvedDescriptionMatches=original.description.replace('逆QFT','QFT')===ours.description&&ours.description===fixed.description
  results.push(result)

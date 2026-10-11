@@ -1,0 +1,45 @@
+---
+interface Props { variant: 'repeated' | 'controlled' | 'qft' }
+const {variant} = Astro.props
+const repeated = variant === 'repeated'
+const width = repeated ? 1272 : variant === 'qft' ? 1772 : 1676
+const height = repeated ? 900 : 824
+const positions = repeated ? [209,309,409,509,609,709,809,1109,1209] : Array.from({length:15},(_,i)=>209+100*i)
+const control = (i:number) => i === 0 ? 0 : i < 3 ? 1 : i < 7 ? 2 : 3
+const image = repeated ? 'shor_xtimes_u.png' : variant === 'qft' ? 'shor_us_and_inv_qft.png' : 'shor_us.png'
+---
+<div data-shor-power={variant} data-original-image={image}>
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={repeated ? 'Uをx回置く回路。4つのHと4bitのtarget register' : `controlごとにUを1、2、4、8回配置する回路${variant==='qft'?'とQFT':''}`}>
+    <rect width={width} height={height} fill="white" />
+    {Array.from({length:8},(_,wire)=><g data-wire={wire}>
+      <line x1="48" x2={width} y1={50+100*wire} y2={50+100*wire} stroke="#333" stroke-width="2.5" />
+      <text x="2" y={60+100*wire} font-size="28">{wire===4?'|1⟩':'|0⟩'}</text>
+      {wire<4 && <g data-h>
+        <rect x="69" y={10+100*wire} width="80" height="80" fill="white" stroke="#333" stroke-width="2.5" />
+        <text x="109" y={61+100*wire} text-anchor="middle" font-size="32">H</text>
+      </g>}
+    </g>)}
+    {positions.map((x,i)=><g data-u data-control-wire={repeated?undefined:control(i)}>
+      {!repeated && <>
+        <line x1={x} x2={x} y1={50+100*control(i)} y2="410" stroke="#333" stroke-width="2.5" />
+        <circle cx={x} cy={50+100*control(i)} r="9" fill="black" />
+      </>}
+      <rect x={x-40} y="410" width="80" height="380" fill="white" stroke="#333" stroke-width="2.5" />
+      <text x={x} y="613" text-anchor="middle" font-size="32">U</text>
+      <title>{repeated?'現在の値をa倍しmod(N)を取るU':`control bit ${control(i)} のU`}</title>
+    </g>)}
+    {repeated && <>
+      <rect x="880" y="528" width="170" height="47" fill="white" />
+      <text x="965" y="565" text-anchor="middle" font-size="44">… …</text>
+      <text x="700" y="864" text-anchor="middle" font-size="48" fill="#00a8da">U を x 回置く</text>
+    </>}
+    {variant==='qft' && <g data-qft>
+      <rect x="1669" y="10" width="80" height="380" fill="white" stroke="#333" stroke-width="2.5" />
+      <text x="1709" y="212" text-anchor="middle" font-size="32">QFT</text>
+    </g>}
+  </svg>
+</div>
+<style>
+[data-shor-power] {width:100%;min-width:0}
+svg {display:block;width:100%;height:auto;font-family:Arial,sans-serif;font-weight:400;fill:#111}
+</style>

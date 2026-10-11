@@ -3,10 +3,10 @@ import {chromium} from '@playwright/test'
 import {createInterface} from 'node:readline/promises'
 import {mkdir,writeFile,readFile} from 'node:fs/promises'
 const slug=process.argv[2]??'quantum_phase_estimation_circuit'
-if(!['quantum_phase_estimation_circuit','phase_kickback'].includes(slug))throw Error('unsupported page')
+if(!['quantum_phase_estimation_circuit','phase_kickback','shor_fx'].includes(slug))throw Error('unsupported page')
 const fixed=JSON.parse(await readFile(new URL(`../tests/fixtures/${slug}-fixed.json`,import.meta.url)))
-const analysis=JSON.parse(await readFile(new URL('../tests/fixtures/qpe-approved-analysis.json',import.meta.url)))
-const vectors=slug==='phase_kickback'?analysis.kickbackExpected:analysis.qpeExpected
+const analysis=JSON.parse(await readFile(new URL(slug==='shor_fx'?'../tests/fixtures/shor-fx-approved-analysis.json':'../tests/fixtures/qpe-approved-analysis.json',import.meta.url)))
+const vectors=slug==='shor_fx'?analysis.shorFxExpected:slug==='phase_kickback'?analysis.kickbackExpected:analysis.qpeExpected
 const base=process.env.QTW_AUDIT_URL??'https://qniapp.github.io/qni-tutorial-webgpu/'
 const out=process.env.QTW_AUDIT_OUTPUT??`/tmp/qtw-${slug}-gpu`;await mkdir(out,{recursive:true})
 const terminal=createInterface({input:process.stdin,output:process.stdout})
