@@ -1894,3 +1894,43 @@ a6f0d14 / Pages38138949248 success。公開source1＋390/1440×DPR1/2の4検査5
 21:25 open PR0。最終fetchのqni origin/mainは5bc62c7、shor_rは保存原とbyte一致。shor_fxは186行の原との差を検出したがdeadline超過時点で未精査、未承認の追加修正は適用しない。fetchのforced-update表示はtracking shallow refでありforce-pushではない。
 
 最終時計21:41:05で21:40超過を検出、追加作業/pushを停止。残る公開証拠とSTOP記録はローカルcommitだけで保存し、preview/temp configを停止・削除する。mainへ新たにpushせず、公開HEADはa6f0d14のまま。期限を守れなかった事実を隠さず報告する。
+
+## 2026-10-12 shor_r C1/C2正確に承認 / GPUなし / push停止08:45・hard stop08:50
+
+08:13開始、clean main/e55a761（前runの公開FX証拠・R blocker）を保持し、fetch/rebase origin/main済み。原repo open PRは08:13に全0件。latest originalのshor_rは保存原とbyte一致。前作業をredoせず、高宮さんが今回承認したC1/C2だけを適用する。
+
+- **C1 before:** `の候補として 4 と 8 が得られます。`
+- **C1 after:** `の候補として 2 と 4 が得られます。 測定値 4、8、12 を 16 で割って既約分数にすると、分母はそれぞれ 4、2、4 になります。 測定値 0 からは有用な候補が得られないので、測定をやり直します。`
+- **C2:** blockerの最後の段落を**全文exact**で置換。候補r4/8→r2/4、gcdが約数かだけ→1より大きくN15より小さい非自明な因数か、Nをその因数で割り相方を得る説明追加、r4で3/5という正しい例は保持。他本文/数値/description/URL/TeXを変更しない。
+
+`docs/shor-r-approved-source.html` 保存、原SHA `c3f78702445ec522ec7362d45e4809d147b2dd4fba1f4d31750fdcfb79d14b33` と独立literal2個で全文byte guard。本文TeX17→18、C1差0、C2のr=4,8→r=2,4とN1入力追加だけを独立pin。titleのr/既存Qiskit sidenote/cfa引用も保持。gate glyph/native0でBold/Regularの新規対象なし。
+
+### peak image政策と数値
+
+`shor_qft_peaks.png` **1画像→owned ShorQftPeaks SVG1図**。x0..15・y0..100%/10%刻み、4bars at0/4/8/12各25%、白の25%注記4個を維持。元のzero tick表記 `-0%` も維持し、勝手に0%へ書換えない。旧Qni UIではない、credits元0/削除0、画像データ変更0。SVG viewBox1622×1046全体をresponsive表示、clip/内部scrollなし。公開pageの**回路0/JSON差なし/palette/max-wire-count/run-buttonは該当なし**（fixtureでは[]）。共通layout/CSS/pin348992f/既存pages無変更。
+
+Pythonのcoset有限負Fourier和（target確率を合計）はk0/4/8/12各25%、他0、sum1。Fractionの既約分母1/4/2/4、有用候補2/4、gcd r2→3/1・r4→5/3・r8→1/15、N/3=5とN/5=3の因数分解を確認。量子CPU simulator/製品fallback/GPU検証ではない。`shor-r-approved-analysis.json` は承認sourceとGPUExecuted:falseを記録。
+
+```sh
+python3 scripts/analyze-shor-r-source.py docs/shor-r-approved-source.html --approved --output /tmp/shor-r-approved-analysis.json
+pnpm exec playwright test tests/shor-r-source.spec.mjs tests/shor-r.spec.ts tests/sidebar.spec.ts
+QTW_AUDIT_URL=http://127.0.0.1:4322/qni-tutorial-webgpu/ node scripts/compare-qpe-original.mjs shor_r
+```
+
+**typecheck/build/diff-check成功、source1＋390/1440×DPR1/2の本文/18TeX/値・両軸・25%注記/credits0/circuit0/sidenote/layout/errors4＋sidebar5の10/10成功。** 文書横overflow/本文内部scroll0、console/page errors0。原実サイトとのlocal4比較もC1/C2だけで成功。比較は作者sidenote textをhiddenでも含め、図のtextだけ除外し独立graph guardする。画像 `/tmp/qtw-shor-r-{390,1440}-dpr{1,2}.png` / `/tmp/qtw-shor_r-live-{original,ours}-{390,1440}-dpr{1,2}.png`、log `/tmp/qtw-r-{tests-final,local-compare,build}.log`。
+
+### 全pending・gmktec到達不可
+
+gmktecはこのboxから到達不可・SSHなし。**全件実機確認待ち**を [pending-real-machine-checks.md](pending-real-machine-checks.md) へまとめた。eigenphases、quantum_phase_estimation_circuit、phase_kickback、shor_fxのreal adapter/running/step0/norm/signed vector/toolbar/Regular/native visibility/active scroll/run測定確認、および既存ket3901440/content-overflow3901440の4失敗を引き継ぐ。正確なcommands:
+
+```sh
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-eigenphases-gpu.mjs
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs quantum_phase_estimation_circuit
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs phase_kickback
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs shor_fx
+pnpm exec playwright test tests/ket.spec.ts tests/content-overflow.spec.ts
+```
+
+新shor_rとqpe_output/shor_hspは回路0なので新規GPU項目は該当なし、diagnostic embedを勝手に追加しない。4layout failuresをnative GPU代替checkと称さず、期待値を緩和しない。今回GPU audit/SSHは実行しない。
+
+通常fetch/rebase/push（forceなし）でC1/C2 pageとe55a761の前回証拠を公開、Pages/公開URL確認後に記録。次shor_uでsummary/引用年/3つのketラベル/図のaxis説明に不一致を発見、route作成前にSTOPした。正しい回路数値/図データとexact fix案は次のblockerに保存し、shor_qft以降へ進まない。

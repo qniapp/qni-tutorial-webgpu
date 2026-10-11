@@ -2,10 +2,10 @@
 import {chromium} from '@playwright/test'
 import {readFile,writeFile} from 'node:fs/promises'
 const slug=process.argv[2]??'quantum_phase_estimation_circuit'
-if(!['quantum_phase_estimation_circuit','phase_kickback','qpe_output','shor_hsp','shor_fx'].includes(slug))throw Error('unsupported page')
-const fixtureName=slug==='shor_hsp'?'shor-hsp-approved':slug==='qpe_output'?'qpe-output-approved':slug+'-fixed'
+if(!['quantum_phase_estimation_circuit','phase_kickback','qpe_output','shor_hsp','shor_fx','shor_r'].includes(slug))throw Error('unsupported page')
+const fixtureName=slug==='shor_r'?'shor-r-approved':slug==='shor_hsp'?'shor-hsp-approved':slug==='qpe_output'?'qpe-output-approved':slug+'-fixed'
 const fixed=JSON.parse(await readFile(new URL(`../tests/fixtures/${fixtureName}.json`,import.meta.url)))
-const originalFixture=['qpe_output','shor_hsp'].includes(slug)?{circuits:[]}:JSON.parse(await readFile(new URL(`../tests/fixtures/${slug}-original.json`,import.meta.url)))
+const originalFixture=['qpe_output','shor_hsp','shor_r'].includes(slug)?{circuits:[]}:JSON.parse(await readFile(new URL(`../tests/fixtures/${slug}-original.json`,import.meta.url)))
 const base=process.env.QTW_AUDIT_URL??'https://qniapp.github.io/qni-tutorial-webgpu/'
 const browser=await chromium.launch({args:['--no-sandbox','--disable-gpu']});const results=[]
 try{
@@ -49,7 +49,16 @@ for(const width of [390,1440])for(const dpr of [1,2]){
    approvedMath.splice(32,1,{tex:'a',display:false},{tex:'mod(N)',display:false})
   }
  }
+ if(slug==='shor_r'){
+  const plain=s=>s.replace(/\\\(.*?\\\)/gs,'').replace(/\s+/g,'')
+  for(const [before,after] of fixed.edits)approvedText=approvedText.replace(plain(before),plain(after))
+  if(JSON.stringify(approvedMath)!==JSON.stringify(fixed.math)){
+   if(approvedMath.length!==17||approvedMath[12].tex!=='r=4,8')throw Error('Original Shor R TeX changed outside C1/C2; STOP')
+   approvedMath[12].tex='r=2,4';approvedMath.splice(16,0,{tex:'N',display:false})
+  }
+ }
  const result={slug,width,dpr,base,snapshots,approvedTextDiffZero:approvedText===ours.text,sourceGoldenTextMatches:ours.text===fixed.text,approvedTexDiffZero:JSON.stringify(approvedMath)===JSON.stringify(ours.math),rawTexUnchanged:JSON.stringify(original.math)===JSON.stringify(ours.math),sourceGoldenTexMatches:JSON.stringify(ours.math)===JSON.stringify(fixed.math),originalJSONMatches:JSON.stringify(original.circuits)===JSON.stringify(originalFixture.circuits),approvedJSONMatches:JSON.stringify(approvedCircuits)===JSON.stringify(ours.circuits),fixedJSONMatches:JSON.stringify(ours.circuits)===JSON.stringify(fixed.circuits??[]),WebGPUExecuted:false}
+ if(slug==='shor_r')result.approvedDescriptionMatches=original.description===ours.description&&ours.description===fixed.description
  if(slug==='shor_fx')result.approvedDescriptionMatches=original.description===ours.description&&ours.description===fixed.description
  if(slug==='shor_hsp')result.approvedDescriptionMatches=original.description===ours.description&&ours.description===fixed.description
  if(slug==='qpe_output')result.approvedDescriptionMatches=original.description.replace('逆QFT','QFT')===ours.description&&ours.description===fixed.description

@@ -1,0 +1,125 @@
+{
+  "GPUExecuted": false,
+  "sourceSHA256": "0bc89b7ee78757da5bf63b3b0afb1a79b08425bf34f30544394942ed5b7dea01",
+  "Q": 16,
+  "r": 4,
+  "probabilities": [
+    0.25,
+    3.417932792258736e-33,
+    2.8279391139561944e-33,
+    1.1797959551790624e-32,
+    0.25,
+    5.63496076181442e-32,
+    4.477929102688913e-32,
+    1.296805605317752e-31,
+    0.25,
+    1.9707777718422008e-31,
+    4.072981671735279e-31,
+    7.515430668658926e-31,
+    0.25,
+    5.288319104559912e-31,
+    2.1892013454127273e-31,
+    1.1494244610835769e-30
+  ],
+  "expectedPeaks": [
+    0.25,
+    0,
+    0,
+    0,
+    0.25,
+    0,
+    0,
+    0,
+    0.25,
+    0,
+    0,
+    0,
+    0.25,
+    0,
+    0,
+    0
+  ],
+  "norm": 1.0,
+  "continuedFractions": [
+    {
+      "measurement": 0,
+      "fraction": "0",
+      "cf": [
+        0
+      ],
+      "denominator": 1,
+      "useful": false
+    },
+    {
+      "measurement": 4,
+      "fraction": "1/4",
+      "cf": [
+        0,
+        4
+      ],
+      "denominator": 4,
+      "useful": true
+    },
+    {
+      "measurement": 8,
+      "fraction": "1/2",
+      "cf": [
+        0,
+        2
+      ],
+      "denominator": 2,
+      "useful": true
+    },
+    {
+      "measurement": 12,
+      "fraction": "3/4",
+      "cf": [
+        0,
+        1,
+        3
+      ],
+      "denominator": 4,
+      "useful": true
+    }
+  ],
+  "rawDenominators": [
+    1,
+    4,
+    2,
+    4
+  ],
+  "usefulCandidateSet": [
+    2,
+    4
+  ],
+  "gcdTrials": [
+    {
+      "candidate": 2,
+      "powMod15": 4,
+      "gcdPlus": 3,
+      "gcdMinus": 1,
+      "nontrivial": [
+        3
+      ]
+    },
+    {
+      "candidate": 4,
+      "powMod15": 1,
+      "gcdPlus": 5,
+      "gcdMinus": 3,
+      "nontrivial": [
+        5,
+        3
+      ]
+    },
+    {
+      "candidate": 8,
+      "powMod15": 1,
+      "gcdPlus": 1,
+      "gcdMinus": 15,
+      "nontrivial": []
+    }
+  ],
+  "method": "Finite negative-Fourier sums per f(x) coset, sum target probabilities; exact Fraction reduction. Not CPU quantum simulation or GPU verification.",
+  "decision": "APPROVED C1/C2 only applied; no other text or graph-data changes"
+}

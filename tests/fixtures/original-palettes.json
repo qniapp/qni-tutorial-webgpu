@@ -320,5 +320,6 @@
   "phase_kickback": [[], []],
   "qpe_output": [],
   "shor_hsp": [],
-  "shor_fx": [[], []]
+  "shor_fx": [[], []],
+  "shor_r": []
 }

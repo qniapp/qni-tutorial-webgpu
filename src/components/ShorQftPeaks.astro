@@ -1,0 +1,31 @@
+---
+// Original fixed histogram: four 25% peaks, x0..15, probability0..100%.
+const peaks = [0,4,8,12]
+const left=137,right=1551,top=65,bottom=941
+const step=(right-left)/16
+const y=(percent:number)=>bottom-(bottom-top)*percent/100
+---
+<div data-shor-qft-peaks data-original-image="shor_qft_peaks.png">
+  <svg viewBox="0 0 1622 1046" role="img" aria-label="QFT測定確率。0、4、8、12が各25%、他は0%">
+    <rect width="1622" height="1046" fill="white" />
+    <g stroke="#bbb" stroke-width="1.5">
+      {Array.from({length:17},(_,i)=><line x1={left+step*i} x2={left+step*i} y1={top} y2={bottom} />)}
+      {Array.from({length:11},(_,i)=><line x1={left} x2={right} y1={y(i*10)} y2={y(i*10)} />)}
+    </g>
+    <path d={`M${left} ${top} V${bottom} H${right}`} fill="none" stroke="black" stroke-width="2.5" />
+    <g font-size="26" text-anchor="end">
+      {Array.from({length:11},(_,i)=><text data-y-tick={i*10} x="106" y={y(i*10)+9}>{i===0?'-0%':`${i*10}%`}</text>)}
+    </g>
+    {Array.from({length:16},(_,x)=><g data-bin={x} data-probability={peaks.includes(x)?0.25:0}>
+      <text data-x-tick={x} x={left+step*(x+.5)} y="976" font-size="26" text-anchor="middle">{x}</text>
+      {peaks.includes(x) && <>
+        <rect data-bar x={left+step*x+13} y={y(25)} width="63" height={bottom-y(25)} fill="#00a6ff" />
+        <text data-percent x={left+step*(x+.5)} y={y(25)+34} text-anchor="middle" font-size="32" fill="white">25%</text>
+      </>}
+    </g>)}
+  </svg>
+</div>
+<style>
+[data-shor-qft-peaks] {width:100%;min-width:0}
+svg {display:block;width:100%;height:auto;font-family:Arial,sans-serif;font-weight:400;fill:black}
+</style>
