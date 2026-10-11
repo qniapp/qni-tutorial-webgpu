@@ -1358,3 +1358,20 @@ sidebar次の最新mainを確認。同ページのopen PRなし (#578は前ペ�
 資料 `/tmp/qtw-port-inverse_qft.json` (public)、`/tmp/qtw-inverse-qft-public-{embed-results,glyphs}.json`、`/tmp/qtw-scroll-inverse-qft-public.json`、`/tmp/qtw-pr63-toolbar-inverse-qft-public.json`。同ページPRなし、#578は前ページの承認1本文編集だけ。今回はreadout_of_patterns→inverse_qftをsidebar順で公開し、新しい本文/数値/JSONの不一致や判断待ちはない。
 
 次の **inside_the_qft（QFTの内部）** は、15:41 hard stopまでに原文/全数値/図/GPU/E2Eを検証して公開する時間が足りないため、route/fixtureを作成せず未着手・未公開のままにする。nextページの検証済みという主張はしない。owned preview4353/診断browserを終了し、通常pushでmain/worktreeを同期する。最後の記録だけのPagesは終了時点の状態を報告する。pin348992f/Binaryen123/GPU-only、本番readback/CPU fallback/上流変更なし。
+
+
+## 2026-10-11 inside_the_qftの上下記述2か所でSTOP / hard stop16:10
+
+前の最後の記録 **16ded7a / Pages38118783708 success** を確認し、完了済みreadout_of_patterns/inverse_qft/PR #63等は再実施せず結果を保持した。sidebar次 **inside_the_qft（QFTの内部）** の最新mainと原liveを実Chromium390/1440で確認。原11JSONがsourceと一致した。
+
+**1. PHASEなしの行:** 短い周波数2準備回路は上からP(π/4)/P(π/2)/P(π)/なし。PHASEがないのは上から4番目 (下から1番目) だが、原文は「この回路では**下から4ビット目**にだけPHASEがありません」。**2. 1の行:** 1xπ/4ミニ回路の入力は上から0/0/1/0。1は上から3番目 (下から2番目) だが、原文は「ここで**下から3ビット目**のみが1なので」。直前の原文には同じ入力を「入力の**上から3ビット目**が|1⟩」と明示しており、記述内でも向きが一致しない。原サイトの2回路スクリーンショットで4本と行位置を確認した。
+
+解析/GPU: 入力は|0100⟩=4、q1=0/q2=1/q3=0なのでπ/2とπ/8制御はoff、π/4制御だけon。H(q0)+CPHASE(π/4)後は **|4⟩ amp1/√2、|5⟩ amp(1+i)/2、各50%**。公開実GPUでは両幅でindex4 input re1/im0/p1、最終index4 re **0.7071067690849304**/im0/p **0.4999999828857291**、index5 re=im **0.4999999701976776**/p **0.499999940395357**。短い周波数2準備回路の全16signed値もa_j=(1/4)exp(iπj/4)と一致、focused **6/6成功**、norm≈1/errors0。
+
+さらに原全11回路を両幅でsigned全状態と解析照合し、**22/22成功**。回路0/1/2/3/5/6は周波数2の一様16状態/各6.25%、回路4は周波数3でa_j=(1/4)exp(i3πj/8)/各6.25%。回路7のπ/4に加え、回路8は|4⟩:1/√2と|6⟩:i/√2、回路9は|0⟩:1/√2と|4⟩:-1/√2、回路10は|4⟩/|12⟩とも1/√2、各50%。P(2π)の恒等、位相単位n×2π/2^N (Nは量子bit数)、周波数3で6π/16とその1/2/4/8倍、SWAPで2(0010)→4(0100)、逆QFTの5block (入力を除く) も整合する。元の16円表示の±0.17678は1/(4√2)の5桁表示と一致。ほかの数値/回路には不一致を見つけていない。
+
+**提案する訂正は2か所だけ**: `この回路では下から 4 ビット目にだけ` → `この回路では上から 4 ビット目にだけ`、`ここで下から 3 ビット目のみが 1 なので` → `ここで上から 3 ビット目のみが 1 なので`。ほかの本文/数字/JSON/図を変えず、正しい回路の入力や行を移す修正はしない。承認を質問してSTOP、未承認のまま原文は変更しない。
+
+15:44に全open PRを確認し、同ページPRなし。qniapp/qni#578はreadout_of_patterns.htmlだけで、今回の2箇所を承認するものではない。詳細 [inside-qft-direction-blocker.md](inside-qft-direction-blocker.md)。永続 `inside-qft-direction-verification.json` にsourceSHA256/原11JSON/原live段落/両幅のGPU6+22結果を保存。資料 `/tmp/qtw-next-inside_the_qft.html`、`/tmp/qtw-inside-qft-original-*` (1440・390各2回路screenshot)、`/tmp/qtw-inside-qft-direction-*`、`/tmp/qtw-inside-qft-all-gpu-*`。
+
+**inside_the_qft未公開、route/移植fixture未作成、原文/JSON無変更。** 原画像0/置換0/削除credits0、paletteなし (移植時[]×11)、max-wire-count1×11、原4-wire/列数20,6,6,21,21,32,26,8,7,6,5/run-buttonなし、16円表示/sidenote0/Orbit0。移植後の本文diff/scroll/step0/toolbar/DPRは未検証。qft_adder以降も停止し、承認を待つ。owned診断browserは終了済み、previewは開始していない。通常pushで記録を同期し、最後の記録だけのPages状態を報告する。pin348992f/Binaryen123/GPU-only、本番readback/CPU fallback/上流変更なし。
