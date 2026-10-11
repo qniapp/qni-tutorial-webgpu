@@ -60,33 +60,179 @@
     []
   ],
   "no_cloning_theorem": [],
-  "gate_combination": [["H", "X"], ["X^½"]],
+  "gate_combination": [
+    [
+      "H",
+      "X"
+    ],
+    [
+      "X^½"
+    ]
+  ],
   "quantum_key_distribution": [],
   "bb84_protocol": [],
   "multi_qubit_circle_notation": [],
-  "multi_qubit_superposition": [[], [], []],
-  "multi_qubit_operation": [[], [], []],
+  "multi_qubit_superposition": [
+    [],
+    [],
+    []
+  ],
+  "multi_qubit_operation": [
+    [],
+    [],
+    []
+  ],
   "operator_pair": [],
-  "random_byte_generator": [[], []],
-  "bb84_circuit": [[]],
-  "multi_qubit_phase_gate": [["P(π/4)"]],
+  "random_byte_generator": [
+    [],
+    []
+  ],
+  "bb84_circuit": [
+    []
+  ],
+  "multi_qubit_phase_gate": [
+    [
+      "P(π/4)"
+    ]
+  ],
   "partial_measurement": [],
-  "swap_gate": [[], []],
-  "cnot_gate": [[], [], []],
-  "swap_from_cnots": [["X", "•", "Measure"]],
-  "entanglement": [[]],
-  "disentangle": [[], [], [], [], [], [], []],
-  "entanglement_operation": [[], [], []],
+  "swap_gate": [
+    [],
+    []
+  ],
+  "cnot_gate": [
+    [],
+    [],
+    []
+  ],
+  "swap_from_cnots": [
+    [
+      "X",
+      "•",
+      "Measure"
+    ]
+  ],
+  "entanglement": [
+    []
+  ],
+  "disentangle": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "entanglement_operation": [
+    [],
+    [],
+    []
+  ],
   "discriminating_bell_states": [],
-  "teleportation_circuit": [[], [], [], [], [], [], []],
-  "cascading_teleportation": [[]],
-  "long_distance_entanglement": [[]],
-  "cphase": [[], [], ["P(π/4)", "•"], ["P(π)", "Z", "•"]],
-  "increment_circuit": [[], [], ["X"], ["X", "H"], ["X", "H"], ["X", "H"]],
-  "decrement_circuit": [[], [], [], [], [], [], []],
-  "addition_circuit": [[], [], []],
-  "subtraction_circuit": [[], []],
-  "multiplication_circuit": [[]],
-  "superdense_coding_circuit": [[]],
-  "quantum_logic": [["|0>", "|1>"], ["|0>", "|1>"], ["|0>", "|1>"], ["|0>", "|1>"], ["|0>", "|1>"], ["|0>", "|1>"], [], ["|0>", "|1>"]]
+  "teleportation_circuit": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "cascading_teleportation": [
+    []
+  ],
+  "long_distance_entanglement": [
+    []
+  ],
+  "cphase": [
+    [],
+    [],
+    [
+      "P(π/4)",
+      "•"
+    ],
+    [
+      "P(π)",
+      "Z",
+      "•"
+    ]
+  ],
+  "increment_circuit": [
+    [],
+    [],
+    [
+      "X"
+    ],
+    [
+      "X",
+      "H"
+    ],
+    [
+      "X",
+      "H"
+    ],
+    [
+      "X",
+      "H"
+    ]
+  ],
+  "decrement_circuit": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "addition_circuit": [
+    [],
+    [],
+    []
+  ],
+  "subtraction_circuit": [
+    [],
+    []
+  ],
+  "multiplication_circuit": [
+    []
+  ],
+  "superdense_coding_circuit": [
+    []
+  ],
+  "quantum_logic": [
+    [
+      "|0>",
+      "|1>"
+    ],
+    [
+      "|0>",
+      "|1>"
+    ],
+    [
+      "|0>",
+      "|1>"
+    ],
+    [
+      "|0>",
+      "|1>"
+    ],
+    [
+      "|0>",
+      "|1>"
+    ],
+    [
+      "|0>",
+      "|1>"
+    ],
+    [],
+    [
+      "|0>",
+      "|1>"
+    ]
+  ],
+  "superposition_quantum_logic": [
+    []
+  ]
 }

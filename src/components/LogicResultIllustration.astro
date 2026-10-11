@@ -1,0 +1,15 @@
+---
+interface Props { states?: number[]; negative?: number[]; wireCount?: number }
+const {states = [0,1,2,3,6,20,21,23], negative = [], wireCount = 5} = Astro.props
+const amplitude = String(1 / Math.sqrt(states.length))
+---
+<div class="results" data-logic-result data-original-image aria-label="回路の最終状態。各円で振幅・確率・位相を確認できます">
+  {Array.from({length:2**wireCount},(_,i)=><qubit-circle data-amplitude={states.includes(i)?(negative.includes(i)?'-':'')+amplitude:'0'} data-ket={String(i)} data-size="base" data-qubit-count={wireCount} data-show-popup-amplitude data-show-popup-probability data-show-popup-phase tabindex="0" role="button" aria-label={`状態${i}の振幅・確率・位相`}></qubit-circle>)}
+</div>
+<style>
+.results { display:grid; grid-template-columns:repeat(16,minmax(0,1fr)); gap:6px; width:100%; padding:12px; border:2px solid #E2E8F0; border-radius:16px; background:white; box-sizing:border-box; }
+.results :global(qubit-circle) { width:100%; height:auto; aspect-ratio:1; margin:0; cursor:pointer; }
+.results :global(qubit-circle::after) { content:none; }
+.results :global(qubit-circle:focus-visible) { outline:2px solid #0EA5E9; outline-offset:1px; }
+@media(max-width:400px) { .results { gap:3px; padding:8px; } }
+</style>

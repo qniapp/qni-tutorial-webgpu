@@ -862,8 +862,8 @@ build/typecheck/diff-check成功、既存と新ページの全 **266 tests (3.5m
 
 | ページ | 状態 |
 | --- | --- |
-| `superposition_quantum_logic`（重ね合わせ上での論理演算） | **文言確定待ち** |
-| 直後の `phase_logic`（位相論理演算） | **文言確定待ち** |
+| `superposition_quantum_logic`（重ね合わせ上での論理演算） | **訂正文言承認済み、待機解除** (10:57の追記参照) |
+| 直後の `phase_logic`（位相論理演算） | **待機解除**、承認ページ公開後に続行 |
 
 どちらもroute/fixtureを作らず、確定前の文言や回路を公開していない。pin **ef652682c23d89427f6f39bb6bee1ec6fae9bb1e**、公開済みの移植と#57/#59解決は変更しない。
 
@@ -876,3 +876,30 @@ build/typecheck/diff-check成功、既存と新ページの全 **266 tests (3.5m
 画像 `phase_logic_result.png` と `quantum_logic_result.png` は旧Qniの円表示パネル2枚。再開時の自作対話的状態表示への置換方針を質問したが、今回は未置換、**削除credits0**。原paletteなしなので **[]**、原HTML max-wire-count **1** を確認した (4-wireを切り詰めない)。移行ページがないため、移行後の本文diff/390・1440のscroll/step0検証は未実施で、合格とは記録しない。
 
 詳細 [phase-logic-combination-blocker.md](phase-logic-combination-blocker.md)。証拠 `/tmp/qtw-phase-combination-original-gpu.{mjs,json,log}`、原JSON `/tmp/qtw-phase-combination-original.json`。診断用browserは終了済み、serverを新規起動していない。今回の製品変更/公開ページ追加は0、既存ページを再移植していない。docs-only checkpointを通常pushし、Pages結果は終了時に報告する。
+
+
+## 2026-10-11 10:57承認 / superposition_quantum_logic の訂正と移植 (11:30 hard stop)
+
+高宮さんから確定した6項目の訂正を明示承認。**superposition_quantum_logicの待機解除**、直後のphase_logicも待機解除。今回の承認をphase_logic_combinationへ拡張しない。
+
+| 項目 | 訂正前 → 承認された訂正後 |
+| --- | --- |
+| 式5か所 | `a OR (NOT b) AND c` → `(a OR (NOT b)) AND c` |
+| 脚注コード | `a \|\| !b && c` → `(a \|\| !b) && c` |
+| true入力1組 | `(1, 0, 0)` → `(0, 0, 1)`。残り `(1, 0, 1)`, `(1, 1, 1)` は維持 |
+| 真理値表の結果見出し | `a OR (NOT b)` → `(a OR (NOT b)) AND c` |
+| 真理値表 | 000→0, **001→1**, 010→0, 011→0, 100→0, **101→1**, 110→0, **111→1**。true行の太字を001/101/111にする |
+| d/e説明 | NOT/ORの出力をd/eとする説明 →「NOT は b 自身を反転するだけで済みますが、OR と AND 演算にはそれぞれ出力用のビットが必要なので、`a OR (NOT b)` の結果を d (ビット 4), d AND c の結果を e (ビット 5) に出力しています。」 |
+| 読み出し文 | 「3 ビットなら答は 8 通り」→「3 ビットなら入力は 8 通り」 |
+
+式を含む実装導入文は式の括弧だけを訂正して維持。uncompute文、ket、**「答は4,5,7」** を維持。承認された箇所以外の本文・順序・TeXを変更していない。原26列/5-wire JSONを**完全にそのまま**保持し、raw fixtureとDOM一致guardで固定。原palette **[]**、原HTML max-wire-count **1**、5-wireを切り詰めず、原に実行ボタンがないので追加しない。
+
+原 `quantum_logic_result.png` は **LogicResultIllustration.astro** の自作対話的32円表示へ置換。状態0,1,2,3,6,20,21,23の振幅1/√8、他は0、原画像と同じ16列×2行。各状態の振幅/12.5%/位相をhover/focusで確認できる。原画像にcredits記載がないため**削除credits0**。画像の外に新しい説明文を足さず、390の狭い円にketが重なった初期表示は置換図内だけのCSSで除き、5-bitのketはpopup/ariaに保持。共通prose Bold/native Regular規則を維持。
+
+実Chromium/AMD WebGPUで、実ページ内のnative回路を水平panして最終列を選択した **18/18** 比較成功 (原uniform状態＋8入力、各390/1440)。e=1は入力4/5/7だけ、dは0へ復帰、a/b/cは保持。原uniformは出力0/1/2/3/6/20/21/23各1/8、norm≈1。H→X/空の8入力診断はtestだけで製品JSONに適用していない。起動時はstep0/norm1、起動/console/page errors0。native水平panを許し、body/shadow DOMの横/縦inner scrollbar/document横overflow0。
+
+original liveのDOMへ承認6項目だけを診断用に適用して比較し、390/1440で**追加本文diff0、TeX diff0、errors0**。原JSON属性は別に完全一致。tests/superposition-logic-corrections.spec.tsは式5か所/脚注/true組/全真理値表/指定d/e説明/uncompute/ketの原TeX比較に加え、承認版の全文normalized textをguard。fixtures/superposition-logic-approved-text.jsonはoriginalを6項目だけ訂正した期待文、raw original JSON fixtureは無変更。
+
+最終 **274 tests (2.4m)** 全成功。置換図の最終CSS後の承認guard2件も再実行成功。typecheck/build/diff-check成功。DPR1/2×390/1440の置換図4ケースで、32円/ket非重複/|10100⟩/12.5%/overflow0を実見確認。検証初期のwide最終列クリックが回路外に出た点とpercent表記12.5000%はharnessだけを修正。
+
+資料 `/tmp/qtw-superlogic-local-{embed-behavior,figure}.json`、`/tmp/qtw-port-superposition_quantum_logic.json`、`/tmp/qtw-scroll-superlogic-local.json`、`/tmp/qtw-superlogic-{all-tests,final-target,final-types,final-build}.log`。pin **ef652682c23d89427f6f39bb6bee1ec6fae9bb1e** 維持、embed/standaloneは前の実再ビルド済みのものを使用し、upstream/CPU fallback/本番readbackを追加していない。公開とlive確認は追記する。
