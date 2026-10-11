@@ -29,5 +29,6 @@
   "addition_circuit": [1, 1, 1],
   "subtraction_circuit": [1, 1],
   "multiplication_circuit": [1],
+  "superdense_coding_circuit": [1],
   "quantum_logic": [2, 2, 2, 2, 2, 2, 1, 2]
 }

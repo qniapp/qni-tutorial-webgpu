@@ -1,6 +1,10 @@
-# 超密度符号化回路: title 付き原 JSON の起動ブロッカー
+# 超密度符号化回路: title 付き原 JSON の起動ブロッカーは解決
 
-2026-10-11。`superdense_coding_circuit` は未公開。#57 とは別の停止条件。
+**現在の状態: #59 解決。** PR #61 のマージcommit `ef652682c23d89427f6f39bb6bee1ec6fae9bb1e` へpinを更新し、embed/standaloneを実再ビルドした。元の `"title":"Superdense Coding"` を含む全JSONで起動、GPUの送受信一致、現在回路リンク・再実行・実ドラッグ編集後のtitle保持を確認。390/1440とDPR1/2で検証済み。title削除やCPU fallbackでの回避はしていない。最新公開結果は [porting.md](porting.md) 末尾。
+
+以下は解決前の歴史的なSTOP記録。
+
+2026-10-11。`superdense_coding_circuit` は未公開だった。#57とは別の停止条件。
 
 - 上流 pin: `785c8b786c9eb0b7cb48d435d8215aaf45177ea1`
 - 原文: `qniapp/qni` の `apps/tutorial/superdense_coding_circuit.html`

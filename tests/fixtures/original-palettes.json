@@ -87,5 +87,6 @@
   "addition_circuit": [[], [], []],
   "subtraction_circuit": [[], []],
   "multiplication_circuit": [[]],
+  "superdense_coding_circuit": [[]],
   "quantum_logic": [["|0>", "|1>"], ["|0>", "|1>"], ["|0>", "|1>"], ["|0>", "|1>"], ["|0>", "|1>"], ["|0>", "|1>"], [], ["|0>", "|1>"]]
 }

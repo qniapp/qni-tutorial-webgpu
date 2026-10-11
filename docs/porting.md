@@ -816,3 +816,28 @@ local/public全 **45移行ページ / 90ケース、81 embed / 162起動** はru
 公開multi-1/3/7/stressも8ケース / 22起動でerrors/scroll0、running/step0/norm1。合計 **全49 builtページ / 98ケース、全92 embed / 184起動**。資料 `/tmp/qtw-pr58-extra-arithmetic-final-public.json`。公開DPR1/2の新6ページ24ケースもprose Bold/16px、native Regular確認。`/tmp/qtw-arithmetic-glyphs.json`、`/tmp/qtw-arithmetic-public-glyphs.log`。
 
 **STOP位置はsuperposition_quantum_logic、原説明の訂正許可待ち。** 論理式のgrouping・脚注・入力組・真理値表・d/eの説明を回路に合わせてよいか、高宮さんへ質問した。原回路や後続を無断変更/公開していない。CPHASEは完了済み、#59は待ち/SKIP維持。owned preview4344/検証browserは終了。main/worktreeを通常pushで同期し、最終docs-only Pages状態は終了時に報告する。
+
+
+## 2026-10-11 PR #61 / title付き超密度符号化回路 (10:50 hard stop)
+
+前checkpoint **0e12a87aae8be2aecb9409e7242cd91dd95e12ce / Pages38101253147 success** を確認。incrementの承認済み1トークン訂正、decrementの4×6/HTML1、足し算・引き算・かけ算・quantum_logicはすべて既に公開済みなので再移植しない。停止位置は `superposition_quantum_logic` の原説明訂正許可待ち。
+
+上流PR #61が **ef652682c23d89427f6f39bb6bee1ec6fae9bb1e** でマージ済みと確認し、`qni-webgpu.ref` を更新。clean detached checkout `verify/tutorial-title` から `scripts/fetch-qni-webgpu.sh` でembed/standaloneの両WASMを実再ビルド。Binaryen **version_123**、`-Oz --enable-bulk-memory --enable-nontrapping-float-to-int`。upstream変更/CPU fallback/本番readbackなし。ログ `/tmp/qtw-pr61-native-build.log`。
+
+### superdense_coding_circuit
+
+保留draftを復帰。**原JSONのroot `"title":"Superdense Coding"` を含む全26列/7-wire回路をそのまま保持**。Bell回路・Swap・名前付きMeasure>bit1/bit2・X<bit1/bit2・送信制御X/Z・Bell測定の構造も未変更。原palette **[]**、max-wire-count **1**、元7-wireを切り詰めない。原の実行ボタンも保持。本文・順序・00/01/10/11の説明を無訂正で移植。画像/削除credits/旧Qni UI画像/このページの追加質問なし。本文に原glyph tagはなく、共通Bold規則を維持、native glyph/labelsはRegular。
+
+390/1440 original/liveは本文/TeX diff0、原JSON・counts一致、errors0。両幅の本文/shadow DOM横/縦inner scrollbar/document横overflow0。ユーザー承認のnative回路内水平panで最後のBell測定blockを表示できることを実際に確認し、canvasをscale/隠すCSSやupstream修正は入れていない。
+
+GPU最終状態 **40/40** 成功 (4送信値を固定する診断8試行、原ランダム生成回路32試行、各390/1440)。最終状態は0/33/66/99だけ、入力q0/q1と受信q5/q6が一致、他のwireは0、norm≈1。固定00/01/10/11すべてを確認。診断のH→X/空への変更はテストのみで製品原JSONには適用しない。独立qni CLIの超密度符号化referenceもseed42/16shotsで4入力すべての送受信一致 (00:4,01:3,10:6,11:3)。
+
+titleは起動・`circuitJSON()`に基づく現在回路リンク・再実行・実ドラッグ編集後も保持。standaloneではdocument titleとURLも **Superdense Coding**。tutorial側のdocument title **超密度符号化回路 | Qni Tutorial** は保持。DPR1/2×390/1440の4ケースで編集・再実行・native pan後を確認。書き換えやtitle削除の回避策は不要になり、**#59待ち/SKIPは解決**。[superdense-blocker.md](superdense-blocker.md) を現在解決＋歴史記録に更新。
+
+build/typecheck/diff-check成功、既存と新ページの全 **266 tests (3.5m)** 成功、追加title-link guard2件も実Chromium/AMD GPUで成功。再ビルド後の全 **46移行ページ / 92ケース、82 embed / 164起動** はrunning/step0/norm1、errors/本文/shadow DOM scrollbar0。CPHASE新parser回帰の最終GPU vector24/24成功、同角3PHASE=CCPHASEを維持。
+
+資料 `/tmp/qtw-pr61-local-{behavior,interactions}.json`、`/tmp/qtw-pr60-pr61-local-behavior.json`、`/tmp/qtw-pr61-title-real-tests.log`、`/tmp/qtw-pr61-local-audit.log`、`/tmp/qtw-scroll-pr61-local.json`、`/tmp/qtw-port-superdense_coding_circuit.json`。検証初期のrelative hrefにbaseを指定しないURL解析とドラッグ座標/待機不足はharnessだけを修正。製品に変更を加えて検証を通したものではない。公開確認は追記する。
+
+### sidebarの続行位置
+
+超密度符号化の後のテレポーテーション3ページと算術5ページ、quantum_logicは完了済み。その次は **superposition_quantum_logicでSTOP**。原JSONは正常だが、本文/脚注のAND優先順、正しい入力組、真理値表、d/e説明が回路と異なる。[superposition-logic-blocker.md](superposition-logic-blocker.md) の訂正許可は今回も明示されていないため、そのページ以降は未公開のまま。許可されたincrement訂正を他の原文訂正へ拡張しない。
