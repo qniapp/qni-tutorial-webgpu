@@ -1186,3 +1186,35 @@ standaloneは新ビルドでgrover_iamの3回路を390/1440で実行し **6/6**�
 原4反復回路の12列反復部が全て同じことを確認し、検証用にだけ同一部を5回追加した9反復をGPU実行すると、390/1440とも **99.21797226588893%**。原3反復prefixは96.1318034678925%→96.1%、原4反復は58.1703%→58.2%で本文と一致。原liveの99.9段落と3JSONも取得sourceと一致する。原回路を勝手に変更したのではなく、本文の「さらに反復」をそのまま評価した。資料 `tests/fixtures/grover-iteration-k3-k9-gpu-verification.json` と `/tmp/qtw-grover-iteration-k3-k9-*`、`/tmp/qtw-grover-iteration-original-nine-prose.json`、原段落screenshot。
 
 **STOP/追加質問:「99.9%」1か所を「99.2%」へ訂正してよいか？** 2回反復の1か所承認をこの別数値へ拡張せず、**grover_iterationは未公開**、route未作成。sidebar次のmultiple_marked_values以降も停止。原3JSONの17/29/53列、各4-wire、palette[]×3/max1×3保持、画像0/削除credits0。移行後の全文diff/scroll/step0検証は未実施。詳細 [grover-iteration-rounding-blocker.md](grover-iteration-rounding-blocker.md)。GPU-only/本番readbackなし/CPU fallbackなし、Pythonは明示された解析式の評価のみ。PR #63の公開全件確認は完了済み。
+
+
+## 2026-10-11 grover_iterationの2数値訂正承認 / qniapp/qni#577 / hard stop14:31
+
+高宮さんが「約90.9%→約90.8%」「9回目99.9%→99.2%」の **2か所だけ** を明示承認。#577はopen、head **5d68bbfcfc878b64cd151fb1b594f6802210070e**。PR raw全文を取得し、原sourceの2数値訂正と、3か所のclass順序変更を戻したものが **完全一致** と確認。class順序変更は無視し、反復回数の近似式 `N_iter=floor(π/4 sqrt(2^n))`、5,000回の表記、他本文/全26TeX/ket順/全3JSONは無変更。原の条件n=4、N=2^n=16、答1111だけでM=1。
+
+### Python解析とGPU照合
+
+sinθ=√(M/N)=√(1/16)=**0.250000000000000**、θ=asin(0.25)=**0.252680255142079rad** (14.477512185929925°)。
+
+| k | (2k+1)θ rad | 解析P | 解析100P | GPU100P (390/1440) | 正しい本文 |
+|---|---|---|---|---|---|
+| 2 | 1.263401275710393 | 0.908447265625000 | 90.844726562500000% | 90.84466975183183% | 約90.8% |
+| 9 | 4.800924847699494 | 0.992181860020537 | 99.218186002053700% | 99.21797226588893% | 99.2% |
+
+Python mathの解析式評価は指示されたもの。CPUで量子状態をシミュレーションする代替経路ではない。実GPUはpin348992f、原2反復29列をそのまま使用し、9反復は原4反復53列の12列反復部に同一部を5回追加した **検証専用113列**。記事の3JSONを9反復へ置換していない。両幅で2反復・9反復の **4/4** を確認。GPU/解析の微小差は単精度誤差で、小数第1位の丸めは一致。
+
+2反復state15は実amp **+0.9531247019767761** / phase0°、他15状態は約+0.078125/0°。9反復state15は **+0.9960821866989136** /0°、他15状態は約−0.0228300728/180°。虚部0、norm≈1、errors0。state15=1111以外の全15状態も保存。3反復96.1318034678925%→96.1%、4反復58.170341234676926%→58.2%も原文と一致。
+
+### 移植とローカル確認
+
+`src/pages/grover_iteration.astro` を作成。原3回路 **17/29/53列、各4-wire**、palette **[]×3**、max-wire-count **1×3**、原run-buttonなしを保持。画像0、自作置換0、削除credits0、sidenote0、Orbit0。prose gate tags0で共通Bold設定保持、native Regular。MathJax3.2.2/Qni/実験版/Qniで開く保持、未来の本文リンクは原サイトへ残す。
+
+承認2か所だけを原liveの検証用DOMに適用し、390/1440で全文 **diff0 / TeXdiff0**、全counts一致、起動running/step0/norm≈1、console-page errors0、body/content/Shadow DOM内部scrollbar0、文書横overflow0。DPR1/2×両幅 **4/4** で書体/overflow/errors0、実表示確認。native canvasは水平panし、倍率変更やwire切り詰めで隠していない。
+
+実記事の3回路を最終H列までクリックし、390/1440の **6/6** で1/2/4反復のsigned全16状態を確認。原standalone3回路6/6、3/9回専用4/4と合わせローカル準備 **16/16**。記事の起動step0とは別に最終教育的結果も確認した。全6ツールバーでundo/redo85画素ずつ/旧trash0、旧位置クリックで回路URL無変更。
+
+原fixture `grover_iteration-original.json`、承認全文/TeX `grover-iteration-approved-text.json`、解析 `grover-iteration-analysis.json`、状態結果 `grover-iteration-gpu-verification.json`、検証専用3/9回 `grover-iteration-k3-k9-gpu-verification.json`、承認source `docs/grover-iteration-approved-source.html`。Golden全文＋26TeX＋無変更3JSON＋5,000の数式guardを追加。初回の追加guardだけ、5,000が本文でなくMathJax内にあるのに本文としてassertしたため2件失敗。実表示/元TeXは無変更で正しく、guardを数式契約へ直して2/2成功、全suiteを再検証してから公開する。
+
+旧 [grover-iteration-rounding-blocker.md](grover-iteration-rounding-blocker.md) は **解決済み** へ更新。pin348992f/Binaryen123/GPU-only/本番readbackなし/CPU fallbackなし/上流コード変更なし。PR #63の公開全55ページ・210起動・210ツールバー確認は完了済みの結果を再利用し、再作業していない。公開完了後にsidebar次のmultiple_marked_valuesへ進む。
+
+全suite再検証 **304 tests成功**、最新追加guard2/2、typecheck/build/diff-check成功。MathJax内の5,000を誤って本文としてassertした検証だけを直し、製品表示はそのまま。公開へ進む。

@@ -1,0 +1,119 @@
+---
+import dividerSvg from '../assets/diagram-divider.svg?raw'
+import downSvg from '../assets/diagram-down.svg?raw'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="グロヴァー反復" description="確率をさらに高めるのに最適な反復回数" section="グローヴァー探索" hasMath hasCircuit>
+
+
+<p>
+  前回学んだ折り返し変換を 4 量子ビット回路で行うと、答の <Ket label="1111" /> は確率が約 47.3%
+  に上昇しましたが、さらに上昇させることはできるでしょうか? 答でない <Ket label="0000" />
+  などの確率はそれぞれ約 3.5% 残っていますから、これらの分を <Ket label="1111" />
+  の確率にさらに上積みできそうです。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"{重ね合わせ\"],[\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1],[\"{pAND\"],[\"•\",\"•\",\"•\",\"•\"],[\"}\"],[1],[\"{折り返し変換\"],[\"H\",\"H\",\"H\",\"H\"],[\"X\",\"X\",\"X\",\"X\"],[\"•\",\"•\",\"•\",\"•\"],[\"X\",\"X\",\"X\",\"X\"],[\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>
+  実際に、振幅増幅を繰り返すことで確率をさらに上昇させることができます。
+  これを<strong>グローヴァー反復</strong>と呼びます。 ためしに 2 回ほど反復してみると、以下のように
+  <Ket label="1111" /> の確率は約 90.8% まで上昇します。 このとき、<Ket label="0000" /> など他の確率は 0.6%
+  まで減衰しています。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"{重ね合わせ\"],[\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1],[\"{pAND\"],[\"•\",\"•\",\"•\",\"•\"],[\"}\"],[1],[\"{折り返し変換\"],[\"H\",\"H\",\"H\",\"H\"],[\"X\",\"X\",\"X\",\"X\"],[\"•\",\"•\",\"•\",\"•\"],[\"X\",\"X\",\"X\",\"X\"],[\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1],[\"{pAND\"],[\"•\",\"•\",\"•\",\"•\"],[\"}\"],[1],[\"{折り返し変換\"],[\"H\",\"H\",\"H\",\"H\"],[\"X\",\"X\",\"X\",\"X\"],[\"•\",\"•\",\"•\",\"•\"],[\"X\",\"X\",\"X\",\"X\"],[\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>反復回数に限界はあるのでしょうか？ 同様に 3 回、4 回繰り返した結果は次のようになります。</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"{重ね合わせ\"],[\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1],[\"{pAND\"],[\"•\",\"•\",\"•\",\"•\"],[\"}\"],[1],[\"{折り返し変換\"],[\"H\",\"H\",\"H\",\"H\"],[\"X\",\"X\",\"X\",\"X\"],[\"•\",\"•\",\"•\",\"•\"],[\"X\",\"X\",\"X\",\"X\"],[\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1],[\"{pAND\"],[\"•\",\"•\",\"•\",\"•\"],[\"}\"],[1],[\"{折り返し変換\"],[\"H\",\"H\",\"H\",\"H\"],[\"X\",\"X\",\"X\",\"X\"],[\"•\",\"•\",\"•\",\"•\"],[\"X\",\"X\",\"X\",\"X\"],[\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1],[\"{pAND\"],[\"•\",\"•\",\"•\",\"•\"],[\"}\"],[1],[\"{折り返し変換\"],[\"H\",\"H\",\"H\",\"H\"],[\"X\",\"X\",\"X\",\"X\"],[\"•\",\"•\",\"•\",\"•\"],[\"X\",\"X\",\"X\",\"X\"],[\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1],[\"{pAND\"],[\"•\",\"•\",\"•\",\"•\"],[\"}\"],[1],[\"{折り返し変換\"],[\"H\",\"H\",\"H\",\"H\"],[\"X\",\"X\",\"X\",\"X\"],[\"•\",\"•\",\"•\",\"•\"],[\"X\",\"X\",\"X\",\"X\"],[\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>
+  実行結果を見ると、反復 3 回で <Ket label="1111" /> の確率はさらに上昇し約 96.1% まで上がります。 しかし
+  4 回目の反復で確率は 58.2% まで低下します。 さらに反復を続けると 6
+  回までは確率が下降し続けますが、それを越えるとまた上昇しはじめ 9 回目で 99.2% の確率を得ます。
+  そしてまた下降し、というふうに確率の上昇下降は振動になっています。
+</p>
+
+<p>
+  このように、グローヴァー反復はほどほどで止めないと、かえって確率を下げてしまいます。
+  確率の上昇下降振動のうち、最初に確率が最大になる最小の反復回数は、\(n\)
+  を量子ビット数として一般に次の式で求めることができます。
+</p>
+
+<p class="flex justify-center">{String.raw`\(N_{iter} = \lfloor\frac{π}{4}\sqrt{2^n}\rfloor\)`}</p>
+
+<p>
+  たとえば量子ビット数 \(n = 4\) のとき反復回数 3 で <Ket label="1111" />{String.raw` の確率は約 96.1%
+  でしたが、この反復回数 3 は \(N_{iter}\) の式から計算できます。
+`}</p>
+
+<p>{String.raw`
+  \[ N_{iter} = \lfloor\frac{π}{4}\sqrt{2^4}\rfloor \\ = \lfloor\frac{π}{4} \times 4 \rfloor \\ =
+  \lfloor π \rfloor \\ = 3 \]
+`}</p>
+
+<h2>グローヴァー探索の計算量</h2>
+
+<p>ふつうの探索に比べて、グローヴァー探索がどのくらい効率的か見積もってみましょう。</p>
+
+<p>
+  ふつうの探索 (線形探索) では、要素の数が n 個あった場合に目的の要素をみつけるには最悪 \(n\)
+  回の繰り返しが必要です。 よって、ふつうの探索の計算量は \(O(n)\) であると言えます。
+</p>
+
+<p>{String.raw`
+  グローヴァー探索では、必要な反復回数は \(q\) を量子ビット数とすると
+  \(\lfloor\frac{π}{4}\sqrt{2^q}\rfloor\) でした。 ここで要素数を \(n\) とすると、\(q\)
+  量子で表せる要素数は \(2^q\) なので、要素数 \(n\) に対して必要な反復回数は
+  \(\lfloor\frac{π}{4}\sqrt{n}\rfloor\) となります。 計算量を見積もる上で不要な係数 \(\frac{π}{4}\)
+  などを除くと、グローヴァー探索の計算量は \(O(\sqrt{n})\) となり、ふつうの探索の計算量 \(O(n)\)
+  に比べて二次の加速であると言えます。
+`}</p>
+
+<p>{String.raw`
+  この差は \(n\) が大きいほど如実に現れます。 はじめにで見たように、2,500
+  万件が掲載された電話帳から特定の電話番号をみつけるには、最悪で 2,500
+  万件すべてに目を通す必要があります。 しかしグローヴァー探索を使えば、たった \(\sqrt{2,500万} =
+  5,000\) 回の繰り返しで目的の番号を見つけられます。
+`}</p>
+
+
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .relative { position:relative; } .absolute { position:absolute; } .inset-0 { inset:0; } .m-auto { margin:auto; }
+  .h-12 { height:48px; } .w-12 { width:48px; } .h-12 :global(svg) { width:100%; height:100%; }
+  .text-purple-500 { color:#A855F7; } .font-bold { font-weight:700; }
+  .h-8 { height:32px; } .w-16 { width:64px; } .text-zinc-300 { color:#DAD8CE; }
+  .h-8 :global(svg) { width:100%; height:100%; }
+  .relative.h-8 :global(x-gate.qpu-operation-sm), .relative :global(measurement-gate.qpu-operation-sm) { font-size:24px; width:24px; height:24px; }
+  .items-center > :global(phase-gate) { font-size:32px; }
+  .mb-4 { margin-bottom:16px; } .space-y-4 { row-gap:16px; } .items-end { align-items:flex-end; }
+  .text-2xl { font-size:24px; line-height:32px; } .mx-auto { margin-inline:auto; } .p-0 { padding:0; }
+  .p-4 { padding:16px; } .border-l-4 { border-left:4px solid #60A5FA; } .bg-blue-50 { background:#EFF6FF; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>

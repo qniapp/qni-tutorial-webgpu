@@ -1,4 +1,4 @@
-# grover_iteration: 2回の丸め訂正は承認済み、9回目の数値確認でSTOP
+# grover_iteration: 2回・9回の確率訂正承認で解決済み
 
 2026-10-11。PR #63 (pin 348992f5d7926d326eaa0f678fa8d89f0894ff54) の公開全55ページ・110ケース・210起動・全210ツールバーの確認を最優先で完了した。その後、高宮さんの「数値は正しく」の指示に従い、原文の前提からPythonで解析した。
 
@@ -32,13 +32,13 @@ Python `math` で、k=2として次を計算した。これは指示された解
 
 原第3回路(4反復)の反復部12列が毎回同じことを確認し、**検証用だけ**に同一12列を5回追加した9反復回路を実GPUで実行。390/1440とも **99.21797226588893%**、errors0、norm≈1。原JSONを勝手に修正・最適化したのではなく、「さらに繰り返す」本文の動作を同じ反復で検証した。3反復の原prefixも **96.1318034678925%** →96.1%、4反復は58.1703%→58.2%で本文と整合する。
 
-「99.9%→99.2%」は2回反復の1か所承認の範囲外なので、**公開前にSTOP**した。高宮さんへ **追加で99.9%を99.2%へ1か所訂正してよいか** と質問している。
+当時「99.9%→99.2%」は2回反復の1か所承認の範囲外だったため、公開前にSTOPした。14:01の更新指示で高宮さんが両訂正を明示承認。qniapp/qni#577 (open、head 5d68bbfcfc878b64cd151fb1b594f6802210070e) の文言と一致することを確認し、追加の確認事項は解決済み。3か所のclass順序変更は無視し、反復回数の近似式・5,000回の表記・全3回路JSONはそのまま保持する。
 
 ## 状態と資料
 
-- grover_iteration routeは未作成、未公開。multiple_marked_values以降も停止。
-- 原palette[]×3/max-wire-count1×3、各4-wire、17/29/53列。画像0、削除credits0。移行後の本文diff/390・1440scroll/step0はまだ検証していない。
+- 承認後にgrover_iteration routeを作成し、公開前の検証を実施。公開状況はdocs/porting.mdの最新記録を参照する。
+- 原palette[]×3/max-wire-count1×3、各4-wire、17/29/53列。画像0、削除credits0。承認2数値以外の本文/全26TeX/JSONの一致と390・1440のscroll/errors0/step0を確認。
 - 永続解析結果 `tests/fixtures/grover-iteration-analysis.json`、3/9回の実GPU結果 `tests/fixtures/grover-iteration-k3-k9-gpu-verification.json`。
 - `/tmp/qtw-grover-iteration-analytic.json`、`/tmp/qtw-grover-iteration-original-gpu-results.json`、`/tmp/qtw-grover-iteration-k3-k9-{circuits.json,gpu.mjs,gpu-results.json,gpu.log}`。
 - 原live段落 `/tmp/qtw-grover-iteration-original-nine-prose.json`、screenshot `/tmp/qtw-grover-iteration-original-99_9.png`。
-- CPU fallback/本番readback/上流コード変更なし。hard stop14:22。
+- CPU fallback/本番readback/上流コード変更なし。最新hard stop14:31。
