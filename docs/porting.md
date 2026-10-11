@@ -1273,3 +1273,22 @@ sidebarの次は **grover_iam_indetail（折り返しの仕組み）**。14:31 h
 open PR全件を確認し、同ページを変更するPRなし。open qniapp/qni#577の変更ファイルはgrover_iteration.htmlだけで、今回の注記/図判断の承認ではない。詳細 [grover-iam-indetail-phase-blocker.md](grover-iam-indetail-phase-blocker.md)。永続結果 `tests/fixtures/grover-iam-indetail-phase-verification.json`、資料 `/tmp/qtw-grover-indetail-phase-*`、原live段落 `/tmp/qtw-grover-indetail-original-prose.json` とscreenshot、原図の白背景版 `/tmp/qtw-grover_iam_*-paper.png`。
 
 **grover_iam_indetail未公開、route/ページfixture未作成、原文/画像無変更。** 原JSON0件、palette属性0件/max-wire-count属性0件 (該当なし)。移植後の390/1440本文diff/scroll/errors/step0/toolbarは未検証。追加回路やmax制限を勝手に入れない。次のreadout_of_patterns以降も停止。注記・5図置換の承認を待つ。pin348992f/Binaryen123/GPU-only、CPU fallback/本番readback/上流変更なし、owned診断browserは終了済み。通常pushで記録を同期し、Pagesの終了時状態を報告する。
+
+
+## 2026-10-11 grover_iam_indetail承認受領 / 原文無変更で5図を移植 / hard stop15:13
+
+高宮さんの回答: **原文そのまま、全体位相の注記は追加しない。5枚は元の座標・平均・反射・最終状態を正確に再現する自作対話図へ置換。** 注記提案は不採用、既存grover_iam回路も無変更。旧ブロッカー文書は解決済みとした。
+
+`src/pages/grover_iam_indetail.astro` と `GroverReflectionIllustration.astro` / `grover-reflection-illustration.ts` を追加。原5画像を5段階の自作SVG対話図に置換し、元の青色/円周/位相/白点/赤い平均点/破線矢印/座標値を保持。原にcreditsなし、削除0。原JSON0件、palette/max-wire-count属性0件 (該当なし)、回路や制限を勝手に追加していない。sidenote0/Orbit0、元近似式等も原文無変更。共通prose Bold維持 (原gateタグ0)、MathJax3.2.2/self-hosted/Qni/実験版を維持。
+
+図はデフォルトだけでなく、クリック・Enter/Space・左右矢印で各状態の座標/振幅/確率を調べられる。5段階の選択強調と説明が同期し、Escapeで説明を閉じる。**調べても元の4状態・座標・平均・反射・最終状態を変更しない**。平均は正規化された新量子状態ではないため、平均/反射段階の説明は座標として明示する。CPUの量子シミュレータではなく、原図の固定参照値を表示する対話図。
+
+解析: 初期a=(0.5,0.5,0.5,-0.5)、各p=0.25=25%。全x座標0、平均y=(0.5+0.5+0.5-0.5)/4=0.25。反射2μ-a=(0,0,0,+1)。左3振幅0、右1/位相上向き0°/確率100%。SVGでは半径56を振幅1とし、原点cyから初期点cy−56a、赤点cy−14、反射点cy−56(2μ-a)を実描画し、全20状態のDOM属性と描画座標を検証する。
+
+実GPUは、原prefix9列の初期状態と、**検証専用D参照回路** (原native -D の17列にZ/X/Z/Xの全体位相−Iを追加した21列) を390/1440で実行。前ページのJSONや記事にこの参照回路は追加していない。原図が定義する平均反射Dを比較し、初期amp±0.4999999701976776/各p0.2499999701976785、最終index3 amp **+0.9999998807907104**/虚部0/p **0.9999997615814351** (上向き/約100%)、他0、norm≈1/errors0、**4/4成功**。既存のnative -Dの負号を隠す変更ではなく、原文/原図の代表ベクトルの規約を保持した検証。全体位相注記は本文に追加しない。永続 `grover-indetail-reference-verification.json`。
+
+ローカル390/1440本文diff0/原TeXdiff0、console-page errors0、本文/Shadow内scrollbar0/文書横overflow0。画像5→0/自作図0→5だけが承認済みcount差。回路0のためstep0/toolbarは該当なし。DPR1/2×両幅4/4、クリック/キーボード/座標不変/最終+1・100%を確認、全5図screenshotを目視した。矢印markerの太さも元図に近い単位指定に調整。原文Golden2＋対話図4の最終 **6/6成功**、typecheck/build/diff-check成功。全suiteの完了後に公開する。
+
+原fixture `grover_iam_indetail-original.json`、全文/TeX `grover-indetail-text.json`、`tests/grover-indetail.spec.ts`、資料 `/tmp/qtw-port-grover_iam_indetail.json`、`/tmp/qtw-scroll-grover-indetail-local.json`、`/tmp/qtw-grover-indetail-figure-*-dpr*-*.png`、`/tmp/qtw-grover-indetail-reference-*`。14:52の再確認ではqniapp/qniのopen PRは0件、同ページPRなし。pin348992f/Binaryen123/GPU-only、本番readback/CPU fallback/上流変更なし。
+
+最初の全suite実行中に最終buildで配信distを入れ替えたため、既存bb84/title-dividerのMathJax待ち2件がtimeoutになった。配信成果物を固定し、buildと並走させず全suiteを最初から再実行した結果 **320tests成功**。製品を変更してtimeoutを隠す修正やretry増加は行っていない。原文/TeX/対話図の最終6/6も成功、typecheck/build/diff-check成功。公開へ進む。

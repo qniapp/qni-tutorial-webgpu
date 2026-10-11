@@ -1,0 +1,17 @@
+{
+  "title": "折り返しの仕組み",
+  "slug": "grover_iam_indetail",
+  "description": "折り返し変換の幾何学的説明",
+  "sidenotes": [],
+  "images": [
+    "images/grover_iam_coordinates.png",
+    "images/grover_iam_coordinates_mean.png",
+    "images/grover_iam_flip.png",
+    "images/grover_iam_flip_result.png",
+    "images/grover_iam_final_state.png"
+  ],
+  "orbitPrompts": 0,
+  "orbit": [],
+  "circuits": [],
+  "amplitudes": []
+}
