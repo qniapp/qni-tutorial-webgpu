@@ -22,5 +22,6 @@
   "entanglement_operation": [1, 1, 1],
   "teleportation_circuit": [1, 1, 1, 1, 1, 1, 1],
   "cascading_teleportation": [1],
-  "long_distance_entanglement": [1]
+  "long_distance_entanglement": [1],
+  "cphase": [1, 1, 1, 1]
 }

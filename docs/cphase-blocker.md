@@ -1,4 +1,8 @@
-# CPHASE 移植のSTOP: 同角度PHASE列の意味
+# CPHASE 同角度PHASE列: PR #60で解決
+
+**現在の状態 (2026-10-11 09:33): 解決。** PR #60のmerge `64b7bb5de1eaecdfcc221bfabe0ed14ffe53ca28` からembed/standaloneを実際に再ビルドした。390/1440のGPU readbackで元4回路、CPHASEの対称性、2個の同角度PHASE、2control+PHASE、3個の同角度PHASE、各CZ表記を照合し、24/24成功。同角度3-PHASEは状態7だけ `0.25+0.25i`、他の7状態は `sqrt(1/8)+0i` で、位相を3回ではなく1回適用する。cphaseは公開対象に復帰し、#57待ち/SKIPを解除する。資料: `/tmp/qtw-pr60-local-behavior.json`。現在の公開checkpointは [porting.md](porting.md) の末尾に記録する。
+
+以下は解決前の歴史的なSTOP再現記録。現在のpinの挙動ではない。
 
 2026-10-11、pin `785c8b786c9eb0b7cb48d435d8215aaf45177ea1` (PR #55、PR #56を含む)、実WebGPU Chromium 152.0.7977.82で再現。本文を変更して回避せず、CPHASEページは公開対象から外した。上流修正が必要。issue: https://github.com/qniapp/qni-webgpu/issues/57 。
 

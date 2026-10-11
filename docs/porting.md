@@ -708,3 +708,34 @@ incrementおよび後続decrementはroute/TOC/fixturesに含めず未公開。dr
 公開全 **38移行ページ×390/1440=76ケース、0 failures**、全 **50 embed×2幅=100起動** がrunning / step0 / norm1。HTML/shadow DOMの横/縦本文scrollbar、document横overflow、console/page errors=0。ナビゲーション外のmulti-1/3/7とstressページも8ケース、22起動で同じ確認を再実施し、合計 **全42 builtページ / 84ケース、全61 embed / 122起動**。資料: `/tmp/qtw-scroll-teleport-public.json`、`/tmp/qtw-teleport-public-audit.log`、`/tmp/qtw-pr58-extra-teleport-public.json`。3ページの原文比較は `/tmp/qtw-port-{teleportation_circuit,cascading_teleportation,long_distance_entanglement}.json`、DPRとnative画像は `/tmp/qtw-teleport-{glyphs,native}-*.png` と `/tmp/qtw-teleport-glyphs.json`。
 
 高宮さんへの未回答質問は **incrementの最後の原 `["1"]` を `[1]` に訂正してよいか**。許可までincrement/decrement以降は停止する。cphase #57待ち / superdense_coding_circuit #59待ちのSKIPは継続。原JSONの書換えや上流変更は行わない。owned preview 4342 / 全検証browserを停止し、09:14前に終了する。
+
+
+## 2026-10-11 PR #60 / CPHASE復帰 (09:45 hard stop)
+
+**現在: cphaseは#57解決、SKIP解除、公開対象に復帰。** 上記の#57待ち・STOP記述は過去のcheckpoint。superdense_coding_circuitは#59待ち / SKIPのまま。increment/decrementは訂正許可待ちとして触らず、route/fixture/TOCにも含めない。
+
+`qni-webgpu.ref` をPR #60 merge **64b7bb5de1eaecdfcc221bfabe0ed14ffe53ca28** に更新。clean detached source `/home/yasuhito/Work/qni-webgpu-worktrees/verify/tutorial-cphase` を作り、`scripts/fetch-qni-webgpu.sh` で **embed + standaloneを実際に再ビルド** (Binaryen123、GPU-only)。その後Astro build/typecheck/diff-checkを実施した。上流コード変更、CPU/WebGL fallback、native scalingなし。既存ページの本文/JSON/palette/max/glyph/creditsは変更していない。
+
+### cphaseページ報告
+
+- 原文/TeXを保持。原4 HTML circuitsのJSON、17 circuit-step / 36 dropzones / 17 PHASE / 17 controlの等価図、32 qubit-circle、12本文ketを維持。本文の改変で等価性を回避していない。
+- image `phase_bit3_ket_pair.png` だけを既存自作 **interactive KetPairs(bit3, PHASE)** に置換。原4色・ペア0/4,1/5,2/6,3/7・8ket・PHASE矢印を維持し、click/keyboardでペア選択可能。原文側にこの画像のcreditはないため、**削除creditsなし**。旧Qni UI画像もないので追加質問なし。
+- 元paletteを個別確認して **[[], [], ["P(π/4)","•"], ["P(π)","Z","•"]]**。元data-max-wire-countは全4個 **1**。mini_qni-filterの2を流用せず、原3-wire回路をmax1で切り詰めない。
+- proseの原小gate glyphは今回なく、17 PHASE/control等価図はRegular、既存のprose Bold contextを維持。390/1440・DPR1/2でglyph/ket/interactive図を目視・選択確認した。
+- 原editorのoverflow-scroll shellは除去。8-circleは既存4列の自然なresponsive配置、CZ等価図は上/下のπラベルが切れないよう **padding-block:16px**。本文/shadow DOMの横/縦inner scrollbar、document横overflowなし。native内clip/panは許可された範囲であり問題項目にしない。
+- original/live390/1440の本文/本文TeX diff0、errors0。画像1→0、replacement内MathJax8個追加だけが意図的な図差。原図外のstep/dropzone/gate/circle数は一致。
+
+### 実GPUの意味検証
+
+390/1440各幅で元4回路と8変形をstandaloneへ読み込み、最後のGPU state vectorを原文の期待複素振幅と直接照合: **24/24成功**。ページ上の4 embedと5ハンズオン変形でも、実native gateへpointerを移して最終stepを選び、各elementのreadStateVectorで **18/18成功**。幅/有paletteによるnative geometry差は検証側のpointer座標で扱い、製品を縮小・改造していない。両方ともnorm≈1、console/page errors0。
+
+- 単独PHASE: 状態4/5/6/7のみπ/4回転。
+- control+PHASE、control/target交換、2同角PHASE: 状態5/7のみπ/4回転。
+- 2control+PHASE、3同角PHASE: **状態7だけ0.25+0.25i、状態0-6はsqrt(1/8)+0i**。位相を3回ではなく1回だけ適用してCCPHASEと等価。
+- CZ: control+P(π)、交換表記、2P(π)、control+Z、controlのみで、状態5/7だけ符号反転して同じvector。
+
+独立な参照としてqni CLIの3H + P(π/4) control0,1 target2もrun --latexで確認し、111のみ(1+i)/4、他7状態sqrt(2)/4だった。GPU検証資料: `/tmp/qtw-pr60-{local,public}-behavior.json` / `-embed-behavior.json` と同prefixのscript/log。解決前の実画面は [cphase-blocker.md](cphase-blocker.md) に歴史として保持し、現在の状態を解決に更新。
+
+### ローカル回帰と公開確認
+
+最終 **237 tests passed (4.0m)**、build/typecheck/diff-check成功。ローカル全39移行ページ×2幅=78ケース / 全54 embed×2=108起動でrunning/step0/norm1、errors0、本文/shadow DOM inner scrollbars0。CPHASEの16px上padding後も2幅で再確認。原頁比較 `/tmp/qtw-port-cphase.json`、回帰 `/tmp/qtw-scroll-pr60-local.json`、tests `/tmp/qtw-pr60-final-tests.log`、native build `/tmp/qtw-pr60-native-build.log`。公開結果とcommit/Pagesは次のcheckpointに追記する。

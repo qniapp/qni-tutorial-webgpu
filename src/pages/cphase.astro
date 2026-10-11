@@ -1,0 +1,390 @@
+---
+import KetPairs from '../components/KetPairs.astro'
+import dividerSvg from '../assets/diagram-divider.svg?raw'
+import downSvg from '../assets/diagram-down.svg?raw'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="CPHASE ゲート" description="条件付き PHASE ゲート" section="QPU 命令その 2" hasMath hasCircuit>
+
+
+<p>
+  コントロールゲートと組合わせた PHASE ゲートを CPHASE ゲートと呼びます。 CNOT
+  ゲートと同じく、CPHASE ゲートは条件付きで PHASE ゲートを作用させます。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row justify-center">
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+    </circuit-step>
+  </div>
+</div>
+
+<p>
+  CPHASE ゲートの特徴に対称性があります。 CPHASE
+  ではコントロールビットとターゲットビットとの区別がなく、入れ替えてもまったく同じ動作をします。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+    </circuit-step>
+
+    <span>=</span>
+
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+    </circuit-step>
+  </div>
+</div>
+
+<p>
+  この対称性のため、CPHASE ゲートはしばしば、次のようにコントロールゲートを使わず PHASE
+  ゲート同士を接続した形で書きます。 このとき、ペアとなる CPHASE
+  ゲートはそれぞれ同じ角度を持たなければいけないことに注意してください。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+    </circuit-step>
+
+    <span>=</span>
+
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+    </circuit-step>
+
+    <span>=</span>
+
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+    </circuit-step>
+  </div>
+</div>
+
+<p>Qni では CPHASE をコントロールゲートありと PHASE ゲート 2 個の両方で書くことができます。</p>
+
+<h2>CPHASE ゲートの作用</h2>
+
+<p>
+  ビット 1 をコントロールビット、ビット 3 をターゲットビットとした CPHASE
+  ゲートの作用を見てみましょう。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\"],[\"{重ね合わせ\"],[\"H\",\"H\",\"H\"],[\"}\"],[\"•\",1,\"P(π/4)\"]]}"}></qni-webgpu-circuit>
+</div>
+
+<p>
+  まずはコントロールゲートなしで、PHASE ゲートのみをビット 3 に適用した場合の動作をおさらいします。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\"],[\"{重ね合わせ\"],[\"H\",\"H\",\"H\"],[\"}\"],[1,1,\"P(π/4)\"]]}"}></qni-webgpu-circuit>
+</div>
+
+<p>
+  PHASE ゲートをビット 3 に適用する場合、演算ペアは 4 つ離れた円のペア「<Ket label="0" /> と <Ket label="4" />」、「<Ket label="1" /> と <Ket label="5" />」、「<Ket label="2" /> と <Ket label="6" />」、「<Ket label="3" /> と <Ket label="7" />」になります。
+</p>
+
+<figure>
+  <KetPairs bit={3} swap gate="PHASE" />
+</figure>
+
+<p>
+  PHASE ゲートは演算ペアの右側の円のみに作用します。
+  つまり、すべての円のうち半分の円のみに作用します。
+</p>
+
+<div class="my-5 flex overflow-x-auto">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-2">
+      <qubit-circle data-amplitude="0.3535533905932738" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      <span class="diagram-arrow size-6" set:html={dividerSvg}></span>
+      <div>PHASE(π/4) ゲートをビット 3 に適用</div>
+      <span class="diagram-arrow size-6 mb-8" set:html={downSvg}></span>
+    </div>
+
+    <div class="flex flex-row items-center space-x-2">
+      <qubit-circle data-amplitude="0.3535533905932738" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25 + 0.25i" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25 + 0.25i" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25 + 0.25i" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25 + 0.25i" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div>
+
+<p>
+  次にコントロールゲートをビット 1 に置いた場合を考えます。 この場合、ビット 1
+  が立っている演算ペアのみに PHASE ゲートを適用するのでした。 すると先ほどの演算ペアの半分「<Ket label="1" /> と <Ket label="5" />」、「<Ket label="3" /> と <Ket label="7" />」が PHASE ゲートの対象になります。
+</p>
+
+<div class="my-5 flex overflow-x-auto">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-2">
+      <qubit-circle data-amplitude="0.3535533905932738" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      <span class="diagram-arrow size-6" set:html={dividerSvg}></span>
+      <div>CPHASE(π/4) (コントロールビット 1、ターゲットビット 3)</div>
+      <span class="diagram-arrow size-6 mb-8" set:html={downSvg}></span>
+    </div>
+
+    <div class="flex flex-row items-center space-x-2">
+      <qubit-circle data-amplitude="0.3535533905932738" data-ket="0" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="1" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="2" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="3" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="4" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25 + 0.25i" data-ket="5" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3535533905932738" data-ket="6" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25 + 0.25i" data-ket="7" data-size="lg" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div>
+
+<p>
+  このように、コントロールビットを 1 つ増やすごとに、回転する円の数は半分になります。 たとえば、上の
+  3 量子ビットの例でコントロールゲートを 2 個に増やすと、回転する円は 1 つになります。
+</p>
+
+<h2>ハンズオン</h2>
+
+<p>
+  コントロールゲート 2 個の PHASE ゲート (CCPHASE) を作り、回転する円が 1
+  個になることを確認しましょう。 また、CCPHASE を同等な 3 個のPHASE
+  ゲートに書き換え、同様に動作することを確認しましょう。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone
+        data-connect-top
+        data-connect-bottom
+        data-input-wire-quantum
+        data-output-wire-quantum
+      >
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+    </circuit-step>
+
+    <span>=</span>
+
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone
+        data-connect-top
+        data-connect-bottom
+        data-input-wire-quantum
+        data-output-wire-quantum
+      >
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+    </circuit-step>
+  </div>
+</div>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[\"P(π/4)\",\"•\"]"} circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\"],[\"{重ね合わせ\"],[\"H\",\"H\",\"H\"],[\"}\"],[\"•\",1,\"P(π/4)\"]]}"}></qni-webgpu-circuit>
+
+<h2>CZ ゲート</h2>
+
+<p>角度が π の場合の CPHASE(π) は、次のようにコントロールゲートのみで書くことができます。</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+    </circuit-step>
+
+    <span>=</span>
+
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π"></phase-gate>
+      </circuit-dropzone>
+    </circuit-step>
+
+    <span>=</span>
+
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π"></phase-gate>
+      </circuit-dropzone>
+    </circuit-step>
+
+    <span>=</span>
+
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+    </circuit-step>
+  </div>
+</div>
+
+<p>
+  このコントロールゲートのみのゲートを CZ ゲートと呼びます。 これは、PHASE(π) には Z
+  ゲートという別名があるため、CPHASE(π) は次のように Z ゲートにコントロールゲートを組合わせたもの
+  (つまり CZ) としても書けるからです。
+</p>
+
+<div class="my-5 overflow-x-auto">
+  <div class="flex flex-row items-center space-x-4">
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π"></phase-gate>
+      </circuit-dropzone>
+    </circuit-step>
+
+    <span>=</span>
+
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+    </circuit-step>
+
+    <span>=</span>
+
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <z-gate></z-gate>
+      </circuit-dropzone>
+    </circuit-step>
+
+    <span>=</span>
+
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <z-gate></z-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+    </circuit-step>
+
+    <span>=</span>
+
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+    </circuit-step>
+  </div>
+</div>
+
+<h2>ハンズオン</h2>
+
+<p>
+  CZ ゲートをコントロールゲートと PHASE(π) ゲートの組合わせ、コントロールゲートと Z
+  ゲートの組合わせ、コントロールゲートのみの 3 通りで作り、同じ動作になることを確認しましょう。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[\"P(π)\",\"Z\",\"•\"]"} circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\"],[\"{重ね合わせ\"],[\"H\",\"H\",\"H\"],[\"}\"],[\"•\",1,\"P(π)\"]]}"}></qni-webgpu-circuit>
+
+
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .relative { position:relative; } .absolute { position:absolute; } .inset-0 { inset:0; } .m-auto { margin:auto; }
+  .h-12 { height:48px; } .w-12 { width:48px; } .h-12 :global(svg) { width:100%; height:100%; }
+  .text-purple-500 { color:#A855F7; } .font-bold { font-weight:700; }
+  .h-8 { height:32px; } .w-16 { width:64px; } .text-zinc-300 { color:#DAD8CE; }
+  .h-8 :global(svg) { width:100%; height:100%; }
+  .relative.h-8 :global(x-gate.qpu-operation-sm), .relative :global(measurement-gate.qpu-operation-sm) { font-size:24px; width:24px; height:24px; }
+  .items-center > :global(phase-gate) { font-size:32px; }
+  .mb-4 { margin-bottom:16px; } .space-y-4 { row-gap:16px; } .items-end { align-items:flex-end; }
+  .text-2xl { font-size:24px; line-height:32px; } .mx-auto { margin-inline:auto; } .p-0 { padding:0; }
+  .p-4 { padding:16px; } .border-l-4 { border-left:4px solid #60A5FA; } .bg-blue-50 { background:#EFF6FF; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  /* Leave room above and below two-wire PHASE equivalences for angle labels. */
+  .overflow-x-auto:has(> .flex-row > circuit-step) { padding-block:16px; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>

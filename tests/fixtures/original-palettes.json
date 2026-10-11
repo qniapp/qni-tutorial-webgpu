@@ -80,5 +80,6 @@
   "discriminating_bell_states": [],
   "teleportation_circuit": [[], [], [], [], [], [], []],
   "cascading_teleportation": [[]],
-  "long_distance_entanglement": [[]]
+  "long_distance_entanglement": [[]],
+  "cphase": [[], [], ["P(π/4)", "•"], ["P(π)", "Z", "•"]]
 }
