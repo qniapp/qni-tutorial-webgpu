@@ -1407,3 +1407,21 @@ qft_adderの数値・回路は正しい。原3JSONは **22/52/12列/各7-wire**�
 原3回路×両幅GPU **6/6**、IQFT/加算の2prefix・初期input・符号反転引算×両幅 **8/8**、合計 **14/14 signed値/確率成功**、norm≈1/errors0。永続 `qft-adder-blocker-verification.json` に原3JSON/原liveラベル/実footerclick/原GPU6/テストprefix3+引算JSON/GPU8を保存。詳細 [qft-adder-blocker.md](qft-adder-blocker.md)。画像0/置換0/credits削除0/sidenote1/Orbit0。未公開、route/移植fixture未作成、本文/URL/JSON未変更、移植後のtext/TeX/scroll/DPR/toolbar/step0等は未検証。次 **eigenphases** 以降も停止。
 
 資料 `/tmp/qtw-next-qft_adder.html`、`/tmp/qtw-qft-adder-original-*` (両幅3回路/prev-link screenshotとlive)、`/tmp/qtw-qft-adder-prev-link-results.json`、`/tmp/qtw-qft-adder-stage-*`。owned診断browserは終了、preview4353は停止する。通常pushで記録を同期し、記録だけのPagesと内容公開を区別して報告する。pin348992f/Binaryen123/GPU-only、本番readback/CPU fallback/上流変更なし、hard stop16:28。
+
+
+## 2026-10-11 qft_adder承認2訂正を移植 / hard stop16:57
+
+高宮さんが **`a += b のブロック (左から 3 番目)` → `a += b のブロック (左から 4 番目)`**、**下部prev「QFT の内部」のhrefをinside_the_qftへ** (原frontmatter `prev_url: ./inverse_qft.html` → `prev_url: ./inside_the_qft.html`) の2件だけを承認。`docs/qft-adder-approved-source.html` の2訂正を逆に戻すと元source全文に完全一致。ほかの本文/数値/JSONに触れない。旧blockerは解決済みとした。open PRは#579 (前ページ) のみで、qft_adderの同ページPRはない。
+
+`src/pages/qft_adder.astro` を移植。原 **3JSON/各7-wire/22,52,12列** を無変更、title **QFT で足し算** 保持。palette **[]×3**、max-wire-count **1×3** (7本をtruncateしない)、run-buttonなし。画像0/置換0/credits削除0/sidenote1/Orbit0を保持。sourceのsidenote phase_adderと文内位置/ゲートの順序も保持した。
+
+当サイトにまだ共通prev/next機能がないため、TutorialLayout footerに空なら何も出ないnamed slot `footer-navigation` を1行だけ追加し、qft_adderだけに原label **QFT の内部** と左chevron、44px以上のhit area、`/qni-tutorial-webgpu/inside_the_qft/` への下部linkを置く。未承認の他ページprev/nextを追加しない。見た目を検査したところ最初は既存「ページ一覧」とくっついて見えたため、linkをfit-contentのblock-flexにして別行にした。再build後のfooter画像で両者が独立した行になることを確認。390/1440×DPR1/2の **4/4実clickでinside_the_qft/へ遷移、heading QFT の内部** を確認した。
+
+解析と先の14GPUは保持。a3/b1入力index19、普通の加算とQFT加算はa4/b1/index20/100%。逆QFTprefix25列はindex16+jの(1/4)exp(i3πj/8)/各6.25%、加算prefix37列は(1/4)exp(i4πj/8)/各6.25%、b1を保持する。各CPHASE角2π×2^qa×2^qb/16がphase exp(i2πjb/16)を加え、周波数3→4になる。sourceのcontrols19→9も正しい (targetゲートは両方9)。入力なし単独コアは|0⟩→|0⟩/100%で、この結果だけを加算効果の証明とはせず、2prefixと最終状態を使う。コア9角をテストだけで負にした52列では3-1=2/b1保持/index18/100%、原JSONに符号変更は書かない。
+
+実記事nativeの全3回路を最後の有効列まで水平pan/クリック、390/1440で **6/6 signed最終値/確率成功**、norm≈1/errors0、各state vectorは128状態/7-wireを保持。最初のprobeは前の4-wire用helperの`v.slice(32)`をleakageとみなして、正しいindex20=1をleakage1と誤判定した。原7-wireに合わせて256scalar/128statesを明示し、その外だけをleakageにし、未使用target15も削除して全6件を再実施。製品の数値/回路を直す必要はなく、helperの次元前提の誤りである。原standalone6+stage8+native6=**20/20**、7-wireを確認した。
+
+ローカル390/1440で承認ordinalだけの本文diff0/原TeXdiff0/全counts・全3JSON・sidenote一致、errors0/running/step0/norm≈1、body/content/shadow scrollbar0/文書横overflow0。DPR1/2×両幅4/4/prose全gate Bold/native Regular。全6toolbar undo/redoのみ85/85/0画素、旧trash位置クリックでも現在回路URL不変。fixtureにnativeLocal/toolbarsLocal/footerLocal/glyphsLocal/scrollLocalを保存。資料 `/tmp/qtw-port-qft_adder.json`、`/tmp/qtw-qft-adder-local-*`、`/tmp/qtw-scroll-qft-adder-local.json`、`/tmp/qtw-pr63-toolbar-qft-adder-local.json`。typecheck/build/diff-check成功、固定distの全suiteが終わってから公開する。pin348992f/Binaryen123/GPU-only、本番readback/CPU fallback/上流変更なし。
+
+
+qft_adder **346 tests/typecheck/build/diff-check成功**、固定dist fullsuite5.8分で成功。16:39確認の新 **qniapp/qni#580** (head6d25cfdedc93f95595c22b429602bf3473dbd0c4) は承認ordinal/prev_urlの2訂正と一致し、余分なinspector class順変更は採用しない。公開前にembed probeのbase設定をさらに点検し、phase名publicだけでは環境変数なしの場合local4353へ行く共通helper仕様を発見した。publicなら公開baseを選ぶようhelperを直し、各resultにbaseも明記し、今回のqft_adderだけでなく前のinside_the_qftの公開22件も実公開URLを明示して再実施する。これは検証harnessの宛先問題で、記事/数値/JSON/本番コード変更ではない。

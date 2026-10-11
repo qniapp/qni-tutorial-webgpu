@@ -85,6 +85,7 @@ const base = import.meta.env.BASE_URL
       <div class="content-with-margin"><slot /></div>
     </main>
     <footer>
+      <slot name="footer-navigation" />
       <a href={base}>ページ一覧</a>
       <p>WebGPU 対応ブラウザで使う実験版です。回路の変更は保存されません。</p>
     </footer>

@@ -1,6 +1,8 @@
-# qft_adder: block序数と前ページURLでSTOP
+# qft_adder: block序数と前ページURL（解決済み）
 
-2026-10-11、hard stop16:28。inside_the_qftの承認2訂正を公開・GPU/本文/全11toolbar/scroll/DPR検証した後、sidebar次のqft_adderを確認し、以下2件の承認を質問した。未承認のまま移植/公開を止めた。
+高宮さんが本文「左から3番目」→「左から4番目」と、下部prevのinverse_qft→inside_the_qftの2訂正だけを承認した。原3JSON/数値/その他本文は変更しない。承認済み全文 `qft-adder-approved-source.html`、当サイトの下部prevはinside_the_qft/にlinkする。以下は確認時の履歴。
+
+2026-10-11、当初のhard stop16:28。inside_the_qftの承認2訂正を公開・GPU/本文/全11toolbar/scroll/DPR検証した後、sidebar次のqft_adderを確認し、以下2件の承認を質問した。未承認のまま移植/公開を止めた。
 
 ## 1. コアblockは左から4番目
 
