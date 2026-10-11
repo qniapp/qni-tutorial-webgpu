@@ -1,0 +1,28 @@
+<section data-sat-states data-original-image aria-label="SAT回路の最終状態。14量子ビット、16384状態">
+  <div class="states">
+    {Array.from({length:32},(_,i)=><qubit-circle data-amplitude={i<16?(i===8?'-0.25':'0.25'):'0'} data-ket={String(i)} data-size="base" data-qubit-count="14" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase tabindex="0"></qubit-circle>)}
+  </div>
+  <label>表示する状態 <input type="range" min="0" max="511" value="0" step="1" aria-label="32状態ごとの表示範囲" /></label>
+  <output aria-live="polite">0〜31 / 16384状態</output>
+</section>
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>('[data-sat-states]')) {
+    const input=root.querySelector('input')!, output=root.querySelector('output')!, circles=root.querySelectorAll('qubit-circle')
+    input.addEventListener('input',()=>{
+      const start=Number(input.value)*32
+      circles.forEach((circle,i)=>{const state=start+i;circle.setAttribute('data-ket',String(state));circle.setAttribute('data-amplitude',state<16?(state===8?'-0.25':'0.25'):'0')})
+      output.textContent=`${start}〜${start+31} / 16384状態`
+    })
+  }
+</script>
+<style>
+section { border:2px solid #E2E8F0; border-radius:16px; padding:12px; background:white; }
+.states { display:grid; grid-template-columns:repeat(16,minmax(0,1fr)); gap:6px; }
+.states :global(qubit-circle) { width:100%; height:auto; aspect-ratio:1; margin:0; cursor:pointer; }
+.states :global(qubit-circle::after) { content:none; }
+.states :global(qubit-circle:focus-visible) { outline:2px solid #0EA5E9; outline-offset:1px; }
+label { display:flex; align-items:center; gap:12px; margin-top:12px; font-size:14px; }
+input { flex:1; min-width:0; }
+output { display:block; font-size:14px; text-align:right; }
+@media(max-width:400px) { section {padding:8px;} .states {gap:3px;} }
+</style>

@@ -158,5 +158,8 @@
   ],
   "phase_logic_combination": [
     1
+  ],
+  "sat": [
+    1
   ]
 }

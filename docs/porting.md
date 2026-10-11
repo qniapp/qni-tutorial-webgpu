@@ -1039,3 +1039,20 @@ H入力の全回路は状態0〜15のみ各約1/16、**index8だけ約-0.25**、
 ただし同指示の「指定PR最終版に合わせ、相違時はPR版を使う」と、PRの現head **b0d1c105ee0edbc2d20f3f45439d595bbe2eecab** の実内容が競合。12:29〜12:35にdiff/contents/headを再確認したが、PRは旧Hint4説明・旧3-item list・旧3変数・「ほかのヒントから」のまま。**質問: PR更新を待つか、今回明示されたHint4の4訂正をPR版より優先するか？** Hint4を訂正してよいかという未承認質問ではなく、どの最終文言へ同期するかの確認。勝手に旧文言を最終版として公開しない。
 
 PRの回路JSONはfixed fixtureと全体で完全一致、10列差分も同じ。class並べ替え以外の追加回路差分なし。[sat-pr575-sync-blocker.md](sat-pr575-sync-blocker.md) に記録。**SATとgrover_iam以降は未公開**。コード作業を保存したまま、docsと確定GPU fixturesだけcheckpointする。owned preview4348/検証browserを終了。hard stopは最新の13:02を適用。
+
+
+### 12:41 PR同期解決 / SAT公開準備
+
+PR #575が **9ed17873eeb3f278e00eaafb539c724f35918b2c** に更新。Hint4の新説明・9変数pre・3→9の確定変数・Hint1「ヒント4から」は高宮さんの追加指定と完全一致 (改行/空白以外の差なし)。元285行付近の最適化説明は無変更。t5の125列JSONもfixed fixtureと全体で完全一致。指定PR優先条件を満たしたので同期質問は解決、作業を再開した。Hint4は未決質問ではない。保存原稿を承認最終版へ更新した。
+
+承認追加diffは、旧「このヒントが言っていることは次の3つ」→「7,3,8=×はどの箱にも入らない」の指定文、旧3-item list→Hint4のA/B/C全9否定pre、3変数→9変数列挙、Hint1「ほかのヒント」→「ヒント4」。これ以外の既承認原稿/本文/TeX/JSONは変更しない。全文期待fixture **sat-approved-text.json** で固定し、390/1440のguard **2/2** 成功。原liveをPRの承認された本文部分だけtest-onlyで変更して比較し **本文diff0/TeX diff0/errors0**。harnessでraw Liquid nmargin_noteタグをDOMへ混ぜた点は、タグを除外して既存sidenoteを保持する比較へ修正した。
+
+原125列/14-wire、palette **[]**、原max-wire-count **1**、原run-buttonなしを保持。proseゲートglyphは原に0個で、共有Bold設定を維持。native/図はRegular、MathJax3.2.2/Qni/実験版/Qniで開くを保持。JSON差分は指定10列だけ、冗長XX/ラベル/他115列を保持。
+
+**sat_result_state_vector.png→自作SatStateIllustration**、32状態ずつrangeで全16384状態へ到達可能。14bitket、index8の振幅-0.25/6.25%/180°、他0〜15の+0.25、16以降の0を保持。元手書きパズル **crack_the_code.jpgは保持** (画像内署名も保持)。原に別credits文なし、**削除credits0**。旧Qni popup/block labelsのPNGは公開assetsへ持ち込まない。
+
+実ページのnativeをpanして最終列を選択し **34/34 GPU検証** 成功 (390/1440それぞれ原H＋16basis)。補助10wire=0・入力保持、8だけ負、uniform16状態各1/16、norm≈1。standalone177/177と合わせて **211/211**。資料 `/tmp/qtw-sat-local-embed-behavior.json`、`tests/fixtures/sat-gpu-verification.json`。製品回路に診断Xを加えず、本番GPU→CPU readbackなし。
+
+local390/1440はbody/content/shadow inner scrollbar/document横overflow/errors0、step0/running/norm1、native内部panのみ許容。DPR1/2×両幅の4ケースはerrors/overflow0、図/native Regularを確認。pre折返しで静的式の長い行だけを表示幅へ合わせ、native canvasをscaleしていない。最初の289成功/3SAT幅失敗は修正後target6/6、最終全文guard2/2、typecheck/build/diff-check成功。全suite再実行は公開準備時に進行中で、成功数は確認後に記録する。
+
+資料 `/tmp/qtw-port-sat.json`、`/tmp/qtw-scroll-sat-final-local.json`、`/tmp/qtw-phase-two-local-glyphs.json` (SAT4ケースの再実行結果)、`/tmp/qtw-sat-{golden-tests,final-tests,final-types,approved-build}.log`。公開live確認後にsidebar順でgrover_iamへ進む。

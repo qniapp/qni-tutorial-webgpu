@@ -45,8 +45,10 @@ import superdense from './fixtures/superdense_coding_circuit-original.json' with
 import superLogic from './fixtures/superposition_quantum_logic-original.json' with { type: 'json' }
 import phaseLogic from './fixtures/phase_logic-original.json' with { type: 'json' }
 import phaseCombination from './fixtures/phase_logic_combination-original.json' with { type: 'json' }
-const replaced = new Set(['phase_logic_result.png','quantum_logic_result.png','entanglement_circuit.png','drone_field_abcd.png','2qubits_bit2_ket_pair.png','phase_bit1_ket_pair.png','phase_bit2_ket_pair.png','phase_bit3_ket_pair.png','H_bit1_ket_pair.png','H_bit2_ket_pair.png','H_bit3_ket_pair.png','X_bit1_ket_pair.png','X_bit2_ket_pair.png','X_bit3_ket_pair.png','ket_label_in_binary.png','bit1_ket_pair.png','bit2_ket_pair.png','bit3_ket_pair.png','rotation-by-pi-around-x-axis.png','matrix_multiplication.png','qpu_operations_matrix_and_state_vector.png','state_vector_norm1.png','reversible_matrix_multiplication.png','p_bit_graph.png','c_bit_and_p_bit.png','p0p1_graph.png','qbit_circular_state.png','bloch_sphere.png','amplitude_amplification_overview.png','argument_of_complex.png','logic_gates_and_not.png'])
-for (const fixture of [qpu, faster, pbit, superposition, qubit, phase, notation, cpu, write, intro, x, phaseGate, measurement, noCloning, combinations, qkd, bb84, multiCircle, multiSuperposition, multiOperation, pairs, randomByte, bb84Circuit, multiPhase, partial, swap, cnot, swapPuzzle, entanglement, disentangle, entanglementOperation, bellStates, teleportation, cascading, longDistance, cphase, increment, decrement, addition, subtraction, multiplication, logic, superdense, superLogic, phaseLogic, phaseCombination]) for (const width of [1440, 390]) {
+import sat from './fixtures/sat-original.json' with { type: 'json' }
+import satFixed from './fixtures/sat-circuit-fixed.json' with { type: 'json' }
+const replaced = new Set(['sat_result_state_vector.png','phase_logic_result.png','quantum_logic_result.png','entanglement_circuit.png','drone_field_abcd.png','2qubits_bit2_ket_pair.png','phase_bit1_ket_pair.png','phase_bit2_ket_pair.png','phase_bit3_ket_pair.png','H_bit1_ket_pair.png','H_bit2_ket_pair.png','H_bit3_ket_pair.png','X_bit1_ket_pair.png','X_bit2_ket_pair.png','X_bit3_ket_pair.png','ket_label_in_binary.png','bit1_ket_pair.png','bit2_ket_pair.png','bit3_ket_pair.png','rotation-by-pi-around-x-axis.png','matrix_multiplication.png','qpu_operations_matrix_and_state_vector.png','state_vector_norm1.png','reversible_matrix_multiplication.png','p_bit_graph.png','c_bit_and_p_bit.png','p0p1_graph.png','qbit_circular_state.png','bloch_sphere.png','amplitude_amplification_overview.png','argument_of_complex.png','logic_gates_and_not.png'])
+for (const fixture of [qpu, faster, pbit, superposition, qubit, phase, notation, cpu, write, intro, x, phaseGate, measurement, noCloning, combinations, qkd, bb84, multiCircle, multiSuperposition, multiOperation, pairs, randomByte, bb84Circuit, multiPhase, partial, swap, cnot, swapPuzzle, entanglement, disentangle, entanglementOperation, bellStates, teleportation, cascading, longDistance, cphase, increment, decrement, addition, subtraction, multiplication, logic, superdense, superLogic, phaseLogic, phaseCombination, sat]) for (const width of [1440, 390]) {
   test(`${fixture.slug} preserves original structure at ${width}px`, async ({ page }) => {
     await page.setViewportSize({width,height:1000})
     await page.goto(`/qni-tutorial-webgpu/${fixture.slug ? fixture.slug + '/' : ''}`)
@@ -66,6 +68,7 @@ for (const fixture of [qpu, faster, pbit, superposition, qubit, phase, notation,
       const expected = structuredClone(fixture.circuits)
       // Takamiya authorized exactly the sixth circuit's final string slot to become numeric.
       if (fixture.slug === 'increment_circuit') expected[5].cols[expected[5].cols.length - 1] = [1]
+      if (fixture.slug === 'sat') expected[0] = satFixed
       expect(await page.locator('main qni-webgpu-circuit').evaluateAll(es => es.map(e => JSON.parse(e.getAttribute('circuit')!)))).toEqual(expected)
     }
     if ('amplitudes' in fixture) {
