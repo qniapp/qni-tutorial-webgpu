@@ -1,0 +1,5265 @@
+{
+  "pin": "348992f5d7926d326eaa0f678fa8d89f0894ff54",
+  "local": {
+    "pages": [
+      {
+        "slug": "",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "2"
+          }
+        ]
+      },
+      {
+        "slug": "",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "2"
+          }
+        ]
+      },
+      {
+        "slug": "qpu",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "qpu",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "what_qpu_do_faster",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "what_qpu_do_faster",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "quantum_circuit",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "quantum_circuit",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "qni_intro",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "qni_intro",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "p_bit",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "p_bit",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "superposition",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "superposition",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "qubit",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "2"
+          }
+        ]
+      },
+      {
+        "slug": "qubit",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "2"
+          }
+        ]
+      },
+      {
+        "slug": "phase",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "phase",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "circle_notation",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "circle_notation",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "cpu_vs_qpu_operations",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "cpu_vs_qpu_operations",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "x_gate",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "x_gate",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "h_gate",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "h_gate",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "phase_gate",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "2"
+          }
+        ]
+      },
+      {
+        "slug": "phase_gate",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "2"
+          }
+        ]
+      },
+      {
+        "slug": "write_operation",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "write_operation",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "measurement_operation",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "measurement_operation",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "no_cloning_theorem",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "no_cloning_theorem",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "gate_combination",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "gate_combination",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "quantum_key_distribution",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "quantum_key_distribution",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "bb84_protocol",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "bb84_protocol",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "bb84_circuit",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "bb84_circuit",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "multi_qubit_circle_notation",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "multi_qubit_circle_notation",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "multi_qubit_superposition",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "multi_qubit_superposition",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "multi_qubit_operation",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "multi_qubit_operation",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "operator_pair",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "operator_pair",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "random_byte_generator",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 256,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 256,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "random_byte_generator",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 256,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 256,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "multi_qubit_phase_gate",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "multi_qubit_phase_gate",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "partial_measurement",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "partial_measurement",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "swap_gate",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "swap_gate",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "cnot_gate",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "cnot_gate",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "swap_from_cnots",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "swap_from_cnots",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "cphase",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "cphase",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "entanglement",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "entanglement",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "disentangle",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "disentangle",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "entanglement_operation",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "entanglement_operation",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "discriminating_bell_states",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "discriminating_bell_states",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "superdense_coding_circuit",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 128,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "superdense_coding_circuit",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 128,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "teleportation_circuit",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "teleportation_circuit",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "cascading_teleportation",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 32,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "cascading_teleportation",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 32,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "long_distance_entanglement",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "long_distance_entanglement",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "increment_circuit",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "increment_circuit",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "decrement_circuit",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "4"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "4"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "4"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "4"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "4"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "4"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "decrement_circuit",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "4"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "4"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "4"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "4"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "4"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "4"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "addition_circuit",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 128,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 128,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 128,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "addition_circuit",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 128,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 128,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 128,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "subtraction_circuit",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 128,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 128,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "subtraction_circuit",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 128,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 128,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "multiplication_circuit",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 1024,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "multiplication_circuit",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 1024,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "quantum_logic",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "2"
+          }
+        ]
+      },
+      {
+        "slug": "quantum_logic",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "2"
+          }
+        ]
+      },
+      {
+        "slug": "superposition_quantum_logic",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 32,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "superposition_quantum_logic",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 32,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "phase_logic",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "2"
+          }
+        ]
+      },
+      {
+        "slug": "phase_logic",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 2,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "2"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 8,
+            "maxWireCount": "2"
+          }
+        ]
+      },
+      {
+        "slug": "phase_logic_combination",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "phase_logic_combination",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "sat",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16384,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "sat",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16384,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "grover_iam",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16384,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "grover_iam",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 4,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16,
+            "maxWireCount": "1"
+          },
+          {
+            "norm": 1,
+            "step0": true,
+            "dimension": 16384,
+            "maxWireCount": "1"
+          }
+        ]
+      },
+      {
+        "slug": "multi-1",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "index": 0,
+            "norm": 0.9999999657714582,
+            "step0": true
+          }
+        ]
+      },
+      {
+        "slug": "multi-3",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "index": 0,
+            "norm": 0.9999999657714582,
+            "step0": true
+          },
+          {
+            "index": 1,
+            "norm": 1,
+            "step0": true
+          },
+          {
+            "index": 2,
+            "norm": 0.9999999657714582,
+            "step0": true
+          }
+        ]
+      },
+      {
+        "slug": "multi-7",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "index": 0,
+            "norm": 0.9999999657714582,
+            "step0": true
+          },
+          {
+            "index": 1,
+            "norm": 1,
+            "step0": true
+          },
+          {
+            "index": 2,
+            "norm": 0.9999999657714582,
+            "step0": true
+          },
+          {
+            "index": 3,
+            "norm": 1,
+            "step0": true
+          },
+          {
+            "index": 4,
+            "norm": 0.9999999657714582,
+            "step0": true
+          },
+          {
+            "index": 5,
+            "norm": 0.9999999657714582,
+            "step0": true
+          },
+          {
+            "index": 6,
+            "norm": 0.9999999657714582,
+            "step0": true
+          }
+        ]
+      },
+      {
+        "slug": "stress-qubit-circle",
+        "width": 390,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      },
+      {
+        "slug": "multi-1",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "index": 0,
+            "norm": 0.9999999657714582,
+            "step0": true
+          }
+        ]
+      },
+      {
+        "slug": "multi-3",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "index": 0,
+            "norm": 0.9999999657714582,
+            "step0": true
+          },
+          {
+            "index": 1,
+            "norm": 1,
+            "step0": true
+          },
+          {
+            "index": 2,
+            "norm": 0.9999999657714582,
+            "step0": true
+          }
+        ]
+      },
+      {
+        "slug": "multi-7",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": [
+          {
+            "index": 0,
+            "norm": 0.9999999657714582,
+            "step0": true
+          },
+          {
+            "index": 1,
+            "norm": 1,
+            "step0": true
+          },
+          {
+            "index": 2,
+            "norm": 0.9999999657714582,
+            "step0": true
+          },
+          {
+            "index": 3,
+            "norm": 1,
+            "step0": true
+          },
+          {
+            "index": 4,
+            "norm": 0.9999999657714582,
+            "step0": true
+          },
+          {
+            "index": 5,
+            "norm": 0.9999999657714582,
+            "step0": true
+          },
+          {
+            "index": 6,
+            "norm": 0.9999999657714582,
+            "step0": true
+          }
+        ]
+      },
+      {
+        "slug": "stress-qubit-circle",
+        "width": 1440,
+        "errors": [],
+        "scrollbars": [],
+        "gpu": []
+      }
+    ],
+    "toolbars": [
+      {
+        "slug": "",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/index-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/index-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "qni_intro",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/qni_intro-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "qni_intro",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/qni_intro-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "qni_intro",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/qni_intro-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "qni_intro",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/qni_intro-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "qubit",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/qubit-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "qubit",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/qubit-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "phase",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/phase-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "phase",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/phase-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "x_gate",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/x_gate-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "x_gate",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/x_gate-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "x_gate",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/x_gate-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "x_gate",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/x_gate-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "h_gate",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/h_gate-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "h_gate",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/h_gate-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "phase_gate",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/phase_gate-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "phase_gate",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/phase_gate-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "write_operation",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/write_operation-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "write_operation",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/write_operation-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "write_operation",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/write_operation-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "write_operation",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/write_operation-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "measurement_operation",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/measurement_operation-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "measurement_operation",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/measurement_operation-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "gate_combination",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/gate_combination-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "gate_combination",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/gate_combination-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "gate_combination",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/gate_combination-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "gate_combination",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/gate_combination-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "bb84_circuit",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/bb84_circuit-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "bb84_circuit",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/bb84_circuit-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi_qubit_superposition",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_superposition-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi_qubit_superposition",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_superposition-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi_qubit_superposition",
+        "width": 390,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_superposition-390-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi_qubit_superposition",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_superposition-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi_qubit_superposition",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_superposition-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi_qubit_superposition",
+        "width": 1440,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_superposition-1440-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi_qubit_operation",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_operation-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi_qubit_operation",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_operation-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi_qubit_operation",
+        "width": 390,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_operation-390-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi_qubit_operation",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_operation-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi_qubit_operation",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_operation-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi_qubit_operation",
+        "width": 1440,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_operation-1440-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "random_byte_generator",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/random_byte_generator-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "random_byte_generator",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/random_byte_generator-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "random_byte_generator",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/random_byte_generator-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "random_byte_generator",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/random_byte_generator-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi_qubit_phase_gate",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_phase_gate-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi_qubit_phase_gate",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_phase_gate-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "swap_gate",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/swap_gate-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "swap_gate",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/swap_gate-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "swap_gate",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/swap_gate-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "swap_gate",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/swap_gate-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "cnot_gate",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/cnot_gate-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "cnot_gate",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/cnot_gate-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "cnot_gate",
+        "width": 390,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/cnot_gate-390-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "cnot_gate",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/cnot_gate-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "cnot_gate",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/cnot_gate-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "cnot_gate",
+        "width": 1440,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/cnot_gate-1440-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "swap_from_cnots",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/swap_from_cnots-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "swap_from_cnots",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/swap_from_cnots-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "cphase",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/cphase-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "cphase",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/cphase-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "cphase",
+        "width": 390,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/cphase-390-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "cphase",
+        "width": 390,
+        "index": 3,
+        "path": "/tmp/qtw-pr63-toolbar-local/cphase-390-3.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "cphase",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/cphase-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "cphase",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/cphase-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "cphase",
+        "width": 1440,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/cphase-1440-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "cphase",
+        "width": 1440,
+        "index": 3,
+        "path": "/tmp/qtw-pr63-toolbar-local/cphase-1440-3.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "entanglement",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/entanglement-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "entanglement",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/entanglement-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "disentangle",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "disentangle",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "disentangle",
+        "width": 390,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-390-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "disentangle",
+        "width": 390,
+        "index": 3,
+        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-390-3.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "disentangle",
+        "width": 390,
+        "index": 4,
+        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-390-4.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "disentangle",
+        "width": 390,
+        "index": 5,
+        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-390-5.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "disentangle",
+        "width": 390,
+        "index": 6,
+        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-390-6.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "disentangle",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "disentangle",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "disentangle",
+        "width": 1440,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-1440-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "disentangle",
+        "width": 1440,
+        "index": 3,
+        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-1440-3.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "disentangle",
+        "width": 1440,
+        "index": 4,
+        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-1440-4.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "disentangle",
+        "width": 1440,
+        "index": 5,
+        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-1440-5.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "disentangle",
+        "width": 1440,
+        "index": 6,
+        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-1440-6.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "entanglement_operation",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/entanglement_operation-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "entanglement_operation",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/entanglement_operation-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "entanglement_operation",
+        "width": 390,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/entanglement_operation-390-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "entanglement_operation",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/entanglement_operation-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "entanglement_operation",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/entanglement_operation-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "entanglement_operation",
+        "width": 1440,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/entanglement_operation-1440-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "superdense_coding_circuit",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/superdense_coding_circuit-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "superdense_coding_circuit",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/superdense_coding_circuit-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "teleportation_circuit",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "teleportation_circuit",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "teleportation_circuit",
+        "width": 390,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-390-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "teleportation_circuit",
+        "width": 390,
+        "index": 3,
+        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-390-3.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "teleportation_circuit",
+        "width": 390,
+        "index": 4,
+        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-390-4.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "teleportation_circuit",
+        "width": 390,
+        "index": 5,
+        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-390-5.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "teleportation_circuit",
+        "width": 390,
+        "index": 6,
+        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-390-6.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "teleportation_circuit",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "teleportation_circuit",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "teleportation_circuit",
+        "width": 1440,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-1440-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "teleportation_circuit",
+        "width": 1440,
+        "index": 3,
+        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-1440-3.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "teleportation_circuit",
+        "width": 1440,
+        "index": 4,
+        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-1440-4.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "teleportation_circuit",
+        "width": 1440,
+        "index": 5,
+        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-1440-5.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "teleportation_circuit",
+        "width": 1440,
+        "index": 6,
+        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-1440-6.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "cascading_teleportation",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/cascading_teleportation-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "cascading_teleportation",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/cascading_teleportation-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "long_distance_entanglement",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/long_distance_entanglement-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "long_distance_entanglement",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/long_distance_entanglement-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "increment_circuit",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "increment_circuit",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "increment_circuit",
+        "width": 390,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-390-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "increment_circuit",
+        "width": 390,
+        "index": 3,
+        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-390-3.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "increment_circuit",
+        "width": 390,
+        "index": 4,
+        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-390-4.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "increment_circuit",
+        "width": 390,
+        "index": 5,
+        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-390-5.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "increment_circuit",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "increment_circuit",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "increment_circuit",
+        "width": 1440,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-1440-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "increment_circuit",
+        "width": 1440,
+        "index": 3,
+        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-1440-3.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "increment_circuit",
+        "width": 1440,
+        "index": 4,
+        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-1440-4.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "increment_circuit",
+        "width": 1440,
+        "index": 5,
+        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-1440-5.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "decrement_circuit",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "decrement_circuit",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "decrement_circuit",
+        "width": 390,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-390-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "decrement_circuit",
+        "width": 390,
+        "index": 3,
+        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-390-3.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "decrement_circuit",
+        "width": 390,
+        "index": 4,
+        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-390-4.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "decrement_circuit",
+        "width": 390,
+        "index": 5,
+        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-390-5.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "decrement_circuit",
+        "width": 390,
+        "index": 6,
+        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-390-6.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "decrement_circuit",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "decrement_circuit",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "decrement_circuit",
+        "width": 1440,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-1440-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "decrement_circuit",
+        "width": 1440,
+        "index": 3,
+        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-1440-3.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "decrement_circuit",
+        "width": 1440,
+        "index": 4,
+        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-1440-4.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "decrement_circuit",
+        "width": 1440,
+        "index": 5,
+        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-1440-5.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "decrement_circuit",
+        "width": 1440,
+        "index": 6,
+        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-1440-6.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "addition_circuit",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/addition_circuit-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "addition_circuit",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/addition_circuit-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "addition_circuit",
+        "width": 390,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/addition_circuit-390-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "addition_circuit",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/addition_circuit-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "addition_circuit",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/addition_circuit-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "addition_circuit",
+        "width": 1440,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/addition_circuit-1440-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "subtraction_circuit",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/subtraction_circuit-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "subtraction_circuit",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/subtraction_circuit-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "subtraction_circuit",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/subtraction_circuit-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "subtraction_circuit",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/subtraction_circuit-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multiplication_circuit",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/multiplication_circuit-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multiplication_circuit",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/multiplication_circuit-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "quantum_logic",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "quantum_logic",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "quantum_logic",
+        "width": 390,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-390-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "quantum_logic",
+        "width": 390,
+        "index": 3,
+        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-390-3.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "quantum_logic",
+        "width": 390,
+        "index": 4,
+        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-390-4.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "quantum_logic",
+        "width": 390,
+        "index": 5,
+        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-390-5.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "quantum_logic",
+        "width": 390,
+        "index": 6,
+        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-390-6.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "quantum_logic",
+        "width": 390,
+        "index": 7,
+        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-390-7.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "quantum_logic",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "quantum_logic",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "quantum_logic",
+        "width": 1440,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-1440-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "quantum_logic",
+        "width": 1440,
+        "index": 3,
+        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-1440-3.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "quantum_logic",
+        "width": 1440,
+        "index": 4,
+        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-1440-4.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "quantum_logic",
+        "width": 1440,
+        "index": 5,
+        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-1440-5.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "quantum_logic",
+        "width": 1440,
+        "index": 6,
+        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-1440-6.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "quantum_logic",
+        "width": 1440,
+        "index": 7,
+        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-1440-7.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "superposition_quantum_logic",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/superposition_quantum_logic-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "superposition_quantum_logic",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/superposition_quantum_logic-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "phase_logic",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "phase_logic",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "phase_logic",
+        "width": 390,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-390-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "phase_logic",
+        "width": 390,
+        "index": 3,
+        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-390-3.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "phase_logic",
+        "width": 390,
+        "index": 4,
+        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-390-4.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "phase_logic",
+        "width": 390,
+        "index": 5,
+        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-390-5.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "phase_logic",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "phase_logic",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "phase_logic",
+        "width": 1440,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-1440-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "phase_logic",
+        "width": 1440,
+        "index": 3,
+        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-1440-3.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "phase_logic",
+        "width": 1440,
+        "index": 4,
+        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-1440-4.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "phase_logic",
+        "width": 1440,
+        "index": 5,
+        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-1440-5.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "phase_logic_combination",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic_combination-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "phase_logic_combination",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic_combination-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "sat",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/sat-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "sat",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/sat-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "grover_iam",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/grover_iam-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "grover_iam",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/grover_iam-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "grover_iam",
+        "width": 390,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/grover_iam-390-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "grover_iam",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/grover_iam-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "grover_iam",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/grover_iam-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "grover_iam",
+        "width": 1440,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/grover_iam-1440-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-1",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-1-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-1",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-1-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-3",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-3-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-3",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-3-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-3",
+        "width": 390,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-3-390-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-3",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-3-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-3",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-3-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-3",
+        "width": 1440,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-3-1440-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-7",
+        "width": 390,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-390-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-7",
+        "width": 390,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-390-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-7",
+        "width": 390,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-390-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-7",
+        "width": 390,
+        "index": 3,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-390-3.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-7",
+        "width": 390,
+        "index": 4,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-390-4.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-7",
+        "width": 390,
+        "index": 5,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-390-5.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-7",
+        "width": 390,
+        "index": 6,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-390-6.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-7",
+        "width": 1440,
+        "index": 0,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-1440-0.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-7",
+        "width": 1440,
+        "index": 1,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-1440-1.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-7",
+        "width": 1440,
+        "index": 2,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-1440-2.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-7",
+        "width": 1440,
+        "index": 3,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-1440-3.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-7",
+        "width": 1440,
+        "index": 4,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-1440-4.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-7",
+        "width": 1440,
+        "index": 5,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-1440-5.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      },
+      {
+        "slug": "multi-7",
+        "width": 1440,
+        "index": 6,
+        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-1440-6.png",
+        "unchanged": true,
+        "errors": [],
+        "iconPixels": [
+          85,
+          85,
+          0
+        ],
+        "undoRedoOnly": true,
+        "pass": true
+      }
+    ],
+    "actions": [
+      {
+        "action": "former trash",
+        "pass": true
+      },
+      {
+        "action": "undo",
+        "pass": true
+      },
+      {
+        "action": "redo",
+        "pass": true
+      },
+      {
+        "action": "no host history/storage side effects",
+        "pass": true
+      }
+    ]
+  }
+}

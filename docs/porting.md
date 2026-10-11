@@ -1145,3 +1145,22 @@ palette **[]×3**、原HTML max-wire-count **1×3**、2/4/14-wireを切り詰め
 **質問:「約90.9%」1か所だけを「約90.8%」へ訂正してよいか？** 原3JSONは変更しない。原liveの段落とJSON3回路が取得sourceと一致することも確認し、実段落screenshotを保存。詳細 [grover-iteration-rounding-blocker.md](grover-iteration-rounding-blocker.md)、`/tmp/qtw-grover-iteration-original-{circuits.json,gpu-results.json,prose.json}`。
 
 grover_iteration原palette[]×3/max1×3、各4-wire、画像0/削除credits0。route/fixtureなし、原本文/JSON無変更、移行後diff/scroll/step0は未実施。multiple_marked_values以降も未公開。owned preview4349/検証browser終了、main/worktreeを通常pushで同期。13:35 hard stopを守り、最後のdocs-only Pagesは終了時に報告。
+
+
+## 2026-10-11 PR #63: 埋め込みのゴミ箱ボタン削除 / hard stop13:57
+
+高宮さんの指示で、grover_iamの公開作業完了後の安全な区切りから実施。grover_iterationの「約90.9%→約90.8%」確認は承認待ちのまま。既存ページ・原文・JSON・palette・wire数・図・creditsは再編集せず、`qni-webgpu.ref` だけを **348992f5d7926d326eaa0f678fa8d89f0894ff54** (上流PR #63のmerge) に更新。
+
+clean detached checkout `verify/tutorial-toolbar` から `scripts/fetch-qni-webgpu.sh` を実行し、**埋め込みとstandaloneの両WASMを実際に再ビルド**。Binaryen123、`-Oz --enable-bulk-memory --enable-nontrapping-float-to-int`、Node22.23.2。再ビルド記録 `/tmp/qtw-pr63-rebuild.log`。Astro側も `QNI_WEBGPU_SOURCE` に同じclean checkoutを指定して再ビルド。Astroだけの再ビルドで済ませていない。GPU-only/本番GPU readbackなし/CPU fallbackなし/上流コード変更なし。
+
+### ローカル検証
+
+全 **55公開対象ページ / 110ケース (390/1440)**、**105埋め込み / 210起動**。全てrunning、step0、norm≈1、console/page errors0、本文/内容/Shadow DOM内部scrollbar0、文書横overflow0。通常51移行ページ102ケース188起動と追加multi1/3/7/stressの8ケース22起動を合算。これは全回路の教育的最終結果を再検証したという主張ではない。
+
+**各210個の実描画ツールバーを撮影**して、undo/redoの位置に両矢印が描画され、旧ゴミ箱位置には描画がないことを画素で確認 (各undo/redoは85非背景画素、旧trashは0)。旧公開Hページで同じ確認を先に行うと旧trash159画素が存在し、旧位置のクリックで回路が消去された。新ビルドは **210/210でundo/redoのみ**、旧位置をクリックしても現在の「Qniで開く」回路URLは変わらない。埋め込みのクリック確認だけで原回路を改変していない。
+
+独立した実描画の検証用ホストでも、X追加→undoで元JSON→redoで再追加、旧trash位置クリック無効果、ホストhistory/storage呼び出しなしの **4/4** 成功。上流PR #63はstandaloneのtrashを削除する変更ではなく、standaloneの既存編集機能は保持される。
+
+standaloneは新ビルドでgrover_iamの3回路を390/1440で実行し **6/6**、答3/15/8、確率約100%/47.2656%/47.2656%、SAT補助q4〜q13のleakage0を再確認。全 **298tests (6.7m)**、typecheck/build/diff-check成功。
+
+永続結果 `tests/fixtures/pr63-verification.json`。資料 `/tmp/qtw-scroll-pr63-local.json`、`/tmp/qtw-pr58-extra-pr63-local.json`、`/tmp/qtw-pr63-toolbar-{before,local}-verified.json`、各ツールバー画像/一覧画像、`/tmp/qtw-pr63-actions-local.json`、`/tmp/qtw-pr63-{tests,types,build,local-standalone}.log`。公開後は同じ全ページ/全ツールバーの確認を行い、実公開結果を追記する。force-pushは使わない。
