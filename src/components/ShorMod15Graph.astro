@@ -1,0 +1,70 @@
+---
+interface Props { markedPeriod?: boolean }
+const {markedPeriod = false} = Astro.props
+// Fixed original arithmetic figure, not a quantum simulation or configurable chart.
+const values = [1,2,4,8,1,2,4,8,1,2,4,8,1,2,4,8] as const
+const px = (x: number) => 205 + x * (1619 - 205) / 15
+const py = (y: number) => 960 - y * (960 - 83) / 12
+---
+<div data-shor-mod15 data-original-image={markedPeriod ? 'shor_mod15_r.png' : 'shor_mod15.png'}>
+  <svg viewBox="0 0 1754 1172" tabindex="0" role="group" aria-label={markedPeriod ? '2のx乗 mod 15 の周期。赤丸は x=0 と x=4。左右矢印またはクリックで値を確認' : '2のx乗 mod 15。左右矢印またはクリックで値を確認'}>
+    <title>f(x) = 2^x mod(15)</title>
+    <rect width="1754" height="1172" fill="white" />
+    <g stroke="#b7b7b7" stroke-width="1.5">
+      {Array.from({length:16},(_,x)=><line data-x-grid={x} x1={px(x)} x2={px(x)} y1="83" y2="960" />)}
+      {Array.from({length:13},(_,y)=><line data-y-grid={y} x1="205" x2="1619" y1={py(y)} y2={py(y)} />)}
+    </g>
+    <path d="M205 83 V960 H1619" fill="none" stroke="black" stroke-width="2.5" />
+    <g fill="black" font-size="24" font-family="Arial, sans-serif">
+      {Array.from({length:16},(_,x)=><text data-x-tick={x} x={px(x)} y="994" text-anchor="middle">{x}</text>)}
+      {Array.from({length:13},(_,y)=><text data-y-tick={y} x="176" y={py(y)+9} text-anchor="end">{y}</text>)}
+      <text x="912" y="1100" text-anchor="middle" font-size="64" font-weight="700">X</text>
+      <text transform="translate(110 522) rotate(-90)" text-anchor="middle" font-size="64" font-weight="700">f(x)</text>
+    </g>
+    <polyline data-plot-line points={values.map((y,x)=>`${px(x)},${py(y)}`).join(' ')} fill="none" stroke="#00a6ff" stroke-width="11" />
+    {values.map((y,x)=><circle data-plot-point data-x={x} data-y={y} cx={px(x)} cy={py(y)} r="13" fill="white" stroke="#00a6ff" stroke-width="9"><title>{`x=${x}, f(x)=${y}`}</title></circle>)}
+    {markedPeriod && [0,4].map(x=><circle data-period-ring data-x={x} cx={px(x)} cy={py(1)} r="32" fill="none" stroke="#ff2b00" stroke-width="9" />)}
+    <circle data-selection hidden r="43" fill="none" stroke="#3aa99f" stroke-width="6" />
+  </svg>
+  <output aria-live="polite" hidden></output>
+</div>
+<script>
+// Instance-local state, one immutable SSR point table; no duplicated client values.
+for (const root of document.querySelectorAll<HTMLElement>('[data-shor-mod15]')) {
+  const svg = root.querySelector('svg')!, output = root.querySelector('output')!
+  const selection = root.querySelector<SVGCircleElement>('[data-selection]')!
+  const points = [...root.querySelectorAll<SVGCircleElement>('[data-plot-point]')]
+  let selected: number | null = null
+  const inspect = (index: number | null) => {
+    selected = index
+    output.hidden = index === null
+    selection.toggleAttribute('hidden', index === null)
+    if (index === null) return
+    const point = points[index]
+    selection.setAttribute('cx', point.getAttribute('cx')!)
+    selection.setAttribute('cy', point.getAttribute('cy')!)
+    output.textContent = `x=${point.dataset.x}, f(x)=${point.dataset.y}`
+  }
+  svg.addEventListener('click', event => {
+    const matrix = svg.getScreenCTM()
+    if (!matrix) return
+    const coordinate = new DOMPoint(event.clientX,event.clientY).matrixTransform(matrix.inverse())
+    const nearest = points.reduce((best,point,index)=>Math.abs(point.cx.baseVal.value-coordinate.x)<Math.abs(points[best].cx.baseVal.value-coordinate.x)?index:best,0)
+    inspect(nearest)
+  })
+  svg.addEventListener('keydown', event => {
+    if (!['ArrowLeft','ArrowRight','Home','End','Enter',' ','Escape'].includes(event.key)) return
+    event.preventDefault()
+    if (event.key === 'Escape') return inspect(null)
+    const next = event.key === 'Home' ? 0 : event.key === 'End' ? points.length-1 : event.key === 'ArrowLeft' ? ((selected ?? 1)-1+points.length)%points.length : event.key === 'ArrowRight' ? ((selected ?? -1)+1)%points.length : selected ?? 0
+    inspect(next)
+  })
+}
+</script>
+<style>
+[data-shor-mod15] {width:100%;min-width:0}
+svg {display:block;width:100%;height:auto;cursor:pointer}
+svg:focus-visible {outline:2px solid #3aa99f;outline-offset:2px}
+[hidden] {display:none}
+output {display:block;text-align:center;font-size:14px;line-height:1.5;margin-top:8px}
+</style>

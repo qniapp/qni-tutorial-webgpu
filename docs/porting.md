@@ -1706,3 +1706,49 @@ scriptは現在の原実サイトが既に承認通り変更された場合に�
 再現: `python3 scripts/analyze-shor-hsp-source.py ../qni/apps/tutorial/shor_hsp.html --output /tmp/shor-hsp-analysis.json`。数学・古典算術の確認だけで、量子CPU simulator/製品fallback/GPU結果ではない。shor_hsp移植後の本文/TeX/3901440/DPR/scroll検査は未実施。回路0なので新規WebGPU検査は該当なし。
 
 通常fetch/rebase/push（forceなし）で記録を同期し、owned preview/browserを停止。qpe_outputに不要なembedを追加せず、前ページの実機確認待ちと既存4回帰は未解決として保持し、hard stop19:39を守る。
+
+## 2026-10-11 shor_hsp: 高宮さんR1〜R6すべて承認 / GPUなし / hard stop20:11
+
+19:41開始。`shor-hsp-blocker.md` とこのtailを再読。高宮さんがR1〜R6を記録の正確なbefore→after通り承認。以下以外の原本文/TeX/正しい15の数値を変更しない。
+
+- **R1**: 根拠のない1024bit/10^278/10^61の説明と3TeXを削除。「古典の因数分解アルゴリズムである『一般数体ふるい法』の実行時間は、入力のビット数に対して準指数時間と見積もられます。」「一方でショアのアルゴリズムは、入力のビット数に対して多項式時間で実行できます。」の2文へ（実sourceでは原の「」を保持）。段落先頭文は維持。
+- **R2**: 「aはとりあえずNより小さい整数なら何でも良い」→「aはNより小さく、Nと共通の因数を持たない整数から選ぶ」。NのTeX入力1追加。
+- **R3**: 偶数rでしかgcd計算不能→「この手順では、周期rが偶数の場合に上の2つの式を使う」。
+- **R4**: gcd結果が因数でない／積がNかで判定→1/Nという自明な約数の場合があり、1より大きくNより小さいかで判定する。
+- **R5**: rが必ず指数増大→「指数関数的に大きくなる場合がある」。
+- **R6**: 古典全般で指数時間が必要→順次列挙の古典的方法が最悪の場合に入力ビット数に対して指数時間かかる。
+
+全文byte guardは6置換をtestへ独立pinし、原SHA256 `5bc7e636ec570f264e1b5caa5aeacd93302f796dd9d8a2db770765d13214512c` とapproved sourceの一致を確認する。`docs/shor-hsp-approved-source.html` は原の2img参照を保った承認本文snapshot、`src/pages/shor_hsp.astro` はその本文から生成し画像だけ自作componentへ置換。MathJax本文54→52入力、frontmatterのnext用1入力はsnapshotで不変。R1の3削除/R2のN1追加以外の全TeXを独立guardする。description/他本文は不変、はじめにhrefだけ移植先baseへ解決。
+
+### 画像政策・部品境界
+
+`shor_mod15.png` / `shor_mod15_r.png` の **2画像→自作interactive SVG2図**。原16点 [1,2,4,8]×4、青線/白中心point、**X軸0〜15/f(x)軸0〜12**、第2図の赤丸 **(0,1)/(4,1)** を維持。rという追加文字や矢印は原画像にないので作らない。既存credits文0、削除credits0。旧Qni UI画像ではない。Orbit0/sidenote0/回路0/JSON差なし、**palette/max-wire-count/run-buttonは該当なし**（fixtureでは空配列で固定）。header/footer/既存頁/WebGPU pin348992fは変更なし。gate glyph0でBold/Regularの新規対象なし。
+
+`ShorMod15Graph.astro` はboolean1つだけの深い部品。図形/値/軸は不変、クリックと矢印/Home/End/EscapeでSSR点の値をHTML readoutに表示、2図の選択状態は独立。新たなCPU量子simulator/製品fallback/読戻しなし。2モデルで設計比較後、単一Astro SSR+per-instance scriptを採用、custom-element lifecycle/汎用chartを不要な境界として退けた。根拠 `shor-hsp-svg-design.md`。
+
+長い原の不可分TeXは既存 `fit-content` で全入力そのまま収め、自然高さ・縮小だけ。本文/Shadow DOM scrollを作らず、clip/overflow:hiddenは追加しない。SVGは原viewBox全体をresponsive表示、native canvasなし。定義/注意boxの原blue border/background/desktop7/12幅を再実装。
+
+### Python解析・非GPU検査
+
+```sh
+python3 scripts/analyze-shor-hsp-source.py docs/shor-hsp-approved-source.html --approved --output /tmp/shor-hsp-approved-analysis.json
+pnpm exec playwright test tests/shor-hsp-source.spec.mjs tests/shor-hsp.spec.ts tests/sidebar.spec.ts
+QTW_AUDIT_URL=http://127.0.0.1:4322/qni-tutorial-webgpu/ node scripts/compare-qpe-original.mjs shor_hsp
+```
+
+N15/a2: x0..15=[1,2,4,8]×4、最小r4、gcd(15,2²+1)=5/gcd(15,2²−1)=3、5×3=15。N15/a14はr2/gcd15/1で非自明因数なし、N15/a3は非互いに素で1に戻らない、N7/a4/r3ではa^(r/2)=8でgcd計算可能。線形周期のMersenne例/大周期例もPythonで再検査。`shor-hsp-approved-analysis.json` に保存。歴史的GNFS leading model/Shor n³は証拠だけで、削除した数値の新たな置換として本文に挿入しない。
+
+**typecheck/build/diff-check成功、source1＋390/1440×DPR1/2の本文/TeX/図/layout/interaction4＋sidebar5の10/10成功。** body/content内部scroll0・文書横overflow0、console/page errors0。16点の座標/値/軸tick/赤丸/独立クリックkeyboardを確認。原実サイトとのlocal比較4/4成功、本文はR1〜R6だけ、TeXは承認3削除+1追加だけ、description不変。比較snapshotは無編集原を残し、承認テキスト置換でTeX部分を除いた本文と52入力を厳密Goldenへ一致させる（既に承認通りの原サイトも同じGoldenの場合だけ許可）。390/DPR1の全文/2グラフを目視確認した。
+
+19:42のqniapp/qni open PRは全0件、同ページPRなし。latest origin/main `a300a7891fc8a499ce77599fcdc0e561fcf31a4e` と取得済みshor_hsp/shor_fxはbyte一致。実サイト/取得sourceへの無断修正なし。最新全非GPU回帰と公開URL検査は完了後追記する。既存4回帰の期待値を緩和しない。
+
+### 実機確認待ち
+
+**shor_hspは回路0なのでrunning/step0/norm/readback/toolbarは該当なし。** SVG/layout検査をGPU検査成功と称さず、診断用回路を勝手に追加しない。既存QPE/phaseの実機確認待ちは未解消:
+
+```sh
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs quantum_phase_estimation_circuit
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs phase_kickback
+```
+
+通常fetch/rebase/push（forceなし）でshor_hspを公開しPages成功を確認する。次shor_fxに科学的な定義/まとめの不一致を発見、同ページのrouteは作らず原文/TeX/JSON/画像4枚を変更していない。証拠と正確な提案は次のSTOP記録に保存する。

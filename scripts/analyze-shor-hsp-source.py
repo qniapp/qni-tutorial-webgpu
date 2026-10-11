@@ -1,7 +1,7 @@
 """Classical arithmetic/complexity-model checks for unported shor_hsp. No quantum simulator."""
 import argparse,hashlib,json,math
 from pathlib import Path
-p=argparse.ArgumentParser();p.add_argument('source',type=Path);p.add_argument('--output',type=Path);args=p.parse_args();source=args.source.read_text()
+p=argparse.ArgumentParser();p.add_argument('source',type=Path);p.add_argument('--output',type=Path);p.add_argument('--approved',action='store_true');args=p.parse_args();source=args.source.read_text()
 def order(a,N):
  assert math.gcd(a,N)==1
  value=1
@@ -33,6 +33,11 @@ bits=1024;lnN=bits*math.log(2);c=(64/9)**(1/3)
 log10L=c*lnN**(1/3)*math.log(lnN)**(2/3)/math.log(10)
 result={'GPUExecuted':False,'sourceSHA256':hashlib.sha256(source.encode()).hexdigest(),'valid15Example':valid,'trivialFactorCounterexample':bad,'nonCoprime3Mod15':noncoprime,'plot2Mod15':[pow(2,x,15) for x in range(16)],'linearOrderCounterexamples':linear,'largeOrderExamplesForNaiveEnumeration':large,'oddOrderIntegerGcdCounterexample':{'N':7,'a':4,'r':3,'aToHalfOrder':8,'gcdPlus':math.gcd(7,9),'gcdMinus':math.gcd(7,7)},'complexityModelComparison':{'bits':bits,'GNFSLeadingHeuristicLog10':log10L,'GNFSLeadingHeuristic':10**log10L,'ShorTextbookCubicTerm':bits**3,'ShorTextbookCubicTermLog10':math.log10(bits**3),'caveat':'GNFS omits o(1) and constants; n^3 is an illustrative polynomial term, not exact Shor operation count. Original 278/61 have no supplied model, so no automatic numeric substitution.'},'decision':'STOP: complexity basis, coprime selection, trivial-factor/product check, even-order wording, unconditional order growth and unqualified classical necessity need owner decisions'}
 assert result['plot2Mod15']==[1,2,4,8]*4
+if args.approved:
+ assert '入力のビット数に対して準指数時間と見積もられます。' in source
+ assert '入力のビット数に対して多項式時間で実行できます。' in source
+ assert '10^{278}' not in source and '10^{61}' not in source
+ result['decision']='APPROVED R1–R6 applied; historical complexity models are evidence only, not published numeric replacements'
 text=json.dumps(result,ensure_ascii=False,indent=2)+'\n'
 if args.output:args.output.write_text(text)
 else:print(text)

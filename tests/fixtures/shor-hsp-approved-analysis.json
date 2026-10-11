@@ -1,0 +1,148 @@
+{
+  "GPUExecuted": false,
+  "sourceSHA256": "4dd4e8bcf36fda2d3cff6b155811611d4d0499255d76a33824fe96331b7a3583",
+  "valid15Example": {
+    "a": 2,
+    "N": 15,
+    "r": 4,
+    "gcdPlus": 5,
+    "gcdMinus": 3,
+    "product": 15,
+    "nontrivial": [
+      5,
+      3
+    ]
+  },
+  "trivialFactorCounterexample": {
+    "a": 14,
+    "N": 15,
+    "r": 2,
+    "gcdPlus": 15,
+    "gcdMinus": 1,
+    "product": 15,
+    "nontrivial": []
+  },
+  "nonCoprime3Mod15": [
+    1,
+    3,
+    9,
+    12,
+    6,
+    3,
+    9,
+    12,
+    6,
+    3,
+    9,
+    12,
+    6,
+    3,
+    9,
+    12
+  ],
+  "plot2Mod15": [
+    1,
+    2,
+    4,
+    8,
+    1,
+    2,
+    4,
+    8,
+    1,
+    2,
+    4,
+    8,
+    1,
+    2,
+    4,
+    8
+  ],
+  "linearOrderCounterexamples": [
+    {
+      "bits": 4,
+      "N": 15,
+      "a": 2,
+      "r": 4
+    },
+    {
+      "bits": 6,
+      "N": 63,
+      "a": 2,
+      "r": 6
+    },
+    {
+      "bits": 8,
+      "N": 255,
+      "a": 2,
+      "r": 8
+    },
+    {
+      "bits": 10,
+      "N": 1023,
+      "a": 2,
+      "r": 10
+    },
+    {
+      "bits": 12,
+      "N": 4095,
+      "a": 2,
+      "r": 12
+    },
+    {
+      "bits": 16,
+      "N": 65535,
+      "a": 2,
+      "r": 16
+    }
+  ],
+  "largeOrderExamplesForNaiveEnumeration": [
+    {
+      "N": 9,
+      "bits": 4,
+      "a": 2,
+      "r": 6
+    },
+    {
+      "N": 27,
+      "bits": 5,
+      "a": 2,
+      "r": 18
+    },
+    {
+      "N": 81,
+      "bits": 7,
+      "a": 2,
+      "r": 54
+    },
+    {
+      "N": 243,
+      "bits": 8,
+      "a": 2,
+      "r": 162
+    },
+    {
+      "N": 729,
+      "bits": 10,
+      "a": 2,
+      "r": 486
+    }
+  ],
+  "oddOrderIntegerGcdCounterexample": {
+    "N": 7,
+    "a": 4,
+    "r": 3,
+    "aToHalfOrder": 8,
+    "gcdPlus": 1,
+    "gcdMinus": 7
+  },
+  "complexityModelComparison": {
+    "bits": 1024,
+    "GNFSLeadingHeuristicLog10": 26.119204501692618,
+    "GNFSLeadingHeuristic": 1.3158442944491535e+26,
+    "ShorTextbookCubicTerm": 1073741824,
+    "ShorTextbookCubicTermLog10": 9.030899869919436,
+    "caveat": "GNFS omits o(1) and constants; n^3 is an illustrative polynomial term, not exact Shor operation count. Original 278/61 have no supplied model, so no automatic numeric substitution."
+  },
+  "decision": "APPROVED R1–R6 applied; historical complexity models are evidence only, not published numeric replacements"
+}

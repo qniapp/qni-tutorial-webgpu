@@ -1,0 +1,129 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import ShorMod15Graph from '../components/ShorMod15Graph.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="別問題に帰着する" description="因数分解を反復周期 (位数) 発見問題として解く" section="ショアの因数分解" hasMath>
+
+
+<p>
+  ショアの因数分解アルゴリズムは、量子コンピュータが得意とする計算のうち最も有名なものの 1 つです。
+  <a href={base}>はじめに</a
+  >で述べたように、因数分解が高速にできると、公開鍵暗号を現実的な時間のうちに解くことができます。
+  公開鍵暗号はインターネット通信やビットコイン技術等の拠り所であるため、これが解けてしまうというインパクトは相当なものです。
+</p>
+
+<p>
+  ショアの因数分解アルゴリズムはどれほど速いのでしょうか。
+  古典の因数分解アルゴリズムである「一般数体ふるい法」の実行時間は、入力のビット数に対して準指数時間と見積もられます。
+  一方でショアのアルゴリズムは、入力のビット数に対して多項式時間で実行できます。
+</p>
+
+<h2>因数分解を別問題として解く</h2>
+
+<p>
+  因数分解のような整数問題の多くは、より解きやすい別問題に帰着させて解くことができます。
+  ショアのアルゴリズムでは、因数分解を次の別問題に帰着させます
+  (一見むずかしそうな数式が出てきますが、すぐ後に具体例で説明するので安心してください)。
+</p>
+
+<div class="definition">
+  <p>
+    <strong>反復周期 (位数とも呼ぶ) の発見問題</strong>
+  </p>
+
+  <p>
+    {String.raw`\(N\)`} を因数分解したい整数とする。 このとき、ある整数 {String.raw`\(a\)`} ({String.raw`\(a \lt N\)`}, かつ {String.raw`\(a\)`} と {String.raw`\(N\)`}
+    は共通の因数を持たない) について、整数 {String.raw`\(x\)`} を変数とする次の関数を考える。
+  </p>
+
+  <p class="flex justify-center">
+    <fit-content>{String.raw`\(f(x) = a^x mod(N) \hspace{16pt} (X mod(Y) は X を Y で割った余りを表す)\)`}</fit-content>
+  </p>
+
+  <p>これは周期関数となり、その反復周期 {String.raw`\(r\)`} から {String.raw`\(N\)`} の因数を求められる。</p>
+</div>
+
+<p>
+  分かりやすくするために、{String.raw`\(a\)`} や {String.raw`\(N\)`} に具体的な値を入れて関数 {String.raw`\(f(x)\)`}
+  がどう動くか見ていきましょう。 因数分解したい数 {String.raw`\(N\)`} を 15 とします。 {String.raw`\(a\)`} は {String.raw`\(N\)`} より小さく、{String.raw`\(N\)`} と共通の因数を持たない整数から選ぶので、ここでは 2 とします。すると、{String.raw`\(f(x)\)`} は次のように書き直せます。
+</p>
+
+<p class="flex justify-center"><fit-content>{String.raw`\(f(x) = 2^x mod(15)\)`}</fit-content></p>
+
+<p>この関数をグラフにして見てみましょう。</p>
+
+<figure>
+  <ShorMod15Graph />
+</figure>
+
+<p>
+  グラフから一目瞭然のとおり、この関数はたしかに周期関数になっています。 そして x が 4
+  増えるごとにまったく同じ形の波が現れるので、反復周期 {String.raw`\(r\)`} は 4 です。
+</p>
+
+<p>反復周期 {String.raw`\(r = 4\)`} が求まれば、{String.raw`\(N\)`} の因数はそれぞれ次の単純な計算で求まります。</p>
+
+<ul>
+  <li><fit-content>{String.raw`\(gcd(N, a^{r/2} + 1)\)`}</fit-content></li>
+  <li><fit-content>{String.raw`\(gcd(N, a^{r/2} - 1)\)`}</fit-content></li>
+</ul>
+
+<p>
+  ここで出てくる {String.raw`\(gcd\)`} とは最大公約数 (greatest common divisor)
+  の略で、古典コンピュータでも高速に計算できる処理です。 たとえば {String.raw`\(N = 15\)`}
+  の場合で具体的に計算してみると、{String.raw`\(a = 2\)`}, 周期 {String.raw`\(r = 4\)`} をこの式に入れてみると、
+</p>
+
+<ul>
+  <li><fit-content>{String.raw`\(gcd(N, a^{r/2} + 1) = gcd(15, 2^{4/2} + 1) = gcd(15, 5) = 5\)`}</fit-content></li>
+  <li><fit-content>{String.raw`\(gcd(N, a^{r/2} - 1) = gcd(15, a^{4/2} - 1) = gcd(15, 3) = 3\)`}</fit-content></li>
+</ul>
+
+<p>たしかに {String.raw`\(15 = 5 \times 3\)`} が求まりました!</p>
+
+<div class="caution">
+  <strong>注意点:</strong> この手順では、周期 {String.raw`\(r\)`} が偶数の場合に上の 2 つの式を使うことに注意してください。 N=15
+  の場合、{String.raw`\(a\)`} を 2 とするとうまくいき、偶数の周期 {String.raw`\(r = 4\)`} が求まります。 選ぶ {String.raw`\(a\)`}
+  の値によっては {String.raw`\(r\)`} が偶数になりません。 またたとえ {String.raw`\(r\)`} が偶数であっても、gcd の結果が 1 や {String.raw`\(N\)`} 自身という自明な約数になる場合があります
+  (結果が 1 より大きく {String.raw`\(N\)`} より小さいかを調べることで、非自明な因数が得られたか確認できます)。
+  このため実際のショアのアルゴリズムでは、{String.raw`\(r\)`} が偶数になり、かつ正しい因数が求まるまで、{String.raw`\(a\)`}
+  をランダムに選び計算を繰り返します。
+</div>
+
+<h2>古典コンピュータでショアのアルゴリズムを実行すると?</h2>
+
+<p>
+  もしショアのアルゴリズムを古典コンピュータで実行すると、計算量はどうなるでしょうか。
+  ショアのアルゴリズムの核心は、{String.raw`\(f(x)\)`} の反復周期 {String.raw`\(r\)`} を求める部分でした。
+  古典コンピュータで周期を求めるには、{String.raw`\(f(x)\)`} の同じ値 (1, 2, 4, 8 など)
+  が出てくる間隔を求めることで周期が求まります。 これは、{String.raw`\(f(x)\)`} の 1 つの周期には同じ値が 1
+  度しか出てこないことが数学的に分かっているためです。 これを使えばたとえば、{String.raw`\(x\)`} を 1
+  つずつ増やしながら {String.raw`\(f(x)\)`} が再び 1 となる点の {String.raw`\(x\)`} を求めることで {String.raw`\(r\)`} も求まります。
+</p>
+
+<figure>
+  <ShorMod15Graph markedPeriod />
+</figure>
+
+<p>
+  問題は、{String.raw`\(N\)`} のビット数が増えるにつれて反復周期 {String.raw`\(r\)`} が指数関数的に大きくなる場合があることです。
+  このため、古典コンピュータではショアのアルゴリズムを使ってもやはり指数時間かかってしまいます。
+</p>
+
+<h2>まとめ</h2>
+
+<p>
+  ショアの因数分解アルゴリズムは、関数 {String.raw`\(f(x) = a^x mod(N)\)`}
+  の反復周期を求めるという別問題を解くことで因数を求めます。
+  この周期を順に値を調べて求める古典的な方法は、最悪の場合に入力のビット数に対して指数時間がかかるため、量子コンピュータを使います。
+  求めた周期を使って古典コンピュータで gcd を計算することで、{String.raw`\(N\)`} の因数が求まります。
+</p>
+
+</TutorialLayout>
+<style>
+.flex {display:flex}.justify-center {justify-content:center}
+.definition,.caution {border-left:4px solid #60a5fa;background:#eff6ff;padding:4px 16px;min-width:0}
+.caution {margin-block:20px;padding:16px}
+@media(min-width:768px) {.definition,.caution {width:58.333333%;margin-right:auto}}
+</style>
