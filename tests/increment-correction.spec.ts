@@ -1,10 +1,9 @@
 import { expect, test } from '@playwright/test'
-import { readFile } from 'node:fs/promises'
 import original from './fixtures/increment_circuit-original.json' with { type: 'json' }
 
-test('increment applies only the authorized sixth-circuit empty-slot correction', async () => {
-  const source = await readFile(new URL('../src/pages/increment_circuit.astro', import.meta.url), 'utf8')
-  const circuits = [...source.matchAll(/circuit=\{("(?:\\.|[^"\\])*")\}/g)].map(match => JSON.parse(JSON.parse(match[1])))
+test('increment applies only the authorized sixth-circuit empty-slot correction', async ({ page }) => {
+  await page.goto('/qni-tutorial-webgpu/increment_circuit/')
+  const circuits = await page.locator('main qni-webgpu-circuit').evaluateAll(elements => elements.map(element => JSON.parse(element.getAttribute('circuit')!)))
   expect(circuits).toHaveLength(6)
   expect(original.circuits[5].cols.at(-1)).toEqual(['1'])
   const expected = structuredClone(original.circuits)
