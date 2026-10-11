@@ -1,0 +1,368 @@
+{
+  "public": [
+    {
+      "width": 390,
+      "input": null,
+      "state": 0,
+      "sent": 0,
+      "received": 0,
+      "norm": 0.9999997615814351,
+      "pass": true
+    },
+    {
+      "width": 390,
+      "input": 0,
+      "state": 0,
+      "sent": 0,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 390,
+      "input": 1,
+      "state": 1,
+      "sent": 1,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 390,
+      "input": 2,
+      "state": 2,
+      "sent": 2,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 390,
+      "input": 3,
+      "state": 3,
+      "sent": 3,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 390,
+      "input": 4,
+      "state": 4,
+      "sent": 4,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 390,
+      "input": 5,
+      "state": 5,
+      "sent": 5,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 390,
+      "input": 6,
+      "state": 6,
+      "sent": 6,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 390,
+      "input": 7,
+      "state": 7,
+      "sent": 7,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 390,
+      "input": 8,
+      "state": 8,
+      "sent": 0,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 390,
+      "input": 9,
+      "state": 9,
+      "sent": 1,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 390,
+      "input": 10,
+      "state": 10,
+      "sent": 2,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 390,
+      "input": 11,
+      "state": 11,
+      "sent": 3,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 390,
+      "input": 12,
+      "state": 12,
+      "sent": 4,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 390,
+      "input": 13,
+      "state": 13,
+      "sent": 5,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 390,
+      "input": 14,
+      "state": 14,
+      "sent": 6,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 390,
+      "input": 15,
+      "state": 15,
+      "sent": 7,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "input": null,
+      "state": 0,
+      "sent": 0,
+      "received": 0,
+      "norm": 0.9999997615814351,
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "input": 0,
+      "state": 0,
+      "sent": 0,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "input": 1,
+      "state": 1,
+      "sent": 1,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "input": 2,
+      "state": 2,
+      "sent": 2,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "input": 3,
+      "state": 3,
+      "sent": 3,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "input": 4,
+      "state": 4,
+      "sent": 4,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "input": 5,
+      "state": 5,
+      "sent": 5,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "input": 6,
+      "state": 6,
+      "sent": 6,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "input": 7,
+      "state": 7,
+      "sent": 7,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "input": 8,
+      "state": 8,
+      "sent": 0,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "input": 9,
+      "state": 9,
+      "sent": 1,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "input": 10,
+      "state": 10,
+      "sent": 2,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "input": 11,
+      "state": 11,
+      "sent": 3,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "input": 12,
+      "state": 12,
+      "sent": 4,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "input": 13,
+      "state": 13,
+      "sent": 5,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "input": 14,
+      "state": 14,
+      "sent": 6,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "input": 15,
+      "state": 15,
+      "sent": 7,
+      "received": 0,
+      "norm": 1,
+      "pass": true
+    }
+  ],
+  "postRegistrationFix": [
+    {
+      "width": 390,
+      "input": null,
+      "state": 0,
+      "sent": 0,
+      "received": 0,
+      "norm": 0.9999997615814351,
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "input": null,
+      "state": 0,
+      "sent": 0,
+      "received": 0,
+      "norm": 0.9999997615814351,
+      "pass": true
+    }
+  ],
+  "figure": [
+    {
+      "width": 390,
+      "dpr": 1,
+      "initial": true,
+      "last": true,
+      "overflow": false,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "width": 390,
+      "dpr": 2,
+      "initial": true,
+      "last": true,
+      "overflow": false,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "dpr": 1,
+      "initial": true,
+      "last": true,
+      "overflow": false,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "dpr": 2,
+      "initial": true,
+      "last": true,
+      "overflow": false,
+      "errors": [],
+      "pass": true
+    }
+  ]
+}

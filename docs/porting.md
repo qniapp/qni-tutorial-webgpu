@@ -1065,3 +1065,20 @@ local390/1440はbody/content/shadow inner scrollbar/document横overflow/errors0�
 公開後の置換図E2Eでcustom element未登録を検出した。SAT原にcircle tagが0個なのでpage generatorがqubit-circle importを付けず、自作SatStateIllustrationも登録を自分でimportしていなかった。実ページのnative GPUとは別の図の問題。component自身のscriptへ **import './qubit-circle'** を追加し、親ページの偶然のimportに依存しないよう修正。原本文/JSON/図の値を変更していない。
 
 登録とpopupを実際に確かめるguardへ強化し **2/2成功**。DPR1/2×390/1440の図 **4/4成功**、状態8の-0.25/6.2500%と14bit aria、末尾16383の14個の1/振幅0へ到達、overflow/errors0。最初の図harnessはketをtooltip textContentで探したがketはaria側にあるので、実tooltip確率＋aria ketへ照合対象を修正した。caption/data attrsだけの検査で済ませない。資料 `/tmp/qtw-sat-local-figure.json`、`/tmp/qtw-sat-circle-tests.log`。登録補正を公開してから最終live確認する。
+
+
+### 12:58 SAT最終公開確認 / grover_iamの旧SATコピーでSTOP
+
+**SAT公開完了**: 内容 **078adba** / Pages38109541877 success、状態円の独立登録補正 **d21c4b4** / **Pages38109863067 success**。公開390/1440は承認以外本文diff0/TeX diff0/console-page errors0/body-content-shadow scroll0/document横overflow0、running/step0/norm1。palette[]/max1、125列/14-wire、run buttonなし、冗長XX/labels保持。MathJax/Qni/実験版/Qniで開く保持、proseゲートglyph原0個・共通Bold設定維持、native/図Regular。
+
+公開実nativeの16basis＋Hを両幅で **34/34成功**。登録補正後もHの最終状態を両幅 **2/2成功**、index8のみ負、補助0、norm≈1。standaloneの各t1〜t10 160＋復元16＋H1の **177/177** と整合。永久記録 `tests/fixtures/sat-gpu-verification.json` と **sat-page-gpu-verification.json**。DPR1/2×390/1440の公開置換図 **4/4**、振幅-0.25/確率6.2500%/位相180°、14bit aria、末尾16383=0の到達を確認。画面を実見し、重なる小ketの表示は図内だけ抑制し、popup/ariaとrangeで状態情報を保持。
+
+原手書きパズルJPEG/画像内署名は保持、旧Qni状態PNGだけ自作図へ置換、credits文削除0。全292tests成功、最終の登録/全文/10列差分/16384状態到達guard2/2成功、typecheck/build/diff-check成功。原liveは途中でPR575の承認文言へ更新されたため、比較harnessを更新済みHint4に対してもidempotentにした。製品を変えて比較を通していない。
+
+公開資料 `/tmp/qtw-port-sat.json` (commit=public)、`/tmp/qtw-sat-public-{embed-behavior,figure}.json`、`/tmp/qtw-sat-final-public-embed-behavior.json`、`/tmp/qtw-scroll-sat-public.json`、`/tmp/qtw-sat-{final-tests,circle-tests,final-types}.log`。今回全体の新しい全ページ公開監査を行ったという主張はしない。最後の全体監査はphase2時点であり、SATは個別に公開確認した。
+
+その直後の **grover_iam（折り返し変換）** をsidebar順で確認しSTOP。最新upstream mainの3番目の回路は **原SAT125列とbyte相当JSON完全一致のprefix＋折り返し変換** (計134列/14-wire)。t5/uncomputeも旧q2=B1のまま。A1=0,A4=1,B1=0,B4=1の原prefixでGPU状態378、t5(bit8)=1、本文の¬A4∨¬B4は0、norm1/errors0を再現した。資料 `/tmp/qtw-grover-t5-{diagnostic.json,gpu.mjs,gpu.json,gpu.log,gpu.png}`。SAT承認を別ページへ自動拡張しない。
+
+**質問: grover_iamの3番目の回路へ、SATと同じ10列 (38〜42/103〜107) の修正を適用してよいか？** 原3回路のpalette[]×3/max1×3、2/4/14-wireを切り詰めない予定。画像はamplitude_amplification_overview.png 1枚、未置換/credits削除0。grover_iam route/fixtureは未作成、本文/JSON無変更、移行後diff/scroll/step0は未検証。後続grover_iteration以降も未公開。
+
+owned preview4348/検証browser終了、main/worktreeを通常fetch/rebase/pushで同期。13:02 hard stopを守り、最後のdocs-only Pages状態を終了時に報告する。
