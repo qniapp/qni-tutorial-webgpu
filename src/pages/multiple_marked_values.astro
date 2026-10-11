@@ -1,0 +1,91 @@
+---
+import dividerSvg from '../assets/diagram-divider.svg?raw'
+import downSvg from '../assets/diagram-down.svg?raw'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="複数の位相反転" description="複数の位相が反転している場合のグローヴァー反復" section="グローヴァー探索" hasMath hasCircuit>
+
+
+<p>
+  反転した位相が複数ある場合のグローヴァー探索はどうなるでしょうか? 今までは答が 1
+  つ、つまり反転した位相が 1 つの場合を見てきました。
+  しかしグローヴァー探索の使い途の一つである充足可能性問題では、条件を満たす答が 2
+  つ以上になる場合もあります。 そこで試しに、以下のように <Ket label="0111" /> と <Ket label="1111" /> の 2
+  つを反転させ、折り返し変換を 1 回適用した結果を見てみます。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"{|0111>と|1111>を反転\"],[\"H\",\"H\",\"H\",\"H\"],[\"•\",\"•\",\"•\"],[\"}\"],[1],[\"{折り返し変換\"],[\"H\",\"H\",\"H\",\"H\"],[\"X\",\"X\",\"X\",\"X\"],[\"•\",\"•\",\"•\",\"•\"],[\"X\",\"X\",\"X\",\"X\"],[\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>
+  実行すると、反転した位相が複数ある場合でもグローヴァー探索はうまく動作することが分かります。
+  折り返し変換を 1 回実行すると、<Ket label="0111" /> と <Ket label="1111" /> の確率が約 39%
+  まで増幅され、それ以外は 約 1.6% まで減衰します。 このように、答が複数ある場合でも振幅増幅
+  (グローヴァー反復) 回路の形は変わらず、位相反転が 1 個の場合とまったく同様に実行できます。
+</p>
+
+<h2>位相反転が複数ある場合の最適な反復回数</h2>
+
+<p>{String.raw`
+  \(n\) を量子ビット数、位相反転の数を \(m\) とすると、位相反転が複数ある場合の最適な反復回数
+  \(N_{iter}\) は一般に次の式で求めることができます。
+`}</p>
+
+<p class="flex justify-center">{String.raw`\(N_{iter} = \lfloor\frac{π}{4}\sqrt{\frac{2^n}{m}}\rfloor\)`}</p>
+
+<p>{String.raw`
+  たとえば先ほどの例では量子ビット数 \(n = 4\), 位相反転の数 \(m = 2\) なので、最適な反復回数
+  \(N_{iter}\) は次のように 2 となります。
+`}</p>
+
+<p class="flex justify-center">{String.raw`
+  \(N_{iter} = \lfloor\frac{π}{4}\sqrt{\frac{2^4}{2}}\rfloor = \lfloor\frac{π}{\sqrt{2}}\rfloor =
+  2\)
+`}</p>
+
+<p>
+  確認のために、3 回まで反復した結果を以下の回路で確認してみましょう。 反復を 2 回行ったあとの <Ket label="0111" /> と <Ket label="1111" />{String.raw` の確率は 1 回目の反復後の確率 約 39% よりも上昇し、約 47%
+  となります。 そして、\(N_{iter} = 2\) なので、これ以上の反復は確率を減衰させることが予想できます。
+  実際に、さらに 3 回目の反復を行うと確率は 16.5% まで減衰します。
+`}</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"{|0111>と|1111>を反転\"],[\"H\",\"H\",\"H\",\"H\"],[\"•\",\"•\",\"•\"],[\"}\"],[1],[\"{折り返し変換 1\"],[\"H\",\"H\",\"H\",\"H\"],[\"X\",\"X\",\"X\",\"X\"],[\"•\",\"•\",\"•\",\"•\"],[\"X\",\"X\",\"X\",\"X\"],[\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1],[\"•\",\"•\",\"•\"],[\"{折り返し変換 2\"],[\"H\",\"H\",\"H\",\"H\"],[\"X\",\"X\",\"X\",\"X\"],[\"•\",\"•\",\"•\",\"•\"],[\"X\",\"X\",\"X\",\"X\"],[\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1],[\"•\",\"•\",\"•\"],[\"{折り返し変換 3\"],[\"H\",\"H\",\"H\",\"H\"],[\"X\",\"X\",\"X\",\"X\"],[\"•\",\"•\",\"•\",\"•\"],[\"X\",\"X\",\"X\",\"X\"],[\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .relative { position:relative; } .absolute { position:absolute; } .inset-0 { inset:0; } .m-auto { margin:auto; }
+  .h-12 { height:48px; } .w-12 { width:48px; } .h-12 :global(svg) { width:100%; height:100%; }
+  .text-purple-500 { color:#A855F7; } .font-bold { font-weight:700; }
+  .h-8 { height:32px; } .w-16 { width:64px; } .text-zinc-300 { color:#DAD8CE; }
+  .h-8 :global(svg) { width:100%; height:100%; }
+  .relative.h-8 :global(x-gate.qpu-operation-sm), .relative :global(measurement-gate.qpu-operation-sm) { font-size:24px; width:24px; height:24px; }
+  .items-center > :global(phase-gate) { font-size:32px; }
+  .mb-4 { margin-bottom:16px; } .space-y-4 { row-gap:16px; } .items-end { align-items:flex-end; }
+  .text-2xl { font-size:24px; line-height:32px; } .mx-auto { margin-inline:auto; } .p-0 { padding:0; }
+  .p-4 { padding:16px; } .border-l-4 { border-left:4px solid #60A5FA; } .bg-blue-50 { background:#EFF6FF; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>

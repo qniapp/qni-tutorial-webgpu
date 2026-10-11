@@ -278,5 +278,13 @@
     [],
     []
   ],
-  "grover_iteration": [[], [], []]
+  "grover_iteration": [
+    [],
+    [],
+    []
+  ],
+  "multiple_marked_values": [
+    [],
+    []
+  ]
 }

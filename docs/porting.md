@@ -1218,3 +1218,30 @@ Python mathの解析式評価は指示されたもの。CPUで量子状態をシ
 旧 [grover-iteration-rounding-blocker.md](grover-iteration-rounding-blocker.md) は **解決済み** へ更新。pin348992f/Binaryen123/GPU-only/本番readbackなし/CPU fallbackなし/上流コード変更なし。PR #63の公開全55ページ・210起動・210ツールバー確認は完了済みの結果を再利用し、再作業していない。公開完了後にsidebar次のmultiple_marked_valuesへ進む。
 
 全suite再検証 **304 tests成功**、最新追加guard2/2、typecheck/build/diff-check成功。MathJax内の5,000を誤って本文としてassertした検証だけを直し、製品表示はそのまま。公開へ進む。
+
+
+### grover_iteration公開live確認 / 次のmultiple_marked_valuesへ
+
+**f61b674 / Pages38114125426 success**、公開390/1440で承認2数値以外の本文diff0/全26TeXdiff0、元3JSON一致、errors0、body/content/Shadow DOM内scrollbar0/文書横overflow0、running/step0/norm≈1。DPR1/2×両幅4/4でnative Regular/overflow-errors0、prose gate tags0 (共通Bold維持)。原の近似式と5,000表記を無変更、画像0/削除credits0、palette[]×3/max1×3、4-wire×3、原run-buttonなし。公開nativeの最終signed全16状態 **6/6**、2反復90.84467%、4反復58.17034%、ツールバー全6でundo/redoのみ/旧trashなし、旧位置クリックも無効果。永続state結果にnativePublicを追加した。解析2反復90.8447265625%、9反復99.2181860021%と専用GPU9反復99.2179722659%は承認数値90.8/99.2を裏付ける。
+
+資料 `/tmp/qtw-port-grover_iteration.json` (public)、`/tmp/qtw-grover-iteration-public-embed-results.json`、`/tmp/qtw-scroll-grover-iteration-public.json`、`/tmp/qtw-phase-two-public-behavior.json` (今回grover_iteration4ケース)、`/tmp/qtw-pr63-toolbar-grover-iteration-public.json`。全304testsと2/2最終guard/typecheck/build/diff-check成功。PR #577のclass順序変更を採用せず、承認2か所だけを反映した。
+
+### multiple_marked_values（複数の位相反転）ローカル移植
+
+sidebar次の原ページを最新mainから取得。新しい数値の不一致なし。本文/数式/JSONを無変更で `src/pages/multiple_marked_values.astro` へ移植。原2JSON **14/32列、各4-wire**、palette **[]×2**、max-wire-count **1×2**、原run-buttonなし。画像0、自作置換0、credits削除0、sidenote0、Orbit0。共通prose Bold/native Regular、MathJax3.2.2/Qni/実験版/Qniで開くを維持。
+
+実GPUで原一反復/原三反復と、二反復までの原第2回路prefix (cols0〜22の23列、三反復目のoracle直前) を390/1440で照合。検証専用prefixを記事JSONに書き戻していない。target **7/15 = 0111/1111** の両状態を確認:
+
+| 反復 | target各amp/確率 | 他14状態amp/確率 | 本文 |
+|---|---|---|---|
+| 1 | -0.625 / 39.0625% | -0.125 / 1.5625% | 約39% / 約1.6% |
+| 2 | +0.6875 / 47.2656% | -0.0625 / 0.3906% | 約47% |
+| 3 | -0.40625 / 16.5039% | +0.21875 / 4.7852% | 16.5% |
+
+全16状態のsigned amp/虚部0/norm≈1を確認。**standalone6/6** と実記事native最終1/3反復 **4/4**、合計 **10/10**。2個のtarget確率を合算して本文の1状態当たり確率と混同しない。N16/M2の原近似最適反復式floor(π/√2)=2も無変更。
+
+390/1440の全文diff0/全TeXdiff0/全counts一致、起動running/step0/norm≈1、console-page errors0、body/content/shadow内scrollbar0/文書横overflow0。DPR1/2×両幅4/4でnative Regular/overflow-errors0。全4ツールバーはundo/redoのみ (85/85/0画素)、旧trash位置クリックでも現在回路URL無変更。
+
+原fixture `multiple_marked_values-original.json`、本文/TeX `multiple-marked-text.json`、結果 `multiple-marked-gpu-verification.json` とGolden全文/TeX/JSON guardを追加。全suite308件と追加Golden2件の検証完了後に公開する。pin348992f/Binaryen123/GPU-only、本番readback/CPU fallback/上流変更なし。
+
+multiple_marked_valuesの全suite **308tests成功**、suite開始後に追加したGolden全文/TeX/JSON guard **2/2成功**、合計310ケース、typecheck/build/diff-check成功。公開へ進む。
