@@ -947,3 +947,24 @@ phase_logic_result.png→**LogicResultIllustration(states0〜7,negative4/5/7,wir
 全 **282 tests (2.9m)** 成功。最終図CSS後の4 approved全文/40振幅逆変換guard＋4原構造guard **8/8** 成功、typecheck/build/diff-check成功。初回guardがfont/ResizeObserverによる静的fit完了前の幅を測った点は、fonts.ready＋実幅pollを待つ検証へ修正し、不安定なsleepやnative clipping変更で回避していない。
 
 資料 `/tmp/qtw-phase-two-local-{behavior,glyphs}.json`、`/tmp/qtw-phase-combination-local-embed-behavior.json`、`/tmp/qtw-port-{phase_logic,phase_logic_combination}.json`、`/tmp/qtw-scroll-phase-two-local.json`、`/tmp/qtw-phase-two-{all-tests,final-target-fixed,final-types,final-build}.log`。originalを承認どおりにtest-only DOM変更して全文比較し、期待全文を2 approved-text fixturesに固定。文字式以外の本文変更を許容しない。pin **ef652682c23d89427f6f39bb6bee1ec6fae9bb1e** 維持、GPU-only、Binaryen123、upstream/CPU fallback/本番readbackなし。公開live確認後にsidebar直後のsatへ進む。
+
+
+### 11:43 公開checkpoint / satのCond2でSTOP
+
+**phase_logic・phase_logic_combination公開成功**: `91efaaccc66ccbf5eefff51a864cfd512feeef0a` / **Pages38105712568 success**。3項目の承認のみを適用し、原本文はphaseでは全文無変更、combinationは括弧2か所以外無変更。6＋1原JSONを完全に維持。phaseの40振幅以外は212元円のamplitude/ket/sizeを保持、1-qubit pNOTの0.70711も保持。原ket/TeX/sidenotes/順序を保持し、paletteはphase=[WRITE0,WRITE1,H]×6/max2×6、combination=[]/max1。元3/4-wireも切り詰めず、prose Bold/図・native Regularを維持。
+
+phaseはamplitude_amplification_overview.png→既存自作interactive、combinationはphase_logic_result.png/quantum_logic_result.png→自作interactive状態表示。**計3画像置換、原にcredits文なしのため削除0**、他のcredits削除なし。combinationの4-wire画像は8列×2、5-wire比較画像は16列×2を維持。どちらも原run-buttonなしを維持。
+
+公開390/1440は **承認以外本文diff0・TeX diff0・console/page errors0**、原JSON属性一致。起動step0/norm1、body/content/shadow DOM横/縦inner scrollbar/document横overflow0。native内部水平panは許容され、canvasをscaleするCSSなし。実Chromium/AMD GPU最終vector **74/74** 成功 (phase56/combination18)。phaseの6真理値表・uniform状態の符号、pXOR補助0を確認。combinationは4/5/7だけ位相反転、d=0へ復帰しa/b/c保持。DPR1/2×390/1440の8ケースもprose Bold/図Regular・scroll/errors0、置換図の実見成功。
+
+全 **49移行ページ / 98ケース、90 embed / 180起動** のlocal/public監査はrunning/step0/norm1/errors/body・shadow scroll0。multi-1/3/7/stressの追加8ケース/22起動も同じ結果。合計 **全53 builtページ / 106ケース、全101 embed / 202起動**。全282tests＋追加approved guard4件成功、最終target8件も成功、typecheck/build/diff-check成功。
+
+公開資料 `/tmp/qtw-phase-two-public-{behavior,glyphs}.json`、`/tmp/qtw-phase-combination-public-embed-behavior.json`、`/tmp/qtw-port-{phase_logic,phase_logic_combination}.json` (commit=public)、`/tmp/qtw-scroll-phase-two-final-{local,public}.json`、`/tmp/qtw-pr58-extra-phase-two-final-public.json`。pin ef652682c23d89427f6f39bb6bee1ec6fae9bb1e、Binaryen123、GPU-only維持、upstream/CPU fallback/本番readbackなし。
+
+公開live確認後、sidebar直後の **sat（充足可能性問題）** を確認してSTOP。原「追加条件2」はA/B/Cのexactly-one条件30項を全てORで結ぶため、「それぞれの箱に高々1個」を要求できない。原liveからCond2を取得し **A0/B0/B1/C0だけtrue** を代入するとCond1/Cond2はtrue、Bに2個入り意図条件はfalse。これはCond2の反例で、全ヒントを同時に満たすという主張ではない。
+
+satの原125列/14-wire回路は別途GPUで起動成功、状態0〜15各約1/16、8だけ位相反転、補助wire0、norm0.9999997616、page errors0。最終答042は本文と一致するが、途中の定式化の不一致を容認して移植しない。**質問: Cond2を箱ごとのOR式に括り、A条件 AND B条件 AND C条件へ訂正してよいか？** 他の式の完全検証も未完了で、今回のphaseへの承認をSAT原文へ拡張しない。
+
+[sat-constraints-blocker.md](sat-constraints-blocker.md)、`/tmp/qtw-sat-original-{constraints,gpu}.{mjs,json,log}` に証拠保存。sat原palette[]/HTML max1、14-wireを保持する予定。原画像2枚は未置換/削除credits0。移行後本文diff/390・1440のscroll/step0は未実施。route/fixtureなし、sat・grover_iam以降は未公開。
+
+owned preview4347/検証browserを終了。docs-only checkpointを通常push、Pages最終状態は終了時に報告。11:54 hard stopを守る。
