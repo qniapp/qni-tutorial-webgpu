@@ -1245,3 +1245,16 @@ sidebar次の原ページを最新mainから取得。新しい数値の不一致
 原fixture `multiple_marked_values-original.json`、本文/TeX `multiple-marked-text.json`、結果 `multiple-marked-gpu-verification.json` とGolden全文/TeX/JSON guardを追加。全suite308件と追加Golden2件の検証完了後に公開する。pin348992f/Binaryen123/GPU-only、本番readback/CPU fallback/上流変更なし。
 
 multiple_marked_valuesの全suite **308tests成功**、suite開始後に追加したGolden全文/TeX/JSON guard **2/2成功**、合計310ケース、typecheck/build/diff-check成功。公開へ進む。
+
+
+### multiple_marked_values公開live確認完了 / 14:31 hard stopへ
+
+**79737aa / Pages38114689884 success**。公開390/1440で原全文diff0/TeXdiff0/全counts一致/原2JSON無変更、palette[]×2/max1×2/各4-wire/14・32列/原run-buttonなし、画像置換0/削除credits0/sidenote0/Orbit0。全起動running/step0/norm≈1、console-page errors0、body/content/shadow内scrollbar0、文書横overflow0。native Regular/共通prose Bold、DPR1/2×両幅4/4でoverflow-errors0。追加の文言訂正なし。
+
+公開実nativeの最終signed全16状態 **4/4** 成功、target7/15の各39.0625% (1反復)、16.5039% (3反復)。検証専用2反復prefixの各47.2656%も原文と一致。standalone6/localnative4/publicnative4の **14/14**。全4公開ツールバーでundo/redoのみ、85/85/0画素、旧trash位置クリックで回路URL無変更。`multiple-marked-gpu-verification.json` にnativePublic/toolbarsPublicを保存。
+
+資料 `/tmp/qtw-port-multiple_marked_values.json` (public)、`/tmp/qtw-multiple-marked-public-embed-results.json`、`/tmp/qtw-scroll-multiple-marked-public.json`、`/tmp/qtw-multiple-marked-public-behavior.json`、`/tmp/qtw-pr63-toolbar-multiple-marked-public.json`。全suite308件＋開始後追加Golden2件が成功、typecheck/build/diff-check成功。原数値はすべて整合し、確認事項なし。
+
+PR #63の公開全55ページ/110ケース/210起動/210ツールバー結果は保持し、今回の追加2ページもそれぞれ同じ起動・scroll・undo/redo-onlyを確認した。全ページを今回再監査したという主張ではない。追加2ページの本文/JSON以外を変更せず、pin348992f/Binaryen123/GPU-only、本番readback/CPU fallbackなし。
+
+sidebarの次は **grover_iam_indetail（折り返しの仕組み）**。14:31 hard stopまでに追加ページをE2E検証して公開する時間が足りないため、安全な区切りで止める。次ページのroute/fixtureは作成せず、未公開。新しい確認事項は見つかっていないが、次ページの原文・数値・図の検証は未実施。owned preview4351/検証browserを停止し、main/worktreeを通常pushで同期する。最後の記録だけのPagesは終了時点の状態を報告する。
