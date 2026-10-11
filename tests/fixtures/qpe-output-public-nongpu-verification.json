@@ -1,0 +1,266 @@
+[
+  {
+    "slug": "qpe_output",
+    "width": 390,
+    "dpr": 1,
+    "base": "https://qniapp.github.io/qni-tutorial-webgpu/",
+    "snapshots": [
+      {
+        "text": "最後のまとめとして、量子位相推定回路の出力であるQFTの結果がなぜ固有位相として解釈できるかを確認しておきましょう。QPU命令としてπ/4回転の(固有位相はπ/4)を回ずつ位相キックバックした場合、コントロールビット4つの状態ベクトルは最終的に次のようになるのでした。これをQFTにかけると、周波数2が得られます。周波数が2ということは、全体で360°x2=720°回転していることになります。ここで全体は4量子ビットによって個に分割されています。よって、720/16を計算すれば回転の1ステップ分の角度(=つまり固有位相)、720°/16=45°が求まります。以上をまとめると、固有位相は次の式で求められます。確認のために、量子位相推定回路で見たQFTの結果8から、の固有位相はπと解釈できることを見ておきましょう。この回路でもコントロールビットの数は4量子ビットだったので、式に代入すると、となり、たしかに正しい固有位相が出力されていることが分かります。",
+        "description": "位相キックバックとQFTの結果を固有位相として解釈する",
+        "math": [
+          {
+            "tex": "2^0,2^1,2^2,\\dots",
+            "display": false
+          },
+          {
+            "tex": "2^4=16",
+            "display": false
+          },
+          {
+            "tex": "固有位相=\\dfrac{360°\\timesQFTの結果}{2^{コントロールビットの数}}",
+            "display": false
+          },
+          {
+            "tex": "固有位相=\\dfrac{360°\\times8}{2^4}=\\dfrac{360°\\times8}{16}=180°=π",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "https://qniapp.github.io/qni/qpe_output.html"
+      },
+      {
+        "text": "最後のまとめとして、量子位相推定回路の出力であるQFTの結果がなぜ固有位相として解釈できるかを確認しておきましょう。QPU命令としてπ/4回転の(固有位相はπ/4)を回ずつ位相キックバックした場合、コントロールビット4つの状態ベクトルは最終的に次のようになるのでした。これをQFTにかけると、周波数2が得られます。周波数が2ということは、全体で360°x2=720°回転していることになります。ここで全体は4量子ビットによって個に分割されています。よって、720/16を計算すれば回転の1ステップ分の角度(=つまり固有位相)、720°/16=45°が求まります。以上をまとめると、固有位相は次の式で求められます。確認のために、量子位相推定回路で見たQFTの結果8から、の固有位相はπと解釈できることを見ておきましょう。この回路でもコントロールビットの数は4量子ビットだったので、式に代入すると、となり、たしかに正しい固有位相が出力されていることが分かります。",
+        "description": "位相キックバックとQFTの結果を固有位相として解釈する",
+        "math": [
+          {
+            "tex": "2^0,2^1,2^2,\\dots",
+            "display": false
+          },
+          {
+            "tex": "2^4=16",
+            "display": false
+          },
+          {
+            "tex": "固有位相=\\dfrac{360°\\timesQFTの結果}{2^{コントロールビットの数}}",
+            "display": false
+          },
+          {
+            "tex": "固有位相=\\dfrac{360°\\times8}{2^4}=\\dfrac{360°\\times8}{16}=180°=π",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "https://qniapp.github.io/qni-tutorial-webgpu/qpe_output/"
+      }
+    ],
+    "approvedTextDiffZero": true,
+    "sourceGoldenTextMatches": true,
+    "approvedTexDiffZero": true,
+    "rawTexUnchanged": true,
+    "sourceGoldenTexMatches": true,
+    "originalJSONMatches": true,
+    "approvedJSONMatches": true,
+    "fixedJSONMatches": true,
+    "WebGPUExecuted": false,
+    "approvedDescriptionMatches": true
+  },
+  {
+    "slug": "qpe_output",
+    "width": 390,
+    "dpr": 2,
+    "base": "https://qniapp.github.io/qni-tutorial-webgpu/",
+    "snapshots": [
+      {
+        "text": "最後のまとめとして、量子位相推定回路の出力であるQFTの結果がなぜ固有位相として解釈できるかを確認しておきましょう。QPU命令としてπ/4回転の(固有位相はπ/4)を回ずつ位相キックバックした場合、コントロールビット4つの状態ベクトルは最終的に次のようになるのでした。これをQFTにかけると、周波数2が得られます。周波数が2ということは、全体で360°x2=720°回転していることになります。ここで全体は4量子ビットによって個に分割されています。よって、720/16を計算すれば回転の1ステップ分の角度(=つまり固有位相)、720°/16=45°が求まります。以上をまとめると、固有位相は次の式で求められます。確認のために、量子位相推定回路で見たQFTの結果8から、の固有位相はπと解釈できることを見ておきましょう。この回路でもコントロールビットの数は4量子ビットだったので、式に代入すると、となり、たしかに正しい固有位相が出力されていることが分かります。",
+        "description": "位相キックバックとQFTの結果を固有位相として解釈する",
+        "math": [
+          {
+            "tex": "2^0,2^1,2^2,\\dots",
+            "display": false
+          },
+          {
+            "tex": "2^4=16",
+            "display": false
+          },
+          {
+            "tex": "固有位相=\\dfrac{360°\\timesQFTの結果}{2^{コントロールビットの数}}",
+            "display": false
+          },
+          {
+            "tex": "固有位相=\\dfrac{360°\\times8}{2^4}=\\dfrac{360°\\times8}{16}=180°=π",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "https://qniapp.github.io/qni/qpe_output.html"
+      },
+      {
+        "text": "最後のまとめとして、量子位相推定回路の出力であるQFTの結果がなぜ固有位相として解釈できるかを確認しておきましょう。QPU命令としてπ/4回転の(固有位相はπ/4)を回ずつ位相キックバックした場合、コントロールビット4つの状態ベクトルは最終的に次のようになるのでした。これをQFTにかけると、周波数2が得られます。周波数が2ということは、全体で360°x2=720°回転していることになります。ここで全体は4量子ビットによって個に分割されています。よって、720/16を計算すれば回転の1ステップ分の角度(=つまり固有位相)、720°/16=45°が求まります。以上をまとめると、固有位相は次の式で求められます。確認のために、量子位相推定回路で見たQFTの結果8から、の固有位相はπと解釈できることを見ておきましょう。この回路でもコントロールビットの数は4量子ビットだったので、式に代入すると、となり、たしかに正しい固有位相が出力されていることが分かります。",
+        "description": "位相キックバックとQFTの結果を固有位相として解釈する",
+        "math": [
+          {
+            "tex": "2^0,2^1,2^2,\\dots",
+            "display": false
+          },
+          {
+            "tex": "2^4=16",
+            "display": false
+          },
+          {
+            "tex": "固有位相=\\dfrac{360°\\timesQFTの結果}{2^{コントロールビットの数}}",
+            "display": false
+          },
+          {
+            "tex": "固有位相=\\dfrac{360°\\times8}{2^4}=\\dfrac{360°\\times8}{16}=180°=π",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "https://qniapp.github.io/qni-tutorial-webgpu/qpe_output/"
+      }
+    ],
+    "approvedTextDiffZero": true,
+    "sourceGoldenTextMatches": true,
+    "approvedTexDiffZero": true,
+    "rawTexUnchanged": true,
+    "sourceGoldenTexMatches": true,
+    "originalJSONMatches": true,
+    "approvedJSONMatches": true,
+    "fixedJSONMatches": true,
+    "WebGPUExecuted": false,
+    "approvedDescriptionMatches": true
+  },
+  {
+    "slug": "qpe_output",
+    "width": 1440,
+    "dpr": 1,
+    "base": "https://qniapp.github.io/qni-tutorial-webgpu/",
+    "snapshots": [
+      {
+        "text": "最後のまとめとして、量子位相推定回路の出力であるQFTの結果がなぜ固有位相として解釈できるかを確認しておきましょう。QPU命令としてπ/4回転の(固有位相はπ/4)を回ずつ位相キックバックした場合、コントロールビット4つの状態ベクトルは最終的に次のようになるのでした。これをQFTにかけると、周波数2が得られます。周波数が2ということは、全体で360°x2=720°回転していることになります。ここで全体は4量子ビットによって個に分割されています。よって、720/16を計算すれば回転の1ステップ分の角度(=つまり固有位相)、720°/16=45°が求まります。以上をまとめると、固有位相は次の式で求められます。確認のために、量子位相推定回路で見たQFTの結果8から、の固有位相はπと解釈できることを見ておきましょう。この回路でもコントロールビットの数は4量子ビットだったので、式に代入すると、となり、たしかに正しい固有位相が出力されていることが分かります。",
+        "description": "位相キックバックとQFTの結果を固有位相として解釈する",
+        "math": [
+          {
+            "tex": "2^0,2^1,2^2,\\dots",
+            "display": false
+          },
+          {
+            "tex": "2^4=16",
+            "display": false
+          },
+          {
+            "tex": "固有位相=\\dfrac{360°\\timesQFTの結果}{2^{コントロールビットの数}}",
+            "display": false
+          },
+          {
+            "tex": "固有位相=\\dfrac{360°\\times8}{2^4}=\\dfrac{360°\\times8}{16}=180°=π",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "https://qniapp.github.io/qni/qpe_output.html"
+      },
+      {
+        "text": "最後のまとめとして、量子位相推定回路の出力であるQFTの結果がなぜ固有位相として解釈できるかを確認しておきましょう。QPU命令としてπ/4回転の(固有位相はπ/4)を回ずつ位相キックバックした場合、コントロールビット4つの状態ベクトルは最終的に次のようになるのでした。これをQFTにかけると、周波数2が得られます。周波数が2ということは、全体で360°x2=720°回転していることになります。ここで全体は4量子ビットによって個に分割されています。よって、720/16を計算すれば回転の1ステップ分の角度(=つまり固有位相)、720°/16=45°が求まります。以上をまとめると、固有位相は次の式で求められます。確認のために、量子位相推定回路で見たQFTの結果8から、の固有位相はπと解釈できることを見ておきましょう。この回路でもコントロールビットの数は4量子ビットだったので、式に代入すると、となり、たしかに正しい固有位相が出力されていることが分かります。",
+        "description": "位相キックバックとQFTの結果を固有位相として解釈する",
+        "math": [
+          {
+            "tex": "2^0,2^1,2^2,\\dots",
+            "display": false
+          },
+          {
+            "tex": "2^4=16",
+            "display": false
+          },
+          {
+            "tex": "固有位相=\\dfrac{360°\\timesQFTの結果}{2^{コントロールビットの数}}",
+            "display": false
+          },
+          {
+            "tex": "固有位相=\\dfrac{360°\\times8}{2^4}=\\dfrac{360°\\times8}{16}=180°=π",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "https://qniapp.github.io/qni-tutorial-webgpu/qpe_output/"
+      }
+    ],
+    "approvedTextDiffZero": true,
+    "sourceGoldenTextMatches": true,
+    "approvedTexDiffZero": true,
+    "rawTexUnchanged": true,
+    "sourceGoldenTexMatches": true,
+    "originalJSONMatches": true,
+    "approvedJSONMatches": true,
+    "fixedJSONMatches": true,
+    "WebGPUExecuted": false,
+    "approvedDescriptionMatches": true
+  },
+  {
+    "slug": "qpe_output",
+    "width": 1440,
+    "dpr": 2,
+    "base": "https://qniapp.github.io/qni-tutorial-webgpu/",
+    "snapshots": [
+      {
+        "text": "最後のまとめとして、量子位相推定回路の出力であるQFTの結果がなぜ固有位相として解釈できるかを確認しておきましょう。QPU命令としてπ/4回転の(固有位相はπ/4)を回ずつ位相キックバックした場合、コントロールビット4つの状態ベクトルは最終的に次のようになるのでした。これをQFTにかけると、周波数2が得られます。周波数が2ということは、全体で360°x2=720°回転していることになります。ここで全体は4量子ビットによって個に分割されています。よって、720/16を計算すれば回転の1ステップ分の角度(=つまり固有位相)、720°/16=45°が求まります。以上をまとめると、固有位相は次の式で求められます。確認のために、量子位相推定回路で見たQFTの結果8から、の固有位相はπと解釈できることを見ておきましょう。この回路でもコントロールビットの数は4量子ビットだったので、式に代入すると、となり、たしかに正しい固有位相が出力されていることが分かります。",
+        "description": "位相キックバックとQFTの結果を固有位相として解釈する",
+        "math": [
+          {
+            "tex": "2^0,2^1,2^2,\\dots",
+            "display": false
+          },
+          {
+            "tex": "2^4=16",
+            "display": false
+          },
+          {
+            "tex": "固有位相=\\dfrac{360°\\timesQFTの結果}{2^{コントロールビットの数}}",
+            "display": false
+          },
+          {
+            "tex": "固有位相=\\dfrac{360°\\times8}{2^4}=\\dfrac{360°\\times8}{16}=180°=π",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "https://qniapp.github.io/qni/qpe_output.html"
+      },
+      {
+        "text": "最後のまとめとして、量子位相推定回路の出力であるQFTの結果がなぜ固有位相として解釈できるかを確認しておきましょう。QPU命令としてπ/4回転の(固有位相はπ/4)を回ずつ位相キックバックした場合、コントロールビット4つの状態ベクトルは最終的に次のようになるのでした。これをQFTにかけると、周波数2が得られます。周波数が2ということは、全体で360°x2=720°回転していることになります。ここで全体は4量子ビットによって個に分割されています。よって、720/16を計算すれば回転の1ステップ分の角度(=つまり固有位相)、720°/16=45°が求まります。以上をまとめると、固有位相は次の式で求められます。確認のために、量子位相推定回路で見たQFTの結果8から、の固有位相はπと解釈できることを見ておきましょう。この回路でもコントロールビットの数は4量子ビットだったので、式に代入すると、となり、たしかに正しい固有位相が出力されていることが分かります。",
+        "description": "位相キックバックとQFTの結果を固有位相として解釈する",
+        "math": [
+          {
+            "tex": "2^0,2^1,2^2,\\dots",
+            "display": false
+          },
+          {
+            "tex": "2^4=16",
+            "display": false
+          },
+          {
+            "tex": "固有位相=\\dfrac{360°\\timesQFTの結果}{2^{コントロールビットの数}}",
+            "display": false
+          },
+          {
+            "tex": "固有位相=\\dfrac{360°\\times8}{2^4}=\\dfrac{360°\\times8}{16}=180°=π",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "https://qniapp.github.io/qni-tutorial-webgpu/qpe_output/"
+      }
+    ],
+    "approvedTextDiffZero": true,
+    "sourceGoldenTextMatches": true,
+    "approvedTexDiffZero": true,
+    "rawTexUnchanged": true,
+    "sourceGoldenTexMatches": true,
+    "originalJSONMatches": true,
+    "approvedJSONMatches": true,
+    "fixedJSONMatches": true,
+    "WebGPUExecuted": false,
+    "approvedDescriptionMatches": true
+  }
+]

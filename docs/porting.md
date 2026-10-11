@@ -1677,3 +1677,32 @@ QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-q
 ```
 
 qpe_outputの公開比較・最新非GPU回帰の結果は完了後に記録。既存4件のlayout guard不一致は未修正、期待値緩和なし。sidebar順の次shor_hspで数値/条件/成功判定に不一致を発見し、未承認のまま同ページと後続を停止した。
+
+### qpe_output公開・非GPU確認完了 / 19:33 checkpoint
+
+**8e3964f / Pages38131826927 success**。ghでbuild/deploy成功を確認。公開URLのsource guard1＋390/1440×DPR1/2の本文/description/原4TeX/16振幅/回路0/本文Bold/scroll/errors4件 **5/5成功**。原実サイトと公開移植ページの4case比較も成功。差分はA/Bだけ、MathJax入力の差は3番目の式の「逆」削除1件だけで他3入力は不変。未編集原text/description/TeXと実公開URLを `tests/fixtures/qpe-output-public-nongpu-verification.json` に保存、WebGPUExecuted:false。
+
+```sh
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/compare-qpe-original.mjs qpe_output
+```
+
+scriptは現在の原実サイトが既に承認通り変更された場合にも、旧版への承認置換と同じGoldenに厳密一致する場合だけ受け付ける。未承認の本文/description/TeX変更を許容する緩和ではない。資料 `/tmp/qtw-output-{local-compare,public-tests,public-compare}.log`、`/tmp/qtw-qpe_output-live-{original,ours}-{390,1440}-dpr{1,2}.png`。390/DPR1の16円と2つの式・全文を目視確認した。既存shared layout差は維持する。
+
+全非GPU回帰は **352件中347成功/5失敗（2workers、5.5分）**。4件は従来の `ket.spec.ts`×2/`content-overflow.spec.ts`×2、qpe_outputはoverflow failure一覧に入っていない。追加1件は `ported-pages.spec.ts` のgrover_iteration1440で `page.goto: Target page, context or browser has been closed`（内容の期待値不一致ではない）。同じ固定distで1worker・その1件だけ再実行し **1/1成功**、製品変更/retry設定追加なし。元suiteを全成功と扱わず、残る既存4件を引き継ぐ。ログ `/tmp/qtw-output-nongpu-regressions.log` / `/tmp/qtw-output-grover-rerun.log`。最新typecheck/build/diff-check・数値解析は成功。
+
+### 次shor_hsp: 計算量・条件・成功判定でSTOP
+
+原source `docs/shor-hsp-original-source.html`、Python証拠 `tests/fixtures/shor-hsp-blocker-analysis.json`。**shor_hspは未移植・未公開、原文/TeX/画像2枚無変更、shor_fx以降も停止。** 19:32のopen PRは全0件、同ページPRなし。
+
+- 正しいN15/a2: [1,2,4,8]×4、r4、gcd5/3、5×3=15。2PNGは算術グラフで旧Qni UIではない、credits文なし。承認後は元軸/値/赤丸/周期注釈を維持した自作SVGへ置換可能だが、今回は置換しない。原回路0、palette/maxは該当なし。
+- GNFSはheuristic準指数時間。N≈2^1024のleading L termはlog10≈26.1192。Shorの教科書的cubic termは1024³=1073741824。これらは正確な実operation countではなく、根拠のない原10^278/10^61を新数値で勝手に置換しない。
+- 「a<Nなら何でも良い」はboxの互いに素条件に反する（N15/a3は1に戻らない）。
+- 偶数rでなければgcd計算不能という一般的主張は不正確。N7/a4/r3ではa^(r/2)=8、gcdの計算が可能。
+- N15/a14/r2はgcd15/1、積15でも非自明な因数を得ていない。原「積がN」という成功判定は誤り。gcd結果は常に約数であり、自明な約数かを検査すべき。
+- a2/N=2^b−1ではr=bで、周期が必ず指数増大するわけではない。一方N=3^kならr=2·3^(k−1)と大きくなりうる。古典全般に指数時間が必要という未証明の下界ではなく、ここで説明する順次列挙法の最悪時間へ限定する案。
+
+**質問（すべて未承認・未適用）:** R1〜R6の正確なbefore→afterを [shor-hsp-blocker.md](shor-hsp-blocker.md) に記録。具体数値段落をGNFS準指数/Shor多項式の一般論へ、aの条件を互いに素へ、偶数rをこの手順の条件へ、gcd成功判定を非自明な約数へ、r増大を「場合がある」へ、まとめの指数時間を順次列挙法の最悪の場合へ限定してよいか？ 6個のbefore文字列が原sourceに各1回一致することも検査した。原画像/正しい15の例/他本文を変更する提案ではない。
+
+再現: `python3 scripts/analyze-shor-hsp-source.py ../qni/apps/tutorial/shor_hsp.html --output /tmp/shor-hsp-analysis.json`。数学・古典算術の確認だけで、量子CPU simulator/製品fallback/GPU結果ではない。shor_hsp移植後の本文/TeX/3901440/DPR/scroll検査は未実施。回路0なので新規WebGPU検査は該当なし。
+
+通常fetch/rebase/push（forceなし）で記録を同期し、owned preview/browserを停止。qpe_outputに不要なembedを追加せず、前ページの実機確認待ちと既存4回帰は未解決として保持し、hard stop19:39を守る。
