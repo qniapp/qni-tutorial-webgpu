@@ -1971,3 +1971,9 @@ QTW_AUDIT_URL=http://127.0.0.1:4322/qni-tutorial-webgpu/ node scripts/compare-qp
 ```
 
 log `/tmp/qtw-r-d12-{build,local-tests,local-compare}.log`。これらの成績を固定したうえで通常main push、Pages成功と公開5テスト/原比較4条件のraw本文・TeX差0を確認する。shor_rの後には進まない。
+
+### 08:47 D1/D2公開成功・raw差0
+
+**23512e3 / Pages38185402140 success**（https://github.com/qniapp/qni-tutorial-webgpu/actions/runs/38185402140）。通常fetch/rebase/push、forceなし。公開source1＋4表示条件の**5/5成功**、最新原実サイトとの比較も**4/4成功**。全4で両raw snapshotの本文文字列直接等値、raw MathJax入力18個直接等値＝**本文/TeX差0**（C1/C2/D1/D2 whitelistの補正を必要としない）。source golden/description/JSON[]も一致。横overflow/body/content内側scrollbars/console/page errors0、SVG1/25%4注記/軸/数値すべて維持。
+
+公開証拠 `tests/fixtures/shor-r-d12-public-verification.json`、log `/tmp/qtw-r-d12-{public-tests,public-compare,pages}.log`。typecheck/build/diff-checkと最終local5/5も成功。GPUなしboxでGPU検証とは称さない。shor_u以降はroute/本文/TeX/JSON/図/fixture/docsとも変更なし。公開証拠のみを別commitでmainへ通常pushしてPages成功を確認し、09:05より前に終了する。
