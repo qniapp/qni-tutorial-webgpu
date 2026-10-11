@@ -1,0 +1,191 @@
+---
+import dividerSvg from '../assets/diagram-divider.svg?raw'
+import downSvg from '../assets/diagram-down.svg?raw'
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="QFT の内部" description="QFT の仕組みを理解する" section="量子フーリエ変換 (QFT)" hasMath hasCircuit>
+
+
+<p>
+  QFT の動作を調べてみましょう。QFT を理解するには、逆 QFT 回路の動作を追ってみるのが簡単です。 逆
+  QFT の動作が理解できれば、単純な逆回路である QFT の動作も理解したことになります。
+</p>
+
+<p>
+  例として、周波数 2 のパターンを状態ベクトルに書き込む逆 QFT 回路を考えます。
+  これは前回に出てきた回路と同じで、次の形になります。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"{2 を入力\"],[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[1,\"X\"],[\"}\"],[1],[\"{逆QFT\"],[\"Swap\",1,1,\"Swap\"],[1,\"Swap\",\"Swap\",1],[\"H\",1,1,1],[\"P(π_2)\",\"•\",1,1],[\"P(π_4)\",1,\"•\",1],[\"P(π_8)\",1,1,\"•\"],[1,\"H\",1,1],[1,\"P(π_2)\",\"•\",1],[1,\"P(π_4)\",1,\"•\"],[1,1,\"H\",1],[1,1,\"P(π_2)\",\"•\"],[1,1,1,\"H\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>
+  <a href={`${base}readout_of_patterns/`}>パターンの読み出し</a
+  >では同じ状態ベクトルをもっと短い以下の回路で準備しました。
+  この回路が何をやっているか分析することで、逆 QFT の内部についても理解が進みます。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"[周波数2の状態を作る\"],[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"H\",\"H\",\"H\",\"H\"],[\"P(π_4)\",\"P(π_2)\",\"P(π)\"],[\"]\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>
+  この回路では上から 4 ビット目にだけ <phase-gate></phase-gate> がありません。 そこで角度が
+  \(2π\)、つまり何もしない <phase-gate></phase-gate>
+  をあえて加えると、次の同等な回路に変換できます。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"[周波数2の状態を作る\"],[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"H\",\"H\",\"H\",\"H\"],[\"P(π_4)\",\"P(π_2)\",\"P(π)\",\"P(2π)\"],[\"]\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>
+  それぞれの <phase-gate></phase-gate> の角度には、あるパターンがあることが分かるでしょうか？
+  回路を次のように書き直すと、このパターンが明らかになります。 それぞれの <phase-gate></phase-gate>{String.raw`
+  は、各ビットを \(\frac{π}{4}\) の整数倍、位相を回転しています。
+  そして係数となる整数は、上位ビットになるにつれて 2 のべき乗で増えていくことも分かります。
+`}</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"{重ね合わせ\"],[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1],[\"{1xπ/4\"],[\"P(π_4)\"],[\"}\"],[1],[\"{2xπ/4\"],[1,\"P(π_2)\"],[\"}\"],[1],[\"{4xπ/4\"],[1,1,\"P(π)\"],[\"}\"],[1],[\"{8xπ/4\"],[1,1,1,\"P(2π)\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>{String.raw`
+  ここで \(\frac{π}{4}\) は`}<strong>周波数 2 での位相の単位</strong>{String.raw`を表しています。 これは、周波数 2
+  の波を作るには、次のように隣りあう円同士で位相を \(\frac{π}{4}\)
+  ずらせば作ることができる、ということを表しています。
+`}</p>
+
+<div class="my-5 flex overflow-x-auto">
+  <div class="pattern-row flex flex-row items-center space-x-2">
+    <qubit-circle data-amplitude="0.25" data-ket="0" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 + 0.17678i" data-ket="1" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25i" data-ket="2" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 + 0.17678i" data-ket="3" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.25" data-ket="4" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 - 0.17678i" data-ket="5" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.25i" data-ket="6" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 - 0.17678i" data-ket="7" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25" data-ket="8" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 + 0.17678i" data-ket="9" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25i" data-ket="10" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 + 0.17678i" data-ket="11" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.25" data-ket="12" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 - 0.17678i" data-ket="13" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.25i" data-ket="14" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 - 0.17678i" data-ket="15" data-size="lg" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+  </div>
+</div>
+
+<p>{String.raw`
+  一般に周波数 \(n\) の位相回転を作るには、量子ビット数を \(N\) とすると、位相の単位は \(n \times
+  \frac{2π}{2^N}\) となります。 そして 1 ビット目に \(1 \times n \times \frac{2π}{2^N}\), 2
+  ビット目に \(2 \times n \times \frac{2π}{2^N}\), 3 ビット目に \(4 \times n \times \frac{2π}{2^N}\)
+  の位相回転... という風に 2 のべき乗で回転する回路によって、周波数 n
+  の位相回転を作ることができます。
+`}</p>
+
+<p>{String.raw`
+  たとえば 4 量子ビットで周波数 3 の場合には、位相の単位は \(3 \times \frac{2π}{2^4} =
+  \frac{6π}{16}\) です。 これによって、周波数 3 の位相回転を作る回路は次のようになります。
+`}</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"{重ね合わせ\"],[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1],[\"{1x6π/16\"],[\"P(6π_16)\"],[\"}\"],[1],[\"{2x6π/16\"],[1,\"P(12π_16)\"],[\"}\"],[1],[\"{4x6π/16\"],[1,1,\"P(24π_16)\"],[\"}\"],[1],[\"{8x6π/16\"],[1,1,1,\"P(48π_16)\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>
+  これをふまえて、周波数 2 の場合について逆 QFT の動作を見ていきましょう。 逆 QFT
+  回路の構造は、次のように 5 つのブロックに分割できます (最初の「2を入力」のブロックは除く)。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"{2 を入力\"],[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[1,\"X\"],[\"}\"],[1],[\"{4(0100)\"],[\"Swap\",1,1,\"Swap\"],[1,\"Swap\",\"Swap\",1],[\"}\"],[1],[\"{1xπ/4\"],[\"H\",1,1,1],[\"P(π_2)\",\"•\",1,1],[\"P(π_4)\",1,\"•\",1],[\"P(π_8)\",1,1,\"•\"],[\"}\"],[1],[\"{2xπ/4\"],[1,\"H\",1,1],[1,\"P(π_2)\",\"•\",1],[1,\"P(π_4)\",1,\"•\"],[\"}\"],[1],[\"{4xπ/4\"],[1,1,\"H\",1],[1,1,\"P(π_2)\",\"•\"],[\"}\"],[1],[\"{8xπ/4\"],[1,1,1,\"H\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>
+  最初の <swap-gate></swap-gate> のペア 2 つは、量子ビットを上下にひっくり返します。 ここでは最初に
+  2 (2 進数で 0010) を入力しているので、<swap-gate></swap-gate> はこれを上下にひっくり返して 4
+  (0100) に変換します。 これは次の回路と同等になります (入力の上から 3 ビット目が <Ket label="1" />
+  に変わっていることに注意)。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"{4を入力\"],[\"|0>\",\"|0>\",\"|1>\",\"|0>\"],[\"}\"],[1],[\"{1xπ/4\"],[\"H\",1,1,1],[\"P(π_2)\",\"•\",1,1],[\"P(π_4)\",1,\"•\",1],[\"P(π_8)\",1,1,\"•\"],[\"}\"],[1],[\"{2xπ/4\"],[1,\"H\",1,1],[1,\"P(π_2)\",\"•\",1],[1,\"P(π_4)\",1,\"•\"],[\"}\"],[1],[\"{4xπ/4\"],[1,1,\"H\",1],[1,1,\"P(π_2)\",\"•\"],[\"}\"],[1],[\"{8xπ/4\"],[1,1,1,\"H\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>{String.raw`次に \(1 \times \frac{π}{4}\) のブロックを見てみましょう。`}</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|1>\",\"|0>\"],[\"{1xπ/4\"],[\"H\",1,1,1],[\"P(π_2)\",\"•\",1,1],[\"P(π_4)\",1,\"•\",1],[\"P(π_8)\",1,1,\"•\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+</div>
+
+<p>
+  最初の <h-gate></h-gate>{String.raw` で 1 ビット目が重ね合わせ状態になります。 次に \(\frac{π}{2},
+  \frac{π}{4}, \frac{π}{8}\) ほど位相を回転する `}<control-gate></control-gate> <phase-gate></phase-gate> の組が続きます。 ここで上から 3 ビット目のみが 1 なので、このうち発火する <phase-gate></phase-gate>{String.raw` は角度が \(\frac{π}{4}\) のもののみです。 つまり、全体では 1
+  ビット目を等しい重ね合わせ状態にし、位相を \(\frac{π}{4}\) 回転していることが分かります。
+`}</p>
+
+<p>{String.raw`
+  次の \(2 \times \frac{π}{4}\) のブロックも同様です。 最初の `}<h-gate></h-gate>{String.raw` で 2
+  ビット目を重ね合わせ状態にし、2 ビット目の位相を \(\frac{π}{2} (= 2 \times \frac{π}{4})\)
+  ほど回転させます。
+`}</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|1>\",\"|0>\"],[\"{2xπ/4\"],[1,\"H\",1,1],[1,\"P(π_2)\",\"•\",1],[1,\"P(π_4)\",1,\"•\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+</div>
+
+<p>{String.raw`次の \(4 \times \frac{π}{4}\) のブロックは少し事情が異なります。`}</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|1>\",\"|0>\"],[\"{4xπ/4\"],[1,1,\"H\",1],[1,1,\"P(π_2)\",\"•\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+</div>
+
+<p>
+  入力の 3 ビット目は 1 なので、これに <h-gate></h-gate>
+  を適用すると、等しい重ね合わせを作ると同時に <Ket label="1" />{String.raw` の位相を π 回転させます。 これは \(4
+  \times \frac{π}{4}\) の回転です。 つまりここの `}<h-gate></h-gate> は、重ね合わせと位相の回転を
+  1 つの <h-gate></h-gate> で行っています。
+</p>
+
+<p>最後のブロックの <h-gate></h-gate> も重ね合わせと位相の回転を同時に行います。</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|1>\",\"|0>\"],[\"{8xπ/4\"],[1,1,1,\"H\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+</div>
+
+<p>
+  しかしここでの回転は 2π であるため 0° の回転と同じであり、単純な重ね合わせと同じ効果を持ちます。
+</p>
+
+<h2>まとめ</h2>
+
+<p>
+  逆 QFT の動作を追うことで、状態ベクトルに位相のパターンを書き込む方法を見てきました。 <h-gate></h-gate> をうまく使うことで、
+  重ね合わせと位相の回転をコンパクトにまとめることができます。
+</p>
+
+<p>
+  この仕組みは、入力や量子ビット数が異なってもうまく動作します。 つまり QFT と逆 QFT
+  をブラックボックス的なサブルーチンと考え、他のいろいろな量子アルゴリズムの一部として便利に使うことができます。
+</p>
+
+
+</TutorialLayout>
+<style>
+  .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
+  .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
+  .items-center { align-items:center; } .justify-center { justify-content:center; } .justify-start { justify-content:flex-start; }
+  .space-x-1 { gap:4px; } .space-x-2 { gap:8px; } .space-x-4 { gap:16px; }
+  .relative { position:relative; } .absolute { position:absolute; } .inset-0 { inset:0; } .m-auto { margin:auto; }
+  .h-12 { height:48px; } .w-12 { width:48px; } .h-12 :global(svg) { width:100%; height:100%; }
+  .text-purple-500 { color:#A855F7; } .font-bold { font-weight:700; }
+  .h-8 { height:32px; } .w-16 { width:64px; } .text-zinc-300 { color:#DAD8CE; }
+  .h-8 :global(svg) { width:100%; height:100%; }
+  .relative.h-8 :global(x-gate.qpu-operation-sm), .relative :global(measurement-gate.qpu-operation-sm) { font-size:24px; width:24px; height:24px; }
+  .items-center > :global(phase-gate) { font-size:32px; }
+  .mb-4 { margin-bottom:16px; } .space-y-4 { row-gap:16px; } .items-end { align-items:flex-end; }
+  .text-2xl { font-size:24px; line-height:32px; } .mx-auto { margin-inline:auto; } .p-0 { padding:0; }
+  .p-4 { padding:16px; } .border-l-4 { border-left:4px solid #60A5FA; } .bg-blue-50 { background:#EFF6FF; }
+  .mt-4 { margin-top:16px; } .mb-2 { margin-bottom:8px; }
+  .diagram-arrow { display:inline-flex; flex:none; color:#A3A3A3; }
+  .size-6 { width:24px; height:24px; } .size-4 { width:16px; height:16px; }
+  .diagram-arrow :global(svg) { width:100%; height:100%; fill:currentColor; }
+  .whitespace-nowrap { white-space:nowrap; }
+  .rounded { border-radius:4px; } .bg-emerald-500 { background:#3AA99F; color:#FFFCF0; padding:8px; }
+  .text-sm { font-size:14px; line-height:20px; } .text-xs { font-size:12px; line-height:16px; }
+  .items-center :global(quantum-circuit) { margin-block:20px; }
+  :global(main quantum-circuit h-gate), :global(main .items-center > write-gate) { font-size:32px; margin:0; }
+  .flex :global(qubit-circle) { margin-right:0; flex:none; }
+  :global(main qubit-circle.magnitude-lime [data-part='disc']) { fill:#84CC16; }
+  .overflow-auto, .overflow-x-auto { overflow:auto; }
+  .list-decimal { list-style-type:decimal; }
+  table { width:100%; border-collapse:collapse; font-size:14px; line-height:24px; }
+  th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
+  td { padding:8px; border-bottom:1px solid #DAD8CE; }
+  th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+</style>
+
+<style>
+ .overflow-x-auto { overflow:visible; }
+ .pattern-row { display:grid; grid-template-columns:repeat(8,48px); gap:8px; width:max-content; max-width:100%; margin-inline:auto; }
+ .pattern-row :global(qubit-circle) { margin:0; }
+ @media(max-width:600px) { .pattern-row { grid-template-columns:repeat(4,48px); } }
+</style>

@@ -1375,3 +1375,18 @@ sidebar次の最新mainを確認。同ページのopen PRなし (#578は前ペ�
 15:44に全open PRを確認し、同ページPRなし。qniapp/qni#578はreadout_of_patterns.htmlだけで、今回の2箇所を承認するものではない。詳細 [inside-qft-direction-blocker.md](inside-qft-direction-blocker.md)。永続 `inside-qft-direction-verification.json` にsourceSHA256/原11JSON/原live段落/両幅のGPU6+22結果を保存。資料 `/tmp/qtw-next-inside_the_qft.html`、`/tmp/qtw-inside-qft-original-*` (1440・390各2回路screenshot)、`/tmp/qtw-inside-qft-direction-*`、`/tmp/qtw-inside-qft-all-gpu-*`。
 
 **inside_the_qft未公開、route/移植fixture未作成、原文/JSON無変更。** 原画像0/置換0/削除credits0、paletteなし (移植時[]×11)、max-wire-count1×11、原4-wire/列数20,6,6,21,21,32,26,8,7,6,5/run-buttonなし、16円表示/sidenote0/Orbit0。移植後の本文diff/scroll/step0/toolbar/DPRは未検証。qft_adder以降も停止し、承認を待つ。owned診断browserは終了済み、previewは開始していない。通常pushで記録を同期し、最後の記録だけのPages状態を報告する。pin348992f/Binaryen123/GPU-only、本番readback/CPU fallback/上流変更なし。
+
+
+## 2026-10-11 inside_the_qft承認2訂正を移植 / hard stop16:28
+
+高宮さんが **`この回路では下から 4 ビット目にだけ` → `この回路では上から 4 ビット目にだけ`**、**`ここで下から 3 ビット目のみが 1 なので` → `ここで上から 3 ビット目のみが 1 なので`** の2か所だけを承認。`docs/inside-qft-approved-source.html` の2訂正を逆に戻すと元source全文に完全一致する。その他本文/数値/JSONを変更しない。旧direction文書は解決済みとした。同ページのopen PRなし、15:58の全openは0件。
+
+`src/pages/inside_the_qft.astro` を移植。原 **11JSON/全4-wire/20,6,6,21,21,32,26,8,7,6,5列** を無変更。palette **[]×11** (源にpaletteなし)、max-wire-count **1×11** (4本をtruncateしない)、原run-buttonなし。原16円表示の複素振幅/data-ket/lgサイズ/順序を無変更。自然なdesktop8列/mobile4列gridにして、円の大きさの縮小/clip/zoomなしで本文内scrollを除去し、ariaの4bit ket幅を明示する。nativeの水平panは通常通り可能。画像0/自作画像置換0/credits削除0/sidenote0/Orbit0を保持。
+
+解析は先のdirection文書・GPU22件のとおり。周波数2はa_j=(1/4)exp(iπj/4)、周波数3はa_j=(1/4)exp(i3πj/8)、各6.25%。N量子bit/周波数nの単位角n×2π/2^N、係数1/2/4/8、n3/N4の6π/16とその倍数、P(2π)=I、SWAPで2(0010)→4(0100)、逆QFTの5blockも正しい。単独blockはπ/4:|4⟩1/√2と|5⟩(1+i)/2、π/2:|4⟩1/√2と|6⟩i/√2、π:|0⟩1/√2と|4⟩-1/√2、2π:|4⟩/|12⟩とも1/√2、各50%。16円表示の±0.17678は1/(4√2)の5桁表示に一致。数値やゲートを変更する必要なし。
+
+今回の実記事nativeで全11回路の最後の有効列に水平pan/クリックし、390/1440の全signed実部/虚部/確率を上記解析と照合 **22/22成功**、norm≈1/errors0。standalone全22＋今回native22の44/44、さらに方向用prefix等focused6/6の証拠も保持する。3つの角度π/2/π/4/π/8の制御はq1=0/q2=1/q3=0でπ/4だけon、入力|4⟩100%も確認済み。`inside-qft-direction-verification.json` にnativeLocal/toolbarsLocal/glyphsLocalを追加した。
+
+ローカル390/1440で承認2訂正以外の本文diff0/原TeXdiff0/全counts・16振幅・全11JSON一致、errors0、running/step0/norm≈1、body/content/shadow内scrollbar0/文書横overflow0。DPR1/2×両幅4/4/prose全gate Bold/native Regular、MathJax3.2.2/self-hosted/Qni/実験版/Qniで開く維持。全22ツールバーundo/redoのみ85/85/0画素、旧trash位置クリックでも現在回路URL不変。
+
+原fixture `inside_the_qft-original.json`、承認済み全文/TeX `inside-qft-approved-text.json`、`tests/inside-qft.spec.ts` はinverse whitelist/全TeX/原11JSON/16振幅/制限/no-scroll/errorsを守る。資料 `/tmp/qtw-port-inside_the_qft.json`、`/tmp/qtw-inside-qft-local-*`、`/tmp/qtw-scroll-inside-qft-local.json`、`/tmp/qtw-pr63-toolbar-inside-qft-local.json`。typecheck/build/diff-check成功、固定distで全suite完了後に公開する。pin348992f/Binaryen123/GPU-only、本番readback/CPU fallback/上流変更なし。
