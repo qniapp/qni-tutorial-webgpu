@@ -25,9 +25,13 @@ const edits = [
   [
     "この周期を求める計算は、古典コンピュータでは指数時間が必要なため、量子コンピュータを使います。",
     "この周期を順に値を調べて求める古典的な方法は、最悪の場合に入力のビット数に対して指数時間がかかるため、量子コンピュータを使います。"
+  ],
+  [
+    "このため、古典コンピュータではショアのアルゴリズムを使ってもやはり指数時間かかってしまいます。",
+    "このため、古典コンピュータでは、ショアのアルゴリズムの手順をそのまま使っても、最悪の場合は指数時間かかってしまいます。"
   ]
 ]
-test('Shor HSP exactly six independently pinned approved changes',()=>{
+test('Shor HSP exactly seven independently pinned approved changes',()=>{
  const original=readFileSync('docs/shor-hsp-original-source.html','utf8'),approved=readFileSync('docs/shor-hsp-approved-source.html','utf8')
  expect(createHash('sha256').update(original).digest('hex')).toBe('5bc7e636ec570f264e1b5caa5aeacd93302f796dd9d8a2db770765d13214512c')
  let fixed=original

@@ -1791,3 +1791,40 @@ QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/compare
 **この追加も承認するか質問する。** 今回の「Change nothing else」を守り、product/Golden/approved sourceに追加しない。[shor-hsp-pr585-question.md](shor-hsp-pr585-question.md) に証拠と提案。20:04原実サイトには未反映で4比較成功、後にmerge/deployされ第7文が現れたらGolden比較はSTOP。原text比較を黙って緩和しない。shor_fx同ページPRはなし、後続移植もなし。
 
 通常fetch/rebase/push（forceなし）で公開結果とSTOP証拠を同期し、owned preview/browserを終了。GPUなしの検査で前ページの実機確認待ちを解消したことにせず、既存4回帰・shor_fx A/B・PR585第7文の質問を残し、hard stop20:11を守る。
+
+## 2026-10-11 shor_hsp 第7文のみ追加承認 / GPUなし / hard stop20:40
+
+20:11開始、worktree clean・前作業はb23d693までcommit/Pages成功済み。porting tail・PR585質問・shor_fx blockerを再読。既存R1〜R6/2SVG/他本文/52TeX/数値/layout/palette/max/共有CSS/pinを作り直さず、高宮さんが今回承認した1文だけを変更する。
+
+**before:** `このため、古典コンピュータではショアのアルゴリズムを使ってもやはり指数時間かかってしまいます。`
+
+**after:** `このため、古典コンピュータでは、ショアのアルゴリズムの手順をそのまま使っても、最悪の場合は指数時間かかってしまいます。`
+
+`src/pages/shor_hsp.astro` はこの1行だけの差。approved source/本文Goldenを同じ1文だけ更新し、fixture whitelistへ第7tupleを追加。source guardも元SHA固定・7個を独立literalでpinする。MathJax入力は追加差0、body52のまま。数値解析fixtureはsourceSHAだけ更新、数学の結果は不変。既存SVG2枚の再実装/追加画像置換/credits削除0、回路0、JSON差なし、palette/max-wire-count/run-buttonは該当なし。
+
+### #585: 実状態と指定headを両方照合
+
+`gh pr diff 585 -R qniapp/qni` を実行。依頼記載のopen/head29d5ebf2と異なり、20:11〜20:12の実APIでは **MERGED / head c960caacb3586e25397fca93e7f7e684bceaee83 / merge9acc69320c79a97fd1e9e2db45f0b6f64b9eb889**。open PRは全0件。fetchしたoriginal latest mainは9acc693。tracking refのshallow fetchにforced-update表示があるが、force-pushはしていない。
+
+- 実head **c960caac…** のsourceは、当方の **R1〜R6+今回第7文** と本文/全TeX/その他source文字が一致。raw byteはR2/R3/R4/R5の行折り返し・indent/空白だけ異なる。折り返しをimportせず、追加の本文差0。
+- 指定head **29d5ebf279c9a7f062822d66c708fe45b177724a** も実commitとして取得して比較。この旧headは第7文がbeforeのままで、当方との差は **今回承認の1文だけ**＋上記折り返し差。全TeXは一致。このheadに合わせて承認修正を取り消さず、他変更も適用しない。
+
+API取得sourceを当方approved snapshotと比較したraw unified diff/一致boolを `tests/fixtures/shor-hsp-pr585-comparison.json` に保存。raw/source whitespace-normalized/all-TeXの3条件を区別し、byte一致と虚偽報告しない。歴史的質問docは先頭に承認解決を追記し、旧記録を残す。
+
+### 非GPU再検査
+
+```sh
+python3 scripts/analyze-shor-hsp-source.py docs/shor-hsp-approved-source.html --approved --output /tmp/shor-hsp-approved-analysis.json
+pnpm exec playwright test tests/shor-hsp-source.spec.mjs tests/shor-hsp.spec.ts
+QTW_AUDIT_URL=http://127.0.0.1:4322/qni-tutorial-webgpu/ node scripts/compare-qpe-original.mjs shor_hsp
+```
+
+**typecheck/build/diff-check成功、source1＋390/1440×DPR1/2の本文/TeX/値・座標・両軸・赤丸・クリックkeyboard/独立2instance/layout/errors4の5/5成功**。文書横overflow/内部scrollなし、console/page errors0。実original/local比較4/4成功、承認7つ以外のtext差0・今回TeX差0。比較scriptはfixture7tupleを読んで承認whitelistを適用、原siteが既に全承認通りの場合もGolden厳密一致だけ許可する。記録 `/tmp/qtw-shor-r7-{tests,local-compare,build}.log`。既存359件中355成功/4既存失敗という前回全回帰の記録は保持し、今回再実行していないものをgreenと称さない。
+
+### sidebar次shor_fx: 未承認A/Bが残るためSTOP継続
+
+20:12にlatest main9acc693のshor_fxを取得し、`docs/shor-fx-original-source.html` とbyte一致を確認、同ページopen PRなし。前回証拠をやり直さず、数値/2JSON/metadataは同じ。今回の承認はshor_hsp第7文だけなので、shor_fxのA/Bへ拡張しない。
+
+**質問:** [shor-fx-blocker.md](shor-fx-blocker.md) の正確なA/Bを承認するか？ Aはまとめのa modNを現在値*a modNへ、Bは互いに素前提とN以上の状態identityを明記する案。N15/a2/現在値8の定義結果1とconstant2の違い、y0/y15が両方0になる非unitary問題が未解決。原文/TeX/2JSON/画像4枚/sidenoteは未変更・route未作成、shor_r以降も停止。原palette[[],[]] / max[1,1] / run2、画像置換/credits削除0、GPU未検査。
+
+shor_hspは回路0で新規GPU検査は該当なし。前QPE/phaseの実機確認待ちは未解消、commandは前節の `check-qpe-gpu.mjs quantum_phase_estimation_circuit` / `phase_kickback` をそのまま引き継ぐ。CPU fallback/production readbackを追加しない。通常fetch/rebase/pushでこの1文を再公開、Pages/公開URL確認後に追記する。
