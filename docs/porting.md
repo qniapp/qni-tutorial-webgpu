@@ -1752,3 +1752,42 @@ QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-q
 ```
 
 通常fetch/rebase/push（forceなし）でshor_hspを公開しPages成功を確認する。次shor_fxに科学的な定義/まとめの不一致を発見、同ページのrouteは作らず原文/TeX/JSON/画像4枚を変更していない。証拠と正確な提案は次のSTOP記録に保存する。
+
+### shor_hsp公開確認・全非GPU回帰 / 20:04 checkpoint
+
+**b521d9d / Pages38133913333 success**。build/deploy成功をghで確認。公開URLでsource1＋390/1440×DPR1/2の原本文/52TeX/2SVG値・座標・軸・赤丸/クリックkeyboard/独立instance/scroll/errors4の **5/5成功**。原実サイトとの **4/4成功**、本文はR1〜R6のみ、TeXは3削除+N1追加だけ、description不変・回路0・GPUExecuted:false。`tests/fixtures/shor-hsp-public-nongpu-verification.json` に無編集原snapshotと公開URL/比較結果を保存した。
+
+```sh
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/compare-qpe-original.mjs shor_hsp
+```
+
+資料 `/tmp/qtw-shor-{tests-final,local-compare,public-tests,public-compare}.log`、`/tmp/qtw-shor-hsp-{390,1440}-dpr{1,2}.png`、`/tmp/qtw-shor_hsp-live-{original,ours}-{390,1440}-dpr{1,2}.png`。本文画像2枚に由来するSVG textをauthor prose比較から除外するが、値/座標/軸/赤丸/interactionは別guardでpinする。
+
+全非GPU回帰は **359件中355成功/4失敗（2workers、5.9分）**。失敗は以前の `ket.spec.ts`×2 / `content-overflow.spec.ts`×2だけ、shor_hspを含む新ページは独自scroll検査も成功し、失敗一覧に入っていない。古い寸法/scroll期待値を緩和せず、共有CSSも変更していない。前回のgrover context閉鎖は今回は出ず成功。ログ `/tmp/qtw-shor-nongpu-regressions.log`。既存4件は [new-machine-layout-blocker.md](new-machine-layout-blocker.md) の実機同環境調査へ引き継ぐ。typecheck/build/数学解析/diff-check成功、GPU成功主張なし。
+
+### shor_fx: Uの定義・まとめでSTOP
+
+原全文 `docs/shor-fx-original-source.html`、Python証拠 `tests/fixtures/shor-fx-blocker-analysis.json`。**shor_fxはroute未作成・未公開、原文/TeX/2JSON/画像4枚無変更、shor_r以降も停止。**
+
+- 正しい数字: 4bit/x0..15、f(0)=1、N15/a2の値[1,2,4,8]×4、controlled U回数1/2/4/8、全xで選ばれた回数の和=x、outputを1に初期化した積がpow(2,x,15)と一致。
+- 原2回路は4/8wire preparationのみ、JSON差0、**palette[[],[]]、max-wire-count[1,1]、run2**。4/8という実wire数をmaxへ勝手に反映しない。H product式は16振幅+0.25/norm1、第二例はtarget|1>との積でindex16..31に+0.25。これはCPUの量子simulator/GPU読戻しではなく解析式。
+- 本文Uは「現在の値*a modN」だがまとめは「a modNを計算」。N15/a2/現在値8なら定義結果1、constant a modNは2。
+- lessonの到達値1/2/4/8は問題ないが、全4bit16basisへ無条件にmod multiplicationを適用するとy0/y15が両方0になりunitaryではない。0≤y<Nでmultiply、y≥Nをidentityとする拡張ならfull permutationになり、元の計算結果は不変。これは作者の定義選択で、黙って実装しない。
+
+**質問A/B:** まとめを「現在の値をa倍し、mod(N)した値を書き込むゲートU」へ／U定義に互いに素前提とN以上の状態identityの1文を追加してよいか？ 正確なbefore→afterを [shor-fx-blocker.md](shor-fx-blocker.md) に記録し、before2個が原source各1回一致することを検査。AはTeX1→2、Bはa/N/Nの3入力追加案で未承認・未適用。有効subspaceだけの説明を意図するならBは別案指示を求める。
+
+3枚の抽象回路図+算術グラフ1枚は未置換、credits削除0、Qiskit sidenote/link未変更。第三図の実ラベルはQFTで正しく、filenameのinv_qftだけを理由に逆QFTへ変更しない。未移植のため390/1440/TeX/layout/GPU検査は未実施。公開後は準備2回路の実機確認待ちとし専用auditを用意するが、今回は不存在route/scriptへの架空commandを作らない。
+
+再現: `python3 scripts/analyze-shor-fx-source.py ../qni/apps/tutorial/shor_fx.html --output /tmp/shor-fx-analysis.json`。sourceSHA/2JSON/max/run/imagesを証拠に保存。現時点GPUExecuted:false。
+
+### 原repo PR585: R1〜R6以外の1文を検出・未適用
+
+19:42はopen PR0だったが、20:03再確認で **PR585 / head c960caacb3586e25397fca93e7f7e684bceaee83** を検出。原shor_hspのR1〜R6に加え、未承認の第7文変更がある。行折り返し差とは別の本文差:
+
+`このため、古典コンピュータではショアのアルゴリズムを使ってもやはり指数時間かかってしまいます。`
+
+→ `このため、古典コンピュータでは、ショアのアルゴリズムの手順をそのまま使っても、最悪の場合は指数時間かかってしまいます。`
+
+**この追加も承認するか質問する。** 今回の「Change nothing else」を守り、product/Golden/approved sourceに追加しない。[shor-hsp-pr585-question.md](shor-hsp-pr585-question.md) に証拠と提案。20:04原実サイトには未反映で4比較成功、後にmerge/deployされ第7文が現れたらGolden比較はSTOP。原text比較を黙って緩和しない。shor_fx同ページPRはなし、後続移植もなし。
+
+通常fetch/rebase/push（forceなし）で公開結果とSTOP証拠を同期し、owned preview/browserを終了。GPUなしの検査で前ページの実機確認待ちを解消したことにせず、既存4回帰・shor_fx A/B・PR585第7文の質問を残し、hard stop20:11を守る。
