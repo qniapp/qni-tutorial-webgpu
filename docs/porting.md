@@ -1984,7 +1984,7 @@ log `/tmp/qtw-r-d12-{build,local-tests,local-compare}.log`。これらの成績�
 
 しかし図を読んで所有SVGの設計をGroundする段階で、**axmodN.pngの出力ラベルx^a modNが、本文/図の制御乗算a^x modNと逆**という新しい不一致を発見。a2/x3/N15でx^a=9、a^x=8、制御bit0/1が選ぶ2×4mod15=8。原最後の表もket56(x3/f8)の振幅+0.25、ket57(x3/f9)は0。Pythonの純粋な剰余/bit選択の検算（量子CPU/GPU simulation/readbackなし）とPNG SHAを `shor-u-image-label-blocker-analysis.json` に保存。
 
-**I1 exact未適用案:** 画像置換時にこの出力ラベル1個だけ `x^a mod N` → `a^x mod N`（TeX `x^{a}\\operatorname{mod}N`→`a^{x}\\operatorname{mod}N`）。U1-U4のbody/年/ket/方向修正とは別の数学訂正なので追加承認が必要。詳細/質問は [shor-u-image-label-blocker.md](shor-u-image-label-blocker.md)。原PNGのSHA a58880daae7dc6ca78fc303d3b3015f9b5a23df01fca0096326d0a7cde5ee5a0、1342×776、右の1初期register出力にx-baseline/a-superscriptを確認。
+**I1 exact未適用案:** 画像置換時にこの出力ラベル1個だけ `x^a mod N` → `a^x mod N`（TeX `x^{a}\operatorname{mod}N`→`a^{x}\operatorname{mod}N`）。U1-U4のbody/年/ket/方向修正とは別の数学訂正なので追加承認が必要。詳細/質問は [shor-u-image-label-blocker.md](shor-u-image-label-blocker.md)。原PNGのSHA a58880daae7dc6ca78fc303d3b3015f9b5a23df01fca0096326d0a7cde5ee5a0、1342×776、右の1初期register出力にx-baseline/a-superscriptを確認。
 
 ### STOPの実際の範囲
 
