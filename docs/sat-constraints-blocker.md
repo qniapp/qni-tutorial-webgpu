@@ -1,4 +1,8 @@
-# sat: Cond2が各箱の条件をORで結ぶためSTOP
+# sat: 承認されたCond2訂正で定式化ブロッカーは解決
+
+**現在の状態:** 2026-10-11 12:02に高宮さんがCond2/説明/4誤字/Hint1前提を明示承認した。指定どおりの原稿 [sat-approved-source.html](sat-approved-source.html) を保存し、逆変換byte一致・原JSON byte一致を確認した。ただし原t5のB4/B1不一致を実GPUで再現したため [新たなSTOP](sat-t5-blocker.md)。SATはまだ公開していない。
+
+以下はCond2承認前の歴史的な記録。
 
 2026-10-11。phase_logic・phase_logic_combinationは承認どおり訂正・公開し、390/1440のlive・GPU確認も成功。その直後の `sat`（充足可能性問題）を調べたところ、原の「追加条件2」の式と説明が一致しないため停止。route/fixtureは作らず、本文/回路を変更していない。
 

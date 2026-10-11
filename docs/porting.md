@@ -968,3 +968,27 @@ satの原125列/14-wire回路は別途GPUで起動成功、状態0〜15各約1/1
 [sat-constraints-blocker.md](sat-constraints-blocker.md)、`/tmp/qtw-sat-original-{constraints,gpu}.{mjs,json,log}` に証拠保存。sat原palette[]/HTML max1、14-wireを保持する予定。原画像2枚は未置換/削除credits0。移行後本文diff/390・1440のscroll/step0は未実施。route/fixtureなし、sat・grover_iam以降は未公開。
 
 owned preview4347/検証browserを終了。docs-only checkpointを通常push、Pages最終状態は終了時に報告。11:54 hard stopを守る。
+
+
+## 2026-10-11 12:02 SAT文言承認 / 原t5回路不一致でSTOP (12:31 hard stop)
+
+高宮さんからSATの4項目だけ明示承認。原の配置に曖昧さはなく、指定どおりのJekyll原稿を **[sat-approved-source.html](sat-approved-source.html)** に保存した。これはsrc/pagesの移行routeではなく未公開の原稿。逆変換すると原sourceと**byte単位で完全一致**、原125列/14-wire JSONも**byte一致で無変更**。他の原文を訂正していない。
+
+1. **Cond2**: 全30項のOR → 箱ごとの10項を括り、A条件 ∧ B条件 ∧ C条件。A/B/C先頭の `( A0`/`( B0`/`( C0` を `(( A0`/`(( B0`/`(( C0`。A/B末尾は `∧ A9)) ∧ // A には数がちょうど 1 つ入る。かつ、` / B同文、C末尾は `∧ C9))   // C には数がちょうど 1 つ入る`。元のdouble space `∧  A9` 等を含め、指定のCond1同様の改行/記法を維持。
+2. **説明**: 「ほかの数 1, ..., 9 とすべての箱 B, C について同様に考えると、論理式は次のようになります。」→「ほかの数 1, ..., 9 についても同様に考えて OR でつなげると、「A には数がちょうど 1 つ入る」という論理式になります。B, C についても同じ論理式を作り、3 つを AND でつなげると次のようになります。30 個の項をすべて OR でつないでしまうと、どれか 1 つの箱で成り立つだけで true になってしまうので注意してください。なお、この論理式は「ちょうど 1 つ」を表すので、追加条件 1 も含んでいます。」
+3. **誤字4つ**: 暗唱番号→暗証番号、アリゴリズム→アルゴリズム、得られてしいまいます→得られてしまいます、巡回サラリーマン問題→巡回セールスマン問題。
+4. **Hint1前提**: 「たとえばヒント 1 の論理式は次のように短い論理式に変換できます。」→「たとえばヒント 1 の論理式は、ほかのヒントから A8, B8, C8 が false と分かることを使うと、次のように短い論理式に変換できます。」
+
+承認Cond2はA0/B0/B1/C0のみtrueの旧反例をfalseにし、042を表すA0/B4/C2のみtrueをtrueにすることを直接確認。Cond2ブロッカーは承認済みとして歴史記録に更新した。
+
+### 公開前に原t5と本文の別不一致を実GPUで再現
+
+原のq0/q1/q2/q3は **A1/A4/B1/B4**。block名と式は **t5 = ¬A4 ∨ ¬B4** だが、原のt5 input/controlは **q1,q2 (A4,B1)** を使い、実際は **¬A4 ∨ ¬B1**。元のuncomputeもq1,q2を使う。
+
+入力 **A1=0,A4=1,B1=0,B4=1** に対して、記載式はt5=0、原prefixを実行したGPUはt5=1。最終basis **378**、bit8=1、norm **1**、page errors0。test-onlyコピーの初期Hを固定入力へ置換し、t5までの原prefixを実行したが、t5のgate/control操作は無変更。承認原稿の原JSONも無変更。全回路の最終答042が一致しても、本文の「ひとつひとつの項を計算して一時bitへ出力」と整合しないのでSTOP。
+
+**質問: 原JSON維持の指定を解除して、t5のB1側操作をB4へ移し、そのuncomputeも対応して修正することを承認できるか？** 承認なしに回路/block label/本文を追加訂正しない。sat・直後grover_iam以降は未公開。
+
+詳細 [sat-t5-blocker.md](sat-t5-blocker.md)、資料 `/tmp/qtw-sat-t5-{diagnostic.json,gpu.mjs,gpu.json,gpu.log,gpu.png}`。原palette **[]**、原HTML max-wire-count **1**、14-wireを維持する予定。原画像2枚は未置換/credits削除0。sat_result_state_vector.pngは旧Qniのblock labels・popupを含むため、再開時の置換について確認が必要。未移植なので本文diff/390・1440 scroll/step0/prose glyph検証を合格とは記録しない。
+
+今回の製品変更とSAT公開は0。承認された本文訂正を失わないよう原稿をcommitし、従来の公開済みページを再移植していない。診断browser終了済み、server新規起動なし。docs-only checkpointを通常pushし、Pages状態を終了時に報告する。
