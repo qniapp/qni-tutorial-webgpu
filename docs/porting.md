@@ -1390,3 +1390,20 @@ sidebar次の最新mainを確認。同ページのopen PRなし (#578は前ペ�
 ローカル390/1440で承認2訂正以外の本文diff0/原TeXdiff0/全counts・16振幅・全11JSON一致、errors0、running/step0/norm≈1、body/content/shadow内scrollbar0/文書横overflow0。DPR1/2×両幅4/4/prose全gate Bold/native Regular、MathJax3.2.2/self-hosted/Qni/実験版/Qniで開く維持。全22ツールバーundo/redoのみ85/85/0画素、旧trash位置クリックでも現在回路URL不変。
 
 原fixture `inside_the_qft-original.json`、承認済み全文/TeX `inside-qft-approved-text.json`、`tests/inside-qft.spec.ts` はinverse whitelist/全TeX/原11JSON/16振幅/制限/no-scroll/errorsを守る。資料 `/tmp/qtw-port-inside_the_qft.json`、`/tmp/qtw-inside-qft-local-*`、`/tmp/qtw-scroll-inside-qft-local.json`、`/tmp/qtw-pr63-toolbar-inside-qft-local.json`。typecheck/build/diff-check成功、固定distで全suite完了後に公開する。pin348992f/Binaryen123/GPU-only、本番readback/CPU fallback/上流変更なし。
+
+
+### inside_the_qft公開確認 / qft_adderでSTOP
+
+inside_the_qft **dfb20f9 / Pages38120464056 success** を公開後に再確認。公開実記事native全11回路×390/1440 **22/22 signed最終ベクトル成功**、standalone22/localnative22/publicnative22=**66/66** (別途focused6保持)。公開390/1440で承認2訂正のみtextdiff0/TeXdiff0/原11JSON・16円値・順序・lgサイズ・counts一致、errors0/running/step0/norm≈1、body/content/shadow内scrollbar0/文書横overflow0、DPR1/2×両幅4/4/本文gate Bold/native Regular、22undo/redo-onlyツールバー85/85/0画素、旧trash位置クリックURL不変。`nativePublic/toolbarsPublic/glyphsPublic/scrollPublic` をfixtureへ保存。**338 tests/typecheck/build/diff-check成功**。公開scroll/toolbarの最初の呼出はenv未指定で旧local4350へのERR_CONNECTION_REFUSEDになったため、公開URLを明示して完全再実施、2幅/22件と0findingsを確認した。検証harnessの宛先問題であり製品の不一致ではない。資料 `/tmp/qtw-port-inside_the_qft.json`、`/tmp/qtw-inside-qft-public-*`、`/tmp/qtw-scroll-inside-qft-public.json`、`/tmp/qtw-pr63-toolbar-inside-qft-public.json`。
+
+16:14確認時に新 **qniapp/qni#579** (head9019a7927c550d885d765cf8dec4b7d33634ba01) がopen。本文は承認2訂正と一致し、余分なinspector class順序変更は採用しない。原コードの変更を広げず、このページの新しい質問はない。
+
+次の **qft_adder** を最新main/原liveの390/1440で確認し、2件でSTOP。**(1)** `a += b のブロック (左から 3 番目)` と書かれるが、原52列JSON・原ブラウザーでラベルはa=3/b=1/逆QFT/a+=b/QFTで、コアは **左から4番目**。**(2)** frontmatter `prev: QFT の内部` に対して `prev_url: ./inverse_qft.html`。原実サイトのfooter「QFT の内部」を両幅で実際にclickすると `/qni/inverse_qft.html`、heading **逆 QFT** に移動した。sidebarの同名linkは正しいinside_the_qftで、footerだけ間違っている。
+
+**提案する正確な訂正:** `a += b のブロック (左から 3 番目)` → `a += b のブロック (左から 4 番目)`、frontmatter `prev_url: ./inverse_qft.html` → `prev_url: ./inside_the_qft.html`。他の本文/数値/JSONを変えず、コアを移動したりprepラベルを結合する修正はしない。承認を質問済み、未承認のまま移植/公開/本文URL変更を止めた。qft_adderを変更するopen PRはなく、#579はinside_the_qftだけ。
+
+qft_adderの数値・回路は正しい。原3JSONは **22/52/12列/各7-wire**、paletteなし (移植時[]×3)、max-wire-count **1×3**、run-buttonなし/title「QFT で足し算」保持が必要。a3/b1初期index19、通常加算とQFT加算はa4/b1最終index20/100%。逆QFT prefix25列はindex16+jでamp(1/4)exp(i3πj/8)/各6.25%、加算prefix37列は同じindex16+jでamp(1/4)exp(i4πj/8)/各6.25%。コアの各CPHASE角は2π×2^qa×2^qb/16で、a(j)・b間の位相exp(i2πjb/16)を加える。3+1を周波数3→4とする動作は正しい。元controlled dot数19→9 (targetゲートはいずれも9) でcontrol削減の説明も整合する。入力のない単独コアは初期|0⟩から最後まで|0⟩/100%。テストだけでコア9角の符号を負にした52列は **3-1=2**/b1保持/index18/100%。原記事の3JSONやゲートを変更しない。
+
+原3回路×両幅GPU **6/6**、IQFT/加算の2prefix・初期input・符号反転引算×両幅 **8/8**、合計 **14/14 signed値/確率成功**、norm≈1/errors0。永続 `qft-adder-blocker-verification.json` に原3JSON/原liveラベル/実footerclick/原GPU6/テストprefix3+引算JSON/GPU8を保存。詳細 [qft-adder-blocker.md](qft-adder-blocker.md)。画像0/置換0/credits削除0/sidenote1/Orbit0。未公開、route/移植fixture未作成、本文/URL/JSON未変更、移植後のtext/TeX/scroll/DPR/toolbar/step0等は未検証。次 **eigenphases** 以降も停止。
+
+資料 `/tmp/qtw-next-qft_adder.html`、`/tmp/qtw-qft-adder-original-*` (両幅3回路/prev-link screenshotとlive)、`/tmp/qtw-qft-adder-prev-link-results.json`、`/tmp/qtw-qft-adder-stage-*`。owned診断browserは終了、preview4353は停止する。通常pushで記録を同期し、記録だけのPagesと内容公開を区別して報告する。pin348992f/Binaryen123/GPU-only、本番readback/CPU fallback/上流変更なし、hard stop16:28。
