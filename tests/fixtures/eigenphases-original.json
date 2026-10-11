@@ -1,0 +1,224 @@
+{
+  "circuits": [
+    {
+      "cols": [
+        [
+          "{Hの固有状態を作る"
+        ],
+        [
+          "|0>"
+        ],
+        [
+          "Ry(π/4)"
+        ],
+        [
+          "}"
+        ],
+        [
+          "H"
+        ]
+      ]
+    },
+    {
+      "cols": [
+        [
+          "{Hの固有状態を作る"
+        ],
+        [
+          "|0>"
+        ],
+        [
+          "Ry(5π/4)"
+        ],
+        [
+          "}"
+        ],
+        [
+          "H"
+        ]
+      ]
+    }
+  ],
+  "amplitudes": [
+    {
+      "amplitude": "0.9238795325112868",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.3826834323650898",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.9238795325112868",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.3826834323650898",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "-0.3826834323650898",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.9238795325112868",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.3826834323650898",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "-0.9238795325112868",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "-0.3826834323650898",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.9238795325112868",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.3826834323650898",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "-0.9238795325112868",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.9238795325112868",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.3826834323650898",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.9238795325112868",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.3826834323650898",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "-0.3826834323650898",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.9238795325112868",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.3826834323650898",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "-0.9238795325112868",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "-0.7071067811865476",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.7071067811865476i",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "0.7071067811865476",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "-0.7071067811865476i",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "1",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "0",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "1",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "1",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "0",
+      "ket": "1",
+      "size": "base"
+    },
+    {
+      "amplitude": "0",
+      "ket": "0",
+      "size": "base"
+    },
+    {
+      "amplitude": "1",
+      "ket": "1",
+      "size": "base"
+    }
+  ]
+}

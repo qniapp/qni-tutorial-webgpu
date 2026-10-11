@@ -1,0 +1,268 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Ket from '../components/Ket.astro'
+import transitionSvg from '../assets/qubit-transition-arrow.svg?raw'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="固有位相" description="固有状態に対応する位相回転" section="量子位相推定" hasMath hasCircuit>
+
+
+<p>
+  本節では、振幅増幅や QFT
+  と並び重要なサブルーチンである、<strong>量子位相推定</strong>を紹介します。
+  量子位相推定は、振幅増幅や QFT とはかなり異質のサブルーチンです。
+  状態ベクトルから情報を取り出すのではなく、<strong>QPU 命令に関する情報を取り出す</strong
+  >という特徴があります。
+  一見わかりづらいですが、動作イメージをつかむためにいくつかの新しい概念を導入します。
+</p>
+
+<h2>固有状態と固有位相</h2>
+
+<p>
+  <h-gate></h-gate> や <x-gate></x-gate> といった QPU
+  命令は、それぞれ<strong>固有状態</strong>と呼ばれる状態ベクトルを持ちます。
+  たとえば以下のように、<Ket label="0" /> の確率が 85.3553%、<Ket label="1" /> の確率が 14.6447% の量子ビットに
+  <h-gate></h-gate> を適用しても、その状態はまったく変わりません。 このように、固有状態とは QPU
+  命令を適用しても変化しない状態ベクトルのことで、QPU 命令それぞれが固有状態を持っています。
+</p>
+
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="mb-8 flex flex-row items-center space-x-2">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.9238795325112868" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3826834323650898" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="relative h-8 w-16">
+      <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+        <span class="transition-arrow" set:html={transitionSvg}></span>
+      </div>
+      <h-gate class="qpu-operation-sm absolute inset-0 m-auto"></h-gate>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.9238795325112868" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3826834323650898" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div>
+
+<qni-webgpu-circuit max-wire-count="2" palette={"[]"} circuit={"{\"cols\":[[\"{Hの固有状態を作る\"],[\"|0>\"],[\"Ry(π/4)\"],[\"}\"],[\"H\"]]}"}></qni-webgpu-circuit>
+
+<p>
+  ある QPU 命令の固有状態は 1 つとは限りません。上の固有状態の <Ket label="0" /> と <Ket label="1" />
+  を入れ替え、<Ket label="0" /> の位相を π 回転したものも、同じく <h-gate></h-gate> の固有状態です。
+</p>
+
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="mb-8 flex flex-row items-center space-x-2">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="-0.3826834323650898" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.9238795325112868" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="relative h-8 w-16">
+      <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+        <span class="transition-arrow" set:html={transitionSvg}></span>
+      </div>
+      <h-gate class="qpu-operation-sm absolute inset-0 m-auto"></h-gate>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.3826834323650898" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.9238795325112868" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div>
+
+<qni-webgpu-circuit max-wire-count="2" palette={"[]"} circuit={"{\"cols\":[[\"{Hの固有状態を作る\"],[\"|0>\"],[\"Ry(5π/4)\"],[\"}\"],[\"H\"]]}"}></qni-webgpu-circuit>
+
+<p>
+  「左と右の状態ベクトルはまったく違うじゃないか!」と思うかもしれません。 しかし<a
+    href={`${base}phase/`}
+    >位相</a
+  >で説明したように、量子コンピュータでは <Ket label="0" /> と <Ket label="1" /> の位相差 (相対位相)
+  のみが意味を持つのでした。 上の左右を見比べてみると、<Ket label="0" /> と <Ket label="1" />
+  の確率は等しく、またそれぞれの位相差は π であるため、これらは実は同じものです。
+</p>
+
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="mb-8 flex flex-row items-center space-x-2">
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="-0.3826834323650898" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.9238795325112868" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+
+    <div class="flex h-8 w-8 justify-center">
+      <span>=</span>
+    </div>
+
+    <div class="flex flex-row space-x-2">
+      <qubit-circle data-amplitude="0.3826834323650898" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.9238795325112868" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+  </div>
+</div>
+
+<p>
+  このように、見た目は異なるが実は等しい状態ベクトルの組について、その位相差を<strong>固有位相</strong>と呼びます。
+  上の固有状態では固有位相は π です。また最初の固有状態には左右で位相差はないので固有位相は 0 です。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <table>
+    <thead>
+      <tr>
+        <th>QPU 命令</th>
+        <th>固有状態<br />(適用前)</th>
+        <th>固有状態<br />(適用後)</th>
+        <th>固有位相</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="2" class="align-middle">
+          <div class="flex justify-center"><h-gate></h-gate></div>
+        </td>
+        <td>
+          <div class="flex flex-row space-x-2">
+            <qubit-circle data-amplitude="0.9238795325112868" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3826834323650898" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+          </div>
+        </td>
+        <td>
+          <div class="flex flex-row space-x-2">
+            <qubit-circle data-amplitude="0.9238795325112868" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.3826834323650898" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+          </div>
+        </td>
+        <td class="align-middle">0</td>
+      </tr>
+      <tr>
+        <td class="p-2">
+          <div class="flex flex-row space-x-2">
+            <qubit-circle data-amplitude="-0.3826834323650898" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.9238795325112868" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+          </div>
+        </td>
+        <td class="p-2">
+          <div class="flex flex-row space-x-2">
+            <qubit-circle data-amplitude="0.3826834323650898" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.9238795325112868" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+          </div>
+        </td>
+        <td class="align-middle">π</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  すべての QPU 命令はそれぞれ固有の固有状態とそれに対応する固有位相を持ちます。 例として <x-gate></x-gate>, <y-gate></y-gate>, <z-gate></z-gate>, <phase-gate></phase-gate>
+  の固有状態と固有位相を示します。 それぞれの固有状態は <h-gate></h-gate> や <phase-gate></phase-gate> などで簡単に作れるものばかりなので、実際に Qni で確認しておくことをおすすめします。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <table>
+    <thead>
+      <tr>
+        <th>QPU 命令</th>
+        <th>固有状態</th>
+        <th>固有位相</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="2" class="align-middle">
+          <div class="flex justify-center"><x-gate></x-gate></div>
+        </td>
+        <td>
+          <div class="flex flex-row space-x-2">
+            <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.7071067811865476" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+          </div>
+        </td>
+        <td class="align-middle">0</td>
+      </tr>
+      <tr>
+        <td class="p-2">
+          <div class="flex flex-row space-x-2">
+            <qubit-circle data-amplitude="-0.7071067811865476" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.7071067811865476" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+          </div>
+        </td>
+        <td class="align-middle">π</td>
+      </tr>
+
+      <tr>
+        <td rowspan="2" class="align-middle">
+          <div class="flex justify-center"><y-gate></y-gate></div>
+        </td>
+        <td>
+          <div class="flex flex-row space-x-2">
+            <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.7071067811865476i" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+          </div>
+        </td>
+        <td class="align-middle">0</td>
+      </tr>
+      <tr>
+        <td class="p-2">
+          <div class="flex flex-row space-x-2">
+            <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.7071067811865476i" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+          </div>
+        </td>
+        <td class="align-middle">π</td>
+      </tr>
+
+      <tr>
+        <td rowspan="2" class="align-middle">
+          <div class="flex justify-center">
+            <span><z-gate></z-gate> (= <phase-gate></phase-gate> π )</span>
+          </div>
+        </td>
+        <td>
+          <div class="flex flex-row space-x-2">
+            <qubit-circle data-amplitude="1" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+          </div>
+        </td>
+        <td class="align-middle">0</td>
+      </tr>
+      <tr>
+        <td class="p-2">
+          <div class="flex flex-row space-x-2">
+            <qubit-circle data-amplitude="0" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+          </div>
+        </td>
+        <td class="align-middle">π</td>
+      </tr>
+
+      <tr>
+        <td rowspan="2" class="align-middle">
+          <div class="flex justify-center">
+            <span><phase-gate></phase-gate> Φ (Φ は任意の角度)</span>
+          </div>
+        </td>
+        <td>
+          <div class="flex flex-row space-x-2">
+            <qubit-circle data-amplitude="1" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+          </div>
+        </td>
+        <td class="align-middle">0</td>
+      </tr>
+      <tr>
+        <td class="p-2">
+          <div class="flex flex-row space-x-2">
+            <qubit-circle data-amplitude="0" data-ket="0" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="1" data-ket="1" data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+          </div>
+        </td>
+        <td class="align-middle">Φ</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>量子位相推定は何ができるか?</h2>
+
+<p>
+  量子位相推定は QPU 命令 (および QPU 命令のセット) の固有位相を取り出すためのサブルーチンです。
+  なぜ固有位相を取り出す必要があるのか、現時点では分からなくても大丈夫です。
+  固有状態と付随する固有位相はそれぞれの QPU
+  命令に固有であり、演算内容を一意的に特徴付ける重要な情報です。
+  実際にショアの量子因数分解アルゴリズムや、量子機械学習、量子化学計算など非常に多くのアルゴリズムの一部として、量子位相推定は使われます。
+</p>
+
+</TutorialLayout>
+<style>
+
+.my-5 {margin-block:20px}.mb-8 {margin-bottom:32px}.flex {display:flex}.flex-row {flex-direction:row}.items-center {align-items:center}.justify-center {justify-content:center}.space-x-2 {gap:8px}.relative {position:relative}.absolute {position:absolute}.inset-0 {inset:0}.m-auto {margin:auto}.h-8 {height:32px}.w-16 {width:64px}.w-8 {width:32px}.text-zinc-300 {color:#DAD8CE}.transition-arrow {display:flex;width:100%;height:100%}.transition-arrow :global(svg) {width:100%;height:100%}.relative :global(h-gate) {width:24px;height:24px;font-size:24px}.flex :global(qubit-circle) {margin-right:0;flex:none}
+table {width:100%;border-collapse:collapse;font-size:14px;line-height:24px}th {text-align:left;padding:0 8px 8px;border-bottom:1px solid #DAD8CE}td {padding:8px;border-bottom:1px solid #DAD8CE}th:first-child,td:first-child {padding-left:0}.align-middle {vertical-align:middle}
+@media(min-width:768px) {[class~='md:w-7/12'] {width:58.333333%;margin-right:auto}}
+</style>

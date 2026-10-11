@@ -1442,3 +1442,47 @@ H=[[1,1],[1,-1]]/√2、c=cos(π/8)、s=sin(π/8)。H(c,s)=(c,s)は固有位相0
 **表現の解釈の質問:** 本文「ユニークな状態ベクトル」「独自の (固有の) 状態ベクトル」を『命令ごとに異なる固有状態』と読むと、同じ表のZとPHASEが|0⟩/|1⟩を共有する事実と食い違う。一方、単に『固有状態という特別な状態』の意味なら原文維持という選択もある。明確な数値誤りとは区別し、**原文維持で移植するか、`ユニークな状態ベクトル` → `状態ベクトル`、`独自の (固有の) 状態ベクトル` → `固有状態と呼ばれる状態ベクトル` の2語句だけを訂正するか** を質問し、承認なしに進めない。その他の本文/数値/36円/原2JSONは変えない。固有位相の説明や追加noteを書き足す提案はしない。
 
 詳細 [eigenphases-wording-question.md](eigenphases-wording-question.md)。永続 `eigenphases-wording-verification.json` に原2JSON/実live段落・table・limits/12テスト回路/解析期待値/24GPU結果を保存。**eigenphases未公開、route/移植fixture未作成、原文/JSON無変更。** 移植後のtext/TeX/scroll/DPR/toolbar/step0等は未検証、次のquantum_phase_estimation_circuit以降もSTOP。資料 `/tmp/qtw-next-eigenphases.html`、`/tmp/qtw-eigenphases-original-*`、`/tmp/qtw-eigenphases-{test-circuits,expected,gpu-results}.json`、`/tmp/qtw-eigenphases-gpu.mjs`。owned browsers終了・preview4353を停止、通常pushで記録を同期し、内容公開と記録だけのPagesを区別する。pin348992f/Binaryen123/GPU-only、hard stop16:57。
+
+## 2026-10-11 eigenphases承認2語句を移植 / 新機械GPUなし / hard stop17:30
+
+今回の明示指示が先の保留・代替案を上書きした。高宮さん承認は **`ユニークな状態ベクトル` → `状態ベクトル`**、**`独自の (固有の) 状態ベクトル` → `固有状態`** の各1回だけ。`固有状態と呼ばれる状態ベクトル` は採用しない。その他の本文/数値/36円表示/TeX/JSONに触れない。`docs/eigenphases-approved-source.html` を逆置換すると原source SHA256 `a2ac117ee7f2e88cdd40d97932c5696881f1ec1c0493a568558f9cfc6be53d7d` と完全一致するsource guardを追加した。旧wording質問は解決済み。
+
+`src/pages/eigenphases.astro` を追加。原 **2JSON/各5列/1-wire** を無変更、palette **[]×2**、max-wire-count **2×2**、原run-buttonなし。原36円の振幅・ket・baseサイズ・順序を保持。元からcustom-tagの円/矢印/H図を既存の軽量部品と原SVGで描画、画像0/画像置換0/削除credits0/sidenote0/Orbit0。本文phaseリンクだけ移植先へ解決する。本文gate10個Bold、図/tableのgate8個Regular、共有header/footer/pinは変更しない。
+
+sourceは既存のshallow qni checkout main `5f342c2b7e3e80b0898ab0c0b9100fa2988dade8` を使用（再cloneなし）。17:05の `gh pr list -R qniapp/qni --state open --json number,title,headRefOid` は0件、同ページPRなし。pin **348992f5d7926d326eaa0f678fa8d89f0894ff54** を維持、上流変更なし。
+
+### この箱で行った検証（GPU検証ではない）
+
+- Python閉形式: c=cos(π/8)、s=sin(π/8)、c²=85.35533905932738%、s²=14.644660940672624%。原85.3553/14.6447の丸めとHの±固有状態が正しい。前回のAMD24件は歴史的証拠として保持し、今回実行したとは主張しない。
+- typecheck/build/diff-check成功。Astro buildは `QNI_WEBGPU_SOURCE=/workspace/qni/qni-webgpu pnpm build`。pin不変でWASM再buildはしない。ローカルにnative bundleはまだないため、実公開WASMはCIがpinから構築する。
+- `tests/eigenphases.spec.ts` はnavigator.gpuを明示的にundefinedにし、**unsupported状態のまま** source由来の独立Golden全文/9TeX/原2JSON/36振幅、390/1440×DPR1/2、body/content内部scrollbar0/文書横overflow0、console/page errors0を確認。原文との許可差は上記2語句だけ、TeX差0。スクリーンショット `/tmp/qtw-eigenphases-{390,1440}-dpr{1,2}.png`、390/DPR1を目視確認。native canvasの稼働状態の画像ではない。
+- 最初のPlaywrightはheadless-shellだけをinstallしたのに既存configがfull Chromium executableを指定していたため起動前に35件失敗。full Chromiumをinstallして製品変更なしで再実行、**37/37成功**（eigenphases4、mock lifecycle31、bb84 Node2）。mock lifecycleはGPU成功の証拠にしない。追加のsource/glyph guard込み **5/5成功**、最終typecheck/diff-check成功。sourceのNode guardは既存方針と同じ `.spec.mjs` に置いた。DOM regressionsは現在実行中で、完了後に別途結果を記録する。
+
+### 実機確認待ち — 公開eigenphasesの未実施WebGPUチェック
+
+この箱にGPUはない。以下はすべて **実機確認待ち**。GPU成功・native toolbar/step0/normをこの箱で確認済みとは記録しない。各390/1440×DPR1/2、2embedで確認する。
+
+1. 本番pinned bundleの実起動running・errors0、step0のsigned vector |0⟩=(1,0)、norm≈1、初期全gate可視、palette非表示、max2/元1-wire保持。
+2. Ry列のsigned GPU readback: (c,s)、(-s,c)、各85.3553/14.6447%（順序に注意）。最後H列: (c,s)、(s,-c)、固有位相0/π、norm≈1。
+3. 実canvasのtoolbar **undo/redoのみ**、trashなし・旧位置クリック無効果。一時H削除→undo→redo→undoで回路復元、export JSONも元と一致。
+4. GPU稼働時のnative Regular/全gate可視、390/1440×DPR1/2のnativeレイアウト、body/content/Shadow DOM内部scrollbar0・文書横overflow0。今回のunsupported状態のlayout検証では代替しない。
+
+GPU desktop上のコマンド（本番URLを明示。実runner.readStateVectorを使い、モック/CPU fallbackなし）:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm exec playwright install chromium
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-eigenphases-gpu.mjs
+```
+
+これは**対話監査**。画面でRy/H列選択、native toolbar編集・旧trash位置操作を行いEnterで進める。signed readback/norm/元JSON復元/errors/scrollはassert、toolbar外観・操作・gate可視性は明示的な手動yes確認として結果に記録する。`/tmp/qtw-eigenphases-gpu/result.json` と各step0/final PNGを保存。GUI環境が必要。scriptのsyntaxだけこの箱で検査し、実GPU実行はしていない。非GPU再現: `pnpm exec playwright test tests/eigenphases.spec.ts tests/eigenphases-source.spec.mjs tests/circuit.spec.ts tests/bb84-text-source.spec.mjs`。追加の全面自動化やpixel比較はorchestratorがgmktecで行ってよい。実機完了後はこの節の待ちを実結果で更新する。
+
+### 次quantum_phase_estimation_circuit: QFT符号不一致でSTOP
+
+原sourceをsidebar順で確認し、**未移植・未公開、phase_kickback以降も停止**。後半図/H全体例の「逆QFT」は正角6個ずつ、120°の3/4bit例は負角。既刊は正角を逆QFT（周波数→位相）、負角をQFT（位相→周波数）と呼ぶため、「後半は逆 QFT 回路そのまま」と120°例が一致しない。
+
+Python閉形式で原数値68.783766%→68.8%、68.489539%→68.5%、17.195942%→17.2%、和85.685480%→85.7%、135°/112.5°・+15°/−7.5°を確認。Hφ=1/2の8/100%は符号どちらでも同じ。正角を120°例に用いるとpeakは3bit5、4bit11（隣10）に反転する。これはGPU結果ではない。
+
+**質問（未承認・未適用）:** 後半図/H全体例の各6CPHASEを負角へ揃え、2block名「逆QFT」→「QFT」、本文「後半は逆 QFT 回路そのままです。」→「後半には、先に説明した QFT 回路を使います。」、まとめ「後半の逆 QFT」→「後半の QFT」にしてよいか？ 原数値/120°JSON/既刊は変えない。証拠・正確な全文置換は [qpe-sign-blocker.md](qpe-sign-blocker.md)、`tests/fixtures/qpe-sign-analysis.json`、再現は `python3 scripts/analyze-qpe-source.py ../qni/apps/tutorial/quantum_phase_estimation_circuit.html --output /tmp/qpe-sign-analysis.json`。
+
+原画像0/credits0、移植する場合はpalette[]×6/max2×1・max1×5/run-button3。今回routeは作らず、移植後checksは一切未実施。原JSON・原文無変更。同ページopen PRなし。通常push前にorigin/mainへrebaseし、force-pushしない。
