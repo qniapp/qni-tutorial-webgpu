@@ -1292,3 +1292,20 @@ open PR全件を確認し、同ページを変更するPRなし。open qniapp/qn
 原fixture `grover_iam_indetail-original.json`、全文/TeX `grover-indetail-text.json`、`tests/grover-indetail.spec.ts`、資料 `/tmp/qtw-port-grover_iam_indetail.json`、`/tmp/qtw-scroll-grover-indetail-local.json`、`/tmp/qtw-grover-indetail-figure-*-dpr*-*.png`、`/tmp/qtw-grover-indetail-reference-*`。14:52の再確認ではqniapp/qniのopen PRは0件、同ページPRなし。pin348992f/Binaryen123/GPU-only、本番readback/CPU fallback/上流変更なし。
 
 最初の全suite実行中に最終buildで配信distを入れ替えたため、既存bb84/title-dividerのMathJax待ち2件がtimeoutになった。配信成果物を固定し、buildと並走させず全suiteを最初から再実行した結果 **320tests成功**。製品を変更してtimeoutを隠す修正やretry増加は行っていない。原文/TeX/対話図の最終6/6も成功、typecheck/build/diff-check成功。公開へ進む。
+
+
+### grover_iam_indetail公開確認完了
+
+**82d7c06 / Pages38116522424 success**。公開390/1440で元本文diff0/原TeXdiff0、画像5→自作対話図5だけが承認済み差、原文無変更/全体位相注記なし。公開Golden2＋DPR1/2対話図4の **6/6成功**、console-page errors0、body/content/shadow内scrollbar0/文書横overflow0。座標/平均/反射/最終+1をクリック/キーボード操作後も不変、右の振幅1/100%、原点/赤点/白点のSVG座標を確認した。原画像creditsなし、削除0。palette/max-wire-countは原に回路0なので該当なし、step0/toolbarも該当なし。共通prose Bold (gateタグ0)/図のRegular/MathJax3.2.2/Qni/実験版を維持。
+
+解析の各25%/平均0.25/反射後0・1/100%を実GPUのD参照で4/4確認、全suite **320tests成功** と最終6/6/typecheck/build/diff-check成功。公開結果を `grover-indetail-public-verification.json` に保存。資料 `/tmp/qtw-port-grover_iam_indetail.json` (public)、`/tmp/qtw-scroll-grover-indetail-public.json`、`/tmp/qtw-grover-indetail-public-tests.log`、公開20スクリーンショット `/tmp/qtw-grover-indetail-figure-*-dpr*-*.png`。前ページnative -DのJSON/上流/pin348992f/Binaryen123を変更していない。本番readback/CPU fallbackなし。
+
+### sidebar次 readout_of_patterns の端点表現でSTOP / hard stop15:13
+
+grover_iam_indetail公開確認後に最新mainと原liveを読み、原回路の準備prefix6列/全21列を公開WebGPUで390/1440照合した。N16のa_j=(1/4)exp(iπj/4)、各p=1/16=6.25%、斜めの±0.17678は±1/(4√2)の小数5桁表示と一致する。負指数QFTではb_k=(1/16)Σ exp(2πi(2-k)j/16)=δ[k,2]、答2/100%も正しい。
+
+ただし原文 **「|15⟩までで位相が2回転」** を厳密に読むと、0から15まで15間隔×45°=**675°=1.875回転** であり、16標本に8標本1周期を2回含むという意味とは異なる。GPUも両幅で最後のunwrapped phase **675.0000096593471° = 1.87500002683152回転**。全16入力signed実部/虚部/各6.25%を確認し、QFT後index2 re **0.9999998807907104**/im **4.5485744948337015e-08**/p **0.9999997615814372**、他0、norm≈1/errors0、**4/4成功**。周波数を1.875に変える提案ではない。
+
+**提案する1か所の修正**: source `{% ket 15 %} までで位相が 2 回転しています。` → `8 個の振幅からなる 1 周期のパターンが 2 回繰り返されています。` 他の本文/45°/周波数2/6.25%/100%/JSON/48円表示は無変更。ユーザーへ承認を質問し、未承認のまま本文を変えずSTOP。同ページのopen PRなし (15:02に全open0件)。原liveの段落/原21列JSONも一致。詳細 [readout-of-patterns-endpoint-blocker.md](readout-of-patterns-endpoint-blocker.md)。
+
+**readout_of_patterns未公開、route/移植fixture未作成。** 原画像0/置換0/削除credits0、palette[]×1 (源にpaletteなし)、max-wire-count1×1、4-wire/21列/run-buttonなし、48円表示/sidenote1/Orbit0。移植後の本文diff/3901440/DPR/scroll/step0/toolbarは未検証。永続 `readout-pattern-gpu-verification.json`、資料 `/tmp/qtw-readout-pattern-*`。inverse_qft以降も停止。owned preview4352と診断browserを終了し、通常pushで記録を同期する。
