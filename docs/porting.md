@@ -1258,3 +1258,18 @@ multiple_marked_valuesの全suite **308tests成功**、suite開始後に追加�
 PR #63の公開全55ページ/110ケース/210起動/210ツールバー結果は保持し、今回の追加2ページもそれぞれ同じ起動・scroll・undo/redo-onlyを確認した。全ページを今回再監査したという主張ではない。追加2ページの本文/JSON以外を変更せず、pin348992f/Binaryen123/GPU-only、本番readback/CPU fallbackなし。
 
 sidebarの次は **grover_iam_indetail（折り返しの仕組み）**。14:31 hard stopまでに追加ページをE2E検証して公開する時間が足りないため、安全な区切りで止める。次ページのroute/fixtureは作成せず、未公開。新しい確認事項は見つかっていないが、次ページの原文・数値・図の検証は未実施。owned preview4351/検証browserを停止し、main/worktreeを通常pushで同期する。最後の記録だけのPagesは終了時点の状態を報告する。
+
+
+## 2026-10-11 grover_iam_indetailの位相規約・旧円表示の図でSTOP / hard stop15:00
+
+前の最後の記録 **9b49ec9 / Pages38114923902 success** を確認し、既存PR #63/grover_iteration/multiple_marked_valuesの完了結果は再実施せず保持した。sidebar次の **grover_iam_indetail（折り返しの仕組み）** の最新mainと原liveを確認。原文の25%/平均0.25/左3振幅0/右振幅の大きさ1/100%は解析で整合するが、図の上向き位相と前ページの実回路の位相が全体位相πだけ異なるため、注記の判断を確認してSTOP。
+
+原図の初期実振幅a=(0.5,0.5,0.5,-0.5)、平均μ=0.25、平均についての反射Dでは2μ-a=(0,0,0,+1)、最後は上向き0°/100%。一方、前ページの原第1回路 (無変更17列) のH→X→全1条件Z→X→Hは -D。その公開GPU実結果は、390/1440とも **index3 amp=-0.9999998807907104 / phase180° / probability0.9999997615814351**、他0。折り返し前の原prefix9列では各amp±0.4999999701976776、各prob0.2499999701976785。**4/4成功**、虚部0、norm≈1、errors0。差は全体位相だけなので観測確率の誤りと主張しないが、図の代表状態ベクトルとnative実回路の向きは同じではない。
+
+**提案する追加注記 (元本文/図の数値/既存JSONを保持):**「ここで図示する折り返しと前ページの回路は全体位相がπ異なります。回路では最後の振幅は−1となり位相は下向きですが、観測確率は同じ100%です。」承認前に追加せず、原liveの「位相も上向きになります」段落と回路JSON0件も確認済み。5図の黒い座標文字は透明背景のため白背景合成して読んだ。
+
+原5画像は旧Qniの円表示を利用した図。4枚は座標/平均/反射点を注釈し、最後1枚は円表示の最終状態。ツールバー等の外枠はないが、「旧Qni UI画像は質問」の指示に従い、**座標・平均・反射・最終+1を保持した自作対話図に5枚置換してよいか** と質問した。原に画像credits文なし、削除は0。まだ画像を置換していない。
+
+open PR全件を確認し、同ページを変更するPRなし。open qniapp/qni#577の変更ファイルはgrover_iteration.htmlだけで、今回の注記/図判断の承認ではない。詳細 [grover-iam-indetail-phase-blocker.md](grover-iam-indetail-phase-blocker.md)。永続結果 `tests/fixtures/grover-iam-indetail-phase-verification.json`、資料 `/tmp/qtw-grover-indetail-phase-*`、原live段落 `/tmp/qtw-grover-indetail-original-prose.json` とscreenshot、原図の白背景版 `/tmp/qtw-grover_iam_*-paper.png`。
+
+**grover_iam_indetail未公開、route/ページfixture未作成、原文/画像無変更。** 原JSON0件、palette属性0件/max-wire-count属性0件 (該当なし)。移植後の390/1440本文diff/scroll/errors/step0/toolbarは未検証。追加回路やmax制限を勝手に入れない。次のreadout_of_patterns以降も停止。注記・5図置換の承認を待つ。pin348992f/Binaryen123/GPU-only、CPU fallback/本番readback/上流変更なし、owned診断browserは終了済み。通常pushで記録を同期し、Pagesの終了時状態を報告する。
