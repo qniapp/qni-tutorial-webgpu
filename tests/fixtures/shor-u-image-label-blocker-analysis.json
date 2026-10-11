@@ -1,0 +1,25 @@
+{
+  "GPUExecuted": false,
+  "quantumCPUSimulatorExecuted": false,
+  "image": "axmodN.png",
+  "imageSHA256": "a58880daae7dc6ca78fc303d3b3015f9b5a23df01fca0096326d0a7cde5ee5a0",
+  "observedImageLabel": "x^a mod N",
+  "proposedOwnedDiagramLabel": "a^x mod N",
+  "a": 2,
+  "x": 3,
+  "N": 15,
+  "controlBitsLowToHigh": [
+    1,
+    1,
+    0,
+    0
+  ],
+  "selectedMultipliersResult": 8,
+  "correctPowAModN": 8,
+  "imagePowXModN": 9,
+  "authoredFinalTable": {
+    "ket56Amplitude": 0.25,
+    "ket57Amplitude": 0
+  },
+  "decision": "STOP before shor_u route; U1-U4 approval does not approve this additional image-formula correction"
+}

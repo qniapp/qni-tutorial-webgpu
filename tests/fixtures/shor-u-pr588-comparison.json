@@ -1,0 +1,10 @@
+{
+  "headRefOid": "30a450fdb403b0cc1edc4cecbeeae306580fb3e0",
+  "mergedAt": null,
+  "number": 588,
+  "state": "OPEN",
+  "title": "Fix U wording, citation year, ket labels and reading directions in Shor U tutorial",
+  "url": "https://github.com/qniapp/qni/pull/588",
+  "U1U4ApprovedSourceMatchesIgnoringWhitespace": true,
+  "unapprovedImageLabelStillPresent": true
+}

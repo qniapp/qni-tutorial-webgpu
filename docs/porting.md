@@ -1977,3 +1977,27 @@ log `/tmp/qtw-r-d12-{build,local-tests,local-compare}.log`。これらの成績�
 **23512e3 / Pages38185402140 success**（https://github.com/qniapp/qni-tutorial-webgpu/actions/runs/38185402140）。通常fetch/rebase/push、forceなし。公開source1＋4表示条件の**5/5成功**、最新原実サイトとの比較も**4/4成功**。全4で両raw snapshotの本文文字列直接等値、raw MathJax入力18個直接等値＝**本文/TeX差0**（C1/C2/D1/D2 whitelistの補正を必要としない）。source golden/description/JSON[]も一致。横overflow/body/content内側scrollbars/console/page errors0、SVG1/25%4注記/軸/数値すべて維持。
 
 公開証拠 `tests/fixtures/shor-r-d12-public-verification.json`、log `/tmp/qtw-r-d12-{public-tests,public-compare,pages}.log`。typecheck/build/diff-checkと最終local5/5も成功。GPUなしboxでGPU検証とは称さない。shor_u以降はroute/本文/TeX/JSON/図/fixture/docsとも変更なし。公開証拠のみを別commitでmainへ通常pushしてPages成功を確認し、09:05より前に終了する。
+
+## 2026-10-12 08:52 shor_u U1〜U4 exact承認 / 新しい原図の式でSTOP
+
+今回のhard stop09:45/push停止09:40を確認。clean main/a675f7dから通常fetch/rebase origin/main（up to date）、forceなし。porting tail/shor-u-blocker再読。**高宮さんのU1/U2(1996)/U3/U4をexact承認済みとして保持し、再質問しない。** 原qni main fetchでshor_uは保存原とbyte一致。open/merged PRを確認し、#588 OPEN/head30a450fdb403b0cc1edc4cecbeeae306580fb3e0を取得。原sourceにU1-U4だけを仮適用した内容はPR headとwhitespace-normalized全文一致（改行差があるのでbyte一致とは称さない）。`shor-u-pr588-comparison.json` 保存。
+
+しかし図を読んで所有SVGの設計をGroundする段階で、**axmodN.pngの出力ラベルx^a modNが、本文/図の制御乗算a^x modNと逆**という新しい不一致を発見。a2/x3/N15でx^a=9、a^x=8、制御bit0/1が選ぶ2×4mod15=8。原最後の表もket56(x3/f8)の振幅+0.25、ket57(x3/f9)は0。Pythonの純粋な剰余/bit選択の検算（量子CPU/GPU simulation/readbackなし）とPNG SHAを `shor-u-image-label-blocker-analysis.json` に保存。
+
+**I1 exact未適用案:** 画像置換時にこの出力ラベル1個だけ `x^a mod N` → `a^x mod N`（TeX `x^{a}\\operatorname{mod}N`→`a^{x}\\operatorname{mod}N`）。U1-U4のbody/年/ket/方向修正とは別の数学訂正なので追加承認が必要。詳細/質問は [shor-u-image-label-blocker.md](shor-u-image-label-blocker.md)。原PNGのSHA a58880daae7dc6ca78fc303d3b3015f9b5a23df01fca0096326d0a7cde5ee5a0、1342×776、右の1初期register出力にx-baseline/a-superscriptを確認。
+
+### STOPの実際の範囲
+
+**route未作成・未移植・未公開**。U1-U4のproduction適用、SVG/MathJax置換、768円変換/新componentの設計実装は始めない。画像4枚は数理回路図で旧Qni UIではないが、誤記を黙って修正も転写もしない。置換0・credits削除0、Vedral scholarly引用不変。原8wire JSON1は差0・palette[[]]・max-wire-count[1]・run1。原本文/全TeX/768円/全画像/JSON/既存pages/CSS/pin無変更。**shor_qft以降は開始せず、公開しない**。U1-U4は保持し、現在の質問はI1だけ。
+
+新page未作成につき4viewportの本文/TeX/scroll差検査、typecheck/build、公開page検証は未実施で成功とは報告しない。既存4layout失敗とnative GPU checksは全件**実機確認待ち**、gmktec unreachableでSSHしない、数学をGPU検証の代替としない。新shor_uの架空GPU audit commandは作らない。現行の正確なcommands:
+
+```sh
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-eigenphases-gpu.mjs
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs quantum_phase_estimation_circuit
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs phase_kickback
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs shor_fx
+pnpm exec playwright test tests/ket.spec.ts tests/content-overflow.spec.ts
+```
+
+`pending-real-machine-checks.md`参照。今回のSTOP/既承認状態/数学/PR証拠のみ通常main commit/pushして保存し、Pagesはdocs記録だけ（shor_u公開ではない）として確認して終了する。

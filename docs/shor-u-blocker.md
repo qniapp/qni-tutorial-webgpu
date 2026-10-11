@@ -1,4 +1,6 @@
-# shor_u: U説明・論文年・ketラベル・軸説明でSTOP
+# shor_u: U1〜U4承認済み / 別の図の式I1でSTOP
+
+2026-10-12 08:52の依頼で高宮さんが以下U1/U2=1996/U3/U4をexact承認。これらは再質問しない。原図の新たなbase/exponent逆転を発見し、owned置換/route作成前に停止した。現在の質問は [shor-u-image-label-blocker.md](shor-u-image-label-blocker.md) のI1だけ。以下は既承認案の歴史的提案・数値記録。
 
 2026-10-12。承認C1/C2だけのshor_rを公開した次のsidebarページを調査。**shor_uは未移植・route未作成・未公開、原文/TeX/JSON/3×256円/画像4枚無変更。shor_qft以降も停止。** 同ページopen PRなし（08:13全0件）。shor_fx A承認をこのページへ転用しない。Bは却下済みで再提案しない。
 
