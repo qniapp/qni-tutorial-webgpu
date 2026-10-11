@@ -1828,3 +1828,17 @@ QTW_AUDIT_URL=http://127.0.0.1:4322/qni-tutorial-webgpu/ node scripts/compare-qp
 **質問:** [shor-fx-blocker.md](shor-fx-blocker.md) の正確なA/Bを承認するか？ Aはまとめのa modNを現在値*a modNへ、Bは互いに素前提とN以上の状態identityを明記する案。N15/a2/現在値8の定義結果1とconstant2の違い、y0/y15が両方0になる非unitary問題が未解決。原文/TeX/2JSON/画像4枚/sidenoteは未変更・route未作成、shor_r以降も停止。原palette[[],[]] / max[1,1] / run2、画像置換/credits削除0、GPU未検査。
 
 shor_hspは回路0で新規GPU検査は該当なし。前QPE/phaseの実機確認待ちは未解消、commandは前節の `check-qpe-gpu.mjs quantum_phase_estimation_circuit` / `phase_kickback` をそのまま引き継ぐ。CPU fallback/production readbackを追加しない。通常fetch/rebase/pushでこの1文を再公開、Pages/公開URL確認後に追記する。
+
+### 第7文の再公開確認完了 / 20:23 checkpoint
+
+**e8c35ea / Pages38135157020 success**（通常fetch/rebase/push、forceなし）。公開URLのsource guard1＋390/1440×DPR1/2の本文/52TeX/2SVG値・座標・両軸・赤丸/独立クリックkeyboard/scroll/errors4、**5/5成功**。実原サイトとの4case比較も成功し、今回は原側にもR1〜R6+第7文が反映済みのため **無編集raw本文差0・全52TeX差0（4/4）**。原snapshotを無編集で保存した `tests/fixtures/shor-hsp-public-nongpu-verification.json` を最新公開結果へ更新。今回の製品差は追加1文だけで、SVG2枚/TeX/他本文/共有CSS/pin無変更、画像置換/credits削除0、回路0・palette/maxなし。
+
+```sh
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/compare-qpe-original.mjs shor_hsp
+```
+
+公開log `/tmp/qtw-shor-r7-public-{tests,compare}.log`、Pages log `/tmp/qtw-shor-r7-pages.log`。navigator.gpuをundefinedとして非GPUだけ検査、GPUExecuted:false。新規GPU検査は回路0で該当なし、既存QPE/phaseの実機確認待ちcommandは不変。全回帰の既存4失敗は未修正・今回全suite未再実行として保持する。
+
+20:23のopen PRは全0件。#585の実merged headc960caacと当方はsource文字/全TeX一致（行折り返し差だけ）、指定旧head29d5ebf2はこの第7文だけbeforeのままという比較結果を保持。行折り返しも他本文も取り込まず、元の6修正をredoしていない。
+
+次shor_fxは原sourceが変わらずA/B未承認のためSTOP継続、原文/TeX/2JSON/画像4枚/sidenote未編集・route未作成、shor_r以降へ進まない。**A/Bの正確なfix案を承認するか質問する。** 架空GPUaudit commandや未実行結果を作らない。owned preview/browser停止、temporary Playwright config削除、通常pushで公開証拠をcommitし、hard stop20:40より前に終了する。
