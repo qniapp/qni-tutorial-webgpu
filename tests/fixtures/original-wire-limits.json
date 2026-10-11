@@ -206,5 +206,6 @@
     2
   ],
   "quantum_phase_estimation_circuit": [2, 1, 1, 1, 1, 1],
-  "phase_kickback": [1, 1]
+  "phase_kickback": [1, 1],
+  "qpe_output": []
 }

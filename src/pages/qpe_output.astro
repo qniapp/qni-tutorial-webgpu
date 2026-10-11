@@ -1,0 +1,56 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="量子位相推定の出力" description="位相キックバックとQFTの結果を固有位相として解釈する" section="量子位相推定" hasMath>
+
+
+<p>
+  最後のまとめとして、量子位相推定回路の出力である QFT
+  の結果がなぜ固有位相として解釈できるかを確認しておきましょう。
+</p>
+
+<p>
+  QPU 命令として π/4 回転の <phase-gate></phase-gate> (固有位相は π/4) を {String.raw`\(2^0, 2^1, 2^2,\dots\)`}
+  回ずつ位相キックバックした場合、コントロールビット 4
+  つの状態ベクトルは最終的に次のようになるのでした。
+</p>
+
+<div class="my-5">
+  <div class="circle-row">
+    <qubit-circle data-amplitude="0.25" data-ket="0" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 + 0.17678i" data-ket="1" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25i" data-ket="2" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 + 0.17678i" data-ket="3" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.25" data-ket="4" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 - 0.17678i" data-ket="5" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.25i" data-ket="6" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 - 0.17678i" data-ket="7" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25" data-ket="8" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 + 0.17678i" data-ket="9" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.25i" data-ket="10" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 + 0.17678i" data-ket="11" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.25" data-ket="12" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.17678 - 0.17678i" data-ket="13" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.25i" data-ket="14" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.17678 - 0.17678i" data-ket="15" data-size="base" data-qubit-count="4" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+  </div>
+</div>
+
+<p>
+  これを QFT にかけると、周波数 2 が得られます。 周波数が 2 ということは、全体で 360° x 2 = 720°
+  回転していることになります。 ここで全体は 4 量子ビットによって {String.raw`\(2^4 = 16\)`} 個に分割されています。
+  よって、720 / 16 を計算すれば回転の 1 ステップ分の角度 (= つまり固有位相)、720° / 16 = 45°
+  が求まります。
+</p>
+
+<p>以上をまとめると、固有位相は次の式で求められます。</p>
+
+<p class="flex justify-center">
+  {String.raw`\(固有位相 = \dfrac{360° \times QFT の結果}{2^{コントロールビットの数}}\)`}
+</p>
+
+<p>
+  確認のために、<a href={`${base}quantum_phase_estimation_circuit/`}>量子位相推定回路</a>で見た QFT
+  の結果 8 から、<h-gate></h-gate> の固有位相は π と解釈できることを見ておきましょう。
+  この回路でもコントロールビットの数は 4 量子ビットだったので、式に代入すると、
+</p>
+
+<p class="flex justify-center">
+  {String.raw`\(固有位相 = \dfrac{360° \times 8}{2^4} = \dfrac{360° \times 8}{16} = 180° = π \)`}
+</p>
+
+<p>となり、たしかに正しい固有位相が出力されていることが分かります。</p>
+
+</TutorialLayout>
+<style>
+.my-5 {margin-block:20px}.flex {display:flex}.justify-center {justify-content:center}
+.circle-row {display:grid;grid-template-columns:repeat(8,32px);gap:8px;width:max-content;max-width:100%}
+.circle-row :global(qubit-circle) {margin-right:0}
+@media(max-width:600px) {.circle-row {grid-template-columns:repeat(4,32px)}}
+</style>

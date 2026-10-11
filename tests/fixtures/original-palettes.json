@@ -317,5 +317,6 @@
     []
   ],
   "quantum_phase_estimation_circuit": [[], [], [], [], [], []],
-  "phase_kickback": [[], []]
+  "phase_kickback": [[], []],
+  "qpe_output": []
 }

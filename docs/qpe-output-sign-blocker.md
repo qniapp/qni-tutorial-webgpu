@@ -1,4 +1,6 @@
-# qpe_output: QFT名と「周期2」でSTOP（未承認・未移植）
+# qpe_output: QFT名と「周期2」 — 解決済み
+
+2026-10-11 19時の再開指示で、高宮さんが **Aの表の5置換すべてとBの1文だけ** を明示承認。適用した。他の本文/数値/16円/残るTeXは不変。正確な原/approved source、guard、比較・公開記録は `porting.md` 末尾。以下は承認前の履歴であり、現在のSTOPではない。
 
 2026-10-11 18時。QPEのoption A承認はQPEページだけに適用し、この別ページへ拡張しない。phase_kickbackの次をsidebar順で調査し、以下でSTOP。**qpe_outputと後続shor_hsp以降は未公開、route未作成、原文/TeX/16円は無変更。** 18:26のopen PRは全0件、同ページPRなし。
 

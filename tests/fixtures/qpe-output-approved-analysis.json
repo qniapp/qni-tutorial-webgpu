@@ -1,0 +1,91 @@
+{
+  "GPUExecuted": false,
+  "sourceSHA256": "b86add7c2ca7bd157872518195ad5fb07966eb49ddf3d6fe1398b35850cbf08e",
+  "fourierResults": [
+    {
+      "sign": -1,
+      "peak": 2,
+      "probability": 1.0,
+      "inferredDegrees": 45.0
+    },
+    {
+      "sign": 1,
+      "peak": 14,
+      "probability": 1.0,
+      "inferredDegrees": 315.0
+    }
+  ],
+  "periodSamples": 8.0,
+  "frequencyOver16Samples": 2.0,
+  "full16IntervalsDegrees": 720.0,
+  "phaseDegrees": 45.0,
+  "HOutput8Degrees": 180.0,
+  "inverseFourierNameOccurrences": 0,
+  "circles": [
+    [
+      0.25,
+      0.0
+    ],
+    [
+      0.17678,
+      0.17678
+    ],
+    [
+      0.0,
+      0.25
+    ],
+    [
+      -0.17678,
+      0.17678
+    ],
+    [
+      -0.25,
+      0.0
+    ],
+    [
+      -0.17678,
+      -0.17678
+    ],
+    [
+      0.0,
+      -0.25
+    ],
+    [
+      0.17678,
+      -0.17678
+    ],
+    [
+      0.25,
+      0.0
+    ],
+    [
+      0.17678,
+      0.17678
+    ],
+    [
+      0.0,
+      0.25
+    ],
+    [
+      -0.17678,
+      0.17678
+    ],
+    [
+      -0.25,
+      0.0
+    ],
+    [
+      -0.17678,
+      -0.17678
+    ],
+    [
+      0.0,
+      -0.25
+    ],
+    [
+      0.17678,
+      -0.17678
+    ]
+  ],
+  "decision": "approved A/B only applied"
+}
