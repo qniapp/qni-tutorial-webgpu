@@ -1882,3 +1882,15 @@ QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-q
 real adapter/running/step0/norm、全最終signed振幅（4wire16個+0.25、8wire16..31+0.25）、2run replay、undo/redo-only/trashなし/JSON復元、Regular/all gates visible・390/1440×DPR1/2・native active-column scrollを確認する。Bは却下なのでUのfull-space identity拡張をここで要求しない。原2回路はprepだけでUを含まない。production CPU fallback/readback追加なし。
 
 通常fetch/rebase/push（forceなし）でmainへ公開しPages/公開URLを確認する。最新依頼によりholdは解除されており、空のwip branchには変更を置かずmainで継続する。次shor_rの連分数候補に数値不一致を検出したため同ページは未移植でSTOP、詳細は公開確認後に記録する。
+
+### 公開結果・STOP記録 / hard stop超過のため追加push停止
+
+a6f0d14 / Pages38138949248 success。公開source1＋390/1440×DPR1/2の4検査5/5成功、原サイト比較4/4成功、Aだけの本文/TeX差・2JSON差0。SVG H computed weight400も公開再検査で成功、本文HはBold。証拠 `tests/fixtures/shor-fx-public-nongpu-verification.json`、log `/tmp/qtw-fx-public-{tests,tests-final,compare}.log`。390/DPR1全文を目視、nativeはGPU非対応表示でありrunning/step0/norm等は実機確認待ち。正確なcommandは上記check-qpe-gpu.mjs shor_fx。画像置換4/credits削除0/palette[[],[]]/max[1,1]/run2は維持、B追加なし。
+
+全非GPU回帰366中362成功/4既存失敗（2workers、5.1分）。旧ket×2/content-overflow×2のみで、新shor_fxの内部scroll/document overflow検査は成功。期待値緩和/共有CSS変更なし。ログ `/tmp/qtw-fx-nongpu-regressions.log`。
+
+次shor_rは未移植・未公開・routeなし。有限Fourierのcoset和はk0/4/8/12各25%を確認。一方測定値/16の既約分母は1/4/2/4で、原候補4/8と不一致。候補8のgcdは1/15で非自明因数なし。`docs/shor-r-blocker.md` に正確なC1/C2 before→afterを保存し承認を質問する（候補2/4、非自明因数判定とN/因数で相方を得る）。Python証拠 `tests/fixtures/shor-r-blocker-analysis.json`、原snapshot保存、画像未置換/credits削除0/回路0/palette/max該当なし。shor_u以降は未移植。
+
+21:25 open PR0。最終fetchのqni origin/mainは5bc62c7、shor_rは保存原とbyte一致。shor_fxは186行の原との差を検出したがdeadline超過時点で未精査、未承認の追加修正は適用しない。fetchのforced-update表示はtracking shallow refでありforce-pushではない。
+
+最終時計21:41:05で21:40超過を検出、追加作業/pushを停止。残る公開証拠とSTOP記録はローカルcommitだけで保存し、preview/temp configを停止・削除する。mainへ新たにpushせず、公開HEADはa6f0d14のまま。期限を守れなかった事実を隠さず報告する。

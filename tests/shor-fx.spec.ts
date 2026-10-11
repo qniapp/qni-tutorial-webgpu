@@ -14,7 +14,7 @@ for(const width of [390,1440])for(const dpr of [1,2])test(`Shor FX non-GPU only 
  await expect(page.locator('main img')).toHaveCount(0);await expect(page.locator('[data-original-image]')).toHaveCount(4)
  for(const variant of ['repeated','controlled','qft']){
  const diagram=page.locator(`[data-shor-power="${variant}"]`)
- await expect(diagram.locator('[data-wire]')).toHaveCount(8);await expect(diagram.locator('[data-h]')).toHaveCount(4);await expect(diagram.locator('[data-u]')).toHaveCount(variant==='repeated'?9:15)
+ await expect(diagram.locator('[data-wire]')).toHaveCount(8);await expect(diagram.locator('[data-h]')).toHaveCount(4);expect(await diagram.locator('[data-h] text').evaluateAll(es=>es.map(e=>getComputedStyle(e).fontWeight))).toEqual(['400','400','400','400']);await expect(diagram.locator('[data-u]')).toHaveCount(variant==='repeated'?9:15)
  if(variant!=='repeated')expect(await diagram.locator('[data-u]').evaluateAll(es=>[0,1,2,3].map(w=>es.filter(e=>Number((e as SVGElement).dataset.controlWire)===w).length))).toEqual([1,2,4,8])
  await expect(diagram.locator('[data-qft]')).toHaveCount(variant==='qft'?1:0)
  }
