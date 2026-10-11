@@ -826,7 +826,7 @@ local/public全 **45移行ページ / 90ケース、81 embed / 162起動** はru
 
 ### superdense_coding_circuit
 
-保留draftを復帰。**原JSONのroot `"title":"Superdense Coding"` を含む全26列/7-wire回路をそのまま保持**。Bell回路・Swap・名前付きMeasure>bit1/bit2・X<bit1/bit2・送信制御X/Z・Bell測定の構造も未変更。原palette **[]**、max-wire-count **1**、元7-wireを切り詰めない。原の実行ボタンも保持。本文・順序・00/01/10/11の説明を無訂正で移植。画像/削除credits/旧Qni UI画像/このページの追加質問なし。本文に原glyph tagはなく、共通Bold規則を維持、native glyph/labelsはRegular。
+保留draftを復帰。**原JSONのroot `"title":"Superdense Coding"` を含む全27列/7-wire回路をそのまま保持**。Bell回路・Swap・名前付きMeasure>bit1/bit2・X<bit1/bit2・送信制御X/Z・Bell測定の構造も未変更。原palette **[]**、max-wire-count **1**、元7-wireを切り詰めない。原の実行ボタンも保持。本文・順序・00/01/10/11の説明を無訂正で移植。画像/削除credits/旧Qni UI画像/このページの追加質問なし。本文に原glyph tagはなく、共通Bold規則を維持、native glyph/labelsはRegular。
 
 390/1440 original/liveは本文/TeX diff0、原JSON・counts一致、errors0。両幅の本文/shadow DOM横/縦inner scrollbar/document横overflow0。ユーザー承認のnative回路内水平panで最後のBell測定blockを表示できることを実際に確認し、canvasをscale/隠すCSSやupstream修正は入れていない。
 
@@ -841,3 +841,16 @@ build/typecheck/diff-check成功、既存と新ページの全 **266 tests (3.5m
 ### sidebarの続行位置
 
 超密度符号化の後のテレポーテーション3ページと算術5ページ、quantum_logicは完了済み。その次は **superposition_quantum_logicでSTOP**。原JSONは正常だが、本文/脚注のAND優先順、正しい入力組、真理値表、d/e説明が回路と異なる。[superposition-logic-blocker.md](superposition-logic-blocker.md) の訂正許可は今回も明示されていないため、そのページ以降は未公開のまま。許可されたincrement訂正を他の原文訂正へ拡張しない。
+
+
+### 10:40 公開checkpoint / #59解決
+
+公開 **17c91dc2fd6147ddff0e125289c400898b32000f / Pages38102185647 success**。pin **ef652682c23d89427f6f39bb6bee1ec6fae9bb1e**、両WASM実再ビルド済み。superdenseの原全27列/7-wire/`title`を保持し、palette[]/max1/原実行ボタンもそのまま。本文/TeX diff0、原JSON/counts一致、画像/削除credits/追加画像質問なし。390/1440本文scroll/errors0、Bell測定blockは承認されたnative水平panで表示。現行の**#59待ち/SKIPを解決**。
+
+公開最終GPU状態はstandalone **40/40**、実ページのnative embed **10/10** で送信q0/q1と受信q5/q6が一致 (00/01/10/11、状態0/33/66/99)、norm≈1。ページ内はnative水平pan後にBell測定列を選択してreadbackしたので、起動/step0だけで動作済みと判断していない。両幅・DPR1/2 **4/4** で原titleが再実行/実ドラッグ編集/現在回路リンクに保持され、standalone document title/URLも原title、tutorial document titleは日本語ページ名のまま。
+
+全 **46移行ページ / 92ケース、82 embed / 164起動** の公開・local監査はrunning/step0/norm1、console/page errors0、body/content/shadow DOM内の横/縦scrollbar/document横overflow0。multi-1/3/7/stressも8ケース/22起動で同じ結果。合計 **全50 builtページ / 100ケース、全93 embed / 186起動**。CPHASEの24最終GPU vector回帰成功、新しいtitle parserでも同角3PHASE=CCPHASEを保持。最終実Chromium/AMD GPU設定で **268 tests (2.6m)** 全成功、typecheck/build/diff-check成功。
+
+資料 `/tmp/qtw-pr61-public-{behavior,embed-behavior,interactions}.json`、`/tmp/qtw-scroll-pr61-{local,public}.json`、`/tmp/qtw-pr58-extra-pr61-{local,public}.json`、`/tmp/qtw-pr61-final-real-tests.log`、`/tmp/qtw-port-superdense_coding_circuit.json`。pan/editのDPR screenshotは `/tmp/qtw-pr61-public-pan-<width>-dpr<dpr>.png`、原回路の最終embedは `/tmp/qtw-pr61-public-embed-final-<width>-<input>.png`。本文は無訂正、metadataを落とす回避策なし。
+
+**停止位置はsuperposition_quantum_logicの原説明訂正許可待ち**。increment/decrement〜quantum_logicを再移植していない。質問は、原JSONを維持し、式/脚注・入力組・真理値表・補助bit d/e説明を原回路 `(a OR NOT b) AND c` に合わせて訂正してよいか。明示承認までこのページ以降は未公開。owned preview4345/取り残された本セッションtest preview4322/検証browserを終了。docs-only Pagesの最終状態は終了時に報告し、10:50 hard stopを守る。
