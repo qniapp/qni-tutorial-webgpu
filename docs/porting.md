@@ -684,7 +684,7 @@ indexとbb84_circuitを両幅で目視。PRの32px block padding、2px rule、24
 
 | ページ | 置換 | 削除credits | palette (embed順) | max-wire-count (embed順) | scroll対応 / 質問 |
 | --- | --- | --- | --- | --- | --- |
-| teleportation_circuit | 画像なし。原7 HTML circuits、原ket6をそのままinteractive embed / 既存Ketに移行 | なし | [] ×7 | 1 ×7 | 元のoverflow-scroll/p-8 editor shellを固定サイズnative embedへ。追加質問なし |
+| teleportation_circuit | 画像なし。原7 HTML circuits、原ket4をそのままinteractive embed / 既存Ketに移行 | なし | [] ×7 | 1 ×7 | 元のoverflow-scroll/p-8 editor shellを固定サイズnative embedへ。追加質問なし |
 | cascading_teleportation | 画像なし。原HTML circuit、原display/inline TeXを維持 | なし | [] | 1 | 同上。長い日本語arrow式も自然表示、追加scroll修正なし。質問なし |
 | long_distance_entanglement | 画像なし。原HTML circuit、原display TeXとket4を維持 | なし | [] | 1 | 同上。challengeのqniapp.netリンクは原文のまま保持 (旧UI画像なし)。質問なし |
 
@@ -699,3 +699,12 @@ startupだけでなく原アルゴリズムの最終GPU状態も32試行で照�
 最後の6番目の原JSONに `["1"]` がある。nativeではそのembedだけinvalid circuit JSON、原サイトでも `Unknown operation: 1` のpageerror。これは元JSON自体の誤記であり、最小 `["1"]` はerror、数値 `[1]` は同じGPUでrunning。**高宮さんに `["1"]` → `[1]` の訂正許可を質問して待つ**。原JSONを黙って書換えず、qni-webgpuを未知gateを受理する方向にも変更していない。[increment-blocker.md](increment-blocker.md)、[実画面](images/increment-string-one-error.png)に記録。
 
 incrementおよび後続decrementはroute/TOC/fixturesに含めず未公開。draftは `/tmp/qtw-blocked-arithmetic/`。decrementの6 authored図=4、後のHTML embed=1は個別確認済みだが、incrementでSTOPしたので公開しない。先行テレポーテーション3ページだけを公開検証してcheckpointする。
+
+
+### 09:08 公開 checkpoint / 原JSON訂正許可待ち
+
+公開commit **e770f9acb22b82091897158a139b0735d905dd25**、Pages **38097100440 success**。新3ページの公開390/1440原文比較は本文/TeX diff0、errors0。公開DPR1/2 (12ケース) の原ket/矢印式とnative Regular glyphを確認。画像/creditsの削除なし。palette/max属性は全9 embedで[]/1の原指定を維持。
+
+公開全 **38移行ページ×390/1440=76ケース、0 failures**、全 **50 embed×2幅=100起動** がrunning / step0 / norm1。HTML/shadow DOMの横/縦本文scrollbar、document横overflow、console/page errors=0。ナビゲーション外のmulti-1/3/7とstressページも8ケース、22起動で同じ確認を再実施し、合計 **全42 builtページ / 84ケース、全61 embed / 122起動**。資料: `/tmp/qtw-scroll-teleport-public.json`、`/tmp/qtw-teleport-public-audit.log`、`/tmp/qtw-pr58-extra-teleport-public.json`。3ページの原文比較は `/tmp/qtw-port-{teleportation_circuit,cascading_teleportation,long_distance_entanglement}.json`、DPRとnative画像は `/tmp/qtw-teleport-{glyphs,native}-*.png` と `/tmp/qtw-teleport-glyphs.json`。
+
+高宮さんへの未回答質問は **incrementの最後の原 `["1"]` を `[1]` に訂正してよいか**。許可までincrement/decrement以降は停止する。cphase #57待ち / superdense_coding_circuit #59待ちのSKIPは継続。原JSONの書換えや上流変更は行わない。owned preview 4342 / 全検証browserを停止し、09:14前に終了する。
