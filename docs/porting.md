@@ -739,3 +739,14 @@ incrementおよび後続decrementはroute/TOC/fixturesに含めず未公開。dr
 ### ローカル回帰と公開確認
 
 最終 **237 tests passed (4.0m)**、build/typecheck/diff-check成功。ローカル全39移行ページ×2幅=78ケース / 全54 embed×2=108起動でrunning/step0/norm1、errors0、本文/shadow DOM inner scrollbars0。CPHASEの16px上padding後も2幅で再確認。原頁比較 `/tmp/qtw-port-cphase.json`、回帰 `/tmp/qtw-scroll-pr60-local.json`、tests `/tmp/qtw-pr60-final-tests.log`、native build `/tmp/qtw-pr60-native-build.log`。公開結果とcommit/Pagesは次のcheckpointに追記する。
+
+
+### 09:41 公開 checkpoint / #57解決
+
+公開 **b6f96be79f32b26408dc72e044e38041f494277f**、Pages **38098985963 success**。公開CPHASE 390/1440の本文/本文TeX diff0、errors0、原図外のgate/step/circle counts一致、palette/maxを保持。DPR1/2でRegular等価図・12本文ket・自作4ペア選択・上下πラベルを確認。旧Qni UI画像/追加質問/削除creditsなし。
+
+公開standalone **24/24**、公開ページ内embed **18/18** の複素GPU vector照合に成功。CCPHASE=同角3PHASEは状態7だけπ/4回転、2PHASE=CPHASEの対称性、単独PHASE、CZ各表記も本文どおり。実画面 [390](images/pr60-three-phases-390.png) / [1440](images/pr60-three-phases-1440.png)、詳細 `/tmp/qtw-pr60-public-{behavior,embed-behavior}.json`。
+
+公開全 **39移行ページ / 78ケース、54 embed / 108起動** はrunning/step0/norm1、console/page errors0、HTML/shadow DOM内の横/縦scrollbar0、document横overflow0。multi-1/3/7/stressの4ページも両幅で追加確認し、8ケース / 22起動で同じ結果。合計 **全43 builtページ / 86ケース、全65 embed / 130起動**。回帰 `/tmp/qtw-scroll-pr60-public.json`、追加 `/tmp/qtw-pr58-extra-pr60-public.json`、原文比較 `/tmp/qtw-port-cphase.json`、DPR `/tmp/qtw-cphase-public-glyphs.json`。native canvasのclip/panは許容範囲。
+
+**cphaseは#57待ちではなく、解決・公開済み。** superdense #59待ち / SKIP、increment/decrement原JSON訂正許可待ちは維持し未変更。owned preview 4343と検証browserを終了。09:45 hard stopを守り、docs-only Pagesの最終状態は終了時に報告する。
