@@ -117,7 +117,7 @@ qni 側ブランチ `replace-orbit-quizzes`（e041754・4359e81、未 push）は
   - 問題側で使う画像は、解くのに必要な見た目（塗りの有無と大きさ、針の向き）を描写し、確率や位相の言葉には言い換えない。
   - 答え側だけで使う画像は、図の種類と問題文に出ている要素だけを書く。内容は答えの文が伝える。
   - 両方で使う画像は問題側の描写を優先する。答え側の `alt` は答えの表示後にしか読まれない（`hidden` の中にある）。
-  - 404 の画像（`basic_quantum_circuit.png`）は `alt=""`（装飾扱い）。復旧したら書き直す。
+  - `basic_quantum_circuit.png` は qni 側で 404 だったため、元画像（qni commit f47d1541）をバイト無変更でこのサイトの `public/images/` に置いて配信し、キーは `/qni-tutorial-webgpu/images/basic_quantum_circuit.png`。alt は写っている線・箱・記号だけを描写し、答えになる語は書かない。
 - 全 18 URL の文言と、どのカードのどちら側で使うかは `docs/quiz-alt.md` にある。文言を変えるときは、この一覧と両リポジトリの表を同時に更新する。
 
 ## 3. 見た目
@@ -201,7 +201,7 @@ UI 文言はすべて日本語で、次の 5 つに限る: 「答えを見る」
 
 - 画像の alt は §2.5 で付けた。ただし alt は答えを書かないので、答えが画像だけのカード（`answer=""`）のうち circle_notation の偏角の 1 枚は、スクリーンリーダーでは答えの中身が伝わらない（superposition の 2 枚は、同じ画像を問題側でも使うので alt で伝わる）。答えの文を足すかどうかは高宮さんが決める。
 - cloze の穴が複数あっても 1 回でまとめて開く（§2.2）。
-- quantum_circuit の問題画像 `https://qniapp.github.io/qni/images/basic_quantum_circuit.png` は 2026-10-12 時点で 404 で、表示されない（マークアップは変更していない。alt は `""` にしてある、§2.5）。ほかの 17 個の画像 URL は 200。
+- quantum_circuit の問題画像 `https://qniapp.github.io/qni/images/basic_quantum_circuit.png` は 2026-10-12 時点で 404 だった。qni が元画像を復元した（qniapp/qni#593、commit f47d1541）ので、同じファイルをバイト無変更で `public/images/basic_quantum_circuit.png` に置き、`question-attachments` をこのサイトの `` {`${base}images/basic_quantum_circuit.png`} ``（`/qni-tutorial-webgpu/images/basic_quantum_circuit.png`）に変えた。元ページから変えた属性はこの 1 つだけ。alt は §2.5。ほかの 17 個の画像 URL は 200。
 - `<orbit-prompt>` 自身には属性を追加しない（状態はカードの `data-state` に持つ）。webgpu の既存テストが `<orbit-prompt>` の属性を元のページと照合しているため。
 
 ## 7. 実装メモ（リポジトリ別）

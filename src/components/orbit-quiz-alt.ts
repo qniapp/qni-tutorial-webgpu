@@ -10,8 +10,9 @@ export const QUIZ_IMAGE_ALT: Record<string, string> = {
   [`${base}superposition-0-100.png`]: '円表示: |0⟩ の円は空。|1⟩ の円は全体が塗りつぶされ、針は真上を向いている',
   [`${base}superposition-50-50.png`]: '円表示: |0⟩ と |1⟩ の円の内側に、外枠より小さい同じ大きさの塗り円がある。針はどちらも真上を向いている',
   [`${base}superposition_phase.png`]: '円表示: |0⟩ の円は小さな塗り円で、針は左下を向いている。|1⟩ の円はほぼ全体が塗られ、針は右上を向いている',
-  // 404 since 2026-10-12: nothing to describe, so mark it decorative.
-  [`${base}basic_quantum_circuit.png`]: '',
+  // Restored from qni (f47d1541) and served by this site; the key is the
+  // rendered attribute, so it includes the Astro base.
+  ['/qni-tutorial-webgpu/images/basic_quantum_circuit.png']: '3 本の横線の回路図。各線の左端に |0⟩。1 本目の線上に H と書かれた箱、その右に 1 本目の黒丸と 2 本目の ⊕ を縦線で結んだ記号、さらに 2 本目の黒丸と 3 本目の ⊕ を縦線で結んだ記号',
   // Used only as answer images: the answer text carries the content.
   [`${base}superposition_phase_reversed.png`]: circles,
   [`${base}superposition-minus-state.png`]: circles,

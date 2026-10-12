@@ -4,8 +4,8 @@
 
 - 正本: `src/components/orbit-quiz-alt.ts` の `QUIZ_IMAGE_ALT`（キーは属性に書かれた URL そのまま）。qni 側は同じ表を素の JS で持つ。文言を変えるときは、この一覧と両リポジトリを同時に更新する。
 - 対象: 16 ページのうち 10 ページにある画像付きカード 24 枚。画像は 31 枚（問題側 12、答え側 19）で、URL は 18 種類。
-- 画像はすべてダウンロードして目視で確認した（2026-10-12）。`basic_quantum_circuit.png` だけが 404。
-- URL は `https://qniapp.github.io/qni/images/` からの相対で書く。
+- 画像はすべてダウンロードして目視で確認した（2026-10-12）。`basic_quantum_circuit.png` は qni 側の 404 だったため、qni が復元した元画像（qni commit f47d1541、qniapp/qni#593 で `apps/tutorial/images/basic_quantum_circuit.png` に復元、4180 バイト、sha256 `32f9dbe447bf62e82b5ef81c6796867e867a0a772759937c31968dfe3d2b9bb6`）をバイト無変更で `public/images/` に置き、このサイトから配信する。
+- URL は `https://qniapp.github.io/qni/images/` からの相対で書く。ただし `basic_quantum_circuit.png` だけはこのサイトの `/qni-tutorial-webgpu/images/basic_quantum_circuit.png`（属性は `` {`${base}images/basic_quantum_circuit.png`} ``）。
 
 ## 書き方
 
@@ -14,7 +14,7 @@
 - **問題側で使う画像**（円表示 4 種）は、解くのに必要な見た目（塗りの有無と大きさ、針の向き）を描写する。それを確率や位相の言葉には言い換えない（読み取りは学習者がする）。
 - **答え側だけで使う画像**は、答えの文が内容を伝えるので、図の種類と問題文に出ている要素だけを書く。結果の状態、等号の右辺、グラフの形は書かない。
 - 1 つの URL に alt は 1 つ。問題側にも答え側にも使う画像は、問題側で必要な描写を優先する。答え側では答えを表示した後（`hidden` が外れた後）にしか読まれないので、先に答えが漏れることはない。
-- 404 の `basic_quantum_circuit.png` は `alt=""`（装飾扱い）にした。誰にも見えない画像を描写すると、スクリーンリーダーにだけ存在しない図の説明が読まれる。問題文（「ワイヤ上に置かれた H などの箱を何と呼ぶか?」）だけで問題は成り立つ。画像が復旧したら alt を書き直す。
+- `basic_quantum_circuit.png` は 404 の間 `alt=""` にしていたが、元画像を復元して配信するようにしたので描写する alt に書き直した。問題（「ワイヤ上に置かれた H などの箱を何と呼ぶか?」）の答えになる語（「ゲート」「命令」など）は書かず、線・箱・記号の見た目だけを書く。
 
 ## 一覧
 
@@ -27,7 +27,7 @@
 | `superposition-50-50.png` | 問題側 | measurement_operation（測定して \|0⟩ が得られる確率は? / \|1⟩ が得られる確率は?）、superposition（この状態を測定すると、何%の確率でどんな状態になる?）、phase_gate（PHASE ゲート π/4 を適用するとどうなる?） | 円表示: \|0⟩ と \|1⟩ の円の内側に、外枠より小さい同じ大きさの塗り円がある。針はどちらも真上を向いている |
 | 〃 | 答え側 | h_gate（H ゲートを適用するとどうなる? 1 枚目） | 〃 |
 | `superposition_phase.png` | 問題側 | phase（時計の針のような線は何を表す? / 量子ビットを測定すると、その確率と位相はどうなる?）、x_gate（X ゲートを適用するとどうなる? 3 枚目） | 円表示: \|0⟩ の円は小さな塗り円で、針は左下を向いている。\|1⟩ の円はほぼ全体が塗られ、針は右上を向いている |
-| `basic_quantum_circuit.png`（404） | 問題側 | quantum_circuit（ワイヤ上に置かれた H などの箱を何と呼ぶか?） | （空。`alt=""`） |
+| `/qni-tutorial-webgpu/images/basic_quantum_circuit.png`（このサイトから配信） | 問題側 | quantum_circuit（ワイヤ上に置かれた H などの箱を何と呼ぶか?） | 3 本の横線の回路図。各線の左端に \|0⟩。1 本目の線上に H と書かれた箱、その右に 1 本目の黒丸と 2 本目の ⊕ を縦線で結んだ記号、さらに 2 本目の黒丸と 3 本目の ⊕ を縦線で結んだ記号 |
 | `superposition_phase_reversed.png` | 答え側 | x_gate（X ゲートを適用するとどうなる? 3 枚目） | 円表示: \|0⟩ と \|1⟩ の 2 つの円 |
 | `superposition-minus-state.png` | 答え側 | h_gate（H ゲートを適用するとどうなる? 2 枚目） | 円表示: \|0⟩ と \|1⟩ の 2 つの円 |
 | `superposition-50-50-phase¼π.png` | 答え側 | phase_gate（PHASE ゲート π/4 を適用するとどうなる?） | 円表示: \|0⟩ と \|1⟩ の 2 つの円 |
