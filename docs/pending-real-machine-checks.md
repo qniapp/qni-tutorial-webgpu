@@ -24,9 +24,28 @@ QTW_HEADLESS=1 QTW_CHROMIUM_PATH=/usr/bin/chromium node scripts/check-qpe-gpu.mj
 node scripts/check-eigenphases-gpu.mjs --headed
 ```
 
-`web-embed.md` と実装のAPIは `destroy/circuitJSON/readStateVector` のみでstep選択APIがないため、`scripts/gpu-audit-helper.mjs` はnative layoutのCSS座標（8px中央panel余白、640px compact gutter、56px列間隔、非表示paletteと58px block outset）からcolumnのgate外側をクリックする。marker列 `{label` / `}` / `[label` / `]` はstep数から除外、横wheelを左端に戻して対象列までscroll、hoverを外してreadback。author stageのsource列番号はmarkerを含む元JSONからsemantic stepへ変換。step0は最初の非marker列の初期化ketからtensor積で導出（q0=LSB、`|0> |1> |+> |-> |i> |-i>`）。shor_u/shor_qftのbasis index1を検証する。後続の準備gateはstep0に含めない。
+**qni-webgpu PR #66 のembedが必須。** `element.runner.selectStep(n)` で0-based semantic stepを選択し、`selectedStep()` を照合、`readStateVector()` でGPU完了を待つ。開始前に `stepCount()` がfixtureの非marker列数と一致することを検査する。API欠落は `embed lacks runner.selectStep; requires qni-webgpu #66` でFAIL。marker列 `{label` / `}` / `[label` / `]` はstep数から除外し、author stageのsource列番号はmarkerを含む元JSONからsemantic stepへ変換する。選択にcanvas座標・クリック・wheelは使わない。自動gate削除/undo/redo/旧trash無効果検査だけは最初の可視列とtoolbarのpointer操作を継続する（選択には使わない）。再生はmainの変更に合わせegui状態バーの最後のkeyboard focusをShift+Tab/Enterで操作する。step0は最初の非marker列の初期化ketからtensor積で導出（q0=LSB、`|0> |1> |+> |-> |i> |-i>`）。shor_u/shor_qftのbasis index1を検証する。後続の準備gateはstep0に含めない。
 
-Regular glyphs・toolbarの外観・all gates visibleは数値assertionではなく、出力先のstep/stage/final/measurementおよび横scroll全範囲のvisual screenshotsとして保存しパスをログする。画像は人による後日確認用の証拠であり、無人PASSは字形/可視性の目視確認済みを意味しない。GPUなしboxではend-to-end未実行、実機確認待ちは継続。
+### ローカルdistで実行
+
+公開URLのembedがまだ#66未対応なら、#66対応のqni-webgpu checkoutをbuildしてローカルdistで監査する。pin/page内容はこの変更では更新しない。既存の `fetch-qni-webgpu.sh` はpin一致を要求するため、#66候補のembedだけは直接buildする（生成assetをcommitしない）。
+
+```sh
+pnpm install --frozen-lockfile
+# #66対応checkout。既存pinのh.svgをgit showできる履歴も必要。
+QNI_WEBGPU_SOURCE=/path/to/qni-webgpu
+pnpm -C "$QNI_WEBGPU_SOURCE/apps/web" install --frozen-lockfile
+bash "$QNI_WEBGPU_SOURCE/apps/web/scripts/build-embed.sh" "$PWD/public/qni-webgpu"
+QNI_WEBGPU_SOURCE="$QNI_WEBGPU_SOURCE" pnpm build
+pnpm preview --host 127.0.0.1 --port 4321
+# 別terminal。URLは末尾 / を付け、実際のbuild base pathを含める。
+QTW_AUDIT_URL=http://127.0.0.1:4321/qni-tutorial-webgpu/ node scripts/check-eigenphases-gpu.mjs --headless
+QTW_AUDIT_URL=http://127.0.0.1:4321/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs shor_qft --headless
+```
+
+`pnpm preview` はdistを現在のAstro base (`/qni-tutorial-webgpu`) でserveする。任意のlocalhost/port/baseを `QTW_AUDIT_URL` に指定可能。他のslugも上記公開URL commandと同様に実行する。GPU adapterがない環境はFAILであり、ローカルserveだけで実機確認済みとはしない。
+
+Regular glyphs・toolbarの外観・all gates visibleは数値assertionではなく、出力先のstep/stage/final/measurementおよび全semantic stepのvisual screenshotsとして保存しパスをログする。API選択は横auto-scrollを保証しないため、全gate可視/active scrollの検査は後日実機で行う。画像は人による後日確認用の証拠であり、無人PASSは字形/可視性の目視確認済みを意味しない。GPUなしboxではend-to-end未実行、実機確認待ちは継続。
 
 **新shor_uは原8wire/1回路。** scriptはstep0とauthor列6/12/17の全256 complex signed成分（512float）をtest-only実読戻し比較し、run replay/undo-redo/Regular/all gates/active scrollも要求する。数学期待値生成と無人scriptの構文/純粋helper検査のみ済みで、boxでGPU実行はしていない。qpe_output/shor_hsp/shor_rは回路0。running/step0/norm/readback/toolbar等は**該当なし**、確認用回路を追加しない。**新shor_qftは原8wire/1回路**。同scriptはbefore-QFT(source17)・最後SWAP(source32)の全signed値/norm、MSB4..7測定後のoutcome0/4/8/12、再生/undo-redo/JSON復元/Regular/all gates/active scrollを要求する。有限Fourier和の期待値を保存しただけで実機GPUは未実行。no-cloning_theorem_proofも回路0なのでGPU監査不要。回路0pageへの架空URL/script commandを用意しない。
 

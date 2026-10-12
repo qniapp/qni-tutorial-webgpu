@@ -1,5 +1,4 @@
-// Native GPU audit utilities. Geometry follows qni-webgpu's layout/geometry.rs,
-// constants.rs, layout/palette.rs and app/drag_controller.rs (no selection API).
+// Native GPU audit utilities; semantic step selection requires qni-webgpu #66.
 import {mkdir, writeFile} from 'node:fs/promises'
 import {chromium} from '@playwright/test'
 
@@ -49,7 +48,8 @@ export async function circuitJSON(embed) {return embed.evaluate(e=>e.runner.circ
 export async function waitJSON(page,index,json) {
  await page.waitForFunction(({index,json})=>document.querySelectorAll('qni-webgpu-circuit')[index].runner.circuitJSON()===json,{index,json})
 }
-export async function geometry(embed,circuit) {
+// Geometry is only for the automated edit/undo/redo toolbar audit, never selection.
+async function toolbarGeometry(embed,circuit) {
  const canvas=embed.locator('canvas')
  await canvas.scrollIntoViewIfNeeded()
  const box=await canvas.boundingBox(), width=box.width-16
@@ -57,39 +57,43 @@ export async function geometry(embed,circuit) {
  if(palette===null || palette.length) throw Error('This audit geometry requires the authored hidden palette')
  return {canvas,box,width,x:8+(width<640?80:162),y:136+(circuit.cols.some(isMarker)?58:0)}
 }
-export async function columnPosition(page,embed,circuit,source) {
- const columns=gateColumns(circuit), step=columns.findIndex(x=>x.source===source)
- if(step<0) throw Error(`Source column ${source} is a block marker or missing`)
- const g=await geometry(embed,circuit)
- // Reset horizontal scroll deterministically, then scroll to a computed offset.
- await page.mouse.move(g.box.x+g.x,g.box.y+g.y-24)
- await page.mouse.wheel(-100000,0); await page.waitForTimeout(400)
- const max=Math.max(0,(g.x-8)+56*columns.length+40+(g.width<640?16:64)-g.width)
- const offset=Math.min(max,Math.max(0,g.x+56*step-g.width/2))
- if(offset) {await page.mouse.wheel(offset,0);await page.waitForTimeout(400)}
- return {...g,step,position:{x:g.x+56*step-offset,y:g.y-24}}
+export async function validateRunner(embed,fixture) {
+ const expected=gateColumns(fixture).length
+ return embed.evaluate((e,expected)=>{
+  const runner=e.runner
+  if(typeof runner?.selectStep!=='function') throw Error('embed lacks runner.selectStep; requires qni-webgpu #66')
+  const actual=runner.stepCount()
+  if(actual!==expected) throw Error(`runner.stepCount()=${actual}; fixture has ${expected} non-marker columns`)
+  return actual
+ },expected)
 }
 export async function selectColumn(page,embed,circuit,source) {
- const g=await columnPosition(page,embed,circuit,source)
- // 24px above q0 is inside the step hit area but outside its 40px gate.
- await g.canvas.click({position:g.position})
- // Hover takes precedence over the locked step: move out before readback.
- await page.mouse.move(g.box.x+4,g.box.y+4)
- await page.waitForTimeout(200)
- return {source,step:g.step,method:'canvas-layout'}
+ const step=gateColumns(circuit).findIndex(x=>x.source===source)
+ if(step<0) throw Error(`Source column ${source} is a block marker or missing`)
+ return embed.evaluate(async(e,{source,step})=>{
+  const runner=e.runner
+  if(typeof runner?.selectStep!=='function') throw Error('embed lacks runner.selectStep; requires qni-webgpu #66')
+  runner.selectStep(step)
+  // This read waits for GPU completion, not a guessed timeout after selection.
+  await runner.readStateVector()
+  const selected=runner.selectedStep()
+  if(selected!==step) throw Error(`runner.selectedStep()=${selected}; expected ${step}`)
+  return {source,step,method:'runner.selectStep'}
+ },{source,step})
 }
 export async function screenshot(canvas,path) {
  await canvas.screenshot({path}); console.log(`SCREENSHOT ${path} (visual evidence, not a glyph/visibility assertion)`)
 }
 export async function toolbarAudit(page,embed,index,circuit,initial) {
  const columns=gateColumns(circuit)
- const target=columns.find(x=>x.col.includes('H')) ?? columns[0]
- const wire=target.col.includes('H')?target.col.indexOf('H'):target.col.findIndex(x=>x!==1)
- const g=await columnPosition(page,embed,circuit,target.source)
- await page.mouse.move(g.box.x+g.position.x,g.box.y+g.y+56*wire)
+ // Edit the initially visible first column; no scrolling or column hit-testing.
+ const wire=columns[0].col.findIndex(x=>x!==1)
+ if(wire<0) throw Error('Toolbar audit needs a gate in the first column')
+ const g=await toolbarGeometry(embed,circuit)
+ await page.mouse.move(g.box.x+g.x,g.box.y+g.y+56*wire)
  await page.mouse.down();await page.waitForTimeout(100)
  // Drag above all wires: native drop removes the gate.
- await page.mouse.move(g.box.x+g.position.x,g.box.y+55,{steps:12})
+ await page.mouse.move(g.box.x+g.x,g.box.y+55,{steps:12})
  await page.waitForTimeout(100);await page.mouse.up()
  await page.waitForFunction(({index,initial})=>document.querySelectorAll('qni-webgpu-circuit')[index].runner.circuitJSON()!==initial,{index,initial})
  const edited=await circuitJSON(embed)
@@ -105,15 +109,13 @@ export async function toolbarAudit(page,embed,index,circuit,initial) {
 }
 export async function visualSweep(page,embed,circuit,prefix) {
  const columns=gateColumns(circuit)
- const g=await geometry(embed,circuit), stride=Math.max(1,Math.floor((g.width-100)/56))
- for(let step=0;step<columns.length;step+=stride) {
-  await columnPosition(page,embed,circuit,columns[step].source)
-  await page.mouse.move(g.box.x+4,g.box.y+4)
-  await screenshot(g.canvas,`${prefix}-visual-column${columns[step].source}.png`)
+ const canvas=embed.locator('canvas')
+ for(const {source} of columns) {
+  await selectColumn(page,embed,circuit,source)
+  await screenshot(canvas,`${prefix}-visual-column${source}.png`)
  }
- await columnPosition(page,embed,circuit,columns.at(-1).source)
- await page.mouse.move(g.box.x+4,g.box.y+4)
- await screenshot(g.canvas,`${prefix}-visual-last.png`)
+ // API selection does not promise horizontal auto-scroll or all-gate visibility.
+ await screenshot(canvas,`${prefix}-visual-last.png`)
 }
 export async function scrollFindings(page,width) {
  const findings=await page.evaluate(()=>{

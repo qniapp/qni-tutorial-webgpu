@@ -1,6 +1,6 @@
 // Unattended real GPU audit; no mocks/CPU fallback.
 import {readFile} from 'node:fs/promises'
-import {audit,gateColumns,initialVector,checkVector,read,circuitJSON,selectColumn,screenshot,toolbarAudit,visualSweep} from './gpu-audit-helper.mjs'
+import {audit,validateRunner,gateColumns,initialVector,checkVector,read,circuitJSON,selectColumn,screenshot,toolbarAudit,visualSweep} from './gpu-audit-helper.mjs'
 const slug=process.argv.slice(2).find(x=>!x.startsWith('--')) ?? 'quantum_phase_estimation_circuit'
 if(!['quantum_phase_estimation_circuit','phase_kickback','shor_fx','shor_u','shor_qft'].includes(slug)) throw Error('unsupported page')
 const fixed=JSON.parse(await readFile(new URL(`../tests/fixtures/${slug}-fixed.json`,import.meta.url)))
@@ -14,10 +14,15 @@ await audit({slug,base,out,async check({page,width,dpr,records}) {
   await canvas.scrollIntoViewIfNeeded()
   await page.waitForFunction(i=>document.querySelectorAll('qni-webgpu-circuit')[i].dataset.state==='running',index)
   const initial=await circuitJSON(embed),circuit=JSON.parse(initial),columns=gateColumns(circuit)
+  const stepCount=await validateRunner(embed,fixed.circuits[index])
+  await selectColumn(page,embed,circuit,columns[0].source)
   const initialExpected=initialVector(circuit,vectors[index].length)
   const prefix=`${out}/${width}-dpr${dpr}-${index}`
-  const record={base,slug,width,dpr,index,start:await checkVector(page,index,initialExpected)}
+  const record={base,slug,width,dpr,index,stepCount,start:await checkVector(page,index,initialExpected)}
   await screenshot(canvas,`${prefix}-step0.png`)
+  record.toolbar=await toolbarAudit(page,embed,index,circuit,initial)
+  await selectColumn(page,embed,circuit,columns[0].source)
+  record.restoredStep0=await checkVector(page,index,initialExpected)
   if(slug==='shor_u'||slug==='shor_qft') {
    record.authoredStages=[]
    for(const stage of slug==='shor_qft'?analysis.shorQftBeforeExpected:analysis.shorUStageExpected) {
@@ -45,8 +50,6 @@ await audit({slug,base,out,async check({page,width,dpr,records}) {
    record.measuredOutcome={values,outcomes}
    await screenshot(canvas,`${prefix}-measurement.png`)
   }
-  record.toolbar=await toolbarAudit(page,embed,index,circuit,initial)
-  record.restoredStep0=await checkVector(page,index,initialExpected)
   if(fixed.embeds[index].runButton) {
    // Main moved restart inside egui, last in its keyboard focus order.
    await canvas.focus()
