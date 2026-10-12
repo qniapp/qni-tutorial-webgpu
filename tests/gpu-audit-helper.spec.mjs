@@ -34,14 +34,20 @@ test('fresh circuit reload restores authored trailing identities and step mappin
  assert.deepEqual(fresh.columns.map(x=>x.source),[0,1,2])
  assert.deepEqual(fresh.circuit,fixture)
 })
-test('edit/undo normalization ignores angles and trailing identity columns',()=>{
+test('edit/undo/redo normalization ignores angle encoding and all-identity columns anywhere',()=>{
  assert.ok(circuitJSONEqual(json([['Z^(-π/2)'],[1],[1,1]]),json([['Z^(-π_2)']])))
  assert.ok(circuitJSONEqual(json([]),json([[1],[1,1]])))
  assert.ok(circuitJSONEqual(json([['H'],[1]]),json([['H'],[1],[1]])))
+ assert.ok(circuitJSONEqual(json([['H'],[1],['X']]),json([['H'],['X']])))
+ assert.ok(circuitJSONEqual(json([[1],['H']]),json([['H']])))
 })
-test('interior identity columns and non-identity trailing columns remain significant',()=>{
- assert.equal(circuitJSONEqual(json([['H'],[1],['X']]),json([['H'],['X']])),false)
- assert.equal(circuitJSONEqual(json([[1],['H']]),json([['H']])),false)
+test('square block markers normalize to braces across identity columns',()=>{
+ assert.ok(circuitJSONEqual(json([['[label'],['H'],[']'],[1],['[next'],['X'],[']'],[1]]),
+  json([['{label'],['H'],['}'],['{next'],['X'],['}']])))
+ assert.equal(circuitJSONEqual(json([['[label']]),json([['{other']])),false)
+ assert.equal(circuitJSONEqual(json([[']suffix']]),json([['}suffix']])),false)
+})
+test('non-identity columns and other circuit data remain significant',()=>{
  assert.equal(circuitJSONEqual(json([['H'],['X']]),json([['H']])),false)
  assert.equal(circuitJSONEqual(json([['H'],['1']]),json([['H']])),false)
  assert.equal(circuitJSONEqual(JSON.stringify({cols:[['H']],extra:1}),json([['H']])),false)

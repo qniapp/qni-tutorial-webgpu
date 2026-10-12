@@ -60,3 +60,7 @@ pnpm exec playwright test tests/ket.spec.ts tests/content-overflow.spec.ts
 - `tests/content-overflow.spec.ts`: 390/1440各1件。変更していない旧ページwrapperが内側scroll判定。
 
 これは非GPUの4layout guardだが、gmktecと同じfonts/Chromiumで再現するまで実機確認待ちとして保持する。Chromium152とbox153/Noto Sansの差が原因とはまだ断定しない。期待値緩和・共有CSS変更・安易なretryで隠さない。native GPU監査をこれらの成功で代用しない。詳細 `new-machine-layout-blocker.md`。
+
+## 進捗 2026-10-12
+
+gmktec real AMD (rdna-3)、HEAD `6ba43ef` のheadless実機監査: 390/1440 × DPR1/2の全4組合せで eigenphases / phase_kickback / shor_fx / shor_u はPASS。quantum_phase_estimation_circuit / shor_qft は toolbarAudit の waitJSON (`circuitJSONEqual`) のみFAIL。このcommitは残る2件の原因である全identity列の除去とsquare block markerのbrace再エンコードを比較時に正規化する。修正後の実機再確認は未実行。

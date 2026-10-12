@@ -49,12 +49,14 @@ export async function circuitJSON(embed) {return embed.evaluate(e=>e.runner.circ
 export function circuitJSONEqual(left,right) {
  const normalize=json=>{
   const circuit=JSON.parse(json)
-  // qni-webgpu normalizes angles and drops trailing all-identity columns on edit/undo.
-  // Interior identity columns remain significant.
-  circuit.cols=circuit.cols.map(col=>col.map(gate=>typeof gate==='string'
-   ? gate.replace(/\(([^)]*)\)/g,(_,angle)=>`(${angle.replaceAll('_','/')})`)
-   : gate))
-  while(circuit.cols.length && circuit.cols.at(-1).every(gate=>gate===1)) circuit.cols.pop()
+  // qni-webgpu re-encodes angle underscores as slashes and square block markers as braces.
+  // Edit/redo drops all-identity columns anywhere; undo restores interior ones, not trailing ones.
+  circuit.cols=circuit.cols.filter(col=>!col.every(gate=>gate===1)).map(col=>col.map(gate=>{
+   if(typeof gate!=='string') return gate
+   if(gate.startsWith('[')) gate='{'+gate.slice(1)
+   else if(gate===']') gate='}'
+   return gate.replace(/\(([^)]*)\)/g,(_,angle)=>`(${angle.replaceAll('_','/')})`)
+  }))
   return circuit
  }
  return isDeepStrictEqual(normalize(left),normalize(right))
