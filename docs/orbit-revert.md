@@ -6,12 +6,12 @@ Orbit の埋め込み（`https://js.withorbit.com/orbit-web-component.js`）が�
 
 - #3（aa4606c）のうち自前クイズへの置き換え部分: 19 ページの Orbit script 行（元と同じ行・位置）、`src/components/orbit-quiz.ts` / `orbit-quiz.css`（content-with-margin の `orbit-reviewarea` 幅指定を含む）、TutorialLayout の import、`tests/quiz.spec.ts`、既存テストの調整（`img:not(orbit-prompt img)`、bb84 のベースライン補正）。
 - #5（8549f32）を git revert: index の傍注 `index-note-5` と 2 文、ported-pages のテスト調整、#5 のスクリーンショット。
-- `src/components/orbit-quiz-alt.ts`（`QUIZ_IMAGE_ALT`）: Orbit は属性から iframe 内に描画し alt を受け取る口が無いので、使われなくなり削除した。`docs/quiz-alt.md` は qni 用の共有一覧として残す。
+- #6/#7 の alt の仕組み: `src/components/orbit-quiz-alt.ts`（`QUIZ_IMAGE_ALT`）と `docs/quiz-alt.md` を削除し、`docs/quiz-spec.md` からも alt の記述を除いた。Orbit は iframe 内で画像を表示するので alt を付けられない（高宮さんの決定）。
 
 ## 残したもの
 
 - `tests/restart.spec.ts` の再試行（#3 で追加）。Enter/Space での再起動直後にランナーがキーを受け付けない競合への対策で、Orbit とは無関係なテストの安定化なので残した。
-- #6/#7 の `public/images/basic_quantum_circuit.png`、`docs/quiz-alt.md`、`docs/quiz-spec.md`（冒頭に未使用の注記を追加）、#4 などの後続変更。
+- #6/#7 の `public/images/basic_quantum_circuit.png`（画像の復元）、`docs/quiz-spec.md`（冒頭に未使用の注記を追加）、#4 などの後続変更。
 
 ## basic_quantum_circuit.png の URL
 
