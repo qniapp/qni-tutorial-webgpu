@@ -1,0 +1,18 @@
+{
+  "number": 590,
+  "head": "1df23dc11a22e03030ab8c5c49d6dd774514fdcd",
+  "stateAtCheck": "OPEN",
+  "changes": [
+    {
+      "approved": "これを連分数アルゴリズムにかけると、\\(r = 2, 4\\) が候補として得られます。",
+      "PR": "これを連分数アルゴリズムにかければ、\\(r\\) の候補として 2 と 4 が得られます。"
+    },
+    {
+      "approved": "\\(r = 4\\) の場合には正しい 3, 5 が求まります。",
+      "PR": "\\(r = 4\\) の場合因数 3 と 5 がみつかります。"
+    }
+  ],
+  "otherNormalizedContentDiffZero": true,
+  "applied": false,
+  "policy": "exact Q1/Q2 retained"
+}

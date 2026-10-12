@@ -2065,3 +2065,45 @@ pnpm exec playwright test tests/ket.spec.ts tests/content-overflow.spec.ts
 現状**shor_qft routeなし・本文/TeX/256circles/JSON無変更**、他後続も停止。画像/credits0、source palette[[]]/max[1]/run1、8wire回路1。viewport/text/TeX/scroll/GPUの実際のpage検査は未実施と明示する。承認前に架空GPU URL/commandや診断回路を追加しない。既存＋新shor_u全native GPU checksと四layout guardsは上記commandsで**実機確認待ち**。
 
 今回公開証拠＋STOP exact案のみ通常main commit/pushで記録し、Pages成功を確認して10:25より前にpush停止する。shor_qftの未承認編集・公開はしない。
+
+## 2026-10-12 10:16 shor_qft Q1/Q2 exact承認 / push停止11:05 hard stop11:10
+
+clean main188d833からfetch/rebase origin/main（up to date）、forceなし。porting tail/blocker再読。最新原mainのshor_qftは保存原とbyte一致、10:16のPR調査は該当なし。Q1全文とQ2の**2個の独立literal**だけを原sourceへ適用し、approved sourceとbyte比較。raw originalSHA固定。その他本文（『3つおき』『にだけに』を含む）/title/description/全JSON/全amplitude/全parameter値/全blockラベルは変更しない。
+
+- **Q1** 最終段落をblocker exact全文で置換。候補r4/8→r2/4、分母4/2/4・0retry・非自明因数判定・N÷factor・r4で3/5成功保持。TeX6→8（r=4,8→r=2,4を1入力変更、N/r4の2入力追加、その他値は不変）。
+- **Q2** 表の位置242だけket241→242（振幅0/本物の位置241を保持）。256全セルの順序/値/符号は不変。
+
+元256円表→**既存ShorModMatrix stage=shift2再利用**、新generic interface/widgetを作らず16×16/両軸0..15/独立click・keyboard/focus/Escape inspectionを維持。phone16+px/desktop34px・内部scrollなし、native circuitにfit-content/zoom/transform縮小を施さない。画像/credits0、置換画像0/削除credit0。prose gate glyph0、nativeRegularは実機確認待ち。
+
+**8wire/JSON1（36cols）差0 / palette[[]] / max-wire-count[1] / run1 / Measure4..7維持 / QFTのnegative P6個維持**。見え方のための符号/JSON/bracket変換を追加しない。sourceSnapshot/golden/independent256 cell・amp・1label差・8TeX guardを追加。共通CSS/header/footer/pin348992f不変。
+
+### PR590の別表現は適用しない
+
+10:24に **#590 OPEN/head1df23dc11a22e03030ab8c5c49d6dd774514fdcd** を発見。取得sourceを別保存。blockerで承認されたQ1と2箇所の表現/TeX差がある:
+
+- 当方『かけると、r=2,4が候補として』→PR『かければ、rの候補として2と4』。r=2,4のTeXがrのみへ変わり数字はplain proseに移る。
+- 当方『r4の場合には正しい3,5が求まります』→PR『r4の場合因数3と5がみつかります』。
+
+Q2/JSON/amp/段落外は一致。2差を**仮**適用するとwhitespace-normalized全文一致をPython確認し、[shor-qft-pr590-comparison.md](shor-qft-pr590-comparison.md) / rawPR source/fixtureへ記録。**user明示どおりPRの別表現をproduction/approved goldenへ適用しない**。比較scriptはQ1の全段落置換権限の中で旧原版または保存PR590版の既知2句だけをapprovedQ1へ正規化できるようにし、raw snapshotを常に保持する。PR merge後にraw差があれば『raw差0』とは称さない。Q1外の追加変更/未知TeXは従来どおりSTOP、whitelistを任意に緩和しない。
+
+### 非GPU検査
+
+**typecheck/build/diff-check成功、local source1＋390/1440×DPR1/2の本文/8TeX/JSON/palette/max/run/256cells/両軸/popupクリック・keyboard・Escape/phoneサイズ/非縮小/Body・content・Shadow inner scroll/errors4＋sidebar5の10/10成功。** document horizontal overflow0、内部scrollbars0、console/page errors0。最新原実サイトとのlocal比較も**4/4成功・Q1/Q2だけ**、raw snapshots `shor-qft-local-nongpu-verification.json` 保存。log `/tmp/qtw-qft-{build-final,tests-final,tests-sidebar,local-compare-final}.log`、shots `/tmp/qtw-shor-qft-{390,1440}-dpr{1,2}.png`。
+
+Pythonのauthoramp/label/full256・Fraction分母1/4/2/4・gcd r2(3/1)/r4(5/3)/r8(1/15)・finite negative Fourier coset sumsで測定0/4/8/12各25%、他0、jointnorm1を再検証。**JSON gate実行/CPU量子simulator/GPU検証ではない**。approved-analysisのlabeldiff[]とsigned256complex期待値を保存。full非GPU suiteをbackgroundで実行、旧4失敗を緩和しない。
+
+### 実機確認待ち
+
+gmktec unreachable、SSH/GPU実行なし。新shor_qftのreal GPU auditを追加（**未実行**）: adapter/running/step0・beforeQFT source17・最後SWAP source32のsigned512float/norm・MSB4..7の測定結果0/4/8/12・run replay・undo/redo-only/no-trash/JSON復元/Regular/allgate/nativeactive scrollを390/1440×DPR1/2で確認する。読戻しはtest-only診断、製品自動readback/fallbackなし。全pending commands:
+
+```sh
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-eigenphases-gpu.mjs
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs quantum_phase_estimation_circuit
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs phase_kickback
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs shor_fx
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs shor_u
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs shor_qft
+pnpm exec playwright test tests/ket.spec.ts tests/content-overflow.spec.ts
+```
+
+4旧layout guardも**実機確認待ち**、nativeGPU代替とは称さない。通常main pushしてPages/公開5テスト/原比較4を確認してからsidebarの次ページを調べる。完成済みpageはやり直さない。

@@ -211,5 +211,6 @@
   "shor_hsp": [],
   "shor_fx": [1, 1],
   "shor_r": [],
-  "shor_u": [1]
+  "shor_u": [1],
+  "shor_qft": [1]
 }

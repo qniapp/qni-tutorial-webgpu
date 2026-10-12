@@ -1,0 +1,1316 @@
+{
+  "text": "あとは状態ベクトルに展開されたの周期パターンをQFTで読み出すだけです。ここでQFTをなんとなく回路全体に適用したくなりますが、それは間違いです。QFTで取り出したいパターンがどのように状態ベクトル中に埋め込まれているか、もう一度確認してみましょう。f(x)の値0123456789101112131415xの値0123456789101112131415ここで取り出したいのは、確率がゼロではない振幅が3つおきに登場しているというパターンです。この「3つおき」はの値として現れる情報です。なのでQFTは次のようにを表す量子ビットにだけにかける必要があります。最後の測定で0,4,8,12のいずれかが求まることを確認してください。これを連分数アルゴリズムにかけると、が候補として得られます。測定値4、8、12を16で割って既約分数にすると、分母はそれぞれ4、2、4になります。測定値0からは有用な候補が得られないので、測定をやり直します。そしてgcdを計算して、結果が1より大きくより小さい非自明な因数かチェックします。非自明な因数が得られたら、をその因数で割ってもう一つの因数を求めます。の場合には正しい3,5が求まります。長い道程でしたが、の因数分解を実行するショアのアルゴリズムができました!",
+  "math": [
+    {
+      "tex": "2^xmod(15)",
+      "display": false
+    },
+    {
+      "tex": "x",
+      "display": false
+    },
+    {
+      "tex": "x",
+      "display": false
+    },
+    {
+      "tex": "r=2,4",
+      "display": false
+    },
+    {
+      "tex": "N=15",
+      "display": false
+    },
+    {
+      "tex": "N",
+      "display": false
+    },
+    {
+      "tex": "r=4",
+      "display": false
+    },
+    {
+      "tex": "15=3\\times5",
+      "display": false
+    }
+  ],
+  "circuits": [
+    {
+      "cols": [
+        [
+          "[f(x)を入れる用"
+        ],
+        [
+          "|1>",
+          "|0>",
+          "|0>",
+          "|0>"
+        ],
+        [
+          "]"
+        ],
+        [
+          1
+        ],
+        [
+          "[x=0〜15"
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          "|0>",
+          "|0>",
+          "|0>",
+          "|0>"
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          "H",
+          "H",
+          "H",
+          "H"
+        ],
+        [
+          "]"
+        ],
+        [
+          1
+        ],
+        [
+          "[左シフト mod(15)"
+        ],
+        [
+          1,
+          1,
+          "Swap",
+          "Swap",
+          "•"
+        ],
+        [
+          1,
+          "Swap",
+          "Swap",
+          1,
+          "•"
+        ],
+        [
+          "Swap",
+          "Swap",
+          1,
+          1,
+          "•"
+        ],
+        [
+          "]"
+        ],
+        [
+          1
+        ],
+        [
+          "[左シフト2回 mod(15)"
+        ],
+        [
+          1,
+          "Swap",
+          1,
+          "Swap",
+          1,
+          "•"
+        ],
+        [
+          "Swap",
+          1,
+          "Swap",
+          1,
+          1,
+          "•"
+        ],
+        [
+          "]"
+        ],
+        [
+          1
+        ],
+        [
+          "{QFT"
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          "H"
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          "P(-π_2)",
+          "•"
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          "P(-π_4)",
+          1,
+          "•"
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          "P(-π_8)",
+          1,
+          1,
+          "•"
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          "H"
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          "P(-π_2)",
+          "•"
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          "P(-π_4)",
+          1,
+          "•"
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          "H"
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          "P(-π_2)",
+          "•"
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          "H"
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          "Swap",
+          1,
+          1,
+          "Swap"
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          "Swap",
+          "Swap"
+        ],
+        [
+          "}"
+        ],
+        [
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          "Measure",
+          "Measure",
+          "Measure",
+          "Measure"
+        ]
+      ]
+    }
+  ],
+  "cells": [
+    {
+      "amplitude": "0",
+      "ket": 0
+    },
+    {
+      "amplitude": "0.25",
+      "ket": 1
+    },
+    {
+      "amplitude": "0",
+      "ket": 2
+    },
+    {
+      "amplitude": "0",
+      "ket": 3
+    },
+    {
+      "amplitude": "0",
+      "ket": 4
+    },
+    {
+      "amplitude": "0",
+      "ket": 5
+    },
+    {
+      "amplitude": "0",
+      "ket": 6
+    },
+    {
+      "amplitude": "0",
+      "ket": 7
+    },
+    {
+      "amplitude": "0",
+      "ket": 8
+    },
+    {
+      "amplitude": "0",
+      "ket": 9
+    },
+    {
+      "amplitude": "0",
+      "ket": 10
+    },
+    {
+      "amplitude": "0",
+      "ket": 11
+    },
+    {
+      "amplitude": "0",
+      "ket": 12
+    },
+    {
+      "amplitude": "0",
+      "ket": 13
+    },
+    {
+      "amplitude": "0",
+      "ket": 14
+    },
+    {
+      "amplitude": "0",
+      "ket": 15
+    },
+    {
+      "amplitude": "0",
+      "ket": 16
+    },
+    {
+      "amplitude": "0",
+      "ket": 17
+    },
+    {
+      "amplitude": "0.25",
+      "ket": 18
+    },
+    {
+      "amplitude": "0",
+      "ket": 19
+    },
+    {
+      "amplitude": "0",
+      "ket": 20
+    },
+    {
+      "amplitude": "0",
+      "ket": 21
+    },
+    {
+      "amplitude": "0",
+      "ket": 22
+    },
+    {
+      "amplitude": "0",
+      "ket": 23
+    },
+    {
+      "amplitude": "0",
+      "ket": 24
+    },
+    {
+      "amplitude": "0",
+      "ket": 25
+    },
+    {
+      "amplitude": "0",
+      "ket": 26
+    },
+    {
+      "amplitude": "0",
+      "ket": 27
+    },
+    {
+      "amplitude": "0",
+      "ket": 28
+    },
+    {
+      "amplitude": "0",
+      "ket": 29
+    },
+    {
+      "amplitude": "0",
+      "ket": 30
+    },
+    {
+      "amplitude": "0",
+      "ket": 31
+    },
+    {
+      "amplitude": "0",
+      "ket": 32
+    },
+    {
+      "amplitude": "0",
+      "ket": 33
+    },
+    {
+      "amplitude": "0",
+      "ket": 34
+    },
+    {
+      "amplitude": "0",
+      "ket": 35
+    },
+    {
+      "amplitude": "0.25",
+      "ket": 36
+    },
+    {
+      "amplitude": "0",
+      "ket": 37
+    },
+    {
+      "amplitude": "0",
+      "ket": 38
+    },
+    {
+      "amplitude": "0",
+      "ket": 39
+    },
+    {
+      "amplitude": "0",
+      "ket": 40
+    },
+    {
+      "amplitude": "0",
+      "ket": 41
+    },
+    {
+      "amplitude": "0",
+      "ket": 42
+    },
+    {
+      "amplitude": "0",
+      "ket": 43
+    },
+    {
+      "amplitude": "0",
+      "ket": 44
+    },
+    {
+      "amplitude": "0",
+      "ket": 45
+    },
+    {
+      "amplitude": "0",
+      "ket": 46
+    },
+    {
+      "amplitude": "0",
+      "ket": 47
+    },
+    {
+      "amplitude": "0",
+      "ket": 48
+    },
+    {
+      "amplitude": "0",
+      "ket": 49
+    },
+    {
+      "amplitude": "0",
+      "ket": 50
+    },
+    {
+      "amplitude": "0",
+      "ket": 51
+    },
+    {
+      "amplitude": "0",
+      "ket": 52
+    },
+    {
+      "amplitude": "0",
+      "ket": 53
+    },
+    {
+      "amplitude": "0",
+      "ket": 54
+    },
+    {
+      "amplitude": "0",
+      "ket": 55
+    },
+    {
+      "amplitude": "0.25",
+      "ket": 56
+    },
+    {
+      "amplitude": "0",
+      "ket": 57
+    },
+    {
+      "amplitude": "0",
+      "ket": 58
+    },
+    {
+      "amplitude": "0",
+      "ket": 59
+    },
+    {
+      "amplitude": "0",
+      "ket": 60
+    },
+    {
+      "amplitude": "0",
+      "ket": 61
+    },
+    {
+      "amplitude": "0",
+      "ket": 62
+    },
+    {
+      "amplitude": "0",
+      "ket": 63
+    },
+    {
+      "amplitude": "0",
+      "ket": 64
+    },
+    {
+      "amplitude": "0.25",
+      "ket": 65
+    },
+    {
+      "amplitude": "0",
+      "ket": 66
+    },
+    {
+      "amplitude": "0",
+      "ket": 67
+    },
+    {
+      "amplitude": "0",
+      "ket": 68
+    },
+    {
+      "amplitude": "0",
+      "ket": 69
+    },
+    {
+      "amplitude": "0",
+      "ket": 70
+    },
+    {
+      "amplitude": "0",
+      "ket": 71
+    },
+    {
+      "amplitude": "0",
+      "ket": 72
+    },
+    {
+      "amplitude": "0",
+      "ket": 73
+    },
+    {
+      "amplitude": "0",
+      "ket": 74
+    },
+    {
+      "amplitude": "0",
+      "ket": 75
+    },
+    {
+      "amplitude": "0",
+      "ket": 76
+    },
+    {
+      "amplitude": "0",
+      "ket": 77
+    },
+    {
+      "amplitude": "0",
+      "ket": 78
+    },
+    {
+      "amplitude": "0",
+      "ket": 79
+    },
+    {
+      "amplitude": "0",
+      "ket": 80
+    },
+    {
+      "amplitude": "0",
+      "ket": 81
+    },
+    {
+      "amplitude": "0.25",
+      "ket": 82
+    },
+    {
+      "amplitude": "0",
+      "ket": 83
+    },
+    {
+      "amplitude": "0",
+      "ket": 84
+    },
+    {
+      "amplitude": "0",
+      "ket": 85
+    },
+    {
+      "amplitude": "0",
+      "ket": 86
+    },
+    {
+      "amplitude": "0",
+      "ket": 87
+    },
+    {
+      "amplitude": "0",
+      "ket": 88
+    },
+    {
+      "amplitude": "0",
+      "ket": 89
+    },
+    {
+      "amplitude": "0",
+      "ket": 90
+    },
+    {
+      "amplitude": "0",
+      "ket": 91
+    },
+    {
+      "amplitude": "0",
+      "ket": 92
+    },
+    {
+      "amplitude": "0",
+      "ket": 93
+    },
+    {
+      "amplitude": "0",
+      "ket": 94
+    },
+    {
+      "amplitude": "0",
+      "ket": 95
+    },
+    {
+      "amplitude": "0",
+      "ket": 96
+    },
+    {
+      "amplitude": "0",
+      "ket": 97
+    },
+    {
+      "amplitude": "0",
+      "ket": 98
+    },
+    {
+      "amplitude": "0",
+      "ket": 99
+    },
+    {
+      "amplitude": "0.25",
+      "ket": 100
+    },
+    {
+      "amplitude": "0",
+      "ket": 101
+    },
+    {
+      "amplitude": "0",
+      "ket": 102
+    },
+    {
+      "amplitude": "0",
+      "ket": 103
+    },
+    {
+      "amplitude": "0",
+      "ket": 104
+    },
+    {
+      "amplitude": "0",
+      "ket": 105
+    },
+    {
+      "amplitude": "0",
+      "ket": 106
+    },
+    {
+      "amplitude": "0",
+      "ket": 107
+    },
+    {
+      "amplitude": "0",
+      "ket": 108
+    },
+    {
+      "amplitude": "0",
+      "ket": 109
+    },
+    {
+      "amplitude": "0",
+      "ket": 110
+    },
+    {
+      "amplitude": "0",
+      "ket": 111
+    },
+    {
+      "amplitude": "0",
+      "ket": 112
+    },
+    {
+      "amplitude": "0",
+      "ket": 113
+    },
+    {
+      "amplitude": "0",
+      "ket": 114
+    },
+    {
+      "amplitude": "0",
+      "ket": 115
+    },
+    {
+      "amplitude": "0",
+      "ket": 116
+    },
+    {
+      "amplitude": "0",
+      "ket": 117
+    },
+    {
+      "amplitude": "0",
+      "ket": 118
+    },
+    {
+      "amplitude": "0",
+      "ket": 119
+    },
+    {
+      "amplitude": "0.25",
+      "ket": 120
+    },
+    {
+      "amplitude": "0",
+      "ket": 121
+    },
+    {
+      "amplitude": "0",
+      "ket": 122
+    },
+    {
+      "amplitude": "0",
+      "ket": 123
+    },
+    {
+      "amplitude": "0",
+      "ket": 124
+    },
+    {
+      "amplitude": "0",
+      "ket": 125
+    },
+    {
+      "amplitude": "0",
+      "ket": 126
+    },
+    {
+      "amplitude": "0",
+      "ket": 127
+    },
+    {
+      "amplitude": "0",
+      "ket": 128
+    },
+    {
+      "amplitude": "0.25",
+      "ket": 129
+    },
+    {
+      "amplitude": "0",
+      "ket": 130
+    },
+    {
+      "amplitude": "0",
+      "ket": 131
+    },
+    {
+      "amplitude": "0",
+      "ket": 132
+    },
+    {
+      "amplitude": "0",
+      "ket": 133
+    },
+    {
+      "amplitude": "0",
+      "ket": 134
+    },
+    {
+      "amplitude": "0",
+      "ket": 135
+    },
+    {
+      "amplitude": "0",
+      "ket": 136
+    },
+    {
+      "amplitude": "0",
+      "ket": 137
+    },
+    {
+      "amplitude": "0",
+      "ket": 138
+    },
+    {
+      "amplitude": "0",
+      "ket": 139
+    },
+    {
+      "amplitude": "0",
+      "ket": 140
+    },
+    {
+      "amplitude": "0",
+      "ket": 141
+    },
+    {
+      "amplitude": "0",
+      "ket": 142
+    },
+    {
+      "amplitude": "0",
+      "ket": 143
+    },
+    {
+      "amplitude": "0",
+      "ket": 144
+    },
+    {
+      "amplitude": "0",
+      "ket": 145
+    },
+    {
+      "amplitude": "0.25",
+      "ket": 146
+    },
+    {
+      "amplitude": "0",
+      "ket": 147
+    },
+    {
+      "amplitude": "0",
+      "ket": 148
+    },
+    {
+      "amplitude": "0",
+      "ket": 149
+    },
+    {
+      "amplitude": "0",
+      "ket": 150
+    },
+    {
+      "amplitude": "0",
+      "ket": 151
+    },
+    {
+      "amplitude": "0",
+      "ket": 152
+    },
+    {
+      "amplitude": "0",
+      "ket": 153
+    },
+    {
+      "amplitude": "0",
+      "ket": 154
+    },
+    {
+      "amplitude": "0",
+      "ket": 155
+    },
+    {
+      "amplitude": "0",
+      "ket": 156
+    },
+    {
+      "amplitude": "0",
+      "ket": 157
+    },
+    {
+      "amplitude": "0",
+      "ket": 158
+    },
+    {
+      "amplitude": "0",
+      "ket": 159
+    },
+    {
+      "amplitude": "0",
+      "ket": 160
+    },
+    {
+      "amplitude": "0",
+      "ket": 161
+    },
+    {
+      "amplitude": "0",
+      "ket": 162
+    },
+    {
+      "amplitude": "0",
+      "ket": 163
+    },
+    {
+      "amplitude": "0.25",
+      "ket": 164
+    },
+    {
+      "amplitude": "0",
+      "ket": 165
+    },
+    {
+      "amplitude": "0",
+      "ket": 166
+    },
+    {
+      "amplitude": "0",
+      "ket": 167
+    },
+    {
+      "amplitude": "0",
+      "ket": 168
+    },
+    {
+      "amplitude": "0",
+      "ket": 169
+    },
+    {
+      "amplitude": "0",
+      "ket": 170
+    },
+    {
+      "amplitude": "0",
+      "ket": 171
+    },
+    {
+      "amplitude": "0",
+      "ket": 172
+    },
+    {
+      "amplitude": "0",
+      "ket": 173
+    },
+    {
+      "amplitude": "0",
+      "ket": 174
+    },
+    {
+      "amplitude": "0",
+      "ket": 175
+    },
+    {
+      "amplitude": "0",
+      "ket": 176
+    },
+    {
+      "amplitude": "0",
+      "ket": 177
+    },
+    {
+      "amplitude": "0",
+      "ket": 178
+    },
+    {
+      "amplitude": "0",
+      "ket": 179
+    },
+    {
+      "amplitude": "0",
+      "ket": 180
+    },
+    {
+      "amplitude": "0",
+      "ket": 181
+    },
+    {
+      "amplitude": "0",
+      "ket": 182
+    },
+    {
+      "amplitude": "0",
+      "ket": 183
+    },
+    {
+      "amplitude": "0.25",
+      "ket": 184
+    },
+    {
+      "amplitude": "0",
+      "ket": 185
+    },
+    {
+      "amplitude": "0",
+      "ket": 186
+    },
+    {
+      "amplitude": "0",
+      "ket": 187
+    },
+    {
+      "amplitude": "0",
+      "ket": 188
+    },
+    {
+      "amplitude": "0",
+      "ket": 189
+    },
+    {
+      "amplitude": "0",
+      "ket": 190
+    },
+    {
+      "amplitude": "0",
+      "ket": 191
+    },
+    {
+      "amplitude": "0",
+      "ket": 192
+    },
+    {
+      "amplitude": "0.25",
+      "ket": 193
+    },
+    {
+      "amplitude": "0",
+      "ket": 194
+    },
+    {
+      "amplitude": "0",
+      "ket": 195
+    },
+    {
+      "amplitude": "0",
+      "ket": 196
+    },
+    {
+      "amplitude": "0",
+      "ket": 197
+    },
+    {
+      "amplitude": "0",
+      "ket": 198
+    },
+    {
+      "amplitude": "0",
+      "ket": 199
+    },
+    {
+      "amplitude": "0",
+      "ket": 200
+    },
+    {
+      "amplitude": "0",
+      "ket": 201
+    },
+    {
+      "amplitude": "0",
+      "ket": 202
+    },
+    {
+      "amplitude": "0",
+      "ket": 203
+    },
+    {
+      "amplitude": "0",
+      "ket": 204
+    },
+    {
+      "amplitude": "0",
+      "ket": 205
+    },
+    {
+      "amplitude": "0",
+      "ket": 206
+    },
+    {
+      "amplitude": "0",
+      "ket": 207
+    },
+    {
+      "amplitude": "0",
+      "ket": 208
+    },
+    {
+      "amplitude": "0",
+      "ket": 209
+    },
+    {
+      "amplitude": "0.25",
+      "ket": 210
+    },
+    {
+      "amplitude": "0",
+      "ket": 211
+    },
+    {
+      "amplitude": "0",
+      "ket": 212
+    },
+    {
+      "amplitude": "0",
+      "ket": 213
+    },
+    {
+      "amplitude": "0",
+      "ket": 214
+    },
+    {
+      "amplitude": "0",
+      "ket": 215
+    },
+    {
+      "amplitude": "0",
+      "ket": 216
+    },
+    {
+      "amplitude": "0",
+      "ket": 217
+    },
+    {
+      "amplitude": "0",
+      "ket": 218
+    },
+    {
+      "amplitude": "0",
+      "ket": 219
+    },
+    {
+      "amplitude": "0",
+      "ket": 220
+    },
+    {
+      "amplitude": "0",
+      "ket": 221
+    },
+    {
+      "amplitude": "0",
+      "ket": 222
+    },
+    {
+      "amplitude": "0",
+      "ket": 223
+    },
+    {
+      "amplitude": "0",
+      "ket": 224
+    },
+    {
+      "amplitude": "0",
+      "ket": 225
+    },
+    {
+      "amplitude": "0",
+      "ket": 226
+    },
+    {
+      "amplitude": "0",
+      "ket": 227
+    },
+    {
+      "amplitude": "0.25",
+      "ket": 228
+    },
+    {
+      "amplitude": "0",
+      "ket": 229
+    },
+    {
+      "amplitude": "0",
+      "ket": 230
+    },
+    {
+      "amplitude": "0",
+      "ket": 231
+    },
+    {
+      "amplitude": "0",
+      "ket": 232
+    },
+    {
+      "amplitude": "0",
+      "ket": 233
+    },
+    {
+      "amplitude": "0",
+      "ket": 234
+    },
+    {
+      "amplitude": "0",
+      "ket": 235
+    },
+    {
+      "amplitude": "0",
+      "ket": 236
+    },
+    {
+      "amplitude": "0",
+      "ket": 237
+    },
+    {
+      "amplitude": "0",
+      "ket": 238
+    },
+    {
+      "amplitude": "0",
+      "ket": 239
+    },
+    {
+      "amplitude": "0",
+      "ket": 240
+    },
+    {
+      "amplitude": "0",
+      "ket": 241
+    },
+    {
+      "amplitude": "0",
+      "ket": 242
+    },
+    {
+      "amplitude": "0",
+      "ket": 243
+    },
+    {
+      "amplitude": "0",
+      "ket": 244
+    },
+    {
+      "amplitude": "0",
+      "ket": 245
+    },
+    {
+      "amplitude": "0",
+      "ket": 246
+    },
+    {
+      "amplitude": "0",
+      "ket": 247
+    },
+    {
+      "amplitude": "0.25",
+      "ket": 248
+    },
+    {
+      "amplitude": "0",
+      "ket": 249
+    },
+    {
+      "amplitude": "0",
+      "ket": 250
+    },
+    {
+      "amplitude": "0",
+      "ket": 251
+    },
+    {
+      "amplitude": "0",
+      "ket": 252
+    },
+    {
+      "amplitude": "0",
+      "ket": 253
+    },
+    {
+      "amplitude": "0",
+      "ket": 254
+    },
+    {
+      "amplitude": "0",
+      "ket": 255
+    }
+  ],
+  "edits": [
+    [
+      "最後の測定で 0, 4, 8, 12 のいずれかが求まることを確認してください。\n  これを連分数アルゴリズムにかければ、\\(r = 4, 8\\) が得られます。 そして gcd を計算して実際に \\(N =\n  15\\) の約数として正しい 3, 5 が求まります。 長い道程でしたが、\\(15 = 3 \\times 5\\)\n  の因数分解を実行するショアのアルゴリズムができました!",
+      "最後の測定で 0, 4, 8, 12 のいずれかが求まることを確認してください。\n  これを連分数アルゴリズムにかけると、\\(r = 2, 4\\) が候補として得られます。\n  測定値 4、8、12 を 16 で割って既約分数にすると、分母はそれぞれ 4、2、4 になります。\n  測定値 0 からは有用な候補が得られないので、測定をやり直します。\n  そして gcd を計算して、結果が 1 より大きく \\(N = 15\\) より小さい非自明な因数かチェックします。\n  非自明な因数が得られたら、\\(N\\) をその因数で割ってもう一つの因数を求めます。\n  \\(r = 4\\) の場合には正しい 3, 5 が求まります。 長い道程でしたが、\\(15 = 3 \\times 5\\)\n  の因数分解を実行するショアのアルゴリズムができました!"
+    ],
+    [
+      "{{ '0' | qubit_circle: 241, 'base' }} {{ '0' |\n        qubit_circle: 241, 'base' }}",
+      "{{ '0' | qubit_circle: 241, 'base' }} {{ '0' |\n        qubit_circle: 242, 'base' }}"
+    ]
+  ],
+  "diff": [],
+  "embeds": [
+    {
+      "palette": [],
+      "maxWireCount": 1,
+      "runButton": true
+    }
+  ],
+  "description": "周期rを決めるためのパターンをQFTで調べる",
+  "sourceSHA256": "ef1b68017823d37888ae043af3c96e32db166230b67b819f95d084506966a499"
+}

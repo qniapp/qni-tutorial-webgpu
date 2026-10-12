@@ -1,4 +1,6 @@
-# shor_qft: 候補4/8・成功判定・ket242でSTOP
+# shor_qft: Q1/Q2 exact承認・解決済み
+
+2026-10-12 10:16の依頼で高宮さんが以下Q1/Q2をexact承認。他変更を適用しない。移植/公開成績とPR比較はporting.md参照。以下は承認前のSTOP・exact提案・数学証拠の歴史的記録。
 
 2026-10-12 09:53。shor_uのPages/公開source5/原比較4を確認してから次pageを調査。**shor_qftは未移植・route未作成・未公開、本文/TeX/JSON/256円無変更。後続も停止。** shor_r/Uの承認を転用しない。
 

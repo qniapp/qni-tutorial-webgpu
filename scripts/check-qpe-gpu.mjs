@@ -3,10 +3,10 @@ import {chromium} from '@playwright/test'
 import {createInterface} from 'node:readline/promises'
 import {mkdir,writeFile,readFile} from 'node:fs/promises'
 const slug=process.argv[2]??'quantum_phase_estimation_circuit'
-if(!['quantum_phase_estimation_circuit','phase_kickback','shor_fx','shor_u'].includes(slug))throw Error('unsupported page')
+if(!['quantum_phase_estimation_circuit','phase_kickback','shor_fx','shor_u','shor_qft'].includes(slug))throw Error('unsupported page')
 const fixed=JSON.parse(await readFile(new URL(`../tests/fixtures/${slug}-fixed.json`,import.meta.url)))
-const analysis=JSON.parse(await readFile(new URL(slug==='shor_u'?'../tests/fixtures/shor-u-approved-analysis.json':slug==='shor_fx'?'../tests/fixtures/shor-fx-approved-analysis.json':'../tests/fixtures/qpe-approved-analysis.json',import.meta.url)))
-const vectors=slug==='shor_u'?analysis.shorUExpected:slug==='shor_fx'?analysis.shorFxExpected:slug==='phase_kickback'?analysis.kickbackExpected:analysis.qpeExpected
+const analysis=JSON.parse(await readFile(new URL(slug==='shor_qft'?'../tests/fixtures/shor-qft-approved-analysis.json':slug==='shor_u'?'../tests/fixtures/shor-u-approved-analysis.json':slug==='shor_fx'?'../tests/fixtures/shor-fx-approved-analysis.json':'../tests/fixtures/qpe-approved-analysis.json',import.meta.url)))
+const vectors=slug==='shor_qft'?analysis.shorQftExpected:slug==='shor_u'?analysis.shorUExpected:slug==='shor_fx'?analysis.shorFxExpected:slug==='phase_kickback'?analysis.kickbackExpected:analysis.qpeExpected
 const base=process.env.QTW_AUDIT_URL??'https://qniapp.github.io/qni-tutorial-webgpu/'
 const out=process.env.QTW_AUDIT_OUTPUT??`/tmp/qtw-${slug}-gpu`;await mkdir(out,{recursive:true})
 const terminal=createInterface({input:process.stdin,output:process.stdout})
@@ -26,23 +26,23 @@ for(const width of [390,1440])for(const dpr of [1,2]){
   const initialExpected=vectors[index].map((_,i)=>[i===0?1:0,0]);const record={base,slug,width,dpr,index,start:verify(await read(page,index),initialExpected)}
   const initial=await embed.evaluate(e=>e.runner.circuitJSON())
   await canvas.screenshot({path:`${out}/${width}-dpr${dpr}-${index}-step0.png`})
-  if(slug==='shor_u'){
+  if(slug==='shor_u'||slug==='shor_qft'){
    record.authoredStages=[]
-   for(const stage of analysis.shorUStageExpected){
-    await terminal.question(`Shor U: ${stage.stage} authored column ${stage.column} (0-based)を選択してEnter: `)
+   for(const stage of slug==='shor_qft'?analysis.shorQftBeforeExpected:analysis.shorUStageExpected){
+    await terminal.question(`${slug}: ${stage.stage} authored column ${stage.column} (0-based)を選択してEnter: `)
     record.authoredStages.push({stage:stage.stage,column:stage.column,...verify(await read(page,index),stage.values)})
    }
   }
   const hasMeasurement=fixed.circuits[index].cols.some(col=>col.includes('Measure'))
-  await terminal.question(`${slug}/${width}/DPR${dpr}/回路${index} (0-based): step0・palette非表示・全gate可視・Regularを確認。${hasMeasurement?'測定直前の最後のH列':'最後の有効列'}を選択してEnter: `)
+  await terminal.question(`${slug}/${width}/DPR${dpr}/回路${index} (0-based): step0・palette非表示・全gate可視・Regularを確認。${slug==='shor_qft'?'測定直前の最後のSWAP列(source32)':hasMeasurement?'測定直前の最後のH列':'最後の有効列'}を選択してEnter: `)
   record.finalBeforeMeasurement=verify(await read(page,index),vectors[index])
   await canvas.screenshot({path:`${out}/${width}-dpr${dpr}-${index}-final.png`})
   if(hasMeasurement){
    await terminal.question('測定列を選択してEnter（確率分布は既に測定直前の全signed値で検証済み）: ')
    const values=await read(page,index),N=index===4?8:16,probabilities=Array(N).fill(0)
-   for(let i=0;i<values.length;i+=2)probabilities[(i/2)%N]+=values[i]**2+values[i+1]**2
+   for(let i=0;i<values.length;i+=2)probabilities[slug==='shor_qft'?Math.floor((i/2)/16):(i/2)%N]+=values[i]**2+values[i+1]**2
    const outcomes=probabilities.map((p,k)=>({p,k})).filter(x=>x.p>1e-5)
-   if(outcomes.length!==1||Math.abs(outcomes[0].p-1)>5e-5||(index===3&&outcomes[0].k!==8))throw Error(JSON.stringify({values,outcomes}))
+   if(outcomes.length!==1||Math.abs(outcomes[0].p-1)>5e-5||(slug==='shor_qft'&&![0,4,8,12].includes(outcomes[0].k))||(index===3&&outcomes[0].k!==8))throw Error(JSON.stringify({values,outcomes}))
    record.measuredOutcome={values,outcomes}
   }
   if(await terminal.question('undo/redoのみ・trashなしを目視。ゲート一時削除→undo→redo→undoで元回路復元。旧trash位置クリック無効果、全gate可視を確認したら yes: ')!=='yes')throw Error('Manual checks not confirmed')
