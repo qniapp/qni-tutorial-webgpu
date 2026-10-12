@@ -1,0 +1,29 @@
+---
+interface Props {stage:'initial'|'shift1'|'shift2'}
+const {stage}=Astro.props
+// Author's fixed tables, not an executable quantum circuit or a simulator.
+const rows={initial:[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],shift1:[1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2],shift2:[1,2,4,8,1,2,4,8,1,2,4,8,1,2,4,8]}[stage]
+---
+<section data-shor-matrix={stage} aria-label={`${stage}: xの各行とf(x)の各列`}>
+  <div class="matrix">
+    <span class="f-title">f(x) の値</span>
+    {rows.map((_,f)=><span class="column" style={`grid-column:${f+3};grid-row:2`} data-f={f}>{f}</span>)}
+    <span class="x-title">x の値</span>
+    {rows.map((nonzero,x)=><>
+      <span class="row" data-x={x} style={`grid-column:2;grid-row:${x+3}`}>{x}</span>
+      {rows.map((_,f)=><qubit-circle style={`grid-column:${f+3};grid-row:${x+3}`} data-amplitude={f===nonzero?'0.25':'0'} data-ket={16*x+f} data-size="base" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase tabindex="0"></qubit-circle>)}
+    </>)}
+  </div>
+</section>
+<script>import './qubit-circle'</script>
+<style>
+section {width:100%;min-width:0;margin:1.5rem 0}
+.matrix {display:grid;grid-template-columns:30px 18px repeat(16,minmax(0,34px));gap:4px;align-items:center}
+.f-title {grid-column:3 / span 16;grid-row:1;text-align:center;font-weight:700;font-size:20px}
+.x-title {grid-column:1;grid-row:3 / span 16;writing-mode:vertical-rl;font-size:16px;font-weight:700;justify-self:center}
+.column,.row {text-align:center;font-size:14px;min-width:0}
+.matrix :global(qubit-circle) {width:100%;height:auto;aspect-ratio:1;margin:0;cursor:pointer;min-width:0}
+.matrix :global(qubit-circle::after) {content:none}
+.matrix :global(qubit-circle:focus-visible) {outline-offset:0}
+@media(max-width:639px){.matrix {grid-template-columns:18px 14px repeat(16,minmax(0,1fr));gap:2px}.column,.row {font-size:10px}.x-title {font-size:11px}.f-title {font-size:16px}}
+</style>

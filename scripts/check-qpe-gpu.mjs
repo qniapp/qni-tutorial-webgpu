@@ -3,10 +3,10 @@ import {chromium} from '@playwright/test'
 import {createInterface} from 'node:readline/promises'
 import {mkdir,writeFile,readFile} from 'node:fs/promises'
 const slug=process.argv[2]??'quantum_phase_estimation_circuit'
-if(!['quantum_phase_estimation_circuit','phase_kickback','shor_fx'].includes(slug))throw Error('unsupported page')
+if(!['quantum_phase_estimation_circuit','phase_kickback','shor_fx','shor_u'].includes(slug))throw Error('unsupported page')
 const fixed=JSON.parse(await readFile(new URL(`../tests/fixtures/${slug}-fixed.json`,import.meta.url)))
-const analysis=JSON.parse(await readFile(new URL(slug==='shor_fx'?'../tests/fixtures/shor-fx-approved-analysis.json':'../tests/fixtures/qpe-approved-analysis.json',import.meta.url)))
-const vectors=slug==='shor_fx'?analysis.shorFxExpected:slug==='phase_kickback'?analysis.kickbackExpected:analysis.qpeExpected
+const analysis=JSON.parse(await readFile(new URL(slug==='shor_u'?'../tests/fixtures/shor-u-approved-analysis.json':slug==='shor_fx'?'../tests/fixtures/shor-fx-approved-analysis.json':'../tests/fixtures/qpe-approved-analysis.json',import.meta.url)))
+const vectors=slug==='shor_u'?analysis.shorUExpected:slug==='shor_fx'?analysis.shorFxExpected:slug==='phase_kickback'?analysis.kickbackExpected:analysis.qpeExpected
 const base=process.env.QTW_AUDIT_URL??'https://qniapp.github.io/qni-tutorial-webgpu/'
 const out=process.env.QTW_AUDIT_OUTPUT??`/tmp/qtw-${slug}-gpu`;await mkdir(out,{recursive:true})
 const terminal=createInterface({input:process.stdin,output:process.stdout})
@@ -26,6 +26,13 @@ for(const width of [390,1440])for(const dpr of [1,2]){
   const initialExpected=vectors[index].map((_,i)=>[i===0?1:0,0]);const record={base,slug,width,dpr,index,start:verify(await read(page,index),initialExpected)}
   const initial=await embed.evaluate(e=>e.runner.circuitJSON())
   await canvas.screenshot({path:`${out}/${width}-dpr${dpr}-${index}-step0.png`})
+  if(slug==='shor_u'){
+   record.authoredStages=[]
+   for(const stage of analysis.shorUStageExpected){
+    await terminal.question(`Shor U: ${stage.stage} authored column ${stage.column} (0-based)を選択してEnter: `)
+    record.authoredStages.push({stage:stage.stage,column:stage.column,...verify(await read(page,index),stage.values)})
+   }
+  }
   const hasMeasurement=fixed.circuits[index].cols.some(col=>col.includes('Measure'))
   await terminal.question(`${slug}/${width}/DPR${dpr}/回路${index} (0-based): step0・palette非表示・全gate可視・Regularを確認。${hasMeasurement?'測定直前の最後のH列':'最後の有効列'}を選択してEnter: `)
   record.finalBeforeMeasurement=verify(await read(page,index),vectors[index])

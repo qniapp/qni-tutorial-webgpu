@@ -1,4 +1,6 @@
-# shor_u: U1〜U4承認済み / 別の図の式I1でSTOP
+# shor_u: U1〜U4承認済み・原PNG保持＋PR589注記で解決
+
+2026-10-12 09:31の最新指示で原PNG/credit保持と直下のPR589 exact noteを適用。I1の画像訂正/ownedSVG置換は撤回。現在の移植/公開検査はporting.md参照。以下は歴史的な承認前提案とSTOP記録。
 
 2026-10-12 08:52の依頼で高宮さんが以下U1/U2=1996/U3/U4をexact承認。これらは再質問しない。原図の新たなbase/exponent逆転を発見し、owned置換/route作成前に停止した。現在の質問は [shor-u-image-label-blocker.md](shor-u-image-label-blocker.md) のI1だけ。以下は既承認案の歴史的提案・数値記録。
 

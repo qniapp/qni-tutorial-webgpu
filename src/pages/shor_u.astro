@@ -1,0 +1,140 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Ket from '../components/Ket.astro'
+import Sidenote from '../components/Sidenote.astro'
+import ShorPowerDiagram from '../components/ShorPowerDiagram.astro'
+import ShorMod15Graph from '../components/ShorMod15Graph.astro'
+import ShorModMatrix from '../components/ShorModMatrix.astro'
+import VedralCircuitDiagram from '../components/VedralCircuitDiagram.astro'
+---
+<TutorialLayout title={String.raw`\(a^xmod(N)\) の実装`} description="べき剰余の実装方法" section="ショアの因数分解" hasMath hasCircuit>
+
+
+<p>
+  今回はいよいよ、{String.raw`\(a^x\,mod(N)\)`} を実際に計算できる回路を実装します。
+  前々回では、ブラックボックスである U ゲートをいくつも使った場合の実装を見てきました。
+  この実装では、U ゲートの一つひとつは現在の値を {String.raw`\(a\)`} 倍し、{String.raw`\(mod(N)\)`} した値を書き込むのでした。 今回は、これらの連続した U
+  と同じ動作をする一つの {String.raw`\(a^xmod(N)\)`} 回路 (べき剰余回路) の実装を考えます。
+</p>
+
+<figure>
+  <ShorPowerDiagram variant="controlled" />
+</figure>
+
+<h2>まともに実装した場合</h2>
+
+<p>
+  べき剰余回路は、まともに実装すると非常に大きくなります。 V. Vedral らの論文<Sidenote id="vedral">V. Vedral, A. Barenco, A. Ekert,
+  <a href="https://arxiv.org/abs/quant-ph/9511018" class="italic"
+    >Quantum Networks for Elementary Arithmetic Operations</a
+  >
+  (1996) </Sidenote>には、べき剰余回路の実装方法が詳しく載っています。
+</p>
+
+<figure>
+  <img src={`${import.meta.env.BASE_URL}images/axmodN.png`} class="h-auto w-full" />
+</figure>
+
+<p>注: 図中の出力ラベル {String.raw`\(x^a\, mod\, N\)`} は、正しくは {String.raw`\(a^x\, mod\, N\)`} です。</p>
+
+<p>
+  べき剰余回路の大まかな構成は、Ctrl MULT MOD という部品と <swap-gate></swap-gate>
+  をいくつか並べた形になります。 Ctrl MULT MOD は制御つき剰余乗算のことで、(その意味は置いておいて)
+  次のような回路になります。
+</p>
+
+<figure>
+  <VedralCircuitDiagram />
+</figure>
+
+<p>
+  見ると Ctrl MULT MOD の中にも ADDER MOD
+  と呼ばれる別の部品が入っており、こちらもゲートを組合わせて実装する必要があります。
+  このように、べき剰余回路はさまざまな部品を階層的に組合わせることで構成できる大規模で複雑な回路です。
+</p>
+
+<p>
+  これをそのまま Qni で実装すると Qni の最大量子ビット数 16
+  を簡単に超えてしまうため、今回は別の方法を採ります。
+</p>
+
+<h2>べき剰余回路の小さい (ずるい) 実装</h2>
+
+<p>
+  今回はべき剰余回路のずっと小さい実装を見てみましょう。 {String.raw`\(a\)`} と {String.raw`\(N\)`} を固定し、かつあらかじめ
+  {String.raw`\(r\)`} が分かっている場合であれば (=
+  因数分解の答があらかじめ分かっているならば)、べき剰余回路はとても短く実装できます。
+  答を利用しているのでちょっとずるいのですが、実行結果は本来のべき剰余回路と変わらないので、ショアのアルゴリズムの動作を見るぶんには問題ありません。
+</p>
+
+<p>
+  まずべき乗 {String.raw`\(a^x\)`} の部分について、今回は {String.raw`\(a = 2\)`} を選択します。その理由は、{String.raw`\(2^x\)`}
+  は論理演算ではシフト演算で簡単に実装できるからです。 {String.raw`\(2^x\)`} を計算するには左シフトを {String.raw`\(x\)`}
+  回、つまり x ビットほど上位ビットへずらすだけです。このビットをずらすという操作は <swap-gate></swap-gate> で実現できます。ビットのずらしを <swap-gate></swap-gate>
+  によるビットの入れ替えとして書くことで、量子回路でのシフト演算が実現できます。
+</p>
+
+<p>
+  また剰余 {String.raw`\(mod(N)\)`} については、シフト演算のラップアラウンドで実現できます。
+  ラップアラウンドとは、左シフトしたときに最上位ビットを最下位ビットにぐるっと回して移動する操作です。
+  たとえば 4 ビットであれば、1000 を左シフトすると 0001 となります。 {String.raw`\(mod(15)\)`} の場合、10 進数の 8
+  (二進数で 1000) を左シフトすると 16 になりますが、4 ビットのラップアラウンドを考えると 0001
+  になります。 {String.raw`\(16\,mod(15) = 1\)`} なので、確かに剰余が正しく求まっています。
+</p>
+
+<h2>べき剰余回路</h2>
+
+<p>
+  シフト演算とラップアラウンドで {String.raw`\(2^x mod(15)\)`} を計算する回路を見てみましょう <Sidenote id="register_order">説明の都合上、{String.raw`\(2^x mod(15)\)`} を書き込む用の 4 量子ビットと {String.raw`\(x\)`} を入れる用の 4
+  量子ビットを上下入れ替えてあります。</Sidenote>。 {String.raw`\(2^x mod(15)\)`} を書き込む量子ビットは
+  mod(15) のラップアラウンドを実現するので 4 量子ビットになります。
+</p>
+
+<qni-webgpu-circuit max-wire-count="1" palette={"[]"} run-button circuit={"{\"cols\":[[\"{f(x)を入れる用\"],[\"|1>\",\"|0>\",\"|0>\",\"|0>\"],[\"}\"],[1],[\"{x=0〜15\"],[1,1,1,1,\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[1,1,1,1,\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1],[\"{左シフト mod(15)\"],[1,1,\"Swap\",\"Swap\",\"•\"],[1,\"Swap\",\"Swap\",1,\"•\"],[\"Swap\",\"Swap\",1,1,\"•\"],[\"}\"],[1],[\"{左シフト2回 mod(15)\"],[1,\"Swap\",1,\"Swap\",1,\"•\"],[\"Swap\",1,\"Swap\",1,1,\"•\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
+
+<p>
+  {String.raw`\(x\)`} を入れる量子ビットを <h-gate></h-gate>
+  で重ね合わせした直後の状態ベクトルは、見やすく正方形に並べると次のようになります。
+</p>
+
+<ShorModMatrix stage="initial" />
+
+<p>
+  {String.raw`\(f(x) = 2^x mod(15)\)`} の値は列番号 (横方向) から読みます。 <Ket label="1" /> や <Ket label="17" />
+  などに確率が散らばっていますが、測定すると {String.raw`\(f(x)\)`} は 100% の確率で 1 となります。 これは
+  {String.raw`\(f(x)\)`} を <Ket label="1" /> に初期化したので当然です。 x の値は行番号 (縦方向) から読みます。 <h-gate></h-gate> で重ね合わせを作ったので、x の値は 0 から 15 までそれぞれ 6.25%
+  の等しい重みを持ちます。
+</p>
+
+<p>
+  回路の次のブロックでは、条件つきの左シフト {String.raw`\(mod(15)\)`} を計算します。 {String.raw`\(x\)`} の最下位ビットが 1
+  の場合、{String.raw`\(f(x)\)`} の各ビットを左シフトすることで 2 倍します。
+  そして最上位ビットを最下位ビットにラップアラウンドすることで {String.raw`\(mod(15)\)`} します。
+  このとき状態ベクトルは次の状態になり、{String.raw`\(x\)`} の最下位ビットが 1 の場合だけ (= {String.raw`\(x\)`}
+  が奇数の場合だけ) {String.raw`\(f(x)\)`} が 2 倍されたことが分かります。
+</p>
+
+<ShorModMatrix stage="shift1" />
+
+<p>
+  回路の最後のブロックでは、同様に条件つきの左 2 ビットシフト {String.raw`\(mod(15)\)`} を計算します。 {String.raw`\(x\)`}
+  の最下位から 2 ビット目が 1 の場合だけ、左 2 ビットシフトつまり 4 倍して {String.raw`\(mod(15)\)`}
+  を書き込みます。 この時、状態ベクトルは次の状態になり、{String.raw`\(x\)`} の最下位から 2 ビット目が 1
+  の場合だけ f(x) が 4 倍されていることが分かります。
+</p>
+
+<ShorModMatrix stage="shift2" />
+
+<p>
+  これで本当に {String.raw`\(2^x mod(15)\)`} がすべての {String.raw`\(x\)`} について計算できているのでしょうか？ 確率が 0
+  でない振幅の並びをよーく見てみると、これは最初のグラフを 90
+  度回転したものとまったく同じ位置にプロットされていることが分かります。 たしかに、状態ベクトルに
+  {String.raw`\(2^x mod(15)\)`} を重ね合わせとして書き込むことができました! あとはこれを QFT
+  にかけて、反復パターンを取り出すだけです。
+</p>
+
+<figure>
+  <ShorMod15Graph />
+</figure>
+
+</TutorialLayout>

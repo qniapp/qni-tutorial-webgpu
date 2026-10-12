@@ -2,7 +2,7 @@
 import {chromium} from '@playwright/test'
 import {readFile,writeFile} from 'node:fs/promises'
 const slug=process.argv[2]??'quantum_phase_estimation_circuit'
-if(!['quantum_phase_estimation_circuit','phase_kickback','qpe_output','shor_hsp','shor_fx','shor_r'].includes(slug))throw Error('unsupported page')
+if(!['quantum_phase_estimation_circuit','phase_kickback','qpe_output','shor_hsp','shor_fx','shor_r','shor_u'].includes(slug))throw Error('unsupported page')
 const fixtureName=slug==='shor_r'?'shor-r-approved':slug==='shor_hsp'?'shor-hsp-approved':slug==='qpe_output'?'qpe-output-approved':slug+'-fixed'
 const fixed=JSON.parse(await readFile(new URL(`../tests/fixtures/${fixtureName}.json`,import.meta.url)))
 const originalFixture=['qpe_output','shor_hsp','shor_r'].includes(slug)?{circuits:[]}:JSON.parse(await readFile(new URL(`../tests/fixtures/${slug}-original.json`,import.meta.url)))
@@ -51,6 +51,14 @@ for(const width of [390,1440])for(const dpr of [1,2]){
    approvedMath.splice(32,1,{tex:'a',display:false},{tex:'mod(N)',display:false})
   }
  }
+ if(slug==='shor_u'){
+  const plain=s=>s.replace(/\\\(.*?\\\)/gs,'').replace(/\s+/g,'')
+  for(const [before,after] of fixed.edits.slice(0,7))approvedText=approvedText.replace(plain(before),plain(after))
+  if(!approvedText.includes('注:図中の出力ラベル'))approvedText=approvedText.replace('べき剰余回路の実装方法が詳しく載っています。','べき剰余回路の実装方法が詳しく載っています。注:図中の出力ラベルは、正しくはです。')
+  if(approvedMath.length===39&&approvedMath[1].tex===String.raw`a\,mod(N)`)approvedMath.splice(1,1,{tex:'a',display:false},{tex:'mod(N)',display:false})
+  if(approvedMath.length===40)approvedMath.splice(4,0,{tex:String.raw`x^a\,mod\,N`,display:false},{tex:String.raw`a^x\,mod\,N`,display:false})
+  if(JSON.stringify(approvedMath)!==JSON.stringify(fixed.math))throw Error('Original Shor U TeX changed outside U1/PR589 note; STOP')
+ }
  if(slug==='shor_r'){
   const plain=s=>s.replace(/\\\(.*?\\\)/gs,'').replace(/\s+/g,'')
   for(const [before,after] of fixed.edits)approvedText=approvedText.replace(plain(before),plain(after))
@@ -60,6 +68,7 @@ for(const width of [390,1440])for(const dpr of [1,2]){
   }
  }
  const result={slug,width,dpr,base,snapshots,approvedTextDiffZero:approvedText===ours.text,sourceGoldenTextMatches:ours.text===fixed.text,approvedTexDiffZero:JSON.stringify(approvedMath)===JSON.stringify(ours.math),rawTexUnchanged:JSON.stringify(original.math)===JSON.stringify(ours.math),sourceGoldenTexMatches:JSON.stringify(ours.math)===JSON.stringify(fixed.math),originalJSONMatches:JSON.stringify(original.circuits)===JSON.stringify(originalFixture.circuits),approvedJSONMatches:JSON.stringify(approvedCircuits)===JSON.stringify(ours.circuits),fixedJSONMatches:JSON.stringify(ours.circuits)===JSON.stringify(fixed.circuits??[]),WebGPUExecuted:false}
+ if(slug==='shor_u')result.approvedDescriptionMatches=original.description===ours.description&&ours.description===fixed.description
  if(slug==='shor_r')result.approvedDescriptionMatches=original.description===ours.description&&ours.description===fixed.description
  if(slug==='shor_fx')result.approvedDescriptionMatches=original.description===ours.description&&ours.description===fixed.description
  if(slug==='shor_hsp')result.approvedDescriptionMatches=original.description===ours.description&&ours.description===fixed.description

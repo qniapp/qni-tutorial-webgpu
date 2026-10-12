@@ -2001,3 +2001,49 @@ pnpm exec playwright test tests/ket.spec.ts tests/content-overflow.spec.ts
 ```
 
 `pending-real-machine-checks.md`参照。今回のSTOP/既承認状態/数学/PR証拠のみ通常main commit/pushして保存し、Pagesはdocs記録だけ（shor_u公開ではない）として確認して終了する。
+
+## 2026-10-12 shor_u移植再開 / U1-U4 exact + 原PNG保持/PR589 note / push停止10:25 hard stop10:30
+
+09:21開始時の未コミットpage/components/source fixtureをそのまま再利用し、09:31の割込み最新指示へ従う。通常fetch/rebase origin/main（up to date）、forceなし。porting tailと両U blocker再読。#588はMERGED/head30a450fdb403b0cc1edc4cecbeeae306580fb3e0。#589初回head029efd9は旧pixel編集のみだったので注記を推測せず確認。09:36更新head **e1995cbca78bf3b567e77369eb44863499bcd1d7** が原PNG復元＋source note2行だけへ変更され、HTML/TeX exactを取得。原へ以下approvedだけ適用した全文はPR589 head sourceとwhitespace-normalized一致（改行差あり、byte一致と称さない）。
+
+- U1 各Uがa modN→**現在値をa倍してmodNを書き込む**（exact proposal）。B追加なし。
+- U2 `(2021)`→**`(1996)`**。著者/title/arXiv URL/credit文を保持。
+- U3 3表の位置242だけket241→**242**。真の241/全768 amplitude文字列/順序/JSONは不変。
+- U4 f **列番号(横方向)**、x **行番号(縦方向)** のexact2句。他説明/90度回転文不変。
+- **新方針:** axmodNは引用図なので原PNG/credit保持。owned modexp SVG案を完全にdrop（Ctrl MULT MODのowned componentは再利用）。PNGはpublic/imagesへbyteコピー、SHA256 **a58880daae7dc6ca78fc303d3b3015f9b5a23df01fca0096326d0a7cde5ee5a0** と独立guard。pixel編集0。
+- 直下plain p noteをPR589 **exact**で追加:
+
+```html
+<p>注: 図中の出力ラベル \(x^a\, mod\, N\) は、正しくは \(a^x\, mod\, N\) です。</p>
+```
+
+## owned置換/デザイン/metadata
+
+4画像のうち**3画像→owned SVG**: shor_us→既存ShorPowerDiagram(controlled)、ctrl_mult_mod→fixed VedralCircuitDiagram（3 ADDER MOD/6 control-pairs/dashed frame/矢印/0とx入力/y出力/≡/compact部品/bands/ellipsis保持）、shor_mod15→既存ShorMod15Graph（x0..15、値1/2/4/8×4）。**axmodN1画像は原PNG保持、credits削除0、Vedral scholarly引用そのまま**。新図/ネイティブglyphはRegular、prose H2/Swap3はBold（guard）。他本文/TEX/JSON/引用/link/header/footer/CSS/pin348992f不変。
+
+3表の**768 independent qubit-circle**はShorModMatrix固定stage(initial/shift1/shift2)で全16×16/各軸0..15/author配列/0.25・0/ket順序を保つ。CSS gridはsource矩形を維持し、global4列fold/fit-content/clip/scrollを使わない。responsive phonecircle16+px、desktop34px、各circle focus/click/hover/Escapeは既存ownerを再利用、別セルの振幅データを共有しない。隣の円にmouseが偶然重なった状態でfocus-scrollするとhover popupが選ばれるため、testはkeyboard検証前にmouseを円のない位置へ移動して意味を分離する（共有tooltip/CSSの仕様変更なし）。2並列design候補/shape/synthesis/却下とgraftは [shor-u-design.md](shor-u-design.md)。
+
+**8wire JSON1 byte値差0 / palette[[]] / max-wire-count[1] / run1。** body real MathJax inputsは旧原39→U1で40→note2追加で**42**、他TeX差0（3ketを含む）。Snapshot approved/source fullbyte literal8個で独立guard、原hash固定、全768 cells/3label差/JSONをguard。prototype新数学/genericchart API/CPU量子sim/fallbackを導入しない。
+
+### 非GPU検査
+
+**typecheck/build/diff-check成功、source＋390/1440×DPR1/2のtext/42TeX/JSON/palette/max/run/768cells/axes/popups/Bold/Regular/figure counts/PNG/scroll/errors＋sidebarの10/10成功。** 本文/body/Shadow inner scrollbar0、document horizontal overflow0、console/page error0。PR589 note直下/TeX2/arXiv creditをguard。最新原実サイトlocal比較も **4/4成功・approved editsだけ**。最新mainは#588本文、#589 noteが未公開なら2TeX/noteだけapproved whitelist、公開済みならraw一致で通す。
+
+Pythonのauthor数値/16個+0.25/norm1/確率6.25%、classical4bit rotate/powmodで全x0..15を確認。U1-U4/注記を含むapproved-analysisはquestions[]、GPUExecuted:false、signed256 complex期待値はauthor表とH tensor productの数学だけ。**GPU検証ではない**。
+
+log `/tmp/qtw-u-{build-final,tests-final,tests-sidebar,local-compare}.log`、screenshots `/tmp/qtw-shor-u-{390,1440}-dpr{1,2}.png`、localraw比較fixture `shor-u-local-nongpu-verification.json`。full non-GPU regression suiteをbackgroundで実行し、既存4失敗は緩和せず保持する。
+
+### 実機確認待ち（gmktec unreachable、SSHなし）
+
+新shor_uをreal GPU audit scriptへ追加。**未実行**。adapter/running/step0/norm/signed final＋author source列6(H後)/12(shift1後)/17(shift2後)全512 floats/Regular/allgate/undo-redo-only/no-trash/JSON復元/nativeactive scroll/元run replayを確認する。test-only on-demand読戻し、production自動readbackなし。全pending:
+
+```sh
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-eigenphases-gpu.mjs
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs quantum_phase_estimation_circuit
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs phase_kickback
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs shor_fx
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs shor_u
+pnpm exec playwright test tests/ket.spec.ts tests/content-overflow.spec.ts
+```
+
+4旧layout guardも**実機確認待ち**。norm等数学をnativeGPU代替と称さず、期待値/共通CSSを緩和しない。通常pushしてPages成功/公開URLを確認し、公開source5/比較4成功の証拠を保存してからshor_qftへ進む。

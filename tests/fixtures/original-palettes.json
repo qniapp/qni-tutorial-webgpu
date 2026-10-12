@@ -321,5 +321,6 @@
   "qpe_output": [],
   "shor_hsp": [],
   "shor_fx": [[], []],
-  "shor_r": []
+  "shor_r": [],
+  "shor_u": [[]]
 }
