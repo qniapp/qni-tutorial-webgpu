@@ -2148,3 +2148,11 @@ TeX8入力のうちr=2,4→rを1入力だけ変更、数値2/4はplain proseへ�
 **typecheck/build/diff-check成功、local source1＋viewport4＋sidebar5=10/10成功、最新原実サイトとのlocal比較4/4でrawTextDiffZero/rawTexDiffZero/rawTexStringsDiffZeroすべてtrue**。390/1440×DPR1/2でdocument horizontal overflow0/Body・content・Shadow内scrollbars0/console-pageerrors0。`shor-qft-merged-local-nongpu-verification.json`、log `/tmp/qtw-qft-merged-{build,tests,local-compare}.log`。既存のnativeGPU全件/4旧layout失敗は**実機確認待ち**、commandsはpending-real-machine-checks.mdを維持。今回非GPU数学値が変わる変更なし、GPUを実行済みとは称さない。
 
 通常main commit/pushで公開してPages成功、公開source＋4viewport5/5・最新原公開4比較のraw3種差0を再確認する。**shor_qftだけで停止**し、他page/新blockerの調査・port・publishを行わない。11:20までにpreview/configを片付けて終了する。
+
+### 11:02 merged版公開・直接差0確認完了
+
+**ba00c86 / Pages38194020481 success**（https://github.com/qniapp/qni-tutorial-webgpu/actions/runs/38194020481）。通常main fetch/rebase/push、forceなし。**公開source1＋390/1440×DPR1/2の4条件5/5成功、最新原実サイト比較4/4成功、rawTextDiffZero/rawTexDiffZero/rawTexStringsDiffZero全12assert true**。旧Q1文言補正ゼロ、raw snapshotに本文canonical直接等値・8TeX canonical直接等値・**8Tex実文字列（空白も保持）直接等値**を保存。raw difference0と正しく報告できる状態になった。
+
+公開JSON/palette[[]]/max[1]/run1・全256cells/amp/kets・matrix両軸・popup操作/Escape・phoneサイズ・native非fit/非zoomもguard成功。document横overflow/Body・content・Shadow内scrollbars/console-pageerrorsは全4で0。`tests/fixtures/shor-qft-merged-public-nongpu-verification.json`、log `/tmp/qtw-qft-merged-{pages,public-tests,public-compare}.log`。
+
+**shor_qftで終了。** ふろくB1〜B3は依然pending・未適用、no-cloning/後続のroute作成・本文/TeX変更・公開・再調査なし。nativeGPU全件と旧4layout failuresは**実機確認待ち**、commandをpending-real-machine-checks.mdに保持。今回GPU未実行、過去full suite383/387（旧4だけ）の状態を新GPU成功等と誤称しない。最後は公開証拠だけを通常mainへcommit/pushしPages成功を確認、owned preview/temporary configを除去する。
