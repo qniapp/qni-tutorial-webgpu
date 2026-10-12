@@ -47,7 +47,7 @@ The Japanese prose, section order, Bloch rotation image/credit, and review quest
 
 - `qubit_circle`, animated transition arrows, and decorative `<h-gate>` icons: static formulas or textual amplitude values replace them.
 - The H/X-only palette, one-wire/five-step constraints, and old inspector: the current unrestricted WebGPU editor replaces them.
-- Orbit scheduling and image-backed flashcards: native `<details>` questions replace them; no learning history is saved.
+- Orbit scheduling: Orbit has shut down, so `src/components/orbit-quiz.ts` renders the unchanged `<orbit-reviewarea>`/`<orbit-prompt>` markup as self-graded quiz cards with no spaced repetition and no saved history. See [the quiz spec](docs/quiz-spec.md).
 - Links to unmigrated X/PHASE pages: plain-text navigation replaces them.
 
 Margin notes use `src/components/Sidenote.astro`, ported from the original tutorial's CSS and Liquid tags. Supply a page-unique `id` and use `numbered` for automatic superscript numbering. Place the component inside a prose paragraph, or inside a figure before its image for an image credit, as in the original tutorial. Notes appear in the right margin from 640px; below that width, tap the blue-backed number or ellipsis to open/close the note. This works without JavaScript. The reserved margin starts at 640px rather than the original 768px to avoid overflow between those breakpoints. `tests/sidenote.spec.ts` covers placement, typography, breakpoint behavior, and toggling.
