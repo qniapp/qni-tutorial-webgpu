@@ -48,7 +48,8 @@ for(const width of [390,1440])for(const dpr of [1,2]){
   if(await terminal.question('undo/redoのみ・trashなしを目視。ゲート一時削除→undo→redo→undoで元回路復元。旧trash位置クリック無効果、全gate可視を確認したら yes: ')!=='yes')throw Error('Manual checks not confirmed')
   if(await embed.evaluate(e=>e.runner.circuitJSON())!==initial)throw Error('Circuit not restored')
   record.manualToolbarVisibilityConfirmed=true
-  if(fixed.embeds[index].runButton){await embed.locator('.run-button').click();await page.waitForTimeout(500);await page.waitForFunction(i=>document.querySelectorAll('qni-webgpu-circuit')[i].dataset.state==='running',index);record.runButtonReplayStep0=verify(await read(page,index),initialExpected)}
+  if(fixed.embeds[index].runButton){// The restart action is inside egui, last in its keyboard focus order.
+   await embed.locator('canvas').focus();await page.keyboard.press('Shift+Tab');await page.waitForTimeout(100);await page.keyboard.press('Enter');await page.waitForTimeout(500);await page.waitForFunction(i=>document.querySelectorAll('qni-webgpu-circuit')[i].dataset.state==='running',index);record.runButtonReplayStep0=verify(await read(page,index),initialExpected)}
   record.scrollFindings=await page.evaluate(()=>{const root=document.querySelector('.content-with-margin'),es=[document.body,root,...root.querySelectorAll('*')];for(const e of root.querySelectorAll('qni-webgpu-circuit'))es.push(...e.shadowRoot.querySelectorAll('*'));return es.filter(e=>{const s=getComputedStyle(e);return(['auto','scroll'].includes(s.overflowX)&&e.scrollWidth>e.clientWidth)||(['auto','scroll'].includes(s.overflowY)&&e.scrollHeight>e.clientHeight)}).map(e=>e.tagName)})
   if(record.scrollFindings.length||await page.evaluate(()=>document.documentElement.scrollWidth)>width||errors.length)throw Error(JSON.stringify({record,errors}))
   records.push(record)

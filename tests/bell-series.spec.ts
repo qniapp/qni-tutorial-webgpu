@@ -11,7 +11,7 @@ for (const width of [390, 1440]) {
       expect(await diagram.locator('qubit-circle').evaluateAll(elements => elements.map(element => Number(element.getAttribute('data-amplitude'))))).toEqual(amplitudes)
     }
     await expect(diagram.locator('h-gate')).toHaveAttribute('data-glyph', 'regular')
-    await expect(page.locator('qni-webgpu-circuit').getByRole('button', { name: '量子回路を実行' })).toBeVisible()
+    await expect(page.locator('qni-webgpu-circuit')).toHaveAttribute('run-button')
   })
 
   test(`interactive four-section field matches the original Bell decoding table at ${width}`, async ({ page }) => {
