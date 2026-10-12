@@ -49,10 +49,12 @@ export async function circuitJSON(embed) {return embed.evaluate(e=>e.runner.circ
 export function circuitJSONEqual(left,right) {
  const normalize=json=>{
   const circuit=JSON.parse(json)
-  // qni-webgpu re-encodes angles with "_" instead of "/" after edits.
+  // qni-webgpu normalizes angles and drops trailing all-identity columns on edit/undo.
+  // Interior identity columns remain significant.
   circuit.cols=circuit.cols.map(col=>col.map(gate=>typeof gate==='string'
    ? gate.replace(/\(([^)]*)\)/g,(_,angle)=>`(${angle.replaceAll('_','/')})`)
    : gate))
+  while(circuit.cols.length && circuit.cols.at(-1).every(gate=>gate===1)) circuit.cols.pop()
   return circuit
  }
  return isDeepStrictEqual(normalize(left),normalize(right))
@@ -168,26 +170,44 @@ export async function audit({slug,base,out,check}) {
  await mkdir(out,{recursive:true})
  const headless=process.argv.includes('--headless') || (!process.argv.includes('--headed') && process.env.QTW_HEADLESS!=='0')
  const summaries=[],records=[]
+ const args=['--enable-unsafe-webgpu','--enable-features=Vulkan','--use-angle=vulkan','--no-sandbox']
+ const launchOptions={headless,executablePath:process.env.QTW_CHROMIUM_PATH || undefined,args}
  let browser
  try {
-  browser=await chromium.launch({headless,executablePath:process.env.QTW_CHROMIUM_PATH || undefined,args:['--enable-unsafe-webgpu','--enable-features=Vulkan','--use-angle=vulkan','--no-sandbox']})
+  browser=await chromium.launch(launchOptions)
   for(const width of [390,1440]) for(const dpr of [1,2]) {
-   let context
+   let context,scaledBrowser
    const summary={slug,width,dpr,status:'FAIL'}
    try {
-    context=await browser.newContext({viewport:{width,height:1100},deviceScaleFactor:dpr})
+    // deviceScaleFactor emulation breaks egui/eframe canvas backing-size geometry.
+    // Use Chromium's real device scale instead, with a native-sized viewport.
+    if(dpr===2) {
+     scaledBrowser=await chromium.launch({...launchOptions,args:[...args,'--force-device-scale-factor=2',`--window-size=${width},1100`]})
+     context=await scaledBrowser.newContext({viewport:null})
+    } else {
+     context=await browser.newContext({viewport:{width,height:1100},deviceScaleFactor:1})
+    }
     const page=await context.newPage(),errors=[]
     page.setDefaultTimeout(30000)
     page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())})
     await page.goto(new URL(`${slug}/`,base).href)
     if(!await page.evaluate(async()=>!!(navigator.gpu&&await navigator.gpu.requestAdapter()))) throw Error('No real WebGPU adapter; audit cannot pass')
     await page.waitForFunction(()=>document.documentElement.dataset.mathjax==='ready')
+    if(dpr===2) {
+     expect(await page.evaluate(()=>window.devicePixelRatio),'Native DPR2 audit requires window.devicePixelRatio === 2').toBe(2)
+     const canvas=page.locator('qni-webgpu-circuit').first().locator('canvas')
+     await expect(canvas,'Native DPR2 audit requires an embed canvas').toBeVisible()
+     await expect.poll(()=>canvas.evaluate(c=>{
+      const cssWidth=c.getBoundingClientRect().width
+      return cssWidth>0 && Math.abs(c.width-2*cssWidth)<=2
+     }),{timeout:30000,message:'Native DPR2 audit requires canvas backing width ≈ 2× CSS width (egui scale mismatch)'}).toBe(true)
+    }
     await check({page,width,dpr,records})
     await scrollFindings(page,width)
     if(errors.length) throw Error(`Browser errors: ${JSON.stringify(errors)}`)
     summary.status='PASS'
    } catch(e) {summary.error=e.stack ?? String(e);process.exitCode=1}
-   finally {await context?.close()}
+   finally {try {await context?.close()} finally {await scaledBrowser?.close()}}
    summaries.push(summary)
    console.log(`${summary.status} ${slug} ${width}/DPR${dpr}${summary.error?`: ${summary.error}`:''}`)
   }
