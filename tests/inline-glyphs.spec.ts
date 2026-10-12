@@ -46,6 +46,6 @@ test('replaced illustrations no longer cite old images, retained images keep ref
     expect(await page.locator('main').innerText()).not.toContain('画像クレジット')
   }
   await page.goto('/qni-tutorial-webgpu/quantum_circuit/')
-  await expect(page.locator('main img:not(orbit-prompt img)')).toHaveCount(2)
+  await expect(page.locator('main img')).toHaveCount(2)
   expect(await page.locator('main').innerText()).toContain('Feynman')
 })

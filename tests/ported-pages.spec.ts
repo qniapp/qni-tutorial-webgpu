@@ -64,12 +64,10 @@ for (const fixture of [qpu, faster, pbit, superposition, qubit, phase, notation,
     if (['what_qpu_do_faster','superposition','qubit','phase','circle_notation','write_operation','x_gate','phase_gate','measurement_operation','gate_combination','bb84_protocol','multi_qubit_circle_notation','multi_qubit_superposition','multi_qubit_operation','operator_pair','random_byte_generator','bb84_circuit','multi_qubit_phase_gate','partial_measurement','swap_gate','cnot_gate','swap_from_cnots','entanglement','disentangle','entanglement_operation','discriminating_bell_states','teleportation_circuit','cascading_teleportation','long_distance_entanglement','cphase','increment_circuit','decrement_circuit','addition_circuit','subtraction_circuit','multiplication_circuit','quantum_logic','superdense_coding_circuit','superposition_quantum_logic','phase_logic','phase_logic_combination'].includes(fixture.slug)) await page.waitForFunction(() => document.documentElement.dataset.mathjax === 'ready')
     await expect(page.locator('main h1')).toHaveText(fixture.title)
     await expect(page.locator('.lede')).toHaveText(fixture.description)
-    // Takamiya authorized removing the index Orbit sidenote.
-    const sidenotes = fixture.slug === intro.slug ? fixture.sidenotes.filter(id => id !== 'index-note-5') : fixture.sidenotes
-    await expect(page.locator('main .margin-note')).toHaveCount(sidenotes.length)
-    for (const id of sidenotes) await expect(page.locator(`#margin-note-${id}`)).toHaveCount(1)
+    await expect(page.locator('main .margin-note')).toHaveCount(fixture.sidenotes.length)
+    for (const id of fixture.sidenotes) await expect(page.locator(`#margin-note-${id}`)).toHaveCount(1)
     const images = fixture.images.filter(image => !replaced.has(image.split('/').at(-1)!))
-    await expect(page.locator('main img:not(orbit-prompt img)')).toHaveCount(images.length)
+    await expect(page.locator('main img')).toHaveCount(images.length)
     for (const image of images) await expect(page.locator(`main img[src="/qni-tutorial-webgpu/${image}"]`)).toHaveCount(1)
     await expect(page.locator('main orbit-prompt')).toHaveCount(fixture.orbitPrompts)
     const prompts = await page.locator('main orbit-prompt').evaluateAll(es => es.map(e => Object.fromEntries([...e.attributes].filter(a => !a.name.startsWith('data-astro-')).map(a => [a.name, a.value.replace(/\s+/g, '')]))))
@@ -97,7 +95,7 @@ for (const fixture of [qpu, faster, pbit, superposition, qubit, phase, notation,
     if (fixture.slug === 'what_qpu_do_faster') {
       expect(await page.locator('main mjx-container').count()).toBeGreaterThan(10)
       expect(await page.locator('main mjx-merror').count()).toBe(0)
-      expect(await page.locator('main img:not(orbit-prompt img)').evaluateAll(es => es.every(e => (e as HTMLImageElement).complete && (e as HTMLImageElement).naturalWidth > 0))).toBe(true)
+      expect(await page.locator('main img').evaluateAll(es => es.every(e => (e as HTMLImageElement).complete && (e as HTMLImageElement).naturalWidth > 0))).toBe(true)
     }
   })
 }
