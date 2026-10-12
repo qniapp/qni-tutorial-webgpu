@@ -1,0 +1,930 @@
+[
+  {
+    "slug": "no_cloning_theorem_proof",
+    "width": 390,
+    "dpr": 1,
+    "base": "http://127.0.0.1:4322/qni-tutorial-webgpu/",
+    "snapshots": [
+      {
+        "mathRaw": [
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "\\left\\{ \\begin{array}{l} U_{CLONE}(|🍎\\rangle|0\\rangle) = |🍎\\rangle|🍎\\rangle \\\\\n  U_{CLONE}(|👶\\rangle|0\\rangle) = |👶\\rangle|👶\\rangle \\end{array} \\right.",
+            "display": true
+          },
+          {
+            "tex": "(\\langle🍎|\\langle 0|)U^{\\dagger}_{CLONE} = \\langle🍎|\\langle🍎|",
+            "display": true
+          },
+          {
+            "tex": "\\begin{array}{l} &(\\langle🍎|\\langle 0|)U^{\\dagger}_{CLONE}U_{CLONE}(|👶\\rangle|0\\rangle) =\n  \\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle \\\\ \\Rightarrow &(\\langle🍎|\\langle 0|)(|👶\\rangle|0\\rangle) =\n  \\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle \\\\ \\Rightarrow &\\langle🍎|👶\\rangle\\langle 0|0\\rangle =\n  \\langle🍎|👶\\rangle\\langle🍎|👶\\rangle \\\\ \\Rightarrow &\\langle🍎|👶\\rangle =\n  (\\langle🍎|👶\\rangle)^2 \\\\ \\end{array}",
+            "display": true
+          },
+          {
+            "tex": "\\langle🍎|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "0",
+            "display": false
+          },
+          {
+            "tex": "1",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          }
+        ],
+        "text": "量子ビットの情報を複製できるユニタリ演算子があったとする。このとき、任意の状態の量子ビット,について、次が成り立つとする。1番目の式から、この式と2番目の式の両辺で内積を取ると、よってはまたはとなり、とが任意であることに矛盾する。以上より、そのようなユニタリ演算子は存在しない。",
+        "description": "",
+        "math": [
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "\\left\\{\\begin{array}{l}U_{CLONE}(|🍎\\rangle|0\\rangle)=|🍎\\rangle|🍎\\rangle\\\\U_{CLONE}(|👶\\rangle|0\\rangle)=|👶\\rangle|👶\\rangle\\end{array}\\right.",
+            "display": true
+          },
+          {
+            "tex": "(\\langle🍎|\\langle0|)U^{\\dagger}_{CLONE}=\\langle🍎|\\langle🍎|",
+            "display": true
+          },
+          {
+            "tex": "\\begin{array}{l}&(\\langle🍎|\\langle0|)U^{\\dagger}_{CLONE}U_{CLONE}(|👶\\rangle|0\\rangle)=\\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle\\\\\\Rightarrow&(\\langle🍎|\\langle0|)(|👶\\rangle|0\\rangle)=\\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle\\\\\\Rightarrow&\\langle🍎|👶\\rangle\\langle0|0\\rangle=\\langle🍎|👶\\rangle\\langle🍎|👶\\rangle\\\\\\Rightarrow&\\langle🍎|👶\\rangle=(\\langle🍎|👶\\rangle)^2\\\\\\end{array}",
+            "display": true
+          },
+          {
+            "tex": "\\langle🍎|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "0",
+            "display": false
+          },
+          {
+            "tex": "1",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "https://qniapp.github.io/qni/no_cloning_theorem_proof.html"
+      },
+      {
+        "mathRaw": [
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "\\left\\{ \\begin{array}{l} U_{CLONE}(|🍎\\rangle|0\\rangle) = |🍎\\rangle|🍎\\rangle \\\\\n  U_{CLONE}(|👶\\rangle|0\\rangle) = |👶\\rangle|👶\\rangle \\end{array} \\right.",
+            "display": true
+          },
+          {
+            "tex": "(\\langle🍎|\\langle 0|)U^{\\dagger}_{CLONE} = \\langle🍎|\\langle🍎|",
+            "display": true
+          },
+          {
+            "tex": "\\begin{array}{l} &(\\langle🍎|\\langle 0|)U^{\\dagger}_{CLONE}U_{CLONE}(|👶\\rangle|0\\rangle) =\n  \\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle \\\\ \\Rightarrow &(\\langle🍎|\\langle 0|)(|👶\\rangle|0\\rangle) =\n  \\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle \\\\ \\Rightarrow &\\langle🍎|👶\\rangle\\langle 0|0\\rangle =\n  \\langle🍎|👶\\rangle\\langle🍎|👶\\rangle \\\\ \\Rightarrow &\\langle🍎|👶\\rangle =\n  (\\langle🍎|👶\\rangle)^2 \\\\ \\end{array}",
+            "display": true
+          },
+          {
+            "tex": "\\langle🍎|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "0",
+            "display": false
+          },
+          {
+            "tex": "1",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          }
+        ],
+        "text": "量子ビットの情報を複製できるユニタリ演算子があったとする。このとき、任意の状態の量子ビット,について、次が成り立つとする。1番目の式から、この式と2番目の式の両辺で内積を取ると、よってはまたはとなり、とが任意であることに矛盾する。以上より、そのようなユニタリ演算子は存在しない。",
+        "description": "",
+        "math": [
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "\\left\\{\\begin{array}{l}U_{CLONE}(|🍎\\rangle|0\\rangle)=|🍎\\rangle|🍎\\rangle\\\\U_{CLONE}(|👶\\rangle|0\\rangle)=|👶\\rangle|👶\\rangle\\end{array}\\right.",
+            "display": true
+          },
+          {
+            "tex": "(\\langle🍎|\\langle0|)U^{\\dagger}_{CLONE}=\\langle🍎|\\langle🍎|",
+            "display": true
+          },
+          {
+            "tex": "\\begin{array}{l}&(\\langle🍎|\\langle0|)U^{\\dagger}_{CLONE}U_{CLONE}(|👶\\rangle|0\\rangle)=\\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle\\\\\\Rightarrow&(\\langle🍎|\\langle0|)(|👶\\rangle|0\\rangle)=\\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle\\\\\\Rightarrow&\\langle🍎|👶\\rangle\\langle0|0\\rangle=\\langle🍎|👶\\rangle\\langle🍎|👶\\rangle\\\\\\Rightarrow&\\langle🍎|👶\\rangle=(\\langle🍎|👶\\rangle)^2\\\\\\end{array}",
+            "display": true
+          },
+          {
+            "tex": "\\langle🍎|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "0",
+            "display": false
+          },
+          {
+            "tex": "1",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "http://127.0.0.1:4322/qni-tutorial-webgpu/no_cloning_theorem_proof/"
+      }
+    ],
+    "approvedTextDiffZero": true,
+    "sourceGoldenTextMatches": true,
+    "approvedTexDiffZero": true,
+    "rawTexUnchanged": true,
+    "sourceGoldenTexMatches": true,
+    "originalJSONMatches": true,
+    "approvedJSONMatches": true,
+    "fixedJSONMatches": true,
+    "WebGPUExecuted": false,
+    "rawTextDiffZero": true,
+    "rawTexDiffZero": true,
+    "rawTexStringsDiffZero": true
+  },
+  {
+    "slug": "no_cloning_theorem_proof",
+    "width": 390,
+    "dpr": 2,
+    "base": "http://127.0.0.1:4322/qni-tutorial-webgpu/",
+    "snapshots": [
+      {
+        "mathRaw": [
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "\\left\\{ \\begin{array}{l} U_{CLONE}(|🍎\\rangle|0\\rangle) = |🍎\\rangle|🍎\\rangle \\\\\n  U_{CLONE}(|👶\\rangle|0\\rangle) = |👶\\rangle|👶\\rangle \\end{array} \\right.",
+            "display": true
+          },
+          {
+            "tex": "(\\langle🍎|\\langle 0|)U^{\\dagger}_{CLONE} = \\langle🍎|\\langle🍎|",
+            "display": true
+          },
+          {
+            "tex": "\\begin{array}{l} &(\\langle🍎|\\langle 0|)U^{\\dagger}_{CLONE}U_{CLONE}(|👶\\rangle|0\\rangle) =\n  \\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle \\\\ \\Rightarrow &(\\langle🍎|\\langle 0|)(|👶\\rangle|0\\rangle) =\n  \\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle \\\\ \\Rightarrow &\\langle🍎|👶\\rangle\\langle 0|0\\rangle =\n  \\langle🍎|👶\\rangle\\langle🍎|👶\\rangle \\\\ \\Rightarrow &\\langle🍎|👶\\rangle =\n  (\\langle🍎|👶\\rangle)^2 \\\\ \\end{array}",
+            "display": true
+          },
+          {
+            "tex": "\\langle🍎|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "0",
+            "display": false
+          },
+          {
+            "tex": "1",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          }
+        ],
+        "text": "量子ビットの情報を複製できるユニタリ演算子があったとする。このとき、任意の状態の量子ビット,について、次が成り立つとする。1番目の式から、この式と2番目の式の両辺で内積を取ると、よってはまたはとなり、とが任意であることに矛盾する。以上より、そのようなユニタリ演算子は存在しない。",
+        "description": "",
+        "math": [
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "\\left\\{\\begin{array}{l}U_{CLONE}(|🍎\\rangle|0\\rangle)=|🍎\\rangle|🍎\\rangle\\\\U_{CLONE}(|👶\\rangle|0\\rangle)=|👶\\rangle|👶\\rangle\\end{array}\\right.",
+            "display": true
+          },
+          {
+            "tex": "(\\langle🍎|\\langle0|)U^{\\dagger}_{CLONE}=\\langle🍎|\\langle🍎|",
+            "display": true
+          },
+          {
+            "tex": "\\begin{array}{l}&(\\langle🍎|\\langle0|)U^{\\dagger}_{CLONE}U_{CLONE}(|👶\\rangle|0\\rangle)=\\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle\\\\\\Rightarrow&(\\langle🍎|\\langle0|)(|👶\\rangle|0\\rangle)=\\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle\\\\\\Rightarrow&\\langle🍎|👶\\rangle\\langle0|0\\rangle=\\langle🍎|👶\\rangle\\langle🍎|👶\\rangle\\\\\\Rightarrow&\\langle🍎|👶\\rangle=(\\langle🍎|👶\\rangle)^2\\\\\\end{array}",
+            "display": true
+          },
+          {
+            "tex": "\\langle🍎|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "0",
+            "display": false
+          },
+          {
+            "tex": "1",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "https://qniapp.github.io/qni/no_cloning_theorem_proof.html"
+      },
+      {
+        "mathRaw": [
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "\\left\\{ \\begin{array}{l} U_{CLONE}(|🍎\\rangle|0\\rangle) = |🍎\\rangle|🍎\\rangle \\\\\n  U_{CLONE}(|👶\\rangle|0\\rangle) = |👶\\rangle|👶\\rangle \\end{array} \\right.",
+            "display": true
+          },
+          {
+            "tex": "(\\langle🍎|\\langle 0|)U^{\\dagger}_{CLONE} = \\langle🍎|\\langle🍎|",
+            "display": true
+          },
+          {
+            "tex": "\\begin{array}{l} &(\\langle🍎|\\langle 0|)U^{\\dagger}_{CLONE}U_{CLONE}(|👶\\rangle|0\\rangle) =\n  \\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle \\\\ \\Rightarrow &(\\langle🍎|\\langle 0|)(|👶\\rangle|0\\rangle) =\n  \\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle \\\\ \\Rightarrow &\\langle🍎|👶\\rangle\\langle 0|0\\rangle =\n  \\langle🍎|👶\\rangle\\langle🍎|👶\\rangle \\\\ \\Rightarrow &\\langle🍎|👶\\rangle =\n  (\\langle🍎|👶\\rangle)^2 \\\\ \\end{array}",
+            "display": true
+          },
+          {
+            "tex": "\\langle🍎|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "0",
+            "display": false
+          },
+          {
+            "tex": "1",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          }
+        ],
+        "text": "量子ビットの情報を複製できるユニタリ演算子があったとする。このとき、任意の状態の量子ビット,について、次が成り立つとする。1番目の式から、この式と2番目の式の両辺で内積を取ると、よってはまたはとなり、とが任意であることに矛盾する。以上より、そのようなユニタリ演算子は存在しない。",
+        "description": "",
+        "math": [
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "\\left\\{\\begin{array}{l}U_{CLONE}(|🍎\\rangle|0\\rangle)=|🍎\\rangle|🍎\\rangle\\\\U_{CLONE}(|👶\\rangle|0\\rangle)=|👶\\rangle|👶\\rangle\\end{array}\\right.",
+            "display": true
+          },
+          {
+            "tex": "(\\langle🍎|\\langle0|)U^{\\dagger}_{CLONE}=\\langle🍎|\\langle🍎|",
+            "display": true
+          },
+          {
+            "tex": "\\begin{array}{l}&(\\langle🍎|\\langle0|)U^{\\dagger}_{CLONE}U_{CLONE}(|👶\\rangle|0\\rangle)=\\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle\\\\\\Rightarrow&(\\langle🍎|\\langle0|)(|👶\\rangle|0\\rangle)=\\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle\\\\\\Rightarrow&\\langle🍎|👶\\rangle\\langle0|0\\rangle=\\langle🍎|👶\\rangle\\langle🍎|👶\\rangle\\\\\\Rightarrow&\\langle🍎|👶\\rangle=(\\langle🍎|👶\\rangle)^2\\\\\\end{array}",
+            "display": true
+          },
+          {
+            "tex": "\\langle🍎|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "0",
+            "display": false
+          },
+          {
+            "tex": "1",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "http://127.0.0.1:4322/qni-tutorial-webgpu/no_cloning_theorem_proof/"
+      }
+    ],
+    "approvedTextDiffZero": true,
+    "sourceGoldenTextMatches": true,
+    "approvedTexDiffZero": true,
+    "rawTexUnchanged": true,
+    "sourceGoldenTexMatches": true,
+    "originalJSONMatches": true,
+    "approvedJSONMatches": true,
+    "fixedJSONMatches": true,
+    "WebGPUExecuted": false,
+    "rawTextDiffZero": true,
+    "rawTexDiffZero": true,
+    "rawTexStringsDiffZero": true
+  },
+  {
+    "slug": "no_cloning_theorem_proof",
+    "width": 1440,
+    "dpr": 1,
+    "base": "http://127.0.0.1:4322/qni-tutorial-webgpu/",
+    "snapshots": [
+      {
+        "mathRaw": [
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "\\left\\{ \\begin{array}{l} U_{CLONE}(|🍎\\rangle|0\\rangle) = |🍎\\rangle|🍎\\rangle \\\\\n  U_{CLONE}(|👶\\rangle|0\\rangle) = |👶\\rangle|👶\\rangle \\end{array} \\right.",
+            "display": true
+          },
+          {
+            "tex": "(\\langle🍎|\\langle 0|)U^{\\dagger}_{CLONE} = \\langle🍎|\\langle🍎|",
+            "display": true
+          },
+          {
+            "tex": "\\begin{array}{l} &(\\langle🍎|\\langle 0|)U^{\\dagger}_{CLONE}U_{CLONE}(|👶\\rangle|0\\rangle) =\n  \\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle \\\\ \\Rightarrow &(\\langle🍎|\\langle 0|)(|👶\\rangle|0\\rangle) =\n  \\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle \\\\ \\Rightarrow &\\langle🍎|👶\\rangle\\langle 0|0\\rangle =\n  \\langle🍎|👶\\rangle\\langle🍎|👶\\rangle \\\\ \\Rightarrow &\\langle🍎|👶\\rangle =\n  (\\langle🍎|👶\\rangle)^2 \\\\ \\end{array}",
+            "display": true
+          },
+          {
+            "tex": "\\langle🍎|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "0",
+            "display": false
+          },
+          {
+            "tex": "1",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          }
+        ],
+        "text": "量子ビットの情報を複製できるユニタリ演算子があったとする。このとき、任意の状態の量子ビット,について、次が成り立つとする。1番目の式から、この式と2番目の式の両辺で内積を取ると、よってはまたはとなり、とが任意であることに矛盾する。以上より、そのようなユニタリ演算子は存在しない。",
+        "description": "",
+        "math": [
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "\\left\\{\\begin{array}{l}U_{CLONE}(|🍎\\rangle|0\\rangle)=|🍎\\rangle|🍎\\rangle\\\\U_{CLONE}(|👶\\rangle|0\\rangle)=|👶\\rangle|👶\\rangle\\end{array}\\right.",
+            "display": true
+          },
+          {
+            "tex": "(\\langle🍎|\\langle0|)U^{\\dagger}_{CLONE}=\\langle🍎|\\langle🍎|",
+            "display": true
+          },
+          {
+            "tex": "\\begin{array}{l}&(\\langle🍎|\\langle0|)U^{\\dagger}_{CLONE}U_{CLONE}(|👶\\rangle|0\\rangle)=\\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle\\\\\\Rightarrow&(\\langle🍎|\\langle0|)(|👶\\rangle|0\\rangle)=\\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle\\\\\\Rightarrow&\\langle🍎|👶\\rangle\\langle0|0\\rangle=\\langle🍎|👶\\rangle\\langle🍎|👶\\rangle\\\\\\Rightarrow&\\langle🍎|👶\\rangle=(\\langle🍎|👶\\rangle)^2\\\\\\end{array}",
+            "display": true
+          },
+          {
+            "tex": "\\langle🍎|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "0",
+            "display": false
+          },
+          {
+            "tex": "1",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "https://qniapp.github.io/qni/no_cloning_theorem_proof.html"
+      },
+      {
+        "mathRaw": [
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "\\left\\{ \\begin{array}{l} U_{CLONE}(|🍎\\rangle|0\\rangle) = |🍎\\rangle|🍎\\rangle \\\\\n  U_{CLONE}(|👶\\rangle|0\\rangle) = |👶\\rangle|👶\\rangle \\end{array} \\right.",
+            "display": true
+          },
+          {
+            "tex": "(\\langle🍎|\\langle 0|)U^{\\dagger}_{CLONE} = \\langle🍎|\\langle🍎|",
+            "display": true
+          },
+          {
+            "tex": "\\begin{array}{l} &(\\langle🍎|\\langle 0|)U^{\\dagger}_{CLONE}U_{CLONE}(|👶\\rangle|0\\rangle) =\n  \\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle \\\\ \\Rightarrow &(\\langle🍎|\\langle 0|)(|👶\\rangle|0\\rangle) =\n  \\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle \\\\ \\Rightarrow &\\langle🍎|👶\\rangle\\langle 0|0\\rangle =\n  \\langle🍎|👶\\rangle\\langle🍎|👶\\rangle \\\\ \\Rightarrow &\\langle🍎|👶\\rangle =\n  (\\langle🍎|👶\\rangle)^2 \\\\ \\end{array}",
+            "display": true
+          },
+          {
+            "tex": "\\langle🍎|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "0",
+            "display": false
+          },
+          {
+            "tex": "1",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          }
+        ],
+        "text": "量子ビットの情報を複製できるユニタリ演算子があったとする。このとき、任意の状態の量子ビット,について、次が成り立つとする。1番目の式から、この式と2番目の式の両辺で内積を取ると、よってはまたはとなり、とが任意であることに矛盾する。以上より、そのようなユニタリ演算子は存在しない。",
+        "description": "",
+        "math": [
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "\\left\\{\\begin{array}{l}U_{CLONE}(|🍎\\rangle|0\\rangle)=|🍎\\rangle|🍎\\rangle\\\\U_{CLONE}(|👶\\rangle|0\\rangle)=|👶\\rangle|👶\\rangle\\end{array}\\right.",
+            "display": true
+          },
+          {
+            "tex": "(\\langle🍎|\\langle0|)U^{\\dagger}_{CLONE}=\\langle🍎|\\langle🍎|",
+            "display": true
+          },
+          {
+            "tex": "\\begin{array}{l}&(\\langle🍎|\\langle0|)U^{\\dagger}_{CLONE}U_{CLONE}(|👶\\rangle|0\\rangle)=\\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle\\\\\\Rightarrow&(\\langle🍎|\\langle0|)(|👶\\rangle|0\\rangle)=\\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle\\\\\\Rightarrow&\\langle🍎|👶\\rangle\\langle0|0\\rangle=\\langle🍎|👶\\rangle\\langle🍎|👶\\rangle\\\\\\Rightarrow&\\langle🍎|👶\\rangle=(\\langle🍎|👶\\rangle)^2\\\\\\end{array}",
+            "display": true
+          },
+          {
+            "tex": "\\langle🍎|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "0",
+            "display": false
+          },
+          {
+            "tex": "1",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "http://127.0.0.1:4322/qni-tutorial-webgpu/no_cloning_theorem_proof/"
+      }
+    ],
+    "approvedTextDiffZero": true,
+    "sourceGoldenTextMatches": true,
+    "approvedTexDiffZero": true,
+    "rawTexUnchanged": true,
+    "sourceGoldenTexMatches": true,
+    "originalJSONMatches": true,
+    "approvedJSONMatches": true,
+    "fixedJSONMatches": true,
+    "WebGPUExecuted": false,
+    "rawTextDiffZero": true,
+    "rawTexDiffZero": true,
+    "rawTexStringsDiffZero": true
+  },
+  {
+    "slug": "no_cloning_theorem_proof",
+    "width": 1440,
+    "dpr": 2,
+    "base": "http://127.0.0.1:4322/qni-tutorial-webgpu/",
+    "snapshots": [
+      {
+        "mathRaw": [
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "\\left\\{ \\begin{array}{l} U_{CLONE}(|🍎\\rangle|0\\rangle) = |🍎\\rangle|🍎\\rangle \\\\\n  U_{CLONE}(|👶\\rangle|0\\rangle) = |👶\\rangle|👶\\rangle \\end{array} \\right.",
+            "display": true
+          },
+          {
+            "tex": "(\\langle🍎|\\langle 0|)U^{\\dagger}_{CLONE} = \\langle🍎|\\langle🍎|",
+            "display": true
+          },
+          {
+            "tex": "\\begin{array}{l} &(\\langle🍎|\\langle 0|)U^{\\dagger}_{CLONE}U_{CLONE}(|👶\\rangle|0\\rangle) =\n  \\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle \\\\ \\Rightarrow &(\\langle🍎|\\langle 0|)(|👶\\rangle|0\\rangle) =\n  \\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle \\\\ \\Rightarrow &\\langle🍎|👶\\rangle\\langle 0|0\\rangle =\n  \\langle🍎|👶\\rangle\\langle🍎|👶\\rangle \\\\ \\Rightarrow &\\langle🍎|👶\\rangle =\n  (\\langle🍎|👶\\rangle)^2 \\\\ \\end{array}",
+            "display": true
+          },
+          {
+            "tex": "\\langle🍎|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "0",
+            "display": false
+          },
+          {
+            "tex": "1",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          }
+        ],
+        "text": "量子ビットの情報を複製できるユニタリ演算子があったとする。このとき、任意の状態の量子ビット,について、次が成り立つとする。1番目の式から、この式と2番目の式の両辺で内積を取ると、よってはまたはとなり、とが任意であることに矛盾する。以上より、そのようなユニタリ演算子は存在しない。",
+        "description": "",
+        "math": [
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "\\left\\{\\begin{array}{l}U_{CLONE}(|🍎\\rangle|0\\rangle)=|🍎\\rangle|🍎\\rangle\\\\U_{CLONE}(|👶\\rangle|0\\rangle)=|👶\\rangle|👶\\rangle\\end{array}\\right.",
+            "display": true
+          },
+          {
+            "tex": "(\\langle🍎|\\langle0|)U^{\\dagger}_{CLONE}=\\langle🍎|\\langle🍎|",
+            "display": true
+          },
+          {
+            "tex": "\\begin{array}{l}&(\\langle🍎|\\langle0|)U^{\\dagger}_{CLONE}U_{CLONE}(|👶\\rangle|0\\rangle)=\\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle\\\\\\Rightarrow&(\\langle🍎|\\langle0|)(|👶\\rangle|0\\rangle)=\\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle\\\\\\Rightarrow&\\langle🍎|👶\\rangle\\langle0|0\\rangle=\\langle🍎|👶\\rangle\\langle🍎|👶\\rangle\\\\\\Rightarrow&\\langle🍎|👶\\rangle=(\\langle🍎|👶\\rangle)^2\\\\\\end{array}",
+            "display": true
+          },
+          {
+            "tex": "\\langle🍎|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "0",
+            "display": false
+          },
+          {
+            "tex": "1",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "https://qniapp.github.io/qni/no_cloning_theorem_proof.html"
+      },
+      {
+        "mathRaw": [
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "\\left\\{ \\begin{array}{l} U_{CLONE}(|🍎\\rangle|0\\rangle) = |🍎\\rangle|🍎\\rangle \\\\\n  U_{CLONE}(|👶\\rangle|0\\rangle) = |👶\\rangle|👶\\rangle \\end{array} \\right.",
+            "display": true
+          },
+          {
+            "tex": "(\\langle🍎|\\langle 0|)U^{\\dagger}_{CLONE} = \\langle🍎|\\langle🍎|",
+            "display": true
+          },
+          {
+            "tex": "\\begin{array}{l} &(\\langle🍎|\\langle 0|)U^{\\dagger}_{CLONE}U_{CLONE}(|👶\\rangle|0\\rangle) =\n  \\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle \\\\ \\Rightarrow &(\\langle🍎|\\langle 0|)(|👶\\rangle|0\\rangle) =\n  \\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle \\\\ \\Rightarrow &\\langle🍎|👶\\rangle\\langle 0|0\\rangle =\n  \\langle🍎|👶\\rangle\\langle🍎|👶\\rangle \\\\ \\Rightarrow &\\langle🍎|👶\\rangle =\n  (\\langle🍎|👶\\rangle)^2 \\\\ \\end{array}",
+            "display": true
+          },
+          {
+            "tex": "\\langle🍎|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "0",
+            "display": false
+          },
+          {
+            "tex": "1",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          }
+        ],
+        "text": "量子ビットの情報を複製できるユニタリ演算子があったとする。このとき、任意の状態の量子ビット,について、次が成り立つとする。1番目の式から、この式と2番目の式の両辺で内積を取ると、よってはまたはとなり、とが任意であることに矛盾する。以上より、そのようなユニタリ演算子は存在しない。",
+        "description": "",
+        "math": [
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "\\left\\{\\begin{array}{l}U_{CLONE}(|🍎\\rangle|0\\rangle)=|🍎\\rangle|🍎\\rangle\\\\U_{CLONE}(|👶\\rangle|0\\rangle)=|👶\\rangle|👶\\rangle\\end{array}\\right.",
+            "display": true
+          },
+          {
+            "tex": "(\\langle🍎|\\langle0|)U^{\\dagger}_{CLONE}=\\langle🍎|\\langle🍎|",
+            "display": true
+          },
+          {
+            "tex": "\\begin{array}{l}&(\\langle🍎|\\langle0|)U^{\\dagger}_{CLONE}U_{CLONE}(|👶\\rangle|0\\rangle)=\\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle\\\\\\Rightarrow&(\\langle🍎|\\langle0|)(|👶\\rangle|0\\rangle)=\\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle\\\\\\Rightarrow&\\langle🍎|👶\\rangle\\langle0|0\\rangle=\\langle🍎|👶\\rangle\\langle🍎|👶\\rangle\\\\\\Rightarrow&\\langle🍎|👶\\rangle=(\\langle🍎|👶\\rangle)^2\\\\\\end{array}",
+            "display": true
+          },
+          {
+            "tex": "\\langle🍎|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "0",
+            "display": false
+          },
+          {
+            "tex": "1",
+            "display": false
+          },
+          {
+            "tex": "|🍎\\rangle",
+            "display": false
+          },
+          {
+            "tex": "|👶\\rangle",
+            "display": false
+          },
+          {
+            "tex": "U_{CLONE}",
+            "display": false
+          }
+        ],
+        "circuits": [],
+        "url": "http://127.0.0.1:4322/qni-tutorial-webgpu/no_cloning_theorem_proof/"
+      }
+    ],
+    "approvedTextDiffZero": true,
+    "sourceGoldenTextMatches": true,
+    "approvedTexDiffZero": true,
+    "rawTexUnchanged": true,
+    "sourceGoldenTexMatches": true,
+    "originalJSONMatches": true,
+    "approvedJSONMatches": true,
+    "fixedJSONMatches": true,
+    "WebGPUExecuted": false,
+    "rawTextDiffZero": true,
+    "rawTexDiffZero": true,
+    "rawTexStringsDiffZero": true
+  }
+]

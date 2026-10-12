@@ -2192,3 +2192,23 @@ pnpm exec playwright test tests/ket.spec.ts tests/content-overflow.spec.ts
 ```
 
 通常main pushでPages成功・公開source＋viewport5/5・最新原実サイト4比較のB1〜B3 onlyを確認するまで次を始めない。**sidebarでこのふろくは最後**、公開完了後順序末尾を確認し、既移植pageを勝手にやり直さない。11:50より前にpushを止め、11:55までにowned preview/configを片付けて終了する。
+
+## 2026-10-12 11:20 interrupted verification再利用 / merged591一致 / hard stop11:50
+
+main37f0339の状態を再利用してfetch/rebase origin/main（up to date）、forceなし。途中のpreview/config/非GPUsuiteを引き継ぎ。**37f0339 / Pages38195297954 success**を確認（https://github.com/qniapp/qni-tutorial-webgpu/actions/runs/38195297954）。最新originalmain **a0865ad** のno-cloning sourceを取得、保存#591 headsourceとbyte一致。#591 MERGED11:18:43/head8d40ec7ac0cc2e7fb4d90178c9a2a845f64d7b3c。
+
+### #591 diff / 実際の唯一変更
+
+本文/TeX canonical/全絵文字/12Math順序/全render意味は既に一致。しかし初回strict実文字列比較で**第一adjoint displayの1空白だけ**差を検出: 当方 `\langle 🍎|` → merged `\langle🍎|`。今回userの『merged exactに一致』policyに基づきその空白1文字だけを除去。**source production diffはこの1spotだけ**、bra因子順/grouping/他TeX/本文/数値/図/画像/credits0/回路0を変更しない。canonical側の差0をraw文字列差0と誤称せず、失敗log `/tmp/qtw-cloning-public-compare.log`を保持して訂正した。
+
+approved sourceも同じ空白を除去した結果、最新原main/保存PR sourceと**全source byte一致**。独立guardは旧rawSHA pin・B1/B2/B3の独立literalに**唯一の明示1空白変換だけ**を加え、全文byte一致と固定原2Math変更/全emoji数不変をassert。Math-only scalar分析もsourceSHAのみ更新、証明の数値/意味は変わらない。MathJax/emoji/fit3/scroll/style/SDKは無変更。
+
+比較scriptのno-cloning B1〜B3 whitelistを完全除去、最新原との直接本文/12TeX（canonical）＋**空白すら除去しない12実TeX文字列**の3zero guardを追加（shor_qftと同等）。他pageのwhitelistは維持。
+
+### 検査・最終公開前
+
+**typecheck/build/diff-check成功、source1＋390/1440×DPR1/2の4条件＋sidebar5=10/10成功、local最新原比較4/4でrawTextDiffZero/rawTexDiffZero/rawTexStringsDiffZeroすべてtrue**。MathJax ready/merror0/全12math/3display/🍎👶実glyph可視・bbox>0・式全幅以内・Body/content inner scrollbars0/document横overflow0/errors0。`no-cloning-proof-merged-local-nongpu-verification.json` 保存。log `/tmp/qtw-cloning-{final-build,final-local-tests,final-local-compare}.log`。
+
+引継いだ**full非GPU suite390/394成功、旧4失敗だけ**（ket390/1440・content-overflow390/1440）。`/tmp/qtw-cloning-nongpu-regressions.log`。期待値/共有CSS緩和なし、新回帰0。Gpu未実行・CPU量子simulator実行なし。4旧layout失敗とnativeGPU全件は**実機確認待ち**、`pending-real-machine-checks.md`の全6GPUcommands＋ket/content-overflow commandsを維持し、全pages完了が実機確認済みではないことを明記する。
+
+11:21のsidebar確認: toc **全67slugsにsrc routeが存在し、missing[]**。ふろくが最後なので次pageはない。公開URL最終差0確認後『全pages移植・公開完了』を記録し、他pageを再編集しない。今回変更を通常mainへpushしPages成功→公開5テスト＋原比較4zeroを確認、docs/公開証拠を記録し再度Pages成功→clean worktree/全owned previews停止。11:50までに終了する。

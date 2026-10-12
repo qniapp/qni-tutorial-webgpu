@@ -51,16 +51,6 @@ for(const width of [390,1440])for(const dpr of [1,2]){
    approvedMath.splice(32,1,{tex:'a',display:false},{tex:'mod(N)',display:false})
   }
  }
- if(slug==='no_cloning_theorem_proof'){
-  if(JSON.stringify(approvedMath)!==JSON.stringify(fixed.math)){
-   if(JSON.stringify(approvedMath)!==JSON.stringify(fixed.originalMath))throw Error('No-cloning original TeX changed outside B1-B3; STOP')
-   for(const [i,[before,after]]of fixed.edits.entries()){
-    const index=[4,5,5][i],a=before.replace(/\s+/g,''),b=after.replace(/\s+/g,'')
-    if(approvedMath[index].tex.split(a).length!==2)throw Error('B1-B3 no longer exact; STOP')
-    approvedMath[index].tex=approvedMath[index].tex.replace(a,b)
-   }
-  }
- }
  if(slug==='shor_u'){
   const plain=s=>s.replace(/\\\(.*?\\\)/gs,'').replace(/\s+/g,'')
   for(const [before,after] of fixed.edits.slice(0,7))approvedText=approvedText.replace(plain(before),plain(after))
@@ -78,11 +68,11 @@ for(const width of [390,1440])for(const dpr of [1,2]){
   }
  }
  const result={slug,width,dpr,base,snapshots,approvedTextDiffZero:approvedText===ours.text,sourceGoldenTextMatches:ours.text===fixed.text,approvedTexDiffZero:JSON.stringify(approvedMath)===JSON.stringify(ours.math),rawTexUnchanged:JSON.stringify(original.math)===JSON.stringify(ours.math),sourceGoldenTexMatches:JSON.stringify(ours.math)===JSON.stringify(fixed.math),originalJSONMatches:JSON.stringify(original.circuits)===JSON.stringify(originalFixture.circuits),approvedJSONMatches:JSON.stringify(approvedCircuits)===JSON.stringify(ours.circuits),fixedJSONMatches:JSON.stringify(ours.circuits)===JSON.stringify(fixed.circuits??[]),WebGPUExecuted:false}
- if(slug==='shor_qft'){
+ if(['shor_qft','no_cloning_theorem_proof'].includes(slug)){
   result.rawTextDiffZero=original.text===ours.text
   result.rawTexDiffZero=JSON.stringify(original.math)===JSON.stringify(ours.math)
   result.rawTexStringsDiffZero=JSON.stringify(original.mathRaw)===JSON.stringify(ours.mathRaw)
-  result.approvedDescriptionMatches=original.description===ours.description&&ours.description===fixed.description
+  if(slug==='shor_qft')result.approvedDescriptionMatches=original.description===ours.description&&ours.description===fixed.description
  }
  if(slug==='shor_u')result.approvedDescriptionMatches=original.description===ours.description&&ours.description===fixed.description
  if(slug==='shor_r')result.approvedDescriptionMatches=original.description===ours.description&&ours.description===fixed.description
@@ -95,5 +85,5 @@ for(const width of [390,1440])for(const dpr of [1,2]){
 }
 const failures=results.filter(comparisonFailed)
 if(failures.length){console.error(`STOP ${slug}: ${failures.length}/4 comparison cases failed; no additional edits are authorized`);process.exitCode=1}
-else console.log(slug==='shor_qft'?`PASS ${slug}: direct raw text/TeX and unnormalized TeX strings diff 0 (4 cases)`:`PASS ${slug}: original/live text and TeX only approved diffs (4 cases)`)
+else console.log(['shor_qft','no_cloning_theorem_proof'].includes(slug)?`PASS ${slug}: direct raw text/TeX and unnormalized TeX strings diff 0 (4 cases)`:`PASS ${slug}: original/live text and TeX only approved diffs (4 cases)`)
 }finally{await writeFile(`/tmp/qtw-${slug}-live-comparison.json`,JSON.stringify(results,null,2)+'\n');await browser.close()}
