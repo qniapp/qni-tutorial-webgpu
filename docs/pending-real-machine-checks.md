@@ -64,3 +64,10 @@ pnpm exec playwright test tests/ket.spec.ts tests/content-overflow.spec.ts
 ## 進捗 2026-10-12
 
 gmktec real AMD (rdna-3)、HEAD `6ba43ef` のheadless実機監査: 390/1440 × DPR1/2の全4組合せで eigenphases / phase_kickback / shor_fx / shor_u はPASS。quantum_phase_estimation_circuit / shor_qft は toolbarAudit の waitJSON (`circuitJSONEqual`) のみFAIL。このcommitは残る2件の原因である全identity列の除去とsquare block markerのbrace再エンコードを比較時に正規化する。修正後の実機再確認は未実行。
+
+### 実機再確認 2026-10-12（HEAD `6dcd88f`、gmktec real AMD rdna-3、headless、ローカルbuild qni-webgpu `0ef550d`）
+
+| page | 390/DPR1 | 390/DPR2 | 1440/DPR1 | 1440/DPR2 |
+|---|---|---|---|---|
+| eigenphases | PASS | PASS | PASS | PASS |
+| quantum_phase_estimation_circuit | PASS | PASS | PASS | PASS |
