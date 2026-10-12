@@ -1,6 +1,7 @@
 // Alt text for quiz attachments, keyed by the exact attribute URL. Shared with
 // qni (apps/tutorial), which keeps the same table in plain JS. Describe only
-// what is drawn, never the answer. See docs/quiz-alt.md and docs/quiz-spec.md.
+// what is drawn, never the answer (one exception below). See docs/quiz-alt.md
+// and docs/quiz-spec.md.
 const base = 'https://qniapp.github.io/qni/images/'
 const circles = '円表示: |0⟩ と |1⟩ の 2 つの円'
 
@@ -26,5 +27,7 @@ export const QUIZ_IMAGE_ALT: Record<string, string> = {
   [`${base}X_gate_decomposition.png`]: 'X ゲートと、それと等しいゲートの並びを等号で結んだ回路図',
   [`${base}random_bit_generator_circuit.png`]: '1 量子ビットの回路図',
   [`${base}p-bit/p_bit_graph.png`]: '横軸を「表の出る確率」、縦軸を「裏の出る確率」とした手描きのグラフ',
-  [`${base}argument_of_complex.png`]: '座標平面に点 a, b と「偏角」の文字を描いた手描きの図',
+  // Exception: the answer is this image alone (answer=""), so the alt describes
+  // its content (still only what is drawn). Takamiya's decision.
+  [`${base}argument_of_complex.png`]: '手描きの図。右向きと上向きの矢印が付いた 2 本の軸が直角に交わっている。右上に青い点があり、「a, b」と書かれている。軸の交点からその点まで青い破線が引かれ、破線と右向きの軸の間に赤い弧があり、その横に「偏角」と書かれている',
 }
