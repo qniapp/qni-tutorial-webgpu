@@ -2212,3 +2212,31 @@ approved sourceも同じ空白を除去した結果、最新原main/保存PR sou
 引継いだ**full非GPU suite390/394成功、旧4失敗だけ**（ket390/1440・content-overflow390/1440）。`/tmp/qtw-cloning-nongpu-regressions.log`。期待値/共有CSS緩和なし、新回帰0。Gpu未実行・CPU量子simulator実行なし。4旧layout失敗とnativeGPU全件は**実機確認待ち**、`pending-real-machine-checks.md`の全6GPUcommands＋ket/content-overflow commandsを維持し、全pages完了が実機確認済みではないことを明記する。
 
 11:21のsidebar確認: toc **全67slugsにsrc routeが存在し、missing[]**。ふろくが最後なので次pageはない。公開URL最終差0確認後『全pages移植・公開完了』を記録し、他pageを再編集しない。今回変更を通常mainへpushしPages成功→公開5テスト＋原比較4zeroを確認、docs/公開証拠を記録し再度Pages成功→clean worktree/全owned previews停止。11:50までに終了する。
+
+### 11:32 appendix merged版の公開・raw直接差0確認
+
+**1bdda5c / Pages38195912860 success**（https://github.com/qniapp/qni-tutorial-webgpu/actions/runs/38195912860）。通常main fetch/rebase/push、forceなし。公開source1＋390/1440×DPR1/2 viewport4 **5/5成功**、最新原実サイトとの直接比較 **4/4成功**。**raw本文/12Tex canonical/12Tex空白も保持した実文字列の3zero guardが全12assert true**。補正/whitelistなし、原maina0865ad/#591と完全一致。テキスト/emoji/数学意味の変更は0、今回の変更は第一adjointのTeX空白1文字だけ。
+
+公開全12Math/3display/🍎👶可視描画/全式幅以内/fit3/図・画像・credit・回路0/内部scrollbars0/document横overflow0/console-pageerrors0を全4条件で確認。`no-cloning-proof-merged-public-nongpu-verification.json` 保存。log `/tmp/qtw-cloning-{merged-pages,final-public-tests,final-public-compare}.log`。原sourceとapproved sourceはbyte一致。published URL https://qniapp.github.io/qni-tutorial-webgpu/no_cloning_theorem_proof/ 。
+
+## 最終まとめ（全sidebar pages移植・公開完了、GPU実機確認を除く）
+
+**sidebar全67pagesにrouteがあり、missing[]、最後の『ふろく クローン禁止定理の証明』まで移植・公開完了。** sidebar順の新portをすべて完了し、後続pageなし。既移植pageを勝手に再編集しない。全page完了は全nativeGPU動作の確認完了ではない。新ページの数値検算/MathJax/DOM/layout検査をGPUの代替と称さず、production CPU fallback/readback・架空診断回路の追加はなし。SDK pin348992f/MathJax3.2.2/共有CSSやlayout/期待値の無断変更なし。
+
+- 最新full **非GPU 390/394成功、旧4失敗だけ**、新回帰0（`/tmp/qtw-cloning-nongpu-regressions.log`）。4旧layout失敗=ket390/1440・content-overflow390/1440。19.12px等の旧期待値を緩和しない。
+- **実機確認待ち: nativeGPU全件**（eigenphases/quantum_phase_estimation_circuit/phase_kickback/shor_fx/shor_u/shor_qft）。real adapter/running/step0/norm/signed readback・replay/measure（元回路にある場合）・undo/redo-only/no-trash/JSON復元・Regular/allgatevisibility/active native scrollを390/1440×DPR1/2で実機検証する。no-cloning等回路0pageは監査該当なし。
+- **実機確認待ち: 旧4layout guard**。同じgmktec fonts/Chromium環境で再現・切り分ける。原因未断定、安易なCSS変更/期待値緩和/retryで隠さない。
+- すべての未実行commandsと詳細は **[pending-real-machine-checks.md](pending-real-machine-checks.md)**。boxにGPUなし、gmktec unreachable/SSHなし。これらを実行済みと称さない。
+
+```sh
+export QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/
+node scripts/check-eigenphases-gpu.mjs
+node scripts/check-qpe-gpu.mjs quantum_phase_estimation_circuit
+node scripts/check-qpe-gpu.mjs phase_kickback
+node scripts/check-qpe-gpu.mjs shor_fx
+node scripts/check-qpe-gpu.mjs shor_u
+node scripts/check-qpe-gpu.mjs shor_qft
+pnpm exec playwright test tests/ket.spec.ts tests/content-overflow.spec.ts
+```
+
+残る作業は上記実機監査/旧環境切り分けのみ。B1〜B3 pendingは承認・実装・#591直接一致で解決済み、今回未回答の編集承認質問はなし。最後にこの公開証拠/総括だけを通常mainへcommit/pushしPages成功を確認、temporary local configを削除し、node CLIまで含めowned previewを停止、clean worktreeで11:50より前に終了する。
