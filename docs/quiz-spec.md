@@ -141,7 +141,7 @@ qni 側ブランチ `replace-orbit-quizzes`（e041754・4359e81、未 push）は
   - 正解: 枠 `#66800B`、文字 `#536907`。ホバー時の背景 `#EDEECF`。
   - 不正解: 枠・文字 `#AF3029`。ホバー時の背景 `#FFE1D5`。
   - やり直す: 文字 `#6F6E69`。ホバー時は背景 `#F2F0E5`、文字 `#100F0F`。
-- **結果表示** `.orbit-quiz-status`: 上に 12px のマージン、ピル形（角丸 999px、padding `2px 10px`）、14px / 20px / 600、アイコンとの間隔 4px。正解は背景 `#EDEECF`・文字 `#536907`、不正解は背景 `#FFE1D5`・文字 `#AF3029`。空のときは `display:none`。
+- **結果表示** `.orbit-quiz-status`: 上に 12px のマージン、ピル形（角丸 999px、padding `2px 10px`）、14px / 20px / 600、アイコンとの間隔 4px。正解は背景 `#EDEECF`・文字 `#536907`、不正解は背景 `#FFE1D5`・文字 `#AF3029`。`display:flex; width:fit-content`（`inline-flex` にすると、空のときも 28px の行ボックスができて問題とボタンの間が空く）。空のときは `display:none` にせず、margin と padding を 0 にして高さ 0 で残す（§5）。
 - **余白カラム**: セットの幅は、各サイトで本文の `<p>` と同じ列にそろえる。
   - webgpu: `@media (min-width:640px) { .content-with-margin > orbit-reviewarea { width:58.333333%; margin-right:auto } }`
   - qni: `css/content_with_margin.css` の `.content-with-margin orbit-reviewarea { @apply md:mr-auto md:w-7/12; }` を**そのまま残す**（要素名を変えないので置き換えは不要）。qni は 768px で切り替わる。両サイトで違ってよいのはこのブレークポイントだけ。
@@ -156,6 +156,12 @@ qni 側ブランチ `replace-orbit-quizzes`（e041754・4359e81、未 push）は
 ## 4. 操作と状態
 
 自己採点だけを行う。間隔反復、保存、正規化した入力の照合、選択肢はいずれも無い。リロードすると未回答に戻る。
+
+### 4.1 正誤判定を自己採点にする理由
+
+- 答えの多くは文章（例: 「出力の 1 ビットから入力の 2 ビットを一意に復元できないから」「AND, OR, NAND, XOR など」「原子 or 電子 or 光子」）、画像だけ（`answer=""`）、または数式である。自由入力を正規化して照合すると、言い換えや表記の揺れを不正解と誤判定する。誤判定は学習者に誤った情報を与えるので、照合しない方が正確である。
+- cloze の穴にも「確率(振幅の大きさの2乗)」「半径 1 の球面」「データのエンコード」「$|0\rangle$」など、入力しにくい語や言い換えのある語が多い。cloze だけ入力欄にすると、カードの種類によって操作が変わる。全カードで操作を 1 つにそろえると、キーボード操作とスクリーンリーダーでの使い方も単純になる。
+- 元の Orbit も、答えを見たあとに自分で申告する方式（覚えていた / 忘れた）だった。判定の考え方は変えず、間隔反復と保存だけをなくした。
 
 | `data-state` | 表示 | 見えるボタン |
 |---|---|---|
@@ -173,7 +179,7 @@ UI 文言はすべて日本語で、次の 5 つに限る: 「答えを見る」
 - すべての操作は `<button type="button">` で行い、Tab・Enter・Space で操作できる。
 - フォーカスリング: ボタンは `:focus-visible` で 2px `#205EA6`、offset 2px。フォーカス先の問題・答えの領域は 2px、offset 4px。マウスでクリックしたときの `:focus` リングは消す。
 - フォーカスの移動: 答えを見る → 表示した内容（Q&A は `.orbit-quiz-answer`、cloze は穴が埋まった `.orbit-quiz-question`。どちらも `tabindex="-1"`）。正解・不正解 → やり直す。やり直す → 答えを見る。
-- 結果は `role="status"`（polite）で読み上げる。正誤は色だけで伝えず、アイコンと文字（✓ 正解 / ✗ 不正解）を必ず併記する。
+- 結果は `role="status"`（polite）で読み上げる。この要素は空のときもアクセシビリティツリーに残す。`display:none` の live region に内容を入れて同時に表示すると、読み上げられないことがあるため。正誤は色だけで伝えず、アイコンと文字（✓ 正解 / ✗ 不正解）を必ず併記する。
 - カードは `role="group"` とし、`aria-labelledby` で問題文を指す。「答えを見る」は `aria-controls` と `aria-expanded` を持つ。
 - コントラスト: アクセント 600 の上に `#FFFCF0` の文字、正解・不正解の文字色はいずれも WCAG AA を満たす。
 - MathJax の assistive MathML と context menu は既定のまま有効にしておく。
@@ -183,6 +189,8 @@ UI 文言はすべて日本語で、次の 5 つに限る: 「答えを見る」
 
 - 画像に alt テキストが無い。答えが画像だけのカード（`answer=""`）は、スクリーンリーダーでは内容が伝わらない。alt を足すと文言の追加になるので、高宮さんの承認を得てから両リポジトリに同じ文言で入れる。
 - cloze の穴が複数あっても 1 回でまとめて開く（§2.2）。
+- quantum_circuit の問題画像 `https://qniapp.github.io/qni/images/basic_quantum_circuit.png` は 2026-10-12 時点で 404 で、表示されない（マークアップは変更していない）。ほかの 17 個の画像 URL は 200。
+- `<orbit-prompt>` 自身には属性を追加しない（状態はカードの `data-state` に持つ）。webgpu の既存テストが `<orbit-prompt>` の属性を元のページと照合しているため。
 
 ## 7. 実装メモ（リポジトリ別）
 
@@ -190,6 +198,18 @@ UI 文言はすべて日本語で、次の 5 つに限る: 「答えを見る」
 - `src/components/orbit-quiz.ts` と `orbit-quiz.css`（`.ts` から import）を作り、`TutorialLayout.astro` の module script で `import '../components/orbit-quiz'` する。
 - 各ページの `<script … orbit-web-component.js>` は削除する。ページの HTML はそのまま。
 - Service worker は無い。Astro がハッシュ付きの asset を出すので、キャッシュの扱いは不要。
+- 390px でのカード内容幅は 300px（390 − 本文の左右余白 16×2 − セット 12×2 − カード枠 1×2 − カード余白 16×2）。
+- テスト `tests/quiz.spec.ts`:
+  - クイズのある全 16 ページで、`<orbit-prompt>` と同じ数のカードが未回答で描画されること。問題文と答えが属性と一致すること（書式記号と数式は除く）。`withorbit.com` への通信が無いこと。
+  - Orbit の script だけを読み込んでいた 3 ページ（bb84_circuit、multi_qubit_phase_gate、partial_measurement）で、通信と script 要素が無いこと。
+  - 未回答 → 答え表示 → 正解 → やり直す → 不正解 の遷移。各状態での表示、`aria-expanded`、`role="status"` の文言、フォーカスの移動。ほかのカードと独立していること。リロードで戻ること。
+  - キーボードだけでの操作（Enter、Tab、Shift+Tab、Space）とフォーカスリング。
+  - cloze の穴を全部隠すこと、表示後に太字になること。TeX（インライン、表示数式、穴の中）と Markdown（`**`、`*`）。
+  - 1440px と 390px での寸法、色、ボタンの高さ、本文の段落と同じ幅であること、横にはみ出さないこと。
+- 既存テストの調整:
+  - `main img` を数えるテストは、クイズの添付画像を除く（`main img:not(orbit-prompt img)`）。
+  - bb84_circuit のソースハッシュは、削除した Orbit の script 行を戻してから比較する。
+  - `tests/restart.spec.ts` は、`running` になった直後で埋め込みがまだキー入力を処理できない場合に備えて、再起動を確認できるまで「フォーカス → Shift+Tab → キー」を繰り返す。この競合は以前からあり、Orbit の script の読み込みでページの起動が約 2 秒遅れていたために表に出ていなかった。origin/main でも Orbit への通信を遮断すると、10 回中 6 回失敗する。
 
 ### qni（Jekyll、`apps/tutorial`）
 - `src/quiz.js` は素の JS に移植する（型を除くだけで、ロジック・DOM・クラス名・文言は §2〜§5 と同じ）。`src/application.js` から `import './quiz.js'` し、esbuild の ESM バンドル `application.js` に入れる。**JS から CSS を import しない**。esbuild が `application.css` を出力して Tailwind の出力を上書きしてしまうため。
