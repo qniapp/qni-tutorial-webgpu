@@ -1,4 +1,5 @@
 import './orbit-quiz.css'
+import { QUIZ_IMAGE_ALT } from './orbit-quiz-alt'
 
 // Drop-in replacement for the Orbit web component (js.withorbit.com), which
 // shut down. Same markup, no spaced repetition and no storage: each prompt is
@@ -65,6 +66,8 @@ function attachments(value: string | null) {
   for (const url of urls) {
     const image = document.createElement('img')
     image.src = url
+    // URLs missing from the table keep no alt attribute at all.
+    if (Object.hasOwn(QUIZ_IMAGE_ALT, url)) image.alt = QUIZ_IMAGE_ALT[url]
     image.loading = 'lazy'
     image.decoding = 'async'
     box.append(image)

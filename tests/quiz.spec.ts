@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
+import { QUIZ_IMAGE_ALT } from '../src/components/orbit-quiz-alt'
 
 // Every page that had Orbit prompts, and how many.
 const pages: Record<string, number> = {
@@ -52,6 +53,38 @@ for (const slug of scriptOnly) {
     await expect(page.locator('script[src*="withorbit"]')).toHaveCount(0)
   })
 }
+
+test('every quiz image gets its alt from the URL table', async ({ page }) => {
+  const used = new Set<string>()
+  let images = 0
+  for (const slug of Object.keys(pages)) {
+    await open(page, slug)
+    const found = await page.locator('orbit-prompt').evaluateAll(prompts => prompts.flatMap(prompt => {
+      const urls = (name: string) => (prompt.getAttribute(name) ?? '').split(/\s+/).filter(Boolean)
+      const images = [...prompt.querySelectorAll('.orbit-quiz-question img'), ...prompt.querySelectorAll('.orbit-quiz-answer img')]
+      return [...urls('question-attachments'), ...urls('answer-attachments')]
+        .map((url, i) => ({ url, alt: images[i]?.getAttribute('alt') ?? null, answer: prompt.getAttribute('answer') ?? '' }))
+    }))
+    for (const { url, alt, answer } of found) {
+      expect(Object.hasOwn(QUIZ_IMAGE_ALT, url), url).toBe(true)
+      expect(alt, url).toBe(QUIZ_IMAGE_ALT[url])
+      // The alt must not give the answer away.
+      if (answer) expect(alt, url).not.toContain(answer)
+      used.add(url)
+      images++
+    }
+  }
+  expect(images).toBe(31)
+  expect([...used].sort()).toEqual(Object.keys(QUIZ_IMAGE_ALT).sort())
+  // A URL missing from the table gets no alt attribute.
+  expect(await page.evaluate(() => {
+    const prompt = document.createElement('orbit-prompt')
+    prompt.setAttribute('question', 'q')
+    prompt.setAttribute('question-attachments', 'https://qniapp.github.io/qni/images/unknown.png')
+    document.querySelector('orbit-reviewarea')!.append(prompt)
+    return prompt.querySelector('img')!.hasAttribute('alt')
+  })).toBe(false)
+})
 
 test('reveal, self-grade, retry and reload reset on h_gate', async ({ page }) => {
   await open(page, 'h_gate')
