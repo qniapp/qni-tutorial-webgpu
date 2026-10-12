@@ -1,6 +1,7 @@
 import { APP_URL } from './qni-webgpu-app-url'
+import { estimateEmbedHeight } from './qni-embed-height'
 
-type EmbedHandle = { destroy(): void; circuitJSON(): string; readStateVector(): Promise<Float32Array> }
+type EmbedHandle = { destroy(): void; circuitJSON(): string; preferredHeight(widthCssPx: number): number; readStateVector(): Promise<Float32Array> }
 type LoadProgress = { stage: string; loaded: number; total: number | null }
 type EmbedModule = {
   startEmbed(
@@ -21,6 +22,7 @@ class QniWebgpuCircuit extends HTMLElement {
   private generation = 0
   private pending: Promise<void> = Promise.resolve()
   private resizeObserver: ResizeObserver
+  private heightTimer?: ReturnType<typeof setInterval>
 
   constructor() {
     super()
@@ -31,7 +33,7 @@ class QniWebgpuCircuit extends HTMLElement {
           display: block;
           position: relative;
           width: var(--_qni-width, var(--qni-webgpu-circuit-width, 100%));
-          height: var(--_qni-height, var(--qni-webgpu-circuit-height, 640px));
+          height: var(--_qni-height, var(--qni-webgpu-circuit-height, var(--_qni-auto-height)));
         }
         /* The attached 「Qniで開く」 tab still needs its 44px row. */
         .frame { box-sizing: border-box; position: relative; height: calc(100% - 44px);
@@ -65,7 +67,10 @@ class QniWebgpuCircuit extends HTMLElement {
     for (const event of ['pointerdown', 'focus', 'keydown', 'click', 'auxclick']) {
       this.openLink.addEventListener(event, () => this.updateOpenLink())
     }
-    this.resizeObserver = new ResizeObserver(() => this.resizeCanvas())
+    this.resizeObserver = new ResizeObserver(() => {
+      this.updateAutoHeight()
+      this.resizeCanvas()
+    })
   }
 
   /** Test-only on-demand GPU readback scoped to this element. */
@@ -78,12 +83,15 @@ class QniWebgpuCircuit extends HTMLElement {
     this.updateSize()
     this.updateOpenLink()
     this.resizeObserver.observe(this)
+    // Metadata-only query also follows edits and state-panel resizing.
+    this.heightTimer = setInterval(() => { if (this.runner) this.updateAutoHeight() }, 250)
     this.restart()
   }
 
   disconnectedCallback() {
     ++this.generation
     this.resizeObserver.disconnect()
+    clearInterval(this.heightTimer)
     this.preservedCircuit = undefined
     this.destroyRunner()
     this.setState('idle')
@@ -123,7 +131,28 @@ class QniWebgpuCircuit extends HTMLElement {
         this.style.removeProperty(`--_qni-${name}`)
       }
     }
+    this.updateAutoHeight()
     this.resizeCanvas()
+  }
+
+  private updateAutoHeight() {
+    if (this.style.getPropertyValue('--_qni-height')) return
+    // The frame has 2px borders; the attached link occupies 44px.
+    const width = Math.max(1, this.getBoundingClientRect().width - 4)
+    let height: number
+    if (this.runner) {
+      try { height = this.runner.preferredHeight(width) }
+      catch { return } // Retain the last valid size if the device/runner was lost.
+    } else {
+      const rawMax = Number(this.getAttribute('max-wire-count'))
+      height = estimateEmbedHeight(this.preservedCircuit ?? this.getAttribute('circuit') ?? '{"cols":[]}',
+        this.getAttribute('palette'), rawMax > 0 ? rawMax : undefined,
+        this.getAttribute('show-state-panel') !== 'false', width)
+    }
+    const value = `${height + 48}px`
+    if (this.style.getPropertyValue('--_qni-auto-height') !== value) {
+      this.style.setProperty('--_qni-auto-height', value)
+    }
   }
 
   private resizeCanvas() {
@@ -152,6 +181,7 @@ class QniWebgpuCircuit extends HTMLElement {
     const generation = ++this.generation
     this.destroyRunner()
     this.setState('loading', '読み込み中…')
+    this.updateAutoHeight()
     this.updateOpenLink()
     // Queue even reconnects behind unresolved startup. A stale handle must be
     // destroyed before startEmbed can use this same canvas again.
@@ -226,6 +256,8 @@ class QniWebgpuCircuit extends HTMLElement {
       this.runner = runner
       this.preservedCircuit = undefined
       this.setState('running')
+      this.updateAutoHeight()
+      this.resizeCanvas()
       this.updateOpenLink()
     } catch (error) {
       console.error('量子回路の起動に失敗しました。', error)
