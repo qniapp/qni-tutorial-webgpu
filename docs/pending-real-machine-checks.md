@@ -74,3 +74,6 @@ gmktec real AMD (rdna-3)、HEAD `6ba43ef` のheadless実機監査: 390/1440 × D
 | phase_kickback | PASS | PASS | PASS | PASS |
 | shor_fx | PASS | PASS | PASS | PASS |
 | shor_u | PASS | PASS | PASS | PASS |
+| shor_qft | PASS | PASS | PASS | PASS |
+
+全6ページ × 4組合せ PASS。native GPU監査（step選択・state readback・undo/redo・JSON復元・再生・測定）は無人で完了。Regular字形/全gate可視/active scrollの目視確認は screenshot 証拠のみ。
