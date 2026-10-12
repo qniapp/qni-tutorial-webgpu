@@ -38,7 +38,7 @@ const mockModule = `
     mock.maxLive = Math.max(mock.maxLive, mock.live);
     if (window.__qniHeld) await new Promise(resolve => mock.release.push(resolve));
     let destroyed = false;
-    return { circuitJSON() { return mock.currentCircuit ?? circuit }, destroy() {
+    return { preferredHeight(width) { return window.__qniHeight ?? (400 + Math.floor(width / 100)) }, circuitJSON() { return mock.currentCircuit ?? circuit }, destroy() {
       if (destroyed) throw new Error('duplicate destroy');
       destroyed = true;
       mock.destroyed.push(id);
@@ -104,6 +104,35 @@ test('uses the deployed base URL and exposes an accessible canvas', async ({ pag
     destroyed: [], live: 1, maxLive: 1,
     accessibility: { open: 'open', focusable: 0, label: '量子回路シミュレーター', role: 'status', live: 'polite' },
   })
+})
+
+test('automatic height uses ready runner geometry', async ({ page }) => {
+  await boot(page)
+  await running(page)
+  expect(await page.locator('qni-webgpu-circuit').evaluate(element => {
+    const canvas = element.shadowRoot!.querySelector('canvas')!
+    return element.getBoundingClientRect().height - 48 - Math.floor(canvas.getBoundingClientRect().width / 100)
+  })).toBe(400)
+})
+
+test('automatic height follows edited layout metadata', async ({ page }) => {
+  await boot(page)
+  await running(page)
+  await page.evaluate(() => { (window as Window & { __qniHeight?: number }).__qniHeight = 900 })
+  await expect(page.locator('qni-webgpu-circuit')).toHaveCSS('height', '948px')
+})
+
+test('removing explicit height restores automatic height', async ({ page }) => {
+  await boot(page)
+  await running(page)
+  await page.locator('qni-webgpu-circuit').evaluate(element => {
+    element.setAttribute('height', '640')
+    element.removeAttribute('height')
+  })
+  expect(await page.locator('qni-webgpu-circuit').evaluate(element => {
+    const canvas = element.shadowRoot!.querySelector('canvas')!
+    return element.getBoundingClientRect().height - 48 - Math.floor(canvas.getBoundingClientRect().width / 100)
+  })).toBe(400)
 })
 
 test('disconnect destroys the runner and reconnect starts a new one', async ({ page }) => {
