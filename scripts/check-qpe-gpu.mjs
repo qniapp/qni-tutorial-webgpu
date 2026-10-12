@@ -1,6 +1,6 @@
 // Unattended real GPU audit; no mocks/CPU fallback.
 import {readFile} from 'node:fs/promises'
-import {audit,validateRunner,gateColumns,initialVector,checkVector,read,circuitJSON,circuitJSONEqual,selectColumn,screenshot,toolbarAudit,visualSweep} from './gpu-audit-helper.mjs'
+import {audit,freshCircuit,gateColumns,initialVector,checkVector,read,circuitJSON,circuitJSONEqual,selectColumn,screenshot,toolbarAudit,visualSweep} from './gpu-audit-helper.mjs'
 const slug=process.argv.slice(2).find(x=>!x.startsWith('--')) ?? 'quantum_phase_estimation_circuit'
 if(!['quantum_phase_estimation_circuit','phase_kickback','shor_fx','shor_u','shor_qft'].includes(slug)) throw Error('unsupported page')
 const fixed=JSON.parse(await readFile(new URL(`../tests/fixtures/${slug}-fixed.json`,import.meta.url)))
@@ -10,19 +10,13 @@ const base=process.env.QTW_AUDIT_URL ?? 'https://qniapp.github.io/qni-tutorial-w
 const out=process.env.QTW_AUDIT_OUTPUT ?? `/tmp/qtw-${slug}-gpu`
 await audit({slug,base,out,async check({page,width,dpr,records}) {
  for(let index=0;index<vectors.length;index++) {
-  const embed=page.locator('qni-webgpu-circuit').nth(index),canvas=embed.locator('canvas')
-  await canvas.scrollIntoViewIfNeeded()
-  await page.waitForFunction(i=>document.querySelectorAll('qni-webgpu-circuit')[i].dataset.state==='running',index)
-  const initial=await circuitJSON(embed),circuit=JSON.parse(initial),columns=gateColumns(circuit)
-  const stepCount=await validateRunner(embed,fixed.circuits[index])
+  const fixture=fixed.circuits[index]
+  const {embed,canvas,circuit,columns,stepCount}=await freshCircuit(page,index,fixture)
   await selectColumn(page,embed,circuit,columns[0].source)
   const initialExpected=initialVector(circuit,vectors[index].length)
   const prefix=`${out}/${width}-dpr${dpr}-${index}`
   const record={base,slug,width,dpr,index,stepCount,start:await checkVector(page,index,initialExpected)}
   await screenshot(canvas,`${prefix}-step0.png`)
-  record.toolbar=await toolbarAudit(page,embed,index,circuit,initial)
-  await selectColumn(page,embed,circuit,columns[0].source)
-  record.restoredStep0=await checkVector(page,index,initialExpected)
   if(slug==='shor_u'||slug==='shor_qft') {
    record.authoredStages=[]
    for(const stage of slug==='shor_qft'?analysis.shorQftBeforeExpected:analysis.shorUStageExpected) {
@@ -50,18 +44,28 @@ await audit({slug,base,out,async check({page,width,dpr,records}) {
    record.measuredOutcome={values,outcomes}
    await screenshot(canvas,`${prefix}-measurement.png`)
   }
+  await visualSweep(page,embed,circuit,prefix)
   if(fixed.embeds[index].runButton) {
+   // Replay gets an unedited runner, independently of selection/measurement.
+   const replay=await freshCircuit(page,index,fixture)
    // Main moved restart inside egui, last in its keyboard focus order.
-   await canvas.focus()
+   await replay.canvas.focus()
    await page.keyboard.press('Shift+Tab')
    await page.waitForTimeout(100)
    await page.keyboard.press('Enter')
    await page.waitForTimeout(500)
    await page.waitForFunction(i=>document.querySelectorAll('qni-webgpu-circuit')[i].dataset.state==='running',index)
    record.runButtonReplayStep0=await checkVector(page,index,initialExpected)
-   if(!circuitJSONEqual(await circuitJSON(embed),initial)) throw Error('Run replay changed JSON')
+   if(!circuitJSONEqual(await circuitJSON(replay.embed),replay.initial)) throw Error('Run replay changed JSON')
   }
-  await visualSweep(page,embed,circuit,prefix)
+  // Destructive toolbar checks run last, on a separate authored load.
+  const toolbar=await freshCircuit(page,index,fixture)
+  await selectColumn(page,toolbar.embed,toolbar.circuit,toolbar.columns[0].source)
+  record.toolbar=await toolbarAudit(page,toolbar.embed,index,toolbar.circuit,toolbar.initial)
+  // Undo can drop trailing identities; verify step 0 only after a fresh load.
+  const restored=await freshCircuit(page,index,fixture)
+  await selectColumn(page,restored.embed,restored.circuit,restored.columns[0].source)
+  record.restoredStep0=await checkVector(page,index,initialExpected)
   records.push(record)
  }
 }})

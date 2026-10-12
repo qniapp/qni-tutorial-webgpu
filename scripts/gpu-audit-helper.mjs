@@ -100,6 +100,17 @@ export async function validateRunner(embed,fixture) {
   return actual
  },expected)
 }
+// Edits and restart can rebuild/normalize the runner. Never reuse their step map.
+export async function freshCircuit(page,index,fixture) {
+ await page.reload()
+ await page.waitForFunction(()=>document.documentElement.dataset.mathjax==='ready')
+ const embed=page.locator('qni-webgpu-circuit').nth(index),canvas=embed.locator('canvas')
+ await canvas.scrollIntoViewIfNeeded()
+ await page.waitForFunction(i=>document.querySelectorAll('qni-webgpu-circuit')[i].dataset.state==='running',index)
+ const initial=await circuitJSON(embed),circuit=JSON.parse(initial)
+ const stepCount=await validateRunner(embed,fixture)
+ return {embed,canvas,initial,circuit,columns:gateColumns(circuit),stepCount}
+}
 export async function selectColumn(page,embed,circuit,source) {
  const step=gateColumns(circuit).findIndex(x=>x.source===source)
  if(step<0) throw Error(`Source column ${source} is a block marker or missing`)
@@ -157,13 +168,14 @@ export async function visualSweep(page,embed,circuit,prefix) {
  // API selection does not promise horizontal auto-scroll or all-gate visibility.
  await screenshot(canvas,`${prefix}-visual-last.png`)
 }
-export async function scrollFindings(page,width) {
+export async function scrollFindings(page) {
  const findings=await page.evaluate(()=>{
   const roots=[document.body,...document.querySelectorAll('.content-with-margin,.content-with-margin *')]
   for(const e of document.querySelectorAll('qni-webgpu-circuit')) roots.push(...e.shadowRoot.querySelectorAll('*'))
   return roots.filter(e=>{const s=getComputedStyle(e);return (['auto','scroll'].includes(s.overflowX)&&e.scrollWidth>e.clientWidth+1)||(['auto','scroll'].includes(s.overflowY)&&e.scrollHeight>e.clientHeight+1)}).map(e=>e.tagName)
  })
- if(findings.length || await page.evaluate(()=>document.documentElement.scrollWidth)>width) throw Error(`Unexpected DOM overflow: ${JSON.stringify(findings)}`)
+ const viewport=await page.evaluate(()=>({scrollWidth:document.documentElement.scrollWidth,clientWidth:document.documentElement.clientWidth,innerWidth:window.innerWidth}))
+ if(findings.length || viewport.scrollWidth>viewport.clientWidth || viewport.scrollWidth>viewport.innerWidth) throw Error(`Unexpected DOM overflow: ${JSON.stringify({findings,viewport})}`)
  return findings
 }
 export async function audit({slug,base,out,check}) {
@@ -203,7 +215,7 @@ export async function audit({slug,base,out,check}) {
      }),{timeout:30000,message:'Native DPR2 audit requires canvas backing width ≈ 2× CSS width (egui scale mismatch)'}).toBe(true)
     }
     await check({page,width,dpr,records})
-    await scrollFindings(page,width)
+    await scrollFindings(page)
     if(errors.length) throw Error(`Browser errors: ${JSON.stringify(errors)}`)
     summary.status='PASS'
    } catch(e) {summary.error=e.stack ?? String(e);process.exitCode=1}
