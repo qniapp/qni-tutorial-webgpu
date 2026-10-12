@@ -71,3 +71,4 @@ gmktec real AMD (rdna-3)、HEAD `6ba43ef` のheadless実機監査: 390/1440 × D
 |---|---|---|---|---|
 | eigenphases | PASS | PASS | PASS | PASS |
 | quantum_phase_estimation_circuit | PASS | PASS | PASS | PASS |
+| phase_kickback | PASS | PASS | PASS | PASS |
