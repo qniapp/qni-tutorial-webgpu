@@ -2107,3 +2107,23 @@ pnpm exec playwright test tests/ket.spec.ts tests/content-overflow.spec.ts
 ```
 
 4旧layout guardも**実機確認待ち**、nativeGPU代替とは称さない。通常main pushしてPages/公開5テスト/原比較4を確認してからsidebarの次ページを調べる。完成済みpageはやり直さない。
+
+### 10:38 shor_qft公開確認完了
+
+**3328bda / Pages38192410961 success**（https://github.com/qniapp/qni-tutorial-webgpu/actions/runs/38192410961）。通常main push、forceなし。**公開source1＋390/1440×DPR1/2の4条件5/5成功、最新原実サイト比較4/4成功・Q1/Q2のscope外差0**。raw snapshots `shor-qft-public-nongpu-verification.json` 保存、log `/tmp/qtw-qft-{public-tests,public-compare,pages}.log`。
+
+#590は **10:29:08 MERGED/head1df23dc11a22e03030ab8c5c49d6dd774514fdcd**。原も公開更新されたので**raw本文・rawTeXは全4条件で差あり（差0と称さない）**。差は上述Q1内の既知2表現とr=2,4/rのTeXだけ、当方productionは承認literal Q1全文/Q2を保持。既知PR版をQ1全段落置換scope内だけでapprovedQ1へ正規化した比較は4/4成功。原外から新表現をimportしない。最新原maina5825a8も取得し、公開変更versionを確認。QFT JSON1・palette[[]]/max[1]/run1、全256 amplitudes、sourceQ2唯一label差、他6negativeP/量子bit範囲/Measureは不変。
+
+**full非GPU suite383/387成功、既存4失敗だけ**（ket390/1440・content-overflow390/1440）。`/tmp/qtw-qft-nongpu-regressions.log`。新回帰0、guard期待値/共通CSSを緩和しない。GPUは全件未実行・実機確認待ち、四旧layout失敗も実機確認待ち。math署名値をGPU検証とは称さない。
+
+### 10:39 sidebar次『ふろく クローン禁止定理の証明』でSTOP
+
+sidebar上でshor_qftの次は **no_cloning_theorem_proof**（最後の項目）。src routeが存在せず未移植だったので原34行を確認。最新maina5825a8でも保存原とbyte一致。標準tensor積表記で `|🍎>⊗|0>` の随伴は `<🍎|⊗<0|` だが、原は `<0|<🍎|` と逆にしており、次の内積展開と一致しない。勝手にTeXを書き替えずSTOP。
+
+Python scalar product/tensor product/conjugateだけ（**unitary/gate実行・CPU/GPU量子simulatorではない**）で🍎=|1>を検算: 入力[0,0,1,0]、正しいbra[0,0,1,0]、原bra[0,1,0,0]、原との内積0/正しい随伴1。👶=|+>では原bra×(|👶>⊗|0>)=0、正しい値1/√2（後続<🍎|👶><0|0>と一致）。結論no-cloningそのものは正しい。
+
+**[no-cloning-proof-blocker.md](no-cloning-proof-blocker.md)** にB1第一display、B2大display第一行、B3次行のbra因子順/groupingの3exact before/afterを記載。before各1回をassert。2displayTeX入力内だけの訂正、他本文/絵文字/仮定/ket/右辺/最後の展開/結論は維持する案。原が逆順braの非標準縮約規約を意図するなら説明がないため標準順への訂正を承認するか質問する。**B1〜B3未適用、src routeなし・本文/TeX無変更・未公開。** viewport/TeX/scroll/GPU page検査は未実施。
+
+`docs/no-cloning-proof-original-source.html` / `scripts/analyze-no-cloning-proof-source.py` / `no-cloning-proof-blocker-analysis.json` 保存。PR検索page名[]、cloningでは歴史的 **#97 MERGED2022-02-19/head6edcb7d873113bbb07a83e4e385e76643d690724**（証明追加）を発見、filesにも対象pageを確認、新修正PRなし。画像/credits/circuit0、palette/max/run=N/A。診断回路や架空GPU URL/commandは追加しない、後続も停止。
+
+公開証拠とSTOP exact案だけ通常mainへ記録し、Pages成功を確認して11:05より前にpush停止、11:10より前に終了。temporary local config/owned previewを片付ける。
