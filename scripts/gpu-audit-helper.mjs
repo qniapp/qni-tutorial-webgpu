@@ -1,6 +1,7 @@
 // Native GPU audit utilities; semantic step selection requires qni-webgpu #66.
 import {mkdir, writeFile} from 'node:fs/promises'
-import {chromium} from '@playwright/test'
+import {isDeepStrictEqual} from 'node:util'
+import {chromium, expect} from '@playwright/test'
 
 export const isMarker = col => col.some(x => typeof x === 'string' && /^[{\[}\]]/.test(x))
 export const gateColumns = circuit => circuit.cols.map((col, source) => ({col, source})).filter(x => !isMarker(x.col))
@@ -45,8 +46,21 @@ export async function checkVector(page,index,expected) {
  throw error
 }
 export async function circuitJSON(embed) {return embed.evaluate(e=>e.runner.circuitJSON())}
-export async function waitJSON(page,index,json) {
- await page.waitForFunction(({index,json})=>document.querySelectorAll('qni-webgpu-circuit')[index].runner.circuitJSON()===json,{index,json})
+export function circuitJSONEqual(left,right) {
+ const normalize=json=>{
+  const circuit=JSON.parse(json)
+  // qni-webgpu re-encodes angles with "_" instead of "/" after edits.
+  circuit.cols=circuit.cols.map(col=>col.map(gate=>typeof gate==='string'
+   ? gate.replace(/\(([^)]*)\)/g,(_,angle)=>`(${angle.replaceAll('_','/')})`)
+   : gate))
+  return circuit
+ }
+ return isDeepStrictEqual(normalize(left),normalize(right))
+}
+export async function waitJSON(page,index,json,equal=true) {
+ await expect.poll(async()=>circuitJSONEqual(await page.evaluate(index=>
+  document.querySelectorAll('qni-webgpu-circuit')[index].runner.circuitJSON(),index),json),
+ {timeout:30000}).toBe(equal)
 }
 // Geometry is only for the automated edit/undo/redo toolbar audit, never selection.
 async function toolbarGeometry(embed,circuit) {
@@ -117,7 +131,7 @@ export async function toolbarAudit(page,embed,index,circuit,initial) {
  await page.waitForTimeout(150);await page.mouse.up()
  await page.mouse.move(g.box.x+4,g.box.y+4)
  await page.waitForTimeout(150)
- await page.waitForFunction(({index,initial})=>document.querySelectorAll('qni-webgpu-circuit')[index].runner.circuitJSON()!==initial,{index,initial})
+ await waitJSON(page,index,initial,false)
  const edited=await circuitJSON(embed)
  for(const [position,json] of [[g.undo,initial],[g.redo,edited],[g.undo,initial]]) {
   await page.mouse.move(g.box.x+position.x,g.box.y+position.y)

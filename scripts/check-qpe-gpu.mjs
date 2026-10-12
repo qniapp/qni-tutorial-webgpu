@@ -1,6 +1,6 @@
 // Unattended real GPU audit; no mocks/CPU fallback.
 import {readFile} from 'node:fs/promises'
-import {audit,validateRunner,gateColumns,initialVector,checkVector,read,circuitJSON,selectColumn,screenshot,toolbarAudit,visualSweep} from './gpu-audit-helper.mjs'
+import {audit,validateRunner,gateColumns,initialVector,checkVector,read,circuitJSON,circuitJSONEqual,selectColumn,screenshot,toolbarAudit,visualSweep} from './gpu-audit-helper.mjs'
 const slug=process.argv.slice(2).find(x=>!x.startsWith('--')) ?? 'quantum_phase_estimation_circuit'
 if(!['quantum_phase_estimation_circuit','phase_kickback','shor_fx','shor_u','shor_qft'].includes(slug)) throw Error('unsupported page')
 const fixed=JSON.parse(await readFile(new URL(`../tests/fixtures/${slug}-fixed.json`,import.meta.url)))
@@ -59,7 +59,7 @@ await audit({slug,base,out,async check({page,width,dpr,records}) {
    await page.waitForTimeout(500)
    await page.waitForFunction(i=>document.querySelectorAll('qni-webgpu-circuit')[i].dataset.state==='running',index)
    record.runButtonReplayStep0=await checkVector(page,index,initialExpected)
-   if(await circuitJSON(embed)!==initial) throw Error('Run replay changed JSON')
+   if(!circuitJSONEqual(await circuitJSON(embed),initial)) throw Error('Run replay changed JSON')
   }
   await visualSweep(page,embed,circuit,prefix)
   records.push(record)
