@@ -54,6 +54,6 @@ test('index links and local assets respect the Pages base path', async ({ page }
   await page.goto('/qni-tutorial-webgpu/')
   const links = await page.locator('a[href^="/"]').evaluateAll(elements => elements.map(element => element.getAttribute('href')))
   await page.goto('/qni-tutorial-webgpu/h_gate/')
-  const assets = await page.locator('img[src]:not(orbit-prompt img), link[rel="icon"]').evaluateAll(elements => elements.map(element => element.getAttribute('src') ?? element.getAttribute('href')))
+  const assets = await page.locator('img[src], link[rel="icon"]').evaluateAll(elements => elements.map(element => element.getAttribute('src') ?? element.getAttribute('href')))
   expect([...links, ...assets].every(url => url?.startsWith('/qni-tutorial-webgpu/'))).toBe(true)
 })
