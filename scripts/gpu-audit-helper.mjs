@@ -52,10 +52,27 @@ export async function waitJSON(page,index,json) {
 async function toolbarGeometry(embed,circuit) {
  const canvas=embed.locator('canvas')
  await canvas.scrollIntoViewIfNeeded()
- const box=await canvas.boundingBox(), width=box.width-16
+ const box=await canvas.boundingBox()
  const palette=JSON.parse(await embed.getAttribute('palette') ?? 'null')
  if(palette===null || palette.length) throw Error('This audit geometry requires the authored hidden palette')
- return {canvas,box,width,x:8+(width<640?80:162),y:136+(circuit.cols.some(isMarker)?58:0)}
+ // qni-webgpu 3842657, paths relative to apps/web/src (all CSS px, no DPR scaling):
+ // app/embed.rs: CentralPanel margin = 8; app.rs::circuit_origin and
+ // layout/geometry.rs::CircuitGutters: compact below content width 640.
+ // constants.rs: LINE_LEFT_OFFSET = 64+42+16, compact left = 40;
+ // first slot = line left + GATE_SIZE (40), LINE_GAP = 56.
+ const margin=8, width=box.width-2*margin, gateSize=40, lineGap=56
+ const lineLeft=width<640?40:64+42+16
+ // constants.rs: LINE_Y = 80+(40*2+8)+20+48+20 = 256.
+ // layout/palette.rs::circuit_shift_y: hidden palette subtracts 88+40 = 128.
+ // app.rs::circuit_block_outset_y: blocks add 32+2+24 = 58.
+ const y=margin+256-128+(circuit.cols.some(isMarker)?32+2+24:0)
+ // render/toolbar.rs: viewport origin, margin (12,6), TOOL_SIZE 32,
+ // horizontal gap 8. Embeds have no picker or clear button (app/embed.rs).
+ const toolSize=32, toolGap=8, toolbarY=6+toolSize/2
+ const undo={x:12+toolSize/2,y:toolbarY}
+ const redo={x:undo.x+toolSize+toolGap,y:toolbarY}
+ // drag_controller/drop.rs deletes beyond SNAP_DISTANCE (40) from every wire.
+ return {canvas,box,x:margin+lineLeft+gateSize,y,lineGap,dropY:y-40-gateSize/2,undo,redo}
 }
 export async function validateRunner(embed,fixture) {
  const expected=gateColumns(fixture).length
@@ -90,22 +107,29 @@ export async function toolbarAudit(page,embed,index,circuit,initial) {
  const wire=columns[0].col.findIndex(x=>x!==1)
  if(wire<0) throw Error('Toolbar audit needs a gate in the first column')
  const g=await toolbarGeometry(embed,circuit)
- await page.mouse.move(g.box.x+g.x,g.box.y+g.y+56*wire)
- await page.mouse.down();await page.waitForTimeout(100)
- // Drag above all wires: native drop removes the gate.
- await page.mouse.move(g.box.x+g.x,g.box.y+55,{steps:12})
- await page.waitForTimeout(100);await page.mouse.up()
+ // egui consumes pointer events on render frames: allow hover and held press
+ // to be rendered separately, rather than batching a whole click into one frame.
+ await page.mouse.move(g.box.x+g.x,g.box.y+g.y+g.lineGap*wire)
+ await page.waitForTimeout(150)
+ await page.mouse.down();await page.waitForTimeout(150)
+ // Drag above all wires by more than SNAP_DISTANCE: native drop removes the gate.
+ await page.mouse.move(g.box.x+g.x,g.box.y+g.dropY,{steps:12})
+ await page.waitForTimeout(150);await page.mouse.up()
+ await page.mouse.move(g.box.x+4,g.box.y+4)
+ await page.waitForTimeout(150)
  await page.waitForFunction(({index,initial})=>document.querySelectorAll('qni-webgpu-circuit')[index].runner.circuitJSON()!==initial,{index,initial})
  const edited=await circuitJSON(embed)
- for(const [x,json] of [[28,initial],[68,edited],[28,initial],[108,initial]]) {
-  await g.canvas.click({position:{x,y:22}})
+ for(const [position,json] of [[g.undo,initial],[g.redo,edited],[g.undo,initial]]) {
+  await page.mouse.move(g.box.x+position.x,g.box.y+position.y)
+  await page.waitForTimeout(150)
+  await page.mouse.down();await page.waitForTimeout(150)
+  await page.mouse.up();await page.waitForTimeout(150)
   await page.mouse.move(g.box.x+4,g.box.y+4)
+  await page.waitForTimeout(150)
   await waitJSON(page,index,json)
  }
- // The old trash location must remain inert after events have been processed.
- await page.waitForTimeout(200)
- if(await circuitJSON(embed)!==initial) throw Error('Former trash location changed circuit')
- return {undoRedo:true,jsonRestored:true,formerTrashInert:true}
+ // #63 removed Clear from embeds; there is no third edit button to audit.
+ return {undoRedo:true,jsonRestored:true}
 }
 export async function visualSweep(page,embed,circuit,prefix) {
  const columns=gateColumns(circuit)
