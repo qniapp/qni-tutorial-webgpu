@@ -9,7 +9,7 @@ for index,(a,k) in enumerate(cells):
  x,f=divmod(index,16);assert a==(.25 if f==pow(2,x,15) else 0)
  if k!=index:labeldiff.append({'position':index,'before':k,'after':index,'amplitude':a})
 if args.approved:
- assert labeldiff==[] and r'\(r = 2, 4\) が候補として得られます。' in source
+ assert labeldiff==[] and r'\(r\) の候補として 2 と 4 が得られます。' in source
  assert '非自明な因数かチェックします。' in source
 else:assert labeldiff==[{'position':242,'before':241,'after':242,'amplitude':0.0}]
 assert sum(a*a for a,k in cells)==1
@@ -30,7 +30,7 @@ assert candidates==[{'r':2,'modularResult':4,'gcdPlus':3,'gcdMinus':1},{'r':4,'m
 circuits=[json.loads(x)for x in re.findall(r"data-json='([^']*)'",source)];assert len(circuits)==1
 result={'sourceSHA256':hashlib.sha256(source.encode()).hexdigest(),'GPUExecuted':False,'quantumCPUSimulatorExecuted':False,'method':'Finite negative Fourier coset sums, Fraction reduction, integer gcd; no gate JSON execution','circuits':circuits,'palette':[[]],'maxWireCount':[1],'runButtonCount':1,'imageCount':0,'authoredCircleCount':256,'labelDiff':labeldiff,'measurements':[0,4,8,12],'probabilities':prob,'fractions':[str(Fraction(y,16))for y in [0,4,8,12]],'denominators':[Fraction(y,16).denominator for y in [0,4,8,12]],'usefulCandidates':[2,4],'gcdCandidates':candidates,'mathSignedDFTExpected':vec,'norm':sum(prob),'decision':'STOP before shor_qft route: final candidates/success wording and ket242 need page-specific approval'}
 if args.approved:
- result['decision']='APPROVED Q1/Q2 exactly; all other text/JSON/amplitudes unchanged'
+ result['decision']='APPROVED Q1/Q2 plus two merged PR590 spots; all other text/JSON/amplitudes unchanged'
  result['shorQftExpected']=[vec]
  result['shorQftBeforeExpected']=[{'stage':'before QFT (source column17)','column':17,'values':[[a,0]for a,k in cells]}]
 text=json.dumps(result,ensure_ascii=False,indent=2)+'\n'

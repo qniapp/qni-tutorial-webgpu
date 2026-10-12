@@ -1,5 +1,5 @@
 {
-  "sourceSHA256": "a92fd9befee7c62b99917ebb6fb613a57367799f2d21474556820654aed3e61f",
+  "sourceSHA256": "e5d73ba43fc2e8c7b0716ff43bf40e3b90f4f2265efa1bb5a95606a02c0b2d47",
   "GPUExecuted": false,
   "quantumCPUSimulatorExecuted": false,
   "method": "Finite negative Fourier coset sums, Fraction reduction, integer gcd; no gate JSON execution",
@@ -1333,7 +1333,7 @@
     ]
   ],
   "norm": 1.0,
-  "decision": "APPROVED Q1/Q2 exactly; all other text/JSON/amplitudes unchanged",
+  "decision": "APPROVED Q1/Q2 plus two merged PR590 spots; all other text/JSON/amplitudes unchanged",
   "shorQftExpected": [
     [
       [

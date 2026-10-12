@@ -1,4 +1,6 @@
-# shor_qft: PR590の別表現は適用しない
+# shor_qft: merged PR590へ合わせる方針に変更
+
+2026-10-12 10:53 user指示で **merged originalと一致させるpolicy** へ変更。以下に記録した2spotだけをexact文言/TeXへ変更。他変更なし。原main sourceは保存PR590とbyte一致、direct raw text/TeX equalityを4条件で要求し旧補正を除去。以下は旧policy時の差の歴史的記録、現在の非適用指示ではない。実績はporting.md。
 
 2026-10-12 10:24、PR#590 OPEN/head `1df23dc11a22e03030ab8c5c49d6dd774514fdcd` を発見。
 https://github.com/qniapp/qni/pull/590

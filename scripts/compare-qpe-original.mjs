@@ -21,7 +21,7 @@ for(const width of [390,1440])for(const dpr of [1,2]){
    const walk=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let text='',node
    while(node=walk.nextNode()){if(!node.parentElement.closest('footer,script,style,mjx-container,[data-original-image],orbit-reviewarea,qni-webgpu-circuit,quantum-simulator,quantum-circuit,circle-notation,qubit-circle')&&!(node.parentElement.closest('a')&&node.textContent.replace(/\s+/g,'')==='Qniで開く'))text+=node.textContent}
    const normalize=s=>s.replace(/\s+/g,'').normalize('NFC')
-   return {text:normalize(text),description:normalize((document.querySelector('.lede')??document.querySelector('h1')?.parentElement.nextElementSibling)?.textContent??''),math:Array.from(window.MathJax.startup.document.math).filter(item=>root.contains(item.typesetRoot)&&!item.typesetRoot.closest('footer,[data-original-image],quantum-simulator,quantum-circuit,circle-notation,qubit-circle,qni-webgpu-circuit')).map(item=>({tex:normalize(item.math),display:item.display})),circuits:[...root.querySelectorAll('quantum-circuit[data-json],qni-webgpu-circuit[circuit]')].map(e=>JSON.parse(e.getAttribute('data-json')??e.getAttribute('circuit')))}
+   return {mathRaw:Array.from(window.MathJax.startup.document.math).filter(item=>root.contains(item.typesetRoot)&&!item.typesetRoot.closest('footer,[data-original-image],quantum-simulator,quantum-circuit,circle-notation,qubit-circle,qni-webgpu-circuit')).map(item=>({tex:item.math,display:item.display})),text:normalize(text),description:normalize((document.querySelector('.lede')??document.querySelector('h1')?.parentElement.nextElementSibling)?.textContent??''),math:Array.from(window.MathJax.startup.document.math).filter(item=>root.contains(item.typesetRoot)&&!item.typesetRoot.closest('footer,[data-original-image],quantum-simulator,quantum-circuit,circle-notation,qubit-circle,qni-webgpu-circuit')).map(item=>({tex:normalize(item.math),display:item.display})),circuits:[...root.querySelectorAll('quantum-circuit[data-json],qni-webgpu-circuit[circuit]')].map(e=>JSON.parse(e.getAttribute('data-json')??e.getAttribute('circuit')))}
   })
   snapshot.url=url;snapshots.push(snapshot);await page.screenshot({path:`/tmp/qtw-${slug}-live-${snapshots.length===1?'original':'ours'}-${width}-dpr${dpr}.png`,fullPage:true});await page.close()
  }
@@ -51,18 +51,6 @@ for(const width of [390,1440])for(const dpr of [1,2]){
    approvedMath.splice(32,1,{tex:'a',display:false},{tex:'mod(N)',display:false})
   }
  }
- if(slug==='shor_qft'){
-  const plain=s=>s.replace(/\\\(.*?\\\)/gs,'').replace(/\s+/g,'')
-  // Known PR590 alternative stays inside Q1. Preserve raw snapshots; never change production to its wording.
-  const pr=JSON.parse(await readFile(new URL('../tests/fixtures/shor-qft-pr590-comparison.json',import.meta.url)))
-  for(const d of pr.changes)approvedText=approvedText.replace(plain(d.PR),plain(d.approved))
-  approvedText=approvedText.replace(plain(fixed.edits[0][0]),plain(fixed.edits[0][1]))
-  if(approvedMath.length===8&&approvedMath[3].tex==='r')approvedMath[3].tex='r=2,4'
-  if(JSON.stringify(approvedMath)!==JSON.stringify(fixed.math)){
-   if(approvedMath.length!==6||approvedMath[3].tex!=='r=4,8')throw Error('Original Shor QFT TeX changed outside Q1; STOP')
-   approvedMath[3].tex='r=2,4';approvedMath.splice(5,0,{tex:'N',display:false},{tex:'r=4',display:false})
-  }
- }
  if(slug==='shor_u'){
   const plain=s=>s.replace(/\\\(.*?\\\)/gs,'').replace(/\s+/g,'')
   for(const [before,after] of fixed.edits.slice(0,7))approvedText=approvedText.replace(plain(before),plain(after))
@@ -80,7 +68,12 @@ for(const width of [390,1440])for(const dpr of [1,2]){
   }
  }
  const result={slug,width,dpr,base,snapshots,approvedTextDiffZero:approvedText===ours.text,sourceGoldenTextMatches:ours.text===fixed.text,approvedTexDiffZero:JSON.stringify(approvedMath)===JSON.stringify(ours.math),rawTexUnchanged:JSON.stringify(original.math)===JSON.stringify(ours.math),sourceGoldenTexMatches:JSON.stringify(ours.math)===JSON.stringify(fixed.math),originalJSONMatches:JSON.stringify(original.circuits)===JSON.stringify(originalFixture.circuits),approvedJSONMatches:JSON.stringify(approvedCircuits)===JSON.stringify(ours.circuits),fixedJSONMatches:JSON.stringify(ours.circuits)===JSON.stringify(fixed.circuits??[]),WebGPUExecuted:false}
- if(slug==='shor_qft')result.approvedDescriptionMatches=original.description===ours.description&&ours.description===fixed.description
+ if(slug==='shor_qft'){
+  result.rawTextDiffZero=original.text===ours.text
+  result.rawTexDiffZero=JSON.stringify(original.math)===JSON.stringify(ours.math)
+  result.rawTexStringsDiffZero=JSON.stringify(original.mathRaw)===JSON.stringify(ours.mathRaw)
+  result.approvedDescriptionMatches=original.description===ours.description&&ours.description===fixed.description
+ }
  if(slug==='shor_u')result.approvedDescriptionMatches=original.description===ours.description&&ours.description===fixed.description
  if(slug==='shor_r')result.approvedDescriptionMatches=original.description===ours.description&&ours.description===fixed.description
  if(slug==='shor_fx')result.approvedDescriptionMatches=original.description===ours.description&&ours.description===fixed.description
@@ -92,5 +85,5 @@ for(const width of [390,1440])for(const dpr of [1,2]){
 }
 const failures=results.filter(comparisonFailed)
 if(failures.length){console.error(`STOP ${slug}: ${failures.length}/4 comparison cases failed; no additional edits are authorized`);process.exitCode=1}
-else console.log(`PASS ${slug}: original/live text and TeX only approved diffs (4 cases)`)
+else console.log(slug==='shor_qft'?`PASS ${slug}: direct raw text/TeX and unnormalized TeX strings diff 0 (4 cases)`:`PASS ${slug}: original/live text and TeX only approved diffs (4 cases)`)
 }finally{await writeFile(`/tmp/qtw-${slug}-live-comparison.json`,JSON.stringify(results,null,2)+'\n');await browser.close()}

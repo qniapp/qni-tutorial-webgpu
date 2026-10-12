@@ -2127,3 +2127,24 @@ Python scalar product/tensor product/conjugateだけ（**unitary/gate実行・CP
 `docs/no-cloning-proof-original-source.html` / `scripts/analyze-no-cloning-proof-source.py` / `no-cloning-proof-blocker-analysis.json` 保存。PR検索page名[]、cloningでは歴史的 **#97 MERGED2022-02-19/head6edcb7d873113bbb07a83e4e385e76643d690724**（証明追加）を発見、filesにも対象pageを確認、新修正PRなし。画像/credits/circuit0、palette/max/run=N/A。診断回路や架空GPU URL/commandは追加しない、後続も停止。
 
 公開証拠とSTOP exact案だけ通常mainへ記録し、Pages成功を確認して11:05より前にpush停止、11:10より前に終了。temporary local config/owned previewを片付ける。
+
+## 2026-10-12 10:53 shor_qft policy更新: merged originalと一致 / hard stop11:20
+
+clean maind90885bをfetch/rebase origin/main（up to date）、forceなし。tailとPR590 comparison再読。**今回userがmerged原に合わせることを明示承認、変更はQ1の2spotだけ。no-cloning appendix/B1〜B3/後続には一切着手しない。** B1〜B3 pendingは維持する。原最新mainをfetchし、shor_qftのraw sourceが保存#590 head版と**byte一致**することをcmp確認。
+
+### before → after（exact2箇所）
+
+1. `これを連分数アルゴリズムにかけると、\(r = 2, 4\) が候補として得られます。` → `これを連分数アルゴリズムにかければ、\(r\) の候補として 2 と 4 が得られます。`
+2. `\(r = 4\) の場合には正しい 3, 5 が求まります。` → `\(r = 4\) の場合因数 3 と 5 がみつかります。`
+
+TeX8入力のうちr=2,4→rを1入力だけ変更、数値2/4はplain proseへ移動。その他7Tex/全本文/画像0/credits0/全256 amplitudes/全kets（正しい242を含む）/全JSON・36cols・negativeP6・8wire・Measure/palette[[]]/max[1]/run1は不変。srcのdiffがexact2spotだけであることを確認。CSS/header/footer/共有glyph/SDK pin/生産readback/fallbackは無変更。
+
+歴史的exactQ1 sourceを `shor-qft-q1-exact-approved-source.html` に保存。独立guardは旧Q1/Q2の2literal＋今回2literalだけを順に適用し、他全byte不変をassert。さらに保存mergedsourceのSHA256をpinし、whitespace-normalized全文一致もassert。approved source/golden/source analysisのsha・決定文のみ対応させ、数学期待値・Norm/Fraction/gcdは同じ。旧PR非適用policyは歴史的記録と明記し、今回方針を先頭に追加。
+
+### latest original直接比較 / 非GPU
+
+**比較scriptのshor_qft旧Q1/PR590補正ブロックを完全除去**。source/live raw body（空白/NFC整形のみ、文言書換えなし）・raw canonical8Tex・さらに**空白さえ除去しないMathJax math8文字列の直接比較**がすべて0でなければ失敗するguardを追加。他pageの承認whitelistは変更しない。
+
+**typecheck/build/diff-check成功、local source1＋viewport4＋sidebar5=10/10成功、最新原実サイトとのlocal比較4/4でrawTextDiffZero/rawTexDiffZero/rawTexStringsDiffZeroすべてtrue**。390/1440×DPR1/2でdocument horizontal overflow0/Body・content・Shadow内scrollbars0/console-pageerrors0。`shor-qft-merged-local-nongpu-verification.json`、log `/tmp/qtw-qft-merged-{build,tests,local-compare}.log`。既存のnativeGPU全件/4旧layout失敗は**実機確認待ち**、commandsはpending-real-machine-checks.mdを維持。今回非GPU数学値が変わる変更なし、GPUを実行済みとは称さない。
+
+通常main commit/pushで公開してPages成功、公開source＋4viewport5/5・最新原公開4比較のraw3種差0を再確認する。**shor_qftだけで停止**し、他page/新blockerの調査・port・publishを行わない。11:20までにpreview/configを片付けて終了する。
