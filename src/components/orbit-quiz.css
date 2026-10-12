@@ -52,10 +52,11 @@ orbit-prompt { display: block; min-width: 0; }
 .orbit-quiz-card:not([data-state="unanswered"]) .orbit-quiz-blank-answer { display: inline; }
 
 .orbit-quiz-status {
-  display: inline-flex; align-items: center; gap: 4px; max-width: none; margin: 12px 0 0;
+  display: flex; width: fit-content; align-items: center; gap: 4px; max-width: none; margin: 12px 0 0;
   padding: 2px 10px; border-radius: 999px; font-size: 14px; line-height: 20px; font-weight: 600;
 }
-.orbit-quiz-status:empty { display: none; }
+/* Keep the live region in the accessibility tree while empty so updates are announced. */
+.orbit-quiz-status:empty { margin: 0; padding: 0; }
 [data-state="correct"] > .orbit-quiz-status { background: #EDEECF; color: #536907; }
 [data-state="incorrect"] > .orbit-quiz-status { background: #FFE1D5; color: #AF3029; }
 
