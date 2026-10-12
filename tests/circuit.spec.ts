@@ -5,6 +5,7 @@ type MockState = {
   calls: { circuit: string; showStatePanel: boolean; url: string }[]
   paletteCalls: { present: boolean; palette?: string[] }[]
   wireCalls: { present: boolean; value?: number }[]
+  restartCalls: { show: boolean; invoke: () => void }[]
   destroyed: number[]
   live: number
   maxLive: number
@@ -28,6 +29,7 @@ const mockModule = `
     const mock = window.__qniMock;
     const id = mock.calls.length;
     mock.progress = settings.onProgress;
+    mock.restartCalls.push({ show: settings.showRestartButton, invoke: settings.onRestart });
     mock.wireCalls.push({ present: Object.hasOwn(settings, 'maxWireCount'), value: settings.maxWireCount });
     mock.paletteCalls.push({ present: Object.hasOwn(settings, 'palette'), palette: settings.palette });
     mock.calls.push({ circuit, showStatePanel: settings.showStatePanel, url: new URL(import.meta.url).pathname });
@@ -49,7 +51,7 @@ async function boot(page: Page, options: { gpu?: boolean; held?: boolean; import
   const requests: string[] = []
   await page.addInitScript(({ gpu, held }) => {
     Object.defineProperty(navigator, 'gpu', { configurable: true, value: gpu ? {} : undefined })
-    window.__qniMock = { calls: [], paletteCalls: [], wireCalls: [], destroyed: [], live: 0, maxLive: 0, release: [] }
+    window.__qniMock = { calls: [], paletteCalls: [], wireCalls: [], restartCalls: [], destroyed: [], live: 0, maxLive: 0, release: [] }
     window.__qniHeld = held
     window.__qniFail = false
   }, { gpu: options.gpu !== false, held: options.held ?? false })
@@ -287,28 +289,98 @@ test('palette JSON reaches startEmbed, [] hides it and absence omits the option'
   expect((await snapshot(page)).maxLive).toBe(1)
 })
 
-test('original run button replays the current edited circuit with one live runner', async ({ page }) => {
+test('run-button opts into the embedded restart action without an external button', async ({ page }) => {
   await boot(page)
   await running(page)
-  const element = page.locator('qni-webgpu-circuit')
-  const button = element.getByRole('button', { name: '量子回路を実行' })
-  await expect(button).toBeHidden()
-  await element.evaluate(element => element.setAttribute('run-button', ''))
-  await expect(button).toBeVisible()
-  expect((await snapshot(page)).calls).toHaveLength(1)
-  const current = '{"cols":[["|1>"],["Measure"]]}'
-  await page.evaluate(value => { window.__qniMock.currentCircuit = value }, current)
-  await button.click()
+  await page.locator('qni-webgpu-circuit').evaluate(e => e.setAttribute('run-button', ''))
   await running(page)
-  expect((await snapshot(page)).calls.at(-1)?.circuit).toBe(current)
-  expect((await snapshot(page)).calls).toHaveLength(2)
-  await button.click()
+  expect(await page.evaluate(() => ({
+    settings: window.__qniMock.restartCalls.map(c => c.show),
+    externalButtons: document.querySelector('qni-webgpu-circuit')!.shadowRoot!.querySelectorAll('button').length,
+  }))).toEqual({ settings: [false, true], externalButtons: 0 })
+})
+
+for (const edited of [false, true]) {
+  test(`status-bar restart preserves ${edited ? 'edited' : 'unchanged'} circuit and one live runner`, async ({ page }) => {
+    await boot(page)
+    await running(page)
+    await page.locator('qni-webgpu-circuit').evaluate(e => e.setAttribute('run-button', ''))
+    await running(page)
+    const current = edited ? '{"cols":[["|1>"],["Measure"]]}' : '{"cols":[["|0>"]]}'
+    await page.evaluate(value => {
+      window.__qniMock.currentCircuit = value
+      window.__qniMock.restartCalls.at(-1)!.invoke()
+    }, current)
+    await running(page)
+    const state = await snapshot(page)
+    expect({ circuit: state.calls.at(-1)?.circuit, calls: state.calls.length, live: state.live, maxLive: state.maxLive })
+      .toEqual({ circuit: current, calls: 3, live: 1, maxLive: 1 })
+  })
+}
+
+for (const phase of ['loading', 'disconnected', 'removed'] as const) {
+  test(`restart callback ignores ${phase} or stale runners`, async ({ page }) => {
+    await boot(page)
+    await running(page)
+    await page.locator('qni-webgpu-circuit').evaluate(e => e.setAttribute('run-button', ''))
+    await running(page)
+    await page.evaluate(phase => {
+      const e = document.querySelector('qni-webgpu-circuit')!
+      const callback = window.__qniMock.restartCalls.at(-1)!.invoke
+      if (phase === 'loading') e.setAttribute('circuit', '{"cols":[["H"]]}')
+      else if (phase === 'disconnected') e.remove()
+      else e.removeAttribute('run-button')
+      callback()
+    }, phase)
+    if (phase !== 'disconnected') await running(page)
+    // Also invoke the old callback after the replacement runner is ready.
+    await page.evaluate(() => window.__qniMock.restartCalls[1].invoke())
+    await page.waitForTimeout(100)
+    expect(await page.evaluate(() => ({ calls: window.__qniMock.calls.length, live: window.__qniMock.live })))
+      .toEqual({ calls: phase === 'disconnected' ? 2 : 3, live: phase === 'disconnected' ? 0 : 1 })
+  })
+}
+
+for (const enabled of [true, false]) {
+  test(`changing run-button to ${enabled} preserves the edited circuit`, async ({ page }) => {
+    await boot(page)
+    await running(page)
+    if (!enabled) {
+      await page.locator('qni-webgpu-circuit').evaluate(e => e.setAttribute('run-button', ''))
+      await running(page)
+    }
+    const edited = '{"cols":[["X"],["Measure"]]}'
+    await page.evaluate(({ edited, enabled }) => {
+      window.__qniMock.currentCircuit = edited
+      document.querySelector('qni-webgpu-circuit')!.toggleAttribute('run-button', enabled)
+    }, { edited, enabled })
+    await running(page)
+    expect((await snapshot(page)).calls.at(-1)?.circuit).toBe(edited)
+  })
+}
+
+test('rapid run-button changes preserve the edited circuit', async ({ page }) => {
+  await boot(page)
   await running(page)
-  expect((await snapshot(page)).calls).toHaveLength(3)
-  expect((await snapshot(page)).maxLive).toBe(1)
-  await element.evaluate(element => element.removeAttribute('run-button'))
-  await expect(button).toBeHidden()
-  expect((await snapshot(page)).calls).toHaveLength(3)
+  const edited = '{"cols":[["X"],["Measure"]]}'
+  await page.evaluate(edited => {
+    window.__qniMock.currentCircuit = edited
+    const e = document.querySelector('qni-webgpu-circuit')!
+    e.setAttribute('run-button', '')
+    e.removeAttribute('run-button')
+  }, edited)
+  await running(page)
+  expect((await snapshot(page)).calls.at(-1)?.circuit).toBe(edited)
+})
+
+test('removing run-button disables the embedded restart setting', async ({ page }) => {
+  await boot(page)
+  await running(page)
+  await page.locator('qni-webgpu-circuit').evaluate(e => e.setAttribute('run-button', ''))
+  await running(page)
+  await page.locator('qni-webgpu-circuit').evaluate(e => e.removeAttribute('run-button'))
+  await running(page)
+  expect(await page.evaluate(() => window.__qniMock.restartCalls.map(c => c.show))).toEqual([false, true, false])
 })
 
 test('max-wire-count forwards integers, restarts on change and omits absent settings', async ({ page }) => {
