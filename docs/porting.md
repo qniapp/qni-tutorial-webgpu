@@ -2047,3 +2047,21 @@ pnpm exec playwright test tests/ket.spec.ts tests/content-overflow.spec.ts
 ```
 
 4旧layout guardも**実機確認待ち**。norm等数学をnativeGPU代替と称さず、期待値/共通CSSを緩和しない。通常pushしてPages成功/公開URLを確認し、公開source5/比較4成功の証拠を保存してからshor_qftへ進む。
+
+### 09:52 shor_u公開確認完了
+
+**3f48aac / Pages38189480744 success**（https://github.com/qniapp/qni-tutorial-webgpu/actions/runs/38189480744）。通常main push、forceなし。**公開source＋4条件5/5成功、原実サイト比較4/4成功。** #589は09:40:46 MERGED/head e1995cbca78bf3b567e77369eb44863499bcd1d7、原サイトもnote公開済みとなり、390/1440×DPR1/2全4で**raw本文直接等値・raw42TeX直接等値（差0、whitelist補正不要）**。JSON/palette/max/run/768cells/png/引用保持/図3/phoneサイズ/popups/Bold/Regular/inner scroll/errorsのguardも成功。公開証拠 `shor-u-public-nongpu-verification.json` とlog `/tmp/qtw-u-{public-tests,public-compare,pages}.log`。
+
+**非GPU full suite376/380成功、既存ket390/1440とcontent-overflow390/1440の4失敗だけ**。`/tmp/qtw-u-nongpu-regressions.log`。新回帰0、期待値/共有CSSを緩和しない、四旧失敗はgmktec等一致環境で実機確認待ち。GPU監査は依然未実行。公開完了後にだけ次のshor_qftを調査した。
+
+### 09:53 shor_qftでSTOP（未移植・未公開）
+
+最新原main61e757cのsourceを `docs/shor-qft-original-source.html` に保存。open/merged PRのpage名検索[]、最新10件を確認し該当page修正なし。表256 amplitudesはpow(2,x,15)に一致、norm1。JSONの負P6個とxレジスタだけのQFTは既存QFT規約に一致するので変更不要。しかし**最後r4/8候補は直接Fraction分母4/2/4と不一致**、候補r8のgcdは1/15で非自明因数を返さない。**表位置242のket241重複/242欠落**も残る。Uの承認をこのpageへ転用しない。
+
+有限負Fouriercoset和で測定0/4/8/12各25%、他0、jointnorm1をPythonで確認（JSON gate実行やCPU/GPU量子simulatorではない）。gcd r2→3/1、r4→5/3、r8→1/15、Fraction分母1/4/2/4。有用候補2/4、0はretry。`scripts/analyze-shor-qft-source.py` / `shor-qft-blocker-analysis.json` 保存。
+
+**未適用exact提案/質問Q1・Q2は [shor-qft-blocker.md](shor-qft-blocker.md)**。Q1 最終段落の候補r4/8→r2/4＋分母/0retry＋非自明因数チェック/N÷factor＋r4で3/5成功保持。Q2 位置242だけラベル241→242、amplitude0は不変。両before substringが保存原に1回だけ出ることをPython確認済み。その他prose（『3つおき』『にだけに』等）/TeX/全JSON/QFT/Measure/全ampは変更しない案。
+
+現状**shor_qft routeなし・本文/TeX/256circles/JSON無変更**、他後続も停止。画像/credits0、source palette[[]]/max[1]/run1、8wire回路1。viewport/text/TeX/scroll/GPUの実際のpage検査は未実施と明示する。承認前に架空GPU URL/commandや診断回路を追加しない。既存＋新shor_u全native GPU checksと四layout guardsは上記commandsで**実機確認待ち**。
+
+今回公開証拠＋STOP exact案のみ通常main commit/pushで記録し、Pages成功を確認して10:25より前にpush停止する。shor_qftの未承認編集・公開はしない。
