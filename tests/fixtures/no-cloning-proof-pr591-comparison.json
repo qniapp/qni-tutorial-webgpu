@@ -1,0 +1,10 @@
+{
+  "number": 591,
+  "stateAtCheck": "OPEN",
+  "head": "8d40ec7ac0cc2e7fb4d90178c9a2a845f64d7b3c",
+  "sourceSHA256": "22aa6fd803d59c0794cca7810e1a1db53e5af72d6763a2120585df8b21b39143",
+  "normalizedWholeSourceEqual": true,
+  "wordingDifferences": [],
+  "additionalChangesApplied": false,
+  "policy": "B1 B2 B3 exactly only"
+}

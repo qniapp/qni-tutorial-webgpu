@@ -1,0 +1,36 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+---
+<TutorialLayout title="クローン禁止定理の証明" section="ふろく" hasMath>
+
+
+<p>
+  量子ビットの情報を複製できるユニタリ演算子 {String.raw`\(U_{CLONE}\)`} があったとする。
+  このとき、任意の状態の量子ビット {String.raw`\(|🍎\rangle\)`}, {String.raw`\(|👶\rangle\)`} について、次が成り立つとする。
+</p>
+
+<p>
+  <fit-content>{String.raw`\[\left\{ \begin{array}{l} U_{CLONE}(|🍎\rangle|0\rangle) = |🍎\rangle|🍎\rangle \\
+  U_{CLONE}(|👶\rangle|0\rangle) = |👶\rangle|👶\rangle \end{array} \right.\]`}</fit-content>
+</p>
+
+<p>1 番目の式から、</p>
+
+<p><fit-content>{String.raw`$$(\langle 🍎|\langle 0|)U^{\dagger}_{CLONE} = \langle🍎|\langle🍎|$$`}</fit-content></p>
+
+<p>この式と 2 番目の式の両辺で内積を取ると、</p>
+
+<p>
+  <fit-content>{String.raw`$$\begin{array}{l} &(\langle🍎|\langle 0|)U^{\dagger}_{CLONE}U_{CLONE}(|👶\rangle|0\rangle) =
+  \langle🍎|\langle🍎|👶\rangle|👶\rangle \\ \Rightarrow &(\langle🍎|\langle 0|)(|👶\rangle|0\rangle) =
+  \langle🍎|\langle🍎|👶\rangle|👶\rangle \\ \Rightarrow &\langle🍎|👶\rangle\langle 0|0\rangle =
+  \langle🍎|👶\rangle\langle🍎|👶\rangle \\ \Rightarrow &\langle🍎|👶\rangle =
+  (\langle🍎|👶\rangle)^2 \\ \end{array}$$`}</fit-content>
+</p>
+
+<p>
+  よって {String.raw`\(\langle🍎|👶\rangle\)`} は {String.raw`\(0\)`} または {String.raw`\(1\)`} となり、{String.raw`\(|🍎\rangle\)`} と {String.raw`\(|👶\rangle\)`}
+  が任意であることに矛盾する。 以上より、そのようなユニタリ演算子 {String.raw`\(U_{CLONE}\)`} は存在しない。
+</p>
+
+</TutorialLayout>

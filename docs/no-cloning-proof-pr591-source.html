@@ -1,0 +1,34 @@
+---
+layout: page
+section: ふろく
+title: クローン禁止定理の証明
+---
+
+<p>
+  量子ビットの情報を複製できるユニタリ演算子 \(U_{CLONE}\) があったとする。
+  このとき、任意の状態の量子ビット \(|🍎\rangle\), \(|👶\rangle\) について、次が成り立つとする。
+</p>
+
+<p>
+  \[\left\{ \begin{array}{l} U_{CLONE}(|🍎\rangle|0\rangle) = |🍎\rangle|🍎\rangle \\
+  U_{CLONE}(|👶\rangle|0\rangle) = |👶\rangle|👶\rangle \end{array} \right.\]
+</p>
+
+<p>1 番目の式から、</p>
+
+<p>$$(\langle🍎|\langle 0|)U^{\dagger}_{CLONE} = \langle🍎|\langle🍎|$$</p>
+
+<p>この式と 2 番目の式の両辺で内積を取ると、</p>
+
+<p class="overflow-x-auto">
+  $$\begin{array}{l} &(\langle🍎|\langle 0|)U^{\dagger}_{CLONE}U_{CLONE}(|👶\rangle|0\rangle) =
+  \langle🍎|\langle🍎|👶\rangle|👶\rangle \\ \Rightarrow &(\langle🍎|\langle 0|)(|👶\rangle|0\rangle) =
+  \langle🍎|\langle🍎|👶\rangle|👶\rangle \\ \Rightarrow &\langle🍎|👶\rangle\langle 0|0\rangle =
+  \langle🍎|👶\rangle\langle🍎|👶\rangle \\ \Rightarrow &\langle🍎|👶\rangle =
+  (\langle🍎|👶\rangle)^2 \\ \end{array}$$
+</p>
+
+<p>
+  よって \(\langle🍎|👶\rangle\) は \(0\) または \(1\) となり、\(|🍎\rangle\) と \(|👶\rangle\)
+  が任意であることに矛盾する。 以上より、そのようなユニタリ演算子 \(U_{CLONE}\) は存在しない。
+</p>

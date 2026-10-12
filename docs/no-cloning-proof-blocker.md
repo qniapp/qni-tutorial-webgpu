@@ -1,4 +1,6 @@
-# ふろく no_cloning_theorem_proof: bra因子順序でSTOP
+# ふろく no_cloning_theorem_proof: B1/B2/B3 exact承認・解決済み
+
+2026-10-12 11:06のuser依頼で高宮さんが以下B1/B2/B3をexact承認。3substringのみ適用し、その他文/TeX/絵文字/結論を変更しない。移植/公開検査はporting.md参照。以下は承認前STOPの歴史的記録。
 
 2026-10-12 10:39、shor_qft公開/公開source5・原比較4成功後、sidebar次pageを確認。**ふろく「クローン禁止定理の証明」は未移植**。src routeなし。本文/TeX無変更・未公開、後続も停止。保存原 `docs/no-cloning-proof-original-source.html`。image/credit/circuit0、palette/max/runはN/A。viewport/TeX/scrollはpage未移植のため未検査。
 

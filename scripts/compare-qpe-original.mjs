@@ -2,10 +2,10 @@
 import {chromium} from '@playwright/test'
 import {readFile,writeFile} from 'node:fs/promises'
 const slug=process.argv[2]??'quantum_phase_estimation_circuit'
-if(!['quantum_phase_estimation_circuit','phase_kickback','qpe_output','shor_hsp','shor_fx','shor_r','shor_u','shor_qft'].includes(slug))throw Error('unsupported page')
+if(!['quantum_phase_estimation_circuit','phase_kickback','qpe_output','shor_hsp','shor_fx','shor_r','shor_u','shor_qft','no_cloning_theorem_proof'].includes(slug))throw Error('unsupported page')
 const fixtureName=slug==='shor_r'?'shor-r-approved':slug==='shor_hsp'?'shor-hsp-approved':slug==='qpe_output'?'qpe-output-approved':slug+'-fixed'
 const fixed=JSON.parse(await readFile(new URL(`../tests/fixtures/${fixtureName}.json`,import.meta.url)))
-const originalFixture=['qpe_output','shor_hsp','shor_r'].includes(slug)?{circuits:[]}:JSON.parse(await readFile(new URL(`../tests/fixtures/${slug}-original.json`,import.meta.url)))
+const originalFixture=['qpe_output','shor_hsp','shor_r','no_cloning_theorem_proof'].includes(slug)?{circuits:[]}:JSON.parse(await readFile(new URL(`../tests/fixtures/${slug}-original.json`,import.meta.url)))
 const base=process.env.QTW_AUDIT_URL??'https://qniapp.github.io/qni-tutorial-webgpu/'
 const browser=await chromium.launch({args:['--no-sandbox','--disable-gpu']});const results=[]
 // Diagnostic collection does not relax any whitelist/assertion and exits nonzero.
@@ -49,6 +49,16 @@ for(const width of [390,1440])for(const dpr of [1,2]){
   if(JSON.stringify(approvedMath)!==JSON.stringify(fixed.math)){
    if(approvedMath.length!==35||approvedMath[32].tex!==String.raw`a\,mod(N)`)throw Error('Original Shor FX TeX changed outside A; STOP')
    approvedMath.splice(32,1,{tex:'a',display:false},{tex:'mod(N)',display:false})
+  }
+ }
+ if(slug==='no_cloning_theorem_proof'){
+  if(JSON.stringify(approvedMath)!==JSON.stringify(fixed.math)){
+   if(JSON.stringify(approvedMath)!==JSON.stringify(fixed.originalMath))throw Error('No-cloning original TeX changed outside B1-B3; STOP')
+   for(const [i,[before,after]]of fixed.edits.entries()){
+    const index=[4,5,5][i],a=before.replace(/\s+/g,''),b=after.replace(/\s+/g,'')
+    if(approvedMath[index].tex.split(a).length!==2)throw Error('B1-B3 no longer exact; STOP')
+    approvedMath[index].tex=approvedMath[index].tex.replace(a,b)
+   }
   }
  }
  if(slug==='shor_u'){

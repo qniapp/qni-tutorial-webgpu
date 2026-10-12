@@ -2156,3 +2156,39 @@ TeX8入力のうちr=2,4→rを1入力だけ変更、数値2/4はplain proseへ�
 公開JSON/palette[[]]/max[1]/run1・全256cells/amp/kets・matrix両軸・popup操作/Escape・phoneサイズ・native非fit/非zoomもguard成功。document横overflow/Body・content・Shadow内scrollbars/console-pageerrorsは全4で0。`tests/fixtures/shor-qft-merged-public-nongpu-verification.json`、log `/tmp/qtw-qft-merged-{pages,public-tests,public-compare}.log`。
 
 **shor_qftで終了。** ふろくB1〜B3は依然pending・未適用、no-cloning/後続のroute作成・本文/TeX変更・公開・再調査なし。nativeGPU全件と旧4layout failuresは**実機確認待ち**、commandをpending-real-machine-checks.mdに保持。今回GPU未実行、過去full suite383/387（旧4だけ）の状態を新GPU成功等と誤称しない。最後は公開証拠だけを通常mainへcommit/pushしPages成功を確認、owned preview/temporary configを除去する。
+
+## 2026-10-12 11:06 no-cloning appendix B1/B2/B3 exact承認 / hard stop11:55 push停止11:50
+
+clean main8f32216からfetch/rebase origin/main（up to date）、forceなし。tail/blockerを再読。高宮さん承認のB1/B2/B3 **独立literal3substringだけ**を保存原に適用、全byte変換をsource guardで検証。他本文/12Math入力の残り10/全emoji数/仮定/入力ket/出力bra/右辺/後続展開/結論は無変更。
+
+- B1 第一adjoint display `<0|<🍎|` → `<🍎|<0|`。
+- B2 大display第一行の同じbra順を訂正。
+- B3 U†U除去後を `(<🍎|<0|)(|👶>|0>)` とし同じtensor因子順/groupingを明示。
+
+12Math入力のうち**display2入力（indices4/5）だけ変更**、display総数3維持。その他prose/inlineMath/Emojiは原どおり。不可分display3を**既存fit-content**で納め、旧inner overflow-x-autoを外す（数学/prose書換えなし）。共有CSS/layout/glyph/SDK pinは無変更。Native circuitがないのでnative縮小やCPU fallback/readback追加なし。図/画像/credits/circuit/qubitcircle0、palette/max/run=N/A、credits削除0。prose gateglyph0（U_CLONEは元TeXユニタリ変数）、nativeRegular監査対象0。
+
+### math / PR
+
+最新原mainのpageは保存原とbyte一致。Python tensor product/conjugate/scalar productだけ（**unitary/gate実行・CPU/GPU量子simulatorではない**）を再確認: 🍎=|1>、正しいbra/ket[0,0,1,0] norm1、旧逆braとの内積0；👶=|+>の訂正後内積1/√2、後続の<🍎|👶><0|0>と一致。B1/B2/B3の旧substring欠落/新substring唯一をassert。no-cloning結論は不変。`no-cloning-proof-approved-analysis.json` 保存。
+
+11:06時点でnew修正PRなし（歴史的#97のみ）だったが、11:15に **#591 OPEN/head8d40ec7ac0cc2e7fb4d90178c9a2a845f64d7b3c** を発見、head sourceを別保存。**B1/B2/B3を適用した当方approved sourceとwhitespace-normalized全文一致、追加wording/TeX/本文変更0**。raw `no-cloning-proof-pr591-source.html` / `no-cloning-proof-pr591-comparison.json`、追加変更適用false。PRの別表現を輸入しない方針を守る（今回は別表現なし）。未知追加変更ならSTOP。
+
+### 非GPU検査
+
+**typecheck/build/diff-check成功、source1＋390/1440×DPR1/2の4条件＋sidebar5=10/10成功**。本文exact/12Tex（display3、変更2入力だけ）/MathJax ready・merror0/🍎👶glyph実DOM可視・非zero bbox/3fit-content/数式全幅以内/図・回路0/body content inner scrollbars0/document横overflow0/console-pageerrors0を検証。390 screenshotを目視し、色付き🍎👶・3display全文が切れず描画されていることを確認（CFA深層shader/GPU検査ではない）。
+
+原実サイトとlocal比較**4/4成功**、本文差0/12Tex差はB1/B2/B3を適用した2display入力だけ。whitelistはその原12Math完全signature＋indices4/5の3exact置換のみ、他原変化はSTOP。PRが同じB1〜B3をmergeした場合は補正不要のdirect一致を検証する。`no-cloning-proof-local-nongpu-verification.json` 保存。log `/tmp/qtw-cloning-{build-final,tests,tests-sidebar,local-compare}.log`、shots `/tmp/qtw-no-cloning-proof-{390,1440}-dpr{1,2}.png`。source初回testはtypo括弧のtest parse-errorだけを訂正し再実行成功（期待値緩和なし）。旧orphan previewがportを保持していたため自分のPID964391を停止しfresh buildに接続した。
+
+全非GPU suiteをbackgroundで実行中、4旧layout期待値を緩和しない。実機GPUはboxにない/SSH不可のまま、全pending nativeGPU checks＋4旧failuresは**実機確認待ち**。Math-only appendixに架空GPU audit URL/commandや診断回路を足さない。commandsはpending-real-machine-checks.mdに維持:
+
+```sh
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-eigenphases-gpu.mjs
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs quantum_phase_estimation_circuit
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs phase_kickback
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs shor_fx
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs shor_u
+QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs shor_qft
+pnpm exec playwright test tests/ket.spec.ts tests/content-overflow.spec.ts
+```
+
+通常main pushでPages成功・公開source＋viewport5/5・最新原実サイト4比較のB1〜B3 onlyを確認するまで次を始めない。**sidebarでこのふろくは最後**、公開完了後順序末尾を確認し、既移植pageを勝手にやり直さない。11:50より前にpushを止め、11:55までにowned preview/configを片付けて終了する。

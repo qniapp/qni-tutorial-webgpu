@@ -1,0 +1,60 @@
+{
+  "sourceSHA256": "480c5f85a370c401752a9b8419b6baeb022091d00db1e21abb71878b6cf06c3d",
+  "GPUExecuted": false,
+  "CPUQuantumSimulatorExecuted": false,
+  "method": "Scalar tensor product and complex conjugate only; no unitary/gate execution",
+  "convention": "|a>|b> = |a> tensor |b>; adjoint preserves tensor-factor order",
+  "apple": [
+    0,
+    1
+  ],
+  "baby": [
+    0.7071067811865475,
+    0.7071067811865475
+  ],
+  "zero": [
+    1,
+    0
+  ],
+  "inputApple": [
+    0,
+    0,
+    1,
+    0
+  ],
+  "trueBra": [
+    0.0,
+    0.0,
+    1.0,
+    0.0
+  ],
+  "sourceReversedBra": [
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "sourceBraOnAppleZero": 0,
+  "correctBraOnAppleZero": 1,
+  "sourceBraOnBabyZero": 0,
+  "correctBraOnBabyZero": 0.7071067811865475,
+  "appleBabyInnerProduct": 0.7071067811865475,
+  "edits": [
+    [
+      "(\\langle 0|\\langle 🍎|)U^{\\dagger}_{CLONE}",
+      "(\\langle 🍎|\\langle 0|)U^{\\dagger}_{CLONE}"
+    ],
+    [
+      "(\\langle 0|\\langle🍎|)U^{\\dagger}_{CLONE}U_{CLONE}",
+      "(\\langle🍎|\\langle 0|)U^{\\dagger}_{CLONE}U_{CLONE}"
+    ],
+    [
+      "\\Rightarrow &\\langle 0|\\langle🍎|👶\\rangle|0\\rangle =",
+      "\\Rightarrow &(\\langle🍎|\\langle 0|)(|👶\\rangle|0\\rangle) ="
+    ]
+  ],
+  "decision": "APPROVED B1 B2 B3 exactly; corrected bra/tensor products agree, all other text/TeX unchanged",
+  "circuitCount": 0,
+  "images": 0,
+  "creditCount": 0
+}

@@ -323,5 +323,6 @@
   "shor_fx": [[], []],
   "shor_r": [],
   "shor_u": [[]],
-  "shor_qft": [[]]
+  "shor_qft": [[]],
+  "no_cloning_theorem_proof": []
 }

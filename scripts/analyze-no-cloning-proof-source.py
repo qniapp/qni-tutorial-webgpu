@@ -1,7 +1,7 @@
 """Tensor-product/adjoint identities only: no gate execution or quantum simulator."""
 import argparse,hashlib,json,math,re
 from pathlib import Path
-p=argparse.ArgumentParser();p.add_argument('source',type=Path);p.add_argument('--output',type=Path);a=p.parse_args();s=a.source.read_text()
+p=argparse.ArgumentParser();p.add_argument('source',type=Path);p.add_argument('--output',type=Path);p.add_argument('--approved',action='store_true');a=p.parse_args();s=a.source.read_text()
 kron=lambda x,y:[a*b for a in x for b in y]
 conj=lambda x:[complex(a).conjugate()for a in x]
 dot=lambda x,y:sum(a*b for a,b in zip(x,y))
@@ -18,8 +18,11 @@ edits=[
  [r'(\langle 0|\langle🍎|)U^{\dagger}_{CLONE}U_{CLONE}',r'(\langle🍎|\langle 0|)U^{\dagger}_{CLONE}U_{CLONE}'],
  [r'\Rightarrow &\langle 0|\langle🍎|👶\rangle|0\rangle =',r'\Rightarrow &(\langle🍎|\langle 0|)(|👶\rangle|0\rangle) =']
 ]
-for before,after in edits:assert s.count(before)==1
+for before,after in edits:
+ if a.approved:assert s.count(before)==0 and s.count(after)==1
+ else:assert s.count(before)==1
 result={'sourceSHA256':hashlib.sha256(s.encode()).hexdigest(),'GPUExecuted':False,'CPUQuantumSimulatorExecuted':False,'method':'Scalar tensor product and complex conjugate only; no unitary/gate execution','convention':'|a>|b> = |a> tensor |b>; adjoint preserves tensor-factor order','apple':[0,1],'baby':baby,'zero':[1,0],'inputApple':inputApple,'trueBra':[z.real for z in trueBra],'sourceReversedBra':[z.real for z in sourceBra],'sourceBraOnAppleZero':0,'correctBraOnAppleZero':1,'sourceBraOnBabyZero':0,'correctBraOnBabyZero':correct,'appleBabyInnerProduct':correct,'edits':edits,'decision':'STOP before porting appendix: ask for three exact bra-order/grouping changes','circuitCount':0,'images':0,'creditCount':0}
+if a.approved:result['decision']='APPROVED B1 B2 B3 exactly; corrected bra/tensor products agree, all other text/TeX unchanged'
 t=json.dumps(result,ensure_ascii=False,indent=2)+'\n'
 if a.output:a.output.write_text(t)
 else:print(t)

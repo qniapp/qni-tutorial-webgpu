@@ -1,0 +1,123 @@
+{
+  "text": "量子ビットの情報を複製できるユニタリ演算子があったとする。このとき、任意の状態の量子ビット,について、次が成り立つとする。1番目の式から、この式と2番目の式の両辺で内積を取ると、よってはまたはとなり、とが任意であることに矛盾する。以上より、そのようなユニタリ演算子は存在しない。",
+  "math": [
+    {
+      "tex": "U_{CLONE}",
+      "display": false
+    },
+    {
+      "tex": "|🍎\\rangle",
+      "display": false
+    },
+    {
+      "tex": "|👶\\rangle",
+      "display": false
+    },
+    {
+      "tex": "\\left\\{\\begin{array}{l}U_{CLONE}(|🍎\\rangle|0\\rangle)=|🍎\\rangle|🍎\\rangle\\\\U_{CLONE}(|👶\\rangle|0\\rangle)=|👶\\rangle|👶\\rangle\\end{array}\\right.",
+      "display": true
+    },
+    {
+      "tex": "(\\langle🍎|\\langle0|)U^{\\dagger}_{CLONE}=\\langle🍎|\\langle🍎|",
+      "display": true
+    },
+    {
+      "tex": "\\begin{array}{l}&(\\langle🍎|\\langle0|)U^{\\dagger}_{CLONE}U_{CLONE}(|👶\\rangle|0\\rangle)=\\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle\\\\\\Rightarrow&(\\langle🍎|\\langle0|)(|👶\\rangle|0\\rangle)=\\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle\\\\\\Rightarrow&\\langle🍎|👶\\rangle\\langle0|0\\rangle=\\langle🍎|👶\\rangle\\langle🍎|👶\\rangle\\\\\\Rightarrow&\\langle🍎|👶\\rangle=(\\langle🍎|👶\\rangle)^2\\\\\\end{array}",
+      "display": true
+    },
+    {
+      "tex": "\\langle🍎|👶\\rangle",
+      "display": false
+    },
+    {
+      "tex": "0",
+      "display": false
+    },
+    {
+      "tex": "1",
+      "display": false
+    },
+    {
+      "tex": "|🍎\\rangle",
+      "display": false
+    },
+    {
+      "tex": "|👶\\rangle",
+      "display": false
+    },
+    {
+      "tex": "U_{CLONE}",
+      "display": false
+    }
+  ],
+  "circuits": [],
+  "embeds": [],
+  "diff": [],
+  "edits": [
+    [
+      "(\\langle 0|\\langle 🍎|)U^{\\dagger}_{CLONE}",
+      "(\\langle 🍎|\\langle 0|)U^{\\dagger}_{CLONE}"
+    ],
+    [
+      "(\\langle 0|\\langle🍎|)U^{\\dagger}_{CLONE}U_{CLONE}",
+      "(\\langle🍎|\\langle 0|)U^{\\dagger}_{CLONE}U_{CLONE}"
+    ],
+    [
+      "\\Rightarrow &\\langle 0|\\langle🍎|👶\\rangle|0\\rangle =",
+      "\\Rightarrow &(\\langle🍎|\\langle 0|)(|👶\\rangle|0\\rangle) ="
+    ]
+  ],
+  "sourceSHA256": "2b0296bf46e1aebd6db8c639886e615c48652f242054783d7d50f6a1f5e36a8f",
+  "imageCount": 0,
+  "creditCount": 0,
+  "originalMath": [
+    {
+      "tex": "U_{CLONE}",
+      "display": false
+    },
+    {
+      "tex": "|🍎\\rangle",
+      "display": false
+    },
+    {
+      "tex": "|👶\\rangle",
+      "display": false
+    },
+    {
+      "tex": "\\left\\{\\begin{array}{l}U_{CLONE}(|🍎\\rangle|0\\rangle)=|🍎\\rangle|🍎\\rangle\\\\U_{CLONE}(|👶\\rangle|0\\rangle)=|👶\\rangle|👶\\rangle\\end{array}\\right.",
+      "display": true
+    },
+    {
+      "tex": "(\\langle0|\\langle🍎|)U^{\\dagger}_{CLONE}=\\langle🍎|\\langle🍎|",
+      "display": true
+    },
+    {
+      "tex": "\\begin{array}{l}&(\\langle0|\\langle🍎|)U^{\\dagger}_{CLONE}U_{CLONE}(|👶\\rangle|0\\rangle)=\\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle\\\\\\Rightarrow&\\langle0|\\langle🍎|👶\\rangle|0\\rangle=\\langle🍎|\\langle🍎|👶\\rangle|👶\\rangle\\\\\\Rightarrow&\\langle🍎|👶\\rangle\\langle0|0\\rangle=\\langle🍎|👶\\rangle\\langle🍎|👶\\rangle\\\\\\Rightarrow&\\langle🍎|👶\\rangle=(\\langle🍎|👶\\rangle)^2\\\\\\end{array}",
+      "display": true
+    },
+    {
+      "tex": "\\langle🍎|👶\\rangle",
+      "display": false
+    },
+    {
+      "tex": "0",
+      "display": false
+    },
+    {
+      "tex": "1",
+      "display": false
+    },
+    {
+      "tex": "|🍎\\rangle",
+      "display": false
+    },
+    {
+      "tex": "|👶\\rangle",
+      "display": false
+    },
+    {
+      "tex": "U_{CLONE}",
+      "display": false
+    }
+  ]
+}
