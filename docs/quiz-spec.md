@@ -1,5 +1,7 @@
 # 自前クイズ（Orbit 置き換え）共有仕様
 
+> **注記（2026-10-13）**: Orbit 復旧により webgpu 側は Orbit に戻した（高宮さんの決定）。本仕様は現在 webgpu 側では未使用。`src/components/orbit-quiz.ts` / `orbit-quiz.css` / `orbit-quiz-alt.ts` は削除済みで、以下に出てくるこれらのファイル・テスト（`tests/quiz.spec.ts`）・URL の記述は置き換え当時のもの。記録として中身は残す。
+
 qni-webgpu eng による共有仕様（高宮さん依頼）
 
 対象: qniapp/qni-tutorial-webgpu（Astro）と qniapp/qni `apps/tutorial`（Jekyll）。両方で同じ見た目と動きにする。

@@ -1,5 +1,7 @@
 # クイズ画像の alt 一覧
 
+> **注記（2026-10-13）**: Orbit 復旧により webgpu 側はクイズを Orbit の埋め込みに戻した。Orbit は `<orbit-prompt>` の属性から withorbit.com の iframe 内に描画し、alt を受け取る口が無いので、**Orbit 埋め込みでは alt は適用されない**。webgpu 側の `src/components/orbit-quiz-alt.ts`（`QUIZ_IMAGE_ALT`）は削除した。この一覧は qni 用の共有一覧として残す。以下の「正本」や `basic_quantum_circuit.png` の URL の記述は置き換え当時のもので、webgpu 側の属性は現在 `https://qniapp.github.io/qni-tutorial-webgpu/images/basic_quantum_circuit.png`（絶対 URL）。
+
 高宮さんの決定（2026-10-12）により、クイズの添付画像に alt を付ける。置き場所と方針は `docs/quiz-spec.md` §2.5 を参照。
 
 - 正本: `src/components/orbit-quiz-alt.ts` の `QUIZ_IMAGE_ALT`（キーは属性に書かれた URL そのまま）。qni 側は同じ表を素の JS で持つ。文言を変えるときは、この一覧と両リポジトリを同時に更新する。
