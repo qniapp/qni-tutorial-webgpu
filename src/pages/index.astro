@@ -110,8 +110,15 @@ const base = import.meta.env.BASE_URL
 </p>
 
 <p>
-  チュートリアルのもう一つの特長は、チュートリアル中に確認クイズが埋め込まれていることです。
+  チュートリアルのもう一つの特長は、チュートリアル中に確認クイズ<Sidenote id="index-note-5" numbered>Andy Matuschak
+  氏によるオープンソースの無料学習ツール
+  <a href="https://withorbit.com/">Orbit</a> を利用しています。クイズ機能を利用する場合は
+  <a href="https://withorbit.com/terms">Orbit の利用規約及びプライバシー・ポリシー</a
+  >を確認してください。</Sidenote>が埋め込まれていることです。
   クイズでは、それぞれの記事のポイントを 1 問 1 答形式で出題します。
+  一度解いたクイズは、忘却曲線に沿った適切なタイミング (数時間から数日、数ヶ月、時には数年後!)
+  で復習クイズとして再び出題されます。
+  これによって、読者は比較的少ない労力で学んだことを深く内面化できる仕組みになっています。
   もちろん、クイズに答えずにこのチュートリアルを読み進めることもできますが、ぜひ試してみてください。
 </p>
 
@@ -174,6 +181,7 @@ const base = import.meta.env.BASE_URL
   本チュートリアルでは、読者からのフィードバックを元にアップデートを続けていくことで、最新のトピックにも対応しつつ、初心者にも優しい内容を充実させていく予定です。
 </p>
 
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
 </TutorialLayout>
 <style>
   :global(.margin-note img) { display:block; max-width:100%; height:auto; }

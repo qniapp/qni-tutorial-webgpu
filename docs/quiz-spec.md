@@ -1,5 +1,7 @@
 # 自前クイズ（Orbit 置き換え）共有仕様
 
+> **注記（2026-10-13）**: Orbit 復旧により webgpu 側は Orbit に戻した（高宮さんの決定）。本仕様は現在 webgpu 側では未使用。`src/components/orbit-quiz.ts` / `orbit-quiz.css` は削除済みで、以下に出てくるこれらのファイル・テスト（`tests/quiz.spec.ts`）・URL の記述は置き換え当時のもの。記録として中身は残す。画像の alt は Orbit（iframe 内で画像を表示する）では付けられないため、alt の仕組みは削除した。
+
 qni-webgpu eng による共有仕様（高宮さん依頼）
 
 対象: qniapp/qni-tutorial-webgpu（Astro）と qniapp/qni `apps/tutorial`（Jekyll）。両方で同じ見た目と動きにする。
@@ -52,7 +54,7 @@ qni 側ブランチ `replace-orbit-quizzes`（e041754・4359e81、未 push）は
 | `cloze` | この属性があれば cloze カードになる。トップレベルの `{…}` が穴 |
 
 - 元の属性値はバイト単位で保持する。全角・半角の `?`、空白、改行、`\rangle` などもそのまま残す。
-- **問題文・答えには何も足さない**。プロンプト、選択肢、見出し、説明文も追加しない。例外は画像の alt テキストだけで、高宮さんの決定により §2.5 の表から付ける（マークアップには書かない）。
+- **問題文・答えには何も足さない**。プロンプト、選択肢、見出し、説明文も追加しない。
 - qni（Jekyll）: マークアップは Liquid を通らない素の HTML として書く。属性値に `{{` や `{%` を含めてはならない（cloze の `{` は 1 文字だけなら Liquid は無視するので安全）。将来 cloze の先頭が `{{` / `{%` になる場合は書き方を変える（`{% raw %}` は使わない）。
 - 外部スクリプト `https://js.withorbit.com/orbit-web-component.js` は削除する（webgpu は各ページから、qni は `_layouts/default.html` から）。
 
@@ -72,7 +74,7 @@ qni 側ブランチ `replace-orbit-quizzes`（e041754・4359e81、未 push）は
        data-state="unanswered|revealed|correct|incorrect">
     <div class="orbit-quiz-question" id="orbit-quiz-N-q" [tabindex="-1"(cloze)]>
       問題文
-      <!-- Q&A: --> <div class="orbit-quiz-attachments"><img src [alt] loading="lazy" decoding="async"></div>
+      <!-- Q&A: --> <div class="orbit-quiz-attachments"><img src loading="lazy" decoding="async"></div>
       <!-- cloze の穴: -->
       <span class="orbit-quiz-blank">
         <span class="orbit-quiz-blank-placeholder">空欄</span>
@@ -97,7 +99,6 @@ qni 側ブランチ `replace-orbit-quizzes`（e041754・4359e81、未 push）は
 
 - `<orbit-reviewarea>` は中身を持たないカスタム要素で、スタイル専用。
 - アイコンは 16×16 のインライン SVG（stroke 2、`currentColor`、`aria-hidden="true"`）。○/× の役割を果たすのはこの ✓/✗ アイコンと「正解」「不正解」の文字。
-- 画像の `alt` は §2.5 の表から付ける。表にない URL の画像には `alt` 属性を付けない（`alt=""` にもしない）。
 - 登録時は `customElements.get()` で定義済みかを確認し、二重定義を避ける。
 
 ### 2.4 MathJax（決定: 区切りの設定は変えず、`$…$` を変換したうえで typesetPromise を呼ぶ）
@@ -107,19 +108,6 @@ qni 側ブランチ `replace-orbit-quizzes`（e041754・4359e81、未 push）は
 - 描画後は `MathJax.startup.promise = MathJax.startup.promise.then(() => MathJax.typesetPromise([card]))` で 1 回だけ typeset する。`typesetPromise` がまだ無い（MathJax の読み込み前）ときは何もしない。最初のページ typeset が拾うので問題ない。
 - 前提: webgpu では、クイズに TeX があるページ（qubit、superposition、circle_notation、what_qpu_do_faster）に `hasMath` を付ける（設定済み）。qni は全ページで `tex-mml-chtml.js` を async で読み込む。
 - `mjx-container` は `max-width:100%; overflow-x:auto`。表示数式の上下マージンは 8px。
-
-### 2.5 画像の alt（高宮さんの決定、2026-10-12）
-
-- **置き場所**: 画像 URL をキーにした JS の表。webgpu は `src/components/orbit-quiz-alt.ts` の `export const QUIZ_IMAGE_ALT: Record<string, string>`、qni は同じ表を素の JS で持つ（キーと文言は同一）。キーは属性に書かれた URL そのまま（`superposition-50-50-phase¼π.png` もエンコードしない）。
-- `<orbit-prompt>` には属性を足さない（§6）。ページの HTML も変えない。描画時に `Object.hasOwn(QUIZ_IMAGE_ALT, url)` なら `img.alt` に入れ、無ければ `alt` 属性を付けない。
-- 1 つの URL に alt は 1 つ。問題側と答え側の両方で使う画像も同じ文言になる。
-- **方針**: 日本語で短く、写っているものだけを描写する。答えを明かす・示唆する情報（確率の数値、「位相」などの状態の名前、答えになるゲートの並びや個数、グラフの形）は書かない。
-  - 問題側で使う画像は、解くのに必要な見た目（塗りの有無と大きさ、針の向き）を描写し、確率や位相の言葉には言い換えない。
-  - 答え側だけで使う画像は、図の種類と問題文に出ている要素だけを書く。内容は答えの文が伝える。
-  - 両方で使う画像は問題側の描写を優先する。答え側の `alt` は答えの表示後にしか読まれない（`hidden` の中にある）。
-  - **例外（高宮さんの決定、2026-10-13）**: 答えが画像だけのカード（`answer=""`）で、alt のほかに答えを伝える手段が無い場合は、alt で答えの中身を描写する。ただし画像に実際に写っているものだけを書き、写っていない解釈は足さない。本文・問題文は変えない。対象は circle_notation の `argument_of_complex.png` の 1 枚だけ（superposition の 2 枚は問題側の描写で伝わるので対象外）。
-  - `basic_quantum_circuit.png` は qni 側で 404 だったため、元画像（qni commit f47d1541）をバイト無変更でこのサイトの `public/images/` に置いて配信し、キーは `/qni-tutorial-webgpu/images/basic_quantum_circuit.png`。alt は写っている線・箱・記号だけを描写し、答えになる語は書かない。
-- 全 18 URL の文言と、どのカードのどちら側で使うかは `docs/quiz-alt.md` にある。文言を変えるときは、この一覧と両リポジトリの表を同時に更新する。
 
 ## 3. 見た目
 
@@ -200,9 +188,8 @@ UI 文言はすべて日本語で、次の 5 つに限る: 「答えを見る」
 
 ## 6. 既知の制約（今回は対応しない）
 
-- 画像の alt は §2.5 で付けた。答えが画像だけのカード（`answer=""`）は、superposition の 2 枚は同じ画像を問題側でも使うので alt で伝わり、circle_notation の偏角の 1 枚は §2.5 の例外で alt が答えの図を描写するので伝わる。答えの文は足していない。
 - cloze の穴が複数あっても 1 回でまとめて開く（§2.2）。
-- quantum_circuit の問題画像 `https://qniapp.github.io/qni/images/basic_quantum_circuit.png` は 2026-10-12 時点で 404 だった。qni が元画像を復元した（qniapp/qni#593、commit f47d1541）ので、同じファイルをバイト無変更で `public/images/basic_quantum_circuit.png` に置き、`question-attachments` をこのサイトの `` {`${base}images/basic_quantum_circuit.png`} ``（`/qni-tutorial-webgpu/images/basic_quantum_circuit.png`）に変えた。元ページから変えた属性はこの 1 つだけ。alt は §2.5。ほかの 17 個の画像 URL は 200。
+- quantum_circuit の問題画像 `https://qniapp.github.io/qni/images/basic_quantum_circuit.png` は 2026-10-12 時点で 404 だった。qni が元画像を復元した（qniapp/qni#593、commit f47d1541）ので、同じファイルをバイト無変更で `public/images/basic_quantum_circuit.png` に置き、`question-attachments` をこのサイトの `` {`${base}images/basic_quantum_circuit.png`} ``（`/qni-tutorial-webgpu/images/basic_quantum_circuit.png`）に変えた。元ページから変えた属性はこの 1 つだけ。ほかの 17 個の画像 URL は 200。
 - `<orbit-prompt>` 自身には属性を追加しない（状態はカードの `data-state` に持つ）。webgpu の既存テストが `<orbit-prompt>` の属性を元のページと照合しているため。
 
 ## 7. 実装メモ（リポジトリ別）
@@ -217,7 +204,6 @@ UI 文言はすべて日本語で、次の 5 つに限る: 「答えを見る」
   - Orbit の script だけを読み込んでいた 3 ページ（bb84_circuit、multi_qubit_phase_gate、partial_measurement）で、通信と script 要素が無いこと。
   - 未回答 → 答え表示 → 正解 → やり直す → 不正解 の遷移。各状態での表示、`aria-expanded`、`role="status"` の文言、フォーカスの移動。ほかのカードと独立していること。リロードで戻ること。
   - キーボードだけでの操作（Enter、Tab、Shift+Tab、Space）とフォーカスリング。
-  - 添付画像 31 枚すべてに `QUIZ_IMAGE_ALT` の alt が付くこと。表のキーとページで使う URL が一致すること。alt にカードの答えの文が含まれないこと。表にない URL の画像には `alt` 属性が無いこと。
   - cloze の穴を全部隠すこと、表示後に太字になること。TeX（インライン、表示数式、穴の中）と Markdown（`**`、`*`）。
   - 1440px と 390px での寸法、色、ボタンの高さ、本文の段落と同じ幅であること、横にはみ出さないこと。
 - 既存テストの調整:
@@ -226,7 +212,7 @@ UI 文言はすべて日本語で、次の 5 つに限る: 「答えを見る」
   - `tests/restart.spec.ts` は、`running` になった直後で埋め込みがまだキー入力を処理できない場合に備えて、再起動を確認できるまで「フォーカス → Shift+Tab → キー」を繰り返す。この競合は以前からあり、Orbit の script の読み込みでページの起動が約 2 秒遅れていたために表に出ていなかった。origin/main でも Orbit への通信を遮断すると、10 回中 6 回失敗する。
 
 ### qni（Jekyll、`apps/tutorial`）
-- `src/quiz.js` は素の JS に移植する（型を除くだけで、ロジック・DOM・クラス名・文言は §2〜§5 と同じ）。alt の表は `src/quiz-alt.js` に `export const QUIZ_IMAGE_ALT = {…}` として webgpu と同じキー・文言で置く（§2.5）。`src/application.js` から `import './quiz.js'` し、esbuild の ESM バンドル `application.js` に入れる。**JS から CSS を import しない**。esbuild が `application.css` を出力して Tailwind の出力を上書きしてしまうため。
+- `src/quiz.js` は素の JS に移植する（型を除くだけで、ロジック・DOM・クラス名・文言は §2〜§5 と同じ）。`src/application.js` から `import './quiz.js'` し、esbuild の ESM バンドル `application.js` に入れる。**JS から CSS を import しない**。esbuild が `application.css` を出力して Tailwind の出力を上書きしてしまうため。
 - `css/quiz.css` には §3 の素の CSS を書く（webgpu 用の `.content-with-margin > orbit-reviewarea` ルールは除く）。`src/application.css` で `@import '../css/quiz';` を `tailwindcss/utilities` より**前**に置く。こうすると `class="mt-5"` のユーティリティが優先される。
 - Tailwind の preflight（ボタンの背景の透明化、`p` のマージン 0、`img` の block 化）があっても、§3 のクラスがすべて明示的に上書きするので見た目は変わらない。
 - `_layouts/default.html` から Orbit の `<script>` を削除する。MathJax の読み込みは変えない。
