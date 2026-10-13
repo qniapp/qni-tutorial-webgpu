@@ -17,4 +17,4 @@ for(const width of [390,1440])test(`QFT adder applies only approved ordinal edit
  expect(errors).toEqual([])
 })
 
-for(const width of[390,1440])test(`QFT adder footer previous link at ${width}`,async({page})=>{await page.setViewportSize({width,height:1100});await page.goto('/qni-tutorial-webgpu/qft_adder/');const link=page.locator('footer .previous-page');await expect(link).toHaveText('QFT の内部');await expect(link).toHaveAttribute('href','/qni-tutorial-webgpu/inside_the_qft/');await link.click();await expect(page).toHaveURL(/\/qni-tutorial-webgpu\/inside_the_qft\/$/);await expect(page.locator('h1')).toHaveText('QFT の内部')})
+for(const width of[390,1440])test(`QFT adder footer previous link at ${width}`,async({page})=>{await page.setViewportSize({width,height:1100});await page.goto('/qni-tutorial-webgpu/qft_adder/');const link=page.locator('footer a').first();await expect(link).toHaveText('QFT の内部');await expect(link).toHaveAttribute('href','/qni-tutorial-webgpu/inside_the_qft/');await link.click();await expect(page).toHaveURL(/\/qni-tutorial-webgpu\/inside_the_qft\/$/);await expect(page.locator('h1')).toHaveText('QFT の内部')})

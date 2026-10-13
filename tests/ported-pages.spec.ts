@@ -91,7 +91,6 @@ for (const fixture of [qpu, faster, pbit, superposition, qubit, phase, notation,
     expect(await page.locator('main').textContent()).not.toMatch(/\{%|endnmargin_note/)
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
     await expect(page.locator('.site-header span')).toHaveText('実験版')
-    await expect(page.locator('footer p')).toContainText('WebGPU 対応ブラウザ')
     if (fixture.slug === 'what_qpu_do_faster') {
       expect(await page.locator('main mjx-container').count()).toBeGreaterThan(10)
       expect(await page.locator('main mjx-merror').count()).toBe(0)

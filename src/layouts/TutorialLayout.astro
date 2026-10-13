@@ -1,5 +1,6 @@
 ---
 import Sidebar from '../components/Sidebar.astro'
+import { isPorted, toc } from '../data/toc'
 
 interface Props {
   title: string
@@ -10,6 +11,12 @@ interface Props {
 }
 const { title, description, section, hasCircuit = false, hasMath = false } = Astro.props
 const base = import.meta.env.BASE_URL
+const href = (slug: string) => (slug === '' ? base : `${base}${slug}/`)
+// Original prev/next follow the sidebar order; unported pages are skipped.
+const pages = toc.flatMap(chapter => chapter.pages)
+const index = pages.findIndex(page => href(page.slug) === Astro.url.pathname)
+const prev = index < 0 ? undefined : pages.slice(0, index).findLast(page => isPorted(page.slug))
+const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isPorted(page.slug))
 ---
 <!doctype html>
 <html lang="ja">
@@ -82,13 +89,13 @@ const base = import.meta.env.BASE_URL
         <h1>{title}</h1>
         <p class="lede">{description}</p>
       </div>
-      <div class="content-with-margin"><slot /></div>
+      <div class="content-with-margin"><slot /><footer class="page-footer">
+        <div class="page-footer-nav">
+          {prev && <a class="page-footer-link" href={href(prev.slug)}><svg class="page-footer-chevron page-footer-chevron-left" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.84182 3.13514C9.04327 3.32401 9.05348 3.64042 8.86462 3.84188L5.43521 7.49991L8.86462 11.1579C9.05348 11.3594 9.04327 11.6758 8.84182 11.8647C8.64036 12.0535 8.32394 12.0433 8.13508 11.8419L4.38508 7.84188C4.20477 7.64955 4.20477 7.35027 4.38508 7.15794L8.13508 3.15794C8.32394 2.95648 8.64036 2.94628 8.84182 3.13514Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>{prev.title}</a>}
+          {next && <a class="page-footer-link page-footer-next" href={href(next.slug)}>{next.title}<svg class="page-footer-chevron page-footer-chevron-right" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></a>}
+        </div>
+      </footer></div>
     </main>
-    <footer>
-      <slot name="footer-navigation" />
-      <a href={base}>ページ一覧</a>
-      <p>WebGPU 対応ブラウザで使う実験版です。回路の変更は保存されません。</p>
-    </footer>
     </div>
     </div>
     <script>
@@ -119,7 +126,7 @@ const base = import.meta.env.BASE_URL
   body { margin: 0; }
   a { color: var(--link); text-underline-offset: 4px; }
   a:focus-visible, summary:focus-visible { outline: 2px solid var(--link); outline-offset: 4px; }
-  .site-header, main, footer { max-width: 1120px; margin-inline: auto; padding: 24px; }
+  .site-header, main { max-width: 1120px; margin-inline: auto; padding: 24px; }
   .site-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
   .site-header a { font-weight: 600; text-decoration: none; }
   .site-header span, .section-label { color: var(--muted); font-size: 14px; line-height: 20px; }
@@ -132,7 +139,7 @@ const base = import.meta.env.BASE_URL
   .lede { color: var(--muted); font-size: 20px; line-height: 28px; margin-bottom: 32px; }
   /* Original page.html: mb-10 border-b border-zinc-200 pb-10.
      Its inline H1 row adds 1px before mt-1; preserve that visual gap
-     without changing our existing title font or the site header/footer. */
+     without changing our existing title font or the site header. */
   .page-title-block { border: 0 solid #E4E4E7; border-bottom-width: 1px; padding-bottom: 40px; margin-bottom: 40px; }
   .page-title-block h1 { margin-bottom: 0; }
   .page-title-block .lede { margin-top: 5px; margin-bottom: 0; }
@@ -155,10 +162,25 @@ const base = import.meta.env.BASE_URL
   }
   figure { max-width: 640px; margin: 24px 0; }
   figure img { display: block; width: 100%; height: auto; }
-  figcaption, footer p { color: var(--muted); font-size: 14px; line-height: 20px; }
+  figcaption { color: var(--muted); font-size: 14px; line-height: 20px; }
   details { max-width: 76ch; border-bottom: 1px solid var(--border); padding: 16px 0; }
   summary { cursor: pointer; line-height: 28px; }
-  footer { border-top: 1px solid var(--border); }
+  /* Original _includes/footer.html: footer mt-12 text-sm leading-6;
+     div mb-10 flex items-center font-semibold text-slate-700;
+     a group flex items-center no-underline hover:text-slate-900 (next: ml-auto);
+     svg mr-3/ml-3 h-4 w-auto overflow-visible text-slate-400 group-hover:text-slate-600. */
+  .page-footer { margin-top: 48px; font-size: 14px; line-height: 24px; }
+  .page-footer-nav { display: flex; align-items: center; margin-bottom: 40px; font-weight: 600; color: #334155; }
+  .page-footer-link { display: flex; align-items: center; color: inherit; text-decoration: none; }
+  .page-footer-link:hover { color: #0f172a; }
+  .page-footer-next { margin-left: auto; }
+  .page-footer-chevron { height: 16px; width: auto; overflow: visible; color: #94a3b8; }
+  .page-footer-chevron-left { margin-right: 12px; }
+  .page-footer-chevron-right { margin-left: 12px; }
+  .page-footer-link:hover .page-footer-chevron { color: #475569; }
+  @media (min-width: 768px) {
+    .content-with-margin > footer { width: 58.333333%; margin-right: auto; }
+  }
   /* Reserve a right margin for notes. Start at the note breakpoint so the
      original's 640-767px negative margin cannot cause horizontal overflow. */
   @media (min-width: 640px) {
@@ -204,7 +226,7 @@ const base = import.meta.env.BASE_URL
   }
   .toc-close:hover { background: var(--bg-2); color: var(--text); }
   @media (max-width: 640px) {
-    .site-header, main, footer { padding-inline: 16px; }
+    .site-header, main { padding-inline: 16px; }
     h1 { font-size: 30px; line-height: 36px; }
   }
 </style>
