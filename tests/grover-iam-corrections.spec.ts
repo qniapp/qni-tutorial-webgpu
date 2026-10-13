@@ -3,7 +3,9 @@ import original from './fixtures/grover-iam-circuits-original.json' with {type:'
 import fixed from './fixtures/grover-iam-circuits-fixed.json' with {type:'json'}
 import satOriginal from './fixtures/sat-circuit-original.json' with {type:'json'}
 import satFixed from './fixtures/sat-circuit-fixed.json' with {type:'json'}
+import negativeControls from './fixtures/grover-iam-circuits-negative-controls.json' with {type:'json'}
 import approved from './fixtures/grover-iam-approved-text.json' with {type:'json'}
+import {applyPr4ToSatCircuit} from './negative-controls'
 import raw from './fixtures/grover-iam-source-prefix.json' with {type:'json'}
 for(const width of [390,1440]) test(`Grover inversion applies exactly the approved third-circuit diff at ${width}`,async({page})=>{
   expect(raw.grover.slice(0,raw.grover.indexOf(',[1],["{折り返し変換"]'))+']}').toBe(raw.sat)
@@ -17,8 +19,10 @@ for(const width of [390,1440]) test(`Grover inversion applies exactly the approv
   const expected=structuredClone(original)
   for(const i of indices){const col=expected[2].cols[i];if(col.length===3)col.push(1);[col[2],col[3]]=[col[3],col[2]]}
   expect(fixed).toEqual(expected)
+  // 承認済みの 10 列修正のあとに、#4 の負制御による短縮を 3 番目の回路の SAT オラクル部分 (先頭 125 列) に重ねたものがページの回路
+  expect([fixed[0],fixed[1],{cols:[...applyPr4ToSatCircuit(fixed[2].cols.slice(0,125)),...fixed[2].cols.slice(125)]}]).toEqual(negativeControls)
   await page.setViewportSize({width,height:1100});await page.goto('/qni-tutorial-webgpu/grover_iam/')
-  expect(await page.locator('qni-webgpu-circuit').evaluateAll(es=>es.map(e=>JSON.parse(e.getAttribute('circuit')!)))).toEqual(fixed)
+  expect(await page.locator('qni-webgpu-circuit').evaluateAll(es=>es.map(e=>JSON.parse(e.getAttribute('circuit')!)))).toEqual(negativeControls)
   for(const e of await page.locator('qni-webgpu-circuit').all()){await expect(e).toHaveAttribute('palette','[]');await expect(e).toHaveAttribute('max-wire-count','1')}
   await page.waitForFunction(()=>document.documentElement.dataset.mathjax==='ready')
   const text=await page.locator('.content-with-margin').evaluate(root=>{const walk=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let text='',node;while(node=walk.nextNode()){if(!node.parentElement!.closest('footer,script,style,mjx-container,orbit-reviewarea,qni-webgpu-circuit,[data-original-image]')&&!(node.parentElement!.closest('a')&&node.textContent!.replace(/\s+/g,'')==='Qniで開く'))text+=node.textContent}return text.replace(/\s+/g,'').normalize('NFC')})
