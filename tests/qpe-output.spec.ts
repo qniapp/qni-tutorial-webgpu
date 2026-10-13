@@ -13,7 +13,7 @@ for(const width of [390,1440])for(const dpr of [1,2])test(`QPE output non-GPU co
  expect(await page.locator('main qubit-circle').evaluateAll(es=>es.map(e=>({amplitude:e.getAttribute('data-amplitude'),ket:e.getAttribute('data-ket'),size:e.getAttribute('data-size')})))).toEqual(approved.amplitudes)
  await expect(page.locator('qni-webgpu-circuit')).toHaveCount(0);await expect(page.locator('main img')).toHaveCount(0)
  expect(await page.locator('main p phase-gate,main p h-gate').evaluateAll(es=>es.map(e=>(e as HTMLElement).dataset.glyph))).toEqual(['bold','bold'])
- await expect(page.locator('main a')).toHaveAttribute('href','/qni-tutorial-webgpu/quantum_phase_estimation_circuit/')
+ await expect(page.locator('main p').getByRole('link',{name:'量子位相推定回路',exact:true})).toHaveAttribute('href','/qni-tutorial-webgpu/quantum_phase_estimation_circuit/')
  expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
  expect(await page.locator('.content-with-margin').evaluate(root=>[document.body,root,...root.querySelectorAll('*')].filter(e=>{const s=getComputedStyle(e);return (['scroll','auto'].includes(s.overflowX)&&e.scrollWidth>e.clientWidth)||(['scroll','auto'].includes(s.overflowY)&&e.scrollHeight>e.clientHeight)}).length)).toBe(0)
  expect(errors).toEqual([])

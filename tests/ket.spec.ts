@@ -13,13 +13,26 @@ for (const width of [1440, 390]) {
     expect(await kets.allTextContents()).toEqual(['|0⟩','|1⟩','|1⟩','|1⟩','|0⟩','|0⟩','|1⟩','|0⟩','|1⟩','|0⟩','|1⟩','|0⟩'])
     await expect(page.locator('mjx-assistive-mml math')).toHaveCount(12)
     await expect(page.locator('.qc-figure mjx-container, details mjx-container')).toHaveCount(0)
-    expect(await kets.first().evaluate(e => ({
-      size: getComputedStyle(e).fontSize,
-      width: e.getBoundingClientRect().width, height: e.getBoundingClientRect().height,
-      shadow: !!e.shadowRoot, registered: !!customElements.get('mjx-container'),
-      marked: performance.getEntriesByName('mathjax-typeset-complete').length,
-      overflow: document.documentElement.scrollWidth > innerWidth,
-    }))).toMatchObject({ size: '19.12px', width: 22.296875, height: 21, shadow: false, registered: false, marked: 1, overflow: false })
+    // MathJax scales kets to match the surrounding font's x-height, so absolute
+    // px depend on the host's system-ui font (19.12px / 19.424px / 18.4px seen).
+    // Check sizes relative to the paragraph text instead.
+    const metrics = await kets.first().evaluate(e => {
+      const p = e.closest('p')!
+      const size = parseFloat(getComputedStyle(e).fontSize), text = parseFloat(getComputedStyle(p).fontSize)
+      const rect = e.getBoundingClientRect()
+      return {
+        sizeRatio: size / text, widthRatio: rect.width / size,
+        height: rect.height, lineHeight: parseFloat(getComputedStyle(p).lineHeight),
+        shadow: !!e.shadowRoot, registered: !!customElements.get('mjx-container'),
+        marked: performance.getEntriesByName('mathjax-typeset-complete').length,
+        overflow: document.documentElement.scrollWidth > innerWidth,
+      }
+    })
+    expect(metrics.sizeRatio).toBeGreaterThanOrEqual(1.12)
+    expect(metrics.sizeRatio).toBeLessThanOrEqual(1.24)
+    expect(metrics.widthRatio).toBeCloseTo(1.166, 1)
+    expect(metrics.height).toBeLessThanOrEqual(metrics.lineHeight)
+    expect(metrics).toMatchObject({ shadow: false, registered: false, marked: 1, overflow: false })
     await kets.first().click({ button: 'right' })
     await expect(page.locator('.CtxtMenu_Menu').first()).toBeVisible()
   })
