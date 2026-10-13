@@ -92,12 +92,11 @@ function liveProgramming() {
   const size = {width: 572, height: 424}, canvas = canvasFor(size)
   const g = geometry(canvas.width, palette)
   const X = g.slot, Y = g.wire, P = g.palette(palette.indexOf('X'))
-  // The original also showed measurement results, but Qni WebGPU's live drag
-  // preview shows the collapsed post-measurement state, which would hide the
-  // superpositions the GIF is about. The breakpoint is the last column.
-  const circuit = '{"cols":[["|0>","|0>"],["H"],["•"]]}'
-  const cnot = '{"cols":[["|0>","|0>"],["H"],["•","X"]]}'
-  const cnot3 = '{"cols":[["|0>","|0>"],["H"],["•",1,"X"]]}'
+  // 元 GIF と同じく Measure あり（ドラッグ中プレビューは測定後状態で可）。
+  // The breakpoint stays at step 2, before the measurement column.
+  const circuit = '{"cols":[["|0>","|0>"],["H"],["•"],["Measure","Measure"]]}'
+  const cnot = '{"cols":[["|0>","|0>"],["H"],["•","X"],["Measure","Measure"]]}'
+  const cnot3 = '{"cols":[["|0>","|0>"],["H"],["•",1,"X"],["Measure","Measure"]]}'
   const frames = []
   const at = (pos, extra = {}) => frames.push({pos, ...extra})
   // 0-5: from right of the breakpoint (above the step band) to the palette X.
