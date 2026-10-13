@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+// QPU fixture includes the original tutorial's updated Zoo count and citation (qni PR #599; port PR #10).
 import qpu from './fixtures/qpu-original.json' with { type: 'json' }
 import faster from './fixtures/what_qpu_do_faster-original.json' with { type: 'json' }
 import pbit from './fixtures/p_bit-original.json' with { type: 'json' }
