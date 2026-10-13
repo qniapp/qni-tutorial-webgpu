@@ -31,12 +31,17 @@ for (const [name, input, expected] of [
 ] as const) {
   test(`real GPU conditional gate is ${name}`, async ({ page }) => {
     await page.goto(`/qni-tutorial-webgpu/app/#${encodeURIComponent(JSON.stringify(input))}`)
-    await expect.poll(() => page.evaluate(async () => {
-      try {
-        const modulePath = '/qni-tutorial-webgpu/app/qni-web.js'
-        const module = await import(modulePath) as { read_state_vector(): Promise<Float32Array> }
-        return Array.from(await module.read_state_vector()).map(value => Math.round(value * 1e5) / 1e5)
-      } catch { return [] }
-    }), { timeout: 20_000 }).toEqual(expected)
+    // qni-webgpu 992eb80 opens the standalone app at step 0, like the original Qni.
+    // Click above the wires to the right of the circuit to select its final step.
+    await expect.poll(async () => {
+      await page.mouse.click(900, 225)
+      return page.evaluate(async () => {
+        try {
+          const modulePath = '/qni-tutorial-webgpu/app/qni-web.js'
+          const module = await import(modulePath) as { read_state_vector(): Promise<Float32Array> }
+          return Array.from(await module.read_state_vector()).map(value => Math.round(value * 1e5) / 1e5)
+        } catch { return [] }
+      })
+    }, { timeout: 20_000 }).toEqual(expected)
   })
 }
