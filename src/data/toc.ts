@@ -42,6 +42,7 @@ export const toc: TocChapter[] = [
       { title: '量子ビット', slug: 'qubit' },
       { title: '位相', slug: 'phase' },
       { title: '状態ベクトル表示', slug: 'circle_notation' },
+      { title: '複素振幅の読み方 ①: 振幅の長さと確率', slug: 'amplitude_probability' },
     ],
   },
   {

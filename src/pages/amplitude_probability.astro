@@ -1,0 +1,142 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Sidenote from '../components/Sidenote.astro'
+import Ket from '../components/Ket.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="複素振幅の読み方 ①: 振幅の長さと確率" description="円の半径から、測定で 0 と 1 が出る確率を求める" section="量子ビット" hasMath hasCircuit>
+  <p>
+    <a href={`${base}circle_notation/`}>状態ベクトル表示</a>では、円の半径が振幅の大きさ、面積が確率に対応するのでした。
+    では、振幅が \(0.5i\) の場合には、どのように確率を求めればよいでしょうか?
+    ここでは円と数値を見比べながら、複素数で表された振幅の読み方を確認していきましょう。
+  </p>
+
+  <h2>半径が半分なら、確率は?</h2>
+  <p>
+    まずは、次の 2 個の円を見てみましょう。左が <Ket label="0" />、右が <Ket label="1" /> です。
+    右の青い円は、外側の円に比べて半径が半分になっています。このとき、1 が出る確率も半分になるでしょうか?
+  </p>
+  <figure>
+    <div class="circle-row">
+      <qubit-circle data-amplitude="0.8660254037844386" data-ket="0" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+      <qubit-circle data-amplitude="0.5" data-ket="1" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+    </div>
+    <figcaption>振幅の大きさは、左が約 0.866、右が 0.5。</figcaption>
+  </figure>
+  <p>
+    円の面積は半径の 2 乗に比例するので、半径が半分なら面積は 4 分の 1 になります。
+    つまり、振幅の大きさが \(0.5\) のとき、確率は \(0.5^2 = 0.25\)、パーセントで表すと 25% です。
+    上の円にマウスポインタを重ねて、振幅と確率を確認しましょう (キーボードでは Tab キーで円を選べます)。
+  </p>
+  <p>
+    左の円の確率は 75% です。こちらの振幅の大きさは \(\sqrt{0.75}\) で、約 0.866 になります。
+    振幅の大きさを足しても 1 にはなりませんが、それぞれを 2 乗して足すと \(0.75 + 0.25 = 1\) になります。
+    確率の合計が 100% になる、という条件は変わらないことに注意してください。
+  </p>
+
+  <h2>複素数の「長さ」を求める</h2>
+  <p>
+    振幅は一般に複素数なので、正の数だけでなく、負の数や \(i\) を含んだ値も取ります。
+    複素数は \(a + bi\) と書き、\(a\) を実部、\(b\) を虚部と呼びます。
+    \(i\) は、2 乗すると \(-1\) になる数です。
+    さしあたっては、振幅には \(a\) と \(b\) という 2 個の数が入っている、と考えて大丈夫です。
+  </p>
+  <p>
+    この 2 個の数を横方向と縦方向の座標と考えると、原点からその点までの距離が振幅の大きさです。
+    三平方の定理を使えば、次のように計算できます。両側の縦棒は「大きさ」を表す記号です。
+  </p>
+  <p class="math-scroll">\[ |a + bi| = \sqrt{a^2 + b^2}, \qquad |a + bi|^2 = a^2 + b^2 \]</p>
+  <p>
+    確率を知りたいときは、右側の式を使えば平方根の計算は必要ありません。
+    たとえば振幅が \(0.3 + 0.4i\) なら、確率は \(0.3^2 + 0.4^2 = 0.25\) で、やはり 25% です。
+    複素数の掛け算に慣れている人は、振幅そのものの 2 乗 \((a + bi)^2\) と取り違えないようにしてください<Sidenote id="amplitude-probability-conjugate" numbered>\(a - bi\) を \(a + bi\) の複素共役と呼びます。大きさの 2 乗は、共役との積 \((a + bi)(a - bi) = a^2 + b^2\) としても求められます。</Sidenote>。
+  </p>
+  <p>
+    では、最初の問いに戻りましょう。振幅が \(0.5i\) の場合は、\(a = 0\)、\(b = 0.5\) なので、確率は \(0^2 + 0.5^2 = 0.25\) です。
+    振幅が \(-0.5\) の場合も、確率は \((-0.5)^2 = 0.25\) になります。
+    符号や針の向きが違っても、長さが同じなら、そのまま 0/1 を測る確率は同じです。
+  </p>
+
+  <h2>ハンズオン</h2>
+  <p>
+    下の回路で、円の大きさと確率の関係を試してみましょう。
+    最初の <Ket label="0" /> に Ry ゲートを適用して、先ほどの 75% と 25% の状態を作ってあります。
+    Ry ゲートの詳しい仕組みは、今は気にしなくてかまいません。
+    Amps は振幅、Probability は確率を表示する命令で、どちらも測定はしません。
+    回路の下の状態ベクトル表示でも、2 個の円を見比べられます。
+  </p>
+  <qni-webgpu-circuit
+    max-wire-count="1"
+    show-state-panel="true"
+    palette={'["H","X","P(π/2)","Ry(π/3)","Amps","Probability"]'}
+    circuit={'{"cols":[["|0>"],["Ry(π/3)"],["Amps"],["Probability"]]}'}
+  ></qni-webgpu-circuit>
+  <ol>
+    <li>
+      まずは編集せず、振幅の大きさが約 0.866 と 0.5、確率が 75% と 25% になっていることを確認しましょう。
+      表示が丸められている場合も、2 乗するとほぼ同じ確率になるはずです。
+    </li>
+    <li>
+      Ry ゲートを回路の外へドラッグし、代わりにパレットから H ゲートを置いてみましょう。
+      0 と 1 が出る確率は、それぞれ何% になるでしょうか? 円の半径も半分になるか、予想してから確認してください。
+      (ヒント: 確率はそれぞれ 50%、振幅の大きさは \(\sqrt{0.5}\)、約 0.707 です)
+    </li>
+    <li>
+      H ゲートを外し、Ry ゲートを元の位置に戻しましょう。
+      次に Ry と Amps の間に P ゲートを置いてください。パレットの P の角度は π/2 です。
+      右の円の針は回りますが、半径と Probability の値は変わるでしょうか?
+      (ヒント: <Ket label="1" /> の振幅は \(0.5i\) になります)
+    </li>
+    <li>
+      余裕のある人は、P と Amps の間に X ゲートを置いてみましょう。
+      2 個の円の内容が入れ替わると、0 と 1 が出る確率も入れ替わることを確認してください。
+    </li>
+  </ol>
+  <p>
+    ここで見ている確率は、同じ状態を準備して測定するときの理論上の確率です。
+    25% だからといって、4 回の測定で必ず 1 回だけ 1 が出るわけではありません。
+    また、振幅をそのまま読めるのはシミュレータの便利な機能です。実機の 1 回の測定で得られるのは、0 か 1 のどちらかです。
+  </p>
+
+  <h2>確率を足すと 1</h2>
+  <p>
+    ここまでの関係を、1 量子ビット全体について書いてみましょう。
+    <Ket label="0" /> の振幅を \(\alpha\)、<Ket label="1" /> の振幅を \(\beta\) とすると、次の条件になります。
+  </p>
+  <p class="math-scroll">\[ |\alpha|^2 + |\beta|^2 = 1 \]</p>
+  <p>
+    このように、確率の合計が 1 となるように振幅をそろえることを正規化と呼びます。
+    Qni の回路でゲートを操作したときも、測定前の状態ではこの条件が保たれています。
+    たとえば 2 個の振幅をどちらも \(0.5\) にすると、確率の合計は \(0.25 + 0.25 = 0.5\) にしかなりません。
+    これは、そのままでは正規化された 1 量子ビットの状態ではありません。
+  </p>
+
+  <h2>確認してみよう</h2>
+  <p>
+    <Ket label="0" /> の振幅が \(0.6\)、<Ket label="1" /> の振幅が \(0.8i\) の状態を考えましょう。
+    1 が出る確率は何% でしょうか? また、確率の合計は 100% になっているでしょうか?
+    (ヒント: 2 個の振幅について、実部の 2 乗と虚部の 2 乗をそれぞれ足します)
+  </p>
+  <orbit-reviewarea color="blue">
+    <orbit-prompt cloze="測定である値が出る確率は、その値の振幅の{大きさの 2 乗}"></orbit-prompt>
+    <orbit-prompt question="振幅が 0.8i のとき、その値が出る確率は何%?" answer="64%。実部が 0、虚部が 0.8 なので、0² + 0.8² = 0.64。"></orbit-prompt>
+    <orbit-prompt question="振幅が 0.6 と 0.8i のとき、確率の合計は?" answer="0.36 + 0.64 = 1、つまり 100%。正規化されている。"></orbit-prompt>
+  </orbit-reviewarea>
+
+  <h2>まとめ</h2>
+  <p>
+    振幅の長さから確率を求める方法を紹介しました。
+    円を見るときは半径と面積を区別し、数値を見るときは実部と虚部の 2 乗を足してみましょう。
+    針の向きは、この長さとは別の情報を表しています。
+    今回の P ゲートのように、その場の確率を変えずに振幅を変える操作もあるのでした。
+  </p>
+  <script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+</TutorialLayout>
+<style>
+  .circle-row { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+  .circle-row :global(qubit-circle) { flex: none; margin-right: 0; }
+  .math-scroll { overflow-x: auto; }
+  ol { max-width: 76ch; padding-left: 24px; }
+  li + li { margin-top: 16px; }
+  @media (min-width: 640px) { ol { width: 58.333333%; margin-right: auto; } }
+</style>
