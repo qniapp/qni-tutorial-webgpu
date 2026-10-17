@@ -146,9 +146,9 @@ const base = import.meta.env.BASE_URL
     （ヒント: 内積は 0.5+0.5i です。実部と虚部の 2 乗を足します）
   </p>
   <orbit-reviewarea color="blue">
-    <orbit-prompt question="0/1 基底で書いた 2 成分の列ベクトルの、上と下は何を表す?" answer="上は |0⟩、下は |1⟩ の複素振幅です。確率そのものではありません。"></orbit-prompt>
-    <orbit-prompt question="内積 ⟨a|b⟩ では、どちらの状態の振幅を複素共役にする?" answer="左側の a です。同じ段どうしを掛けてから足します。"></orbit-prompt>
-    <orbit-prompt question="H の後に 0 が出る確率は、H の前のどの成分から求められる?" answer="+ 成分の大きさの 2 乗です。H の後の 1 は − 成分に対応します。"></orbit-prompt>
+    <orbit-prompt question="0/1 基底で書いた 2 成分の列ベクトルの、上と下は何を表す?" answer="上は |0⟩、下は |1⟩ の複素振幅です。"></orbit-prompt>
+    <orbit-prompt question="|a⟩ の成分が a0, a1、|b⟩ の成分が b0, b1 のとき、内積 ⟨a|b⟩ をどう計算しますか?" answer="a0 の複素共役 × b0 + a1 の複素共役 × b1 です。"></orbit-prompt>
+    <orbit-prompt question="H の前の状態を +/− 基底で書いたとき、H の後に 0/1 を測って 0 が出る確率は、どの成分から求められる?" answer="+ 成分の大きさの 2 乗です。"></orbit-prompt>
     <orbit-prompt question="⟨+|ψ⟩ = 0.5+0.5i のとき、+ が出る確率は?" answer="50% です。0.5² + 0.5² = 0.5 になります。"></orbit-prompt>
   </orbit-reviewarea>
 

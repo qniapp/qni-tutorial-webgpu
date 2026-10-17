@@ -114,9 +114,9 @@ const base = import.meta.env.BASE_URL
   </p>
   <orbit-reviewarea color="blue">
     <orbit-prompt cloze="すべての振幅に同じ位相を掛ける変更を{全体位相}の変更と呼びます。"></orbit-prompt>
-    <orbit-prompt question="全体位相だけが違う状態を、同じ H を通してからの測定で区別できますか?" answer="できません。共通の位相は H の後にも全体に残り、測定確率は変わりません。"></orbit-prompt>
+    <orbit-prompt question="全体位相だけが違う状態が、同じ H の後の測定でも区別できないのはなぜ?" answer="H の後も共通の位相が全振幅に残り、振幅の大きさの 2 乗が変わらないからです。"></orbit-prompt>
     <orbit-prompt question="等しい正の振幅から |1⟩ だけを π 回し、H を通すと、1 が出る確率は?" answer="100%。相対位相が π になり、H による足し算の側の振幅が打ち消されます。"></orbit-prompt>
-    <orbit-prompt question="相対位相を変えても直接の Z 測定が 50% ずつなら、その違いは無意味ですか?" answer="いいえ。H のように振幅を組み合わせる操作を続けると、測定確率の違いとして現れます。"></orbit-prompt>
+    <orbit-prompt question="直接の Z 測定では見えない相対位相の違いが、H の後に確率の違いとして現れることがあるのはなぜ?" answer="H は振幅の和と差を作るため、相対位相によって強め合い方や打ち消し合い方が変わるからです。"></orbit-prompt>
   </orbit-reviewarea>
 
   <h2>まとめ</h2>
