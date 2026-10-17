@@ -142,9 +142,10 @@ const base = import.meta.env.BASE_URL
   </p>
   <orbit-reviewarea color="blue">
     <orbit-prompt question="正規化された 2 量子ビットの純粋状態を積に分けられる、振幅表の条件は?" answer="a00×a11 − a01×a10 = 0。確率ではなく振幅を掛けます。"></orbit-prompt>
-    <orbit-prompt question="(|00⟩ + |11⟩)/√2 の交差する積の差は? 積に分けられますか?" answer="1/2。0 ではないので、積に分けられません。"></orbit-prompt>
-    <orbit-prompt question="ベル状態の q0 だけを見ると、0/1 の確率とブロッホベクトルの長さは?" answer="0 と 1 はそれぞれ 50%、長さは 0。全体は純粋状態でも、q0 だけは混合状態です。"></orbit-prompt>
-    <orbit-prompt question="q0 の 0/1 の確率が 50% ずつなら、q0 は必ず純粋状態ですか?" answer="いいえ。純粋な等しい重ね合わせでも、ベル状態の部分系でも同じ確率になります。ほかの測り方での結果も必要です。"></orbit-prompt>
+    <orbit-prompt question="(|00⟩ + |11⟩)/√2 が積状態でないと判定できるのは、a00×a11 − a01×a10 がいくつになるから?" answer="1/2 です。0 ではないため、積に分けられません。"></orbit-prompt>
+    <orbit-prompt question="ベル状態 (|00⟩ + |11⟩)/√2 の q0 だけのブロッホベクトルの長さは?" answer="0 です。q0 だけの状態は混合状態です。"></orbit-prompt>
+    <orbit-prompt question="ベル状態 (|00⟩ + |11⟩)/√2 の q0 を 0/1 で測ると、1 が出る確率は?" answer="50% です。"></orbit-prompt>
+    <orbit-prompt question="q0 が純粋な |+⟩ の場合と、ベル状態 (|00⟩ + |11⟩)/√2 の部分系の場合を比べます。q0 に H を適用してから 0/1 を測ると、0 が出る確率はそれぞれいくつ?" answer="|+⟩ なら 100%、ベル状態の部分系なら 50% です。"></orbit-prompt>
   </orbit-reviewarea>
 
   <h2>まとめ</h2>

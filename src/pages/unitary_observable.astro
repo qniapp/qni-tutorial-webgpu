@@ -190,9 +190,10 @@ const base = import.meta.env.BASE_URL
     また、Probability が 0 に 35%、1 に 65% を示したとき、Z の期待値はどうなるでしょうか? 符号にも注意して計算してください。
   </p>
   <orbit-reviewarea color="blue">
-    <orbit-prompt question="すべての入力で状態の長さを保つ、ユニタリ行列の条件は?" answer="U†U = I。1 個の入力で長さが 1 になるだけでは十分ではありません。"></orbit-prompt>
-    <orbit-prompt question="観測量を表すエルミート行列 A の条件は?" answer="A† = A。随伴が自分自身と等しく、固有値は実数です。"></orbit-prompt>
-    <orbit-prompt question="P(0) = 35%、P(1) = 65% のとき、Z の期待値は?" answer="0.35 − 0.65 = −0.30。1 回の測定値は +1 か −1 で、この平均そのものが出るわけではありません。"></orbit-prompt>
+    <orbit-prompt question="すべての入力で状態の長さを保つ、ユニタリ行列の条件は?" answer="U†U = I です。"></orbit-prompt>
+    <orbit-prompt question="観測量を表すエルミート行列 A の条件は?" answer="A† = A です。"></orbit-prompt>
+    <orbit-prompt question="P(0) = 35%、P(1) = 65% のとき、Z の期待値は?" answer="0.35 − 0.65 = −0.30 です。"></orbit-prompt>
+    <orbit-prompt question="行列がユニタリかを調べるとき、1 個の正規化された入力で出力の長さが 1 だっただけでは不十分なのはなぜ?" answer="ユニタリは、すべての入力で長さを保つ必要があるからです。"></orbit-prompt>
     <orbit-prompt question="元の状態の X の期待値を、0/1 の確率から読むには?" answer="H を加えてから 0/1 の確率を読み、P(0) − P(1) を計算します。"></orbit-prompt>
   </orbit-reviewarea>
 

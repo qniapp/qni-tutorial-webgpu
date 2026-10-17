@@ -143,10 +143,11 @@ const base = import.meta.env.BASE_URL
     予想してから、上の図の「ゲート」スライダーで S† を、下の図の「調べるユニタリ行列 U」スライダーで Ry(π/3) を選び、「随伴を作る手順」スライダーで変化を確かめましょう。
   </p>
   <orbit-reviewarea color="blue">
-    <orbit-prompt question="1 量子ビットのゲート行列の左の列は何を表す?" answer="入力が |0⟩ のときの出力の振幅ベクトルです。右の列は入力が |1⟩ のときの出力です。"></orbit-prompt>
+    <orbit-prompt question="0/1 基底で書いた 1 量子ビットのゲート行列の左の列は何を表す?" answer="入力が |0⟩ のときの出力の振幅ベクトルです。"></orbit-prompt>
     <orbit-prompt cloze="行列の随伴は、転置してから各成分の{複素共役}を取って作ります。"></orbit-prompt>
-    <orbit-prompt question="S† の右の列は?" answer="上が 0、下が −i です。S の下の振幅の位相回転を戻します。"></orbit-prompt>
-    <orbit-prompt question="実数だけの Ry の随伴を作るとき、複素共役で数は変わる?" answer="変わりません。転置で対角線以外の数を交換します。"></orbit-prompt>
+    <orbit-prompt question="S† の右の列は?" answer="上が 0、下が −i です。"></orbit-prompt>
+    <orbit-prompt question="実数だけの Ry の随伴を、転置だけで作れるのはなぜ?" answer="実数は複素共役を取っても変わらないからです。"></orbit-prompt>
+    <orbit-prompt question="ゲート行列の上の行が (a, b)、入力の振幅が上から α, β のとき、出力の上の振幅は?" answer="aα + bβ です。"></orbit-prompt>
     <orbit-prompt question="U の後に U† を使って元に戻せる条件は?" answer="U がユニタリ行列であることです。U†U = UU† = I を満たします。"></orbit-prompt>
   </orbit-reviewarea>
 
