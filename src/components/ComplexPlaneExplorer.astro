@@ -1,5 +1,5 @@
 <figure data-complex-plane data-original-image>
-  <svg viewBox="0 0 360 350" aria-label="複素平面。横が実部、縦が虚部です。点を動かして長さを調べます。">
+  <svg viewBox="0 0 360 350" aria-label="複素平面。横が実部、縦が虚部です。角度と長さのスライダーで振幅と確率を調べます。">
     <defs>
       <marker id="amplitude-plane-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#4385BE" /></marker>
     </defs>
@@ -17,39 +17,38 @@
     <text data-a x="198" y="194" text-anchor="middle">a</text>
     <text data-b x="228" y="146">b</text>
     <text data-length x="186" y="130" text-anchor="end">|a+bi|</text>
-    <g data-point tabindex="0" role="button" aria-label="複素数の点。矢印キーで実部・虚部を 0.05 ずつ動かします。" transform="translate(216 122)">
-      <circle class="focus-ring" r="16" fill="none" stroke="#24837B" stroke-width="2" />
-      <circle r="22" fill="transparent" />
-      <circle r="7" fill="#3AA99F" stroke="#100F0F" stroke-width="1.5" />
-    </g>
     <text x="180" y="338" text-anchor="middle">外側の円は長さ 1（確率 100%）</text>
   </svg>
-  <div class="presets" aria-label="複素数の例">
-    <button type="button" data-a="0.5" data-b="0">0.5</button>
-    <button type="button" data-a="0" data-b="0.5">0.5i</button>
-    <button type="button" data-a="-0.5" data-b="0">−0.5</button>
-    <button type="button" data-a="0.3" data-b="0.4">0.3+0.4i</button>
-    <button type="button" data-a="0.6" data-b="0">0.6</button>
-    <button type="button" data-a="0" data-b="0.8">0.8i</button>
-  </div>
+  <label>角度：<span data-angle-label>53.13°</span>
+    <input data-angle type="range" min="0" max="360" step="0.01" value="53.13" aria-valuetext="角度 53.13 度" />
+  </label>
+  <label>長さ |a+bi|：<span data-radius-label>0.50</span>
+    <input data-radius type="range" min="0" max="1" step="0.01" value="0.5" aria-valuetext="長さ 0.50" />
+  </label>
   <output aria-live="polite" aria-atomic="true">a = 0.30、b = 0.40<br />a²+b² = 0.2500<br />|a+bi| = √(a²+b²) = 0.500<br />確率 |a+bi|² = 25%</output>
-  <figcaption>点をドラッグします。Tab キーで点を選び、矢印キーでも動かせます（長さは 1 まで）。</figcaption>
+  <figcaption>長さを変えずに角度だけ変えると、確率はどうなるでしょうか? 「角度」スライダーを動かし、矢印の向きと確率を確認しましょう。長さは「長さ |a+bi|」スライダーで 0 から 1 まで変えられます。</figcaption>
 </figure>
 <script>
   for (const root of document.querySelectorAll<HTMLElement>('[data-complex-plane]')) {
-    const svg = root.querySelector('svg')!
-    const point = root.querySelector<SVGGElement>('[data-point]')!
+    const angleInput = root.querySelector<HTMLInputElement>('[data-angle]')!
+    const radiusInput = root.querySelector<HTMLInputElement>('[data-radius]')!
     const part = (name: string) => root.querySelector<SVGElement>(`[data-${name}]`)!
-    let a = 0.3, b = 0.4
     const fmt = (v: number, digits = 2) => (Math.abs(v) < 0.000001 ? 0 : v).toFixed(digits)
     function paint() {
+      const angle = Number(angleInput.value)
+      const radius = Number(radiusInput.value)
+      const radians = angle * Math.PI / 180
+      const a = radius * Math.cos(radians), b = radius * Math.sin(radians)
+      root.querySelector('[data-angle-label]')!.textContent = `${angle}°`
+      root.querySelector('[data-radius-label]')!.textContent = fmt(radius)
+      angleInput.setAttribute('aria-valuetext', `角度 ${angle} 度`)
+      radiusInput.setAttribute('aria-valuetext', `長さ ${fmt(radius)}`)
       const x = 180 + 120*a, y = 170 - 120*b
       const sx = Math.sign(a), sy = Math.sign(b)
       part('legs').setAttribute('d', `M180 170 H${x} V${y}`)
       part('right-angle').setAttribute('d', `M${x-sx*8} 170 V${170-sy*8} H${x}`)
       part('right-angle').style.display = Math.abs(a) > 0.07 && Math.abs(b) > 0.07 ? '' : 'none'
       part('arrow').setAttribute('x2', String(x)); part('arrow').setAttribute('y2', String(y))
-      point.setAttribute('transform', `translate(${x} ${y})`)
       part('a').setAttribute('x', String((180+x)/2)); part('a').setAttribute('y', String(170+(b>=0?24:-14)))
       part('b').setAttribute('x', String(x+(a>=0?14:-14))); part('b').setAttribute('y', String((170+y)/2))
       part('b').setAttribute('text-anchor', a>=0?'start':'end')
@@ -60,55 +59,23 @@
       const probability = a*a+b*b
       const text = [`a = ${fmt(a)}、b = ${fmt(b)}`, `a²+b² = ${fmt(probability,4)}`, `|a+bi| = √(a²+b²) = ${fmt(length,3)}`, `確率 |a+bi|² = ${Number((100*probability).toFixed(2))}%`]
       root.querySelector('output')!.textContent = text.join('\n')
-      point.setAttribute('aria-label', `複素数の点、実部 ${fmt(a)}、虚部 ${fmt(b)}、確率 ${Number((100*probability).toFixed(2))}%。矢印キーで 0.05 ずつ移動します。`)
-      root.querySelectorAll<HTMLButtonElement>('button').forEach(button => {
-        button.setAttribute('aria-pressed', String(Math.abs(a-Number(button.dataset.a))<0.00001 && Math.abs(b-Number(button.dataset.b))<0.00001))
-      })
     }
-    function set(re: number, im: number) {
-      const length = Math.hypot(re,im)
-      a = length > 1 ? re/length : re; b = length > 1 ? im/length : im
-      paint()
-    }
-    function move(event: PointerEvent) {
-      const matrix = svg.getScreenCTM()
-      if (!matrix) return
-      const p = svg.createSVGPoint(); p.x=event.clientX; p.y=event.clientY
-      const pos = p.matrixTransform(matrix.inverse())
-      set((pos.x-180)/120, (170-pos.y)/120)
-    }
-    svg.addEventListener('pointerdown', event => {
-      if (!event.isPrimary || event.button !== 0) return
-      event.preventDefault()
-      svg.setPointerCapture(event.pointerId); point.focus({preventScroll:true}); move(event)
-    })
-    svg.addEventListener('pointermove', event => { if (svg.hasPointerCapture(event.pointerId)) move(event) })
-    for (const name of ['pointerup','pointercancel'] as const) svg.addEventListener(name, event => {
-      if (svg.hasPointerCapture(event.pointerId)) svg.releasePointerCapture(event.pointerId)
-    })
-    point.addEventListener('keydown', event => {
-      const offsets: Record<string,[number,number]> = {ArrowLeft:[-0.05,0], ArrowRight:[0.05,0], ArrowUp:[0,0.05], ArrowDown:[0,-0.05]}
-      const offset = offsets[event.key]
-      if (!offset) return
-      event.preventDefault(); set(a+offset[0], b+offset[1])
-    })
-    root.querySelectorAll<HTMLButtonElement>('button').forEach(button => button.addEventListener('click', () => set(Number(button.dataset.a), Number(button.dataset.b))))
+    angleInput.addEventListener('input', paint)
+    radiusInput.addEventListener('input', paint)
     paint()
   }
 </script>
 <style>
   figure { width:100%; max-width:500px; margin:24px auto; color:#100F0F; }
-  svg { width:100%; height:auto; display:block; touch-action:none; user-select:none; cursor:crosshair; }
+  svg { width:100%; height:auto; display:block; }
   text { font:14px system-ui,sans-serif; fill:#6F6E69; }
   .grid { fill:none; stroke:#E6E4D9; stroke-width:1; }
   .axis { fill:none; stroke:#6F6E69; stroke-width:1.5; }
-  [data-point] { cursor:grab; outline:none; }
-  .focus-ring { opacity:0; }
-  [data-point]:focus-visible .focus-ring { opacity:1; }
-  .presets { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; }
-  button { min-height:44px; padding:6px 12px; border:1px solid #6F6E69; border-radius:6px; background:#FFFCF0; color:inherit; font:inherit; cursor:pointer; }
-  button[aria-pressed=true] { background:#DDF1EF; border-color:#24837B; }
-  button:focus-visible { outline:2px solid #24837B; outline-offset:3px; }
+  label { display:block; }
+  input[type="range"] { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0; accent-color:#24837B; writing-mode:horizontal-tb; }
+  input[type="range"], input[type="range"]:focus, input[type="range"]:focus-visible { outline:none; border:none; box-shadow:none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow:0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow:0 0 0 3px #24837B; }
   output { display:block; white-space:pre-line; margin:16px 0; padding:12px; border-radius:6px; background:#F2F0E5; font-variant-numeric:tabular-nums; line-height:1.7; }
   figcaption { font-size:14px; color:#6F6E69; line-height:1.6; }
 </style>
