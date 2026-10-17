@@ -1,0 +1,109 @@
+---
+const a = [Math.cos(Math.PI / 6), Math.sin(Math.PI / 6)]
+const b = [Math.cos(Math.PI / 4), Math.sin(Math.PI / 4)]
+const percent = (value: number) => `${Number((value * 100).toFixed(2))}%`
+---
+<tensor-product-explorer data-original-image>
+  <p>|00⟩ から出発し、q0 と q1 にそれぞれ Ry をかけます。角度を変えて、振幅の積を確認しましょう。</p>
+  <label>q0 の回転角 θ0（0 から π、刻み π/60）
+    <input data-angle="0" type="range" min="0" max="60" step="1" value="20" aria-valuetext="θ0 = π/3" />
+  </label>
+  <label>q1 の回転角 θ1（0 から π、刻み π/60）
+    <input data-angle="1" type="range" min="0" max="60" step="1" value="30" aria-valuetext="θ1 = π/2" />
+  </label>
+  <output aria-live="polite" aria-atomic="true">
+    <span data-single="0">q0：θ0 = π/3、a0 = cos(θ0/2) = 0.8660、a1 = sin(θ0/2) = 0.5000</span>
+    <span data-single="1">q1：θ1 = π/2、b0 = cos(θ1/2) = 0.7071、b1 = sin(θ1/2) = 0.7071</span>
+    <span data-summary>|00⟩：振幅 0.6124、確率 37.5%；|01⟩：振幅 0.3536、確率 12.5%；|10⟩：振幅 0.6124、確率 37.5%；|11⟩：振幅 0.3536、確率 12.5%。確率の合計 = 100%</span>
+  </output>
+  <table>
+    <caption>行は q1、列は q0。|q1 q0⟩ の振幅 = b行 × a列</caption>
+    <thead><tr><th scope="col">q1 ＼ q0</th><th scope="col">q0 = 0</th><th scope="col">q0 = 1</th></tr></thead>
+    <tbody>{b.map((row, r) => <tr>
+      <th scope="row">q1 = {r}</th>
+      {a.map((col, c) => <td data-cell={`${r}${c}`}>
+        <svg viewBox="0 0 120 132" role="img" aria-label={`|${r}${c}⟩。塗った円の半径は振幅の大きさ、面積は確率を表します。`}>
+          <circle class="surface" cx="60" cy="56" r="48" />
+          <circle class="disc" data-disc cx="60" cy="56" r={48 * Math.abs(row * col)} />
+          <circle class="rim" cx="60" cy="56" r="48" />
+          <text x="60" y="126" text-anchor="middle">|{r}{c}⟩</text>
+        </svg>
+        <span>b{r} × a{c}</span>
+        <span>振幅 <b data-amplitude>{(row * col).toFixed(4)}</b></span>
+        <span>確率 <b data-probability>{percent((row * col) ** 2)}</b></span>
+      </td>)}
+    </tr>)}</tbody>
+  </table>
+  <p class="hint">外側の円は振幅 1。塗った円の半径は |b行 × a列|、面積は確率です。</p>
+  <button type="button" data-reset>θ0 = π/3、θ1 = π/2 に戻す</button>
+</tensor-product-explorer>
+
+<script>
+  class TensorProductExplorer extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.ready) return
+      this.dataset.ready = 'true'
+      const inputs = [0, 1].map(i => this.querySelector<HTMLInputElement>(`[data-angle="${i}"]`)!)
+      const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b)
+      const angle = (n: number) => {
+        if (n === 0) return '0'
+        const d = gcd(n, 60), top = n / d, bottom = 60 / d
+        return `${top === 1 ? '' : top}π${bottom === 1 ? '' : `/${bottom}`}`
+      }
+      const percent = (p: number) => `${Number((100 * p).toFixed(2))}%`
+      const update = () => {
+        const vectors = inputs.map((input, i) => {
+          const n = Number(input.value), theta = n * Math.PI / 60
+          const values = [n === 60 ? 0 : Math.cos(theta / 2), Math.sin(theta / 2)]
+          input.setAttribute('aria-valuetext', `θ${i} = ${angle(n)}`)
+          const letter = i === 0 ? 'a' : 'b'
+          this.querySelector(`[data-single="${i}"]`)!.textContent = `q${i}：θ${i} = ${angle(n)}、${letter}0 = cos(θ${i}/2) = ${values[0].toFixed(4)}、${letter}1 = sin(θ${i}/2) = ${values[1].toFixed(4)}`
+          return values
+        })
+        let sum = 0
+        const summary: string[] = []
+        for (let r = 0; r < 2; r++) for (let c = 0; c < 2; c++) {
+          const amplitude = vectors[1][r] * vectors[0][c], probability = amplitude ** 2
+          sum += probability
+          const cell = this.querySelector(`[data-cell="${r}${c}"]`)!
+          cell.querySelector('[data-disc]')!.setAttribute('r', String(48 * Math.abs(amplitude)))
+          cell.querySelector('[data-amplitude]')!.textContent = amplitude.toFixed(4)
+          cell.querySelector('[data-probability]')!.textContent = percent(probability)
+          summary.push(`|${r}${c}⟩：振幅 ${amplitude.toFixed(4)}、確率 ${percent(probability)}`)
+        }
+        this.querySelector('[data-summary]')!.textContent = `${summary.join('；')}。確率の合計 = ${percent(sum)}`
+      }
+      inputs.forEach(input => input.addEventListener('input', update))
+      this.querySelector('[data-reset]')!.addEventListener('click', () => {
+        inputs[0].value = '20'; inputs[1].value = '30'; update()
+      })
+      update()
+    }
+  }
+  if (!customElements.get('tensor-product-explorer')) customElements.define('tensor-product-explorer', TensorProductExplorer)
+</script>
+
+<style>
+  tensor-product-explorer { display:block; box-sizing:border-box; width:100%; max-width:540px; margin:1.5rem auto; padding:1rem; color:#100F0F; background:#FFFCF0; border:1px solid #4385BE; border-radius:8px; font:inherit; }
+  p { line-height:1.6; }
+  label, output, output > span, td > span { display:block; }
+  label { margin-top:0.5rem; }
+  input { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0; accent-color:#24837B; }
+  output { margin:1rem 0; padding:0.75rem; background:#F2F0E5; border-radius:6px; line-height:1.7; overflow-wrap:anywhere; font-variant-numeric:tabular-nums; }
+  table { width:100%; table-layout:fixed; border-collapse:collapse; font-variant-numeric:tabular-nums; }
+  caption { margin-bottom:0.5rem; line-height:1.6; }
+  th, td { padding:0.4rem 0.2rem; border:1px solid #DAD8CE; text-align:center; }
+  th:first-child { width:19%; }
+  th { font-size:0.85em; font-weight:normal; }
+  td > span { font-size:0.85em; line-height:1.7; }
+  svg { display:block; width:100%; height:auto; max-width:150px; margin:auto; }
+  .surface { fill:#FFFCF0; }
+  .disc { fill:#92BFDB; }
+  .rim { fill:none; stroke:#4385BE; }
+  text { fill:#100F0F; font:16px system-ui,sans-serif; }
+  .hint { color:#6F6E69; font-size:0.9em; }
+  button { min-height:44px; padding:0.5rem 0.75rem; border:1px solid #4385BE; border-radius:4px; background:#FFFCF0; color:inherit; font:inherit; cursor:pointer; }
+  button:hover { background:#DDF1EF; }
+  button:active { border-color:#100F0F; }
+  input:focus-visible, button:focus-visible { outline:2px solid #24837B; outline-offset:3px; }
+</style>
