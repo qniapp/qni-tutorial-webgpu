@@ -62,6 +62,7 @@ export const toc: TocChapter[] = [
       { title: 'MEASUREMENT 命令', slug: 'measurement_operation' },
       { title: 'CLONE 命令!?', slug: 'no_cloning_theorem' },
       { title: '組合わせゲート', slug: 'gate_combination' },
+      { title: '測る基底と期待値 1: X・Y・Z の質問', slug: 'measurement_basis' },
     ],
   },
   {
