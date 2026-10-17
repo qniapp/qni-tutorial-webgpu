@@ -12,6 +12,7 @@ type MockState = {
   release: (() => void)[]
   currentCircuit?: string
   progress?: (value: { stage: string; loaded: number; total: number | null }) => void
+  deviceLost?: (error: unknown) => void
 }
 
 declare global {
@@ -19,6 +20,7 @@ declare global {
     __qniMock: MockState
     __qniHeld: boolean
     __qniFail: boolean
+    __qniAdapterAvailable: boolean
     __qniElement?: HTMLElement
   }
 }
@@ -29,6 +31,7 @@ const mockModule = `
     const mock = window.__qniMock;
     const id = mock.calls.length;
     mock.progress = settings.onProgress;
+    mock.deviceLost = settings.onDeviceLost;
     mock.restartCalls.push({ show: settings.showRestartButton, invoke: settings.onRestart });
     mock.wireCalls.push({ present: Object.hasOwn(settings, 'maxWireCount'), value: settings.maxWireCount });
     mock.paletteCalls.push({ present: Object.hasOwn(settings, 'palette'), palette: settings.palette });
@@ -47,14 +50,18 @@ const mockModule = `
   }
 `
 
-async function boot(page: Page, options: { gpu?: boolean; held?: boolean; importFails?: boolean } = {}) {
+async function boot(page: Page, options: { gpu?: boolean; adapterAvailable?: boolean; held?: boolean; importFails?: boolean } = {}) {
   const requests: string[] = []
-  await page.addInitScript(({ gpu, held }) => {
-    Object.defineProperty(navigator, 'gpu', { configurable: true, value: gpu ? {} : undefined })
+  await page.addInitScript(({ gpu, adapterAvailable, held }) => {
+    window.__qniAdapterAvailable = adapterAvailable
+    Object.defineProperty(navigator, 'gpu', { configurable: true, value: gpu ? {
+      requestAdapter: async () => window.__qniAdapterAvailable ? {} : null,
+    } : undefined })
     window.__qniMock = { calls: [], paletteCalls: [], wireCalls: [], restartCalls: [], destroyed: [], live: 0, maxLive: 0, release: [] }
     window.__qniHeld = held
     window.__qniFail = false
-  }, { gpu: options.gpu !== false, held: options.held ?? false })
+  }, { gpu: options.gpu !== false, adapterAvailable: options.adapterAvailable !== false, held: options.held ?? false })
+  // Only the app entry is mocked; qni-embed-error.mjs is served from dist.
   await page.route('**/qni-embed.mjs', async route => {
     requests.push(new URL(route.request().url()).pathname)
     await route.fulfill({
@@ -224,9 +231,76 @@ test('missing WebGPU shows a Japanese message without importing a fallback', asy
   const requests = await boot(page, { gpu: false })
   await page.locator('qni-webgpu-circuit[data-state="unsupported"]').waitFor()
   expect({ requests, ...(await page.evaluate(() => {
-    const shadow = document.querySelector('qni-webgpu-circuit')!.shadowRoot!
-    return { message: shadow.querySelector('[role="status"]')!.textContent, hidden: shadow.querySelector('canvas')!.hidden, calls: window.__qniMock.calls.length }
-  })) }).toEqual({ requests: [], message: 'このブラウザーはWebGPUに対応していません。', hidden: true, calls: 0 })
+    const element = document.querySelector('qni-webgpu-circuit') as HTMLElement
+    const shadow = element.shadowRoot!
+    const errorRoot = shadow.querySelector('.error-slot > div')!.shadowRoot!
+    return { code: element.dataset.errorCode, message: errorRoot.querySelector('h3')!.textContent, hidden: shadow.querySelector('canvas')!.hidden, calls: window.__qniMock.calls.length }
+  })) }).toEqual({ requests: [], code: 'webgpu-unsupported', message: 'このブラウザーでは動きません', hidden: true, calls: 0 })
+})
+
+test('unavailable adapter shows its cause and retry clears the error before restarting', async ({ page }) => {
+  await boot(page, { adapterAvailable: false })
+  const element = page.locator('qni-webgpu-circuit')
+  const slot = element.locator('.error-slot')
+  await expect(element).toHaveAttribute('data-state', 'error')
+  await expect(element).toHaveAttribute('data-error-code', 'gpu-adapter-unavailable')
+  await expect(slot.getByRole('heading', { level: 3 })).toHaveText('GPU を使えませんでした')
+  await expect(element.locator('canvas')).toBeHidden()
+  expect((await snapshot(page)).calls).toHaveLength(0)
+  expect((await snapshot(page)).live).toBe(0)
+
+  await page.evaluate(() => {
+    window.__qniAdapterAvailable = true
+    window.__qniHeld = true
+  })
+  await slot.getByRole('button', { name: '再試行', exact: true }).click()
+  await page.waitForFunction(() => window.__qniMock.release.length === 1)
+  await expect(element).toHaveAttribute('data-state', 'loading')
+  await expect(element).not.toHaveAttribute('data-error-code')
+  await expect(slot).toBeHidden()
+  await expect(slot.locator('[data-qni-startup-error]')).toHaveCount(0)
+  await expect(element.locator('canvas')).toBeVisible()
+  await page.evaluate(() => window.__qniMock.release.shift()!())
+  await running(page)
+  await expect(element).not.toHaveAttribute('data-error-code')
+  expect((await snapshot(page)).calls).toHaveLength(1)
+  expect((await snapshot(page)).live).toBe(1)
+})
+
+test('device loss renders the supplied error and retry preserves an available edited circuit', async ({ page }) => {
+  await boot(page)
+  await running(page)
+  const edited = '{"cols":[["H"],["Measure"]]}'
+  await page.evaluate(circuit => {
+    window.__qniMock.currentCircuit = circuit
+    window.__qniMock.deviceLost!({ name: 'QniStartupError', code: 'gpu-device-lost', message: 'mock device lost' })
+  }, edited)
+  const element = page.locator('qni-webgpu-circuit')
+  const slot = element.locator('.error-slot')
+  await expect(element).toHaveAttribute('data-state', 'error')
+  await expect(element).toHaveAttribute('data-error-code', 'gpu-device-lost')
+  await expect(slot.getByRole('heading', { level: 3 })).toHaveText('GPU との接続が切れました')
+  await expect(element.locator('canvas')).toBeHidden()
+  expect((await snapshot(page)).destroyed).toEqual([0])
+  expect((await snapshot(page)).live).toBe(0)
+  await slot.getByRole('button', { name: '再試行', exact: true }).click()
+  await running(page)
+  await expect(slot).toBeHidden()
+  await expect(slot.locator('[data-qni-startup-error]')).toHaveCount(0)
+  await expect(element).not.toHaveAttribute('data-error-code')
+  expect((await snapshot(page)).calls.at(-1)?.circuit).toBe(edited)
+  expect((await snapshot(page)).maxLive).toBe(1)
+})
+
+test('failure to load the error module falls back to a reload message', async ({ page }) => {
+  await page.route('**/qni-embed-error.mjs', route => route.fulfill({ status: 500, body: '' }))
+  await boot(page)
+  const element = page.locator('qni-webgpu-circuit')
+  await expect(element).toHaveAttribute('data-state', 'error')
+  await expect(element.locator('.error-slot')).toHaveText('量子回路を起動できませんでした。ページを再読み込みしてください。')
+  await expect(element.locator('canvas')).toBeHidden()
+  expect((await snapshot(page)).calls).toHaveLength(0)
+  expect((await snapshot(page)).live).toBe(0)
 })
 
 test('shows Japanese progress with an honest unknown compressed total', async ({ page }) => {
@@ -262,10 +336,15 @@ for (const failure of ['import', 'parse', 'GPU'] as const) {
     }
     await page.locator('qni-webgpu-circuit[data-state="error"]').waitFor()
     expect({
-      message: await page.locator('qni-webgpu-circuit').locator('[role="status"]').textContent(),
+      code: await page.locator('qni-webgpu-circuit').getAttribute('data-error-code'),
+      message: await page.locator('qni-webgpu-circuit .error-slot').getByRole('heading', { level: 3 }).textContent(),
       logged: errors.some(error => error.includes('量子回路の起動に失敗しました。')),
       live: (await snapshot(page)).live,
-    }).toEqual({ message: '量子回路を起動できませんでした。', logged: true, live: 0 })
+    }).toEqual({
+      code: failure === 'parse' ? 'invalid-embed' : failure === 'import' ? 'load-failed' : 'unknown',
+      message: failure === 'parse' ? '回路のデータに問題があります' : failure === 'import' ? '読み込みに失敗しました' : '量子回路を起動できませんでした',
+      logged: true, live: 0,
+    })
   })
 }
 
@@ -433,6 +512,8 @@ for (const value of ['', '0', '-1', '1.5', '2foo', 'NaN', '9007199254740992']) {
     await running(page)
     await page.locator('qni-webgpu-circuit').evaluate((element, value) => element.setAttribute('max-wire-count', value), value)
     await page.locator('qni-webgpu-circuit[data-state="error"]').waitFor()
+    await expect(page.locator('qni-webgpu-circuit')).toHaveAttribute('data-error-code', 'invalid-embed')
+    await expect(page.locator('.error-slot').getByRole('heading', { level: 3 })).toHaveText('回路のデータに問題があります')
     expect((await snapshot(page)).calls).toHaveLength(1)
     expect((await snapshot(page)).live).toBe(0)
   })
@@ -444,6 +525,8 @@ for (const palette of ['not-json', 'null', '"H"', '["H",1]']) {
     await running(page)
     await page.locator('qni-webgpu-circuit').evaluate((element, value) => element.setAttribute('palette', value), palette)
     await page.locator('qni-webgpu-circuit[data-state="error"]').waitFor()
+    await expect(page.locator('qni-webgpu-circuit')).toHaveAttribute('data-error-code', 'invalid-embed')
+    await expect(page.locator('.error-slot').getByRole('heading', { level: 3 })).toHaveText('回路のデータに問題があります')
     expect((await snapshot(page)).calls).toHaveLength(1)
     expect((await snapshot(page)).live).toBe(0)
   })
