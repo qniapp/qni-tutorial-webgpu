@@ -27,13 +27,13 @@ const base = import.meta.env.BASE_URL
     右端では、左上と右下の振幅がともに約 0.707、ほかの 2 マスが 0 になります。
     交差する積の差は、0 ではなく 0.5 です。この右端の状態を、ベル状態の 1 つと呼びます。
   </p>
-  <p class="math-scroll">{String.raw`\[ |\Phi^+\rangle=\frac{|00\rangle+|11\rangle}{\sqrt{2}} \]`}</p>
+  <p class="math-display">{String.raw`\[ |\Phi^+\rangle=\frac{|00\rangle+|11\rangle}{\sqrt{2}} \]`}</p>
   <p>
     図では、角度 \(t\) を 0 から π/2 まで動かして、次の状態を作っています。
     三角関数を計算しなくても、4 個の円と数値を見比べれば大丈夫です。
     「中間」を押し、4 個の確率の合計が 100% になることも確認しましょう。
   </p>
-  <p class="math-scroll">{String.raw`\[ |\psi(t)\rangle=\frac{|00\rangle+\cos t\,|01\rangle+\sin t\,|11\rangle}{\sqrt{2}} \]`}</p>
+  <p class="math-display">{String.raw`\[ |\psi(t)\rangle=\frac{|00\rangle+\cos t\,|01\rangle+\sin t\,|11\rangle}{\sqrt{2}} \]`}</p>
 
   <h2>差が 0 なら、積に分けられる</h2>
   <p>
@@ -41,12 +41,12 @@ const base = import.meta.env.BASE_URL
     2 量子ビット全体が 1 本の正規化された状態ベクトルで表されるとき、積に分けられる条件は次の式です。
     この条件は、振幅が複素数でも使えます。確率ではなく、振幅そのものを掛けることに注意してください。
   </p>
-  <p class="math-scroll">{String.raw`\[ D=a_{00}a_{11}-a_{01}a_{10}=0 \]`}</p>
+  <p class="math-display">{String.raw`\[ D=a_{00}a_{11}-a_{01}a_{10}=0 \]`}</p>
   <p>
     なぜ積状態なら差が 0 になるのでしょうか?
     q1 の振幅を \(b_0,b_1\)、q0 の振幅を \(c_0,c_1\) とすると、2 通りの積は次のようになります。
   </p>
-  <p class="math-scroll">{String.raw`\[
+  <p class="math-display">{String.raw`\[
     \begin{gathered}
       a_{00}a_{11}=(b_0c_0)(b_1c_1) \\
       a_{01}a_{10}=(b_0c_1)(b_1c_0)
@@ -94,7 +94,7 @@ const base = import.meta.env.BASE_URL
     部分系の状態を表す道具を、密度行列と呼びます。この図の q0 では、次の形になります。
     対角の 2 個の値は 0/1 の確率、対角以外の値は重ね合わせの位相に関わる情報を表します。
   </p>
-  <p class="math-scroll">{String.raw`\[ \rho_0=\frac12\begin{pmatrix}1&\cos t\\\cos t&1\end{pmatrix} \]`}</p>
+  <p class="math-display">{String.raw`\[ \rho_0=\frac12\begin{pmatrix}1&\cos t\\\cos t&1\end{pmatrix} \]`}</p>
   <p>
     左端では対角以外も 0.5 ですが、ベル状態では 0 です。
     余裕のある人は、q0 に H を適用してから測る場合を考えてみましょう。
@@ -151,7 +151,6 @@ const base = import.meta.env.BASE_URL
   <script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
 </TutorialLayout>
 <style>
-  .math-scroll { overflow-x: auto; }
   ol { max-width: 76ch; padding-left: 24px; }
   li + li { margin-top: 16px; }
   @media (min-width: 640px) { ol { width: 58.333333%; margin-right: auto; } }

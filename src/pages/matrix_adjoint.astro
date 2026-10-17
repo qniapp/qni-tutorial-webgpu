@@ -26,7 +26,7 @@ const base = import.meta.env.BASE_URL
     右の列には、入力が <Ket label="1" /> のときの出力が入ります。
     つまり X の左の列は「上が 0、下が 1」、右の列は「上が 1、下が 0」です。
   </p>
-  <p class="math-scroll">{String.raw`\[ \begin{gathered}
+  <p class="math-display">{String.raw`\[ \begin{gathered}
     X=\begin{pmatrix}0&1\\1&0\end{pmatrix} \\
     X\begin{pmatrix}1\\0\end{pmatrix}=\begin{pmatrix}0\\1\end{pmatrix} \\
     X\begin{pmatrix}0\\1\end{pmatrix}=\begin{pmatrix}1\\0\end{pmatrix}
@@ -44,7 +44,7 @@ const base = import.meta.env.BASE_URL
     上の行が新しい <Ket label="0" /> の振幅、下の行が新しい <Ket label="1" /> の振幅を作ります。
     一般の数を使って書くと、次のようになります。
   </p>
-  <p class="math-scroll">{String.raw`\[ \begin{aligned}
+  <p class="math-display">{String.raw`\[ \begin{aligned}
     U\begin{pmatrix}\alpha\\\beta\end{pmatrix}&=\begin{pmatrix}a&b\\c&d\end{pmatrix}\begin{pmatrix}\alpha\\\beta\end{pmatrix} \\
     &=\begin{pmatrix}a\alpha+b\beta\\c\alpha+d\beta\end{pmatrix}
   \end{aligned} \]`}</p>
@@ -60,13 +60,13 @@ const base = import.meta.env.BASE_URL
     Z は下の振幅に −1 を掛け、S は下の振幅に i を掛けます。どちらも上の振幅は変えません。
     下の針はそれぞれ半回転、反時計回りに 4 分の 1 回転しますが、半径は変わりません。
   </p>
-  <p class="math-scroll">{String.raw`\[ Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad S=\begin{pmatrix}1&0\\0&i\end{pmatrix} \]`}</p>
+  <p class="math-display">{String.raw`\[ Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad S=\begin{pmatrix}1&0\\0&i\end{pmatrix} \]`}</p>
   <p>
     H に切り替えるとどうなるでしょうか? まず「入力 |0⟩」、次に「入力 |1⟩」を押してください。
     どちらも半径は同じになりますが、後者では下の針が反対を向きます。
     H の左の列は正の振幅 2 個、右の列は下だけが負の振幅です。
   </p>
-  <p class="math-scroll">{String.raw`\[ \begin{gathered} H=\frac{1}{\sqrt{2}}\begin{pmatrix}1&1\\1&-1\end{pmatrix} \\ H\begin{pmatrix}\alpha\\\beta\end{pmatrix}=\frac{1}{\sqrt{2}}\begin{pmatrix}\alpha+\beta\\\alpha-\beta\end{pmatrix} \end{gathered} \]`}</p>
+  <p class="math-display">{String.raw`\[ \begin{gathered} H=\frac{1}{\sqrt{2}}\begin{pmatrix}1&1\\1&-1\end{pmatrix} \\ H\begin{pmatrix}\alpha\\\beta\end{pmatrix}=\frac{1}{\sqrt{2}}\begin{pmatrix}\alpha+\beta\\\alpha-\beta\end{pmatrix} \end{gathered} \]`}</p>
   <p>
     H では、振幅の足し算と引き算が出力を決めます。
     余裕のある人は、図で入力の分布角 t を 90 度、相対位相 φ を 0 度にし、H の下の行で 2 個の積が打ち消し合うことを確認しましょう。
@@ -87,7 +87,7 @@ const base = import.meta.env.BASE_URL
     つまり実部はそのままで、虚部の符号を反転させます。
     この 2 つの操作で作る行列を随伴と呼び、\(U^\dagger\) と書きます。
   </p>
-  <p class="math-scroll">{String.raw`\[ \begin{gathered}
+  <p class="math-display">{String.raw`\[ \begin{gathered}
     U=\begin{pmatrix}a&b\\c&d\end{pmatrix} \\
     \longrightarrow\quad U^{\mathsf T}=\begin{pmatrix}a&c\\b&d\end{pmatrix} \\
     \longrightarrow\quad U^\dagger=\begin{pmatrix}\overline a&\overline c\\\overline b&\overline d\end{pmatrix}
@@ -96,7 +96,7 @@ const base = import.meta.env.BASE_URL
     S は対角線以外が 0 なので、転置だけでは変わりません。複素共役を取ると i が −i になります。
     S† は下の振幅に −i を掛けるので、S が掛けた i と合わせて \((-i)i=1\) となり、元に戻ります。
   </p>
-  <p class="math-scroll">{String.raw`\[ S^\dagger=\begin{pmatrix}1&0\\0&-i\end{pmatrix},\qquad S^\dagger S=\begin{pmatrix}1&0\\0&1\end{pmatrix}=I \]`}</p>
+  <p class="math-display">{String.raw`\[ S^\dagger=\begin{pmatrix}1&0\\0&-i\end{pmatrix},\qquad S^\dagger S=\begin{pmatrix}1&0\\0&1\end{pmatrix}=I \]`}</p>
 
   <h2>随伴なら、いつでも戻せる?</h2>
   <p>
@@ -160,7 +160,6 @@ const base = import.meta.env.BASE_URL
   <script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
 </TutorialLayout>
 <style>
-  .math-scroll { max-width:100%; overflow-x:auto; padding-block:0.5em; }
   ol { max-width:76ch; padding-left:24px; }
   li + li { margin-top:16px; }
   @media (min-width:640px) { ol { width:58.333333%; margin-right:auto; } }

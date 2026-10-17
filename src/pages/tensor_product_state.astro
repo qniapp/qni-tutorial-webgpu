@@ -64,7 +64,7 @@ const base = import.meta.env.BASE_URL
     行のベクトルと列のベクトルを掛けて表を作るこの計算を、外積と呼びます。
     ここでの外積は、3 次元の矢印で使う外積とは別の意味です。
   </p>
-  <p class="math-scroll">{String.raw`\[
+  <p class="math-display">{String.raw`\[
     \begin{pmatrix}b_0\\b_1\end{pmatrix}
     \begin{pmatrix}a_0 & a_1\end{pmatrix}
     =\begin{pmatrix}b_0a_0 & b_0a_1\\b_1a_0 & b_1a_1\end{pmatrix}
@@ -73,7 +73,7 @@ const base = import.meta.env.BASE_URL
     この表を上の行から順に読み、縦に並べたものが、全体の状態ベクトルです。
     掛け算は、振幅が複素数の場合も同じです。外積の表を作るときは、複素共役にはしません。
   </p>
-  <p class="math-scroll">{String.raw`\[
+  <p class="math-display">{String.raw`\[
     b\otimes a=\begin{pmatrix}b_0a_0\\b_0a_1\\b_1a_0\\b_1a_1\end{pmatrix}
   \]`}</p>
   <p>順番は <Ket label="00" />、<Ket label="01" />、<Ket label="10" />、<Ket label="11" /> です。</p>
@@ -85,7 +85,7 @@ const base = import.meta.env.BASE_URL
     大きさを 2 乗すると \(0.64^2=0.4096\) なので、確率は 40.96% です。
     q1 の 0 の確率 64% と、q0 の 1 の確率 64% を掛けた結果とも一致します。
   </p>
-  <p class="math-scroll">{String.raw`\[ |b_i a_j|^2=|b_i|^2|a_j|^2 \]`}</p>
+  <p class="math-display">{String.raw`\[ |b_i a_j|^2=|b_i|^2|a_j|^2 \]`}</p>
   <p>
     たとえば q0 の 1 の確率だけを知るには、右の列の確率を足します。
     2 番目の図では \(40.96+23.04=64\)% です。
@@ -146,11 +146,6 @@ const base = import.meta.env.BASE_URL
   <script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
 </TutorialLayout>
 <style>
-  .math-scroll {
-    overflow-x: auto;
-    /* Leave room for tall MathJax matrices and their descenders. */
-    padding-block: 0.5em;
-  }
   ol { max-width: 76ch; padding-left: 24px; }
   li + li { margin-top: 16px; }
   @media (min-width: 640px) { ol { width: 58.333333%; margin-right: auto; } }

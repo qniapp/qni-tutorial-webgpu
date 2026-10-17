@@ -27,12 +27,12 @@ const base = import.meta.env.BASE_URL
     このように、すべての振幅に共通する位相を全体位相と呼びます。
     図では、もとの 2 個の振幅に同じ数を掛けています。
   </p>
-  <p class="math-scroll">{String.raw`\[ e^{i\varphi}=\cos\varphi+i\sin\varphi, \qquad |e^{i\varphi}|=1 \]`}</p>
+  <p class="math-display">{String.raw`\[ e^{i\varphi}=\cos\varphi+i\sin\varphi, \qquad |e^{i\varphi}|=1 \]`}</p>
   <p>
     この数の大きさは 1 なので、掛けても長さは変わりません。複素平面では、反時計回りに角度 φ だけ回すことに対応します。
     一般に、2 個の振幅を α、β とすると、全体位相の変更は次のように書けます。
   </p>
-  <p class="math-scroll">{String.raw`\[ (\alpha,\beta)\ \longrightarrow\ (e^{i\varphi}\alpha,e^{i\varphi}\beta) \]`}</p>
+  <p class="math-display">{String.raw`\[ (\alpha,\beta)\ \longrightarrow\ (e^{i\varphi}\alpha,e^{i\varphi}\beta) \]`}</p>
   <p>
     では、測る前に H を置いた場合はどうなるでしょうか? 図の「H の後に測る」も見ながら、スライダーを一周させてみましょう。
     この例では、H の後も常に 0 が 100% です。
@@ -61,14 +61,14 @@ const base = import.meta.env.BASE_URL
     <Ket label="1" /> の振幅は {String.raw`\(e^{i\varphi}/\sqrt{2}\)`} です。
     H は、2 個の振幅の和と差を取り、それぞれを {String.raw`\(\sqrt{2}\)`} で割ります。
   </p>
-  <p class="math-scroll">{String.raw`\[ \alpha'=\frac{1+e^{i\varphi}}{2}, \qquad \beta'=\frac{1-e^{i\varphi}}{2} \]`}</p>
+  <p class="math-display">{String.raw`\[ \alpha'=\frac{1+e^{i\varphi}}{2}, \qquad \beta'=\frac{1-e^{i\varphi}}{2} \]`}</p>
   <p>
     φ が 0 なら、引き算の側は 0 になります。φ が π なら {String.raw`\(e^{i\pi}=-1\)`} なので、足し算の側が 0 になります。
     このように、振幅を足し合わせた結果が強め合ったり打ち消し合ったりすることを干渉と呼びます。
     足すのは確率ではなく、向きを持つ振幅であることに注意してください。
     それぞれの大きさの 2 乗を求めると、図の棒に使った確率になります。
   </p>
-  <p class="math-scroll">{String.raw`\[ P(0)=\cos^2(\varphi/2), \qquad P(1)=\sin^2(\varphi/2) \]`}</p>
+  <p class="math-display">{String.raw`\[ P(0)=\cos^2(\varphi/2), \qquad P(1)=\sin^2(\varphi/2) \]`}</p>
   <p>
     この式は、今回のように等しい振幅から片方だけを回し、H を通した場合の式です。
     全体位相を変える操作と、片方だけを回す操作は同じではありません。
@@ -128,7 +128,6 @@ const base = import.meta.env.BASE_URL
   <script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
 </TutorialLayout>
 <style>
-  .math-scroll { overflow-x: auto; }
   ol { max-width: 76ch; padding-left: 24px; }
   li + li { margin-top: 16px; }
   @media (min-width: 640px) { ol { width: 58.333333%; margin-right: auto; } }

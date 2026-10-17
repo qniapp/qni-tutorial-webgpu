@@ -40,7 +40,7 @@ const base = import.meta.env.BASE_URL
     図で試した実数の振幅だけでなく、複素数の振幅についても長さを保つ必要があります。
     その条件は、随伴を使うと次のように書けます。I は状態を変えない単位行列です。
   </p>
-  <p class="math-scroll">{String.raw`\[ U^\dagger U=I,\qquad I=\begin{pmatrix}1&0\\0&1\end{pmatrix} \]`}</p>
+  <p class="math-display">{String.raw`\[ U^\dagger U=I,\qquad I=\begin{pmatrix}1&0\\0&1\end{pmatrix} \]`}</p>
   <p>
     U の後に U† を適用すると元に戻る、という関係にもなっています。
     図の U†U の表示を、H と diag(1, 0.5) で比べてみましょう。
@@ -50,7 +50,7 @@ const base = import.meta.env.BASE_URL
     状態を ψ と書くと、内積を使って長さの 2 乗を確かめられます。
     ユニタリなら、変換後も次のように 1 が保たれます。
   </p>
-  <p class="math-scroll">{String.raw`\[ \begin{aligned}
+  <p class="math-display">{String.raw`\[ \begin{aligned}
     \langle U\psi|U\psi\rangle&=\langle\psi|U^\dagger U|\psi\rangle \\
     &=\langle\psi|\psi\rangle \\
     &=1
@@ -74,7 +74,7 @@ const base = import.meta.env.BASE_URL
     このように、各結果の値にその確率を掛けて足した平均を期待値と呼びます。
     Z の期待値を ⟨Z⟩ と書くと、次のようになります。P(0) と P(1) は、それぞれ 0 と 1 が出る確率です。
   </p>
-  <p class="math-scroll">{String.raw`\[ \begin{aligned}
+  <p class="math-display">{String.raw`\[ \begin{aligned}
     \langle Z\rangle&=(+1)P(0)+(-1)P(1) \\
     &=P(0)-P(1)
   \end{aligned} \]`}</p>
@@ -89,7 +89,7 @@ const base = import.meta.env.BASE_URL
     今の +1 と −1 の割り当てを、行列で表してみましょう。
     Z は <Ket label="0" /> に +1、<Ket label="1" /> に −1 を掛ける行列なのでした。
   </p>
-  <p class="math-scroll">{String.raw`\[ \begin{gathered}
+  <p class="math-display">{String.raw`\[ \begin{gathered}
     Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix} \\
     Z|0\rangle=+|0\rangle \\
     Z|1\rangle=-|1\rangle
@@ -103,7 +103,7 @@ const base = import.meta.env.BASE_URL
     観測量は、随伴を取っても自分自身になる行列で表します。このような行列をエルミート行列と呼びます。
     エルミート行列の固有値は実数なので、測る値を実数として扱えます。
   </p>
-  <p class="math-scroll">{String.raw`\[ \begin{gathered}
+  <p class="math-display">{String.raw`\[ \begin{gathered}
     A^\dagger=A\quad\text{（エルミート）} \\
     U^\dagger U=I\quad\text{（ユニタリ）}
   \end{gathered} \]`}</p>
@@ -125,7 +125,7 @@ const base = import.meta.env.BASE_URL
     <Ket label="−" /> は下の振幅だけが {String.raw`\(-1/\sqrt{2}\)`} の状態です。
     X は振幅を交換するので、次の関係になります。
   </p>
-  <p class="math-scroll">{String.raw`\[ \begin{gathered}
+  <p class="math-display">{String.raw`\[ \begin{gathered}
     X=\begin{pmatrix}0&1\\1&0\end{pmatrix} \\
     X|+\rangle=+|+\rangle \\
     X|-\rangle=-|-\rangle
@@ -139,7 +139,7 @@ const base = import.meta.env.BASE_URL
     図の状態は、<Ket label="0" /> に Ry を適用したものです。
     この状態について、Z と X の期待値は次のようになります。今は公式を覚えるより、θ が同じでも、読む観測量によって平均が違うことを図で確かめてください。
   </p>
-  <p class="math-scroll">{String.raw`\[ \begin{gathered}
+  <p class="math-display">{String.raw`\[ \begin{gathered}
     |\psi\rangle=\cos(\theta/2)|0\rangle+\sin(\theta/2)|1\rangle \\
     \langle Z\rangle=\cos\theta \\
     \langle X\rangle=\sin\theta
@@ -205,7 +205,6 @@ const base = import.meta.env.BASE_URL
   <script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
 </TutorialLayout>
 <style>
-  .math-scroll { max-width:100%; overflow-x:auto; padding-block:0.5em; }
   ol { max-width:76ch; padding-left:24px; }
   li + li { margin-top:16px; }
   @media (min-width:640px) { ol { width:58.333333%; margin-right:auto; } }
