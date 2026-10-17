@@ -93,7 +93,9 @@
   .hint { color: #6F6E69; font-size: 0.9em; }
   label, output, output > span { display: block; }
   input { display: block; box-sizing: border-box; width: 100%; min-height: 44px; margin: 0; accent-color: #24837B; }
-  input:focus-visible { outline: 2px solid #24837B; outline-offset: 3px; }
+  input[type="range"], input[type="range"]:focus, input[type="range"]:focus-visible { outline: none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px #24837B; }
   output { margin: 0.5rem 0; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
   .states { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
   svg { display: block; width: 100%; height: auto; max-width: 200px; margin: auto; }
