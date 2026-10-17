@@ -1,0 +1,174 @@
+---
+interface Props {
+  mode: 'global' | 'relative'
+}
+const { mode } = Astro.props
+const global = mode === 'global'
+const radius = 60 / Math.sqrt(2)
+---
+
+<phase-comparison-explorer data-mode={mode}>
+  <figure data-original-image>
+    <p class="hint">{global ? '全体位相：2 本の矢印を一緒に回します。' : '相対位相：|0⟩ を固定し、|1⟩ の矢印だけを回します。'} 円の半径はどちらも 1/√2 で変わりません。</p>
+    <div class="states">
+      {[0, 1].map(state => (
+        <svg data-state={state} data-drag={global || state === 1 ? '' : undefined} viewBox="0 0 160 180" role="img" aria-label={`|${state}⟩ の円表記、位相 0 度、確率 50%`}>
+          <title>{`|${state}⟩ の振幅と位相`}</title>
+          <desc>外円の半径 60 は振幅 1 です。青い円の半径は 60/√2、面積は確率 50% を表します。矢印は位相を表します。</desc>
+          <circle class="surface" cx="80" cy="80" r="60" />
+          <circle class="disc" cx="80" cy="80" r={radius} />
+          <circle class="rim" cx="80" cy="80" r="60" />
+          <path class="axes" d="M14 80 H146 M80 14 V146" />
+          <g data-arrow transform="rotate(0 80 80)">
+            <path class="arrow" d={`M80 80 H${80 + radius}`} />
+            <path class="tip" d={`M${80 + radius - 9} 75 L${80 + radius} 80 L${80 + radius - 9} 85 Z`} />
+            <circle class="handle" cx={80 + radius} cy="80" r="5" />
+          </g>
+          <text x="80" y="166" text-anchor="middle">{`|${state}⟩`}</text>
+        </svg>
+      ))}
+    </div>
+    <label>{global ? '全体位相' : '相対位相'} φ（度）
+      <input data-angle type="range" min="0" max="360" step="1" value="0" aria-valuetext="φ = 0°、直接 Z 測定：|0⟩ 50%、|1⟩ 50%、H 後：|0⟩ 100%、|1⟩ 0%" />
+    </label>
+    <div class="presets" role="group" aria-label="位相のプリセット">
+      {[[0, '0'], [90, 'π/2'], [180, 'π'], [360, '2π']].map(([angle, label]) => (
+        <button type="button" data-preset={angle} aria-pressed={angle === 0}>{label}</button>
+      ))}
+    </div>
+    <div class="comparison">
+      {['before', 'after'].map(stage => (
+        <div>
+          <p>{stage === 'before' ? 'そのまま測る（H 前・Z）' : 'H の後に測る（Z）'}</p>
+          {[0, 1].map(state => {
+            const probability = stage === 'before' ? 50 : state === 0 ? 100 : 0
+            return <div class="probability">
+              <span>{`|${state}⟩：`}<b data-prob={`${stage}-${state}`}>{probability}%</b></span>
+              <svg data-chart={`${stage}-${state}`} viewBox="0 0 160 24" role="img" aria-label={`${stage === 'before' ? 'H 前' : 'H 後'} |${state}⟩ の確率 ${probability}%`}>
+                <rect class="surface" width="160" height="24" />
+                <rect class="disc" data-bar width={160 * probability / 100} height="24" />
+                <rect class="rim" x="0.5" y="0.5" width="159" height="23" />
+              </svg>
+            </div>
+          })}
+        </div>
+      ))}
+    </div>
+    <output aria-live="polite" aria-atomic="true">φ = 0°。直接 Z 測定（H 前）：|0⟩ 50%、|1⟩ 50%。H 後：|0⟩ 100%、|1⟩ 0%。</output>
+    <figcaption>
+      {global ? 'どちらかの円をドラッグすると、両方の矢印が回ります。' : '|1⟩ の円をドラッグすると、その矢印だけが回ります。'}
+      スライダーを選び、矢印キーでも 1 度ずつ変更できます。反時計回りが正の向きです。
+      {global ? '全体位相は、H 後の確率にも影響しません。' : '直接測定では位相の違いは見えませんが、H 後は |0⟩ が cos²(φ/2)、|1⟩ が sin²(φ/2) の確率になります。'}
+    </figcaption>
+  </figure>
+</phase-comparison-explorer>
+
+<script>
+  class PhaseComparisonExplorer extends HTMLElement {
+    static afterZero(degrees: number, global: boolean) {
+      return global ? 1 : Math.cos(degrees * Math.PI / 360) ** 2
+    }
+
+    static percent(probability: number) {
+      return `${Number((probability * 100).toFixed(2))}%`
+    }
+
+    connectedCallback() {
+      if (this.dataset.ready) return
+      this.dataset.ready = 'true'
+      const global = this.dataset.mode === 'global'
+      const input = this.querySelector<HTMLInputElement>('[data-angle]')!
+      const update = (value: number) => {
+        const degrees = Math.round(Math.max(0, Math.min(360, value)))
+        input.value = String(degrees)
+        this.querySelectorAll<SVGSVGElement>('[data-state]').forEach(svg => {
+          const angle = global || svg.dataset.state === '1' ? degrees : 0
+          svg.querySelector('[data-arrow]')!.setAttribute('transform', `rotate(${-angle} 80 80)`)
+          svg.setAttribute('aria-label', `|${svg.dataset.state}⟩ の円表記、位相 ${angle} 度、確率 50%`)
+        })
+        const zero = PhaseComparisonExplorer.afterZero(degrees, global)
+        const zeroText = PhaseComparisonExplorer.percent(zero)
+        const oneText = PhaseComparisonExplorer.percent(1 - zero)
+        for (const [state, probability] of [[0, zero], [1, 1 - zero]]) {
+          const text = PhaseComparisonExplorer.percent(probability)
+          const chart = this.querySelector(`[data-chart="after-${state}"]`)!
+          chart.querySelector('[data-bar]')!.setAttribute('width', String(160 * probability))
+          chart.setAttribute('aria-label', `H 後 |${state}⟩ の確率 ${text}`)
+          this.querySelector(`[data-prob="after-${state}"]`)!.textContent = text
+        }
+        const description = `φ = ${degrees}°、直接 Z 測定：|0⟩ 50%、|1⟩ 50%、H 後：|0⟩ ${zeroText}、|1⟩ ${oneText}`
+        input.setAttribute('aria-valuetext', description)
+        this.querySelector('output')!.textContent = `φ = ${degrees}°。直接 Z 測定（H 前）：|0⟩ 50%、|1⟩ 50%。H 後：|0⟩ ${zeroText}、|1⟩ ${oneText}。`
+        this.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach(button => {
+          button.setAttribute('aria-pressed', String(Number(button.dataset.preset) === degrees))
+        })
+      }
+      input.addEventListener('input', () => update(Number(input.value)))
+      this.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach(button => {
+        button.addEventListener('click', () => update(Number(button.dataset.preset)))
+      })
+      this.querySelectorAll<SVGSVGElement>('[data-drag]').forEach(svg => {
+        let pointer: number | null = null
+        const move = (event: PointerEvent) => {
+          const matrix = svg.getScreenCTM()
+          if (!matrix) return
+          const point = new DOMPoint(event.clientX, event.clientY).matrixTransform(matrix.inverse())
+          if (Math.hypot(point.x - 80, point.y - 80) < 1) return
+          const angle = Math.atan2(80 - point.y, point.x - 80) * 180 / Math.PI
+          update((angle + 360) % 360)
+        }
+        svg.addEventListener('pointerdown', event => {
+          if (pointer !== null || !event.isPrimary || event.button !== 0) return
+          event.preventDefault()
+          pointer = event.pointerId
+          svg.setPointerCapture(pointer)
+          input.focus({ preventScroll: true })
+          move(event)
+        })
+        svg.addEventListener('pointermove', event => {
+          if (event.pointerId === pointer) move(event)
+        })
+        const stop = (event: PointerEvent) => {
+          if (event.pointerId !== pointer) return
+          pointer = null
+          if (svg.hasPointerCapture(event.pointerId)) svg.releasePointerCapture(event.pointerId)
+        }
+        svg.addEventListener('pointerup', stop)
+        svg.addEventListener('pointercancel', stop)
+        svg.addEventListener('lostpointercapture', stop)
+      })
+    }
+  }
+  if (!customElements.get('phase-comparison-explorer')) {
+    customElements.define('phase-comparison-explorer', PhaseComparisonExplorer)
+  }
+</script>
+
+<style>
+  phase-comparison-explorer { display: block; box-sizing: border-box; width: 100%; max-width: 540px; margin: 1.5rem auto; padding: 1rem; color: #100F0F; background: #FFFCF0; border: 1px solid #4385BE; border-radius: 8px; font: inherit; }
+  figure { margin: 0; min-width: 0; }
+  .states, .comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  svg { display: block; width: 100%; height: auto; }
+  .states svg { max-width: 200px; margin: auto; }
+  [data-drag] { touch-action: none; cursor: crosshair; user-select: none; }
+  .surface { fill: #FFFCF0; }
+  .disc { fill: #92BFDB; }
+  .rim { fill: none; stroke: #4385BE; }
+  .axes { fill: none; stroke: #6F6E69; stroke-width: 1; }
+  .arrow { fill: none; stroke: #100F0F; stroke-width: 2; }
+  .tip, .handle { fill: #100F0F; }
+  text { fill: #100F0F; font: inherit; }
+  label, output { display: block; }
+  input { display: block; box-sizing: border-box; width: 100%; min-height: 44px; margin: 0; accent-color: #24837B; }
+  .presets { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.5rem 0 1rem; }
+  button { min-height: 44px; padding: 0.5rem 1rem; border: 1px solid #4385BE; border-radius: 4px; background: #FFFCF0; color: inherit; font: inherit; cursor: pointer; }
+  button:hover { background: #92BFDB; }
+  button[aria-pressed=true] { border-color: #24837B; box-shadow: inset 0 0 0 1px #24837B; font-weight: bold; }
+  button:active { background: #92BFDB; border-color: #100F0F; }
+  input:focus-visible, button:focus-visible { outline: 2px solid #24837B; outline-offset: 3px; }
+  .comparison p { margin: 0 0 0.4rem; overflow-wrap: anywhere; }
+  .probability { margin-bottom: 0.5rem; font-variant-numeric: tabular-nums; }
+  .probability span { font-size: 0.9em; }
+  output { margin: 0.5rem 0 1rem; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+  .hint, figcaption { color: #6F6E69; font-size: 0.9em; line-height: 1.6; }
+</style>
