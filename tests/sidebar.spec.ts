@@ -6,6 +6,7 @@ const added: [string, string, { title: string, slug: string }][] = [
   ['量子ビット', 'circle_notation', { title: '複素振幅の読み方 1: 振幅の長さと確率', slug: 'amplitude_probability' }],
   ['量子ビット', 'amplitude_probability', { title: '複素振幅の読み方 2: 全体位相と相対位相', slug: 'global_relative_phase' }],
   ['量子ビット', 'global_relative_phase', { title: '回路のための線形代数 1: 基底と内積', slug: 'basis_inner_product' }],
+  ['量子ビット', 'basis_inner_product', { title: '回路のための線形代数 2: 行列と随伴', slug: 'matrix_adjoint' }],
 ]
 
 function expectedChapters() {
