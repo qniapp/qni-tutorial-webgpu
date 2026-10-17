@@ -105,6 +105,36 @@ test('narrow screens open and close the drawer without layout shift', async ({ p
   await expect(drawer).toBeHidden()
 })
 
+for (const width of [1280, 390]) {
+  test(`chapter 1 sidebar entries fit on one line at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 })
+    await page.goto('/qni-tutorial-webgpu/amplitude_probability/')
+    await page.evaluate(() => document.fonts.ready)
+    if (width < 1024) await page.getByRole('button', { name: '目次を開く' }).click()
+    const nav = width < 1024 ? page.getByRole('dialog', { name: '目次' }) : page.locator('.sidebar')
+    const chapter = nav.locator('details').filter({ has: page.locator('summary', { hasText: /^量子ビット$/ }) })
+    await expect(chapter).toHaveAttribute('open', '')
+    const labels = await chapter.locator('.toc-label').evaluateAll(elements => elements.map(element => {
+      const range = document.createRange()
+      range.selectNodeContents(element)
+      const rects = [...range.getClientRects()]
+      return {
+        text: element.textContent,
+        lines: new Set(rects.map(rect => rect.top)).size,
+        fits: element.scrollWidth <= element.clientWidth,
+        height: element.getBoundingClientRect().height,
+        lineHeight: parseFloat(getComputedStyle(element).lineHeight),
+      }
+    }))
+    expect(labels.length).toBeGreaterThan(0)
+    for (const label of labels) {
+      expect(label.lines, label.text!).toBe(1)
+      expect(label.fits, label.text!).toBe(true)
+      expect(label.height, label.text!).toBeLessThanOrEqual(label.lineHeight)
+    }
+  })
+}
+
 test('wide screens show a sticky sidebar and no menu button', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 })
   await page.goto('/qni-tutorial-webgpu/h_gate/')
