@@ -50,7 +50,11 @@ const base = import.meta.env.BASE_URL
     状態を ψ と書くと、内積を使って長さの 2 乗を確かめられます。
     ユニタリなら、変換後も次のように 1 が保たれます。
   </p>
-  <p class="math-scroll">{String.raw`\[ \langle U\psi|U\psi\rangle=\langle\psi|U^\dagger U|\psi\rangle=\langle\psi|\psi\rangle=1 \]`}</p>
+  <p class="math-scroll">{String.raw`\[ \begin{aligned}
+    \langle U\psi|U\psi\rangle&=\langle\psi|U^\dagger U|\psi\rangle \\
+    &=\langle\psi|\psi\rangle \\
+    &=1
+  \end{aligned} \]`}</p>
   <p>
     X、H、Ry など、閉じた量子系の状態を変換する量子ゲートはすべてユニタリです。
     ただし、回路に置ける命令がすべてユニタリという意味ではありません。測定や状態の初期化は別の操作で、Amps1 や Probability はシミュレータの表示命令です。
@@ -70,7 +74,10 @@ const base = import.meta.env.BASE_URL
     このように、各結果の値にその確率を掛けて足した平均を期待値と呼びます。
     Z の期待値を ⟨Z⟩ と書くと、次のようになります。P(0) と P(1) は、それぞれ 0 と 1 が出る確率です。
   </p>
-  <p class="math-scroll">{String.raw`\[ \langle Z\rangle=(+1)P(0)+(-1)P(1)=P(0)-P(1) \]`}</p>
+  <p class="math-scroll">{String.raw`\[ \begin{aligned}
+    \langle Z\rangle&=(+1)P(0)+(-1)P(1) \\
+    &=P(0)-P(1)
+  \end{aligned} \]`}</p>
   <p>
     θ を 60 度にすると、確率は 75% と 25%、期待値は 0.75 − 0.25 = 0.5 です。
     パーセントの数値をそのまま引いた 50 は期待値ではありません。
@@ -82,7 +89,11 @@ const base = import.meta.env.BASE_URL
     今の +1 と −1 の割り当てを、行列で表してみましょう。
     Z は <Ket label="0" /> に +1、<Ket label="1" /> に −1 を掛ける行列なのでした。
   </p>
-  <p class="math-scroll">{String.raw`\[ Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad Z|0\rangle=+|0\rangle,\qquad Z|1\rangle=-|1\rangle \]`}</p>
+  <p class="math-scroll">{String.raw`\[ \begin{gathered}
+    Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix} \\
+    Z|0\rangle=+|0\rangle \\
+    Z|1\rangle=-|1\rangle
+  \end{gathered} \]`}</p>
   <p>
     行列を掛けても、ある状態が数倍になるだけのとき、その状態を固有状態、掛かる数を固有値と呼びます。
     Z の場合、上の 2 個の状態が固有状態で、固有値は +1 と −1 です。
@@ -92,7 +103,10 @@ const base = import.meta.env.BASE_URL
     観測量は、随伴を取っても自分自身になる行列で表します。このような行列をエルミート行列と呼びます。
     エルミート行列の固有値は実数なので、測る値を実数として扱えます。
   </p>
-  <p class="math-scroll">{String.raw`\[ A^\dagger=A\quad\text{（エルミート）},\qquad U^\dagger U=I\quad\text{（ユニタリ）} \]`}</p>
+  <p class="math-scroll">{String.raw`\[ \begin{gathered}
+    A^\dagger=A\quad\text{（エルミート）} \\
+    U^\dagger U=I\quad\text{（ユニタリ）}
+  \end{gathered} \]`}</p>
   <p>
     この 2 個の条件は役割が違います。Z は両方を満たしますが、一般には同じ条件ではありません。
     たとえば、最初の図の diag(1, 0.5) は随伴を取っても変わらないのでエルミートですが、ユニタリではありません。
@@ -111,7 +125,11 @@ const base = import.meta.env.BASE_URL
     <Ket label="−" /> は下の振幅だけが {String.raw`\(-1/\sqrt{2}\)`} の状態です。
     X は振幅を交換するので、次の関係になります。
   </p>
-  <p class="math-scroll">{String.raw`\[ X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad X|+\rangle=+|+\rangle,\qquad X|-\rangle=-|-\rangle \]`}</p>
+  <p class="math-scroll">{String.raw`\[ \begin{gathered}
+    X=\begin{pmatrix}0&1\\1&0\end{pmatrix} \\
+    X|+\rangle=+|+\rangle \\
+    X|-\rangle=-|-\rangle
+  \end{gathered} \]`}</p>
   <p>
     つまり X を観測量とすると、<Ket label="+" /> に +1、<Ket label="−" /> に −1 を割り当てます。
     H はこの 2 個の状態をそれぞれ <Ket label="0" /> と <Ket label="1" /> に変えるので、H の後の Probability から X の期待値を読めます。
@@ -121,7 +139,11 @@ const base = import.meta.env.BASE_URL
     図の状態は、<Ket label="0" /> に Ry を適用したものです。
     この状態について、Z と X の期待値は次のようになります。今は公式を覚えるより、θ が同じでも、読む観測量によって平均が違うことを図で確かめてください。
   </p>
-  <p class="math-scroll">{String.raw`\[ |\psi\rangle=\cos(\theta/2)|0\rangle+\sin(\theta/2)|1\rangle,\qquad \langle Z\rangle=\cos\theta,\quad\langle X\rangle=\sin\theta \]`}</p>
+  <p class="math-scroll">{String.raw`\[ \begin{gathered}
+    |\psi\rangle=\cos(\theta/2)|0\rangle+\sin(\theta/2)|1\rangle \\
+    \langle Z\rangle=\cos\theta \\
+    \langle X\rangle=\sin\theta
+  \end{gathered} \]`}</p>
 
   <h2>ハンズオン</h2>
   <p>
@@ -183,7 +205,7 @@ const base = import.meta.env.BASE_URL
   <script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
 </TutorialLayout>
 <style>
-  .math-scroll { max-width:100%; overflow-x:auto; }
+  .math-scroll { max-width:100%; overflow-x:auto; padding-block:0.5em; }
   ol { max-width:76ch; padding-left:24px; }
   li + li { margin-top:16px; }
   @media (min-width:640px) { ol { width:58.333333%; margin-right:auto; } }

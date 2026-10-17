@@ -75,8 +75,8 @@ const base = import.meta.env.BASE_URL
   </p>
   <p class="math-scroll">{String.raw`\[
     b\otimes a=\begin{pmatrix}b_0a_0\\b_0a_1\\b_1a_0\\b_1a_1\end{pmatrix}
-    \quad\text{順番は }|00\rangle,|01\rangle,|10\rangle,|11\rangle
   \]`}</p>
+  <p>順番は <Ket label="00" />、<Ket label="01" />、<Ket label="10" />、<Ket label="11" /> です。</p>
 
   <h2>確率も掛け合わせる</h2>
   <p>
@@ -146,7 +146,11 @@ const base = import.meta.env.BASE_URL
   <script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
 </TutorialLayout>
 <style>
-  .math-scroll { overflow-x: auto; }
+  .math-scroll {
+    overflow-x: auto;
+    /* Leave room for tall MathJax matrices and their descenders. */
+    padding-block: 0.5em;
+  }
   ol { max-width: 76ch; padding-left: 24px; }
   li + li { margin-top: 16px; }
   @media (min-width: 640px) { ol { width: 58.333333%; margin-right: auto; } }
