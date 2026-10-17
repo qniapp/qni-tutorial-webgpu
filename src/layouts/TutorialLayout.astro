@@ -163,6 +163,9 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isPorte
   figure { max-width: 640px; margin: 24px 0; }
   figure img { display: block; width: 100%; height: auto; }
   figcaption { color: var(--muted); font-size: 14px; line-height: 20px; }
+  /* Orbit's shadow iframe is 100% wide; size its host like the prose,
+     not the full content area that also reserves space for margin notes. */
+  orbit-reviewarea { display: block; max-width: 76ch; }
   details { max-width: 76ch; border-bottom: 1px solid var(--border); padding: 16px 0; }
   summary { cursor: pointer; line-height: 28px; }
   /* Original _includes/footer.html: footer mt-12 text-sm leading-6;
@@ -188,7 +191,8 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isPorte
     .content-with-margin > ul,
     .content-with-margin > figure,
     .content-with-margin > .static-diagram,
-    .content-with-margin > details { width: 58.333333%; margin-right: auto; }
+    .content-with-margin > details,
+    .content-with-margin > orbit-reviewarea { width: 58.333333%; margin-right: auto; }
   }
   /* Original page.html: md (768px) fixed w-64 sidebar; below it a menu
      button opens an off-canvas drawer (here a modal <dialog>). */
