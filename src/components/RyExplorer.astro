@@ -1,0 +1,105 @@
+<ry-explorer data-original-image>
+  <p class="hint">角度 θ を変えると、振幅と測定確率が変わります。</p>
+  <label>回転角 θ（0 から π、刻み π/60）
+    <input data-angle type="range" min="0" max="60" step="1" value="20" aria-valuetext="θ = π/3" />
+  </label>
+  <div class="states">
+    <div>
+      <svg viewBox="0 0 160 180" role="img" aria-label="|0⟩ の円表記">
+        <title>|0⟩ の振幅</title>
+        <desc>基準の円の半径は 60 です。塗りつぶした円の半径は振幅、面積は確率に比例します。</desc>
+        <circle class="surface" cx="80" cy="80" r="60" />
+        <circle class="disc" data-zero-disc cx="80" cy="80" r={60 * Math.sqrt(0.75)} />
+        <circle class="rim" cx="80" cy="80" r="60" />
+        <text x="80" y="166" text-anchor="middle">|0⟩</text>
+      </svg>
+      <svg data-zero-bar-chart viewBox="0 0 160 24" role="img" aria-label="|0⟩ の確率 75%">
+        <rect class="surface" width="160" height="24" />
+        <rect class="disc" data-zero-bar width="120" height="24" />
+        <rect class="rim" x="0.5" y="0.5" width="159" height="23" />
+      </svg>
+      <p>確率 <span data-zero-percent>75%</span></p>
+    </div>
+    <div>
+      <svg viewBox="0 0 160 180" role="img" aria-label="|1⟩ の円表記">
+        <title>|1⟩ の振幅</title>
+        <desc>基準の円の半径は 60 です。塗りつぶした円の半径は振幅、面積は確率に比例します。</desc>
+        <circle class="surface" cx="80" cy="80" r="60" />
+        <circle class="disc" data-one-disc cx="80" cy="80" r="30" />
+        <circle class="rim" cx="80" cy="80" r="60" />
+        <text x="80" y="166" text-anchor="middle">|1⟩</text>
+      </svg>
+      <svg data-one-bar-chart viewBox="0 0 160 24" role="img" aria-label="|1⟩ の確率 25%">
+        <rect class="surface" width="160" height="24" />
+        <rect class="disc" data-one-bar width="40" height="24" />
+        <rect class="rim" x="0.5" y="0.5" width="159" height="23" />
+      </svg>
+      <p>確率 <span data-one-percent>25%</span></p>
+    </div>
+  </div>
+  <output aria-live="polite" aria-atomic="true">
+    <span>θ = <b data-angle-label>π/3</b></span>
+    <span>|0⟩：cos(θ/2) = <b data-zero>0.866</b>、確率 <b data-zero-prob>75%</b></span>
+    <span>|1⟩：sin(θ/2) = <b data-one>0.500</b>、確率 <b data-one-prob>25%</b></span>
+  </output>
+</ry-explorer>
+
+<script>
+  class RyExplorer extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.ready) return
+      this.dataset.ready = 'true'
+      const input = this.querySelector<HTMLInputElement>('[data-angle]')!
+      const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b)
+      const angleLabel = (n: number) => {
+        if (n === 0) return '0'
+        const divisor = gcd(n, 60)
+        const numerator = n / divisor
+        const denominator = 60 / divisor
+        return `${numerator === 1 ? '' : numerator}π${denominator === 1 ? '' : `/${denominator}`}`
+      }
+      const setText = (selector: string, text: string) => {
+        this.querySelector(selector)!.textContent = text
+      }
+      const update = () => {
+        const n = Number(input.value)
+        const theta = n * Math.PI / 60
+        const zero = n === 60 ? 0 : Math.cos(theta / 2)
+        const one = Math.sin(theta / 2)
+        const angle = angleLabel(n)
+        input.setAttribute('aria-valuetext', `θ = ${angle}`)
+        setText('[data-angle-label]', angle)
+        for (const [state, amplitude] of [['zero', zero], ['one', one]] as const) {
+          const probability = amplitude * amplitude
+          const percent = `${Number((probability * 100).toFixed(1))}%`
+          this.querySelector(`[data-${state}-disc]`)!.setAttribute('r', String(60 * amplitude))
+          this.querySelector(`[data-${state}-bar]`)!.setAttribute('width', String(160 * probability))
+          this.querySelector(`[data-${state}-bar-chart]`)!.setAttribute('aria-label', `|${state === 'zero' ? 0 : 1}⟩ の確率 ${percent}`)
+          setText(`[data-${state}]`, amplitude.toFixed(3))
+          setText(`[data-${state}-prob]`, percent)
+          setText(`[data-${state}-percent]`, percent)
+        }
+      }
+      input.addEventListener('input', update)
+    }
+  }
+  if (!customElements.get('ry-explorer')) {
+    customElements.define('ry-explorer', RyExplorer)
+  }
+</script>
+
+<style>
+  ry-explorer { display: block; box-sizing: border-box; width: 100%; max-width: 540px; margin: 1.5rem auto; padding: 1rem; color: #100F0F; background: #FFFCF0; border: 1px solid #4385BE; border-radius: 8px; font: inherit; }
+  .hint { color: #6F6E69; font-size: 0.9em; }
+  label, output, output > span { display: block; }
+  input { display: block; box-sizing: border-box; width: 100%; min-height: 44px; margin: 0; accent-color: #24837B; }
+  input:focus-visible { outline: 2px solid #24837B; outline-offset: 3px; }
+  output { margin: 0.5rem 0; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+  .states { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  svg { display: block; width: 100%; height: auto; max-width: 200px; margin: auto; }
+  .surface { fill: #FFFCF0; }
+  .disc { fill: #92BFDB; }
+  .rim { fill: none; stroke: #4385BE; }
+  text { fill: #100F0F; font: inherit; }
+  .states p { margin: 0.4rem 0 0; text-align: center; font-variant-numeric: tabular-nums; }
+</style>

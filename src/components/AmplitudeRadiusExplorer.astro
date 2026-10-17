@@ -1,0 +1,139 @@
+<amplitude-radius-explorer data-original-image>
+  <div class="circles">
+    <svg viewBox="0 0 160 180" role="img" aria-label="|0⟩ の振幅と確率">
+      <title>|0⟩ の円表記</title>
+      <desc>外側の円の半径は 60 です。塗りつぶした円の半径は振幅、面積は確率に比例します。</desc>
+      <circle class="surface" cx="80" cy="80" r="60" />
+      <circle class="disc" data-zero-disc cx="80" cy="80" r={60 * Math.sqrt(0.75)} />
+      <circle class="rim" cx="80" cy="80" r="60" />
+      <text x="80" y="166" text-anchor="middle">|0⟩</text>
+    </svg>
+    <svg data-drag viewBox="0 0 160 180" role="img" aria-label="|1⟩ の半径をドラッグして変更できます。下のスライダーでも操作できます。">
+      <title>|1⟩ の円表記</title>
+      <desc>半径 60 が振幅 1 に対応します。中心からの距離で振幅を変更できます。</desc>
+      <circle class="surface" cx="80" cy="80" r="60" />
+      <circle class="disc" data-one-disc cx="80" cy="80" r="30" />
+      <circle class="rim" cx="80" cy="80" r="60" />
+      <path class="radius" data-radius d="M80 80 H110" />
+      <circle class="handle" data-handle cx="110" cy="80" r="5" />
+      <text x="80" y="166" text-anchor="middle">|1⟩</text>
+    </svg>
+  </div>
+  <p class="hint">|1⟩ の円をドラッグするか、スライダーで半径を変えられます。</p>
+  <label>半径（振幅の大きさ）r：|1⟩
+    <input data-radius-input type="range" min="0" max="1" step="0.01" value="0.5" aria-valuetext="r = 0.50、確率 25%" />
+  </label>
+  <output aria-live="polite" aria-atomic="true">
+    <span>|1⟩：半径 r = <b data-r>0.50</b>、確率 r² = <b data-one-prob>25%</b></span>
+    <span>|0⟩：√(1 − r²) = <b data-zero>0.866</b>、確率 <b data-zero-prob>75%</b></span>
+  </output>
+  <div class="comparison">
+    <div>
+      <p>基準 r = 1</p>
+      <svg viewBox="0 0 160 24" role="img" aria-label="基準の面積 100%">
+        <rect class="surface" width="160" height="24" />
+        <rect class="disc" width="160" height="24" />
+        <rect class="rim" x="0.5" y="0.5" width="159" height="23" />
+      </svg>
+      <span>面積 100%</span>
+    </div>
+    <div>
+      <p>現在の r</p>
+      <svg data-area-chart viewBox="0 0 160 24" role="img" aria-label="現在の面積 25%">
+        <rect class="surface" width="160" height="24" />
+        <rect class="disc" data-area width="40" height="24" />
+        <rect class="rim" x="0.5" y="0.5" width="159" height="23" />
+      </svg>
+      <span>面積 <span data-area-label>25%</span></span>
+    </div>
+  </div>
+  <p class="hint">半径を半分にすると、面積（確率）は 1/4 になります。</p>
+  <button type="button" data-reset>r = 0.5 に戻す</button>
+</amplitude-radius-explorer>
+
+<script>
+  class AmplitudeRadiusExplorer extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.ready) return
+      this.dataset.ready = 'true'
+      const input = this.querySelector<HTMLInputElement>('[data-radius-input]')!
+      const drag = this.querySelector<SVGSVGElement>('[data-drag]')!
+      const setText = (selector: string, text: string) => {
+        this.querySelector(selector)!.textContent = text
+      }
+      const update = (value: number) => {
+        const r = Math.round(Math.max(0, Math.min(1, value)) * 100) / 100
+        const p = r * r
+        const zero = Math.sqrt(1 - p)
+        const percent = (v: number) => `${Number((100 * v).toFixed(2))}%`
+        input.value = String(r)
+        input.setAttribute('aria-valuetext', `r = ${r.toFixed(2)}、確率 ${percent(p)}`)
+        this.querySelector('[data-one-disc]')!.setAttribute('r', String(60 * r))
+        this.querySelector('[data-zero-disc]')!.setAttribute('r', String(60 * zero))
+        this.querySelector('[data-radius]')!.setAttribute('d', `M80 80 H${80 + 60 * r}`)
+        this.querySelector('[data-handle]')!.setAttribute('cx', String(80 + 60 * r))
+        this.querySelector('[data-area]')!.setAttribute('width', String(160 * p))
+        this.querySelector('[data-area-chart]')!.setAttribute('aria-label', `現在の面積 ${percent(p)}`)
+        setText('[data-r]', r.toFixed(2))
+        setText('[data-one-prob]', percent(p))
+        setText('[data-zero]', zero.toFixed(3))
+        setText('[data-zero-prob]', percent(1 - p))
+        setText('[data-area-label]', percent(p))
+      }
+      input.addEventListener('input', () => update(Number(input.value)))
+      this.querySelector('[data-reset]')!.addEventListener('click', () => update(0.5))
+      let pointer: number | null = null
+      const move = (event: PointerEvent) => {
+        const matrix = drag.getScreenCTM()
+        if (!matrix) return
+        const point = new DOMPoint(event.clientX, event.clientY).matrixTransform(matrix.inverse())
+        update(Math.hypot(point.x - 80, point.y - 80) / 60)
+      }
+      drag.addEventListener('pointerdown', (event) => {
+        if (pointer !== null || !event.isPrimary || event.button !== 0) return
+        event.preventDefault()
+        pointer = event.pointerId
+        drag.setPointerCapture(pointer)
+        move(event)
+      })
+      drag.addEventListener('pointermove', (event) => {
+        if (event.pointerId === pointer) move(event)
+      })
+      const stop = (event: PointerEvent) => {
+        if (event.pointerId !== pointer) return
+        pointer = null
+        if (drag.hasPointerCapture(event.pointerId)) drag.releasePointerCapture(event.pointerId)
+      }
+      drag.addEventListener('pointerup', stop)
+      drag.addEventListener('pointercancel', stop)
+      drag.addEventListener('lostpointercapture', stop)
+    }
+  }
+  if (!customElements.get('amplitude-radius-explorer')) {
+    customElements.define('amplitude-radius-explorer', AmplitudeRadiusExplorer)
+  }
+</script>
+
+<style>
+  amplitude-radius-explorer { display: block; box-sizing: border-box; width: 100%; max-width: 540px; margin: 1.5rem auto; padding: 1rem; color: #100F0F; background: #FFFCF0; border: 1px solid #4385BE; border-radius: 8px; font: inherit; }
+  .circles, .comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  svg { display: block; width: 100%; height: auto; }
+  .circles svg { max-width: 200px; margin: auto; }
+  [data-drag] { touch-action: none; cursor: crosshair; }
+  .surface { fill: #FFFCF0; }
+  .disc { fill: #92BFDB; }
+  .rim { fill: none; stroke: #4385BE; }
+  .radius { fill: none; stroke: #100F0F; stroke-width: 2; }
+  .handle { fill: #100F0F; }
+  text { fill: #100F0F; font: inherit; }
+  label, output, output > span { display: block; }
+  input { display: block; box-sizing: border-box; width: 100%; min-height: 44px; margin: 0; accent-color: #24837B; }
+  output { margin: 0.5rem 0 1rem; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+  .hint { color: #6F6E69; font-size: 0.9em; }
+  .comparison p { margin: 0 0 0.4rem; }
+  .comparison span { font-size: 0.9em; }
+  button { min-height: 44px; padding: 0.5rem 1rem; border: 1px solid #4385BE; border-radius: 4px; background: #FFFCF0; color: #100F0F; font: inherit; cursor: pointer; }
+  button:hover { background: #92BFDB; }
+  button:active { border-color: #100F0F; }
+  input:focus-visible, button:focus-visible { outline: 2px solid #24837B; outline-offset: 3px; }
+</style>
