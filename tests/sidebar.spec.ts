@@ -7,6 +7,7 @@ const added: [string, string, { title: string, slug: string }][] = [
   ['量子ビット', 'amplitude_probability', { title: '複素振幅の読み方 2: 全体位相と相対位相', slug: 'global_relative_phase' }],
   ['量子ビット', 'global_relative_phase', { title: '回路のための線形代数 1: 基底と内積', slug: 'basis_inner_product' }],
   ['量子ビット', 'basis_inner_product', { title: '回路のための線形代数 2: 行列と随伴', slug: 'matrix_adjoint' }],
+  ['量子ビット', 'matrix_adjoint', { title: '回路のための線形代数 3: ユニタリと観測量', slug: 'unitary_observable' }],
 ]
 
 function expectedChapters() {
