@@ -135,5 +135,8 @@
   button { min-height: 44px; padding: 0.5rem 1rem; border: 1px solid #4385BE; border-radius: 4px; background: #FFFCF0; color: #100F0F; font: inherit; cursor: pointer; }
   button:hover { background: #92BFDB; }
   button:active { border-color: #100F0F; }
-  input:focus-visible, button:focus-visible { outline: 2px solid #24837B; outline-offset: 3px; }
+  input[type="range"], input[type="range"]:focus, input[type="range"]:focus-visible { outline: none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px #24837B; }
+  button:focus-visible { outline: 2px solid #24837B; outline-offset: 3px; }
 </style>
