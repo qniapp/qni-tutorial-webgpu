@@ -1,0 +1,81 @@
+---
+const rows = [0.8, 0.6]
+const cols = [0.6, 0.8]
+const cells = rows.flatMap((b, r) => cols.map((a, c) => ({ r, c, value: b * a, key: `${r}${c}` })))
+---
+<tensor-factors-explorer data-original-image>
+  <p>q1 = (0.8, 0.6)、q0 = (0.6, 0.8) の積を見ていきましょう。|01⟩ と |10⟩ の振幅はどうなるでしょうか? 「振幅セル」スライダーを動かして、掛け合わせる行と列を確認しましょう。</p>
+  <svg viewBox="0 0 420 390" role="img" aria-label="行は q1 の b0 = 0.8、b1 = 0.6。列は q0 の a0 = 0.6、a1 = 0.8。各セルの振幅は行の因子と列の因子の積です。">
+    <text x="270" y="22" text-anchor="middle">列：q0 = (a0, a1)</text>
+    {cols.map((a, c) => <g data-col={c} data-selected={c === 1 ? 'true' : 'false'}>
+      <rect class="factor" x={150 + c * 130} y="38" width="120" height="48" rx="6" />
+      <text x={210 + c * 130} y="68" text-anchor="middle">a{c} = {a.toFixed(1)}</text>
+    </g>)}
+    <text x="66" y="112" text-anchor="middle">行：q1</text>
+    {rows.map((b, r) => <g data-row={r} data-selected={r === 0 ? 'true' : 'false'}>
+      <rect class="factor" x="5" y={145 + r * 130} width="122" height="48" rx="6" />
+      <text x="66" y={175 + r * 130} text-anchor="middle">b{r} = {b.toFixed(1)}</text>
+    </g>)}
+    {cells.map(({ r, c, value, key }) => <g data-cell={key} data-selected={key === '01' ? 'true' : 'false'}>
+      <rect class="cell" x={150 + c * 130} y={115 + r * 130} width="120" height="120" rx="8" />
+      <circle class="rim" cx={210 + c * 130} cy={161 + r * 130} r="34" />
+      <circle class="disc" cx={210 + c * 130} cy={161 + r * 130} r={34 * value} />
+      <text x={210 + c * 130} y={218 + r * 130} text-anchor="middle">|{key}⟩ : {value.toFixed(2)}</text>
+    </g>)}
+    <path data-row-line class="connector" d="M127 169 H306" />
+    <path data-col-line class="connector" d="M340 86 V127" />
+    <text x="270" y="382" text-anchor="middle">振幅 = b行 × a列</text>
+  </svg>
+  <label>振幅セル：<span data-choice>|01⟩</span>（左から |00⟩、|01⟩、|10⟩、|11⟩）
+    <input data-select type="range" min="0" max="3" step="1" value="1" aria-valuetext="|01⟩、q1 = 0、q0 = 1" />
+  </label>
+  <output aria-live="polite" aria-atomic="true">|01⟩：q1 = 0 の行因子 b0 = 0.8 × q0 = 1 の列因子 a1 = 0.8。振幅 = 0.8 × 0.8 = 0.64、確率 = 0.64² = 40.96%</output>
+  <p class="hint">塗った円の半径は振幅の大きさ、面積は確率を表します。「振幅セル」スライダーの各位置は、表を上の行から読んだ順に対応します。</p>
+</tensor-factors-explorer>
+
+<script>
+  class TensorFactorsExplorer extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.ready) return
+      this.dataset.ready = 'true'
+      const rows = [0.8, 0.6], cols = [0.6, 0.8]
+      const input = this.querySelector<HTMLInputElement>('[data-select]')!
+      const select = () => {
+        const key = Number(input.value).toString(2).padStart(2, '0')
+        const r = Number(key[0]), c = Number(key[1])
+        const b = rows[r], a = cols[c], amplitude = b * a
+        this.querySelectorAll<SVGElement>('[data-row]').forEach(node => node.dataset.selected = String(node.dataset.row === String(r)))
+        this.querySelectorAll<SVGElement>('[data-col]').forEach(node => node.dataset.selected = String(node.dataset.col === String(c)))
+        this.querySelectorAll<SVGElement>('[data-cell]').forEach(node => node.dataset.selected = String(node.dataset.cell === key))
+        input.setAttribute('aria-valuetext', `|${key}⟩、q1 = ${r}、q0 = ${c}`)
+        this.querySelector('[data-choice]')!.textContent = `|${key}⟩`
+        this.querySelector('[data-row-line]')!.setAttribute('d', `M127 ${169 + r * 130} H${176 + c * 130}`)
+        this.querySelector('[data-col-line]')!.setAttribute('d', `M${210 + c * 130} 86 V${127 + r * 130}`)
+        this.querySelector('output')!.textContent = `|${key}⟩：q1 = ${r} の行因子 b${r} = ${b} × q0 = ${c} の列因子 a${c} = ${a}。振幅 = ${b} × ${a} = ${amplitude.toFixed(2)}、確率 = ${amplitude.toFixed(2)}² = ${(100 * amplitude ** 2).toFixed(2)}%`
+      }
+      input.addEventListener('input', select)
+      select()
+    }
+  }
+  if (!customElements.get('tensor-factors-explorer')) customElements.define('tensor-factors-explorer', TensorFactorsExplorer)
+</script>
+
+<style>
+  tensor-factors-explorer { display:block; box-sizing:border-box; width:100%; max-width:540px; margin:1.5rem auto; margin-inline:0 auto; padding:1rem; color:#100F0F; background:#FFFCF0; border:1px solid #4385BE; border-radius:8px; font:inherit; }
+  p { line-height:1.6; }
+  svg { display:block; width:100%; height:auto; }
+  text { fill:#100F0F; font:16px system-ui,sans-serif; }
+  .factor, .cell { fill:#FFFCF0; stroke:#4385BE; }
+  [data-selected=true] .factor, [data-selected=true] .cell { fill:#DDF1EF; stroke:#24837B; stroke-width:3; }
+  .rim { fill:none; stroke:#4385BE; }
+  .disc { fill:#92BFDB; }
+  [data-selected=true] .disc { fill:#24837B; }
+  .connector { fill:none; stroke:#24837B; stroke-width:3; stroke-dasharray:5 3; }
+  label { display:block; line-height:1.6; }
+  input[type="range"] { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0; accent-color:#24837B; outline:none; }
+  input[type="range"]:focus, input[type="range"]:focus-visible { outline:none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow:0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow:0 0 0 3px #24837B; }
+  output { display:block; margin:1rem 0; padding:0.75rem; border-radius:6px; background:#F2F0E5; line-height:1.7; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
+  .hint { color:#6F6E69; font-size:0.9em; }
+</style>

@@ -1,0 +1,141 @@
+---
+import { MatrixMath } from './matrix-adjoint-math'
+import { InnerProductMath as C } from './basis-inner-product-math'
+const initial = MatrixMath.gate('SRy')
+---
+<adjoint-builder>
+  <p>行と列を入れ替えてから、複素共役を取りましょう。この2つの操作で、随伴行列 U† を作れます。</p>
+  <label>調べるユニタリ行列 U：<span data-gate-name>S Ry(π/3)</span>
+    <input data-gate type="range" min="0" max="2" step="1" value="2" aria-valuetext="S Ry(π/3)" />
+  </label>
+  <p class="hint">S Ry(π/3) は、先に Ry(π/3)、次に S を適用する順序です。行列は [[√3/2, −1/2], [i/2, i√3/2]] です。対角線の外側の入れ替えと、虚部の符号の変化を両方確かめられます。</p>
+  <div class="matrices">
+    {['元の U', '作成中の行列'].map((label, index) => <div>
+      <p data-heading={index}>{label}</p>
+      <div class="matrix" data-matrix={index} aria-label={label}>
+        {initial.flat().map((z, i) => <span data-cell={i}>{C.format(z)}</span>)}
+      </div>
+    </div>)}
+  </div>
+  <label>随伴を作る手順：<span data-stage-name>元の U</span>
+    <input data-stage type="range" min="0" max="2" step="1" value="0" aria-valuetext="元の U" />
+  </label>
+  <p class="hint">転置では対角線の外側の成分を青で、複素共役では虚部の符号が変わる成分を緑で示します。小数は丸めた近似値です。</p>
+  <label>入力の分布角 t（度、位相は 60°）
+    <input data-population type="range" min="0" max="180" step="1" value="100" />
+  </label>
+  <p class="hint">入力は α = cos(t/2)、β = sin(t/2)e^(iπ/3) です。</p>
+  <figure data-original-image>
+    <div class="states">
+      {['入力', 'U を適用した後', '続けて U† を適用した後'].map((label, index) => <div data-stage-state={index} hidden={index === 2}>
+        <p>{label}</p>
+        <svg data-state={index} viewBox="0 0 230 130" role="img" aria-label={`${label}の円表記`}>
+          {[0, 1].map(i => <g transform={`translate(${60 + 110 * i} 52)`}>
+            <circle r="42" class="surface" /><circle data-disc r="0" class="disc" />
+            <circle r="42" class="rim" /><line x1="0" y1="0" x2="0" y2="0" />
+            <text x="0" y="66" text-anchor="middle">|{i}⟩</text>
+          </g>)}
+        </svg>
+      </div>)}
+    </div>
+    <figcaption>半径は振幅の大きさ、針は右向きから反時計回りの位相です。振幅 0 では針は表示されません。</figcaption>
+  </figure>
+  <output aria-live="polite" aria-atomic="true">
+    <span data-step>「随伴を作る手順」スライダーを「転置後」に動かし、行と列を入れ替えましょう。</span>
+    <span data-values></span>
+    <span data-result>まだ元に戻す操作は行っていません。</span>
+  </output>
+  <section data-product-section hidden aria-label="随伴と元の行列の積">
+    <p>計算した U†U ≈ I（単位行列）</p>
+    <div class="matrix product" data-product aria-label="計算した U†U の近似値">
+      {[0, 1, 2, 3].map(i => <span data-cell={i}></span>)}
+    </div>
+  </section>
+  <p class="hint">往復の振幅も U†U も、丸める前の行列から計算しています。</p>
+</adjoint-builder>
+
+<script>
+  import { MatrixMath as M, paintState, type GateName, type Matrix2 } from './matrix-adjoint-math'
+  import { InnerProductMath as C } from './basis-inner-product-math'
+  class AdjointBuilder extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.ready) return
+      this.dataset.ready = 'true'
+      const gate = this.querySelector<HTMLInputElement>('[data-gate]')!
+      const t = this.querySelector<HTMLInputElement>('[data-population]')!
+      const stageInput = this.querySelector<HTMLInputElement>('[data-stage]')!
+      const gates: GateName[] = ['S', 'Ry', 'SRy']
+      const gateNames = ['S', 'Ry(π/3)', 'S Ry(π/3)']
+      let stage = 0
+      const showMatrix = (selector: string, matrix: Matrix2, highlight = false) => {
+        this.querySelectorAll<HTMLElement>(`${selector} [data-cell]`).forEach((cell, i) => {
+          const r = Math.floor(i / 2) as 0 | 1, c = i % 2 as 0 | 1
+          cell.textContent = C.format(matrix[r][c])
+          cell.classList.toggle('moved', highlight && stage >= 1 && r !== c)
+          cell.classList.toggle('conjugated', highlight && stage === 2 && Math.abs(matrix[r][c][1]) > 1e-12)
+        })
+      }
+      const update = () => {
+        stage = Number(stageInput.value)
+        const gateName = gateNames[Number(gate.value)]
+        const stageName = ['元の U', '転置後', '複素共役後（U†）'][stage]
+        gate.setAttribute('aria-valuetext', gateName)
+        stageInput.setAttribute('aria-valuetext', stageName)
+        this.querySelector('[data-gate-name]')!.textContent = gateName
+        this.querySelector('[data-stage-name]')!.textContent = stageName
+        const original = M.gate(gates[Number(gate.value)])
+        const current = stage === 0 ? original : stage === 1 ? M.transpose(original) : M.adjoint(original)
+        const state = C.state(Number(t.value), 60), after = M.apply(original, state)
+        showMatrix('[data-matrix="0"]', original)
+        showMatrix('[data-matrix="1"]', current, true)
+        this.querySelector('[data-heading="1"]')!.textContent = ['作成中：U', '転置後：Uᵀ', '完成：U†'][stage]
+        t.setAttribute('aria-valuetext', `${t.value} 度、位相は 60 度`)
+        this.querySelector('[data-step]')!.textContent = [
+          '「随伴を作る手順」スライダーを「転置後」に動かし、行と列を入れ替えましょう。',
+          '行と列を入れ替えました。青い成分は対角線の反対側から移ったものです。次に「随伴を作る手順」スライダーを「複素共役後（U†）」に動かし、虚部の符号を確認しましょう。',
+          '複素共役を取り、U† ができました。緑の成分は虚部の符号が変わったものです。U の後に U† を適用して、入力に戻ることを確かめましょう。'
+        ][stage]
+        const vector = (v: typeof state) => `[${C.format(v[0])}, ${C.format(v[1])}]ᵀ`
+        this.querySelector('[data-values]')!.textContent = `t = ${t.value}°、位相 = 60°\n入力 ≈ ${vector(state)}\nU 適用後 ≈ ${vector(after)}`
+        paintState(this.querySelector<SVGSVGElement>('[data-state="0"]')!, state, '入力')
+        paintState(this.querySelector<SVGSVGElement>('[data-state="1"]')!, after, 'U を適用した後')
+        this.querySelector<HTMLElement>('[data-stage-state="2"]')!.hidden = stage !== 2
+        this.querySelector<HTMLElement>('[data-product-section]')!.hidden = stage !== 2
+        const result = this.querySelector('[data-result]')!
+        if (stage === 2) {
+          const roundtrip = M.apply(current, after)
+          showMatrix('[data-product]', M.multiply(current, original))
+          paintState(this.querySelector<SVGSVGElement>('[data-state="2"]')!, roundtrip, '続けて U† を適用した後')
+          result.textContent = `U† 適用後 ≈ ${vector(roundtrip)}\n入力との差の大きさ ≈ ${Math.hypot(...roundtrip.flatMap((z, i) => [z[0] - state[i][0], z[1] - state[i][1]])).toFixed(8)}`
+        } else result.textContent = 'まだ元に戻す操作は行っていません。U† の完成後に、往復の状態と U†U を表示します。'
+      }
+      gate.addEventListener('input', () => { stageInput.value = '0'; update() })
+      stageInput.addEventListener('input', update)
+      t.addEventListener('input', update)
+      update()
+    }
+  }
+  if (!customElements.get('adjoint-builder')) customElements.define('adjoint-builder', AdjointBuilder)
+</script>
+
+<style>
+  adjoint-builder { display:block; box-sizing:border-box; width:100%; max-width:680px; margin:1.5rem auto; margin-inline:0 auto; padding:1rem; background:#FFFCF0; color:#100F0F; border:1px solid #4385BE; border-radius:8px; }
+  p { line-height:1.7; } label, output, output > span { display:block; }
+  input[type="range"] { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0 0 8px; accent-color:#24837B; outline:none; }
+  input[type="range"]:focus, input[type="range"]:focus-visible { outline:none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow:0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow:0 0 0 3px #24837B; }
+  .matrices, .states { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+  .matrix { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); border-inline:2px solid #4385BE; padding:4px; text-align:center; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
+  .matrix span { padding:8px 2px; }
+  .moved { background:#E1ECEB; box-shadow:inset 0 -3px #4385BE; }
+  .conjugated { background:#DDF1EF; box-shadow:inset 3px 0 #24837B; font-weight:bold; }
+  .product { max-width:300px; }
+  figure { margin:1rem 0; } .states { text-align:center; }
+  svg { display:block; width:100%; height:auto; } .surface { fill:#FFFCF0; } .disc { fill:#92BFDB; } .rim { fill:none; stroke:#4385BE; } line { stroke:#100F0F; stroke-width:2; } text { fill:#100F0F; font:16px system-ui,sans-serif; }
+  output { padding:12px; background:#F2F0E5; border-radius:6px; margin:1rem 0; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
+  output > span { margin:8px 0; white-space:pre-line; }
+  .hint, figcaption { color:#6F6E69; font-size:0.9em; line-height:1.6; }
+  [hidden] { display:none; }
+  @media(max-width:420px) { .matrices { grid-template-columns:1fr; } }
+</style>

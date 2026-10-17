@@ -1,0 +1,103 @@
+<observable-expectation-explorer data-original-image>
+  <figure>
+    <p>Ry(θ)|0⟩ を用意します。測定で得る値を +1 と −1 に対応させたとき、その平均を期待値と呼びます。同じ状態を何度も用意して測定した平均であり、1 回の測定で期待値が出るわけではありません。</p>
+    <label>状態を用意する角度 θ（−180〜180 度）：<span data-angle-value>60 度</span>
+      <input data-angle type="range" min="-180" max="180" step="1" value="60" aria-valuetext="θ = 60 度" />
+    </label>
+    <label>測定方法：<span data-mode-name>Z を測る</span>
+      <input data-mode type="range" min="0" max="1" step="1" value="0" aria-valuetext="Z を測る" />
+    </label>
+    <p data-mode-description class="hint">Z：そのまま測る 0/1 確率</p>
+    <svg viewBox="0 0 360 300" role="img" aria-label="Z 測定。0 の確率 75%、1 の確率 25%、期待値 0.500。">
+      <text x="16" y="25">測定確率</text>
+      <text data-first-label x="16" y="64">0</text>
+      <rect class="surface" x="50" y="43" width="240" height="28" />
+      <rect data-first-bar class="first" x="50" y="43" width="180" height="28" />
+      <rect class="rim" x="50" y="43" width="240" height="28" />
+      <text data-first-percent x="300" y="64">75%</text>
+      <text data-second-label x="16" y="112">1</text>
+      <rect class="surface" x="50" y="91" width="240" height="28" />
+      <rect data-second-bar class="second" x="50" y="91" width="60" height="28" />
+      <rect class="rim" x="50" y="91" width="240" height="28" />
+      <text data-second-percent x="300" y="112">25%</text>
+      <text x="16" y="164">期待値（平均）</text>
+      <path class="axis" d="M40 210 H320 M40 203 V217 M180 203 V217 M320 203 V217" />
+      <text x="40" y="240" text-anchor="middle">−1</text>
+      <text x="180" y="240" text-anchor="middle">0</text>
+      <text x="320" y="240" text-anchor="middle">+1</text>
+      <path data-mean-marker class="marker" d="M250 203 l-7 -13 h14 Z" />
+      <text data-mean-label x="180" y="280" text-anchor="middle">⟨Z⟩ = 0.500</text>
+    </svg>
+    <output aria-live="polite" aria-atomic="true">θ = 60 度、Z 測定
+0 の確率 = 75.0%、1 の確率 = 25.0%
+対応する値：0 → +1、1 → −1
+期待値 ⟨Z⟩ = cos θ = 0.500</output>
+    <p class="hint">棒は確率、下の印は平均を表します。同じ状態で測定方法を変えると、どうなるでしょうか? 予想してから「測定方法」スライダーを Z と X の間で動かし、平均の変化を確かめましょう。</p>
+    <figcaption>角度を 90 度にすると、Z と X の期待値はどうなるでしょうか? 「状態を用意する角度 θ」スライダーを 90 度に合わせ、「測定方法」スライダーを動かして確かめましょう。</figcaption>
+  </figure>
+</observable-expectation-explorer>
+
+<script>
+  class ObservableExpectationExplorer extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.ready) return
+      this.dataset.ready = 'true'
+      const input = this.querySelector<HTMLInputElement>('[data-angle]')!
+      const modeInput = this.querySelector<HTMLInputElement>('[data-mode]')!
+      const text = (selector: string, value: string) => { this.querySelector(selector)!.textContent = value }
+      const fmt = (n: number) => (Math.abs(n) < 1e-10 ? 0 : n).toFixed(3)
+      const percent = (n: number) => `${(100 * n).toFixed(1)}%`
+      const update = () => {
+        const mode = Number(modeInput.value) === 0 ? 'Z' : 'X'
+        const degrees = Number(input.value), theta = degrees * Math.PI / 180
+        const mean = Math.max(-1, Math.min(1, mode === 'Z' ? Math.cos(theta) : Math.sin(theta)))
+        const first = (1 + mean) / 2, second = (1 - mean) / 2
+        const labels = mode === 'Z' ? ['0', '1'] : ['+', '−']
+        const description = mode === 'Z' ? 'Z：そのまま測る 0/1 確率' : 'X：H を加えた後の 0/1 確率（元の状態の +/− 確率）'
+        input.setAttribute('aria-valuetext', `θ = ${degrees} 度`)
+        text('[data-angle-value]', `${degrees} 度`)
+        const modeName = `${mode} を測る`
+        modeInput.setAttribute('aria-valuetext', modeName)
+        text('[data-mode-name]', modeName)
+        text('[data-mode-description]', description)
+        for (const [index, kind, probability] of [[0, 'first', first], [1, 'second', second]] as const) {
+          text(`[data-${kind}-label]`, labels[index])
+          text(`[data-${kind}-percent]`, percent(probability))
+          this.querySelector(`[data-${kind}-bar]`)!.setAttribute('width', String(240 * probability))
+        }
+        const x = 180 + 140 * mean
+        this.querySelector('[data-mean-marker]')!.setAttribute('d', `M${x} 203 l-7 -13 h14 Z`)
+        text('[data-mean-label]', `⟨${mode}⟩ = ${fmt(mean)}`)
+        const result = `θ = ${degrees} 度、${mode} 測定\n${description}\n${labels[0]} の確率 = ${percent(first)}、${labels[1]} の確率 = ${percent(second)}\n対応する値：${labels[0]} → +1、${labels[1]} → −1\n期待値 ⟨${mode}⟩ = ${mode === 'Z' ? 'cos' : 'sin'} θ = ${fmt(mean)}`
+        this.querySelector('output')!.textContent = result
+        this.querySelector('svg')!.setAttribute('aria-label', result)
+      }
+      input.addEventListener('input', update)
+      modeInput.addEventListener('input', update)
+      update()
+    }
+  }
+  if (!customElements.get('observable-expectation-explorer')) customElements.define('observable-expectation-explorer', ObservableExpectationExplorer)
+</script>
+
+<style>
+  observable-expectation-explorer { display:block; box-sizing:border-box; width:100%; max-width:540px; margin:1.5rem auto; margin-inline:0 auto; padding:1rem; color:#100F0F; background:#FFFCF0; border:1px solid #4385BE; border-radius:8px; }
+  figure { margin:0; min-width:0; line-height:1.7; }
+  p { margin:0 0 1rem; }
+  label { display:block; }
+  input[type="range"] { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0 0 8px; accent-color:#24837B; outline:none; }
+  input[type="range"]:focus, input[type="range"]:focus-visible { outline:none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow:0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow:0 0 0 3px #24837B; }
+  svg { display:block; width:100%; height:auto; }
+  text { font:14px system-ui,sans-serif; fill:#100F0F; }
+  .surface { fill:#F2F0E5; }
+  .first { fill:#3AA99F; }
+  .second { fill:#92BFDB; }
+  .rim { fill:none; stroke:#6F6E69; }
+  .axis { fill:none; stroke:#6F6E69; stroke-width:1.5; }
+  .marker { fill:#4385BE; stroke:#100F0F; stroke-width:1; }
+  output { display:block; white-space:pre-line; overflow-wrap:anywhere; padding:12px; margin:1rem 0; border-radius:6px; background:#F2F0E5; font-variant-numeric:tabular-nums; }
+  .hint, figcaption { color:#6F6E69; font-size:0.9em; }
+  @media (max-width:390px) { observable-expectation-explorer { padding:0.75rem; } }
+</style>

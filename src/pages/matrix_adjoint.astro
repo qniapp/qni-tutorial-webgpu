@@ -1,0 +1,167 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Ket from '../components/Ket.astro'
+import MatrixVectorExplorer from '../components/MatrixVectorExplorer.astro'
+import AdjointBuilder from '../components/AdjointBuilder.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="回路のための線形代数 2: 行列と随伴" description="ゲートの行列を列と行から読み、随伴で元の振幅に戻す" section="量子ビット" hasMath hasCircuit>
+  <p>
+    <a href={`${base}basis_inner_product/`}>基底と内積</a>では、状態を <Ket label="0" /> と <Ket label="1" /> の振幅を縦に並べて表すのでした。
+    今回は、その振幅をゲートがどう変えるかを、2 行 2 列の数の表で見ていきましょう。
+    表の列からゲートの働きを読み、行から計算し、最後に操作を取り消す行列を作るのが目的です。
+  </p>
+
+  <h2>円の変化を、数の表で追う</h2>
+  <p>
+    X は 2 個の振幅を交換するのでした。入力が <Ket label="0" /> なら、出力はどうなるでしょうか?
+    下の図の「ゲート」スライダーを X に、「入力の例」スライダーを「入力 |0⟩」に動かしてみましょう。次に「入力の例」を「入力 |1⟩」に動かし、青い円がどちらへ移るかを確認しましょう。
+    入力と出力の間の表も見比べてみましょう。円の半径は振幅の大きさ、針は位相を表します。
+  </p>
+  <MatrixVectorExplorer />
+  <p>
+    数を長方形に並べた表を行列と呼びます。横の並びが行、縦の並びが列です。
+    この図では、上が <Ket label="0" />、下が <Ket label="1" /> の振幅です。
+    行列の左の列には、入力が <Ket label="0" /> のときの出力が入ります。
+    右の列には、入力が <Ket label="1" /> のときの出力が入ります。
+    つまり X の左の列は「上が 0、下が 1」、右の列は「上が 1、下が 0」です。
+  </p>
+  <p class="math-display">{String.raw`\[ \begin{gathered}
+    X=\begin{pmatrix}0&1\\1&0\end{pmatrix} \\
+    X\begin{pmatrix}1\\0\end{pmatrix}=\begin{pmatrix}0\\1\end{pmatrix} \\
+    X\begin{pmatrix}0\\1\end{pmatrix}=\begin{pmatrix}1\\0\end{pmatrix}
+  \end{gathered} \]`}</p>
+
+  <h2>出力を 1 行ずつ計算する</h2>
+  <p>
+    では、両方の振幅が 0 ではないとき、出力はどうなるでしょうか?
+    図の「入力の例」スライダーを「初期の入力」に戻し、X のまま「注目する行」スライダーで 1 行目と 2 行目を順に選びましょう。
+    色のついた行の数と、入力の同じ位置の振幅を掛け、2 個の積を足してみましょう。
+    X なら上の出力に元の下の振幅、下の出力に元の上の振幅が現れます。
+  </p>
+  <p>
+    この計算を行列とベクトルの積と呼びます。
+    上の行が新しい <Ket label="0" /> の振幅、下の行が新しい <Ket label="1" /> の振幅を作ります。
+    一般の数を使って書くと、次のようになります。
+  </p>
+  <p class="math-display">{String.raw`\[ \begin{aligned}
+    U\begin{pmatrix}\alpha\\\beta\end{pmatrix}&=\begin{pmatrix}a&b\\c&d\end{pmatrix}\begin{pmatrix}\alpha\\\beta\end{pmatrix} \\
+    &=\begin{pmatrix}a\alpha+b\beta\\c\alpha+d\beta\end{pmatrix}
+  \end{aligned} \]`}</p>
+  <p>
+    確率を先に足すのではなく、複素数の振幅を掛けて足すことに注意してください。
+    図の数値は丸めて表示していますが、円は丸める前の振幅から描いています。
+  </p>
+
+  <h2>X、Z、H、S を読み比べる</h2>
+  <p>
+    入力が <Ket label="1" /> のとき、Z と S で針と半径はどうなるでしょうか?
+    「入力の例」スライダーを「入力 |1⟩」にし、「ゲート」スライダーで Z と S を順に選んで予想を確かめましょう。それから次の表を読んでください。
+    Z は下の振幅に −1 を掛け、S は下の振幅に i を掛けます。どちらも上の振幅は変えません。
+    下の針はそれぞれ半回転、反時計回りに 4 分の 1 回転しますが、半径は変わりません。
+  </p>
+  <p class="math-display">{String.raw`\[ \begin{gathered} Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix} \\ S=\begin{pmatrix}1&0\\0&i\end{pmatrix} \end{gathered} \]`}</p>
+  <p>
+    H に切り替えるとどうなるでしょうか? 「ゲート」スライダーを H にし、「入力の例」スライダーで「入力 |0⟩」、次に「入力 |1⟩」を選んで確かめましょう。
+    どちらも半径は同じになりますが、後者では下の針が反対を向きます。
+    H の左の列は正の振幅 2 個、右の列は下だけが負の振幅です。
+  </p>
+  <p class="math-display">{String.raw`\[ \begin{gathered} H=\frac{1}{\sqrt{2}}\begin{pmatrix}1&1\\1&-1\end{pmatrix} \\ H\begin{pmatrix}\alpha\\\beta\end{pmatrix}=\frac{1}{\sqrt{2}}\begin{pmatrix}\alpha+\beta\\\alpha-\beta\end{pmatrix} \end{gathered} \]`}</p>
+  <p>
+    H では、振幅の足し算と引き算が出力を決めます。
+    余裕のある人は、図で入力の分布角 t を 90 度、相対位相 φ を 0 度にし、H の下の行で 2 個の積が打ち消し合うことを確認しましょう。
+    Ry も選べます。回転角を変えると、行列の数と出力の円が一緒に変わります。
+  </p>
+
+  <h2>戻す行列を作る</h2>
+  <p>
+    S で回した針を戻すには、どうすればよいでしょうか?
+    次の図の「調べるユニタリ行列 U」スライダーを S にし、「随伴を作る手順」スライダーを「転置後」「複素共役後（U†）」の順に動かしましょう。
+    入力、U の後、戻す操作の後の円を見比べ、最初と最後の針と半径を確認しましょう。
+    次に「調べるユニタリ行列 U」スライダーで S Ry(π/3) を選び、同じ手順をたどると、対角線以外の数の移動も見えます。
+  </p>
+  <AdjointBuilder />
+  <p>
+    行と列を交換する操作を転置と呼びます。左上と右下の数はそのままで、右上と左下の数を交換します。
+    続いて、各成分の複素共役を取ります。複素共役は、たとえば 0.2 + 0.7i を 0.2 − 0.7i にする操作でした。
+    つまり実部はそのままで、虚部の符号を反転させます。
+    この 2 つの操作で作る行列を随伴と呼び、\(U^\dagger\) と書きます。
+  </p>
+  <p class="math-display">{String.raw`\[ \begin{gathered}
+    U=\begin{pmatrix}a&b\\c&d\end{pmatrix} \\
+    \longrightarrow\quad U^{\mathsf T}=\begin{pmatrix}a&c\\b&d\end{pmatrix} \\
+    \longrightarrow\quad U^\dagger=\begin{pmatrix}\overline a&\overline c\\\overline b&\overline d\end{pmatrix}
+  \end{gathered} \]`}</p>
+  <p>
+    S は対角線以外が 0 なので、転置だけでは変わりません。複素共役を取ると i が −i になります。
+    S† は下の振幅に −i を掛けるので、S が掛けた i と合わせて \((-i)i=1\) となり、元に戻ります。
+  </p>
+  <p class="math-display">{String.raw`\[ \begin{gathered} S^\dagger=\begin{pmatrix}1&0\\0&-i\end{pmatrix} \\ S^\dagger S=\begin{pmatrix}1&0\\0&1\end{pmatrix}=I \end{gathered} \]`}</p>
+
+  <h2>随伴なら、いつでも戻せる?</h2>
+  <p>
+    図で Ry や U = S Ry(π/3) に切り替えても、最後の円はどうなるでしょうか?
+    「随伴を作る手順」スライダーを「複素共役後（U†）」にし、「入力の分布角 t」スライダーも動かして、積が I になり、元の振幅に戻ることを確認しましょう。
+    I を単位行列と呼びます。どんな振幅ベクトルに掛けても、その振幅を変えません。
+  </p>
+  <p>
+    実は、すべての行列が随伴で元に戻せるわけではありません。
+    \(U^\dagger U=UU^\dagger=I\) を満たす行列をユニタリ行列と呼びます。
+    今回の X、Z、H、S、Ry のような、測定を含まない量子ゲートはユニタリ行列で表されます。
+    そのため、先に U、後に U† を使うと、掛け算は右から作用して \(U^\dagger(U\psi)=\psi\) となります。
+    随伴を作る手順と、それが逆操作になる条件を区別しておきましょう。
+  </p>
+
+  <h2>ハンズオン</h2>
+  <p>
+    Qni で試してみましょう! 下の回路は <Ket label="0" /> から始め、H、S、S†、H の順に適用します。
+    最後はどうなるでしょうか? S と S† が打ち消し合った後に、H が 2 回分残ると予想してみてください。
+    初期表示では最後の H の直後を選んであります。
+    Amps1 は振幅、Probability は確率を表示し、測定はしません。重ならないように間を 1 列空けています。
+  </p>
+  <qni-webgpu-circuit
+    max-wire-count="1"
+    selected-step="4"
+    show-state-panel="true"
+    palette={'["H","S","S†","Amps1","Probability"]'}
+    circuit={'{"cols":[["|0>"],["H"],["S"],["S†"],["H"],["Amps1"],[1],["Probability"]]}'}
+  ></qni-webgpu-circuit>
+  <ol>
+    <li>まずは編集せずに、最終状態の振幅が上は 1、下は 0、確率が 0 に対して 100% になっていることを確認しましょう。</li>
+    <li>各ゲートの少し下をクリックし、状態ベクトル表示を見てください。最初の H の後は振幅が両方とも約 0.707、S の後は下が約 0.707i、S† の後は下が約 0.707 に戻ります。</li>
+    <li>S† だけを回路の外へドラッグすると、最後の確率はどうなるでしょうか? 最後の表示命令の少し下をクリックして確認してください。（ヒント: 0 と 1 はそれぞれ 50% です）</li>
+    <li>パレットの S† を S と最後の H の間に戻し、再び 0 が 100% になることを確認しましょう。余裕のある人は S† を S に置き換えてみてください。S を 2 回使うと Z になり、最後は <Ket label="1" /> になります。</li>
+  </ol>
+  <p>
+    ここでの振幅表示は、シミュレータが計算した状態です。実機の 1 回の測定で振幅全体を読めるわけではありません。
+    また、測定で得た結果を随伴で取り消せる、と考えないように注意してください。
+  </p>
+
+  <h2>確認してみよう</h2>
+  <p>
+    S† の右の列は何になるでしょうか? また、実数だけの Ry では、随伴を作る 2 段階のうちどちらで数が変わるでしょうか?
+    予想してから、上の図の「ゲート」スライダーで S† を、下の図の「調べるユニタリ行列 U」スライダーで Ry(π/3) を選び、「随伴を作る手順」スライダーで変化を確かめましょう。
+  </p>
+  <orbit-reviewarea color="blue">
+    <orbit-prompt question="1 量子ビットのゲート行列の左の列は何を表す?" answer="入力が |0⟩ のときの出力の振幅ベクトルです。右の列は入力が |1⟩ のときの出力です。"></orbit-prompt>
+    <orbit-prompt cloze="行列の随伴は、転置してから各成分の{複素共役}を取って作ります。"></orbit-prompt>
+    <orbit-prompt question="S† の右の列は?" answer="上が 0、下が −i です。S の下の振幅の位相回転を戻します。"></orbit-prompt>
+    <orbit-prompt question="実数だけの Ry の随伴を作るとき、複素共役で数は変わる?" answer="変わりません。転置で対角線以外の数を交換します。"></orbit-prompt>
+    <orbit-prompt question="U の後に U† を使って元に戻せる条件は?" answer="U がユニタリ行列であることです。U†U = UU† = I を満たします。"></orbit-prompt>
+  </orbit-reviewarea>
+
+  <h2>まとめ</h2>
+  <p>
+    ゲート行列の列は基底状態の行き先を、行は出力の各振幅の計算を表します。
+    まず円で変化を予想し、行ごとの積と和を追ってみましょう。
+    随伴は転置と複素共役で作り、ユニタリなゲートでは元に戻す操作になります。
+    S と S† の組では、針が進んだ分だけ戻る様子を確かめられるのでした。
+  </p>
+  <script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+</TutorialLayout>
+<style>
+  @media (max-width:420px) { .math-display { font-size:0.85rem; } }
+  ol { max-width:76ch; padding-left:24px; }
+  li + li { margin-top:16px; }
+  @media (min-width:640px) { ol { width:58.333333%; margin-right:auto; } }
+</style>

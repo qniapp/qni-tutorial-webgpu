@@ -1,0 +1,69 @@
+<figure data-basis-projection data-original-image>
+  <svg viewBox="0 0 360 350" aria-label="実数の振幅だけを持つ状態の矢印と、2 組の基底への射影">
+    <defs><marker id="basis-state-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#4385BE" /></marker></defs>
+    <circle cx="180" cy="175" r="118" fill="none" stroke="#DAD8CE" />
+    <path d="M28 175 H332 M180 327 V23" class="axis" />
+    <path d="M73 282 L287 68 M73 68 L287 282" class="diagonal" />
+    <text x="307" y="196">|0⟩</text><text x="190" y="32">|1⟩</text>
+    <text x="282" y="61">|+⟩</text><text x="282" y="304">|−⟩</text>
+    <g data-projections fill="none" stroke="#24837B" stroke-width="2.5" stroke-dasharray="5 4"><path /><path /></g>
+    <line data-arrow x1="180" y1="175" x2="282.19" y2="116" stroke="#4385BE" stroke-width="3" marker-end="url(#basis-state-arrow)" />
+    <g data-point transform="translate(282.19 116)">
+      <circle r="7" fill="#3AA99F" stroke="#100F0F" />
+    </g>
+    <text x="180" y="346" text-anchor="middle">横が |0⟩、縦が |1⟩ の振幅</text>
+  </svg>
+  <label>射影する基底：<span data-basis-label>0/1 基底</span>
+    <input data-basis type="range" min="0" max="1" step="1" value="0" aria-valuetext="0/1 基底" />
+  </label>
+  <label>矢印の角度 t（度）<input data-angle type="range" min="0" max="360" step="1" value="30" aria-valuetext="30 度" /></label>
+  <output aria-live="polite" aria-atomic="true">t = 30°
+|0⟩ の成分 = 0.866、2 乗 = 75.0%
+|1⟩ の成分 = 0.500、2 乗 = 25.0%</output>
+  <figcaption>読む軸を変えると、成分はどうなるでしょうか? 予想してから「射影する基底」スライダーを動かし、矢印が動かずに成分が変わることを確認しましょう。「矢印の角度 t」スライダーで t を 45 度にすると、|+⟩ の状態も調べられます。破線の先が、選んだ軸への射影です。これは実数の振幅だけを描いた図で、ブロッホ球ではありません。</figcaption>
+</figure>
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>('[data-basis-projection]')) {
+    const point = root.querySelector<SVGGElement>('[data-point]')!
+    const input = root.querySelector<HTMLInputElement>('[data-angle]')!
+    const basisInput = root.querySelector<HTMLInputElement>('[data-basis]')!
+    const arrow = root.querySelector('[data-arrow]')!
+    const paths = root.querySelectorAll('[data-projections] path')
+    let angle = Number(input.value), basis = basisInput.value === '0' ? '01' : 'pm'
+    function paint() {
+      const t = angle * Math.PI / 180, x = Math.cos(t), y = Math.sin(t)
+      const axes = basis === '01' ? [[1,0],[0,1]] : [[Math.SQRT1_2,Math.SQRT1_2],[Math.SQRT1_2,-Math.SQRT1_2]]
+      const labels = basis === '01' ? ['0','1'] : ['+','−']
+      const endX = 180+118*x, endY = 175-118*y
+      arrow.setAttribute('x2', String(endX)); arrow.setAttribute('y2', String(endY))
+      point.setAttribute('transform', `translate(${endX} ${endY})`)
+      input.value = String(angle); input.setAttribute('aria-valuetext', `${angle} 度`)
+      const lines = axes.map(([u,v], i) => {
+        const c = x*u+y*v
+        paths[i].setAttribute('d', `M${endX} ${endY} L${180+118*c*u} ${175-118*c*v}`)
+        return `|${labels[i]}⟩ の成分 = ${(Math.abs(c)<1e-10?0:c).toFixed(3)}、2 乗 = ${(100*c*c).toFixed(1)}%`
+      })
+      root.querySelector('output')!.textContent = [`t = ${angle}°（状態は変えず、読む軸を切り替えられます）`, ...lines].join('\n')
+      const basisLabel = basis === '01' ? '0/1 基底' : '+/− 基底'
+      basisInput.setAttribute('aria-valuetext', basisLabel)
+      root.querySelector('[data-basis-label]')!.textContent = basisLabel
+    }
+    input.addEventListener('input', () => { angle = Number(input.value); paint() })
+    basisInput.addEventListener('input', () => { basis = basisInput.value === '0' ? '01' : 'pm'; paint() })
+    paint()
+  }
+</script>
+<style>
+  figure { box-sizing:border-box; width:100%; max-width:540px; margin:24px auto; margin-inline:0 auto; padding:16px; background:#FFFCF0; border:1px solid #4385BE; border-radius:8px; color:#100F0F; }
+  svg { display:block; width:100%; height:auto; }
+  text { font:14px system-ui,sans-serif; fill:#6F6E69; }
+  .axis { fill:none; stroke:#6F6E69; stroke-width:1.5; }
+  .diagonal { fill:none; stroke:#A6A09B; stroke-width:1.5; }
+  label { display:block; margin-top:16px; }
+  input[type="range"] { display: block; box-sizing: border-box; width: 100%; min-width: 0; min-height: 44px; margin: 0; accent-color: #24837B; outline: none; }
+  input[type="range"]:focus, input[type="range"]:focus-visible { outline: none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px #24837B; }
+  output { display:block; white-space:pre-line; padding:12px; margin:12px 0; background:#F2F0E5; border-radius:6px; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; line-height:1.7; }
+  figcaption { color:#6F6E69; font-size:14px; line-height:1.6; }
+</style>

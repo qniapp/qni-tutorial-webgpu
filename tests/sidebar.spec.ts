@@ -4,6 +4,12 @@ import original from './fixtures/original-navigation.json' with { type: 'json' }
 // Pages added after the port, inserted into the original order: [chapter title, slug to follow, page].
 const added: [string, string, { title: string, slug: string }][] = [
   ['量子ビット', 'circle_notation', { title: '複素振幅の読み方 1: 振幅の長さと確率', slug: 'amplitude_probability' }],
+  ['量子ビット', 'amplitude_probability', { title: '複素振幅の読み方 2: 全体位相と相対位相', slug: 'global_relative_phase' }],
+  ['量子ビット', 'global_relative_phase', { title: '回路のための線形代数 1: 基底と内積', slug: 'basis_inner_product' }],
+  ['量子ビット', 'basis_inner_product', { title: '回路のための線形代数 2: 行列と随伴', slug: 'matrix_adjoint' }],
+  ['量子ビット', 'matrix_adjoint', { title: '回路のための線形代数 3: ユニタリと観測量', slug: 'unitary_observable' }],
+  ['量子ビット', 'unitary_observable', { title: 'テンソル積と部分系 1: 積状態の振幅表', slug: 'tensor_product_state' }],
+  ['量子ビット', 'tensor_product_state', { title: 'テンソル積と部分系 2: 積に分けられない状態', slug: 'entangled_state' }],
 ]
 
 function expectedChapters() {

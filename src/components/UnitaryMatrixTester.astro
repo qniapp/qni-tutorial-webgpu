@@ -1,0 +1,132 @@
+<unitary-matrix-tester data-original-image>
+  <figure>
+    <p>どの入力でも振幅の二乗和を保つ行列を、ユニタリ行列と呼びます。行列と入力の角度を変えて確認しましょう。</p>
+    <label>調べる行列：<span data-matrix-name>I</span>
+      <input data-matrix type="range" min="0" max="4" step="1" value="0" aria-valuetext="I" />
+    </label>
+    <div class="matrices">
+      <div><span>選んだ行列 U</span><table data-selected aria-label="選んだ行列 U"><tbody><tr><td>1</td><td>0</td></tr><tr><td>0</td><td>1</td></tr></tbody></table></div>
+      <div><span>U†U</span><table data-product aria-label="U†U"><tbody><tr><td>1</td><td>0</td></tr><tr><td>0</td><td>1</td></tr></tbody></table></div>
+    </div>
+    <label>入力の角度 t（0〜360 度）：<span data-angle-value>45 度</span>
+      <input data-angle type="range" min="0" max="360" step="1" value="45" aria-valuetext="t = 45 度" />
+    </label>
+    <p class="hint">実数の振幅 α = cos t、β = sin t の座標です。複素平面でもブロッホ球の円でもありません。</p>
+    <svg viewBox="0 0 360 340" role="img" aria-label="振幅座標平面。I は入力と出力が重なり、単位円を保ちます。">
+      <circle class="reference" cx="180" cy="166" r="112" />
+      <path class="axis" d="M30 166 H330 M180 310 V22" />
+      <g class="ticks"><text x="292" y="186">1</text><text x="56" y="186">−1</text><text x="190" y="58">1</text><text x="190" y="282">−1</text><text x="164" y="185">0</text></g>
+      <text x="314" y="153">α</text><text x="192" y="26">β</text>
+      <path data-orbit class="orbit" d="M292 166 A112 112 0 1 0 68 166 A112 112 0 1 0 292 166" />
+      <line data-input-line class="input-line" x1="180" y1="166" x2="259.196" y2="86.804" />
+      <line data-output-line class="output-line" x1="180" y1="166" x2="259.196" y2="86.804" />
+      <circle data-input-point class="input-point" cx="259.196" cy="86.804" r="9" />
+      <rect data-output-point class="output-point" x="255.196" y="82.804" width="8" height="8" />
+      <text x="180" y="330" text-anchor="middle">横：α、縦：β（実数の振幅）</text>
+    </svg>
+    <ul class="legend"><li>緑の破線・丸：入力</li><li>青の実線・四角：出力</li><li>灰色の円：二乗和 1</li><li>青の点線：単位円全体の変換先</li></ul>
+    <output aria-live="polite" aria-atomic="true">I、t = 45 度
+入力 (α, β) = (0.707, 0.707)
+出力 (α′, β′) = (0.707, 0.707)
+二乗和 |α′|² + |β′|² = 1.0000（100%）
+U†U = I：ユニタリです。すべての入力で二乗和を保ちます。</output>
+    <p class="hint">入力を変えると二乗和はどうなるでしょうか? 予想してから「調べる行列」スライダーを diag(1, 0.5) にし、「入力の角度 t」スライダーを 0 度から動かして確認しましょう。|0⟩ を保つだけでは十分ではありません。判定の条件は、すべての入力に対する U†U = I です。</p>
+    <figcaption>H では出力の点はどこを動くでしょうか? 「調べる行列」スライダーを H に合わせ、「入力の角度 t」スライダーを動かして、点が単位円の上にあることを確かめましょう。</figcaption>
+  </figure>
+</unitary-matrix-tester>
+
+<script>
+  import { MatrixMath, type Matrix2, type StateVector } from './matrix-adjoint-math'
+
+  class UnitaryMatrixTester extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.ready) return
+      this.dataset.ready = 'true'
+      const input = this.querySelector<HTMLInputElement>('[data-angle]')!
+      const svg = this.querySelector('svg')!
+      const matrixInput = this.querySelector<HTMLInputElement>('[data-matrix]')!
+      const choices = ['I', 'X', 'H', 'diag', 'half']
+      const diagonal = (a: number, b: number): Matrix2 => [[[a, 0], [0, 0]], [[0, 0], [b, 0]]]
+      const matrices: Record<string, Matrix2> = {
+        I: diagonal(1, 1), X: MatrixMath.gate('X'), H: MatrixMath.gate('H'),
+        diag: diagonal(1, 0.5), half: diagonal(0.5, 0.5),
+      }
+      const names: Record<string, string> = { I: 'I', X: 'X', H: 'H', diag: 'diag(1, 0.5)', half: '0.5I' }
+      const fmt = (n: number, digits = 3) => (Math.abs(n) < 1e-10 ? 0 : n).toFixed(digits)
+      const entry = (n: number) => Math.abs(Math.abs(n) - Math.SQRT1_2) < 1e-10
+        ? `${n < 0 ? '−' : ''}1/√2` : String(Number(fmt(n, 4)))
+      const paintMatrix = (selector: string, matrix: Matrix2, label: string) => {
+        const table = this.querySelector<HTMLTableElement>(selector)!
+        table.querySelectorAll('td').forEach((cell, i) => { cell.textContent = entry(matrix[Math.floor(i / 2)][i % 2][0]) })
+        table.setAttribute('aria-label', `${label}：1 行目 ${matrix[0].map(z => entry(z[0])).join('、')}、2 行目 ${matrix[1].map(z => entry(z[0])).join('、')}`)
+      }
+      const point = (state: StateVector) => [180 + 112 * state[0][0], 166 - 112 * state[1][0]]
+      const update = () => {
+        const selected = choices[Number(matrixInput.value)]
+        const degrees = Number(input.value), t = degrees * Math.PI / 180
+        const matrix = matrices[selected]
+        const state: StateVector = [[Math.cos(t), 0], [Math.sin(t), 0]]
+        const result = MatrixMath.apply(matrix, state)
+        const product = MatrixMath.multiply(MatrixMath.adjoint(matrix), matrix)
+        const unitary = product.every((row, r) => row.every((z, c) => Math.abs(z[0] - (r === c ? 1 : 0)) < 1e-10 && Math.abs(z[1]) < 1e-10))
+        const sum = result.reduce((total, z) => total + z[0] ** 2 + z[1] ** 2, 0)
+        paintMatrix('[data-selected]', matrix, `選んだ行列 ${names[selected]}`)
+        paintMatrix('[data-product]', product, 'U†U')
+        input.setAttribute('aria-valuetext', `t = ${degrees} 度`)
+        this.querySelector('[data-angle-value]')!.textContent = `${degrees} 度`
+        matrixInput.setAttribute('aria-valuetext', names[selected])
+        this.querySelector('[data-matrix-name]')!.textContent = names[selected]
+        for (const [kind, vector] of [['input', state], ['output', result]] as const) {
+          const [x, y] = point(vector)
+          const line = this.querySelector(`[data-${kind}-line]`)!
+          line.setAttribute('x2', String(x)); line.setAttribute('y2', String(y))
+          const dot = this.querySelector(`[data-${kind}-point]`)!
+          if (kind === 'input') { dot.setAttribute('cx', String(x)); dot.setAttribute('cy', String(y)) }
+          else { dot.setAttribute('x', String(x - 4)); dot.setAttribute('y', String(y - 4)) }
+        }
+        const orbit = Array.from({ length: 121 }, (_, i) => {
+          const angle = i * 2 * Math.PI / 120
+          const [x, y] = point(MatrixMath.apply(matrix, [[Math.cos(angle), 0], [Math.sin(angle), 0]]))
+          return `${i === 0 ? 'M' : 'L'}${x} ${y}`
+        }).join(' ') + ' Z'
+        this.querySelector('[data-orbit]')!.setAttribute('d', orbit)
+        const criterion = unitary ? 'U†U = I：ユニタリです。すべての入力で二乗和を保ちます。' : 'U†U ≠ I：ユニタリではありません。すべての入力で二乗和を保つ条件を満たしません。'
+        const sumLabel = Math.abs(sum - 1) < 1e-10 ? '二乗和' : '確率の合計候補（1 ではないため、このままでは正規化された状態ではありません）'
+        const description = `${names[selected]}、t = ${degrees} 度\n入力 (α, β) = (${fmt(state[0][0])}, ${fmt(state[1][0])})\n出力 (α′, β′) = (${fmt(result[0][0])}, ${fmt(result[1][0])})\n${sumLabel} |α′|² + |β′|² = ${fmt(sum, 4)}（${Number((sum * 100).toFixed(2))}%）\n${criterion}`
+        this.querySelector('output')!.textContent = description
+        svg.setAttribute('aria-label', `振幅座標平面。灰色は単位円、青の点線はその変換先。緑の丸は入力、青の四角は出力。${description}`)
+      }
+      input.addEventListener('input', update)
+      matrixInput.addEventListener('input', update)
+      update()
+    }
+  }
+  if (!customElements.get('unitary-matrix-tester')) customElements.define('unitary-matrix-tester', UnitaryMatrixTester)
+</script>
+
+<style>
+  unitary-matrix-tester { display:block; box-sizing:border-box; width:100%; max-width:540px; margin:1.5rem auto; margin-inline:0 auto; padding:1rem; color:#100F0F; background:#FFFCF0; border:1px solid #4385BE; border-radius:8px; }
+  figure { margin:0; min-width:0; line-height:1.7; }
+  p { margin:0 0 1rem; }
+  .matrices { display:flex; flex-wrap:wrap; gap:1rem 2rem; margin:1rem 0; }
+  table { border-collapse:collapse; border-inline:2px solid #6F6E69; margin-top:0.25rem; font-variant-numeric:tabular-nums; }
+  td { padding:0.1rem 0.6rem; text-align:center; }
+  label { display:block; }
+  input[type="range"] { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0 0 8px; accent-color:#24837B; outline:none; }
+  input[type="range"]:focus, input[type="range"]:focus-visible { outline:none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow:0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow:0 0 0 3px #24837B; }
+  svg { display:block; width:100%; height:auto; }
+  text { font:14px system-ui,sans-serif; fill:#6F6E69; }
+  .reference { fill:none; stroke:#DAD8CE; stroke-width:7; }
+  .axis { fill:none; stroke:#6F6E69; stroke-width:1; }
+  .orbit { fill:none; stroke:#4385BE; stroke-width:2; stroke-dasharray:3 5; }
+  .input-line { stroke:#24837B; stroke-width:5; stroke-dasharray:7 5; }
+  .output-line { stroke:#4385BE; stroke-width:2; }
+  .input-point { fill:#FFFCF0; stroke:#24837B; stroke-width:3; }
+  .output-point { fill:#4385BE; stroke:#100F0F; stroke-width:1; }
+  .legend { padding-left:1.2rem; margin:0.5rem 0; font-size:0.9em; }
+  output { display:block; white-space:pre-line; overflow-wrap:anywhere; padding:12px; margin:1rem 0; border-radius:6px; background:#F2F0E5; font-variant-numeric:tabular-nums; }
+  .hint, figcaption { font-size:0.9em; color:#6F6E69; }
+  @media (max-width:390px) { unitary-matrix-tester { padding:0.75rem; } .matrices { gap:0.75rem; } td { padding:0.1rem 0.4rem; } }
+</style>
