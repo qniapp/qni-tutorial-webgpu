@@ -137,9 +137,11 @@ const base = import.meta.env.BASE_URL
   </p>
   <orbit-reviewarea color="blue">
     <orbit-prompt question="Qni の Measure をそのまま置くと、どの質問になる?" answer="Z の質問です。0 と 1 を区別します。"></orbit-prompt>
-    <orbit-prompt question="Y の質問では、Measure の前にどの順番でゲートを置く?" answer="S†、H の順です。出力 0 を +1、1 を −1 と読みます。"></orbit-prompt>
-    <orbit-prompt question="|+⟩ に Z と X の質問をしたとき、それぞれの期待値は?" answer="Z は 0、X は +1 です。同じ状態でも質問によって異なります。"></orbit-prompt>
-    <orbit-prompt question="Z ゲートを置くことは、Z を測定することと同じ?" answer="違います。Z ゲートは振幅の符号を変えます。Z の測定は Measure で行い、0/1 の結果を得ます。"></orbit-prompt>
+    <orbit-prompt question="Qni で Y の質問をするには、Measure の直前にどの順番でゲートを適用しますか?" answer="S†、H の順です。"></orbit-prompt>
+    <orbit-prompt question="状態 |+⟩ = (|0⟩ + |1⟩)/√2 に Z の質問をするとき、0 に +1、1 に −1 を割り当てた期待値はいくつですか?" answer="0 です。"></orbit-prompt>
+    <orbit-prompt question="状態 |+⟩ = (|0⟩ + |1⟩)/√2 に X の質問をするとき、結果 + に +1、結果 − に −1 を割り当てた期待値はいくつですか?" answer="+1 です。"></orbit-prompt>
+    <orbit-prompt question="Qni で Z ゲートだけを置いても、Z 測定の代わりにならないのはなぜですか?" answer="Z ゲートは状態を変えるだけで、測定結果の 0/1 を出さないからです。"></orbit-prompt>
+    <orbit-prompt question="Qni の Measure で、元の状態への X の質問の結果を読みたいとき、Measure の直前にどのゲートを置きますか?" answer="H ゲートです。"></orbit-prompt>
   </orbit-reviewarea>
 
   <h2>まとめ</h2>

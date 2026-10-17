@@ -135,10 +135,12 @@ const base = import.meta.env.BASE_URL
     また、球の図を θ = 90 度、φ = 270 度にすると、どの期待値が −1 になるでしょうか? 予想してから図で確認してください。
   </p>
   <orbit-reviewarea color="blue">
-    <orbit-prompt question="X の質問の + と − に割り当てる固有値は?" answer="+ に +1、− に −1 を割り当てます。"></orbit-prompt>
-    <orbit-prompt question="+1 が 8 回、−1 が 12 回の記録の平均は?" answer="(8 − 12) / 20 = −0.2 です。有限回の平均なので、理論上の期待値そのものとは限りません。"></orbit-prompt>
+    <orbit-prompt question="X の質問で状態 |−⟩ = (|0⟩ − |1⟩)/√2 に対応する結果が出たとき、その記録に割り当てる固有値はいくつですか?" answer="−1 です。"></orbit-prompt>
+    <orbit-prompt question="同じ状態を毎回準備し直して同じ測定を 20 回行い、+1 が 8 回、−1 が 12 回出ました。記録の平均はいくつですか?" answer="(8 − 12) / 20 = −0.2 です。"></orbit-prompt>
+    <orbit-prompt question="同じ状態を毎回準備し直して同じ測定を繰り返すとき、有限回の記録の平均が理論上の期待値と一致しないことがあるのはなぜですか?" answer="各回の測定結果が確率的に出るため、有限回の平均には統計的なばらつきがあるからです。"></orbit-prompt>
     <orbit-prompt question="S†、H の後の Probability が 0 に 30%、1 に 70% を示すとき、元の状態の ⟨Y⟩ は?" answer="0.30 − 0.70 = −0.40 です。"></orbit-prompt>
-    <orbit-prompt question="純粋状態のブロッホベクトルの 3 座標は?" answer="⟨X⟩、⟨Y⟩、⟨Z⟩ です。それぞれを 2 乗して足すと 1 になります。"></orbit-prompt>
+    <orbit-prompt question="1 量子ビットの純粋状態では、理論上の期待値から求めた ⟨X⟩² + ⟨Y⟩² + ⟨Z⟩² はいくつですか?" answer="1 です。"></orbit-prompt>
+    <orbit-prompt question="1 量子ビットのブロッホベクトルの x 座標は、どの観測量の期待値ですか?" answer="X の期待値 ⟨X⟩ です。"></orbit-prompt>
   </orbit-reviewarea>
 
   <h2>まとめ</h2>

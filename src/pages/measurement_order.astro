@@ -150,10 +150,11 @@ const base = import.meta.env.BASE_URL
   </p>
   <orbit-reviewarea color="blue">
     <orbit-prompt question="理想的な Z 測定で −1 を得た直後の状態は?" answer="|1⟩ です。結果に対応する固有状態になります。"></orbit-prompt>
-    <orbit-prompt question="Z を測って −1 を得て、すぐ Z を再測定すると?" answer="−1 が確実に出ます。間にゲートや別の変化がない場合です。"></orbit-prompt>
-    <orbit-prompt question="Z の結果がどちらでも、続けて X を測ると?" answer="+1 と −1 が 50% ずつです。最初の結果を区別しない X の期待値も 0 です。"></orbit-prompt>
+    <orbit-prompt question="理想的な Z の射影測定で −1 を得た後、状態が変化しないまま Z を再測定します。−1 が出る確率はいくつですか?" answer="100% です。"></orbit-prompt>
+    <orbit-prompt question="理想的な Z の射影測定で −1 を得た直後、状態を変える操作を挟まず、理想的な X の射影測定をします。X の結果が +1 になる条件付き確率はいくつですか?" answer="1/2 です。"></orbit-prompt>
     <orbit-prompt question="最初が +1 の確率が 0.75、その枝で次が −1 の確率が 0.5 なら、組の確率は?" answer="0.75 × 0.5 = 0.375、37.5% です。"></orbit-prompt>
-    <orbit-prompt question="途中の測定結果を読まなければ、測定しない場合と同じになる?" answer="なりません。結果ごとの条件付き状態を確率で混ぜて扱い、元の振幅をそのまま保つわけではありません。"></orbit-prompt>
+    <orbit-prompt question="理想的な測定を A、B の順に行います。P(A = +1, B = −1) = 0.375、P(A = −1, B = −1) = 0.125 のとき、A の結果を区別しない P(B = −1) はいくつですか?" answer="0.375 + 0.125 = 0.5 です。"></orbit-prompt>
+    <orbit-prompt question="状態 |+⟩ = (|0⟩ + |1⟩)/√2 では ⟨X⟩ = 1 です。途中で理想的な Z の射影測定をして結果を区別しないと、その後の ⟨X⟩ が 0 になるのはなぜですか? 測定以外の状態変化はないものとします。" answer="Z 測定後は、X の期待値がともに 0 の状態 |0⟩ と |1⟩ を確率で混ぜて扱うからです。"></orbit-prompt>
   </orbit-reviewarea>
 
   <h2>まとめ</h2>
