@@ -44,6 +44,7 @@ export const toc: TocChapter[] = [
       { title: '状態ベクトル表示', slug: 'circle_notation' },
       { title: '複素振幅の読み方 1: 振幅の長さと確率', slug: 'amplitude_probability' },
       { title: '複素振幅の読み方 2: 全体位相と相対位相', slug: 'global_relative_phase' },
+      { title: '回路のための線形代数 1: 基底と内積', slug: 'basis_inner_product' },
     ],
   },
   {

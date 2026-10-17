@@ -1,0 +1,166 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Ket from '../components/Ket.astro'
+import Sidenote from '../components/Sidenote.astro'
+import BasisProjectionExplorer from '../components/BasisProjectionExplorer.astro'
+import InnerProductExplorer from '../components/InnerProductExplorer.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="回路のための線形代数 1: 基底と内積" description="読む軸を選び、内積から量子回路の測定確率を求める" section="量子ビット" hasMath hasCircuit>
+  <p>
+    <a href={`${base}amplitude_probability/`}>振幅の長さと確率</a>では、振幅の大きさの 2 乗が測定確率になるのでした。
+    また、<a href={`${base}global_relative_phase/`}>全体位相と相対位相</a>では、相対位相の違いをゲートの後の確率で見分けました。
+    今回は、同じ状態を別の軸から読む方法を見ていきましょう。目的は、H を置いてから測る回路が、何を読み出しているのかを説明できるようになることです。
+  </p>
+
+  <h2>状態は同じでも、読む軸が変わる</h2>
+  <p>
+    まずは、振幅がどちらも実数の場合だけを図にします。横方向を <Ket label="0" />、縦方向を <Ket label="1" /> として、2 個の振幅を 1 本の矢印の座標にしてみましょう。
+    最初の矢印の成分は約 0.866 と 0.500 です。0/1 を測る確率は 75% と 25% になります。
+    では、読む軸だけを斜めにすると、成分はどうなるでしょうか?
+    下の図で「+/− 基底」を押し、矢印は動かないのに、破線の先と成分の数値が変わることを確認しましょう。
+  </p>
+  <BasisProjectionExplorer />
+  <p>
+    状態を表すための、ものさしになるベクトルの組を基底と呼びます。
+    ここで使う基底は、互いに直交する長さ 1 の矢印の組です。このような組を正規直交基底と呼びます。
+    図では、矢印から軸へ垂直に下ろした点を射影と呼びます。原点からその点までの符号付きの長さが、その軸の成分です。
+    反対向きの成分は負になりますが、2 乗した確率は負にはなりません。
+  </p>
+  <p>
+    「状態を |+⟩ にする」を押してみましょう。0/1 基底で読むと、成分の大きさはどちらも約 0.707 です。
+    +/− 基底に切り替えるとどうなるでしょうか?
+    + 方向の成分が 1、− 方向の成分が 0 になります。状態を変えずに、どの軸に沿って読むかを変えたのでした。
+  </p>
+
+  <h2>2 個の複素数を縦に並べる</h2>
+  <p>
+    回路の状態ベクトル表示では、<Ket label="0" /> と <Ket label="1" /> にそれぞれ複素数の振幅がありました。
+    この振幅を順に縦に並べると、2 成分の複素ベクトルになります。状態を表す文字として \(\psi\)（プサイ）を使い、次のように書きます。
+  </p>
+  <p class="math-scroll">{String.raw`\[ |\psi\rangle = \alpha|0\rangle + \beta|1\rangle = \begin{pmatrix}\alpha\\\beta\end{pmatrix} \]`}</p>
+  <p class="math-scroll">{String.raw`\[ |0\rangle=\begin{pmatrix}1\\0\end{pmatrix},\qquad |1\rangle=\begin{pmatrix}0\\1\end{pmatrix} \]`}</p>
+  <p>
+    上の段は <Ket label="0" />、下の段は <Ket label="1" /> の振幅です。
+    たとえば {String.raw`\(\alpha=\sqrt{3}/2\)`}、{String.raw`\(\beta=i/2\)`} なら、0/1 の確率は 75% と 25% です。
+    下の段が複素数なので、この状態は先ほどの実数平面の矢印だけでは表せません。
+    それでも、{String.raw`\(|\alpha|^2+|\beta|^2=1\)`} という正規化の条件は同じです。
+  </p>
+  <p>
+    図の斜めの軸も、0/1 基底の成分で書けます。右上が <Ket label="+" />、右下が <Ket label="−" /> です。
+  </p>
+  <p class="math-scroll">{String.raw`\[ |+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt{2}},\qquad |-\rangle=\frac{|0\rangle-|1\rangle}{\sqrt{2}} \]`}</p>
+  <p>
+    つまり、どちらも 2 個の振幅の大きさは同じで、下の段の符号が違います。
+    この 2 本を新しい基底にすると、同じ状態を {String.raw`\(|\psi\rangle=c_+|+\rangle+c_-|-\rangle\)`} と書けます。
+    では、複素数の振幅も含めて、この成分をどう求めればよいでしょうか?
+  </p>
+
+  <h2>内積で、ある向きの成分を読む</h2>
+  <p>
+    ここでは、長さ 1 の状態 <Ket label="a" /> に沿って、状態 <Ket label="b" /> がどれだけ向いているかを調べます。
+    実数の図なら符号付きの射影の長さ、複素数まで含めると複素数の成分を求める計算です。
+    この計算を内積と呼び、{String.raw`\(\langle a|b\rangle\)`} と書きます。
+    次の図では、同じ段どうしの積を 2 個作り、足す様子を見られます。
+    最初は a も b も <Ket label="+" /> です。b の相対位相だけを 180 度にすると、和の矢印はどうなるでしょうか?
+    予想してからスライダーを動かし、2 個の積が打ち消し合うか確認しましょう。
+  </p>
+  <InnerProductExplorer />
+  <p>
+    b の相対位相を 180 度にすると <Ket label="−" /> になり、<Ket label="+" /> 方向の成分は 0 になります。
+    このように内積が 0 になる関係を直交と呼びます。
+    図の 2 本の積の矢印は、状態そのものではなく、内積を計算する途中の複素数を表しています。
+  </p>
+  <p>
+    複素数で計算するときには、左側の状態 a の振幅を複素共役にしてから掛けることに注意してください。
+    複素共役は、虚部の符号だけを反転する操作です。たとえば \(0.4+0.3i\) の共役は \(0.4-0.3i\) です。
+    共役を上線で表すと、図の計算は次の式になります。
+  </p>
+  <p class="math-scroll">{String.raw`\[ |a\rangle=\begin{pmatrix}a_0\\a_1\end{pmatrix},\qquad |b\rangle=\begin{pmatrix}b_0\\b_1\end{pmatrix} \]`}</p>
+  <p class="math-scroll">{String.raw`\[ \langle a|b\rangle=\overline{a_0}b_0+\overline{a_1}b_1 \]`}</p>
+  <p>
+    <Ket label="a" /> を共役にして横に並べたものを、ブラ {String.raw`\(\langle a|\)`} と呼びます。
+    図で「同じ状態・位相 90°」の例を選んでみましょう。左の下の成分が約 0.707i から −0.707i へ変わることを確認してください。
+    その積は正の 0.5 になり、上の段の積 0.5 と足して 1 になります。
+    共役を忘れると、下の段の積が −0.5 になってしまいます。
+    正規化した状態と自分自身の内積は、いつも 1 です。
+  </p>
+
+  <h2>内積の大きさの 2 乗が、測定確率</h2>
+  <p>
+    0/1 基底で、<Ket label="0" /> に沿う成分を求めるとどうなるでしょうか?
+    <Ket label="0" /> の成分は上が 1、下が 0 なので、内積は元の上の振幅をそのまま取り出します。
+  </p>
+  <p class="math-scroll">{String.raw`\[ \langle0|\psi\rangle=1\alpha+0\beta=\alpha,\qquad P(0)=|\langle0|\psi\rangle|^2 \]`}</p>
+  <p>
+    +/− 基底でも同じです。<Ket label="+" /> に沿う成分を求め、その大きさを 2 乗すると、+ が出る確率になります。
+    同じ計算を <Ket label="−" /> にも行えます。
+  </p>
+  <p class="math-scroll">{String.raw`\[ c_+=\langle+|\psi\rangle=\frac{\alpha+\beta}{\sqrt{2}} \]`}</p>
+  <p class="math-scroll">{String.raw`\[ c_-=\langle-|\psi\rangle=\frac{\alpha-\beta}{\sqrt{2}} \]`}</p>
+  <p class="math-scroll">{String.raw`\[ P(+)=|\langle+|\psi\rangle|^2,\qquad P(-)=|\langle-|\psi\rangle|^2 \]`}</p>
+  <p>
+    ここで確率にするのは成分の大きさの 2 乗です。内積そのものは負にも複素数にもなるので、確率とは区別しましょう。
+    たとえば <Ket label="+" /> と <Ket label="−" /> は、0/1 を直接測るとどちらも半々ですが、+ が出る確率はそれぞれ 100% と 0% になります。
+  </p>
+
+  <h2>ハンズオン: H を置いてから読む</h2>
+  <p>
+    回路では、H を適用してから 0/1 を測ると、H の前の状態を +/− 基底で測ったことになります。
+    H は <Ket label="+" /> を <Ket label="0" /> に、<Ket label="−" /> を <Ket label="1" /> に移すのでした。
+    一般の状態でも、H の後の上の振幅が {String.raw`\((\alpha+\beta)/\sqrt{2}\)`}、下が {String.raw`\((\alpha-\beta)/\sqrt{2}\)`} になります。
+    つまり、出力の 0 を +、1 を − の結果として読みます<Sidenote id="basis-inner-product-passive" numbered>図の基底切り替えは状態を変えずに成分を読み直す操作です。一方、回路の H は実際に状態を変えます。H の後に通常の 0/1 測定をすることで、H の前の +/− 成分を読み出せます。</Sidenote>。
+  </p>
+  <p>
+    次の回路は <Ket label="0" /> から Ry(π/3) で準備し、H で読み出す向きを変えます。
+    H の直前では、振幅は約 0.866 と 0.500 です。H の後の 0 の確率はどうなるでしょうか?
+    内積の図で a を角度 90 度・位相 0 度、b を角度 60 度・位相 0 度にして予想し、回路と比べましょう。
+    図の状態を設定する角度は Ry の角度 θ に対応します。最初の実数平面の矢印の角度 t は、その半分の θ/2 です。
+  </p>
+  <qni-webgpu-circuit
+    max-wire-count="1"
+    selected-step="2"
+    show-state-panel="true"
+    palette={'["H","Ry(π/3)","Ry(π/2)","Ry(-π/2)","Amps1","Probability"]'}
+    circuit={'{"cols":[["|0>"],["Ry(π/3)"],["H"],["Amps1"],[1],["Probability"]]}'}
+  ></qni-webgpu-circuit>
+  <p>
+    Amps1 は 1 量子ビットの振幅、Probability は 0/1 の理論上の確率を表示します。どちらも測定ではありません。
+    表示が重ならないように、間を 1 列空けています。最初は H の直後を選択しています。
+    編集後は、最後の表示命令の少し下をクリックして、その位置の状態を確認しましょう。
+  </p>
+  <ol>
+    <li>まずはそのまま、0 が約 93.3%、1 が約 6.7% になることを確認しましょう。これは H の前の状態について、+ と − が出る確率です。振幅は約 0.966 と 0.259 になります。</li>
+    <li>H を回路の外へドラッグしてください。0/1 の確率はどうなるでしょうか? 75% と 25% に戻ることを確認し、先ほどは違う基底で読んでいたことを見比べましょう。</li>
+    <li>H を元の位置に戻し、Ry(π/3) を Ry(π/2) に置き換えてください。準備される状態は <Ket label="+" /> です。H の後が 0 だけになるか、予想してから確認しましょう。</li>
+    <li>余裕のある人は、Ry を Ry(-π/2) に置き換えてください。今度は <Ket label="−" /> が準備されます。H の後が 1 だけになることを、図の内積とも照らし合わせてください。</li>
+  </ol>
+  <p>ここで表示するのは、同じ準備と測定を繰り返すときの理論上の確率です。実機の 1 回の測定で内積の数値が読めるわけではなく、結果は 0 か 1 のどちらかです。</p>
+
+  <h2>確認してみよう</h2>
+  <p>
+    状態が {String.raw`\((|0\rangle+i|1\rangle)/\sqrt{2}\)`} のとき、+ が出る確率はどうなるでしょうか?
+    内積の図で a を <Ket label="+" />、b を角度 90 度・位相 90 度にして確かめましょう。
+    （ヒント: 内積は 0.5+0.5i です。実部と虚部の 2 乗を足します）
+  </p>
+  <orbit-reviewarea color="blue">
+    <orbit-prompt question="0/1 基底で書いた 2 成分の列ベクトルの、上と下は何を表す?" answer="上は |0⟩、下は |1⟩ の複素振幅です。確率そのものではありません。"></orbit-prompt>
+    <orbit-prompt question="内積 ⟨a|b⟩ では、どちらの状態の振幅を複素共役にする?" answer="左側の a です。同じ段どうしを掛けてから足します。"></orbit-prompt>
+    <orbit-prompt question="H の後に 0 が出る確率は、H の前のどの成分から求められる?" answer="+ 成分の大きさの 2 乗です。H の後の 1 は − 成分に対応します。"></orbit-prompt>
+    <orbit-prompt question="⟨+|ψ⟩ = 0.5+0.5i のとき、+ が出る確率は?" answer="50% です。0.5² + 0.5² = 0.5 になります。"></orbit-prompt>
+  </orbit-reviewarea>
+
+  <h2>まとめ</h2>
+  <p>
+    1 量子ビットの状態は、基底を決めると 2 個の複素振幅で表せます。
+    内積は、ある基底の向きの成分を読む道具です。左の振幅を共役にしてから掛けて足し、その大きさの 2 乗を測定確率にします。
+    回路に H を置いてから 0/1 を測るときは、「H の前の +/− 成分を読んでいる」と考えてみましょう。
+  </p>
+  <script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+</TutorialLayout>
+<style>
+  .math-scroll { overflow-x:auto; }
+  ol { max-width:76ch; padding-left:24px; }
+  li + li { margin-top:16px; }
+  @media (min-width:640px) { ol { width:58.333333%; margin-right:auto; } }
+</style>
