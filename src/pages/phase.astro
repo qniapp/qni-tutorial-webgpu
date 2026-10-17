@@ -1,5 +1,6 @@
 ---
 import AmplificationIllustration from '../components/AmplificationIllustration.astro'
+import CircleFigure from '../components/CircleFigure.astro'
 import TutorialLayout from '../layouts/TutorialLayout.astro'
 import Sidenote from '../components/Sidenote.astro'
 import Ket from '../components/Ket.astro'
@@ -10,9 +11,11 @@ const base = import.meta.env.BASE_URL
 
 <p>Qni で円の中にある時計の針のようなものは、量子ビットが持つ位相という角度データを表します。</p>
 
-<div class="mt-5 mb-8 flex justify-center space-x-2 md:mr-auto md:w-7/12">
-  <qubit-circle data-amplitude="-0.20015 + 0.44444i" data-ket="0" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.67819 - 0.54997i" data-ket="1" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
-</div>
+<CircleFigure>
+  <div class="flex justify-center space-x-2">
+    <qubit-circle data-amplitude="-0.20015 + 0.44444i" data-ket="0" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.67819 - 0.54997i" data-ket="1" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
+  </div>
+</CircleFigure>
 
 <p>
   位相は量子ビットが持つある種の回転を表します。 位相は反時計まわりの方向に回転し、-2π (-360°) から
@@ -26,7 +29,7 @@ const base = import.meta.env.BASE_URL
   なので、見た目は違いますが同じ状態を表しています。
 </p>
 
-<div class="mt-5 mb-8 overflow-auto md:mr-auto md:w-7/12">
+<CircleFigure>
   <div class="flex flex-row items-center space-x-4">
     <div class="flex flex-row space-x-2">
       <qubit-circle data-amplitude="0.7071067811865476" data-ket="0" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="-0.7071067811865476i" data-ket="1" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
@@ -38,7 +41,7 @@ const base = import.meta.env.BASE_URL
       <qubit-circle data-amplitude="0.5 + 0.5i" data-ket="0" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle> <qubit-circle data-amplitude="0.5 - 0.5i" data-ket="1" data-size="xl" data-show-popup-amplitude data-show-popup-probability data-show-popup-phase></qubit-circle>
     </div>
   </div>
-</div>
+</CircleFigure>
 
 <p>
   確率と位相は、量子ビットが持つまったく独立した 2 つのプロパティです。

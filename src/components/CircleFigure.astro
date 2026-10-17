@@ -1,0 +1,13 @@
+<div class="circle-figure">
+  <div class="circle-figure-content"><slot /></div>
+</div>
+
+<style>
+  /* Match the prose column, then center the complete static circle diagram.
+     Explorer components own their separate, intentionally left-aligned layout. */
+  .circle-figure { width: 100%; margin: 20px 0 32px; overflow-x: auto; }
+  .circle-figure-content { width: max-content; max-width: 100%; margin-inline: auto; }
+  @media (min-width: 640px) {
+    .circle-figure { width: 58.333333%; }
+  }
+</style>
