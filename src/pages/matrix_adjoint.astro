@@ -15,7 +15,7 @@ const base = import.meta.env.BASE_URL
   <h2>円の変化を、数の表で追う</h2>
   <p>
     X は 2 個の振幅を交換するのでした。入力が <Ket label="0" /> なら、出力はどうなるでしょうか?
-    下の図で X を選び、「入力 |0⟩」を押してみましょう。次に「入力 |1⟩」を押し、青い円がどちらへ移るかを確認してください。
+    下の図の「ゲート」スライダーを X に、「入力の例」スライダーを「入力 |0⟩」に動かしてみましょう。次に「入力の例」を「入力 |1⟩」に動かし、青い円がどちらへ移るかを確認しましょう。
     入力と出力の間の表も見比べてみましょう。円の半径は振幅の大きさ、針は位相を表します。
   </p>
   <MatrixVectorExplorer />
@@ -35,7 +35,7 @@ const base = import.meta.env.BASE_URL
   <h2>出力を 1 行ずつ計算する</h2>
   <p>
     では、両方の振幅が 0 ではないとき、出力はどうなるでしょうか?
-    図の「入力を戻す」を押し、X のまま上の行と下の行を順に選んでください。
+    図の「入力の例」スライダーを「初期の入力」に戻し、X のまま「注目する行」スライダーで 1 行目と 2 行目を順に選びましょう。
     色のついた行の数と、入力の同じ位置の振幅を掛け、2 個の積を足してみましょう。
     X なら上の出力に元の下の振幅、下の出力に元の上の振幅が現れます。
   </p>
@@ -55,14 +55,14 @@ const base = import.meta.env.BASE_URL
 
   <h2>X、Z、H、S を読み比べる</h2>
   <p>
-    今度は入力を <Ket label="1" /> にして、Z と S を順に選んでみましょう。
-    針と半径はどうなるでしょうか? 図で予想を確かめてから、次の表を読んでください。
+    入力が <Ket label="1" /> のとき、Z と S で針と半径はどうなるでしょうか?
+    「入力の例」スライダーを「入力 |1⟩」にし、「ゲート」スライダーで Z と S を順に選んで予想を確かめましょう。それから次の表を読んでください。
     Z は下の振幅に −1 を掛け、S は下の振幅に i を掛けます。どちらも上の振幅は変えません。
     下の針はそれぞれ半回転、反時計回りに 4 分の 1 回転しますが、半径は変わりません。
   </p>
-  <p class="math-display">{String.raw`\[ Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad S=\begin{pmatrix}1&0\\0&i\end{pmatrix} \]`}</p>
+  <p class="math-display">{String.raw`\[ \begin{gathered} Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix} \\ S=\begin{pmatrix}1&0\\0&i\end{pmatrix} \end{gathered} \]`}</p>
   <p>
-    H に切り替えるとどうなるでしょうか? まず「入力 |0⟩」、次に「入力 |1⟩」を押してください。
+    H に切り替えるとどうなるでしょうか? 「ゲート」スライダーを H にし、「入力の例」スライダーで「入力 |0⟩」、次に「入力 |1⟩」を選んで確かめましょう。
     どちらも半径は同じになりますが、後者では下の針が反対を向きます。
     H の左の列は正の振幅 2 個、右の列は下だけが負の振幅です。
   </p>
@@ -76,9 +76,9 @@ const base = import.meta.env.BASE_URL
   <h2>戻す行列を作る</h2>
   <p>
     S で回した針を戻すには、どうすればよいでしょうか?
-    次の図で S を選び、「転置する」「複素共役を取る」の順に押してください。
+    次の図の「調べるユニタリ行列 U」スライダーを S にし、「随伴を作る手順」スライダーを「転置後」「複素共役後（U†）」の順に動かしましょう。
     入力、U の後、戻す操作の後の円を見比べ、最初と最後の針と半径を確認しましょう。
-    次に U = S Ry(π/3) を選ぶと、対角線以外の数の移動も見えます。
+    次に「調べるユニタリ行列 U」スライダーで S Ry(π/3) を選び、同じ手順をたどると、対角線以外の数の移動も見えます。
   </p>
   <AdjointBuilder />
   <p>
@@ -96,12 +96,12 @@ const base = import.meta.env.BASE_URL
     S は対角線以外が 0 なので、転置だけでは変わりません。複素共役を取ると i が −i になります。
     S† は下の振幅に −i を掛けるので、S が掛けた i と合わせて \((-i)i=1\) となり、元に戻ります。
   </p>
-  <p class="math-display">{String.raw`\[ S^\dagger=\begin{pmatrix}1&0\\0&-i\end{pmatrix},\qquad S^\dagger S=\begin{pmatrix}1&0\\0&1\end{pmatrix}=I \]`}</p>
+  <p class="math-display">{String.raw`\[ \begin{gathered} S^\dagger=\begin{pmatrix}1&0\\0&-i\end{pmatrix} \\ S^\dagger S=\begin{pmatrix}1&0\\0&1\end{pmatrix}=I \end{gathered} \]`}</p>
 
   <h2>随伴なら、いつでも戻せる?</h2>
   <p>
     図で Ry や U = S Ry(π/3) に切り替えても、最後の円はどうなるでしょうか?
-    入力の分布角 t も動かして、積が I になり、元の振幅に戻ることを確認しましょう。
+    「随伴を作る手順」スライダーを「複素共役後（U†）」にし、「入力の分布角 t」スライダーも動かして、積が I になり、元の振幅に戻ることを確認しましょう。
     I を単位行列と呼びます。どんな振幅ベクトルに掛けても、その振幅を変えません。
   </p>
   <p>
@@ -140,7 +140,7 @@ const base = import.meta.env.BASE_URL
   <h2>確認してみよう</h2>
   <p>
     S† の右の列は何になるでしょうか? また、実数だけの Ry では、随伴を作る 2 段階のうちどちらで数が変わるでしょうか?
-    予想してから上の 2 個の図で確かめてください。
+    予想してから、上の図の「ゲート」スライダーで S† を、下の図の「調べるユニタリ行列 U」スライダーで Ry(π/3) を選び、「随伴を作る手順」スライダーで変化を確かめましょう。
   </p>
   <orbit-reviewarea color="blue">
     <orbit-prompt question="1 量子ビットのゲート行列の左の列は何を表す?" answer="入力が |0⟩ のときの出力の振幅ベクトルです。右の列は入力が |1⟩ のときの出力です。"></orbit-prompt>
@@ -160,6 +160,7 @@ const base = import.meta.env.BASE_URL
   <script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
 </TutorialLayout>
 <style>
+  @media (max-width:420px) { .math-display { font-size:0.85rem; } }
   ol { max-width:76ch; padding-left:24px; }
   li + li { margin-top:16px; }
   @media (min-width:640px) { ol { width:58.333333%; margin-right:auto; } }

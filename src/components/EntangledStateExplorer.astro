@@ -7,8 +7,8 @@ const { view = 'table' } = Astro.props
 
 <entangled-state-explorer data-view={view} data-original-image>
   <p class="family">|ψ(t)⟩ = (|00⟩ + cos(t)|01⟩ + sin(t)|11⟩) / √2</p>
-  <p class="hint">状態ラベルは |q1 q0⟩ です。角度を変えて、{view === 'table' ? '振幅と積への分解' : 'q0 だけを見た状態'}を確かめましょう。</p>
-  <label>角度 t（0 から π/2、刻み π/120）
+  <p class="hint">状態ラベルは |q1 q0⟩ です。角度を大きくすると、{view === 'table' ? '交差する積の差は' : 'q0 の矢印の長さは'}どうなるでしょうか? 「角度 t」スライダーを動かして確かめましょう。</p>
+  <label>角度 t：<span data-angle-label>0</span>（0 から π/2、刻み π/120）
     <input data-angle type="range" min="0" max="60" step="1" value="0" aria-valuetext="t = 0" />
   </label>
   {view === 'table' ? (
@@ -64,15 +64,10 @@ const { view = 'table' } = Astro.props
       <p class="hint">測定確率は同じままでも、ブロッホベクトルの長さは変わります。</p>
     </>
   )}
-  <div class="presets" aria-label="角度の例">
-    <button type="button" data-n="0" aria-pressed="true">最初 (0)</button>
-    <button type="button" data-n="30" aria-pressed="false">中間 (π/4)</button>
-    <button type="button" data-n="60" aria-pressed="false">ベル状態 (π/2)</button>
-  </div>
   <output aria-live="polite" aria-atomic="true">{view === 'table'
     ? 't = 0\na00 × a11 = 0.0000\na01 × a10 = 0.0000\na00 × a11 − a01 × a10 = sin(t)/2 = 0.0000\n積に分けられる（差は正確に 0）。\n確率 |00⟩：50.0%、|01⟩：50.0%\n確率 |10⟩：0.0%、|11⟩：0.0%\n確率の合計：100.0%\n|+⟩q0 と |0⟩q1 の積状態です。'
     : 't = 0\n長さ = cos(t) = 1.0000\nρ01 = cos(t)/2 = 0.5000\nq0 の測定確率：0 は 50%、1 は 50%\n|+⟩q0 と |0⟩q1 の積状態です。'}</output>
-  <p class="hint">スライダーやボタンで操作できます。図を左右にドラッグしても角度を変えられます（左が 0、右が π/2）。</p>
+  <p class="hint">「角度 t」スライダーの左端は 0、中間は π/4、右端はベル状態の π/2 です。</p>
 </entangled-state-explorer>
 
 <script>
@@ -105,6 +100,7 @@ const { view = 'table' } = Astro.props
         const { cos, amplitudes, determinant } = EntangledStateExplorer.state(n)
         const angle = EntangledStateExplorer.angle(n)
         input.setAttribute('aria-valuetext', `t = ${angle}`)
+        this.querySelector('[data-angle-label]')!.textContent = angle
         const endpoint = n === 0 ? '|+⟩q0 と |0⟩q1 の積状態です。'
           : n === 60 ? 'Bell 状態 (|00⟩ + |11⟩)/√2 です。' : ''
         let lines: string[]
@@ -133,41 +129,8 @@ const { view = 'table' } = Astro.props
         }
         if (endpoint) lines.push(endpoint)
         this.querySelector('output')!.textContent = lines.join('\n')
-        this.querySelectorAll<HTMLButtonElement>('button[data-n]').forEach(button => {
-          button.setAttribute('aria-pressed', String(Number(button.dataset.n) === n))
-        })
-      }
-      const set = (n: number) => {
-        input.value = String(Math.max(0, Math.min(60, Math.round(n))))
-        update()
       }
       input.addEventListener('input', update)
-      this.querySelectorAll<HTMLButtonElement>('button[data-n]').forEach(button => {
-        button.addEventListener('click', () => set(Number(button.dataset.n)))
-      })
-      const move = (event: PointerEvent) => {
-        const matrix = svg.getScreenCTM()
-        if (!matrix) return
-        const point = svg.createSVGPoint()
-        point.x = event.clientX; point.y = event.clientY
-        const position = point.matrixTransform(matrix.inverse())
-        set((position.x - 60) / 240 * 60)
-      }
-      svg.addEventListener('pointerdown', event => {
-        if (!event.isPrimary || event.button !== 0) return
-        event.preventDefault()
-        input.focus({ preventScroll: true })
-        svg.setPointerCapture(event.pointerId)
-        move(event)
-      })
-      svg.addEventListener('pointermove', event => {
-        if (svg.hasPointerCapture(event.pointerId)) move(event)
-      })
-      for (const name of ['pointerup', 'pointercancel'] as const) {
-        svg.addEventListener(name, event => {
-          if (svg.hasPointerCapture(event.pointerId)) svg.releasePointerCapture(event.pointerId)
-        })
-      }
       update()
     }
   }
@@ -181,9 +144,11 @@ const { view = 'table' } = Astro.props
   .family { margin-top:0; }
   .hint { color:#6F6E69; font-size:0.9em; line-height:1.6; }
   label { display:block; }
-  input { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0; accent-color:#24837B; }
+  input[type="range"] { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0; accent-color:#24837B; outline:none; }
+  input[type="range"]:focus, input[type="range"]:focus-visible { outline:none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow:0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow:0 0 0 3px #24837B; }
   svg { display:block; width:100%; height:auto; margin:auto; }
-  [data-diagram] { touch-action:none; user-select:none; cursor:ew-resize; }
   text { fill:#100F0F; font:14px system-ui,sans-serif; }
   .surface { fill:#FFFCF0; }
   .disc { fill:#92BFDB; }
@@ -194,11 +159,5 @@ const { view = 'table' } = Astro.props
   .diagonals { font-size:0.9em; line-height:1.8; }
   .positive { color:#205EA6; text-decoration:underline solid; text-underline-offset:4px; }
   .negative { color:#24837B; text-decoration:underline dashed; text-underline-offset:4px; }
-  .presets { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; }
-  button { min-height:44px; min-width:44px; padding:6px 12px; border:1px solid #6F6E69; border-radius:6px; background:#FFFCF0; color:inherit; font:inherit; cursor:pointer; }
-  button:hover { background:#F2F0E5; }
-  button[aria-pressed=true] { background:#DDF1EF; border-color:#24837B; }
-  button:active { background:#BFE1DD; }
-  button:focus-visible, input:focus-visible { outline:2px solid #24837B; outline-offset:3px; }
   output { display:block; white-space:pre-line; margin:16px 0; padding:12px; border-radius:6px; background:#F2F0E5; font-variant-numeric:tabular-nums; line-height:1.7; }
 </style>

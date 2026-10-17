@@ -4,11 +4,11 @@ const b = [Math.cos(Math.PI / 4), Math.sin(Math.PI / 4)]
 const percent = (value: number) => `${Number((value * 100).toFixed(2))}%`
 ---
 <tensor-product-explorer data-original-image>
-  <p>|00⟩ から出発し、q0 と q1 にそれぞれ Ry をかけます。角度を変えて、振幅の積を確認しましょう。</p>
-  <label>q0 の回転角 θ0（0 から π、刻み π/60）
+  <p>|00⟩ から出発し、q0 と q1 にそれぞれ Ry をかけます。q0 だけを回すと、各行の振幅はどうなるでしょうか? 「q0 の回転角 θ0」スライダーを動かし、左右の振幅の変化を確認しましょう。</p>
+  <label>q0 の回転角 θ0：<span data-angle-label="0">π/3</span>（0 から π、刻み π/60）
     <input data-angle="0" type="range" min="0" max="60" step="1" value="20" aria-valuetext="θ0 = π/3" />
   </label>
-  <label>q1 の回転角 θ1（0 から π、刻み π/60）
+  <label>q1 の回転角 θ1：<span data-angle-label="1">π/2</span>（0 から π、刻み π/60）
     <input data-angle="1" type="range" min="0" max="60" step="1" value="30" aria-valuetext="θ1 = π/2" />
   </label>
   <output aria-live="polite" aria-atomic="true">
@@ -35,7 +35,7 @@ const percent = (value: number) => `${Number((value * 100).toFixed(2))}%`
     </tr>)}</tbody>
   </table>
   <p class="hint">外側の円は振幅 1。塗った円の半径は |b行 × a列|、面積は確率です。</p>
-  <button type="button" data-reset>θ0 = π/3、θ1 = π/2 に戻す</button>
+  <p class="hint">初期値は「q0 の回転角 θ0」が π/3、「q1 の回転角 θ1」が π/2 です。</p>
 </tensor-product-explorer>
 
 <script>
@@ -56,6 +56,7 @@ const percent = (value: number) => `${Number((value * 100).toFixed(2))}%`
           const n = Number(input.value), theta = n * Math.PI / 60
           const values = [n === 60 ? 0 : Math.cos(theta / 2), Math.sin(theta / 2)]
           input.setAttribute('aria-valuetext', `θ${i} = ${angle(n)}`)
+          this.querySelector(`[data-angle-label="${i}"]`)!.textContent = angle(n)
           const letter = i === 0 ? 'a' : 'b'
           this.querySelector(`[data-single="${i}"]`)!.textContent = `q${i}：θ${i} = ${angle(n)}、${letter}0 = cos(θ${i}/2) = ${values[0].toFixed(4)}、${letter}1 = sin(θ${i}/2) = ${values[1].toFixed(4)}`
           return values
@@ -74,9 +75,6 @@ const percent = (value: number) => `${Number((value * 100).toFixed(2))}%`
         this.querySelector('[data-summary]')!.textContent = `${summary.join('；')}。確率の合計 = ${percent(sum)}`
       }
       inputs.forEach(input => input.addEventListener('input', update))
-      this.querySelector('[data-reset]')!.addEventListener('click', () => {
-        inputs[0].value = '20'; inputs[1].value = '30'; update()
-      })
       update()
     }
   }
@@ -88,7 +86,10 @@ const percent = (value: number) => `${Number((value * 100).toFixed(2))}%`
   p { line-height:1.6; }
   label, output, output > span, td > span { display:block; }
   label { margin-top:0.5rem; }
-  input { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0; accent-color:#24837B; }
+  input[type="range"] { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0; accent-color:#24837B; outline:none; }
+  input[type="range"]:focus, input[type="range"]:focus-visible { outline:none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow:0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow:0 0 0 3px #24837B; }
   output { margin:1rem 0; padding:0.75rem; background:#F2F0E5; border-radius:6px; line-height:1.7; overflow-wrap:anywhere; font-variant-numeric:tabular-nums; }
   table { width:100%; table-layout:fixed; border-collapse:collapse; font-variant-numeric:tabular-nums; }
   caption { margin-bottom:0.5rem; line-height:1.6; }
@@ -102,8 +103,4 @@ const percent = (value: number) => `${Number((value * 100).toFixed(2))}%`
   .rim { fill:none; stroke:#4385BE; }
   text { fill:#100F0F; font:16px system-ui,sans-serif; }
   .hint { color:#6F6E69; font-size:0.9em; }
-  button { min-height:44px; padding:0.5rem 0.75rem; border:1px solid #4385BE; border-radius:4px; background:#FFFCF0; color:inherit; font:inherit; cursor:pointer; }
-  button:hover { background:#DDF1EF; }
-  button:active { border-color:#100F0F; }
-  input:focus-visible, button:focus-visible { outline:2px solid #24837B; outline-offset:3px; }
 </style>

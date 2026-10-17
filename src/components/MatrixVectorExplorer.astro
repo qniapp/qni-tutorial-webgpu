@@ -6,20 +6,16 @@ const state = C.state(100, 60)
 ---
 <matrix-vector-explorer>
   <p>ゲートの行列を、入力の縦ベクトルに掛けてみましょう。各行の2つの積を足すと、出力の振幅になります。</p>
-  <label>ゲート
-    <select data-gate aria-label="適用するゲート">
-      {['X', 'Z', 'H', 'S', 'S†', 'Ry'].map(gate => <option selected={gate === 'H'}>{gate}</option>)}
-    </select>
+  <label>ゲート：<span data-gate-name>H</span>
+    <input data-gate type="range" min="0" max="5" step="1" value="2" aria-valuetext="H" />
   </label>
   <label>Ry の回転角 θ（度）<input data-theta type="range" min="0" max="360" step="1" value="60" disabled /></label>
   <label>入力の分布角 t（度）<input data-population type="range" min="0" max="180" step="1" value="100" /></label>
   <label>入力の相対位相 φ（度）<input data-phase type="range" min="-180" max="180" step="1" value="60" /></label>
   <p class="hint">α = cos(t/2)、β = sin(t/2)e^(iφ) です。|α|² + |β|² = 1 になる入力を使います。</p>
-  <div class="buttons" aria-label="入力の例">
-    <button type="button" data-basis="0">入力 |0⟩</button>
-    <button type="button" data-basis="1">入力 |1⟩</button>
-    <button type="button" data-reset>入力を戻す</button>
-  </div>
+  <label>入力の例：<span data-example-name>初期の入力</span>
+    <input data-example type="range" min="0" max="3" step="1" value="1" aria-valuetext="初期の入力" />
+  </label>
   <figure data-original-image>
     <div class="states">
       {['入力', 'ゲート適用後'].map((label, index) => <div>
@@ -43,10 +39,9 @@ const state = C.state(100, 60)
       {state.map((z, i) => <span data-input={i}>{C.format(z)}</span>)}
     </div></div>
   </div>
-  <div class="buttons" aria-label="注目する行">
-    <button type="button" data-row="0" aria-pressed="true">1 行目（α′）に注目</button>
-    <button type="button" data-row="1" aria-pressed="false">2 行目（β′）に注目</button>
-  </div>
+  <label>注目する行：<span data-row-name>1 行目（α′）</span>
+    <input data-row type="range" min="0" max="1" step="1" value="0" aria-valuetext="1 行目（α′）" />
+  </label>
   <output aria-live="polite" aria-atomic="true">
     <span data-angles></span>
     <span data-work="0"></span><span data-work="1"></span>
@@ -61,16 +56,25 @@ const state = C.state(100, 60)
     connectedCallback() {
       if (this.dataset.ready) return
       this.dataset.ready = 'true'
-      const gate = this.querySelector<HTMLSelectElement>('[data-gate]')!
+      const gate = this.querySelector<HTMLInputElement>('[data-gate]')!
       const input = (name: string) => this.querySelector<HTMLInputElement>(`[data-${name}]`)!
       const t = input('population'), phase = input('phase'), theta = input('theta')
-      let row: 0 | 1 = 0
+      const rowInput = input('row'), example = input('example')
+      const gates: GateName[] = ['X', 'Z', 'H', 'S', 'S†', 'Ry']
+      const examples = ['自由入力', '初期の入力', '入力 |0⟩', '入力 |1⟩']
       const update = () => {
-        theta.disabled = gate.value !== 'Ry'
+        const gateName = gates[Number(gate.value)]
+        const row = Number(rowInput.value) as 0 | 1
+        const rowName = ['1 行目（α′）', '2 行目（β′）'][row]
+        for (const [control, name, label] of [[gate, 'gate', gateName], [rowInput, 'row', rowName], [example, 'example', examples[Number(example.value)]]] as const) {
+          control.setAttribute('aria-valuetext', label)
+          this.querySelector(`[data-${name}-name]`)!.textContent = label
+        }
+        theta.disabled = gateName !== 'Ry'
         for (const slider of [t, phase, theta]) slider.setAttribute('aria-valuetext', `${slider.value} 度`)
-        const matrix = M.gate(gate.value as GateName, Number(theta.value) * Math.PI / 180)
+        const matrix = M.gate(gateName, Number(theta.value) * Math.PI / 180)
         const state = C.state(Number(t.value), Number(phase.value)), result = M.apply(matrix, state)
-        this.querySelector('[data-angles]')!.textContent = `t = ${t.value}°、φ = ${phase.value}°${gate.value === 'Ry' ? `、θ = ${theta.value}°` : ''}`
+        this.querySelector('[data-angles]')!.textContent = `t = ${t.value}°、φ = ${phase.value}°${gateName === 'Ry' ? `、θ = ${theta.value}°` : ''}`
         matrix.flat().forEach((z, i) => {
           const cell = this.querySelector<HTMLElement>(`[data-cell="${i}"]`)!
           cell.textContent = C.format(z); cell.classList.toggle('selected', Math.floor(i / 2) === row)
@@ -85,14 +89,16 @@ const state = C.state(100, 60)
           work.textContent = `${r + 1} 行目：${r === 0 ? 'α′' : 'β′'} ≈ (${C.format(matrix[r][0])}) × (${C.format(state[0])}) + (${C.format(matrix[r][1])}) × (${C.format(state[1])})\n≈ (${C.format(products[0])}) + (${C.format(products[1])}) ≈ ${C.format(result[r])}`
           work.classList.toggle('selected', r === row)
         }
-        this.querySelectorAll<HTMLButtonElement>('[data-row]').forEach(button => button.setAttribute('aria-pressed', String(Number(button.dataset.row) === row)))
         paintState(this.querySelector<SVGSVGElement>('[data-state="0"]')!, state, '入力')
         paintState(this.querySelector<SVGSVGElement>('[data-state="1"]')!, result, 'ゲート適用後')
       }
-      this.querySelectorAll('input, select').forEach(control => control.addEventListener('input', update))
-      this.querySelectorAll<HTMLButtonElement>('[data-row]').forEach(button => button.addEventListener('click', () => { row = Number(button.dataset.row) as 0 | 1; update() }))
-      this.querySelectorAll<HTMLButtonElement>('[data-basis]').forEach(button => button.addEventListener('click', () => { t.value = button.dataset.basis === '0' ? '0' : '180'; phase.value = '0'; update() }))
-      this.querySelector('[data-reset]')!.addEventListener('click', () => { t.value = '100'; phase.value = '60'; update() })
+      this.querySelectorAll('input').forEach(control => control.addEventListener('input', () => {
+        if (control === example) {
+          const preset = Number(example.value)
+          if (preset > 0) { t.value = ['100', '0', '180'][preset - 1]; phase.value = preset === 1 ? '60' : '0' }
+        } else if (control === t || control === phase) example.value = '0'
+        update()
+      }))
       update()
     }
   }
@@ -102,14 +108,11 @@ const state = C.state(100, 60)
 <style>
   matrix-vector-explorer { display:block; box-sizing:border-box; width:100%; max-width:680px; margin:1.5rem auto; padding:1rem; background:#FFFCF0; color:#100F0F; border:1px solid #4385BE; border-radius:8px; }
   p { line-height:1.7; } label, output, output > span { display:block; }
-  input, select { box-sizing:border-box; width:100%; min-height:44px; margin:0 0 8px; accent-color:#24837B; font:inherit; color:inherit; }
-  select, button { background:#FFFCF0; border:1px solid #4385BE; border-radius:4px; }
-  button { min-height:44px; padding:8px 12px; color:inherit; font:inherit; cursor:pointer; }
-  .buttons { display:flex; flex-wrap:wrap; gap:8px; }
-  button:hover { background:#E1ECEB; } button:active { border-color:#100F0F; }
+  input[type="range"] { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0 0 8px; accent-color:#24837B; outline:none; }
+  input[type="range"]:focus, input[type="range"]:focus-visible { outline:none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow:0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow:0 0 0 3px #24837B; }
   input:disabled { opacity:0.5; cursor:not-allowed; }
-  :is(input, select, button):focus-visible { outline:2px solid #24837B; outline-offset:3px; }
-  button[aria-pressed=true] { background:#DDF1EF; border-color:#24837B; }
   figure { margin:1rem 0; } .states { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; text-align:center; }
   svg { display:block; width:100%; height:auto; } .surface { fill:#FFFCF0; } .disc { fill:#92BFDB; } .rim { fill:none; stroke:#4385BE; } line { stroke:#100F0F; stroke-width:2; } text { fill:#100F0F; font:16px system-ui,sans-serif; }
   .calculation { display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:12px; margin-bottom:16px; }

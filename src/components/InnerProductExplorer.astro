@@ -8,16 +8,14 @@ const id = `inner-product-${crypto.randomUUID()}`
     {['a', 'b'].map(state => <fieldset>
       <legend>{state === 'a' ? '左の状態 a' : '右の状態 b'}</legend>
       <label for={`${id}-${state}-t`}>角度 θ <span data-value={`${state}-t`}>90°</span></label>
-      <input id={`${id}-${state}-t`} data-control={`${state}-t`} type="range" min="0" max="180" step="1" value="90" />
+      <input id={`${id}-${state}-t`} data-control={`${state}-t`} type="range" min="0" max="180" step="1" value="90" aria-valuetext="90 度" />
       <label for={`${id}-${state}-phi`}>相対位相 φ <span data-value={`${state}-phi`}>0°</span></label>
-      <input id={`${id}-${state}-phi`} data-control={`${state}-phi`} type="range" min="-180" max="180" step="1" value="0" />
+      <input id={`${id}-${state}-phi`} data-control={`${state}-phi`} type="range" min="-180" max="180" step="1" value="0" aria-valuetext="0 度" />
     </fieldset>)}
   </div>
-  <div class="presets" role="group" aria-label="状態の組み合わせの例">
-    <button type="button" data-preset="phase">同じ状態・位相 90°</button>
-    <button type="button" data-preset="opposite">a = |+⟩、b = |−⟩</button>
-    <button type="button" data-preset="reset" aria-pressed="true">a と b を |+⟩ に戻す</button>
-  </div>
+  <label class="preset-label">状態の組み合わせの例：<span data-choice>a と b が |+⟩</span>
+    <input data-preset type="range" min="0" max="3" step="1" value="1" aria-valuetext="a と b が |+⟩" />
+  </label>
   <svg viewBox="0 0 360 330" role="img" aria-labelledby={`${id}-title`}>
     <title id={`${id}-title`}>内積の複素平面です。第1項は 0.5、第2項は 0.5、和は 1 です。</title>
     <defs>
@@ -50,18 +48,18 @@ b = (0.7071, 0.7071)
 第2項: conj(a₁)b₁ = 0.5
 和: ⟨a|b⟩ = 0.5 + 0.5 = 1
 絶対値の2乗: |⟨a|b⟩|² = 1² + 0² = 1（100%）</output>
-  <figcaption>スライダーはマウス、タッチ、矢印キーで操作できます。矢印は第1項の先に第2項をつなぎ、破線はその和を表します。同じ状態を選ぶと、位相があっても内積は 1 になることを確認しましょう。</figcaption>
+  <figcaption>同じ状態に位相があると、内積はどうなるでしょうか? 予想してから「状態の組み合わせの例」スライダーを「同じ状態・位相 90°」に動かし、和が 1 になることを確認しましょう。矢印は第1項の先に第2項をつなぎ、破線はその和を表します。</figcaption>
 </figure>
 <script>
   import { InnerProductMath as M } from './basis-inner-product-math'
 
   for (const root of document.querySelectorAll<HTMLElement>('[data-inner-product]')) {
-    const controls = Array.from(root.querySelectorAll<HTMLInputElement>('input[type="range"]'))
+    const controls = Array.from(root.querySelectorAll<HTMLInputElement>('input[data-control]'))
     const value = (name: string) => Number(controls.find(control => control.dataset.control === name)!.value)
-    const presets: Record<string, number[]> = {
-      phase: [90, 90, 90, 90], opposite: [90, 0, 90, 180], reset: [90, 0, 90, 0],
-    }
-    function paint() {
+    const preset = root.querySelector<HTMLInputElement>('[data-preset]')!
+    const choices = ['自由な組み合わせ', 'a と b が |+⟩', '同じ状態・位相 90°', 'a = |+⟩、b = |−⟩']
+    const presets = [null, [90, 0, 90, 0], [90, 90, 90, 90], [90, 0, 90, 180]]
+    function paint(selectedChoice?: number) {
       const a = M.state(value('a-t'), value('a-phi'))
       const b = M.state(value('b-t'), value('b-phi'))
       const left = [M.conj(a[0]), M.conj(a[1])]
@@ -97,15 +95,17 @@ b = (0.7071, 0.7071)
         `和: ⟨a|b⟩ = (${M.format(first)}) + (${M.format(second)}) = ${M.format(sum)}`,
         `絶対値の2乗: |⟨a|b⟩|² = (${real(sum[0])})² + (${real(sum[1])})² = ${real(probability)}（${percent}）`,
       ].join('\n')
-      root.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach(button => {
-        button.setAttribute('aria-pressed', String(presets[button.dataset.preset!]!.every((n, i) => n === Number(controls[i].value))))
-      })
+      const choice = selectedChoice ?? Math.max(0, presets.findIndex(values => values?.every((n, i) => n === Number(controls[i].value))))
+      preset.value = String(choice)
+      preset.setAttribute('aria-valuetext', choices[choice])
+      root.querySelector('[data-choice]')!.textContent = choices[choice]
     }
-    controls.forEach(control => control.addEventListener('input', paint))
-    root.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach(button => button.addEventListener('click', () => {
-      presets[button.dataset.preset!]!.forEach((n, i) => { controls[i].value = String(n) })
-      paint()
-    }))
+    controls.forEach(control => control.addEventListener('input', () => paint()))
+    preset.addEventListener('input', () => {
+      const choice = Number(preset.value)
+      presets[choice]?.forEach((n, i) => { controls[i].value = String(n) })
+      paint(choice)
+    })
     paint()
   }
 </script>
@@ -117,12 +117,11 @@ b = (0.7071, 0.7071)
   fieldset { min-width:0; margin:0; padding:12px; border:1px solid #6F6E69; border-radius:6px; }
   legend { padding:0 4px; }
   label { display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px; }
-  input[type=range] { display:block; box-sizing:border-box; width:100%; min-width:0; height:44px; margin:0; accent-color:#24837B; cursor:pointer; }
-  .presets { display:flex; flex-wrap:wrap; gap:8px; margin:16px 0; }
-  button { min-height:44px; max-width:100%; padding:6px 12px; border:1px solid #6F6E69; border-radius:6px; background:#FFFCF0; color:inherit; font:inherit; cursor:pointer; }
-  button:hover { border-color:#24837B; background:#F2F0E5; }
-  button:active, button[aria-pressed=true] { background:#DDF1EF; border-color:#24837B; }
-  button:focus-visible, input:focus-visible { outline:2px solid #24837B; outline-offset:3px; }
+  input[type="range"] { display: block; box-sizing: border-box; width: 100%; min-width: 0; min-height: 44px; margin: 0; accent-color: #24837B; outline: none; }
+  input[type="range"]:focus, input[type="range"]:focus-visible { outline: none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px #24837B; }
+  .preset-label { display: block; margin: 16px 0; }
   svg { display:block; width:100%; max-width:400px; height:auto; margin:auto; }
   svg text { font:14px system-ui,sans-serif; fill:#6F6E69; }
   .unit-circle { fill:none; stroke:#DAD8CE; stroke-width:2; }

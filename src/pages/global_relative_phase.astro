@@ -18,7 +18,7 @@ const base = import.meta.env.BASE_URL
     下の図は、<Ket label="0" /> と <Ket label="1" /> の振幅がどちらも約 0.707 の状態から始めます。
     各円の塗りつぶした部分の半径が振幅の大きさ、面積が確率に対応します。横の軸は実部、縦の軸は虚部です。
     2 本の針を同じ角度だけ回すと、確率はどうなるでしょうか?
-    まず予想し、π/2 と π のボタンを押してみましょう。円の面積と「そのまま測る」の棒を見比べてください。
+    まず予想し、「全体位相」スライダーを 90 度（π/2）、180 度（π）の順に動かしましょう。円の面積と「そのまま測る」の棒が変わらないことを確認しましょう。
   </p>
   <PhaseComparisonExplorer mode="global" />
   <p>
@@ -27,14 +27,14 @@ const base = import.meta.env.BASE_URL
     このように、すべての振幅に共通する位相を全体位相と呼びます。
     図では、もとの 2 個の振幅に同じ数を掛けています。
   </p>
-  <p class="math-display">{String.raw`\[ e^{i\varphi}=\cos\varphi+i\sin\varphi, \qquad |e^{i\varphi}|=1 \]`}</p>
+  <p class="math-display">{String.raw`\[ \begin{gathered} e^{i\varphi}=\cos\varphi+i\sin\varphi \\ |e^{i\varphi}|=1 \end{gathered} \]`}</p>
   <p>
     この数の大きさは 1 なので、掛けても長さは変わりません。複素平面では、反時計回りに角度 φ だけ回すことに対応します。
     一般に、2 個の振幅を α、β とすると、全体位相の変更は次のように書けます。
   </p>
-  <p class="math-display">{String.raw`\[ (\alpha,\beta)\ \longrightarrow\ (e^{i\varphi}\alpha,e^{i\varphi}\beta) \]`}</p>
+  <p class="math-display">{String.raw`\[ \begin{gathered} (\alpha,\beta) \\ \downarrow \\ (e^{i\varphi}\alpha,e^{i\varphi}\beta) \end{gathered} \]`}</p>
   <p>
-    では、測る前に H を置いた場合はどうなるでしょうか? 図の「H の後に測る」も見ながら、スライダーを一周させてみましょう。
+    では、測る前に H を置いた場合はどうなるでしょうか? 予想してから「全体位相」スライダーを 0 度から 360 度まで動かし、「H の後に測る」の棒を確認しましょう。
     この例では、H の後も常に 0 が 100% です。
     実は、全体位相だけが異なる状態は、そのままの測定だけでなく、同じゲートを続けてから行うどの測定でも区別できません。
     ゲートで振幅を組み合わせた後にも、同じ係数が全体に残るためです。円の針の表示は違っても、測定から得られる情報は同じなのです。
@@ -45,7 +45,7 @@ const base = import.meta.env.BASE_URL
     次は <Ket label="0" /> の針を右向きに固定し、<Ket label="1" /> の針だけを回します。
     2 本の針の角度差を相対位相と呼びます。ここでは、その角度差が φ です。
     片方だけを回すと、確率はどうなるでしょうか?
-    下の図で 0、π/2、π の順に切り替え、「そのまま測る」と「H の後に測る」を比べてください。
+    予想してから「相対位相」スライダーを 0 度、90 度（π/2）、180 度（π）の順に動かし、「そのまま測る」と「H の後に測る」の棒を比べましょう。
   </p>
   <PhaseComparisonExplorer mode="relative" />
   <p>
@@ -61,18 +61,18 @@ const base = import.meta.env.BASE_URL
     <Ket label="1" /> の振幅は {String.raw`\(e^{i\varphi}/\sqrt{2}\)`} です。
     H は、2 個の振幅の和と差を取り、それぞれを {String.raw`\(\sqrt{2}\)`} で割ります。
   </p>
-  <p class="math-display">{String.raw`\[ \alpha'=\frac{1+e^{i\varphi}}{2}, \qquad \beta'=\frac{1-e^{i\varphi}}{2} \]`}</p>
+  <p class="math-display">{String.raw`\[ \begin{gathered} \alpha'=\frac{1+e^{i\varphi}}{2} \\ \beta'=\frac{1-e^{i\varphi}}{2} \end{gathered} \]`}</p>
   <p>
     φ が 0 なら、引き算の側は 0 になります。φ が π なら {String.raw`\(e^{i\pi}=-1\)`} なので、足し算の側が 0 になります。
     このように、振幅を足し合わせた結果が強め合ったり打ち消し合ったりすることを干渉と呼びます。
     足すのは確率ではなく、向きを持つ振幅であることに注意してください。
     それぞれの大きさの 2 乗を求めると、図の棒に使った確率になります。
   </p>
-  <p class="math-display">{String.raw`\[ P(0)=\cos^2(\varphi/2), \qquad P(1)=\sin^2(\varphi/2) \]`}</p>
+  <p class="math-display">{String.raw`\[ \begin{gathered} P(0)=\cos^2(\varphi/2) \\ P(1)=\sin^2(\varphi/2) \end{gathered} \]`}</p>
   <p>
     この式は、今回のように等しい振幅から片方だけを回し、H を通した場合の式です。
     全体位相を変える操作と、片方だけを回す操作は同じではありません。
-    全体位相の図でも π を押し、相対位相の図の π と比べてみましょう。H の後の結果は同じでしょうか?
+    H の後の結果は同じでしょうか? 予想してから「全体位相」と「相対位相」のスライダーをそれぞれ 180 度（π）に合わせ、H の後の棒の違いを確認しましょう。
   </p>
 
   <h2>ハンズオン</h2>
@@ -110,7 +110,7 @@ const base = import.meta.env.BASE_URL
   <h2>確認してみよう</h2>
   <p>
     両方の針を π/2 回した場合と、右の針だけを π/2 回した場合では、H の後はどうなるでしょうか?
-    予想してから、2 つの図を同じ角度に合わせて確認しましょう。
+    予想してから、「全体位相」と「相対位相」のスライダーをそれぞれ 90 度に合わせ、H の後の確率を確認しましょう。
   </p>
   <orbit-reviewarea color="blue">
     <orbit-prompt cloze="すべての振幅に同じ位相を掛ける変更を{全体位相}の変更と呼びます。"></orbit-prompt>

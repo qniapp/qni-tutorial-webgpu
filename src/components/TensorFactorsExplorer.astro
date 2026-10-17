@@ -1,10 +1,10 @@
 ---
 const rows = [0.8, 0.6]
 const cols = [0.6, 0.8]
-const cells = rows.flatMap((b, r) => cols.map((a, c) => ({ r, c, a, b, value: b * a, key: `${r}${c}` })))
+const cells = rows.flatMap((b, r) => cols.map((a, c) => ({ r, c, value: b * a, key: `${r}${c}` })))
 ---
 <tensor-factors-explorer data-original-image>
-  <p>q1 = (0.8, 0.6)、q0 = (0.6, 0.8) の積を見ていきましょう。セルに触れるか、下のボタンを選ぶと、掛け合わせる行と列がわかります。</p>
+  <p>q1 = (0.8, 0.6)、q0 = (0.6, 0.8) の積を見ていきましょう。|01⟩ と |10⟩ の振幅はどうなるでしょうか? 「振幅セル」スライダーを動かして、掛け合わせる行と列を確認しましょう。</p>
   <svg viewBox="0 0 420 390" role="img" aria-label="行は q1 の b0 = 0.8、b1 = 0.6。列は q0 の a0 = 0.6、a1 = 0.8。各セルの振幅は行の因子と列の因子の積です。">
     <text x="270" y="22" text-anchor="middle">列：q0 = (a0, a1)</text>
     {cols.map((a, c) => <g data-col={c} data-selected={c === 1 ? 'true' : 'false'}>
@@ -26,13 +26,11 @@ const cells = rows.flatMap((b, r) => cols.map((a, c) => ({ r, c, a, b, value: b 
     <path data-col-line class="connector" d="M340 86 V127" />
     <text x="270" y="382" text-anchor="middle">振幅 = b行 × a列</text>
   </svg>
-  <div class="choices" role="group" aria-label="振幅セルを選択。上の行は q1 = 0、下の行は q1 = 1、左の列は q0 = 0、右の列は q0 = 1。">
-    {cells.map(({ key, r, c, a, b, value }) => <button type="button" data-select={key} aria-pressed={key === '01' ? 'true' : 'false'} aria-label={`|${key}⟩、q1 = ${r} の b${r} = ${b} と q0 = ${c} の a${c} = ${a}。振幅 ${value.toFixed(2)}`}>
-      |{key}⟩：{value.toFixed(2)}
-    </button>)}
-  </div>
+  <label>振幅セル：<span data-choice>|01⟩</span>（左から |00⟩、|01⟩、|10⟩、|11⟩）
+    <input data-select type="range" min="0" max="3" step="1" value="1" aria-valuetext="|01⟩、q1 = 0、q0 = 1" />
+  </label>
   <output aria-live="polite" aria-atomic="true">|01⟩：q1 = 0 の行因子 b0 = 0.8 × q0 = 1 の列因子 a1 = 0.8。振幅 = 0.8 × 0.8 = 0.64、確率 = 0.64² = 40.96%</output>
-  <p class="hint">塗った円の半径は振幅の大きさ、面積は確率を表します。Tab キーでボタンに移動しても選べます。</p>
+  <p class="hint">塗った円の半径は振幅の大きさ、面積は確率を表します。「振幅セル」スライダーの各位置は、表を上の行から読んだ順に対応します。</p>
 </tensor-factors-explorer>
 
 <script>
@@ -41,23 +39,22 @@ const cells = rows.flatMap((b, r) => cols.map((a, c) => ({ r, c, a, b, value: b 
       if (this.dataset.ready) return
       this.dataset.ready = 'true'
       const rows = [0.8, 0.6], cols = [0.6, 0.8]
-      const select = (key: string) => {
+      const input = this.querySelector<HTMLInputElement>('[data-select]')!
+      const select = () => {
+        const key = Number(input.value).toString(2).padStart(2, '0')
         const r = Number(key[0]), c = Number(key[1])
         const b = rows[r], a = cols[c], amplitude = b * a
         this.querySelectorAll<SVGElement>('[data-row]').forEach(node => node.dataset.selected = String(node.dataset.row === String(r)))
         this.querySelectorAll<SVGElement>('[data-col]').forEach(node => node.dataset.selected = String(node.dataset.col === String(c)))
         this.querySelectorAll<SVGElement>('[data-cell]').forEach(node => node.dataset.selected = String(node.dataset.cell === key))
-        this.querySelectorAll<HTMLButtonElement>('[data-select]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.select === key)))
+        input.setAttribute('aria-valuetext', `|${key}⟩、q1 = ${r}、q0 = ${c}`)
+        this.querySelector('[data-choice]')!.textContent = `|${key}⟩`
         this.querySelector('[data-row-line]')!.setAttribute('d', `M127 ${169 + r * 130} H${176 + c * 130}`)
         this.querySelector('[data-col-line]')!.setAttribute('d', `M${210 + c * 130} 86 V${127 + r * 130}`)
         this.querySelector('output')!.textContent = `|${key}⟩：q1 = ${r} の行因子 b${r} = ${b} × q0 = ${c} の列因子 a${c} = ${a}。振幅 = ${b} × ${a} = ${amplitude.toFixed(2)}、確率 = ${amplitude.toFixed(2)}² = ${(100 * amplitude ** 2).toFixed(2)}%`
       }
-      this.querySelectorAll<HTMLButtonElement>('[data-select]').forEach(button => {
-        for (const event of ['pointerenter', 'focus', 'click']) button.addEventListener(event, () => select(button.dataset.select!))
-      })
-      this.querySelectorAll<SVGElement>('[data-cell]').forEach(cell => {
-        for (const event of ['pointerenter', 'click']) cell.addEventListener(event, () => select(cell.dataset.cell!))
-      })
+      input.addEventListener('input', select)
+      select()
     }
   }
   if (!customElements.get('tensor-factors-explorer')) customElements.define('tensor-factors-explorer', TensorFactorsExplorer)
@@ -73,14 +70,12 @@ const cells = rows.flatMap((b, r) => cols.map((a, c) => ({ r, c, a, b, value: b 
   .rim { fill:none; stroke:#4385BE; }
   .disc { fill:#92BFDB; }
   [data-selected=true] .disc { fill:#24837B; }
-  [data-cell] { cursor:pointer; }
-  .connector { pointer-events:none; fill:none; stroke:#24837B; stroke-width:3; stroke-dasharray:5 3; }
-  .choices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0.5rem; }
-  button { min-height:44px; padding:0.5rem; border:1px solid #4385BE; border-radius:4px; background:#FFFCF0; color:inherit; font:inherit; cursor:pointer; }
-  button:hover { background:#F2F0E5; }
-  button[aria-pressed=true] { background:#DDF1EF; border:2px solid #24837B; font-weight:bold; }
-  button:active { background:#92BFDB; }
-  button:focus-visible { outline:2px solid #24837B; outline-offset:3px; }
+  .connector { fill:none; stroke:#24837B; stroke-width:3; stroke-dasharray:5 3; }
+  label { display:block; line-height:1.6; }
+  input[type="range"] { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0; accent-color:#24837B; outline:none; }
+  input[type="range"]:focus, input[type="range"]:focus-visible { outline:none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow:0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow:0 0 0 3px #24837B; }
   output { display:block; margin:1rem 0; padding:0.75rem; border-radius:6px; background:#F2F0E5; line-height:1.7; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
   .hint { color:#6F6E69; font-size:0.9em; }
 </style>

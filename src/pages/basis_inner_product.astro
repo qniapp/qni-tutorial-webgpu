@@ -18,7 +18,7 @@ const base = import.meta.env.BASE_URL
     まずは、振幅がどちらも実数の場合だけを図にします。横方向を <Ket label="0" />、縦方向を <Ket label="1" /> として、2 個の振幅を 1 本の矢印の座標にしてみましょう。
     最初の矢印の成分は約 0.866 と 0.500 です。0/1 を測る確率は 75% と 25% になります。
     では、読む軸だけを斜めにすると、成分はどうなるでしょうか?
-    下の図で「+/− 基底」を押し、矢印は動かないのに、破線の先と成分の数値が変わることを確認しましょう。
+    予想してから、下の図の「射影する基底」スライダーを「+/− 基底」に動かしましょう。矢印は動かないのに、破線の先と成分の数値が変わることを確認しましょう。
   </p>
   <BasisProjectionExplorer />
   <p>
@@ -28,9 +28,10 @@ const base = import.meta.env.BASE_URL
     反対向きの成分は負になりますが、2 乗した確率は負にはなりません。
   </p>
   <p>
-    「状態を |+⟩ にする」を押してみましょう。0/1 基底で読むと、成分の大きさはどちらも約 0.707 です。
-    +/− 基底に切り替えるとどうなるでしょうか?
-    + 方向の成分が 1、− 方向の成分が 0 になります。状態を変えずに、どの軸に沿って読むかを変えたのでした。
+    状態が <Ket label="+" /> のとき、読む軸を変えると成分はどうなるでしょうか?
+    予想してから、「矢印の角度 t」スライダーを 45 度に合わせ、「射影する基底」スライダーで 0/1 基底と +/− 基底を比べましょう。
+    0/1 基底で読むと、成分の大きさはどちらも約 0.707 です。
+    +/− 基底で読むと、+ 方向の成分が 1、− 方向の成分が 0 になることを確認しましょう。状態を変えずに、どの軸に沿って読むかを変えたのでした。
   </p>
 
   <h2>2 個の複素数を縦に並べる</h2>
@@ -38,8 +39,8 @@ const base = import.meta.env.BASE_URL
     回路の状態ベクトル表示では、<Ket label="0" /> と <Ket label="1" /> にそれぞれ複素数の振幅がありました。
     この振幅を順に縦に並べると、2 成分の複素ベクトルになります。状態を表す文字として \(\psi\)（プサイ）を使い、次のように書きます。
   </p>
-  <p class="math-display">{String.raw`\[ |\psi\rangle = \alpha|0\rangle + \beta|1\rangle = \begin{pmatrix}\alpha\\\beta\end{pmatrix} \]`}</p>
-  <p class="math-display">{String.raw`\[ |0\rangle=\begin{pmatrix}1\\0\end{pmatrix},\qquad |1\rangle=\begin{pmatrix}0\\1\end{pmatrix} \]`}</p>
+  <p class="math-display">{String.raw`\[ \begin{aligned} |\psi\rangle &= \alpha|0\rangle + \beta|1\rangle \\ &= \begin{pmatrix}\alpha\\\beta\end{pmatrix} \end{aligned} \]`}</p>
+  <p class="math-display">{String.raw`\[ \begin{gathered} |0\rangle=\begin{pmatrix}1\\0\end{pmatrix} \\ |1\rangle=\begin{pmatrix}0\\1\end{pmatrix} \end{gathered} \]`}</p>
   <p>
     上の段は <Ket label="0" />、下の段は <Ket label="1" /> の振幅です。
     たとえば {String.raw`\(\alpha=\sqrt{3}/2\)`}、{String.raw`\(\beta=i/2\)`} なら、0/1 の確率は 75% と 25% です。
@@ -49,7 +50,7 @@ const base = import.meta.env.BASE_URL
   <p>
     図の斜めの軸も、0/1 基底の成分で書けます。右上が <Ket label="+" />、右下が <Ket label="−" /> です。
   </p>
-  <p class="math-display">{String.raw`\[ |+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt{2}},\qquad |-\rangle=\frac{|0\rangle-|1\rangle}{\sqrt{2}} \]`}</p>
+  <p class="math-display">{String.raw`\[ \begin{gathered} |+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt{2}} \\ |-\rangle=\frac{|0\rangle-|1\rangle}{\sqrt{2}} \end{gathered} \]`}</p>
   <p>
     つまり、どちらも 2 個の振幅の大きさは同じで、下の段の符号が違います。
     この 2 本を新しい基底にすると、同じ状態を {String.raw`\(|\psi\rangle=c_+|+\rangle+c_-|-\rangle\)`} と書けます。
@@ -63,7 +64,7 @@ const base = import.meta.env.BASE_URL
     この計算を内積と呼び、{String.raw`\(\langle a|b\rangle\)`} と書きます。
     次の図では、同じ段どうしの積を 2 個作り、足す様子を見られます。
     最初は a も b も <Ket label="+" /> です。b の相対位相だけを 180 度にすると、和の矢印はどうなるでしょうか?
-    予想してからスライダーを動かし、2 個の積が打ち消し合うか確認しましょう。
+    予想してから、右の状態 b の「相対位相 φ」スライダーを 180 度に動かし、2 個の積が打ち消し合うか確認しましょう。
   </p>
   <InnerProductExplorer />
   <p>
@@ -76,11 +77,12 @@ const base = import.meta.env.BASE_URL
     複素共役は、虚部の符号だけを反転する操作です。たとえば \(0.4+0.3i\) の共役は \(0.4-0.3i\) です。
     共役を上線で表すと、図の計算は次の式になります。
   </p>
-  <p class="math-display">{String.raw`\[ |a\rangle=\begin{pmatrix}a_0\\a_1\end{pmatrix},\qquad |b\rangle=\begin{pmatrix}b_0\\b_1\end{pmatrix} \]`}</p>
+  <p class="math-display">{String.raw`\[ \begin{gathered} |a\rangle=\begin{pmatrix}a_0\\a_1\end{pmatrix} \\ |b\rangle=\begin{pmatrix}b_0\\b_1\end{pmatrix} \end{gathered} \]`}</p>
   <p class="math-display">{String.raw`\[ \langle a|b\rangle=\overline{a_0}b_0+\overline{a_1}b_1 \]`}</p>
   <p>
     <Ket label="a" /> を共役にして横に並べたものを、ブラ {String.raw`\(\langle a|\)`} と呼びます。
-    図で「同じ状態・位相 90°」の例を選んでみましょう。左の下の成分が約 0.707i から −0.707i へ変わることを確認してください。
+    a と b が同じ相対位相を持つとき、内積はどうなるでしょうか?
+    予想してから、図の「状態の組み合わせの例」スライダーを「同じ状態・位相 90°」に動かしましょう。左の下の成分が約 0.707i から −0.707i へ変わることを確認しましょう。
     その積は正の 0.5 になり、上の段の積 0.5 と足して 1 になります。
     共役を忘れると、下の段の積が −0.5 になってしまいます。
     正規化した状態と自分自身の内積は、いつも 1 です。
@@ -91,14 +93,14 @@ const base = import.meta.env.BASE_URL
     0/1 基底で、<Ket label="0" /> に沿う成分を求めるとどうなるでしょうか?
     <Ket label="0" /> の成分は上が 1、下が 0 なので、内積は元の上の振幅をそのまま取り出します。
   </p>
-  <p class="math-display">{String.raw`\[ \langle0|\psi\rangle=1\alpha+0\beta=\alpha,\qquad P(0)=|\langle0|\psi\rangle|^2 \]`}</p>
+  <p class="math-display">{String.raw`\[ \begin{gathered} \langle0|\psi\rangle=1\alpha+0\beta=\alpha \\ P(0)=|\langle0|\psi\rangle|^2 \end{gathered} \]`}</p>
   <p>
     +/− 基底でも同じです。<Ket label="+" /> に沿う成分を求め、その大きさを 2 乗すると、+ が出る確率になります。
     同じ計算を <Ket label="−" /> にも行えます。
   </p>
   <p class="math-display">{String.raw`\[ c_+=\langle+|\psi\rangle=\frac{\alpha+\beta}{\sqrt{2}} \]`}</p>
   <p class="math-display">{String.raw`\[ c_-=\langle-|\psi\rangle=\frac{\alpha-\beta}{\sqrt{2}} \]`}</p>
-  <p class="math-display">{String.raw`\[ P(+)=|\langle+|\psi\rangle|^2,\qquad P(-)=|\langle-|\psi\rangle|^2 \]`}</p>
+  <p class="math-display">{String.raw`\[ \begin{gathered} P(+)=|\langle+|\psi\rangle|^2 \\ P(-)=|\langle-|\psi\rangle|^2 \end{gathered} \]`}</p>
   <p>
     ここで確率にするのは成分の大きさの 2 乗です。内積そのものは負にも複素数にもなるので、確率とは区別しましょう。
     たとえば <Ket label="+" /> と <Ket label="−" /> は、0/1 を直接測るとどちらも半々ですが、+ が出る確率はそれぞれ 100% と 0% になります。
@@ -140,7 +142,7 @@ const base = import.meta.env.BASE_URL
   <h2>確認してみよう</h2>
   <p>
     状態が {String.raw`\((|0\rangle+i|1\rangle)/\sqrt{2}\)`} のとき、+ が出る確率はどうなるでしょうか?
-    内積の図で a を <Ket label="+" />、b を角度 90 度・位相 90 度にして確かめましょう。
+    予想してから、内積の図の「状態の組み合わせの例」スライダーで「a と b が |+⟩」を選び、右の状態 b の「相対位相 φ」スライダーを 90 度に動かしましょう。和と確率の数値で確かめましょう。
     （ヒント: 内積は 0.5+0.5i です。実部と虚部の 2 乗を足します）
   </p>
   <orbit-reviewarea color="blue">

@@ -1,16 +1,12 @@
 <observable-expectation-explorer data-original-image>
   <figure>
     <p>Ry(θ)|0⟩ を用意します。測定で得る値を +1 と −1 に対応させたとき、その平均を期待値と呼びます。同じ状態を何度も用意して測定した平均であり、1 回の測定で期待値が出るわけではありません。</p>
-    <label>状態を用意する角度 θ（−180〜180 度）
+    <label>状態を用意する角度 θ（−180〜180 度）：<span data-angle-value>60 度</span>
       <input data-angle type="range" min="-180" max="180" step="1" value="60" aria-valuetext="θ = 60 度" />
     </label>
-    <div class="presets" role="group" aria-label="角度の例">
-      {[0, 60, 90, -90, 180].map(angle => <button type="button" data-preset={angle} aria-pressed={angle === 60 ? 'true' : 'false'}>θ = {angle}°</button>)}
-    </div>
-    <div class="modes" role="group" aria-label="測定方法の切り替え">
-      <button type="button" data-mode="Z" aria-pressed="true">Z を測る</button>
-      <button type="button" data-mode="X" aria-pressed="false">X を測る</button>
-    </div>
+    <label>測定方法：<span data-mode-name>Z を測る</span>
+      <input data-mode type="range" min="0" max="1" step="1" value="0" aria-valuetext="Z を測る" />
+    </label>
     <p data-mode-description class="hint">Z：そのまま測る 0/1 確率</p>
     <svg viewBox="0 0 360 300" role="img" aria-label="Z 測定。0 の確率 75%、1 の確率 25%、期待値 0.500。">
       <text x="16" y="25">測定確率</text>
@@ -36,8 +32,8 @@
 0 の確率 = 75.0%、1 の確率 = 25.0%
 対応する値：0 → +1、1 → −1
 期待値 ⟨Z⟩ = cos θ = 0.500</output>
-    <p class="hint">棒は確率、下の印は平均を表します。Z と X を切り替えて、同じ状態でも測定方法によって平均が変わることを確かめましょう。</p>
-    <figcaption>Tab キーでスライダーや測定方法の切り替えボタンを選びます。スライダーは矢印キー、ボタンは Enter・Space で操作できます。マウスやタッチでも操作できます。</figcaption>
+    <p class="hint">棒は確率、下の印は平均を表します。同じ状態で測定方法を変えると、どうなるでしょうか? 予想してから「測定方法」スライダーを Z と X の間で動かし、平均の変化を確かめましょう。</p>
+    <figcaption>角度を 90 度にすると、Z と X の期待値はどうなるでしょうか? 「状態を用意する角度 θ」スライダーを 90 度に合わせ、「測定方法」スライダーを動かして確かめましょう。</figcaption>
   </figure>
 </observable-expectation-explorer>
 
@@ -47,21 +43,22 @@
       if (this.dataset.ready) return
       this.dataset.ready = 'true'
       const input = this.querySelector<HTMLInputElement>('[data-angle]')!
-      const modes = this.querySelectorAll<HTMLButtonElement>('[data-mode]')
-      const presets = this.querySelectorAll<HTMLButtonElement>('[data-preset]')
-      let mode: 'Z' | 'X' = 'Z'
+      const modeInput = this.querySelector<HTMLInputElement>('[data-mode]')!
       const text = (selector: string, value: string) => { this.querySelector(selector)!.textContent = value }
       const fmt = (n: number) => (Math.abs(n) < 1e-10 ? 0 : n).toFixed(3)
       const percent = (n: number) => `${(100 * n).toFixed(1)}%`
       const update = () => {
+        const mode = Number(modeInput.value) === 0 ? 'Z' : 'X'
         const degrees = Number(input.value), theta = degrees * Math.PI / 180
         const mean = Math.max(-1, Math.min(1, mode === 'Z' ? Math.cos(theta) : Math.sin(theta)))
         const first = (1 + mean) / 2, second = (1 - mean) / 2
         const labels = mode === 'Z' ? ['0', '1'] : ['+', '−']
         const description = mode === 'Z' ? 'Z：そのまま測る 0/1 確率' : 'X：H を加えた後の 0/1 確率（元の状態の +/− 確率）'
         input.setAttribute('aria-valuetext', `θ = ${degrees} 度`)
-        modes.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.mode === mode)))
-        presets.forEach(button => button.setAttribute('aria-pressed', String(Number(button.dataset.preset) === degrees)))
+        text('[data-angle-value]', `${degrees} 度`)
+        const modeName = `${mode} を測る`
+        modeInput.setAttribute('aria-valuetext', modeName)
+        text('[data-mode-name]', modeName)
         text('[data-mode-description]', description)
         for (const [index, kind, probability] of [[0, 'first', first], [1, 'second', second]] as const) {
           text(`[data-${kind}-label]`, labels[index])
@@ -76,8 +73,7 @@
         this.querySelector('svg')!.setAttribute('aria-label', result)
       }
       input.addEventListener('input', update)
-      modes.forEach(button => button.addEventListener('click', () => { mode = button.dataset.mode as 'Z' | 'X'; update() }))
-      presets.forEach(button => button.addEventListener('click', () => { input.value = button.dataset.preset!; update() }))
+      modeInput.addEventListener('input', update)
       update()
     }
   }
@@ -89,13 +85,10 @@
   figure { margin:0; min-width:0; line-height:1.7; }
   p { margin:0 0 1rem; }
   label { display:block; }
-  input { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0; accent-color:#24837B; }
-  .presets, .modes { display:flex; flex-wrap:wrap; gap:8px; margin:0.5rem 0 1rem; }
-  button { min-height:44px; padding:6px 12px; border:1px solid #6F6E69; border-radius:6px; background:#FFFCF0; color:inherit; font:inherit; cursor:pointer; }
-  button[aria-pressed=true] { background:#DDF1EF; border-color:#24837B; font-weight:700; }
-  button:hover { background:#E6E4D9; }
-  button:active { border-color:#100F0F; }
-  button:focus-visible, input:focus-visible { outline:2px solid #24837B; outline-offset:3px; }
+  input[type="range"] { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0 0 8px; accent-color:#24837B; outline:none; }
+  input[type="range"]:focus, input[type="range"]:focus-visible { outline:none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow:0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow:0 0 0 3px #24837B; }
   svg { display:block; width:100%; height:auto; }
   text { font:14px system-ui,sans-serif; fill:#100F0F; }
   .surface { fill:#F2F0E5; }

@@ -1,18 +1,14 @@
 <unitary-matrix-tester data-original-image>
   <figure>
     <p>どの入力でも振幅の二乗和を保つ行列を、ユニタリ行列と呼びます。行列と入力の角度を変えて確認しましょう。</p>
-    <div class="presets" role="group" aria-label="調べる行列">
-      <button type="button" data-matrix="I" aria-pressed="true">I</button>
-      <button type="button" data-matrix="X" aria-pressed="false">X</button>
-      <button type="button" data-matrix="H" aria-pressed="false">H</button>
-      <button type="button" data-matrix="diag" aria-pressed="false">diag(1, 0.5)</button>
-      <button type="button" data-matrix="half" aria-pressed="false">0.5I</button>
-    </div>
+    <label>調べる行列：<span data-matrix-name>I</span>
+      <input data-matrix type="range" min="0" max="4" step="1" value="0" aria-valuetext="I" />
+    </label>
     <div class="matrices">
       <div><span>選んだ行列 U</span><table data-selected aria-label="選んだ行列 U"><tbody><tr><td>1</td><td>0</td></tr><tr><td>0</td><td>1</td></tr></tbody></table></div>
       <div><span>U†U</span><table data-product aria-label="U†U"><tbody><tr><td>1</td><td>0</td></tr><tr><td>0</td><td>1</td></tr></tbody></table></div>
     </div>
-    <label>入力の角度 t（0〜360 度）
+    <label>入力の角度 t（0〜360 度）：<span data-angle-value>45 度</span>
       <input data-angle type="range" min="0" max="360" step="1" value="45" aria-valuetext="t = 45 度" />
     </label>
     <p class="hint">実数の振幅 α = cos t、β = sin t の座標です。複素平面でもブロッホ球の円でもありません。</p>
@@ -34,8 +30,8 @@
 出力 (α′, β′) = (0.707, 0.707)
 二乗和 |α′|² + |β′|² = 1.0000（100%）
 U†U = I：ユニタリです。すべての入力で二乗和を保ちます。</output>
-    <p class="hint">diag(1, 0.5) を選び、t = 0 度から動かしてみましょう。|0⟩ を保つだけでは十分ではありません。判定の条件は、すべての入力に対する U†U = I です。</p>
-    <figcaption>Tab キーで行列ボタンやスライダーを選びます。ボタンは Enter・Space、スライダーは矢印キーで操作できます。マウスやタッチでも角度を変えられます。</figcaption>
+    <p class="hint">入力を変えると二乗和はどうなるでしょうか? 予想してから「調べる行列」スライダーを diag(1, 0.5) にし、「入力の角度 t」スライダーを 0 度から動かして確認しましょう。|0⟩ を保つだけでは十分ではありません。判定の条件は、すべての入力に対する U†U = I です。</p>
+    <figcaption>H では出力の点はどこを動くでしょうか? 「調べる行列」スライダーを H に合わせ、「入力の角度 t」スライダーを動かして、点が単位円の上にあることを確かめましょう。</figcaption>
   </figure>
 </unitary-matrix-tester>
 
@@ -48,14 +44,14 @@ U†U = I：ユニタリです。すべての入力で二乗和を保ちます�
       this.dataset.ready = 'true'
       const input = this.querySelector<HTMLInputElement>('[data-angle]')!
       const svg = this.querySelector('svg')!
-      const buttons = this.querySelectorAll<HTMLButtonElement>('[data-matrix]')
+      const matrixInput = this.querySelector<HTMLInputElement>('[data-matrix]')!
+      const choices = ['I', 'X', 'H', 'diag', 'half']
       const diagonal = (a: number, b: number): Matrix2 => [[[a, 0], [0, 0]], [[0, 0], [b, 0]]]
       const matrices: Record<string, Matrix2> = {
         I: diagonal(1, 1), X: MatrixMath.gate('X'), H: MatrixMath.gate('H'),
         diag: diagonal(1, 0.5), half: diagonal(0.5, 0.5),
       }
       const names: Record<string, string> = { I: 'I', X: 'X', H: 'H', diag: 'diag(1, 0.5)', half: '0.5I' }
-      let selected = 'I'
       const fmt = (n: number, digits = 3) => (Math.abs(n) < 1e-10 ? 0 : n).toFixed(digits)
       const entry = (n: number) => Math.abs(Math.abs(n) - Math.SQRT1_2) < 1e-10
         ? `${n < 0 ? '−' : ''}1/√2` : String(Number(fmt(n, 4)))
@@ -66,6 +62,7 @@ U†U = I：ユニタリです。すべての入力で二乗和を保ちます�
       }
       const point = (state: StateVector) => [180 + 112 * state[0][0], 166 - 112 * state[1][0]]
       const update = () => {
+        const selected = choices[Number(matrixInput.value)]
         const degrees = Number(input.value), t = degrees * Math.PI / 180
         const matrix = matrices[selected]
         const state: StateVector = [[Math.cos(t), 0], [Math.sin(t), 0]]
@@ -76,7 +73,9 @@ U†U = I：ユニタリです。すべての入力で二乗和を保ちます�
         paintMatrix('[data-selected]', matrix, `選んだ行列 ${names[selected]}`)
         paintMatrix('[data-product]', product, 'U†U')
         input.setAttribute('aria-valuetext', `t = ${degrees} 度`)
-        buttons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.matrix === selected)))
+        this.querySelector('[data-angle-value]')!.textContent = `${degrees} 度`
+        matrixInput.setAttribute('aria-valuetext', names[selected])
+        this.querySelector('[data-matrix-name]')!.textContent = names[selected]
         for (const [kind, vector] of [['input', state], ['output', result]] as const) {
           const [x, y] = point(vector)
           const line = this.querySelector(`[data-${kind}-line]`)!
@@ -98,7 +97,7 @@ U†U = I：ユニタリです。すべての入力で二乗和を保ちます�
         svg.setAttribute('aria-label', `振幅座標平面。灰色は単位円、青の点線はその変換先。緑の丸は入力、青の四角は出力。${description}`)
       }
       input.addEventListener('input', update)
-      buttons.forEach(button => button.addEventListener('click', () => { selected = button.dataset.matrix!; update() }))
+      matrixInput.addEventListener('input', update)
       update()
     }
   }
@@ -109,17 +108,14 @@ U†U = I：ユニタリです。すべての入力で二乗和を保ちます�
   unitary-matrix-tester { display:block; box-sizing:border-box; width:100%; max-width:540px; margin:1.5rem auto; padding:1rem; color:#100F0F; background:#FFFCF0; border:1px solid #4385BE; border-radius:8px; }
   figure { margin:0; min-width:0; line-height:1.7; }
   p { margin:0 0 1rem; }
-  .presets { display:flex; flex-wrap:wrap; gap:8px; }
-  button { min-height:44px; padding:6px 12px; border:1px solid #6F6E69; border-radius:6px; background:#FFFCF0; color:inherit; font:inherit; cursor:pointer; }
-  button[aria-pressed=true] { background:#DDF1EF; border-color:#24837B; font-weight:700; }
-  button:hover { background:#E6E4D9; }
-  button:active { border-color:#100F0F; }
-  button:focus-visible, input:focus-visible { outline:2px solid #24837B; outline-offset:3px; }
   .matrices { display:flex; flex-wrap:wrap; gap:1rem 2rem; margin:1rem 0; }
   table { border-collapse:collapse; border-inline:2px solid #6F6E69; margin-top:0.25rem; font-variant-numeric:tabular-nums; }
   td { padding:0.1rem 0.6rem; text-align:center; }
   label { display:block; }
-  input { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0; accent-color:#24837B; }
+  input[type="range"] { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0 0 8px; accent-color:#24837B; outline:none; }
+  input[type="range"]:focus, input[type="range"]:focus-visible { outline:none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow:0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow:0 0 0 3px #24837B; }
   svg { display:block; width:100%; height:auto; }
   text { font:14px system-ui,sans-serif; fill:#6F6E69; }
   .reference { fill:none; stroke:#DAD8CE; stroke-width:7; }

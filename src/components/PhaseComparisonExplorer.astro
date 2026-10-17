@@ -12,7 +12,7 @@ const radius = 60 / Math.sqrt(2)
     <p class="hint">{global ? '全体位相：2 本の矢印を一緒に回します。' : '相対位相：|0⟩ を固定し、|1⟩ の矢印だけを回します。'} 円の半径はどちらも 1/√2 で変わりません。</p>
     <div class="states">
       {[0, 1].map(state => (
-        <svg data-state={state} data-drag={global || state === 1 ? '' : undefined} viewBox="0 0 160 180" role="img" aria-label={`|${state}⟩ の円表記、位相 0 度、確率 50%`}>
+        <svg data-state={state} viewBox="0 0 160 180" role="img" aria-label={`|${state}⟩ の円表記、位相 0 度、確率 50%`}>
           <title>{`|${state}⟩ の振幅と位相`}</title>
           <desc>外円の半径 60 は振幅 1 です。青い円の半径は 60/√2、面積は確率 50% を表します。矢印は位相を表します。</desc>
           <circle class="surface" cx="80" cy="80" r="60" />
@@ -22,7 +22,6 @@ const radius = 60 / Math.sqrt(2)
           <g data-arrow transform="rotate(0 80 80)">
             <path class="arrow" d={`M80 80 H${80 + radius}`} />
             <path class="tip" d={`M${80 + radius - 9} 75 L${80 + radius} 80 L${80 + radius - 9} 85 Z`} />
-            <circle class="handle" cx={80 + radius} cy="80" r="5" />
           </g>
           <text x="80" y="166" text-anchor="middle">{`|${state}⟩`}</text>
         </svg>
@@ -31,11 +30,9 @@ const radius = 60 / Math.sqrt(2)
     <label>{global ? '全体位相' : '相対位相'} φ（度）
       <input data-angle type="range" min="0" max="360" step="1" value="0" aria-valuetext="φ = 0°、直接 Z 測定：|0⟩ 50%、|1⟩ 50%、H 後：|0⟩ 100%、|1⟩ 0%" />
     </label>
-    <div class="presets" role="group" aria-label="位相のプリセット">
-      {[[0, '0'], [90, 'π/2'], [180, 'π'], [360, '2π']].map(([angle, label]) => (
-        <button type="button" data-preset={angle} aria-pressed={angle === 0}>{label}</button>
-      ))}
-    </div>
+    <label>位相の例：<span data-choice>0</span>
+      <input data-preset type="range" min="0" max="4" step="1" value="1" aria-valuetext="0" />
+    </label>
     <div class="comparison">
       {['before', 'after'].map(stage => (
         <div>
@@ -56,8 +53,7 @@ const radius = 60 / Math.sqrt(2)
     </div>
     <output aria-live="polite" aria-atomic="true">φ = 0°。直接 Z 測定（H 前）：|0⟩ 50%、|1⟩ 50%。H 後：|0⟩ 100%、|1⟩ 0%。</output>
     <figcaption>
-      {global ? 'どちらかの円をドラッグすると、両方の矢印が回ります。' : '|1⟩ の円をドラッグすると、その矢印だけが回ります。'}
-      スライダーを選び、矢印キーでも 1 度ずつ変更できます。反時計回りが正の向きです。
+      位相を変えると、H 後の確率はどうなるでしょうか? 予想してから「位相の例」スライダーで 0、π/2、π、2π を選び、棒の長さを確認しましょう。自由に調べるときは、{global ? '「全体位相」' : '「相対位相」'}スライダーを動かしましょう。反時計回りが正の向きです。
       {global ? '全体位相は、H 後の確率にも影響しません。' : '直接測定では位相の違いは見えませんが、H 後は |0⟩ が cos²(φ/2)、|1⟩ が sin²(φ/2) の確率になります。'}
     </figcaption>
   </figure>
@@ -78,7 +74,10 @@ const radius = 60 / Math.sqrt(2)
       this.dataset.ready = 'true'
       const global = this.dataset.mode === 'global'
       const input = this.querySelector<HTMLInputElement>('[data-angle]')!
-      const update = (value: number) => {
+      const preset = this.querySelector<HTMLInputElement>('[data-preset]')!
+      const angles = [null, 0, 90, 180, 360]
+      const choices = ['自由な角度', '0', 'π/2', 'π', '2π']
+      const update = (value: number, selectedChoice?: number) => {
         const degrees = Math.round(Math.max(0, Math.min(360, value)))
         input.value = String(degrees)
         this.querySelectorAll<SVGSVGElement>('[data-state]').forEach(svg => {
@@ -99,44 +98,17 @@ const radius = 60 / Math.sqrt(2)
         const description = `φ = ${degrees}°、直接 Z 測定：|0⟩ 50%、|1⟩ 50%、H 後：|0⟩ ${zeroText}、|1⟩ ${oneText}`
         input.setAttribute('aria-valuetext', description)
         this.querySelector('output')!.textContent = `φ = ${degrees}°。直接 Z 測定（H 前）：|0⟩ 50%、|1⟩ 50%。H 後：|0⟩ ${zeroText}、|1⟩ ${oneText}。`
-        this.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach(button => {
-          button.setAttribute('aria-pressed', String(Number(button.dataset.preset) === degrees))
-        })
+        const choice = selectedChoice ?? Math.max(0, angles.indexOf(degrees))
+        preset.value = String(choice)
+        preset.setAttribute('aria-valuetext', choices[choice])
+        this.querySelector('[data-choice]')!.textContent = choices[choice]
       }
       input.addEventListener('input', () => update(Number(input.value)))
-      this.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach(button => {
-        button.addEventListener('click', () => update(Number(button.dataset.preset)))
+      preset.addEventListener('input', () => {
+        const choice = Number(preset.value)
+        update(angles[choice] ?? Number(input.value), choice)
       })
-      this.querySelectorAll<SVGSVGElement>('[data-drag]').forEach(svg => {
-        let pointer: number | null = null
-        const move = (event: PointerEvent) => {
-          const matrix = svg.getScreenCTM()
-          if (!matrix) return
-          const point = new DOMPoint(event.clientX, event.clientY).matrixTransform(matrix.inverse())
-          if (Math.hypot(point.x - 80, point.y - 80) < 1) return
-          const angle = Math.atan2(80 - point.y, point.x - 80) * 180 / Math.PI
-          update((angle + 360) % 360)
-        }
-        svg.addEventListener('pointerdown', event => {
-          if (pointer !== null || !event.isPrimary || event.button !== 0) return
-          event.preventDefault()
-          pointer = event.pointerId
-          svg.setPointerCapture(pointer)
-          input.focus({ preventScroll: true })
-          move(event)
-        })
-        svg.addEventListener('pointermove', event => {
-          if (event.pointerId === pointer) move(event)
-        })
-        const stop = (event: PointerEvent) => {
-          if (event.pointerId !== pointer) return
-          pointer = null
-          if (svg.hasPointerCapture(event.pointerId)) svg.releasePointerCapture(event.pointerId)
-        }
-        svg.addEventListener('pointerup', stop)
-        svg.addEventListener('pointercancel', stop)
-        svg.addEventListener('lostpointercapture', stop)
-      })
+      update(Number(input.value))
     }
   }
   if (!customElements.get('phase-comparison-explorer')) {
@@ -150,22 +122,18 @@ const radius = 60 / Math.sqrt(2)
   .states, .comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
   svg { display: block; width: 100%; height: auto; }
   .states svg { max-width: 200px; margin: auto; }
-  [data-drag] { touch-action: none; cursor: crosshair; user-select: none; }
   .surface { fill: #FFFCF0; }
   .disc { fill: #92BFDB; }
   .rim { fill: none; stroke: #4385BE; }
   .axes { fill: none; stroke: #6F6E69; stroke-width: 1; }
   .arrow { fill: none; stroke: #100F0F; stroke-width: 2; }
-  .tip, .handle { fill: #100F0F; }
+  .tip { fill: #100F0F; }
   text { fill: #100F0F; font: inherit; }
   label, output { display: block; }
-  input { display: block; box-sizing: border-box; width: 100%; min-height: 44px; margin: 0; accent-color: #24837B; }
-  .presets { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.5rem 0 1rem; }
-  button { min-height: 44px; padding: 0.5rem 1rem; border: 1px solid #4385BE; border-radius: 4px; background: #FFFCF0; color: inherit; font: inherit; cursor: pointer; }
-  button:hover { background: #92BFDB; }
-  button[aria-pressed=true] { border-color: #24837B; box-shadow: inset 0 0 0 1px #24837B; font-weight: bold; }
-  button:active { background: #92BFDB; border-color: #100F0F; }
-  input:focus-visible, button:focus-visible { outline: 2px solid #24837B; outline-offset: 3px; }
+  input[type="range"] { display: block; box-sizing: border-box; width: 100%; min-width: 0; min-height: 44px; margin: 0; accent-color: #24837B; outline: none; }
+  input[type="range"]:focus, input[type="range"]:focus-visible { outline: none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px #24837B; }
   .comparison p { margin: 0 0 0.4rem; overflow-wrap: anywhere; }
   .probability { margin-bottom: 0.5rem; font-variant-numeric: tabular-nums; }
   .probability span { font-size: 0.9em; }
