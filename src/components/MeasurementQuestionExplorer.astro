@@ -1,0 +1,104 @@
+<measurement-question-explorer data-original-image>
+  <p>状態 cos(θ/2)|0⟩ + e<sup>iφ</sup>sin(θ/2)|1⟩ に、Z・X・Y のどの質問をするか選びます。円は単位球の投影です。</p>
+  <label>角度 θ：<span data-theta-value>90 度</span>
+    <input data-theta type="range" min="0" max="180" step="1" value="90" aria-valuetext="θ = 90 度" />
+  </label>
+  <label>位相 φ：<span data-phi-value>0 度</span>
+    <input data-phi type="range" min="0" max="360" step="1" value="0" aria-valuetext="φ = 0 度" />
+  </label>
+  <label>質問：<span data-question-value>Z</span>
+    <input data-question type="range" min="0" max="2" step="1" value="0" aria-valuetext="Z を測ります" />
+  </label>
+  <div class="projections">
+    {['XZ', 'XY'].map(plane => <svg data-plane={plane} viewBox="0 0 200 210" role="img" aria-label={`${plane} 平面への投影です。`}>
+      <circle class="rim" cx="100" cy="100" r="72" />
+      <path class="axis" d="M20 100 H180 M100 180 V20" />
+      <path data-selected class="selected" d="M100 172 V28" />
+      <text x="180" y="118">X</text><text x="108" y="22">{plane[1]}</text>
+      <text x="100" y="205" text-anchor="middle">{plane} 投影</text>
+      <line data-vector class="vector" x1="100" y1="100" x2="172" y2="100" />
+      <circle data-point class="point" cx="172" cy="100" r="5" />
+    </svg>)}
+  </div>
+  <p class="hint">青い点は状態、太い緑の線は選んだ測定軸です。投影面に垂直な軸は中央の緑の輪で示します。</p>
+  <svg data-bars viewBox="0 0 400 155" role="img" aria-label="Z の確率は両方 50%、期待値は 0 です。">
+    <text x="10" y="22">P(+1 / 出力 0)</text>
+    <rect class="surface" x="10" y="30" width="280" height="22" /><rect data-plus class="plus" x="10" y="30" width="140" height="22" />
+    <text data-plus-value x="300" y="48">50.0%</text>
+    <text x="10" y="80">P(−1 / 出力 1)</text>
+    <rect class="surface" x="10" y="88" width="280" height="22" /><rect data-minus class="minus" x="10" y="88" width="140" height="22" />
+    <text data-minus-value x="300" y="106">50.0%</text>
+    <text data-mean x="10" y="144">期待値 = P(+1) − P(−1) = 0.000</text>
+  </svg>
+  <output aria-live="polite" aria-atomic="true">Z の質問です。P(+1 / 出力 0) = 50.0%、P(−1 / 出力 1) = 50.0%、期待値 = 0.000 です。</output>
+  <p class="hint">出力 0 は選んだ軸の +1、出力 1 は −1 に対応します。期待値は繰り返し測定した値の平均です。</p>
+</measurement-question-explorer>
+
+<script>
+  import { MeasurementBasisMath as MathBasis } from './measurement-basis-math'
+  class MeasurementQuestionExplorer extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.ready) return
+      this.dataset.ready = 'true'
+      const input = (name: string) => this.querySelector<HTMLInputElement>(`[data-${name}]`)!
+      const text = (name: string, value: string) => { this.querySelector(`[data-${name}]`)!.textContent = value }
+      const update = () => {
+        const theta = Number(input('theta').value), phi = Number(input('phi').value)
+        const question = MathBasis.questions[Number(input('question').value)]!
+        const state = MathBasis.state(theta, phi), coordinates = MathBasis.bloch(state)
+        const [plus, minus] = MathBasis.probabilities(MathBasis.premeasurement(state, question))
+        for (const [name, value] of [['theta', theta], ['phi', phi]] as const) {
+          text(`${name}-value`, `${value} 度`)
+          input(name).setAttribute('aria-valuetext', `${name === 'theta' ? 'θ' : 'φ'} = ${value} 度`)
+        }
+        text('question-value', question)
+        input('question').setAttribute('aria-valuetext', `${question} を測ります`)
+        for (const svg of this.querySelectorAll<SVGSVGElement>('[data-plane]')) {
+          const vertical = svg.dataset.plane === 'XZ' ? 'Z' : 'Y'
+          const x = 100 + 72 * coordinates.X, y = 100 - 72 * coordinates[vertical]
+          svg.querySelector('[data-point]')!.setAttribute('cx', String(x))
+          svg.querySelector('[data-point]')!.setAttribute('cy', String(y))
+          svg.querySelector('[data-vector]')!.setAttribute('x2', String(x))
+          svg.querySelector('[data-vector]')!.setAttribute('y2', String(y))
+          svg.querySelector('[data-selected]')!.setAttribute('d', question === 'X' ? 'M28 100 H172' : question === vertical ? 'M100 172 V28' : 'M106 100 a6 6 0 1 0 -12 0 a6 6 0 1 0 12 0')
+          svg.setAttribute('aria-label', `${svg.dataset.plane} 投影です。X = ${MathBasis.format(coordinates.X)}、${vertical} = ${MathBasis.format(coordinates[vertical])}、選択軸は ${question} です。`)
+        }
+        for (const [name, p] of [['plus', plus], ['minus', minus]] as const) {
+          this.querySelector(`[data-${name}]`)!.setAttribute('width', String(280 * p))
+          text(`${name}-value`, MathBasis.percent(p))
+        }
+        const mean = MathBasis.format(plus - minus)
+        text('mean', `期待値 = P(+1) − P(−1) = ${mean}`)
+        const result = `${question} の質問です。P(+1 / 出力 0) = ${MathBasis.percent(plus)}、P(−1 / 出力 1) = ${MathBasis.percent(minus)}、期待値 = ${mean} です。`
+        this.querySelector('output')!.textContent = result
+        this.querySelector('[data-bars]')!.setAttribute('aria-label', result)
+      }
+      for (const range of this.querySelectorAll('input')) range.addEventListener('input', update)
+      update()
+    }
+  }
+  if (!customElements.get('measurement-question-explorer')) customElements.define('measurement-question-explorer', MeasurementQuestionExplorer)
+</script>
+
+<style>
+  measurement-question-explorer { display:block; box-sizing:border-box; width:100%; max-width:540px; margin-block:1.5rem; margin-inline:0 auto; padding:1rem; color:#100F0F; background:#FFFCF0; border:1px solid #4385BE; border-radius:8px; line-height:1.7; }
+  p { margin:0 0 1rem; }
+  label, output { display:block; }
+  .projections { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0.5rem; }
+  svg { display:block; width:100%; height:auto; min-width:0; }
+  text { font:14px system-ui,sans-serif; fill:#100F0F; }
+  .rim { fill:none; stroke:#4385BE; }
+  .axis { fill:none; stroke:#B7B5AC; }
+  .selected { fill:none; stroke:#24837B; stroke-width:4; }
+  .vector { stroke:#4385BE; stroke-width:2; }
+  .point { fill:#4385BE; stroke:#100F0F; }
+  .surface { fill:#E6E4D9; }
+  .plus { fill:#3AA99F; }
+  .minus { fill:#92BFDB; }
+  input[type="range"] { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0; accent-color:#24837B; writing-mode:horizontal-tb; }
+  input[type="range"], input[type="range"]:hover, input[type="range"]:active, input[type="range"]:focus, input[type="range"]:focus-visible, input[type="range"]:disabled { outline:none; border:none; box-shadow:none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow:0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow:0 0 0 3px #24837B; }
+  output { margin:1rem 0; padding:0.75rem; background:#F2F0E5; border-radius:6px; overflow-wrap:anywhere; font-variant-numeric:tabular-nums; }
+  .hint { color:#6F6E69; font-size:0.9em; }
+</style>
