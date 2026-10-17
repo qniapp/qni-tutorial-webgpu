@@ -1,0 +1,128 @@
+---
+import { MeasurementOrder as M } from './measurement-order-math'
+const outcomes = [1, -1] as const
+---
+<measurement-tree-explorer data-original-image>
+  <p class="hint">同じ状態を準備して、2 回続けて測定します。角度や測定基底を変えて、枝の確率を比べましょう。</p>
+  <label>状態を用意する角度 θ：<b data-angle-value>60°</b>
+    <input data-angle type="range" min="-180" max="180" step="1" value="60" aria-valuetext="θ = 60°" />
+  </label>
+  <label>最初の質問：<b data-first-value>Z</b>
+    <input data-first type="range" min="0" max="1" step="1" value="0" aria-valuetext="最初の質問 Z" />
+  </label>
+  <label>次の質問：<b data-second-value>Z</b>
+    <input data-second type="range" min="0" max="1" step="1" value="0" aria-valuetext="次の質問 Z" />
+  </label>
+  <svg data-tree viewBox="0 0 560 500" role="img" aria-label={M.summary(60, 'Z', 'Z')}>
+    <title>連続測定の確率木</title>
+    <desc>線の太さは、最初の枝では最初の確率、次の枝では同時確率に比例します。円の面積は計算基底の確率、針の左右は振幅の符号です。</desc>
+    <text x="280" y="28" text-anchor="middle">cos(θ/2)|0⟩ + sin(θ/2)|1⟩</text>
+    {outcomes.map((first, i) => {
+      const x = 140 + i * 280
+      const p = M.firstProbability(60, 'Z', first)
+      return <g data-branch={i}>
+        <path data-first-line class="branch" d={`M280 42 L${x} 95`} stroke-width={20 * p} />
+        <text data-first-label x={x} y="122" text-anchor="middle">Z：{first === 1 ? '+1' : '−1'}</text>
+        <text data-first-prob x={x} y="148" text-anchor="middle">{M.percent(p)}</text>
+        {[0, 1].map((state) => {
+          const cx = x - 32 + state * 64
+          const amplitude = M.eigenstate('Z', first)[state]
+          return <g>
+            <circle class="surface" cx={cx} cy="185" r="23" />
+            <circle data-disc={state} class="disc" cx={cx} cy="185" r={23 * Math.abs(amplitude)} />
+            <circle class="rim" cx={cx} cy="185" r="23" />
+            <path data-needle={state} class="needle" d={`M${cx} 185 h${23 * amplitude}`} />
+            <text x={cx} y="230" text-anchor="middle">|{state}⟩</text>
+          </g>
+        })}
+        <text data-state-label x={x} y="258" text-anchor="middle">測定後：|{i}⟩</text>
+        {outcomes.map((second, j) => {
+          const end = x - 65 + j * 130
+          const conditional = M.conditionalProbability('Z', first, 'Z', second)
+          return <g data-leaf={j}>
+            <path data-joint-line class="branch" d={`M${x} 274 L${end} 366`} stroke-width={20 * p * conditional} />
+            <text data-conditional class="over-line" x={end} y="327" text-anchor="middle">条件 {M.percent(conditional)}</text>
+            <text data-second-label x={end} y="395" text-anchor="middle">Z：{second === 1 ? '+1' : '−1'}</text>
+            <text data-joint x={end} y="426" text-anchor="middle">同時 {M.percent(p * conditional)}</text>
+          </g>
+        })}
+      </g>
+    })}
+    <text x="280" y="474" text-anchor="middle">線の太さ：最初の確率 → 同時確率</text>
+  </svg>
+  <p class="hint">円は測定後の固有状態を |0⟩ と |1⟩ で表します。針は正なら右、負なら左です。確率 0 の枝には、実現しない仮定の状態を示します。</p>
+  <output aria-live="polite" aria-atomic="true">{M.summary(60, 'Z', 'Z')}</output>
+</measurement-tree-explorer>
+
+<script>
+  import { MeasurementOrder as M, type MeasurementBasis } from './measurement-order-math'
+  class MeasurementTreeExplorer extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.ready) return
+      this.dataset.ready = 'true'
+      const angle = this.querySelector<HTMLInputElement>('[data-angle]')!
+      const firstInput = this.querySelector<HTMLInputElement>('[data-first]')!
+      const secondInput = this.querySelector<HTMLInputElement>('[data-second]')!
+      const update = () => {
+        const theta = Number(angle.value)
+        const firstBasis: MeasurementBasis = firstInput.value === '0' ? 'Z' : 'X'
+        const secondBasis: MeasurementBasis = secondInput.value === '0' ? 'Z' : 'X'
+        const set = (root: ParentNode, selector: string, text: string) => { root.querySelector(selector)!.textContent = text }
+        set(this, '[data-angle-value]', `${theta}°`)
+        set(this, '[data-first-value]', firstBasis)
+        set(this, '[data-second-value]', secondBasis)
+        angle.setAttribute('aria-valuetext', `θ = ${theta}°`)
+        firstInput.setAttribute('aria-valuetext', `最初の質問 ${firstBasis}`)
+        secondInput.setAttribute('aria-valuetext', `次の質問 ${secondBasis}`)
+        for (const [i, first] of ([1, -1] as const).entries()) {
+          const branch = this.querySelector(`[data-branch="${i}"]`)!
+          const p = M.firstProbability(theta, firstBasis, first)
+          branch.querySelector('[data-first-line]')!.setAttribute('stroke-width', String(20 * p))
+          set(branch, '[data-first-label]', `${firstBasis}：${first === 1 ? '+1' : '−1'}`)
+          set(branch, '[data-first-prob]', M.percent(p))
+          const eigenLabel = firstBasis === 'Z' ? `|${i}⟩` : first === 1 ? '|+⟩' : '|−⟩'
+          set(branch, '[data-state-label]', `${p === 0 ? '仮定・未実現' : '測定後'}：${eigenLabel}`)
+          M.eigenstate(firstBasis, first).forEach((amplitude, state) => {
+            const cx = 140 + i * 280 - 32 + state * 64
+            branch.querySelector(`[data-disc="${state}"]`)!.setAttribute('r', String(23 * Math.abs(amplitude)))
+            branch.querySelector(`[data-needle="${state}"]`)!.setAttribute('d', `M${cx} 185 h${23 * amplitude}`)
+          })
+          for (const [j, second] of ([1, -1] as const).entries()) {
+            const leaf = branch.querySelector(`[data-leaf="${j}"]`)!
+            const conditional = M.conditionalProbability(firstBasis, first, secondBasis, second)
+            const joint = M.jointProbability(theta, firstBasis, first, secondBasis, second)
+            leaf.querySelector('[data-joint-line]')!.setAttribute('stroke-width', String(20 * joint))
+            set(leaf, '[data-conditional]', `条件 ${M.percent(conditional)}`)
+            set(leaf, '[data-second-label]', `${secondBasis}：${second === 1 ? '+1' : '−1'}`)
+            set(leaf, '[data-joint]', `同時 ${M.percent(joint)}`)
+          }
+        }
+        const summary = M.summary(theta, firstBasis, secondBasis)
+        this.querySelector('output')!.textContent = summary
+        this.querySelector('[data-tree]')!.setAttribute('aria-label', summary)
+      }
+      for (const input of [angle, firstInput, secondInput]) input.addEventListener('input', update)
+      update()
+    }
+  }
+  if (!customElements.get('measurement-tree-explorer')) customElements.define('measurement-tree-explorer', MeasurementTreeExplorer)
+</script>
+
+<style>
+  measurement-tree-explorer { display: block; box-sizing: border-box; width: 100%; max-width: 600px; margin-block: 1.5rem; margin-inline: 0 auto; padding: 1rem; color: #100F0F; background: #FFFCF0; border: 1px solid #4385BE; border-radius: 8px; font: inherit; }
+  .hint { color: #6F6E69; font-size: 0.9em; }
+  label, output { display: block; }
+  input { display: block; box-sizing: border-box; width: 100%; min-height: 44px; margin: 0; accent-color: #24837B; writing-mode: horizontal-tb; }
+  input[type="range"], input[type="range"]:focus, input[type="range"]:focus-visible { outline: none; border: none; box-shadow: none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px #24837B; }
+  svg { display: block; width: 100%; height: auto; margin-block: 0.5rem; }
+  text { fill: #100F0F; font: 20px sans-serif; }
+  .surface { fill: #FFFCF0; }
+  .disc { fill: #92BFDB; }
+  .rim { fill: none; stroke: #4385BE; }
+  .needle { fill: none; stroke: #100F0F; stroke-width: 2; }
+  .branch { fill: none; stroke: #4385BE; }
+  .over-line { paint-order: stroke; stroke: #FFFCF0; stroke-width: 5px; stroke-linejoin: round; }
+  output { margin-block: 0.5rem; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+</style>

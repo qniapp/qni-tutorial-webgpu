@@ -64,6 +64,7 @@ export const toc: TocChapter[] = [
       { title: '組合わせゲート', slug: 'gate_combination' },
       { title: '測る基底と期待値 1: X・Y・Z の質問', slug: 'measurement_basis' },
       { title: '測る基底と期待値 2: 結果 ±1 と平均', slug: 'measurement_expectation', label: '測る基底と期待値 2' },
+      { title: '測る基底と期待値 3: 測る順番と測定後の状態', slug: 'measurement_order', label: '測る基底と期待値 3' },
     ],
   },
   {

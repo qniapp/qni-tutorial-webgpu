@@ -1,0 +1,97 @@
+---
+import { MeasurementOrder as M } from './measurement-order-math'
+const orders = [['Z', 'X'], ['X', 'Z']] as const
+const outcomes = [1, -1] as const
+---
+<measurement-order-explorer data-original-image>
+  <p class="hint">cos(θ/2)|0⟩ + sin(θ/2)|1⟩ を毎回準備します。測定する順序を入れ替えると、同時確率はどう変わるでしょうか。</p>
+  <label>状態を用意する角度 θ：<b data-angle-value>60°</b>
+    <input data-angle type="range" min="-180" max="180" step="1" value="60" aria-valuetext="θ = 60°" />
+  </label>
+  <p class="hint">行は最初の結果、列は 2 回目の結果です。各マスの棒と数値は同時確率を示します。</p>
+  <div class="tables">
+    {orders.map(([firstBasis, secondBasis], order) => <section data-order={order} aria-label={`${firstBasis} の次に ${secondBasis} を測定します。`}>
+      <table>
+        <caption>{firstBasis} → {secondBasis}<span>最初 {firstBasis}・次 {secondBasis}</span></caption>
+        <thead><tr><th scope="col">最初<br />{firstBasis} ↓</th>{outcomes.map(second => <th scope="col">次 {secondBasis}<br />{second === 1 ? '+1' : '−1'}</th>)}</tr></thead>
+        <tbody>{outcomes.map((first, i) => <tr>
+          <th scope="row">{firstBasis}<br />{first === 1 ? '+1' : '−1'}</th>
+          {outcomes.map((second, j) => {
+            const joint = M.jointProbability(60, firstBasis, first, secondBasis, second)
+            return <td data-cell={`${i}-${j}`}>
+              <span data-prob>{M.percent(joint)}</span>
+              <svg viewBox="0 0 100 16" role="img" aria-label={`${firstBasis} ${first === 1 ? '+1' : '−1'}、${secondBasis} ${second === 1 ? '+1' : '−1'} の同時確率 ${M.percent(joint)}`}>
+                <rect class="surface" width="100" height="16" />
+                <rect data-bar class="disc" width={100 * joint} height="16" />
+                <rect class="rim" x="0.5" y="0.5" width="99" height="15" />
+              </svg>
+            </td>
+          })}
+        </tr>)}</tbody>
+      </table>
+      <p class="marginal">次の {secondBasis}：<br />+1 <b data-marginal-plus>50%</b><br />−1 <b data-marginal-minus>50%</b><br />期待値 <b data-expectation>0</b></p>
+    </section>)}
+  </div>
+  <p class="hint">異なる基底への測定では、2 回目の条件付き確率はどちらの結果も 50% です。2 回目だけの分布が同じでも、最初の結果を含む同時確率は順序によって変わります。</p>
+  <output aria-live="polite" aria-atomic="true">{orders.map(([first, second]) => M.tableSummary(60, first, second)).join(' ')}</output>
+</measurement-order-explorer>
+
+<script>
+  import { MeasurementOrder as M } from './measurement-order-math'
+  class MeasurementOrderExplorer extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.ready) return
+      this.dataset.ready = 'true'
+      const angle = this.querySelector<HTMLInputElement>('[data-angle]')!
+      const orders = [['Z', 'X'], ['X', 'Z']] as const
+      const update = () => {
+        const theta = Number(angle.value)
+        this.querySelector('[data-angle-value]')!.textContent = `${theta}°`
+        angle.setAttribute('aria-valuetext', `θ = ${theta}°`)
+        orders.forEach(([firstBasis, secondBasis], order) => {
+          const section = this.querySelector(`[data-order="${order}"]`)!
+          for (const [i, first] of ([1, -1] as const).entries()) {
+            for (const [j, second] of ([1, -1] as const).entries()) {
+              const cell = section.querySelector(`[data-cell="${i}-${j}"]`)!
+              const joint = M.jointProbability(theta, firstBasis, first, secondBasis, second)
+              cell.querySelector('[data-prob]')!.textContent = M.percent(joint)
+              cell.querySelector('[data-bar]')!.setAttribute('width', String(100 * joint))
+              cell.querySelector('svg')!.setAttribute('aria-label', `${firstBasis} ${first === 1 ? '+1' : '−1'}、${secondBasis} ${second === 1 ? '+1' : '−1'} の同時確率 ${M.percent(joint)}`)
+            }
+          }
+          section.querySelector('[data-marginal-plus]')!.textContent = M.percent(M.marginalSecond(theta, firstBasis, secondBasis, 1))
+          section.querySelector('[data-marginal-minus]')!.textContent = M.percent(M.marginalSecond(theta, firstBasis, secondBasis, -1))
+          section.querySelector('[data-expectation]')!.textContent = String(Number(M.expectation(theta, firstBasis, secondBasis).toFixed(3)))
+        })
+        this.querySelector('output')!.textContent = orders.map(([first, second]) => M.tableSummary(theta, first, second)).join(' ')
+      }
+      angle.addEventListener('input', update)
+      update()
+    }
+  }
+  if (!customElements.get('measurement-order-explorer')) customElements.define('measurement-order-explorer', MeasurementOrderExplorer)
+</script>
+
+<style>
+  measurement-order-explorer { display: block; box-sizing: border-box; width: 100%; max-width: 600px; margin-block: 1.5rem; margin-inline: 0 auto; padding: 1rem; color: #100F0F; background: #FFFCF0; border: 1px solid #4385BE; border-radius: 8px; font: inherit; }
+  .hint { color: #6F6E69; font-size: 0.9em; }
+  label, output { display: block; }
+  input { display: block; box-sizing: border-box; width: 100%; min-height: 44px; margin: 0; accent-color: #24837B; writing-mode: horizontal-tb; }
+  input[type="range"], input[type="range"]:focus, input[type="range"]:focus-visible { outline: none; border: none; box-shadow: none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px #24837B; }
+  .tables { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+  section { min-width: 0; }
+  table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 0.85em; font-variant-numeric: tabular-nums; }
+  caption { padding-block: 0.5rem; font-weight: bold; }
+  caption span { display: block; font-size: 0.85em; font-weight: normal; }
+  th, td { border: 1px solid #4385BE; padding: 0.4rem 0.15rem; text-align: center; overflow-wrap: anywhere; }
+  th { font-weight: normal; }
+  svg { display: block; width: 100%; height: auto; margin-top: 0.35rem; }
+  .surface { fill: #FFFCF0; }
+  .disc { fill: #92BFDB; }
+  .rim { fill: none; stroke: #4385BE; }
+  .marginal { margin-block: 0.6rem; font-size: 0.9em; font-variant-numeric: tabular-nums; }
+  output { margin-block: 0.5rem; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+  @media (max-width: 350px) { .tables { grid-template-columns: minmax(0, 1fr); } }
+</style>
