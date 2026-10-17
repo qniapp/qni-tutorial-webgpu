@@ -629,6 +629,10 @@ const base = import.meta.env.BASE_URL
 <script>import "../components/fit-content"</script>
 </TutorialLayout>
 <style>
+  /* Center the complete fitted diagram, not its already shrink-wrapped row.
+     Keep scaling on narrow screens and leave interactive explorers alone. */
+  fit-content > :global(.fitted-content) { margin-inline:auto; padding-right:0; }
+  @media(min-width:640px) { fit-content { width:58.333333%; } }
   .my-5[data-fit-content] { width:max-content!important; }
   .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
   .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
