@@ -7,8 +7,27 @@ type EmbedModule = {
   startEmbed(
     canvas: HTMLCanvasElement,
     circuit: string,
-    settings: { showStatePanel: boolean; palette?: string[]; maxWireCount?: number; showRestartButton?: boolean; onRestart?: () => void; onProgress?: (progress: LoadProgress) => void; onDeviceLost?: () => void },
+    settings: { showStatePanel: boolean; palette?: string[]; maxWireCount?: number; showRestartButton?: boolean; onRestart?: () => void; onProgress?: (progress: LoadProgress) => void; onDeviceLost?: (error: unknown) => void },
   ): Promise<EmbedHandle>
+}
+
+type StartupError = Error & { code: string }
+type StartupErrorView = { code: string; remove(): void }
+type ErrorModule = {
+  QniStartupError: new (code: string, message: string, options?: { cause?: unknown }) => StartupError
+  diagnoseWebGpu(): Promise<StartupError | null>
+  renderStartupError(container: HTMLElement, error: unknown, options: { onRetry: () => void; headingLevel: 3 }): StartupErrorView
+}
+
+// This module is independent of wasm; share its load across all embeds.
+let errorModulePromise: Promise<ErrorModule> | undefined
+function loadErrorModule() {
+  return errorModulePromise ??= (import(
+    /* @vite-ignore */ `${import.meta.env.BASE_URL}qni-webgpu/qni-embed-error.mjs`
+  ) as Promise<ErrorModule>).catch(error => {
+    errorModulePromise = undefined
+    throw error
+  })
 }
 
 class QniWebgpuCircuit extends HTMLElement {
@@ -16,6 +35,8 @@ class QniWebgpuCircuit extends HTMLElement {
 
   private canvas: HTMLCanvasElement
   private status: HTMLDivElement
+  private errorSlot: HTMLDivElement
+  private errorView?: StartupErrorView
   private openLink: HTMLAnchorElement
   private runner?: EmbedHandle
   private preservedCircuit?: string
@@ -50,11 +71,13 @@ class QniWebgpuCircuit extends HTMLElement {
         .open-link:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
         canvas:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
         [role="status"] { position: absolute; inset: 1rem; pointer-events: none; }
+        .error-slot { position: absolute; inset: 0; overflow: auto; }
         [hidden] { display: none; }
       </style>
       <div class="frame">
         <canvas tabindex="0" aria-label="量子回路シミュレーター"></canvas>
         <div role="status" aria-live="polite" aria-atomic="true"></div>
+        <div class="error-slot" hidden></div>
       </div>
       <div class="open-tab"><a class="open-link" target="_blank" rel="noopener"><span>Qniで開く</span><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 9L21 3M21 3H15M21 3L13 11M10 5H7.8C6.11984 5 5.27976 5 4.63803 5.32698C4.07354 5.6146 3.6146 6.07354 3.32698 6.63803C3 7.27976 3 8.11984 3 9.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21H14.2C15.8802 21 16.7202 21 17.362 20.673C17.9265 20.3854 18.3854 19.9265 18.673 19.362C19 18.7202 19 17.8802 19 16.2V14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
     `
@@ -63,6 +86,7 @@ class QniWebgpuCircuit extends HTMLElement {
     const focusCanvas = this.canvas.focus.bind(this.canvas)
     this.canvas.focus = options => focusCanvas({ ...options, preventScroll: true })
     this.status = shadow.querySelector('[role="status"]')!
+    this.errorSlot = shadow.querySelector('.error-slot')!
     this.openLink = shadow.querySelector('.open-link')!
     for (const event of ['pointerdown', 'focus', 'keydown', 'click', 'auxclick']) {
       this.openLink.addEventListener(event, () => this.updateOpenLink())
@@ -94,6 +118,7 @@ class QniWebgpuCircuit extends HTMLElement {
     clearInterval(this.heightTimer)
     this.preservedCircuit = undefined
     this.destroyRunner()
+    this.clearError()
     this.setState('idle')
   }
 
@@ -188,9 +213,34 @@ class QniWebgpuCircuit extends HTMLElement {
     runner?.destroy()
   }
 
-  private restart(circuit?: string) {
+  private clearError() {
+    this.errorView?.remove()
+    this.errorView = undefined
+    this.errorSlot.replaceChildren()
+    this.errorSlot.hidden = true
+    delete this.dataset.errorCode
+  }
+
+  private showError(errors: ErrorModule | undefined, error: unknown) {
+    this.clearError()
+    if (errors) {
+      this.errorView = errors.renderStartupError(this.errorSlot, error, {
+        onRetry: () => this.restart(), headingLevel: 3,
+      })
+      this.dataset.errorCode = this.errorView.code
+    } else {
+      this.dataset.errorCode = 'unknown'
+      this.errorSlot.textContent = '量子回路を起動できませんでした。ページを再読み込みしてください。'
+    }
+    this.errorSlot.hidden = false
+    this.setState(this.errorView?.code === 'webgpu-unsupported' ? 'unsupported' : 'error')
+  }
+
+  private restart(circuit = this.preservedCircuit) {
     const generation = ++this.generation
+    this.preservedCircuit = circuit
     this.destroyRunner()
+    this.clearError()
     this.setState('loading', '読み込み中…')
     this.updateAutoHeight()
     this.updateOpenLink()
@@ -202,11 +252,18 @@ class QniWebgpuCircuit extends HTMLElement {
   private async start(generation: number, preservedCircuit?: string) {
     const current = () => this.isConnected && generation === this.generation
     if (!current()) return
-    if (!(navigator as Navigator & { gpu?: unknown }).gpu) {
-      this.setState('unsupported', 'このブラウザーはWebGPUに対応していません。')
-      return
-    }
+    let errors: ErrorModule | undefined
+    let validatingAttributes = false
     try {
+      errors = await loadErrorModule()
+      if (!current()) return
+      const problem = await errors.diagnoseWebGpu()
+      if (!current()) return
+      if (problem) {
+        this.showError(errors, problem)
+        return
+      }
+      validatingAttributes = true
       const circuit = preservedCircuit ?? this.getAttribute('circuit') ?? '{"cols":[]}'
       JSON.parse(circuit)
       const rawPalette = this.getAttribute('palette')
@@ -227,6 +284,7 @@ class QniWebgpuCircuit extends HTMLElement {
           throw new TypeError('max-wire-count must be a positive integer')
         }
       }
+      validatingAttributes = false
       const settings = {
         ...(palette === undefined ? {} : { palette }),
         ...(maxWireCount === undefined ? {} : { maxWireCount }),
@@ -238,11 +296,14 @@ class QniWebgpuCircuit extends HTMLElement {
           if (this.getAttribute('circuit') === circuit) this.restart()
           else this.setAttribute('circuit', circuit)
         },
-        onDeviceLost: () => {
+        onDeviceLost: (error: unknown) => {
           if (!current()) return
+          // Export if still available; real lost-device runners may reject it.
+          try { this.preservedCircuit = this.runner?.circuitJSON() ?? preservedCircuit }
+          catch { /* Keep the last preserved/initial circuit. */ }
           ++this.generation
           this.destroyRunner()
-          this.setState('error', 'GPU との接続が失われました。ページを再読み込みしてください。')
+          this.showError(errors, error)
         },
         onProgress: ({ stage, loaded, total }: LoadProgress) => {
           if (!current()) return
@@ -267,13 +328,18 @@ class QniWebgpuCircuit extends HTMLElement {
       this.runner = runner
       this.applySelectedStep()
       this.preservedCircuit = undefined
+      this.clearError()
       this.setState('running')
       this.updateAutoHeight()
       this.resizeCanvas()
       this.updateOpenLink()
     } catch (error) {
       console.error('量子回路の起動に失敗しました。', error)
-      if (current()) this.setState('error', '量子回路を起動できませんでした。')
+      if (current()) {
+        this.showError(errors, validatingAttributes && errors
+          ? new errors.QniStartupError('invalid-embed', error instanceof Error ? error.message : String(error), { cause: error })
+          : error)
+      }
     }
   }
 }

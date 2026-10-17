@@ -43,7 +43,7 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isPorte
       <script is:inline id="MathJax-script" defer src={`${base}mathjax/tex-chtml.js`}></script>
     </Fragment>}
     {hasCircuit && <script is:inline define:vars={{ qniEmbedBase: `${base}qni-webgpu/` }}>
-      if (navigator.gpu) {
+      if (typeof navigator.gpu?.requestAdapter === 'function') {
         for (const file of ['qni-embed.mjs', 'qni-web.js', 'qni-web_bg.wasm']) {
           const link = document.createElement('link')
           link.href = qniEmbedBase + file
@@ -57,7 +57,7 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isPorte
         }
         // Warm the driver during download. Rust/wgpu acquires its own device;
         // a speculative device would allocate unused resources.
-        if (navigator.gpu.requestAdapter) navigator.gpu.requestAdapter().catch(() => {})
+        navigator.gpu.requestAdapter().catch(() => {})
         import(qniEmbedBase + 'qni-embed.mjs').then(module => module.prepareEmbed()).catch(() => {})
       }
     </script>}

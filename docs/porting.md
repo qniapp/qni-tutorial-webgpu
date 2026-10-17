@@ -10,7 +10,7 @@
 
 原文indexの本文・6注釈・PNG1・Orbit9を維持。「量子もつれ」block tokenを含む原文JSONをそのままnative embedへ置換し、Qniで開くを維持。既存の実験版トップ本文は原文へ置換し、header/footerは変更しない。旧UI記述: Qniの原文スクリーンショットと元palette3個の見た目はnative editorと異なる。原文リンクqniapp.netやGitHub案内もそのまま保持。型チェック/build、関連49/49テスト成功。注釈PNGには元のmax-width100%を適用。native canvas focusによるページ自動scrollをhostのpreventScrollで抑止し、sidebar testはMathJax完了後のdocument座標でlayout shiftを測定する。
 
-以下は旧pin時点の履歴 (質問は解決済み)。
+以下は旧pin時点の履歴 (質問は解決済み)。現在の埋め込みは `qni-embed-error.mjs` の原因別画面を表示する。WebGPU 未対応は「このブラウザーでは動きません」、属性の検証失敗は「回路のデータに問題があります」となり、再試行できる原因では「再試行」から起動し直せる（以下の status 文言は当時の記録）。
 
 12:30の指示更新: 高宮さんがこのページの保留を決定。別ストリームのqni-webgpu circuit-block PRを待ち、今回indexは変更しない。「QPUとは」から再開し、以後もcircuit-blockページだけは保留して次に進んでよい。以下は12:19時点の停止記録。
 
