@@ -1,0 +1,81 @@
+<figure data-complex-plane data-original-image>
+  <svg viewBox="0 0 360 350" aria-label="複素平面。横が実部、縦が虚部です。角度と長さのスライダーで振幅と確率を調べます。">
+    <defs>
+      <marker id="amplitude-plane-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#4385BE" /></marker>
+    </defs>
+    {Array.from({length:9}, (_, i) => {
+      const p = 60 + i * 30
+      return <g class="grid"><path d={`M${p} 50 V290 M60 ${p-10} H300`} /></g>
+    })}
+    <circle cx="180" cy="170" r="120" fill="none" stroke="#DAD8CE" stroke-width="2" />
+    <path d="M30 170 H330 M180 315 V25" class="axis" />
+    <g class="ticks"><text x="300" y="190">1</text><text x="48" y="190">−1</text><text x="188" y="54">1</text><text x="188" y="296">−1</text><text x="165" y="188">0</text></g>
+    <text x="276" y="215">実部 a</text><text x="192" y="25">虚部 b</text>
+    <path data-legs d="M180 170 H216 V122" fill="none" stroke="#24837B" stroke-width="2" />
+    <path data-right-angle d="M208 170 V162 H216" fill="none" stroke="#24837B" stroke-width="1.5" />
+    <line data-arrow x1="180" y1="170" x2="216" y2="122" stroke="#4385BE" stroke-width="3" marker-end="url(#amplitude-plane-arrow)" />
+    <text data-a x="198" y="194" text-anchor="middle">a</text>
+    <text data-b x="228" y="146">b</text>
+    <text data-length x="186" y="130" text-anchor="end">|a+bi|</text>
+    <text x="180" y="338" text-anchor="middle">外側の円は長さ 1（確率 100%）</text>
+  </svg>
+  <label>角度：<span data-angle-label>53.13°</span>
+    <input data-angle type="range" min="0" max="360" step="0.01" value="53.13" aria-valuetext="角度 53.13 度" />
+  </label>
+  <label>長さ |a+bi|：<span data-radius-label>0.50</span>
+    <input data-radius type="range" min="0" max="1" step="0.01" value="0.5" aria-valuetext="長さ 0.50" />
+  </label>
+  <output aria-live="polite" aria-atomic="true">a = 0.30、b = 0.40<br />a²+b² = 0.2500<br />|a+bi| = √(a²+b²) = 0.500<br />確率 |a+bi|² = 25%</output>
+  <figcaption>長さを変えずに角度だけ変えると、確率はどうなるでしょうか? 「角度」スライダーを動かし、矢印の向きと確率を確認しましょう。長さは「長さ |a+bi|」スライダーで 0 から 1 まで変えられます。</figcaption>
+</figure>
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>('[data-complex-plane]')) {
+    const angleInput = root.querySelector<HTMLInputElement>('[data-angle]')!
+    const radiusInput = root.querySelector<HTMLInputElement>('[data-radius]')!
+    const part = (name: string) => root.querySelector<SVGElement>(`[data-${name}]`)!
+    const fmt = (v: number, digits = 2) => (Math.abs(v) < 0.000001 ? 0 : v).toFixed(digits)
+    function paint() {
+      const angle = Number(angleInput.value)
+      const radius = Number(radiusInput.value)
+      const radians = angle * Math.PI / 180
+      const a = radius * Math.cos(radians), b = radius * Math.sin(radians)
+      root.querySelector('[data-angle-label]')!.textContent = `${angle}°`
+      root.querySelector('[data-radius-label]')!.textContent = fmt(radius)
+      angleInput.setAttribute('aria-valuetext', `角度 ${angle} 度`)
+      radiusInput.setAttribute('aria-valuetext', `長さ ${fmt(radius)}`)
+      const x = 180 + 120*a, y = 170 - 120*b
+      const sx = Math.sign(a), sy = Math.sign(b)
+      part('legs').setAttribute('d', `M180 170 H${x} V${y}`)
+      part('right-angle').setAttribute('d', `M${x-sx*8} 170 V${170-sy*8} H${x}`)
+      part('right-angle').style.display = Math.abs(a) > 0.07 && Math.abs(b) > 0.07 ? '' : 'none'
+      part('arrow').setAttribute('x2', String(x)); part('arrow').setAttribute('y2', String(y))
+      part('a').setAttribute('x', String((180+x)/2)); part('a').setAttribute('y', String(170+(b>=0?24:-14)))
+      part('b').setAttribute('x', String(x+(a>=0?14:-14))); part('b').setAttribute('y', String((170+y)/2))
+      part('b').setAttribute('text-anchor', a>=0?'start':'end')
+      // Place the hypotenuse label on the side away from the triangle.
+      const length = Math.hypot(a,b), nx = length ? -b/length : 0, ny = length ? -a/length : -1
+      part('length').setAttribute('x', String(180+60*a+20*nx)); part('length').setAttribute('y', String(170-60*b+20*ny))
+      part('length').setAttribute('text-anchor', a>=0?'end':'start')
+      const probability = a*a+b*b
+      const text = [`a = ${fmt(a)}、b = ${fmt(b)}`, `a²+b² = ${fmt(probability,4)}`, `|a+bi| = √(a²+b²) = ${fmt(length,3)}`, `確率 |a+bi|² = ${Number((100*probability).toFixed(2))}%`]
+      root.querySelector('output')!.textContent = text.join('\n')
+    }
+    angleInput.addEventListener('input', paint)
+    radiusInput.addEventListener('input', paint)
+    paint()
+  }
+</script>
+<style>
+  figure { width:100%; max-width:500px; margin:24px auto; margin-inline:0 auto; color:#100F0F; }
+  svg { width:100%; height:auto; display:block; }
+  text { font:14px system-ui,sans-serif; fill:#6F6E69; }
+  .grid { fill:none; stroke:#E6E4D9; stroke-width:1; }
+  .axis { fill:none; stroke:#6F6E69; stroke-width:1.5; }
+  label { display:block; }
+  input[type="range"] { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0; accent-color:#24837B; writing-mode:horizontal-tb; }
+  input[type="range"], input[type="range"]:focus, input[type="range"]:focus-visible { outline:none; border:none; box-shadow:none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow:0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow:0 0 0 3px #24837B; }
+  output { display:block; white-space:pre-line; margin:16px 0; padding:12px; border-radius:6px; background:#F2F0E5; font-variant-numeric:tabular-nums; line-height:1.7; }
+  figcaption { font-size:14px; color:#6F6E69; line-height:1.6; }
+</style>

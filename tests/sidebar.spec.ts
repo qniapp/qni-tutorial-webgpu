@@ -1,7 +1,22 @@
 import { expect, test } from '@playwright/test'
 import original from './fixtures/original-navigation.json' with { type: 'json' }
 
-const ported = new Set(['', 'h_gate', 'qpu', 'what_qpu_do_faster', 'quantum_circuit', 'qni_intro', 'p_bit', 'superposition', 'qubit', 'phase', 'circle_notation', 'cpu_vs_qpu_operations', 'write_operation', 'x_gate', 'phase_gate', 'measurement_operation', 'no_cloning_theorem', 'gate_combination', 'quantum_key_distribution', 'bb84_protocol', 'multi_qubit_circle_notation', 'multi_qubit_superposition', 'multi_qubit_operation', 'operator_pair', 'random_byte_generator', 'bb84_circuit', 'multi_qubit_phase_gate', 'partial_measurement', 'swap_gate', 'cnot_gate', 'swap_from_cnots', 'entanglement', 'disentangle', 'entanglement_operation', 'discriminating_bell_states', 'teleportation_circuit', 'cascading_teleportation', 'long_distance_entanglement', 'cphase', 'increment_circuit', 'decrement_circuit', 'addition_circuit', 'subtraction_circuit', 'multiplication_circuit', 'quantum_logic', 'superdense_coding_circuit', 'superposition_quantum_logic', 'phase_logic', 'phase_logic_combination', 'sat', 'grover_iam', 'grover_iteration', 'multiple_marked_values', 'grover_iam_indetail', 'readout_of_patterns', 'inverse_qft', 'inside_the_qft', 'qft_adder', 'eigenphases', 'quantum_phase_estimation_circuit', 'phase_kickback', 'qpe_output', 'shor_hsp', 'shor_fx', 'shor_r', 'shor_u', 'shor_qft', 'no_cloning_theorem_proof'])
+// Pages added after the port, inserted into the original order: [chapter title, slug to follow, page].
+const added: [string, string, { title: string, slug: string }][] = [
+  ['量子ビット', 'circle_notation', { title: '複素振幅の読み方 1: 振幅の長さと確率', slug: 'amplitude_probability' }],
+]
+
+function expectedChapters() {
+  return original.chapters.map(chapter => {
+    const pages = chapter.pages.map(({ title, slug }) => ({ title, slug }))
+    for (const [chapterTitle, after, page] of added) {
+      if (chapterTitle === chapter.title) pages.splice(pages.findIndex(p => p.slug === after) + 1, 0, page)
+    }
+    return { title: chapter.title, pages }
+  })
+}
+
+const ported = new Set([...added.map(([, , page]) => page.slug), '', 'h_gate', 'qpu', 'what_qpu_do_faster', 'quantum_circuit', 'qni_intro', 'p_bit', 'superposition', 'qubit', 'phase', 'circle_notation', 'cpu_vs_qpu_operations', 'write_operation', 'x_gate', 'phase_gate', 'measurement_operation', 'no_cloning_theorem', 'gate_combination', 'quantum_key_distribution', 'bb84_protocol', 'multi_qubit_circle_notation', 'multi_qubit_superposition', 'multi_qubit_operation', 'operator_pair', 'random_byte_generator', 'bb84_circuit', 'multi_qubit_phase_gate', 'partial_measurement', 'swap_gate', 'cnot_gate', 'swap_from_cnots', 'entanglement', 'disentangle', 'entanglement_operation', 'discriminating_bell_states', 'teleportation_circuit', 'cascading_teleportation', 'long_distance_entanglement', 'cphase', 'increment_circuit', 'decrement_circuit', 'addition_circuit', 'subtraction_circuit', 'multiplication_circuit', 'quantum_logic', 'superdense_coding_circuit', 'superposition_quantum_logic', 'phase_logic', 'phase_logic_combination', 'sat', 'grover_iam', 'grover_iteration', 'multiple_marked_values', 'grover_iam_indetail', 'readout_of_patterns', 'inverse_qft', 'inside_the_qft', 'qft_adder', 'eigenphases', 'quantum_phase_estimation_circuit', 'phase_kickback', 'qpe_output', 'shor_hsp', 'shor_fx', 'shor_r', 'shor_u', 'shor_qft', 'no_cloning_theorem_proof'])
 
 test('sidebar has the original chapters and page order', async ({ page }) => {
   await page.goto('/qni-tutorial-webgpu/h_gate/')
@@ -11,9 +26,9 @@ test('sidebar has the original chapters and page order', async ({ page }) => {
     title: chapter.querySelector('summary')!.textContent!.trim(),
     pages: [...chapter.querySelectorAll('[data-slug]')].map(item => ({ title: item.getAttribute('data-original-title'), slug: item.getAttribute('data-slug') })),
   })))
-  expect(actual).toEqual(original.chapters.map(chapter => ({ title: chapter.title, pages: chapter.pages.map(({ title, slug }) => ({ title, slug })) })))
+  expect(actual).toEqual(expectedChapters())
   expect(actual).toHaveLength(15)
-  expect(actual.flatMap(chapter => chapter.pages)).toHaveLength(68)
+  expect(actual.flatMap(chapter => chapter.pages)).toHaveLength(68 + added.length)
 })
 
 test('current page is highlighted and only its chapter is open', async ({ page }) => {

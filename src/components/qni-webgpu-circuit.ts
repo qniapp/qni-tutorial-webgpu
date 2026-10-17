@@ -1,7 +1,7 @@
 import { APP_URL } from './qni-webgpu-app-url'
 import { estimateEmbedHeight } from './qni-embed-height'
 
-type EmbedHandle = { destroy(): void; circuitJSON(): string; preferredHeight(widthCssPx: number): number; readStateVector(): Promise<Float32Array> }
+type EmbedHandle = { destroy(): void; circuitJSON(): string; preferredHeight(widthCssPx: number): number; readStateVector(): Promise<Float32Array>; selectStep(n: number): void; selectedStep(): number | null; stepCount(): number }
 type LoadProgress = { stage: string; loaded: number; total: number | null }
 type EmbedModule = {
   startEmbed(
@@ -12,7 +12,7 @@ type EmbedModule = {
 }
 
 class QniWebgpuCircuit extends HTMLElement {
-  static observedAttributes = ['circuit', 'palette', 'show-state-panel', 'max-wire-count', 'run-button', 'width', 'height']
+  static observedAttributes = ['circuit', 'palette', 'show-state-panel', 'max-wire-count', 'run-button', 'width', 'height', 'selected-step']
 
   private canvas: HTMLCanvasElement
   private status: HTMLDivElement
@@ -99,7 +99,9 @@ class QniWebgpuCircuit extends HTMLElement {
 
   attributeChangedCallback(name: string, oldValue: string | null, value: string | null) {
     if (oldValue === value) return
-    if (name === 'width' || name === 'height') {
+    if (name === 'selected-step') {
+      this.applySelectedStep()
+    } else if (name === 'width' || name === 'height') {
       this.updateSize()
     } else if (this.isConnected) {
       // A visibility change must not discard gates edited inside the embed.
@@ -108,6 +110,15 @@ class QniWebgpuCircuit extends HTMLElement {
         : undefined
       this.restart(this.preservedCircuit)
     }
+  }
+
+  private applySelectedStep() {
+    const value = this.getAttribute('selected-step')?.trim()
+    if (!this.runner || !value || !/^[+-]?\d+$/.test(value)) return
+    const step = Number(value)
+    if (!Number.isSafeInteger(step)) return
+    try { this.runner.selectStep(step) }
+    catch (error) { console.warn('量子回路のステップを選択できませんでした。', error) }
   }
 
   private updateOpenLink() {
@@ -254,6 +265,7 @@ class QniWebgpuCircuit extends HTMLElement {
         return
       }
       this.runner = runner
+      this.applySelectedStep()
       this.preservedCircuit = undefined
       this.setState('running')
       this.updateAutoHeight()
