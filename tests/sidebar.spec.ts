@@ -4,6 +4,7 @@ import original from './fixtures/original-navigation.json' with { type: 'json' }
 // Pages added after the port, inserted into the original order: [chapter title, slug to follow, page].
 const added: [string, string, { title: string, slug: string }][] = [
   ['QPU 命令その 1', 'gate_combination', { title: '測る基底と期待値 1: X・Y・Z の質問', slug: 'measurement_basis' }],
+  ['QPU 命令その 1', 'measurement_basis', { title: '測る基底と期待値 2: 結果 ±1 と平均', slug: 'measurement_expectation' }],
   ['量子ビット', 'circle_notation', { title: '複素振幅の読み方 1: 振幅の長さと確率', slug: 'amplitude_probability' }],
   ['量子ビット', 'amplitude_probability', { title: '複素振幅の読み方 2: 全体位相と相対位相', slug: 'global_relative_phase' }],
   ['量子ビット', 'global_relative_phase', { title: '回路のための線形代数 1: 基底と内積', slug: 'basis_inner_product' }],

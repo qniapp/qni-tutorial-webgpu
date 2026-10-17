@@ -1,0 +1,95 @@
+---
+// One fixed sequence is reused for every setting; more shots reveal its prefix.
+let seed = 271828
+const uniforms = Array.from({ length: 1000 }, () => {
+  seed = (Math.imul(1664525, seed) + 1013904223) >>> 0
+  return seed / 4294967296
+})
+const initialPlus = uniforms.slice(0, 40).filter(u => u < 0.75).length
+const initialMean = (2 * initialPlus - 40) / 40
+---
+<measurement-shots-explorer>
+  <figure data-original-image>
+    <svg data-dots viewBox="0 0 440 30" role="img" aria-label={`40 回の測定：+1 が ${initialPlus} 回、−1 が ${40 - initialPlus} 回`}>
+      <title>測定結果を左から右へ、40 列ずつ表示します</title>
+      {uniforms.map((u, i) => <circle data-shot data-uniform={u} cx={5.5 + (i % 40) * 11} cy={8 + Math.floor(i / 40) * 11} r="3.8" fill={u < 0.75 ? '#24837B' : '#CE5D97'} style={i >= 40 ? 'display:none' : undefined} />)}
+    </svg>
+    <p class="legend"><span class="plus">●</span> +1　<span class="minus">●</span> −1（左から順に測定）</p>
+    <svg viewBox="0 0 440 104" role="img" data-means aria-label={`理論期待値 0.500、標本平均 ${initialMean.toFixed(3)}`}>
+      <path class="axis" d="M30 50 H410 M30 45 V55 M220 45 V55 M410 45 V55" />
+      <text x="30" y="76" text-anchor="middle">−1</text><text x="220" y="76" text-anchor="middle">0</text><text x="410" y="76" text-anchor="middle">+1</text>
+      <path data-theory d="M315 32 L322 44 L308 44 Z" class="theory" />
+      <circle data-mean cx={220 + 190 * initialMean} cy="57" r="5" class="mean" />
+      <text x="220" y="99" text-anchor="middle">測定値の平均</text>
+    </svg>
+    <p class="legend"><span class="theory-key">▲</span> 理論期待値　<span class="mean-key">●</span> 標本平均</p>
+    <figcaption>状態 Ry(θ)|0⟩ を用意し、Z・X・Y のどれを測るか選びます。回数を増やすと標本平均がどう変わるか、理論期待値と比べてみましょう。同じ設定では同じ結果を表示し、回数を増やしてもそれまでの結果は変わりません。</figcaption>
+  </figure>
+  <label>状態を用意する角度 θ：<span data-theta-label>60°</span><input data-theta type="range" min="0" max="180" step="1" value="60" aria-valuetext="状態を用意する角度 θ 60 度" /></label>
+  <label>質問：<span data-question-label>Z</span>（Z・X・Y）<input data-question type="range" min="0" max="2" step="1" value="0" aria-valuetext="質問 Z" /></label>
+  <label>ショット数：<span data-shots-label>40 回</span><input data-shots type="range" min="1" max="1000" step="1" value="40" aria-valuetext="ショット数 40 回" /></label>
+  <output aria-live="polite" aria-atomic="true">Z を 40 回測定：+1 は {initialPlus} 回、−1 は {40 - initialPlus} 回。確率 P(+1) = 75.0%、P(−1) = 25.0%。標本平均 {initialMean.toFixed(3)}、理論期待値 0.500。</output>
+</measurement-shots-explorer>
+<script>
+  class MeasurementShotsExplorer extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.ready) return
+      this.dataset.ready = 'true'
+      const theta = this.querySelector<HTMLInputElement>('[data-theta]')!
+      const question = this.querySelector<HTMLInputElement>('[data-question]')!
+      const shots = this.querySelector<HTMLInputElement>('[data-shots]')!
+      const dots = [...this.querySelectorAll<SVGCircleElement>('[data-shot]')]
+      const text = (key: string, value: string) => { this.querySelector(`[data-${key}]`)!.textContent = value }
+      const update = () => {
+        const angle = Number(theta.value), count = Number(shots.value), q = Number(question.value)
+        const name = ['Z', 'X', 'Y'][q]
+        const radians = angle * Math.PI / 180
+        const raw = [Math.cos(radians), Math.sin(radians), 0][q]
+        const theory = Math.abs(raw) < 1e-12 ? 0 : raw
+        const p = (1 + theory) / 2
+        let plus = 0
+        dots.forEach((dot, i) => {
+          const positive = Number(dot.dataset.uniform) < p
+          dot.style.display = i < count ? '' : 'none'
+          dot.setAttribute('fill', positive ? '#24837B' : '#CE5D97')
+          if (i < count && positive) plus++
+        })
+        const mean = (2 * plus - count) / count
+        const summary = `${name} を ${count} 回測定：+1 は ${plus} 回、−1 は ${count - plus} 回。確率 P(+1) = ${(100 * p).toFixed(1)}%、P(−1) = ${(100 * (1 - p)).toFixed(1)}%。標本平均 ${mean.toFixed(3)}、理論期待値 ${theory.toFixed(3)}。`
+        text('theta-label', `${angle}°`); text('question-label', name); text('shots-label', `${count} 回`)
+        theta.setAttribute('aria-valuetext', `状態を用意する角度 θ ${angle} 度`)
+        question.setAttribute('aria-valuetext', `質問 ${name}`)
+        shots.setAttribute('aria-valuetext', `ショット数 ${count} 回`)
+        const chart = this.querySelector('[data-dots]')!
+        chart.setAttribute('viewBox', `0 0 440 ${Math.ceil(count / 40) * 11 + 8}`)
+        chart.setAttribute('aria-label', `${count} 回の測定：+1 が ${plus} 回、−1 が ${count - plus} 回`)
+        const x = 220 + 190 * theory
+        this.querySelector('[data-theory]')!.setAttribute('d', `M${x} 32 L${x + 7} 44 L${x - 7} 44 Z`)
+        this.querySelector('[data-mean]')!.setAttribute('cx', String(220 + 190 * mean))
+        this.querySelector('[data-means]')!.setAttribute('aria-label', `理論期待値 ${theory.toFixed(3)}、標本平均 ${mean.toFixed(3)}`)
+        this.querySelector('output')!.textContent = summary
+      }
+      ;[theta, question, shots].forEach(input => input.addEventListener('input', update))
+      update()
+    }
+  }
+  if (!customElements.get('measurement-shots-explorer')) customElements.define('measurement-shots-explorer', MeasurementShotsExplorer)
+</script>
+<style>
+  measurement-shots-explorer { display:block; box-sizing:border-box; width:100%; max-width:540px; margin:1.5rem 0; margin-inline:0 auto; padding:1rem; color:#100F0F; background:#FFFCF0; border:1px solid #4385BE; border-radius:8px; font:inherit; }
+  figure { margin:0 0 1rem; }
+  svg { display:block; width:100%; height:auto; }
+  text { font:16px system-ui,sans-serif; fill:#100F0F; }
+  .axis { fill:none; stroke:#6F6E69; stroke-width:1.5; }
+  .theory, .theory-key { fill:#4385BE; color:#4385BE; }
+  .mean, .mean-key { fill:#100F0F; color:#100F0F; }
+  .plus { color:#24837B; } .minus { color:#CE5D97; }
+  .legend, figcaption { font-size:0.9em; line-height:1.6; }
+  figcaption { color:#6F6E69; }
+  label, output { display:block; overflow-wrap:anywhere; }
+  output { margin-top:0.75rem; font-variant-numeric:tabular-nums; }
+  input[type="range"] { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0; accent-color:#24837B; writing-mode:horizontal-tb; }
+  input[type="range"], input[type="range"]:focus, input[type="range"]:focus-visible { outline:none; border:none; box-shadow:none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow:0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow:0 0 0 3px #24837B; }
+</style>
