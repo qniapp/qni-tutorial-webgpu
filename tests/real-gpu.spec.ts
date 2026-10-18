@@ -22,14 +22,14 @@ test('built H-gate page loads the real WebGPU runner under the Pages base path',
     return state === 'running' || state === 'error'
   })
   const result = await page.evaluate(async () => {
-    const element = document.querySelector<HTMLElement>('qni-webgpu-circuit')!
+    const element = document.querySelector('qni-webgpu-circuit') as HTMLElement & {
+      readStateVector(): Promise<Float32Array>
+    }
     if (element.dataset.state !== 'running') return { started: false, amplitudes: [] }
-    const modulePath = '/qni-tutorial-webgpu/qni-webgpu/qni-web.js'
-    const module = await import(modulePath) as { read_state_vector(): Promise<Float32Array> }
     const deadline = performance.now() + 10_000
     while (performance.now() < deadline) {
       try {
-        const values = Array.from(await module.read_state_vector())
+        const values = Array.from(await element.readStateVector())
         if (values.length) return { started: true, amplitudes: values }
       } catch { /* First render may not have populated test readback yet. */ }
       await new Promise(resolve => setTimeout(resolve, 50))

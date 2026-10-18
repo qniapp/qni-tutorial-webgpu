@@ -2,6 +2,7 @@ node_modules/
 .astro/
 dist/
 public/qni-webgpu/
+public/qni-webgpu-prebuilt/
 public/app/
 public/mathjax/
 .qni-webgpu-source/

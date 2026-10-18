@@ -19,11 +19,14 @@ type ErrorModule = {
   renderStartupError(container: HTMLElement, error: unknown, options: { onRetry: () => void; headingLevel: 3 }): StartupErrorView
 }
 
+// One page selects one complete release, including its independent error module.
+const embedBase = document.documentElement.dataset.qniEmbedBase ?? `${import.meta.env.BASE_URL}qni-webgpu/`
+
 // This module is independent of wasm; share its load across all embeds.
 let errorModulePromise: Promise<ErrorModule> | undefined
 function loadErrorModule() {
   return errorModulePromise ??= (import(
-    /* @vite-ignore */ `${import.meta.env.BASE_URL}qni-webgpu/qni-embed-error.mjs`
+    /* @vite-ignore */ `${embedBase}qni-embed-error.mjs`
   ) as Promise<ErrorModule>).catch(error => {
     errorModulePromise = undefined
     throw error
@@ -317,7 +320,7 @@ class QniWebgpuCircuit extends HTMLElement {
         },
       }
       const module = await import(
-        /* @vite-ignore */ `${import.meta.env.BASE_URL}qni-webgpu/qni-embed.mjs`
+        /* @vite-ignore */ `${embedBase}qni-embed.mjs`
       ) as EmbedModule
       if (!current()) return
       const runner = await module.startEmbed(this.canvas, circuit, settings)

@@ -39,6 +39,10 @@ jobs:
           cache-dependency-path: |
             pnpm-lock.yaml
             .qni-webgpu-source/apps/web/pnpm-lock.yaml
+      - name: Install tutorial dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Test pinned embed release verification
+        run: pnpm run test:unit
       - name: Install upstream Rust toolchain and wasm target
         run: |
           env -C .qni-webgpu-source rustup show active-toolchain
@@ -75,6 +79,19 @@ jobs:
         with:
           node-version: 24
           build-cmd: pnpm run typecheck && pnpm run build
+      # Run only after withastro/action has built/uploaded the default (opt-out) site.
+      - name: Install mobile acceptance Chromium
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Run isolated pinned embed mobile acceptance
+        run: node scripts/test-pinned-embed-mobile.mjs
+      - name: Upload mobile acceptance results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pinned-embed-mobile-results
+          path: test-results/pinned-embed-mobile
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Upload built site for Playwright
         uses: actions/upload-artifact@v4
         with:
