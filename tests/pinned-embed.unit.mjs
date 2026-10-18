@@ -10,7 +10,7 @@ class FixtureRelease {
   static async create() {
     const root = await mkdtemp(join(tmpdir(), 'pinned-embed-test-'))
     const sha = 'a'.repeat(40)
-    const refFile = join(root, 'qni-webgpu.ref')
+    const refFile = join(root, 'qni-embed.ref')
     await writeFile(refFile, `${sha}\n`)
     const { files, manifest } = buildReleaseFixture({ sourceCommit: sha })
     const fixture = { root, sha, refFile, files, manifest, checksum: true, missing: false, badChecksum: false, checksumStatus: 200, requests: [], attestations: [] }
@@ -74,6 +74,22 @@ for (const newline of [true, false]) {
   })
 }
 
+test('default release pin is independent of the bundled source pin', async () => {
+  const fixture = await FixtureRelease.create()
+  const cwd = process.cwd()
+  try {
+    await writeFile(join(fixture.root, 'qni-webgpu.ref'), `${'b'.repeat(40)}\n`)
+    process.chdir(fixture.root)
+    const { refFile, ...options } = fixture.options
+    await PinnedEmbed.fetch(options)
+    expect(fixture.requests.every(path => path.startsWith(`/embed-${fixture.sha}/`))).toBe(true)
+    expect(fixture.attestations.every(({ sha }) => sha === fixture.sha)).toBe(true)
+  } finally {
+    process.chdir(cwd)
+    await fixture.close()
+  }
+})
+
 const failures = [
   ['manifest attestation', f => { f.manifestBytes = Buffer.from('{not JSON'); f.options.verifyAttestation = async filename => { if (filename.endsWith('manifest.json')) throw new Error('bad signature') } }, /attestation verification failed for manifest.json: verifier rejected artifact/],
   ['asset attestation', f => { f.options.verifyAttestation = async filename => { if (filename.endsWith('h-gate.js')) throw new Error('bad signature') } }, /attestation verification failed for h-gate.js: verifier rejected artifact/],
@@ -123,7 +139,7 @@ for (const [name, mutate, error] of failures) {
       if (name === 'manifest checksum mismatch') {
         expect(fixture.requests).toEqual([`/embed-${fixture.sha}/manifest.json.sha256`, `/embed-${fixture.sha}/manifest.json`])
       }
-      expect((await readdir(fixture.root)).sort()).toEqual(['qni-webgpu.ref'])
+      expect((await readdir(fixture.root)).sort()).toEqual(['qni-embed.ref'])
     } finally { await fixture.close() }
   })
 }
@@ -151,7 +167,7 @@ test('default attestation verifier reports missing gh and gh errors', async () =
       PinnedEmbed.runGh = async () => { throw failure }
       fixture.options.verifyAttestation = (filename, sha) => PinnedEmbed.verifyAttestation(filename, sha)
       await expect(PinnedEmbed.fetch(fixture.options)).rejects.toThrow(/attestation verification failed for manifest.json: (gh is missing|gh error)/)
-      expect((await readdir(fixture.root)).sort()).toEqual(['qni-webgpu.ref'])
+      expect((await readdir(fixture.root)).sort()).toEqual(['qni-embed.ref'])
     } finally {
       PinnedEmbed.runGh = originalRunGh
       await fixture.close()
@@ -166,6 +182,6 @@ test('failed verification leaves previously published output untouched', async (
     fixture.manifest.files.at(-1).sha256 = '0'.repeat(64)
     await expect(PinnedEmbed.fetch(fixture.options)).rejects.toThrow(/sha256 mismatch/)
     for (const [name, bytes] of fixture.files) expect(await readFile(join(fixture.options.outputDir, name))).toEqual(bytes)
-    expect((await readdir(fixture.root)).sort()).toEqual(['output', 'qni-webgpu.ref'])
+    expect((await readdir(fixture.root)).sort()).toEqual(['output', 'qni-embed.ref'])
   } finally { await fixture.close() }
 })

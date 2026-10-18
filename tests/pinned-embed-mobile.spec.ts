@@ -1,4 +1,7 @@
 import { expect, test } from '@playwright/test'
+import { readFileSync } from 'node:fs'
+
+const releasePin = readFileSync(new URL('../qni-embed.ref', import.meta.url), 'utf8').trim()
 
 test('pinned H-gate embed runs real GPU code and fits a touch phone', async ({ page }) => {
   let artifactBase = '/qni-tutorial-webgpu/qni-webgpu-prebuilt/'
@@ -23,6 +26,7 @@ test('pinned H-gate embed runs real GPU code and fits a touch phone', async ({ p
   await page.goto('/qni-tutorial-webgpu/h_gate/')
   await expect(page.locator('html')).toHaveAttribute('data-qni-embed-base', /^\/qni-tutorial-webgpu\/qni-webgpu-prebuilt\/embed-[a-f0-9]{40}\/$/)
   artifactBase = (await page.locator('html').getAttribute('data-qni-embed-base'))!
+  expect(artifactBase).toBe(`/qni-tutorial-webgpu/qni-webgpu-prebuilt/embed-${releasePin}/`)
   expect(await page.evaluate(() => ({ width: innerWidth, touch: navigator.maxTouchPoints > 0 })))
     .toEqual({ width: 390, touch: true })
 
@@ -39,6 +43,17 @@ test('pinned H-gate embed runs real GPU code and fits a touch phone', async ({ p
       return [] // Readback may not exist until the first submitted GPU frame.
     }
   }), { timeout: 10_000, message: 'runner computes the authored zero state' }).toEqual([1, 0, 0, 0])
+  await circuit.evaluate(element => element.setAttribute('circuit', '{"cols":[["H"]]}'))
+  await expect.poll(async () => circuit.evaluate(async element => {
+    try {
+      const state = await (element as HTMLElement & { readStateVector(): Promise<Float32Array> }).readStateVector()
+      return state.length === 4
+        && Math.abs(state[0] - Math.SQRT1_2) < 0.0001
+        && Math.abs(state[1]) < 0.0001
+        && Math.abs(state[2] - Math.SQRT1_2) < 0.0001
+        && Math.abs(state[3]) < 0.0001
+    } catch { return false }
+  }), { timeout: 10_000, message: 'release runner computes H on zero, interleaved real/imaginary' }).toBe(true)
   expect(upstreamGateRequests).toEqual([])
   expect(await page.evaluate(() => !!customElements.get('h-gate'))).toBe(true)
 

@@ -4,12 +4,13 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { PinnedEmbed } from './scripts/fetch-qni-embed.mjs'
 
-// Per-page pilot switch: OFF unless explicitly enabled for this build/dev server.
-const hGatePrebuilt = process.env.QNI_H_GATE_PREBUILT === '1'
+// The H-page release pilot is on by default; 0 explicitly selects the bundled path.
+// Preview only serves completed output; it must not need gh or rebuild selection.
+const hGatePrebuilt = process.env.QNI_H_GATE_PREBUILT !== '0' && !process.argv.includes('preview')
 let hGateEmbedDirectory = null
 if (hGatePrebuilt) {
   await PinnedEmbed.fetch()
-  const sha = readFileSync(resolve('qni-webgpu.ref'), 'utf8').trim()
+  const sha = readFileSync(resolve('qni-embed.ref'), 'utf8').trim()
   hGateEmbedDirectory = `qni-webgpu-prebuilt/embed-${sha}/`
 }
 

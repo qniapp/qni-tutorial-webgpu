@@ -39,7 +39,7 @@ export class PinnedEmbed {
 
   static validateManifest(manifest, sha) {
     if (!manifest || manifest.schema_version !== 1) throw new Error('Pinned embed: unsupported schema_version')
-    if (manifest.source_commit !== sha) throw new Error('Pinned embed: source_commit does not match qni-webgpu.ref')
+    if (manifest.source_commit !== sha) throw new Error('Pinned embed: source_commit does not match qni-embed.ref')
     if (manifest.embed_api_version !== 1) {
       throw new Error('Pinned embed: unsupported embed_api_version (expected 1)')
     }
@@ -82,9 +82,9 @@ export class PinnedEmbed {
     }
   }
 
-  static async fetch({ refFile = 'qni-webgpu.ref', outputDir, verifyAttestation = this.verifyAttestation.bind(this), baseUrl = process.env.QNI_EMBED_RELEASE_BASE_URL ?? 'https://github.com/qniapp/qni-webgpu/releases/download' } = {}) {
+  static async fetch({ refFile = 'qni-embed.ref', outputDir, verifyAttestation = this.verifyAttestation.bind(this), baseUrl = process.env.QNI_EMBED_RELEASE_BASE_URL ?? 'https://github.com/qniapp/qni-webgpu/releases/download' } = {}) {
     const sha = (await readFile(refFile, 'utf8')).trim()
-    if (!/^[a-f0-9]{40}$/.test(sha)) throw new Error('Pinned embed: invalid qni-webgpu.ref (expected full 40-character SHA)')
+    if (!/^[a-f0-9]{40}$/.test(sha)) throw new Error('Pinned embed: invalid qni-embed.ref (expected full 40-character SHA)')
     const release = `${baseUrl.replace(/\/+$/, '')}/embed-${sha}/`
     const checksum = await this.download(`${release}manifest.json.sha256`)
     // Exactly one sha256sum line; allow an absent final newline, not extra lines,
