@@ -82,7 +82,7 @@ export class PinnedEmbed {
     }
   }
 
-  static async fetch({ refFile = 'qni-embed.ref', outputDir, verifyAttestation = this.verifyAttestation.bind(this), baseUrl = process.env.QNI_EMBED_RELEASE_BASE_URL ?? 'https://github.com/qniapp/qni-webgpu/releases/download' } = {}) {
+  static async fetch({ refFile = 'qni-embed.ref', outputDir, log = console.log, verifyAttestation = this.verifyAttestation.bind(this), baseUrl = process.env.QNI_EMBED_RELEASE_BASE_URL ?? 'https://github.com/qniapp/qni-webgpu/releases/download' } = {}) {
     const sha = (await readFile(refFile, 'utf8')).trim()
     if (!/^[a-f0-9]{40}$/.test(sha)) throw new Error('Pinned embed: invalid qni-embed.ref (expected full 40-character SHA)')
     const release = `${baseUrl.replace(/\/+$/, '')}/embed-${sha}/`
@@ -112,6 +112,7 @@ export class PinnedEmbed {
           const detail = error.code === 'ENOENT' ? 'gh is missing; install GitHub CLI' : (error.code ? `gh error (${error.code})` : 'verifier rejected artifact')
           throw new Error(`Pinned embed: attestation verification failed for ${name}: ${detail}`, { cause: error })
         }
+        log(`pinned embed: attestation verified ${name}`)
       }
       await writeFile(join(stage, 'manifest.json'), bytes)
       await attest('manifest.json')
@@ -140,6 +141,7 @@ export class PinnedEmbed {
         throw error
       }
       await rm(backup, { recursive: true, force: true })
+      log(`pinned embed: installed embed-${sha} (${manifest.files.length + 2} files)`)
       return target
     } finally {
       await rm(stage, { recursive: true, force: true })
@@ -148,7 +150,7 @@ export class PinnedEmbed {
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  PinnedEmbed.fetch().then(path => console.log(`Verified pinned embed: ${path}`)).catch(error => {
+  PinnedEmbed.fetch().catch(error => {
     console.error(error.message)
     process.exitCode = 1
   })

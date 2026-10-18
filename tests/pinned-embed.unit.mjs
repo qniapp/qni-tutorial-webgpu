@@ -13,7 +13,7 @@ class FixtureRelease {
     const refFile = join(root, 'qni-embed.ref')
     await writeFile(refFile, `${sha}\n`)
     const { files, manifest } = buildReleaseFixture({ sourceCommit: sha })
-    const fixture = { root, sha, refFile, files, manifest, checksum: true, missing: false, badChecksum: false, checksumStatus: 200, requests: [], attestations: [] }
+    const fixture = { root, sha, refFile, files, manifest, checksum: true, missing: false, badChecksum: false, checksumStatus: 200, requests: [], attestations: [], logs: [] }
     const server = createServer((request, response) => {
       fixture.requests.push(request.url)
       const prefix = `/embed-${sha}/`
@@ -30,6 +30,7 @@ class FixtureRelease {
     await new Promise(resolve => server.listen(0, '127.0.0.1', resolve))
     fixture.options = {
       refFile,
+      log: message => fixture.logs.push(message),
       outputDir: join(root, 'output'),
       baseUrl: `http://127.0.0.1:${server.address().port}`,
       verifyAttestation: async (filename, sha) => {
@@ -55,6 +56,10 @@ for (const newline of [true, false]) {
       await PinnedEmbed.fetch(fixture.options)
       const expectedNames = ['manifest.json', 'manifest.json.sha256', ...releaseAssets.map(([name]) => name)]
       expect(fixture.attestations.map(({ filename }) => filename)).toEqual(expectedNames)
+      expect(fixture.logs).toEqual([
+        ...expectedNames.map(name => `pinned embed: attestation verified ${name}`),
+        `pinned embed: installed embed-${fixture.sha} (${expectedNames.length} files)`,
+      ])
       for (const { filename, bytes, sha } of fixture.attestations) {
         const expected = filename === 'manifest.json' ? manifestBytes(fixture.manifest)
           : filename === 'manifest.json.sha256' ? (fixture.files.get(filename) ?? manifestChecksum(manifestBytes(fixture.manifest)))
@@ -133,6 +138,13 @@ for (const [name, mutate, error] of failures) {
     try {
       mutate(fixture)
       await expect(PinnedEmbed.fetch(fixture.options)).rejects.toThrow(error)
+      expect(fixture.logs.some(line => line.startsWith('pinned embed: installed '))).toBe(false)
+      if (name === 'manifest attestation') expect(fixture.logs).toEqual([])
+      if (name === 'asset attestation') {
+        expect(fixture.logs).toEqual([
+          'manifest.json', 'manifest.json.sha256', ...releaseAssets.slice(0, 6).map(([name]) => name),
+        ].map(name => `pinned embed: attestation verified ${name}`))
+      }
       if (name === 'missing checksum' || name.startsWith('malformed checksum') || name === 'checksum server error') {
         expect(fixture.requests).toEqual([`/embed-${fixture.sha}/manifest.json.sha256`])
       }

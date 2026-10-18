@@ -28,8 +28,10 @@ declare global {
 
 const bundledEmbedPath = '/qni-tutorial-webgpu/qni-webgpu/qni-embed.mjs'
 const releasePin = readFileSync(new URL('../qni-embed.ref', import.meta.url), 'utf8').trim()
-// boot() defaults to h_gate, whose runtime is selected by the release pin.
-const embedPath = `/qni-tutorial-webgpu/qni-webgpu-prebuilt/embed-${releasePin}/qni-embed.mjs`
+// boot() defaults to h_gate. Match the default-on build flag with one exact URL.
+const embedPath = process.env.QNI_H_GATE_PREBUILT !== '0'
+  ? `/qni-tutorial-webgpu/qni-webgpu-prebuilt/embed-${releasePin}/qni-embed.mjs`
+  : bundledEmbedPath
 const mockModule = `
   export async function startEmbed(canvas, circuit, settings) {
     const mock = window.__qniMock;
