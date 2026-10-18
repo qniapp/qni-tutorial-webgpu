@@ -54,7 +54,7 @@
 
 ## 試作とローカル検証 (07:44 JST)
 
-- `src/components/QwHGate.astro` が `qni-webgpu.ref` の実際の SHA から H SVG を git show で取得し、字形を変更せず内包する。CI の標準参照先は `.qni-webgpu-source`。ローカルは `QNI_WEBGPU_SOURCE=/home/yasuhito/Work/qni-webgpu` を指定し、保護された作業ツリーを変更せず git オブジェクトだけを読む。
+- `src/components/QwHGate.astro` が `qni-webgpu.ref` の実際の SHA から H SVG を git show で取得し、字形を変更せず内包する。CI の標準参照先は `.qni-webgpu-source`。ローカルは `QNI_WEBGPU_SOURCE="<qni-webgpu checkout>"` を指定し、保護された作業ツリーを変更せず git オブジェクトだけを読む。
 - `h_gate.astro` の最初の説明文に一つだけ挿入した。手描きの H や代替フォントは使っていない。本体の CSS だけを Rust の形状/色に合わせた。
 - 型チェック、Astro ビルド、Node 22 による対象の **2 テスト**が成功。アクセシブルなベクター、非登録タグ、16px/1em、行高以内、baseline の CSS、色を確認。
 - 最初のテストは Node 型の未導入を避けるよう修正。Astro の SSR では import.meta.url が出力側になるため、ビルドの作業ディレクトリー基準でピンを読むよう修正した。いずれも修正後のビルド/テストが成功。
@@ -67,7 +67,7 @@
 
 ## 実機の公開検証と完了記録 (07:59 JST)
 
-対象: [公開 H ゲート教材](https://qniapp.github.io/qni-tutorial-webgpu/h_gate/)。ホスト `gmktec`、Chromium **152.0.7977.82**、GPU vendor `amd` / architecture `rdna-3`。`--enable-unsafe-webgpu --enable-features=Vulkan --use-angle=vulkan` と、各ケースに `--force-device-scale-factor=1/2` を使用。
+対象: [公開 H ゲート教材](https://qniapp.github.io/qni-tutorial-webgpu/h_gate/)。AMD GPU を積んだ手元の Linux マシン、Chromium **152.0.7977.82**、GPU vendor `amd` / architecture `rdna-3`。`--enable-unsafe-webgpu --enable-features=Vulkan --use-angle=vulkan` と、各ケースに `--force-device-scale-factor=1/2` を使用。
 
 | 確認項目 | DPR 1 | DPR 2 |
 | --- | --- | --- |
@@ -85,10 +85,10 @@ H 字形と角丸、色が同じ系列であることを比較画像でも確認
 
 保存物:
 
-- `/tmp/qtw-inline-live.json`: 寸法、基線、ピン、実機 GPU、エラー、ピクセル色の比較。
-- `/tmp/qtw-inline-compare-dpr1.png`
-- `/tmp/qtw-inline-compare-dpr2.png`
-- `/tmp/qtw-inline-verify.mjs`: 最終検証のハーネス。
+- 一時ディレクトリの `qtw-inline-live.json`: 寸法、基線、ピン、実機 GPU、エラー、ピクセル色の比較。
+- `qtw-inline-compare-dpr1.png`
+- `qtw-inline-compare-dpr2.png`
+- `qtw-inline-verify.mjs`: 最終検証のハーネス。
 
 最終の対象テストは新規 2 件＋既存コンポーネント 16 件の **18/18 成功**。型チェックと Astro ビルドも成功。開始したテスト用サーバーとブラウザーは終了済み。比較画像二枚は依頼どおり保持し、検査用の中間画像は削除した。保護された二つのチェックアウト、廃止予定の worktree、ピンには変更を加えていない。
 

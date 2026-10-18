@@ -6,8 +6,10 @@
 
 原source `docs/shor-r-original-source.html`、Python証拠 `tests/fixtures/shor-r-blocker-analysis.json`。
 
+一時ディレクトリに保存する解析結果も、コマンドでは相対ファイル名を指定する。
+
 ```sh
-python3 scripts/analyze-shor-r-source.py ../qni/apps/tutorial/shor_r.html --output /tmp/shor-r-analysis.json
+python3 scripts/analyze-shor-r-source.py ../qni/apps/tutorial/shor_r.html --output shor-r-analysis.json
 ```
 
 ## 正しいピーク

@@ -25,7 +25,7 @@
 
 1/3は位相反転せず、原文の文字式をAND優先で解釈した結果にはならない。原JSONを変更して合わせる回避策は取らない。
 
-資料 `/tmp/qtw-phase-combination-original-gpu.{mjs,json,log}`、原JSON `/tmp/qtw-phase-combination-original.json`。診断用ブラウザーは終了済み。
+資料 一時ディレクトリの `qtw-phase-combination-original-gpu.{mjs,json,log}`、原JSON `qtw-phase-combination-original.json`。診断用ブラウザーは終了済み。
 
 ## 未着手の移植内容
 

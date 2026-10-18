@@ -39,6 +39,6 @@ Python `math` で、k=2として次を計算した。これは指示された解
 - 承認後にgrover_iteration routeを作成し、公開前の検証を実施。公開状況はdocs/porting.mdの最新記録を参照する。
 - 原palette[]×3/max-wire-count1×3、各4-wire、17/29/53列。画像0、削除credits0。承認2数値以外の本文/全26TeX/JSONの一致と390・1440のscroll/errors0/step0を確認。
 - 永続解析結果 `tests/fixtures/grover-iteration-analysis.json`、3/9回の実GPU結果 `tests/fixtures/grover-iteration-k3-k9-gpu-verification.json`。
-- `/tmp/qtw-grover-iteration-analytic.json`、`/tmp/qtw-grover-iteration-original-gpu-results.json`、`/tmp/qtw-grover-iteration-k3-k9-{circuits.json,gpu.mjs,gpu-results.json,gpu.log}`。
-- 原live段落 `/tmp/qtw-grover-iteration-original-nine-prose.json`、screenshot `/tmp/qtw-grover-iteration-original-99_9.png`。
+- 一時ディレクトリの `qtw-grover-iteration-analytic.json`、`qtw-grover-iteration-original-gpu-results.json`、`qtw-grover-iteration-k3-k9-{circuits.json,gpu.mjs,gpu-results.json,gpu.log}`。
+- 原live段落 `qtw-grover-iteration-original-nine-prose.json`、screenshot `qtw-grover-iteration-original-99_9.png`。
 - CPU fallback/本番readback/上流コード変更なし。最新hard stop14:31。

@@ -53,7 +53,7 @@ QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/compare
 QTW_COMPARE_COLLECT_FAILURES=1 QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/compare-qpe-original.mjs shor_r
 ```
 
-後者の実結果 `STOP shor_r: 4/4 comparison cases failed; no additional edits are authorized`、exit1。これを成功と報告しない。参照log `/tmp/qtw-r-public-{tests,compare,compare-all}.log`。GPUExecuted:false。
+後者の実結果 `STOP shor_r: 4/4 comparison cases failed; no additional edits are authorized`、exit1。これを成功と報告しない。参照log 一時ディレクトリの `qtw-r-public-{tests,compare,compare-all}.log`。GPUExecuted:false。
 
 ## 質問/停止
 

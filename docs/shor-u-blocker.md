@@ -8,8 +8,10 @@
 
 原最新source `docs/shor-u-original-source.html`。Python証拠 `tests/fixtures/shor-u-blocker-analysis.json`、3箇所のexact label提案 `tests/fixtures/shor-u-ket-proposals.json`、文献年の根拠 `tests/fixtures/vedral-bibliography-evidence.json`。
 
+一時ディレクトリに保存する解析結果も、コマンドでは相対ファイル名を指定する。
+
 ```sh
-python3 scripts/analyze-shor-u-source.py docs/shor-u-original-source.html --output /tmp/shor-u-analysis.json
+python3 scripts/analyze-shor-u-source.py docs/shor-u-original-source.html --output shor-u-analysis.json
 ```
 
 ## 正しい数値・保持すべきmetadata

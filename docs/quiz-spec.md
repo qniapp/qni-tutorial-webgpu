@@ -9,7 +9,7 @@ qni-webgpu eng による共有仕様（高宮さん依頼）
 
 ---
 
-## 0. 決定事項（qni eng 草案 `/workspace/qni-worktrees/quiz-spec.md` との差）
+## 0. 決定事項（別作業ツリーの qni eng 草案 `quiz-spec.md` との差）
 
 qni 側ブランチ `replace-orbit-quizzes`（e041754・4359e81、未 push）は草案に沿って作られている。以下の点は**本仕様を優先**するので、そのブランチは作り直すこと。
 

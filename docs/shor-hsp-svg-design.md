@@ -13,7 +13,7 @@
 
 Public `Props { markedPeriod?: boolean }` hides fixed data, grid geometry, red-ring policy, pointer-coordinate transforms, keyboard behavior and instance state. One `ShorMod15Graph.astro` owns SSR and local script. The immutable SSR values drive polyline/markers; the browser reads emitted point data/coordinates, never carries a second table or computes quantum states.
 
-Interaction state is a closure per root. `inspect(index:number|null):void` is the only state transition; null hides selection/readout. Click maps client coordinates through inverse SVG screen CTM and selects the nearest emitted point x. Arrow/Home/End/Enter/Space/Escape select or clear values. All original geometry and red period rings are invariant. One focus target gives a real whole-graph hit area rather than sixteen tiny tab stops.
+Interaction state is a closure per root. `inspect(index:number|null):void` is the only state transition; null hides selection/readout. Click maps client coordinates through inverse SVG screen CTM and selects the nearest emitted point x. Arrow, Home, End, Enter, Space, Escape select or clear values. All original geometry and red period rings are invariant. One focus target gives a real whole-graph hit area rather than sixteen tiny tab stops.
 
 ## Synthesis decision / alternatives
 

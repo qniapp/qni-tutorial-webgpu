@@ -65,4 +65,4 @@ c=cos(π/8)、s=sin(π/8)、H=[[1,1],[1,-1]]/√2。
 - **eigenphases未公開、route/移植fixture未作成、原文/JSON無変更。** 移植後のtext/TeX/scroll/DPR/toolbar/step0は未検証。
 - 次quantum_phase_estimation_circuit以降も停止し、原文維持または2語句修正の判断を待つ。
 
-永続 `tests/fixtures/eigenphases-wording-verification.json` に原2JSON/12テストJSON/解析期待値/24GPU結果/原live該当段落・table・limitsを保存した。資料 `/tmp/qtw-next-eigenphases.html`、`/tmp/qtw-eigenphases-original-*` (各mini回路両幅のscreenshot)、`/tmp/qtw-eigenphases-{test-circuits,expected,gpu-results}.json`、`/tmp/qtw-eigenphases-gpu.mjs`。
+永続 `tests/fixtures/eigenphases-wording-verification.json` に原2JSON/12テストJSON/解析期待値/24GPU結果/原live該当段落・table・limitsを保存した。資料 一時ディレクトリの `qtw-next-eigenphases.html`、`qtw-eigenphases-original-*` (各mini回路両幅のscreenshot)、`qtw-eigenphases-{test-circuits,expected,gpu-results}.json`、`qtw-eigenphases-gpu.mjs`。

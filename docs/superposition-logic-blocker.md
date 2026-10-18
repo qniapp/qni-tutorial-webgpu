@@ -14,7 +14,7 @@ a,b,cは第1,2,3 wire、つまり低位bit0,1,2。NOT bはb自身に実行。d (
 
 原5-wire/26-column JSONをそのままGPU実行すると、状態0,1,2,3,6,20,21,23に各1/8、他は0。e=1は20/21/23、低3bitでは4/5/7。norm≈1。
 
-再現資料 `/tmp/qtw-superposition-logic-original-gpu.{mjs,json,log}`。診断のみで最初のH3個をX/空/空に替えて入力(a,b,c)=(1,0,0)を準備すると、最終状態1のみ、e=0になる。原本や製品にはこの変更を入れていない。資料 `/tmp/qtw-superposition-logic-diagnostic-gpu.{mjs,json,log}`。
+再現資料 一時ディレクトリの `qtw-superposition-logic-original-gpu.{mjs,json,log}`。診断のみで最初のH3個をX/空/空に替えて入力(a,b,c)=(1,0,0)を準備すると、最終状態1のみ、e=0になる。原本や製品にはこの変更を入れていない。資料 `qtw-superposition-logic-diagnostic-gpu.{mjs,json,log}`。
 
 ## 訂正許可が必要な説明
 

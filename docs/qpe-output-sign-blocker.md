@@ -22,8 +22,10 @@
 
 これは数学の閉形式評価で、GPU実行でも回路CPU simulatorでもない。
 
+一時ディレクトリに保存する解析結果も、コマンドでは相対ファイル名を指定する。
+
 ```sh
-python3 scripts/analyze-qpe-output-source.py ../qni/apps/tutorial/qpe_output.html --output /tmp/qpe-output-analysis.json
+python3 scripts/analyze-qpe-output-source.py ../qni/apps/tutorial/qpe_output.html --output qpe-output-analysis.json
 ```
 
 永続 `tests/fixtures/qpe-output-blocker-analysis.json`。GPUExecuted:false。

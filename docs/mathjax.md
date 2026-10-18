@@ -26,7 +26,7 @@ startup.ready は defaultReady をそのまま呼び、startup.promise 解決時
 
 ## 配信方式の比較 / 選択 (10:15 JST)
 
-各構成で3 fresh browser contexts と、同じ page の reload を測った。cold は HTTP cache が空の新規 context、warm は同じ context の reload。GPU driver / OS cache をリセットした意味ではない。gmktec の実 Chromium 152、Vulkan / unsafe WebGPU / force-device-scale-factor=1、1440px。MathJax resource の transferSize を合計し、CDP encodedDataLength も保存。CDN は jsDelivr の実 URL、self-host はローカル gzip HTTP origin なので、差を GitHub Pages での CDN 対 self-host の厳密な優劣とは解釈しない。startup.promise 解決時の mark は font の最終 paint 時刻ではない。
+各構成で3 fresh browser contexts と、同じ page の reload を測った。cold は HTTP cache が空の新規 context、warm は同じ context の reload。GPU driver / OS cache をリセットした意味ではない。手元 Linux 実機（AMD GPU）の Chromium 152、Vulkan / unsafe WebGPU / force-device-scale-factor=1、1440px。MathJax resource の transferSize を合計し、CDP encodedDataLength も保存。CDN は jsDelivr の実 URL、self-host はローカル gzip HTTP origin なので、差を GitHub Pages での CDN 対 self-host の厳密な優劣とは解釈しない。startup.promise 解決時の mark は font の最終 paint 時刻ではない。
 
 ローカル h_gate の3回中央値:
 
@@ -48,7 +48,7 @@ shim の typeset は存在せず、fonts.ready proxy は cold80.8 / warm55.2ms�
 
 一次資料: mathjax-full@3.2.2 の `js/input/tex/FindTeX.js:140-152`。TeX FindTeX 既定 delimiters は inline `\\(` / `\\)`、display `$$` / `$$` と `\\[` / `\\]`。single `$` は既定では無効。processEscapes / processEnvironments / processRefs はtrue。実 document で packages=base,ams,newcommand,noundefined,require,autoload,configmacros、enableMenu=true / enableAssistiveMml=true を確認。独自 macros はなし。
 
-公開 shim の before も cold/warm 各3回保存済み: load中央値1,103.4 / 350.8ms、font-ready proxy1,054.0 / 356.3ms、transfer34,460 / 0 bytes。生データは `/tmp/qtw-mathjax-perf.json`、static prototype は `/tmp/qtw-mathjax-static.{html,json}`。CDNやlocalhostの結果を公開URLの before/after と混ぜない。
+公開 shim の before も cold/warm 各3回保存済み: load中央値1,103.4 / 350.8ms、font-ready proxy1,054.0 / 356.3ms、transfer34,460 / 0 bytes。生データは 一時ディレクトリの `qtw-mathjax-perf.json`、static prototype は `qtw-mathjax-static.{html,json}`。CDNやlocalhostの結果を公開URLの before/after と混ぜない。
 
 ## Deploy / 公開比較 / 完了 (10:24 JST)
 
@@ -63,12 +63,12 @@ shim の typeset は存在せず、fonts.ready proxy は cold80.8 / warm55.2ms�
 
 MathJax は shim より約269KB多い。before/afterの load短縮は観測値であり、MathJaxによる高速化とは主張しない。時刻の異なる測定の CDN/driver/cache 変動を含み、同時比較ではない。typeset mark と shim の fonts-ready proxy は別指標。tex-chtml はraw1,160,989bytes、元の tex-mml-chtml は1,173,007bytes、gzip転送差はローカルで2,425bytes。
 
-実 gmktec Chromium152.0.7977.82 / AMD rdna-3 / Vulkan の1440px・390px、原文と移植後の4ケースを再比較。**ket12、H19、qubit-circle24、console/page errors0**。全12 ketが原文と同じ22.296875×21px、19.12px、MJXZERO/MJXTEX。両ページの delimiters、packages、enableMenu=true、enableAssistiveMml=trueも同じ。拡大cropと本文を目視確認した。背景/本文色は既存 theme (原文white/gray、移植Flexoki paper/black) の差を維持し、raw pixel一致とは主張しない。
+手元 Linux 実機（AMD GPU）の Chromium152.0.7977.82 / AMD rdna-3 / Vulkan の1440px・390px、原文と移植後の4ケースを再比較。**ket12、H19、qubit-circle24、console/page errors0**。全12 ketが原文と同じ22.296875×21px、19.12px、MJXZERO/MJXTEX。両ページの delimiters、packages、enableMenu=true、enableAssistiveMml=trueも同じ。拡大cropと本文を目視確認した。背景/本文色は既存 theme (原文white/gray、移植Flexoki paper/black) の差を維持し、raw pixel一致とは主張しない。
 
 移植後は両幅とも overflowなし。実 mouse hoverで shared tooltip (振幅+0.70711、確率+50.0000%、位相+0.00°) を確認。WebGPU embedの実GPU診断readbackで初期状態[1,0,0,0]、Hを設定後[0.7071067690849304,0,0.7071067690849304,0]を確認した。これは既存test-only/on-demand APIの診断であり、production自動readbackやCPU fallbackを追加していない。
 
 原文のcold warm-upには既知のroot favicon.ico 404がある。`coldOriginalErrors`に残し、同じcontextのwarm再比較4ケースが0であることを区別した。route/mockでエラーを隠していない。移植後はcold/warmとも0。
 
-保存: `/tmp/qtw-mathjax-compare-1440.png`、`/tmp/qtw-mathjax-compare-390.png`、`/tmp/qtw-mathjax.json`、`/tmp/qtw-mathjax-perf.json`。個別cropは `/tmp/qtw-mathjax-crop-{original,ours}-{1440,390}.png`。全42 localhost比較navと公開before/after計12navのraw data、CDP transferも保存。失敗した最初の撮影は原文の不可視MathJax補助nodeをglobal selectorで選んだharness問題で、本文内selectorに直して再実行した。
+保存: 一時ディレクトリの `qtw-mathjax-compare-1440.png`、`qtw-mathjax-compare-390.png`、`qtw-mathjax.json`、`qtw-mathjax-perf.json`。個別cropは `qtw-mathjax-crop-{original,ours}-{1440,390}.png`。全42 localhost比較navと公開before/after計12navのraw data、CDP transferも保存。失敗した最初の撮影は原文の不可視MathJax補助nodeをglobal selectorで選んだharness問題で、本文内selectorに直して再実行した。
 
 12/12関連tests、typecheck/build成功。`rg 'mjx-' src` は0。起動したbrowserはfinallyで停止、測定用HTTP serverとprototype installも終了させる。既存pinは変更なし。実装と文書を通常pushし、main/worktreeをcleanにして期限前に終了する。

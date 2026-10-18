@@ -1,6 +1,6 @@
 # CPHASE 同角度PHASE列: PR #60で解決
 
-**現在の状態 (2026-10-11 09:33): 解決。** PR #60のmerge `64b7bb5de1eaecdfcc221bfabe0ed14ffe53ca28` からembed/standaloneを実際に再ビルドした。390/1440のGPU readbackで元4回路、CPHASEの対称性、2個の同角度PHASE、2control+PHASE、3個の同角度PHASE、各CZ表記を照合し、24/24成功。同角度3-PHASEは状態7だけ `0.25+0.25i`、他の7状態は `sqrt(1/8)+0i` で、位相を3回ではなく1回適用する。cphaseは公開対象に復帰し、#57待ち/SKIPを解除する。資料: `/tmp/qtw-pr60-local-behavior.json`。現在の公開checkpointは [porting.md](porting.md) の末尾に記録する。
+**現在の状態 (2026-10-11 09:33): 解決。** PR #60のmerge `64b7bb5de1eaecdfcc221bfabe0ed14ffe53ca28` からembed/standaloneを実際に再ビルドした。390/1440のGPU readbackで元4回路、CPHASEの対称性、2個の同角度PHASE、2control+PHASE、3個の同角度PHASE、各CZ表記を照合し、24/24成功。同角度3-PHASEは状態7だけ `0.25+0.25i`、他の7状態は `sqrt(1/8)+0i` で、位相を3回ではなく1回適用する。cphaseは公開対象に復帰し、#57待ち/SKIPを解除する。資料: 一時ディレクトリの `qtw-pr60-local-behavior.json`。現在の公開checkpointは [porting.md](porting.md) の末尾に記録する。
 
 以下は解決前の歴史的なSTOP再現記録。現在のpinの挙動ではない。
 
@@ -24,9 +24,9 @@
 
 対照としてSWAP、3-CNOTによるSWAP、Bell状態、control + PHASE(π/4)、単独PHASE、3種類のCZ (control+PHASE(π)、control+Z、controlのみ) は実GPUで期待vectorと一致した。8ケース合格、同角度3-PHASEの1ケース不一致。
 
-- 再現script: `/tmp/qtw-swap-behavior.mjs`
-- vector/期待値: `/tmp/qtw-swap-behavior.json`
-- 実画面: `/tmp/qtw-swap-behavior-three-phases.png`
-- 未公開CPHASE draft/fixture: `/tmp/qtw-blocked-cphase/`
+- 再現script: 一時ディレクトリの `qtw-swap-behavior.mjs`
+- vector/期待値: `qtw-swap-behavior.json`
+- 実画面: `qtw-swap-behavior-three-phases.png`
+- 未公開CPHASE draft/fixture: `qtw-blocked-cphase/`
 
 CPHASE draftではimage `phase_bit3_ket_pair.png` を既存interactive PHASE pair図へ置換し、palette `[[],[],["P(π/4)","•"],["P(π)","Z","•"]]`、max-wire-count `[1,1,1,1]` を照合済み。πラベルの下端が出すHTML内縦scrollは自然な16px下paddingで解消し、390/1440でscroll0を確認した。ただし意味不一致が優先するため公開しない。上流解決後、元の4回路/本文/図と実GPU動作を再確認してからsidebar順で再開する。

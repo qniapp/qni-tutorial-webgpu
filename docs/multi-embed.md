@@ -6,7 +6,7 @@ Each embed owns its app, input, egui context, textures, renderer resources and s
 
 ## Live measurements
 
-Three cold/warm pairs each, hardware Chromium 152.0.7977.82, AMD RDNA-3; flags `--enable-unsafe-webgpu --enable-features=Vulkan --use-angle=vulkan`. One shared browser process; fresh context per pair, normal reload for warm. Viewport 1280×900, so later embeds are below the fold. Raw checkpointed results: `/tmp/qtw-multi-live.json`.
+Three cold/warm pairs each, hardware Chromium 152.0.7977.82, AMD RDNA-3; flags `--enable-unsafe-webgpu --enable-features=Vulkan --use-angle=vulkan`. One shared browser process; fresh context per pair, normal reload for warm. Viewport 1280×900, so later embeds are below the fold. Raw checkpointed results: `qtw-multi-live.json` in a temporary directory.
 
 | Embeds | All ready cold ms | All ready warm ms | JS heap cold/warm MiB | Wasm memory MiB | Idle/drag rAF median ms |
 | --- | ---: | ---: | --- | ---: | --- |
@@ -24,4 +24,4 @@ rAF intervals sampled for two seconds idle and two seconds of pointer dragging o
 
 All 18 live loads had **one wasm resource, one streaming instantiation and one GPUDevice**, zero console/page errors and no Table.grow failure. Pointer activity followed by replacing only the first circuit changed its GPU state while all other GPU readbacks stayed byte-for-byte unchanged. Local seven-embed testing additionally destroyed the real shared GPUDevice: one console loss diagnostic and visible reload instructions appeared in all seven affected embeds. Recovery requires reloading; no CPU/WebGL fallback or production readback was added. Binaryen 123 remains pinned.
 
-Reproduce: `node scripts/measure-multi.mjs https://qniapp.github.io/qni-tutorial-webgpu/ /tmp/qtw-multi-live.json 3`. Remaining limitations: per-renderer pipelines/state buffers still scale with embed count; mobile/large-circuit and simultaneous-all-visible behavior need separate testing. Single-runner global diagnostic APIs must not be used to identify individual embeds.
+Reproduce: `node scripts/measure-multi.mjs https://qniapp.github.io/qni-tutorial-webgpu/ qtw-multi-live.json 3` (output filenames are relative; retain artifacts in a temporary directory). Remaining limitations: per-renderer pipelines/state buffers still scale with embed count; mobile/large-circuit and simultaneous-all-visible behavior need separate testing. Single-runner global diagnostic APIs must not be used to identify individual embeds.

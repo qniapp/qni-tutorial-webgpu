@@ -12,8 +12,10 @@ PR検索page名[]、cloning検索で歴史的 **#97 MERGED（2022-02-19）head6e
 
 Python証拠（unitary/gate executionなし、CPU/GPU量子simulatorではない）:
 
+一時ディレクトリに保存する解析結果も、コマンドでは相対ファイル名を指定する。
+
 ```sh
-python3 scripts/analyze-no-cloning-proof-source.py docs/no-cloning-proof-original-source.html --output /tmp/no-cloning-proof-analysis.json
+python3 scripts/analyze-no-cloning-proof-source.py docs/no-cloning-proof-original-source.html --output no-cloning-proof-analysis.json
 ```
 
 `tests/fixtures/no-cloning-proof-blocker-analysis.json`:

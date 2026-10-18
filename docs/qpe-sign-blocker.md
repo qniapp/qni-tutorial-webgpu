@@ -33,8 +33,10 @@ source: qniapp/qni main `5f342c2b7e3e80b0898ab0c0b9100fa2988dade8`、`apps/tutor
 
 解析は閉形式の評価だけで、量子回路CPU simulatorや本番fallbackは実装していない。
 
+一時ディレクトリに保存する解析結果も、コマンドでは相対ファイル名を指定する。
+
 ```sh
-python3 scripts/analyze-qpe-source.py ../qni/apps/tutorial/quantum_phase_estimation_circuit.html --output /tmp/qpe-sign-analysis.json
+python3 scripts/analyze-qpe-source.py ../qni/apps/tutorial/quantum_phase_estimation_circuit.html --output qpe-sign-analysis.json
 ```
 
 永続証拠 `tests/fixtures/qpe-sign-analysis.json` にsourceSHA256・無変更5JSON・正負角・解析値を保存。GPU検証は一切実行していない。最初の解析guardでH全体回路の制御数にもFourier側のdotが入ることを見落としassertが失敗したため、1/2/4/8を前半図で、全体を1/3/6/11で検査するよう直した。記事や計算値の修正ではない。

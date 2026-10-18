@@ -11,7 +11,7 @@ Chromium、390/1440で原ページを開き、原11JSONが最新sourceと一致�
 1. 短い周波数2準備回路のPHASE列は、上から **π/4、π/2、π、なし**。PHASEがないのは上から4番目 (下から1番目)。原文は「この回路では**下から4ビット目**にだけPHASEがありません」としている。
 2. 1xπ/4ミニ回路の入力は上から **0,0,1,0**。1は上から3番目 (下から2番目)。原文は「ここで**下から3ビット目**のみが1なので」としている。直前の説明は同じ入力を「入力の**上から3ビット目**が|1⟩」と説明しており、本文内でも向きが一致しない。
 
-原回路のスクリーンショット: `/tmp/qtw-inside-qft-original-1440-1.png` (PHASEなしの行)、`/tmp/qtw-inside-qft-original-1440-7.png` (1の行)、390版も取得。原live段落・原JSON一致記録は `/tmp/qtw-inside-qft-original-direction.json`。
+原回路のスクリーンショット: 一時ディレクトリの `qtw-inside-qft-original-1440-1.png` (PHASEなしの行)、`qtw-inside-qft-original-1440-7.png` (1の行)、390版も取得。原live段落・原JSON一致記録は `qtw-inside-qft-original-direction.json`。
 
 ## 解析と実GPU
 
@@ -77,4 +77,4 @@ Chromium、390/1440で原ページを開き、原11JSONが最新sourceと一致�
 - 移植後の本文diff/scroll/step0/toolbar/DPR等は未検証。
 - qft_adder以降も停止。
 
-資料 `/tmp/qtw-next-inside_the_qft.html`、`/tmp/qtw-inside-qft-original-*`、`/tmp/qtw-inside-qft-direction-*`、`/tmp/qtw-inside-qft-all-gpu-*`。永続 `tests/fixtures/inside-qft-direction-verification.json` に原JSON・原live段落・GPU結果を保存。本番readback/CPU fallback/上流コード変更なし。
+資料 一時ディレクトリの `qtw-next-inside_the_qft.html`、`qtw-inside-qft-original-*`、`qtw-inside-qft-direction-*`、`qtw-inside-qft-all-gpu-*`。永続 `tests/fixtures/inside-qft-direction-verification.json` に原JSON・原live段落・GPU結果を保存。本番readback/CPU fallback/上流コード変更なし。
