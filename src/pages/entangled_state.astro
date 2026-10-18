@@ -113,7 +113,7 @@ const base = import.meta.env.BASE_URL
     Qni でベル状態を作ってみましょう。両方を <Ket label="0" /> で準備し、上の q0 に H、その後に CNOT を使います。
     CNOT の列では、上の「•」が制御、下の X が標的です。q0 が 1 のときだけ q1 が反転します。
     下の状態パネルは CNOT の直後を選んでいます。
-    Amps2 は全体の 4 個の振幅、1 列空けた Probability は各ワイヤ自身の 0 と 1 の確率を表示します。
+    Amps2 は全体の 4 個の振幅、Probability は各ワイヤ自身の 0 と 1 の確率を表示します。
     Bloch は各ワイヤのブロッホ球、Density は各ワイヤの密度行列です。これらの表示命令は測定しません。
   </p>
   <qni-webgpu-circuit
@@ -121,7 +121,7 @@ const base = import.meta.env.BASE_URL
     selected-step="2"
     show-state-panel="true"
     palette={'["H","Ry(π/3)","Ry(π/2)","•","X"]'}
-    circuit={'{"cols":[["|0>","|0>"],["H"],["•","X"],["Amps2"],[1],["Probability","Probability"],["Bloch","Bloch"],["Density","Density"]]}'}
+    circuit={'{"cols":[["|0>","|0>"],["H"],["•","X"],["Amps2"],["Probability","Probability"],["Bloch","Bloch"],["Density","Density"]]}'}
   ></qni-webgpu-circuit>
   <ol>
     <li>まず編集せず、全体の振幅が順に約 0.707、0、0、0.707 であることを確認しましょう。各ワイヤの Probability は 0 と 1 がそれぞれ 50%、Bloch の矢印は長さ 0、Density は対角が 0.5、対角以外が 0 になります。</li>
