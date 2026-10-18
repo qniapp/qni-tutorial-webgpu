@@ -1,0 +1,159 @@
+---
+import TutorialLayout from '../layouts/TutorialLayout.astro'
+import Ket from '../components/Ket.astro'
+import MeasurementQuestionExplorer from '../components/MeasurementQuestionExplorer.astro'
+import MeasurementRecipeExplorer from '../components/MeasurementRecipeExplorer.astro'
+const base = import.meta.env.BASE_URL
+---
+<TutorialLayout title="測る基底と期待値 1: X・Y・Z の質問" description="同じ量子ビットに違う質問をして、測定の基底と期待値を図と回路で確かめる" section="QPU 命令その 1" hasMath hasCircuit>
+  <p>
+    <a href={`${base}measurement_operation/`}>MEASUREMENT 命令</a>では、測定すると 0 か 1 が出るのでした。
+    ここでは、測定を量子ビットへの「質問」と考えてみましょう。
+    目的は、何を質問するかによって答えの確率が変わることと、その質問を Qni の回路で作る方法を確かめることです。
+  </p>
+
+  <h2>状態はそのまま、質問を変える</h2>
+  <p>
+    Qni の Measure は、<Ket label="0" /> と <Ket label="1" /> のどちらかを尋ねます。これを Z の質問と呼びます。
+    一方、X の質問は <Ket label="+" /> と <Ket label="−" /> のどちらかを尋ねます。
+    <a href={`${base}h_gate/`}>H ゲート</a>で作る <Ket label="+" /> は、0 と 1 の振幅が同じ状態なのでした。
+    この状態に Z の質問をした場合と、X の質問をした場合で、答えの確率はどうなるでしょうか?
+  </p>
+  <p>
+    次の図は、最初に <Ket label="+" /> を用意しています。「質問」スライダーを Z から X へ動かしてみましょう。
+    状態の点が動かないことと、2 本の確率の棒が変わることを確認してください。
+    すべてのスライダーは、選択して左右の矢印キーでも動かせます。
+  </p>
+  <MeasurementQuestionExplorer />
+  <p>
+    Z では答えが半分ずつですが、X では + 側の答えが確率 100% になります。
+    図の + 側、− 側は、選んだ軸の正方向、負方向の答えです。Z の場合は、それぞれ 0、1 に対応します。
+    読む基準となる 2 個の状態の組を測定基底と呼びます。
+    同じ状態でも、測定基底が違うと答えの確率が変わります。
+    成分の求め方は、<a href={`${base}basis_inner_product/`}>基底と内積</a>で確かめられます。
+  </p>
+  <p>
+    図の点はブロッホ球上の状態を、XZ 面と XY 面へ写したものです。振幅そのものの座標ではありません。
+    θ は北極からの角度、φ は Z 軸のまわりの角度です。点の座標 X、Y、Z は、それぞれの質問の期待値に対応します。
+    Y は、0 と 1 の振幅の間に ±90 度の位相差がある 2 個の状態を区別する質問です。
+    θ を 90 度に保ち、φ を 90 度にしてから質問を Y にすると、どうなるでしょうか?
+    予想してから操作し、Y の + 側だけが出ることを確認しましょう。
+  </p>
+
+  <h2>Measure の前に置くゲート</h2>
+  <p>
+    Measure が尋ねるのは常に Z の質問です。では、X や Y の質問はどう作ればよいでしょうか?
+    測定する前にゲートを置き、それぞれの答えに対応する状態を <Ket label="0" /> と <Ket label="1" /> に移します。
+    次の図の入力は、先ほどの θ = 90 度、φ = 90 度の状態です。これを <Ket label="+i" /> と書きます。
+    「質問」を Y にし、「測定前の段階」を最初から最後まで動かして、右の円の針と大きさを追いましょう。
+    最後にはどうなるでしょうか? 予想してから確認してください。
+  </p>
+  <MeasurementRecipeExplorer />
+  <p>
+    Y の質問では、先に S†、次に H を置きます。S† は S の逆操作で、<Ket label="1" /> の振幅を −i 倍します。
+    最初に右の円の針が、虚数の正方向から実数の正方向へ回り、<Ket label="+" /> になります。続く H で <Ket label="0" /> に移ります。
+    X の質問なら H だけ、Z の質問なら追加のゲートは必要ありません。
+    図の「質問」を X、Z にも動かして、最後の 0/1 の確率を比べましょう。
+    途中の円はゲートで変わった状態であり、質問の結果の確率として読むのは、変換をすべて終えた位置です。
+  </p>
+  <p>
+    Y の 2 個の基底状態は、次のように書けます。S† の後の H は、この順番で適用してください。
+    <Ket label="+i" /> は 0 に、<Ket label="−i" /> は 1 に対応します。
+  </p>
+  <p class="math-display">{String.raw`\[ |+i\rangle=\frac{|0\rangle+i|1\rangle}{\sqrt{2}} \]`}</p>
+  <p class="math-display">{String.raw`\[ |-i\rangle=\frac{|0\rangle-i|1\rangle}{\sqrt{2}} \]`}</p>
+  <p>
+    ここで一致するのは、元の状態へ X や Y の質問をする確率と、ゲートで変換した後の状態へ Z の質問をする確率です。
+    変換ゲートは実際に状態を動かします。測定後に元の基底の状態へ戻したい場合は、測定の後に逆の変換も必要です。
+  </p>
+
+  <h2>2 個の答えから期待値を読む</h2>
+  <p>
+    変換後の Measure の出力 0 に +1、出力 1 に −1 を割り当てましょう。
+    たとえば確率が 75% と 25% なら、同じ準備と質問を繰り返すときの平均はどうなるでしょうか?
+    最初の図で質問を Z、θ を 60 度にして、確率と期待値を確認しましょう。
+  </p>
+  <p>
+    各答えの値に確率を掛けて足した、理論上の平均を期待値と呼びます。
+    質問を A（X、Y、Z のいずれか）と書くと、次の式になります。P(0) と P(1) は、必要な変換を済ませた後の出力確率です。
+  </p>
+  <p class="math-display">{String.raw`\[ \begin{aligned} \langle A\rangle&=(+1)P(0)+(-1)P(1) \\ &=P(0)-P(1) \end{aligned} \]`}</p>
+  <p>
+    今の例では 0.75 − 0.25 = 0.5 です。1 回の測定で 0.5 が出るわけではありません。
+    1 回の記録は +1 か −1 で、実際に繰り返した平均にはばらつきがあります。
+    余裕のある人は、同じ θ のまま質問を X、Y に変え、平均が変わることも確認しましょう。
+  </p>
+
+  <h2>Z ゲートと、Z の質問は別の操作</h2>
+  <p>
+    <Ket label="+" /> に Z ゲートを置いたら、Z の質問をしたことになるでしょうか?
+    Z ゲートは右の振幅の符号を反転し、<Ket label="+" /> を <Ket label="−" /> に動かします。測定結果の 0/1 は出しません。
+    一方、Z の質問は Measure による測定です。<Ket label="+" /> から 0 か 1 が出て、その結果に応じた状態になります。
+    Z ゲートを置いても、Measure を置いた代わりにはならないことに注意してください。
+  </p>
+  <p>
+    同じ Z という行列でも、状態を変える命令として使う場合と、どんな値を測るかの指定として使う場合があります。
+    後者を観測量と呼びます。行列としての違いは、<a href={`${base}unitary_observable/`}>ユニタリと観測量</a>でも確認できます。
+  </p>
+
+  <h2>ハンズオン: 同じ準備に、違う質問</h2>
+  <p>
+    次の 2 回路は、どちらも最初の H で <Ket label="+" /> を準備します。
+    上はそのまま Z の質問、下はもう 1 個の H を加えた X の質問です。Measure の結果はどうなるでしょうか?
+    予想してから Probability を比べましょう。Amps1 は振幅、Probability は確率の表示命令で、測定はしません。
+    表示が重ならないよう、Amps1 と Probability の間を 1 列空けています。
+    状態パネルは、Measure より前の最後のゲートを選んであります。
+  </p>
+  <qni-webgpu-circuit max-wire-count="1" selected-step="0" show-state-panel="true"
+    palette={'["H","Z","Measure","Amps1","Probability"]'}
+    circuit={'{"cols":[["H"],["Amps1"],[1],["Probability"],["Measure"]]}'}
+  ></qni-webgpu-circuit>
+  <qni-webgpu-circuit max-wire-count="1" selected-step="1" show-state-panel="true"
+    palette={'["H","Z","Measure","Amps1","Probability"]'}
+    circuit={'{"cols":[["H"],["H"],["Amps1"],[1],["Probability"],["Measure"]]}'}
+  ></qni-webgpu-circuit>
+  <ol>
+    <li>上は 50% ずつ、下は 0 が 100% です。下の 0 は、準備した状態への X の質問で +1 と答えたことを表します。</li>
+    <li>下の回路の 2 個の H の間に Z を置くと、どうなるでしょうか? 予想してから置き、1 が 100% になることを確認しましょう。質問を変えたのではなく、質問する前の状態が変わりました。</li>
+    <li>編集後は Measure の手前の表示命令の少し下をクリックして、測定前の状態を選び直しましょう。Measure の後の円と、準備直後の円を取り違えないようにしてください。</li>
+  </ol>
+  <p>
+    今度は Y の質問です。最初の H と S で <Ket label="+i" /> を準備し、S†、H の順で変換してから Measure を置きました。
+    パネルでは 2 個目の H の直後を選んでいます。0 が 100% になるか、図の最後の段階と照らし合わせましょう。
+  </p>
+  <qni-webgpu-circuit max-wire-count="1" selected-step="3" show-state-panel="true"
+    palette={'["H","S","S†","Measure","Amps1","Probability"]'}
+    circuit={'{"cols":[["H"],["S"],["S†"],["H"],["Amps1"],[1],["Probability"],["Measure"]]}'}
+  ></qni-webgpu-circuit>
+  <p>
+    余裕のある人は、準備用の S だけを S† に置き換えてみましょう。準備が <Ket label="−i" /> に変わり、同じ Y の質問に対して 1 が 100% になります。
+    読み出し用の S† と H は残してください。シミュレータの確率表示と違い、実機では同じ準備と測定を繰り返して確率を見積もります。
+  </p>
+
+  <h2>確認してみよう</h2>
+  <p>
+    最初の図を θ = 90 度、φ = 180 度にすると、X の期待値はどうなるでしょうか?
+    予想してから質問を X にし、出力 1 の確率と期待値の符号を確かめましょう。（ヒント: 状態は <Ket label="−" /> です）
+  </p>
+  <orbit-reviewarea color="blue">
+    <orbit-prompt question="Qni の Measure をそのまま置くと、どの質問になる?" answer="Z の質問です。0 と 1 を区別します。"></orbit-prompt>
+    <orbit-prompt question="Qni で Y の質問をするには、Measure の直前にどの順番でゲートを適用しますか?" answer="S†、H の順です。"></orbit-prompt>
+    <orbit-prompt question="状態 |+⟩ = (|0⟩ + |1⟩)/√2 に Z の質問をするとき、0 に +1、1 に −1 を割り当てた期待値はいくつですか?" answer="0 です。"></orbit-prompt>
+    <orbit-prompt question="状態 |+⟩ = (|0⟩ + |1⟩)/√2 に X の質問をするとき、結果 + に +1、結果 − に −1 を割り当てた期待値はいくつですか?" answer="+1 です。"></orbit-prompt>
+    <orbit-prompt question="Qni で Z ゲートだけを置いても、Z 測定の代わりにならないのはなぜですか?" answer="Z ゲートは状態を変えるだけで、測定結果の 0/1 を出さないからです。"></orbit-prompt>
+    <orbit-prompt question="Qni の Measure で、元の状態への X の質問の結果を読みたいとき、Measure の直前にどのゲートを置きますか?" answer="H ゲートです。"></orbit-prompt>
+  </orbit-reviewarea>
+
+  <h2>まとめ</h2>
+  <p>
+    測定では、状態だけでなく、どの基底で質問するかも大切です。
+    Z はそのまま Measure、X は H の後、Y は S†、H の後に Measure を置きます。
+    出力の確率の差を取ると、その質問の期待値になります。状態を変えるゲートと、測る値を指定する観測量を区別して、回路を読んでみましょう。
+  </p>
+  <script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+</TutorialLayout>
+<style>
+  ol { max-width:76ch; padding-left:24px; }
+  li + li { margin-top:16px; }
+  @media (min-width:640px) { ol { width:58.333333%; margin-right:auto; } }
+</style>

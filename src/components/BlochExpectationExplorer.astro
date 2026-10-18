@@ -1,0 +1,120 @@
+---
+const components = [Math.sin(Math.PI / 3) * Math.cos(Math.PI / 4), Math.sin(Math.PI / 3) * Math.sin(Math.PI / 4), 0.5]
+const axes = [
+  { name: 'X', color: '#24837B', dx: 110, dy: 35, labelX: 327, labelY: 221 },
+  { name: 'Y', color: '#CE5D97', dx: -65, dy: 60, labelX: 65, labelY: 256 },
+  { name: 'Z', color: '#4385BE', dx: 0, dy: -110, labelX: 180, labelY: 30 },
+]
+const tipX = 180 + 110 * components[0] - 65 * components[1]
+const tipY = 170 + 35 * components[0] + 60 * components[1] - 110 * components[2]
+const equator = Array.from({ length: 65 }, (_, i) => {
+  const a = i * Math.PI / 32
+  return `${i ? 'L' : 'M'}${180 + 110 * Math.cos(a) - 65 * Math.sin(a)} ${170 + 35 * Math.cos(a) + 60 * Math.sin(a)}`
+}).join(' ') + ' Z'
+const meridian = Array.from({ length: 65 }, (_, i) => {
+  const a = i * Math.PI / 32
+  return `${i ? 'L' : 'M'}${180 + 110 * Math.cos(a)} ${170 + 35 * Math.cos(a) - 110 * Math.sin(a)}`
+}).join(' ') + ' Z'
+---
+<bloch-expectation-explorer>
+  <figure data-original-image>
+    <svg data-sphere viewBox="0 0 360 310" role="img" aria-label="Bloch 球の斜め投影。期待値 X は 0.612、Y は 0.612、Z は 0.500。">
+      <title>Bloch ベクトルと三つの軸への投影</title>
+      <ellipse class="sphere" cx="180" cy="170" rx="127.753" ry="130.112" transform="rotate(4.731 180 170)" />
+      <path class="equator" d={equator} />
+      <path class="equator" d={meridian} />
+      {axes.map((axis, i) => <g>
+        <path class="axis" d={`M${180 - axis.dx} ${170 - axis.dy} L${180 + axis.dx} ${170 + axis.dy}`} />
+        <text x={180 - axis.dx * 1.12} y={174 - axis.dy * 1.12} text-anchor="middle">−{axis.name}</text>
+        <text x={axis.labelX} y={axis.labelY} text-anchor="middle" fill={axis.color}>+{axis.name}</text>
+        <line data-guide={i} x1={tipX} y1={tipY} x2={180 + axis.dx * components[i]} y2={170 + axis.dy * components[i]} stroke={axis.color} stroke-dasharray="3 4" />
+        <line data-projection={i} x1="180" y1="170" x2={180 + axis.dx * components[i]} y2={170 + axis.dy * components[i]} stroke={axis.color} stroke-width="5" />
+        <circle data-foot={i} cx={180 + axis.dx * components[i]} cy={170 + axis.dy * components[i]} r="4" fill={axis.color} />
+      </g>)}
+      <line data-vector x1="180" y1="170" x2={tipX} y2={tipY} stroke="#100F0F" stroke-width="3" />
+      <circle data-tip cx={tipX} cy={tipY} r="5" fill="#100F0F" />
+      <circle cx="180" cy="170" r="3" fill="#100F0F" />
+      <text x="180" y="303" text-anchor="middle">黒：ブロッホベクトル</text>
+    </svg>
+    <svg viewBox="0 0 440 162" role="img" data-bars aria-label="符号付き期待値：X 0.612、Y 0.612、Z 0.500。各範囲は −1 から +1。">
+      <text x="110" y="18" text-anchor="middle">−1</text><text x="240" y="18" text-anchor="middle">0</text><text x="370" y="18" text-anchor="middle">+1</text>
+      {axes.map((axis, i) => <g>
+        <text x="4" y={48 + 47 * i} fill={axis.color}>〈{axis.name}〉</text>
+        <path class="bar-track" d={`M110 ${42 + 47 * i} H370`} />
+        <path class="axis" d={`M240 ${32 + 47 * i} V${52 + 47 * i}`} />
+        <line data-bar={i} x1="240" y1={42 + 47 * i} x2={240 + 130 * components[i]} y2={42 + 47 * i} stroke={axis.color} stroke-width="9" />
+        <text data-value={i} x="436" y={48 + 47 * i} text-anchor="end">+{components[i].toFixed(3)}</text>
+      </g>)}
+    </svg>
+    <figcaption>θ は北極からの角度、φ は赤道上の向きです。斜めから見た球なので、図上の長さではなく、色を対応させた符号付きの棒と数値で各軸への投影〈X〉・〈Y〉・〈Z〉を確かめてください。各期待値の二乗和は常に 1 です。</figcaption>
+  </figure>
+  <label>θ：<span data-theta-label>60°</span><input data-theta type="range" min="0" max="180" step="1" value="60" aria-valuetext="角度 θ 60 度" /></label>
+  <label>φ：<span data-phi-label>45°</span><input data-phi type="range" min="0" max="360" step="1" value="45" aria-valuetext="角度 φ 45 度" /></label>
+  <output aria-live="polite" aria-atomic="true">〈X〉 = +0.612、〈Y〉 = +0.612、〈Z〉 = +0.500
+〈X〉² + 〈Y〉² + 〈Z〉² = 0.3750 + 0.3750 + 0.2500 = 1.0000</output>
+</bloch-expectation-explorer>
+<script>
+  class BlochExpectationExplorer extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.ready) return
+      this.dataset.ready = 'true'
+      const theta = this.querySelector<HTMLInputElement>('[data-theta]')!
+      const phi = this.querySelector<HTMLInputElement>('[data-phi]')!
+      const axes = [[110, 35], [-65, 60], [0, -110]]
+      const fmt = (value: number) => `${value > 0 ? '+' : ''}${value.toFixed(3)}`
+      const update = () => {
+        const t = Number(theta.value) * Math.PI / 180, p = Number(phi.value) * Math.PI / 180
+        const values = [Math.sin(t) * Math.cos(p), Math.sin(t) * Math.sin(p), Math.cos(t)].map(v => Math.abs(v) < 1e-12 ? 0 : v)
+        const x = 180 + values[0] * 110 - values[1] * 65
+        const y = 170 + values[0] * 35 + values[1] * 60 - values[2] * 110
+        for (const [name, input] of [['theta', theta], ['phi', phi]] as const) {
+          const symbol = name === 'theta' ? 'θ' : 'φ'
+          this.querySelector(`[data-${name}-label]`)!.textContent = `${input.value}°`
+          input.setAttribute('aria-valuetext', `角度 ${symbol} ${input.value} 度`)
+        }
+        values.forEach((value, i) => {
+          const px = 180 + axes[i][0] * value, py = 170 + axes[i][1] * value
+          const projection = this.querySelector(`[data-projection="${i}"]`)!
+          const guide = this.querySelector(`[data-guide="${i}"]`)!
+          const foot = this.querySelector(`[data-foot="${i}"]`)!
+          projection.setAttribute('x2', String(px)); projection.setAttribute('y2', String(py))
+          guide.setAttribute('x1', String(x)); guide.setAttribute('y1', String(y))
+          guide.setAttribute('x2', String(px)); guide.setAttribute('y2', String(py))
+          foot.setAttribute('cx', String(px)); foot.setAttribute('cy', String(py))
+          this.querySelector(`[data-bar="${i}"]`)!.setAttribute('x2', String(240 + 130 * value))
+          this.querySelector(`[data-value="${i}"]`)!.textContent = fmt(value)
+        })
+        this.querySelector('[data-vector]')!.setAttribute('x2', String(x))
+        this.querySelector('[data-vector]')!.setAttribute('y2', String(y))
+        this.querySelector('[data-tip]')!.setAttribute('cx', String(x))
+        this.querySelector('[data-tip]')!.setAttribute('cy', String(y))
+        const summary = values.map((v, i) => `〈${['X', 'Y', 'Z'][i]}〉 = ${fmt(v)}`).join('、')
+        this.querySelector('[data-sphere]')!.setAttribute('aria-label', `Bloch 球の斜め投影。${summary}`)
+        this.querySelector('[data-bars]')!.setAttribute('aria-label', `符号付き期待値。${summary}。各範囲は −1 から +1。`)
+        const squares = values.map(v => v * v)
+        this.querySelector('output')!.textContent = `${summary}\n〈X〉² + 〈Y〉² + 〈Z〉² = ${squares.map(v => v.toFixed(4)).join(' + ')} = ${squares.reduce((sum, v) => sum + v, 0).toFixed(4)}`
+      }
+      theta.addEventListener('input', update)
+      phi.addEventListener('input', update)
+      update()
+    }
+  }
+  if (!customElements.get('bloch-expectation-explorer')) customElements.define('bloch-expectation-explorer', BlochExpectationExplorer)
+</script>
+<style>
+  bloch-expectation-explorer { display:block; box-sizing:border-box; width:100%; max-width:540px; margin:1.5rem 0; margin-inline:0 auto; padding:1rem; color:#100F0F; background:#FFFCF0; border:1px solid #4385BE; border-radius:8px; font:inherit; }
+  figure { margin:0 0 1rem; }
+  svg { display:block; width:100%; height:auto; }
+  text { font:14px system-ui,sans-serif; }
+  .sphere { fill:#F2F0E5; fill-opacity:0.5; stroke:#B7B5AC; }
+  .equator { fill:none; stroke:#CECDC3; }
+  .axis { fill:none; stroke:#6F6E69; stroke-width:1; }
+  .bar-track { stroke:#DAD8CE; stroke-width:9; }
+  figcaption { font-size:0.9em; line-height:1.6; color:#6F6E69; }
+  label, output { display:block; overflow-wrap:anywhere; }
+  output { margin-top:0.75rem; white-space:pre-line; font-variant-numeric:tabular-nums; }
+  input[type="range"] { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0; accent-color:#24837B; writing-mode:horizontal-tb; }
+  input[type="range"], input[type="range"]:focus, input[type="range"]:focus-visible { outline:none; border:none; box-shadow:none; }
+  input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow:0 0 0 3px #24837B; }
+  input[type="range"]:focus-visible::-moz-range-thumb { box-shadow:0 0 0 3px #24837B; }
+</style>
