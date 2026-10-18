@@ -15,6 +15,8 @@ QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-q
 QTW_AUDIT_URL=https://qniapp.github.io/qni-tutorial-webgpu/ node scripts/check-qpe-gpu.mjs shor_qft
 ```
 
+step0 は初期表示または明示的な列選択で確認する。qni-webgpu #95 以降、回路の編集・Undo・Redo 後の状態パネルは、その回路の最終状態を表示する。
+
 各scriptは完全無人でreal adapter/running/step0/norm/全signed stateの実読戻し・native column選択・gate一時削除→undo→redo→undo・旧trash位置無効果・JSON復元・390/1440×DPR1/2・DOM overflowを検査する。失敗しても残りのviewportを実行し、各page/viewportのPASS/FAILと `result.json` を出力、失敗時は非zero終了。元run-buttonがある場合は再生、元measurementがある場合は測定を検査する。readbackはtest-onlyのon-demand診断で、production自動readback/CPU fallbackを追加しない。
 
 既定はheadless。`--headless` または `QTW_HEADLESS=1` で明示でき、表示ありは `--headed` または `QTW_HEADLESS=0`。`--headless` は優先。`QTW_CHROMIUM_PATH=/path/to/chromium` で実行ファイル、`QTW_AUDIT_OUTPUT=/path/to/output` で出力先を変更可能。例:

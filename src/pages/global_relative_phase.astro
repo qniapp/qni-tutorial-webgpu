@@ -88,11 +88,10 @@ const base = import.meta.env.BASE_URL
     selected-step="2"
     show-state-panel="true"
     palette={'["H","Z","P(π/4)","P(π/2)","P(π)","Amps1","Probability","Density"]'}
-    circuit={'{"cols":[["H"],["P(π/2)"],["H"],["Amps1"],[1],["Probability"]]}'}
+    circuit={'{"cols":[["H"],["P(π/2)"],["H"],["Amps1"],["Probability"]]}'}
   ></qni-webgpu-circuit>
   <p>
     Amps1 は 1 量子ビットの振幅、Probability は Z 測定の確率を表示する命令です。どちらも測定そのものは行いません。
-    Amps1 の後は、Probability と表示が重ならないように空の列を挟んであります。
     編集後は、観察したいゲートの列の少し下をクリックして、その直後の状態を選んでください。
   </p>
   <ol>
