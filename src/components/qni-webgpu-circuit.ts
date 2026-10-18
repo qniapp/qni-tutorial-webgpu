@@ -1,4 +1,4 @@
-import { APP_URL } from './qni-webgpu-app-url'
+import { buildQniAppUrl } from './qni-webgpu-app-url'
 import { estimateEmbedHeight } from './qni-embed-height'
 
 type EmbedHandle = { destroy(): void; circuitJSON(): string; preferredHeight(widthCssPx: number): number; readStateVector(): Promise<Float32Array>; selectStep(n: number): void; selectedStep(): number | null; stepCount(): number }
@@ -154,7 +154,7 @@ class QniWebgpuCircuit extends HTMLElement {
       try { circuit = this.runner.circuitJSON() }
       catch { return } // Retain the last valid link if the runner is unavailable.
     }
-    this.openLink.href = `${APP_URL}#${encodeURIComponent(circuit)}`
+    this.openLink.href = buildQniAppUrl(circuit)
   }
 
   private updateSize() {

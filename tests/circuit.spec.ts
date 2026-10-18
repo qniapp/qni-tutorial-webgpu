@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { APP_URL } from '../src/components/qni-webgpu-app-url'
+import { QNI_APP_BASE_URL } from '../src/components/qni-webgpu-app-url'
 
 type MockState = {
   calls: { circuit: string; showStatePanel: boolean; url: string }[]
@@ -364,11 +364,12 @@ test('open link has the exact label, safe new-tab attributes and encoded circuit
   const link = page.locator('qni-webgpu-circuit').getByRole('link', { name: 'Qniで開く', exact: true })
   expect(await link.evaluate((a: HTMLAnchorElement) => ({
     label: a.textContent, target: a.target, rel: a.rel,
-    path: new URL(a.href).pathname, circuit: JSON.parse(decodeURIComponent(new URL(a.href).hash.slice(1))),
-  }))).toEqual({ label: 'Qniで開く', target: '_blank', rel: 'noopener', path: new URL(APP_URL, 'http://localhost').pathname, circuit: { cols: [['|0>']] } })
+    href: a.href, path: new URL(a.href).pathname, circuit: JSON.parse(decodeURIComponent(new URL(a.href).hash.slice(1))),
+  }))).toEqual({ label: 'Qniで開く', target: '_blank', rel: 'noopener', href: 'https://qniapp.github.io/qni-webgpu/#%7B%22cols%22%3A%5B%5B%22%7C0%3E%22%5D%5D%7D', path: '/qni-webgpu/', circuit: { cols: [['|0>']] } })
+  expect(await link.getAttribute('href')).toBe(`${QNI_APP_BASE_URL}#${encodeURIComponent('{"cols":[["|0>"]]}')}`)
 })
 
-for (const event of ['pointerdown', 'focus', 'keydown', 'click']) {
+for (const event of ['pointerdown', 'focus', 'keydown', 'click', 'auxclick']) {
   test(`open link exports the current circuit synchronously on ${event}`, async ({ page }) => {
     await boot(page)
     await running(page)
@@ -377,7 +378,8 @@ for (const event of ['pointerdown', 'focus', 'keydown', 'click']) {
     const link = page.locator('qni-webgpu-circuit').getByRole('link', { name: 'Qniで開く', exact: true })
     await link.evaluate(a => a.addEventListener('click', e => e.preventDefault()))
     await link.dispatchEvent(event)
-    expect(await link.evaluate((a: HTMLAnchorElement) => new URL(a.href).hash.slice(1))).toBe(encodeURIComponent(current))
+    expect(await link.getAttribute('href')).toBe(`${QNI_APP_BASE_URL}#${encodeURIComponent(current)}`)
+    expect(await link.evaluate((a: HTMLAnchorElement) => JSON.parse(decodeURIComponent(new URL(a.href).hash.slice(1))))).toEqual(JSON.parse(current))
   })
 }
 
