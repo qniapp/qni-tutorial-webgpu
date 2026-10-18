@@ -193,8 +193,8 @@ export async function audit({slug,base,out,check}) {
    let context,scaledBrowser
    const summary={slug,width,dpr,status:'FAIL'}
    try {
-    // deviceScaleFactor emulation breaks egui/eframe canvas backing-size geometry.
-    // Use Chromium's real device scale instead, with a native-sized viewport.
+    // Retain native device-scale coverage in addition to the emulated DPR2
+    // regression in embed-fixes.spec.ts (supported since qni-webgpu #96).
     if(dpr===2) {
      scaledBrowser=await chromium.launch({...launchOptions,args:[...args,'--force-device-scale-factor=2',`--window-size=${width},1100`]})
      context=await scaledBrowser.newContext({viewport:null})
