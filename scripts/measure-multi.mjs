@@ -2,8 +2,10 @@
 // Usage: node scripts/measure-multi.mjs BASE_URL OUTPUT_JSON [pairs=3]
 import { chromium } from '@playwright/test'
 import { writeFile } from 'node:fs/promises'
+import os from 'node:os'
+import path from 'node:path'
 const base = process.argv[2] ?? 'https://qniapp.github.io/qni-tutorial-webgpu/'
-const output = process.argv[3] ?? '/tmp/qtw-multi-live.json'
+const output = process.argv[3] ?? path.join(os.tmpdir(), 'qtw-multi-live.json')
 const pairs = Number(process.argv[4] ?? 3)
 const median = xs => { const sorted = [...xs].sort((a,b)=>a-b); return sorted[Math.floor(sorted.length/2)] }
 const result = { base, pairs, browser: null, flags: ['--enable-unsafe-webgpu','--enable-features=Vulkan','--use-angle=vulkan'], gpuMemoryBytes: null, runs: [], medians: {} }

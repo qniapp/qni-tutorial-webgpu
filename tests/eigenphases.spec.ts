@@ -1,4 +1,6 @@
 import {expect,test} from '@playwright/test'
+import os from 'node:os'
+import path from 'node:path'
 import approved from './fixtures/eigenphases-approved-text.json' with {type:'json'}
 import original from './fixtures/eigenphases-original.json' with {type:'json'}
 // Deliberately disable WebGPU: these are content/layout checks, not native execution evidence.
@@ -20,6 +22,6 @@ for(const width of [390,1440])for(const dpr of [1,2])test(`eigenphases non-GPU c
  expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
  expect(await page.locator('.content-with-margin').evaluate(root=>[document.body,root,...root.querySelectorAll('*')].filter(e=>{const s=getComputedStyle(e);return (['scroll','auto'].includes(s.overflowX)&&e.scrollWidth>e.clientWidth+1)||(['scroll','auto'].includes(s.overflowY)&&e.scrollHeight>e.clientHeight+1)}).length)).toBe(0)
  expect(errors).toEqual([])
- await page.screenshot({path:`/tmp/qtw-eigenphases-${width}-dpr${dpr}.png`,fullPage:true})
+ await page.screenshot({path:path.join(os.tmpdir(), `qtw-eigenphases-${width}-dpr${dpr}.png`),fullPage:true})
  }finally{await context.close()}
 })

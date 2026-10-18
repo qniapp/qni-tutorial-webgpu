@@ -1,6 +1,8 @@
 // Browser comparison against the actual original site; explicitly no WebGPU.
 import {chromium} from '@playwright/test'
 import {readFile,writeFile} from 'node:fs/promises'
+import os from 'node:os'
+import path from 'node:path'
 const golden=JSON.parse(await readFile(new URL('../tests/fixtures/eigenphases-approved-text.json',import.meta.url)))
 const originalCircuits=JSON.parse(await readFile(new URL('../tests/fixtures/eigenphases-original.json',import.meta.url))).circuits
 const base=process.env.QTW_AUDIT_URL ?? 'https://qniapp.github.io/qni-tutorial-webgpu/'
@@ -25,7 +27,7 @@ try{
  return {text:normalize(text),math:Array.from(window.MathJax.startup.document.math).filter(item=>root.contains(item.typesetRoot)&&!item.typesetRoot.closest('quantum-simulator,quantum-circuit,circle-notation,qubit-circle,qni-webgpu-circuit')).map(item=>({tex:normalize(item.math),display:item.display})),circuits:[...root.querySelectorAll('quantum-circuit[data-json],qni-webgpu-circuit[circuit]')].map(e=>JSON.parse(e.getAttribute('data-json')??e.getAttribute('circuit')))}
  })
  snapshot.url=url;snapshots.push(snapshot)
- await page.screenshot({path:`/tmp/qtw-eigenphases-live-${snapshots.length===1?'original':'ours'}-${width}-dpr${dpr}.png`,fullPage:true})
+ await page.screenshot({path:path.join(os.tmpdir(), `qtw-eigenphases-live-${snapshots.length===1?'original':'ours'}-${width}-dpr${dpr}.png`),fullPage:true})
  await page.close()
  }
  const original=snapshots[0],ours=snapshots[1]
@@ -36,4 +38,4 @@ try{
  await context.close()
  }
  console.log('PASS original/live diff: approved two phrases only; TeX and JSON unchanged (4 cases)')
-}finally{await writeFile('/tmp/qtw-eigenphases-live-comparison.json',JSON.stringify(results,null,2)+'\n');await browser.close()}
+}finally{await writeFile(path.join(os.tmpdir(), 'qtw-eigenphases-live-comparison.json'),JSON.stringify(results,null,2)+'\n');await browser.close()}

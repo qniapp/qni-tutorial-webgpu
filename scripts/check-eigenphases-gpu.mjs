@@ -1,8 +1,10 @@
 // Unattended native GPU audit; no mocks or CPU simulation.
 import {readFile} from 'node:fs/promises'
+import os from 'node:os'
+import path from 'node:path'
 import {audit,freshCircuit,initialVector,checkVector,selectColumn,screenshot,toolbarAudit,visualSweep} from './gpu-audit-helper.mjs'
 const base=process.env.QTW_AUDIT_URL ?? 'https://qniapp.github.io/qni-tutorial-webgpu/'
-const out=process.env.QTW_AUDIT_OUTPUT ?? '/tmp/qtw-eigenphases-gpu'
+const out=process.env.QTW_AUDIT_OUTPUT ?? path.join(os.tmpdir(), 'qtw-eigenphases-gpu')
 const fixed=JSON.parse(await readFile(new URL('../tests/fixtures/eigenphases-original.json',import.meta.url)))
 const c=Math.cos(Math.PI/8),s=Math.sin(Math.PI/8)
 await audit({slug:'eigenphases',base,out,async check({page,width,dpr,records}) {

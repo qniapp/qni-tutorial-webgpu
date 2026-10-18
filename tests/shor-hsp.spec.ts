@@ -1,4 +1,6 @@
 import {expect,test} from '@playwright/test'
+import os from 'node:os'
+import path from 'node:path'
 import approved from './fixtures/shor-hsp-approved.json' with {type:'json'}
 for(const width of [390,1440])for(const dpr of [1,2])test(`Shor HSP non-GPU approved source and SVG ${width} DPR${dpr}`,async({browser})=>{
  const context=await browser.newContext({viewport:{width,height:1100},deviceScaleFactor:dpr}),page=await context.newPage(),errors:string[]=[]
@@ -23,7 +25,7 @@ for(const width of [390,1440])for(const dpr of [1,2])test(`Shor HSP non-GPU appr
  }
  expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
  expect(await page.locator('.content-with-margin').evaluate(root=>[document.body,root,...root.querySelectorAll('*')].filter(e=>{const s=getComputedStyle(e);return (['scroll','auto'].includes(s.overflowX)&&e.scrollWidth>e.clientWidth)||(['scroll','auto'].includes(s.overflowY)&&e.scrollHeight>e.clientHeight)}).length)).toBe(0)
- await page.screenshot({path:`/tmp/qtw-shor-hsp-${width}-dpr${dpr}.png`,fullPage:true})
+ await page.screenshot({path:path.join(os.tmpdir(), `qtw-shor-hsp-${width}-dpr${dpr}.png`),fullPage:true})
  const first=graphs.nth(0),second=graphs.nth(1)
  await first.locator('svg').focus();await page.keyboard.press('Home');await page.keyboard.press('ArrowRight');await expect(first.locator('output')).toHaveText('x=1, f(x)=2');await expect(second.locator('output')).toBeHidden()
  await first.locator('[data-plot-point][data-x="4"]').click({force:true});await expect(first.locator('output')).toHaveText('x=4, f(x)=1')

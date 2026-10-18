@@ -1,5 +1,7 @@
 // Unattended real GPU audit; no mocks/CPU fallback.
 import {readFile} from 'node:fs/promises'
+import os from 'node:os'
+import path from 'node:path'
 import {audit,freshCircuit,gateColumns,initialVector,checkVector,read,circuitJSON,circuitJSONEqual,selectColumn,screenshot,toolbarAudit,visualSweep} from './gpu-audit-helper.mjs'
 const slug=process.argv.slice(2).find(x=>!x.startsWith('--')) ?? 'quantum_phase_estimation_circuit'
 if(!['quantum_phase_estimation_circuit','phase_kickback','shor_fx','shor_u','shor_qft'].includes(slug)) throw Error('unsupported page')
@@ -7,7 +9,7 @@ const fixed=JSON.parse(await readFile(new URL(`../tests/fixtures/${slug}-fixed.j
 const analysis=JSON.parse(await readFile(new URL(slug==='shor_qft'?'../tests/fixtures/shor-qft-approved-analysis.json':slug==='shor_u'?'../tests/fixtures/shor-u-approved-analysis.json':slug==='shor_fx'?'../tests/fixtures/shor-fx-approved-analysis.json':'../tests/fixtures/qpe-approved-analysis.json',import.meta.url)))
 const vectors=slug==='shor_qft'?analysis.shorQftExpected:slug==='shor_u'?analysis.shorUExpected:slug==='shor_fx'?analysis.shorFxExpected:slug==='phase_kickback'?analysis.kickbackExpected:analysis.qpeExpected
 const base=process.env.QTW_AUDIT_URL ?? 'https://qniapp.github.io/qni-tutorial-webgpu/'
-const out=process.env.QTW_AUDIT_OUTPUT ?? `/tmp/qtw-${slug}-gpu`
+const out=process.env.QTW_AUDIT_OUTPUT ?? path.join(os.tmpdir(), `qtw-${slug}-gpu`)
 await audit({slug,base,out,async check({page,width,dpr,records}) {
  for(let index=0;index<vectors.length;index++) {
   const fixture=fixed.circuits[index]

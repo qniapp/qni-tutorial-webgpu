@@ -1,4 +1,6 @@
 import {expect,test} from '@playwright/test'
+import os from 'node:os'
+import path from 'node:path'
 import fixed from './fixtures/shor-r-approved.json' with {type:'json'}
 for(const width of [390,1440])for(const dpr of [1,2])test(`Shor R approved source and peaks ${width} DPR${dpr}`,async({browser})=>{
  const context=await browser.newContext({viewport:{width,height:1100},deviceScaleFactor:dpr}),page=await context.newPage(),errors:string[]=[]
@@ -19,6 +21,6 @@ for(const width of [390,1440])for(const dpr of [1,2])test(`Shor R approved sourc
  expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
  expect(await page.locator('.content-with-margin').evaluate(root=>[document.body,root,...root.querySelectorAll('*')].filter(e=>{const s=getComputedStyle(e);return (['scroll','auto'].includes(s.overflowX)&&e.scrollWidth>e.clientWidth)||(['scroll','auto'].includes(s.overflowY)&&e.scrollHeight>e.clientHeight)}).length)).toBe(0)
  expect(errors).toEqual([])
- await page.screenshot({path:`/tmp/qtw-shor-r-${width}-dpr${dpr}.png`,fullPage:true})
+ await page.screenshot({path:path.join(os.tmpdir(), `qtw-shor-r-${width}-dpr${dpr}.png`),fullPage:true})
  }finally{await context.close()}
 })

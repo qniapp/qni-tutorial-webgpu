@@ -1,6 +1,8 @@
 // Actual original/live comparison. Native WebGPU is explicitly disabled.
 import {chromium} from '@playwright/test'
 import {readFile,writeFile} from 'node:fs/promises'
+import os from 'node:os'
+import path from 'node:path'
 const slug=process.argv[2]??'quantum_phase_estimation_circuit'
 if(!['quantum_phase_estimation_circuit','phase_kickback','qpe_output','shor_hsp','shor_fx','shor_r','shor_u','shor_qft','no_cloning_theorem_proof'].includes(slug))throw Error('unsupported page')
 const fixtureName=slug==='shor_r'?'shor-r-approved':slug==='shor_hsp'?'shor-hsp-approved':slug==='qpe_output'?'qpe-output-approved':slug+'-fixed'
@@ -23,7 +25,7 @@ for(const width of [390,1440])for(const dpr of [1,2]){
    const normalize=s=>s.replace(/\s+/g,'').normalize('NFC')
    return {mathRaw:Array.from(window.MathJax.startup.document.math).filter(item=>root.contains(item.typesetRoot)&&!item.typesetRoot.closest('footer,[data-original-image],quantum-simulator,quantum-circuit,circle-notation,qubit-circle,qni-webgpu-circuit')).map(item=>({tex:item.math,display:item.display})),text:normalize(text),description:normalize((document.querySelector('.lede')??document.querySelector('h1')?.parentElement.nextElementSibling)?.textContent??''),math:Array.from(window.MathJax.startup.document.math).filter(item=>root.contains(item.typesetRoot)&&!item.typesetRoot.closest('footer,[data-original-image],quantum-simulator,quantum-circuit,circle-notation,qubit-circle,qni-webgpu-circuit')).map(item=>({tex:normalize(item.math),display:item.display})),circuits:[...root.querySelectorAll('quantum-circuit[data-json],qni-webgpu-circuit[circuit]')].map(e=>JSON.parse(e.getAttribute('data-json')??e.getAttribute('circuit')))}
   })
-  snapshot.url=url;snapshots.push(snapshot);await page.screenshot({path:`/tmp/qtw-${slug}-live-${snapshots.length===1?'original':'ours'}-${width}-dpr${dpr}.png`,fullPage:true});await page.close()
+  snapshot.url=url;snapshots.push(snapshot);await page.screenshot({path:path.join(os.tmpdir(), `qtw-${slug}-live-${snapshots.length===1?'original':'ours'}-${width}-dpr${dpr}.png`),fullPage:true});await page.close()
  }
  const original=snapshots[0],ours=snapshots[1],approvedCircuits=structuredClone(original.circuits)
  for(const d of fixed.diff??[]){if(approvedCircuits[d.circuit].cols[d.column][d.wire]!==d.before)throw Error('Original changed; STOP');approvedCircuits[d.circuit].cols[d.column][d.wire]=d.after}
@@ -86,4 +88,4 @@ for(const width of [390,1440])for(const dpr of [1,2]){
 const failures=results.filter(comparisonFailed)
 if(failures.length){console.error(`STOP ${slug}: ${failures.length}/4 comparison cases failed; no additional edits are authorized`);process.exitCode=1}
 else console.log(['shor_qft','no_cloning_theorem_proof'].includes(slug)?`PASS ${slug}: direct raw text/TeX and unnormalized TeX strings diff 0 (4 cases)`:`PASS ${slug}: original/live text and TeX only approved diffs (4 cases)`)
-}finally{await writeFile(`/tmp/qtw-${slug}-live-comparison.json`,JSON.stringify(results,null,2)+'\n');await browser.close()}
+}finally{await writeFile(path.join(os.tmpdir(), `qtw-${slug}-live-comparison.json`),JSON.stringify(results,null,2)+'\n');await browser.close()}

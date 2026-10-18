@@ -2096,7 +2096,7 @@
         "slug": "",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/index-390-0.png",
+        "path": "qtw-pr63-toolbar-local/index-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2111,7 +2111,7 @@
         "slug": "",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/index-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/index-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2126,7 +2126,7 @@
         "slug": "qni_intro",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/qni_intro-390-0.png",
+        "path": "qtw-pr63-toolbar-local/qni_intro-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2141,7 +2141,7 @@
         "slug": "qni_intro",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/qni_intro-390-1.png",
+        "path": "qtw-pr63-toolbar-local/qni_intro-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2156,7 +2156,7 @@
         "slug": "qni_intro",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/qni_intro-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/qni_intro-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2171,7 +2171,7 @@
         "slug": "qni_intro",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/qni_intro-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/qni_intro-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2186,7 +2186,7 @@
         "slug": "qubit",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/qubit-390-0.png",
+        "path": "qtw-pr63-toolbar-local/qubit-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2201,7 +2201,7 @@
         "slug": "qubit",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/qubit-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/qubit-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2216,7 +2216,7 @@
         "slug": "phase",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/phase-390-0.png",
+        "path": "qtw-pr63-toolbar-local/phase-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2231,7 +2231,7 @@
         "slug": "phase",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/phase-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/phase-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2246,7 +2246,7 @@
         "slug": "x_gate",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/x_gate-390-0.png",
+        "path": "qtw-pr63-toolbar-local/x_gate-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2261,7 +2261,7 @@
         "slug": "x_gate",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/x_gate-390-1.png",
+        "path": "qtw-pr63-toolbar-local/x_gate-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2276,7 +2276,7 @@
         "slug": "x_gate",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/x_gate-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/x_gate-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2291,7 +2291,7 @@
         "slug": "x_gate",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/x_gate-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/x_gate-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2306,7 +2306,7 @@
         "slug": "h_gate",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/h_gate-390-0.png",
+        "path": "qtw-pr63-toolbar-local/h_gate-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2321,7 +2321,7 @@
         "slug": "h_gate",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/h_gate-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/h_gate-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2336,7 +2336,7 @@
         "slug": "phase_gate",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/phase_gate-390-0.png",
+        "path": "qtw-pr63-toolbar-local/phase_gate-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2351,7 +2351,7 @@
         "slug": "phase_gate",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/phase_gate-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/phase_gate-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2366,7 +2366,7 @@
         "slug": "write_operation",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/write_operation-390-0.png",
+        "path": "qtw-pr63-toolbar-local/write_operation-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2381,7 +2381,7 @@
         "slug": "write_operation",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/write_operation-390-1.png",
+        "path": "qtw-pr63-toolbar-local/write_operation-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2396,7 +2396,7 @@
         "slug": "write_operation",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/write_operation-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/write_operation-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2411,7 +2411,7 @@
         "slug": "write_operation",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/write_operation-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/write_operation-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2426,7 +2426,7 @@
         "slug": "measurement_operation",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/measurement_operation-390-0.png",
+        "path": "qtw-pr63-toolbar-local/measurement_operation-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2441,7 +2441,7 @@
         "slug": "measurement_operation",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/measurement_operation-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/measurement_operation-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2456,7 +2456,7 @@
         "slug": "gate_combination",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/gate_combination-390-0.png",
+        "path": "qtw-pr63-toolbar-local/gate_combination-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2471,7 +2471,7 @@
         "slug": "gate_combination",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/gate_combination-390-1.png",
+        "path": "qtw-pr63-toolbar-local/gate_combination-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2486,7 +2486,7 @@
         "slug": "gate_combination",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/gate_combination-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/gate_combination-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2501,7 +2501,7 @@
         "slug": "gate_combination",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/gate_combination-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/gate_combination-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2516,7 +2516,7 @@
         "slug": "bb84_circuit",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/bb84_circuit-390-0.png",
+        "path": "qtw-pr63-toolbar-local/bb84_circuit-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2531,7 +2531,7 @@
         "slug": "bb84_circuit",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/bb84_circuit-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/bb84_circuit-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2546,7 +2546,7 @@
         "slug": "multi_qubit_superposition",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_superposition-390-0.png",
+        "path": "qtw-pr63-toolbar-local/multi_qubit_superposition-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2561,7 +2561,7 @@
         "slug": "multi_qubit_superposition",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_superposition-390-1.png",
+        "path": "qtw-pr63-toolbar-local/multi_qubit_superposition-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2576,7 +2576,7 @@
         "slug": "multi_qubit_superposition",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_superposition-390-2.png",
+        "path": "qtw-pr63-toolbar-local/multi_qubit_superposition-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2591,7 +2591,7 @@
         "slug": "multi_qubit_superposition",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_superposition-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/multi_qubit_superposition-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2606,7 +2606,7 @@
         "slug": "multi_qubit_superposition",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_superposition-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/multi_qubit_superposition-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2621,7 +2621,7 @@
         "slug": "multi_qubit_superposition",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_superposition-1440-2.png",
+        "path": "qtw-pr63-toolbar-local/multi_qubit_superposition-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2636,7 +2636,7 @@
         "slug": "multi_qubit_operation",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_operation-390-0.png",
+        "path": "qtw-pr63-toolbar-local/multi_qubit_operation-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2651,7 +2651,7 @@
         "slug": "multi_qubit_operation",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_operation-390-1.png",
+        "path": "qtw-pr63-toolbar-local/multi_qubit_operation-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2666,7 +2666,7 @@
         "slug": "multi_qubit_operation",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_operation-390-2.png",
+        "path": "qtw-pr63-toolbar-local/multi_qubit_operation-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2681,7 +2681,7 @@
         "slug": "multi_qubit_operation",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_operation-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/multi_qubit_operation-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2696,7 +2696,7 @@
         "slug": "multi_qubit_operation",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_operation-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/multi_qubit_operation-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2711,7 +2711,7 @@
         "slug": "multi_qubit_operation",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_operation-1440-2.png",
+        "path": "qtw-pr63-toolbar-local/multi_qubit_operation-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2726,7 +2726,7 @@
         "slug": "random_byte_generator",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/random_byte_generator-390-0.png",
+        "path": "qtw-pr63-toolbar-local/random_byte_generator-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2741,7 +2741,7 @@
         "slug": "random_byte_generator",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/random_byte_generator-390-1.png",
+        "path": "qtw-pr63-toolbar-local/random_byte_generator-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2756,7 +2756,7 @@
         "slug": "random_byte_generator",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/random_byte_generator-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/random_byte_generator-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2771,7 +2771,7 @@
         "slug": "random_byte_generator",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/random_byte_generator-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/random_byte_generator-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2786,7 +2786,7 @@
         "slug": "multi_qubit_phase_gate",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_phase_gate-390-0.png",
+        "path": "qtw-pr63-toolbar-local/multi_qubit_phase_gate-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2801,7 +2801,7 @@
         "slug": "multi_qubit_phase_gate",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi_qubit_phase_gate-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/multi_qubit_phase_gate-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2816,7 +2816,7 @@
         "slug": "swap_gate",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/swap_gate-390-0.png",
+        "path": "qtw-pr63-toolbar-local/swap_gate-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2831,7 +2831,7 @@
         "slug": "swap_gate",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/swap_gate-390-1.png",
+        "path": "qtw-pr63-toolbar-local/swap_gate-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2846,7 +2846,7 @@
         "slug": "swap_gate",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/swap_gate-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/swap_gate-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2861,7 +2861,7 @@
         "slug": "swap_gate",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/swap_gate-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/swap_gate-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2876,7 +2876,7 @@
         "slug": "cnot_gate",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/cnot_gate-390-0.png",
+        "path": "qtw-pr63-toolbar-local/cnot_gate-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2891,7 +2891,7 @@
         "slug": "cnot_gate",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/cnot_gate-390-1.png",
+        "path": "qtw-pr63-toolbar-local/cnot_gate-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2906,7 +2906,7 @@
         "slug": "cnot_gate",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/cnot_gate-390-2.png",
+        "path": "qtw-pr63-toolbar-local/cnot_gate-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2921,7 +2921,7 @@
         "slug": "cnot_gate",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/cnot_gate-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/cnot_gate-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2936,7 +2936,7 @@
         "slug": "cnot_gate",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/cnot_gate-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/cnot_gate-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2951,7 +2951,7 @@
         "slug": "cnot_gate",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/cnot_gate-1440-2.png",
+        "path": "qtw-pr63-toolbar-local/cnot_gate-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2966,7 +2966,7 @@
         "slug": "swap_from_cnots",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/swap_from_cnots-390-0.png",
+        "path": "qtw-pr63-toolbar-local/swap_from_cnots-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2981,7 +2981,7 @@
         "slug": "swap_from_cnots",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/swap_from_cnots-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/swap_from_cnots-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -2996,7 +2996,7 @@
         "slug": "cphase",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/cphase-390-0.png",
+        "path": "qtw-pr63-toolbar-local/cphase-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3011,7 +3011,7 @@
         "slug": "cphase",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/cphase-390-1.png",
+        "path": "qtw-pr63-toolbar-local/cphase-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3026,7 +3026,7 @@
         "slug": "cphase",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/cphase-390-2.png",
+        "path": "qtw-pr63-toolbar-local/cphase-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3041,7 +3041,7 @@
         "slug": "cphase",
         "width": 390,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-local/cphase-390-3.png",
+        "path": "qtw-pr63-toolbar-local/cphase-390-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3056,7 +3056,7 @@
         "slug": "cphase",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/cphase-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/cphase-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3071,7 +3071,7 @@
         "slug": "cphase",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/cphase-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/cphase-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3086,7 +3086,7 @@
         "slug": "cphase",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/cphase-1440-2.png",
+        "path": "qtw-pr63-toolbar-local/cphase-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3101,7 +3101,7 @@
         "slug": "cphase",
         "width": 1440,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-local/cphase-1440-3.png",
+        "path": "qtw-pr63-toolbar-local/cphase-1440-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3116,7 +3116,7 @@
         "slug": "entanglement",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/entanglement-390-0.png",
+        "path": "qtw-pr63-toolbar-local/entanglement-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3131,7 +3131,7 @@
         "slug": "entanglement",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/entanglement-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/entanglement-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3146,7 +3146,7 @@
         "slug": "disentangle",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-390-0.png",
+        "path": "qtw-pr63-toolbar-local/disentangle-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3161,7 +3161,7 @@
         "slug": "disentangle",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-390-1.png",
+        "path": "qtw-pr63-toolbar-local/disentangle-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3176,7 +3176,7 @@
         "slug": "disentangle",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-390-2.png",
+        "path": "qtw-pr63-toolbar-local/disentangle-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3191,7 +3191,7 @@
         "slug": "disentangle",
         "width": 390,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-390-3.png",
+        "path": "qtw-pr63-toolbar-local/disentangle-390-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3206,7 +3206,7 @@
         "slug": "disentangle",
         "width": 390,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-390-4.png",
+        "path": "qtw-pr63-toolbar-local/disentangle-390-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3221,7 +3221,7 @@
         "slug": "disentangle",
         "width": 390,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-390-5.png",
+        "path": "qtw-pr63-toolbar-local/disentangle-390-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3236,7 +3236,7 @@
         "slug": "disentangle",
         "width": 390,
         "index": 6,
-        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-390-6.png",
+        "path": "qtw-pr63-toolbar-local/disentangle-390-6.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3251,7 +3251,7 @@
         "slug": "disentangle",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/disentangle-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3266,7 +3266,7 @@
         "slug": "disentangle",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/disentangle-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3281,7 +3281,7 @@
         "slug": "disentangle",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-1440-2.png",
+        "path": "qtw-pr63-toolbar-local/disentangle-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3296,7 +3296,7 @@
         "slug": "disentangle",
         "width": 1440,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-1440-3.png",
+        "path": "qtw-pr63-toolbar-local/disentangle-1440-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3311,7 +3311,7 @@
         "slug": "disentangle",
         "width": 1440,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-1440-4.png",
+        "path": "qtw-pr63-toolbar-local/disentangle-1440-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3326,7 +3326,7 @@
         "slug": "disentangle",
         "width": 1440,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-1440-5.png",
+        "path": "qtw-pr63-toolbar-local/disentangle-1440-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3341,7 +3341,7 @@
         "slug": "disentangle",
         "width": 1440,
         "index": 6,
-        "path": "/tmp/qtw-pr63-toolbar-local/disentangle-1440-6.png",
+        "path": "qtw-pr63-toolbar-local/disentangle-1440-6.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3356,7 +3356,7 @@
         "slug": "entanglement_operation",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/entanglement_operation-390-0.png",
+        "path": "qtw-pr63-toolbar-local/entanglement_operation-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3371,7 +3371,7 @@
         "slug": "entanglement_operation",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/entanglement_operation-390-1.png",
+        "path": "qtw-pr63-toolbar-local/entanglement_operation-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3386,7 +3386,7 @@
         "slug": "entanglement_operation",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/entanglement_operation-390-2.png",
+        "path": "qtw-pr63-toolbar-local/entanglement_operation-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3401,7 +3401,7 @@
         "slug": "entanglement_operation",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/entanglement_operation-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/entanglement_operation-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3416,7 +3416,7 @@
         "slug": "entanglement_operation",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/entanglement_operation-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/entanglement_operation-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3431,7 +3431,7 @@
         "slug": "entanglement_operation",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/entanglement_operation-1440-2.png",
+        "path": "qtw-pr63-toolbar-local/entanglement_operation-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3446,7 +3446,7 @@
         "slug": "superdense_coding_circuit",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/superdense_coding_circuit-390-0.png",
+        "path": "qtw-pr63-toolbar-local/superdense_coding_circuit-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3461,7 +3461,7 @@
         "slug": "superdense_coding_circuit",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/superdense_coding_circuit-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/superdense_coding_circuit-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3476,7 +3476,7 @@
         "slug": "teleportation_circuit",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-390-0.png",
+        "path": "qtw-pr63-toolbar-local/teleportation_circuit-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3491,7 +3491,7 @@
         "slug": "teleportation_circuit",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-390-1.png",
+        "path": "qtw-pr63-toolbar-local/teleportation_circuit-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3506,7 +3506,7 @@
         "slug": "teleportation_circuit",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-390-2.png",
+        "path": "qtw-pr63-toolbar-local/teleportation_circuit-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3521,7 +3521,7 @@
         "slug": "teleportation_circuit",
         "width": 390,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-390-3.png",
+        "path": "qtw-pr63-toolbar-local/teleportation_circuit-390-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3536,7 +3536,7 @@
         "slug": "teleportation_circuit",
         "width": 390,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-390-4.png",
+        "path": "qtw-pr63-toolbar-local/teleportation_circuit-390-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3551,7 +3551,7 @@
         "slug": "teleportation_circuit",
         "width": 390,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-390-5.png",
+        "path": "qtw-pr63-toolbar-local/teleportation_circuit-390-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3566,7 +3566,7 @@
         "slug": "teleportation_circuit",
         "width": 390,
         "index": 6,
-        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-390-6.png",
+        "path": "qtw-pr63-toolbar-local/teleportation_circuit-390-6.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3581,7 +3581,7 @@
         "slug": "teleportation_circuit",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/teleportation_circuit-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3596,7 +3596,7 @@
         "slug": "teleportation_circuit",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/teleportation_circuit-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3611,7 +3611,7 @@
         "slug": "teleportation_circuit",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-1440-2.png",
+        "path": "qtw-pr63-toolbar-local/teleportation_circuit-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3626,7 +3626,7 @@
         "slug": "teleportation_circuit",
         "width": 1440,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-1440-3.png",
+        "path": "qtw-pr63-toolbar-local/teleportation_circuit-1440-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3641,7 +3641,7 @@
         "slug": "teleportation_circuit",
         "width": 1440,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-1440-4.png",
+        "path": "qtw-pr63-toolbar-local/teleportation_circuit-1440-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3656,7 +3656,7 @@
         "slug": "teleportation_circuit",
         "width": 1440,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-1440-5.png",
+        "path": "qtw-pr63-toolbar-local/teleportation_circuit-1440-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3671,7 +3671,7 @@
         "slug": "teleportation_circuit",
         "width": 1440,
         "index": 6,
-        "path": "/tmp/qtw-pr63-toolbar-local/teleportation_circuit-1440-6.png",
+        "path": "qtw-pr63-toolbar-local/teleportation_circuit-1440-6.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3686,7 +3686,7 @@
         "slug": "cascading_teleportation",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/cascading_teleportation-390-0.png",
+        "path": "qtw-pr63-toolbar-local/cascading_teleportation-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3701,7 +3701,7 @@
         "slug": "cascading_teleportation",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/cascading_teleportation-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/cascading_teleportation-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3716,7 +3716,7 @@
         "slug": "long_distance_entanglement",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/long_distance_entanglement-390-0.png",
+        "path": "qtw-pr63-toolbar-local/long_distance_entanglement-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3731,7 +3731,7 @@
         "slug": "long_distance_entanglement",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/long_distance_entanglement-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/long_distance_entanglement-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3746,7 +3746,7 @@
         "slug": "increment_circuit",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-390-0.png",
+        "path": "qtw-pr63-toolbar-local/increment_circuit-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3761,7 +3761,7 @@
         "slug": "increment_circuit",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-390-1.png",
+        "path": "qtw-pr63-toolbar-local/increment_circuit-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3776,7 +3776,7 @@
         "slug": "increment_circuit",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-390-2.png",
+        "path": "qtw-pr63-toolbar-local/increment_circuit-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3791,7 +3791,7 @@
         "slug": "increment_circuit",
         "width": 390,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-390-3.png",
+        "path": "qtw-pr63-toolbar-local/increment_circuit-390-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3806,7 +3806,7 @@
         "slug": "increment_circuit",
         "width": 390,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-390-4.png",
+        "path": "qtw-pr63-toolbar-local/increment_circuit-390-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3821,7 +3821,7 @@
         "slug": "increment_circuit",
         "width": 390,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-390-5.png",
+        "path": "qtw-pr63-toolbar-local/increment_circuit-390-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3836,7 +3836,7 @@
         "slug": "increment_circuit",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/increment_circuit-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3851,7 +3851,7 @@
         "slug": "increment_circuit",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/increment_circuit-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3866,7 +3866,7 @@
         "slug": "increment_circuit",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-1440-2.png",
+        "path": "qtw-pr63-toolbar-local/increment_circuit-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3881,7 +3881,7 @@
         "slug": "increment_circuit",
         "width": 1440,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-1440-3.png",
+        "path": "qtw-pr63-toolbar-local/increment_circuit-1440-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3896,7 +3896,7 @@
         "slug": "increment_circuit",
         "width": 1440,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-1440-4.png",
+        "path": "qtw-pr63-toolbar-local/increment_circuit-1440-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3911,7 +3911,7 @@
         "slug": "increment_circuit",
         "width": 1440,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-local/increment_circuit-1440-5.png",
+        "path": "qtw-pr63-toolbar-local/increment_circuit-1440-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3926,7 +3926,7 @@
         "slug": "decrement_circuit",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-390-0.png",
+        "path": "qtw-pr63-toolbar-local/decrement_circuit-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3941,7 +3941,7 @@
         "slug": "decrement_circuit",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-390-1.png",
+        "path": "qtw-pr63-toolbar-local/decrement_circuit-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3956,7 +3956,7 @@
         "slug": "decrement_circuit",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-390-2.png",
+        "path": "qtw-pr63-toolbar-local/decrement_circuit-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3971,7 +3971,7 @@
         "slug": "decrement_circuit",
         "width": 390,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-390-3.png",
+        "path": "qtw-pr63-toolbar-local/decrement_circuit-390-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -3986,7 +3986,7 @@
         "slug": "decrement_circuit",
         "width": 390,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-390-4.png",
+        "path": "qtw-pr63-toolbar-local/decrement_circuit-390-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4001,7 +4001,7 @@
         "slug": "decrement_circuit",
         "width": 390,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-390-5.png",
+        "path": "qtw-pr63-toolbar-local/decrement_circuit-390-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4016,7 +4016,7 @@
         "slug": "decrement_circuit",
         "width": 390,
         "index": 6,
-        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-390-6.png",
+        "path": "qtw-pr63-toolbar-local/decrement_circuit-390-6.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4031,7 +4031,7 @@
         "slug": "decrement_circuit",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/decrement_circuit-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4046,7 +4046,7 @@
         "slug": "decrement_circuit",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/decrement_circuit-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4061,7 +4061,7 @@
         "slug": "decrement_circuit",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-1440-2.png",
+        "path": "qtw-pr63-toolbar-local/decrement_circuit-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4076,7 +4076,7 @@
         "slug": "decrement_circuit",
         "width": 1440,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-1440-3.png",
+        "path": "qtw-pr63-toolbar-local/decrement_circuit-1440-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4091,7 +4091,7 @@
         "slug": "decrement_circuit",
         "width": 1440,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-1440-4.png",
+        "path": "qtw-pr63-toolbar-local/decrement_circuit-1440-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4106,7 +4106,7 @@
         "slug": "decrement_circuit",
         "width": 1440,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-1440-5.png",
+        "path": "qtw-pr63-toolbar-local/decrement_circuit-1440-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4121,7 +4121,7 @@
         "slug": "decrement_circuit",
         "width": 1440,
         "index": 6,
-        "path": "/tmp/qtw-pr63-toolbar-local/decrement_circuit-1440-6.png",
+        "path": "qtw-pr63-toolbar-local/decrement_circuit-1440-6.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4136,7 +4136,7 @@
         "slug": "addition_circuit",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/addition_circuit-390-0.png",
+        "path": "qtw-pr63-toolbar-local/addition_circuit-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4151,7 +4151,7 @@
         "slug": "addition_circuit",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/addition_circuit-390-1.png",
+        "path": "qtw-pr63-toolbar-local/addition_circuit-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4166,7 +4166,7 @@
         "slug": "addition_circuit",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/addition_circuit-390-2.png",
+        "path": "qtw-pr63-toolbar-local/addition_circuit-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4181,7 +4181,7 @@
         "slug": "addition_circuit",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/addition_circuit-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/addition_circuit-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4196,7 +4196,7 @@
         "slug": "addition_circuit",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/addition_circuit-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/addition_circuit-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4211,7 +4211,7 @@
         "slug": "addition_circuit",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/addition_circuit-1440-2.png",
+        "path": "qtw-pr63-toolbar-local/addition_circuit-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4226,7 +4226,7 @@
         "slug": "subtraction_circuit",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/subtraction_circuit-390-0.png",
+        "path": "qtw-pr63-toolbar-local/subtraction_circuit-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4241,7 +4241,7 @@
         "slug": "subtraction_circuit",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/subtraction_circuit-390-1.png",
+        "path": "qtw-pr63-toolbar-local/subtraction_circuit-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4256,7 +4256,7 @@
         "slug": "subtraction_circuit",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/subtraction_circuit-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/subtraction_circuit-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4271,7 +4271,7 @@
         "slug": "subtraction_circuit",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/subtraction_circuit-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/subtraction_circuit-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4286,7 +4286,7 @@
         "slug": "multiplication_circuit",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/multiplication_circuit-390-0.png",
+        "path": "qtw-pr63-toolbar-local/multiplication_circuit-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4301,7 +4301,7 @@
         "slug": "multiplication_circuit",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/multiplication_circuit-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/multiplication_circuit-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4316,7 +4316,7 @@
         "slug": "quantum_logic",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-390-0.png",
+        "path": "qtw-pr63-toolbar-local/quantum_logic-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4331,7 +4331,7 @@
         "slug": "quantum_logic",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-390-1.png",
+        "path": "qtw-pr63-toolbar-local/quantum_logic-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4346,7 +4346,7 @@
         "slug": "quantum_logic",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-390-2.png",
+        "path": "qtw-pr63-toolbar-local/quantum_logic-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4361,7 +4361,7 @@
         "slug": "quantum_logic",
         "width": 390,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-390-3.png",
+        "path": "qtw-pr63-toolbar-local/quantum_logic-390-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4376,7 +4376,7 @@
         "slug": "quantum_logic",
         "width": 390,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-390-4.png",
+        "path": "qtw-pr63-toolbar-local/quantum_logic-390-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4391,7 +4391,7 @@
         "slug": "quantum_logic",
         "width": 390,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-390-5.png",
+        "path": "qtw-pr63-toolbar-local/quantum_logic-390-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4406,7 +4406,7 @@
         "slug": "quantum_logic",
         "width": 390,
         "index": 6,
-        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-390-6.png",
+        "path": "qtw-pr63-toolbar-local/quantum_logic-390-6.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4421,7 +4421,7 @@
         "slug": "quantum_logic",
         "width": 390,
         "index": 7,
-        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-390-7.png",
+        "path": "qtw-pr63-toolbar-local/quantum_logic-390-7.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4436,7 +4436,7 @@
         "slug": "quantum_logic",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/quantum_logic-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4451,7 +4451,7 @@
         "slug": "quantum_logic",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/quantum_logic-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4466,7 +4466,7 @@
         "slug": "quantum_logic",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-1440-2.png",
+        "path": "qtw-pr63-toolbar-local/quantum_logic-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4481,7 +4481,7 @@
         "slug": "quantum_logic",
         "width": 1440,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-1440-3.png",
+        "path": "qtw-pr63-toolbar-local/quantum_logic-1440-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4496,7 +4496,7 @@
         "slug": "quantum_logic",
         "width": 1440,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-1440-4.png",
+        "path": "qtw-pr63-toolbar-local/quantum_logic-1440-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4511,7 +4511,7 @@
         "slug": "quantum_logic",
         "width": 1440,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-1440-5.png",
+        "path": "qtw-pr63-toolbar-local/quantum_logic-1440-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4526,7 +4526,7 @@
         "slug": "quantum_logic",
         "width": 1440,
         "index": 6,
-        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-1440-6.png",
+        "path": "qtw-pr63-toolbar-local/quantum_logic-1440-6.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4541,7 +4541,7 @@
         "slug": "quantum_logic",
         "width": 1440,
         "index": 7,
-        "path": "/tmp/qtw-pr63-toolbar-local/quantum_logic-1440-7.png",
+        "path": "qtw-pr63-toolbar-local/quantum_logic-1440-7.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4556,7 +4556,7 @@
         "slug": "superposition_quantum_logic",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/superposition_quantum_logic-390-0.png",
+        "path": "qtw-pr63-toolbar-local/superposition_quantum_logic-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4571,7 +4571,7 @@
         "slug": "superposition_quantum_logic",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/superposition_quantum_logic-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/superposition_quantum_logic-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4586,7 +4586,7 @@
         "slug": "phase_logic",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-390-0.png",
+        "path": "qtw-pr63-toolbar-local/phase_logic-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4601,7 +4601,7 @@
         "slug": "phase_logic",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-390-1.png",
+        "path": "qtw-pr63-toolbar-local/phase_logic-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4616,7 +4616,7 @@
         "slug": "phase_logic",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-390-2.png",
+        "path": "qtw-pr63-toolbar-local/phase_logic-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4631,7 +4631,7 @@
         "slug": "phase_logic",
         "width": 390,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-390-3.png",
+        "path": "qtw-pr63-toolbar-local/phase_logic-390-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4646,7 +4646,7 @@
         "slug": "phase_logic",
         "width": 390,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-390-4.png",
+        "path": "qtw-pr63-toolbar-local/phase_logic-390-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4661,7 +4661,7 @@
         "slug": "phase_logic",
         "width": 390,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-390-5.png",
+        "path": "qtw-pr63-toolbar-local/phase_logic-390-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4676,7 +4676,7 @@
         "slug": "phase_logic",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/phase_logic-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4691,7 +4691,7 @@
         "slug": "phase_logic",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/phase_logic-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4706,7 +4706,7 @@
         "slug": "phase_logic",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-1440-2.png",
+        "path": "qtw-pr63-toolbar-local/phase_logic-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4721,7 +4721,7 @@
         "slug": "phase_logic",
         "width": 1440,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-1440-3.png",
+        "path": "qtw-pr63-toolbar-local/phase_logic-1440-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4736,7 +4736,7 @@
         "slug": "phase_logic",
         "width": 1440,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-1440-4.png",
+        "path": "qtw-pr63-toolbar-local/phase_logic-1440-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4751,7 +4751,7 @@
         "slug": "phase_logic",
         "width": 1440,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic-1440-5.png",
+        "path": "qtw-pr63-toolbar-local/phase_logic-1440-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4766,7 +4766,7 @@
         "slug": "phase_logic_combination",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic_combination-390-0.png",
+        "path": "qtw-pr63-toolbar-local/phase_logic_combination-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4781,7 +4781,7 @@
         "slug": "phase_logic_combination",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/phase_logic_combination-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/phase_logic_combination-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4796,7 +4796,7 @@
         "slug": "sat",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/sat-390-0.png",
+        "path": "qtw-pr63-toolbar-local/sat-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4811,7 +4811,7 @@
         "slug": "sat",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/sat-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/sat-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4826,7 +4826,7 @@
         "slug": "grover_iam",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/grover_iam-390-0.png",
+        "path": "qtw-pr63-toolbar-local/grover_iam-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4841,7 +4841,7 @@
         "slug": "grover_iam",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/grover_iam-390-1.png",
+        "path": "qtw-pr63-toolbar-local/grover_iam-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4856,7 +4856,7 @@
         "slug": "grover_iam",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/grover_iam-390-2.png",
+        "path": "qtw-pr63-toolbar-local/grover_iam-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4871,7 +4871,7 @@
         "slug": "grover_iam",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/grover_iam-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/grover_iam-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4886,7 +4886,7 @@
         "slug": "grover_iam",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/grover_iam-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/grover_iam-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4901,7 +4901,7 @@
         "slug": "grover_iam",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/grover_iam-1440-2.png",
+        "path": "qtw-pr63-toolbar-local/grover_iam-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4916,7 +4916,7 @@
         "slug": "multi-1",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-1-390-0.png",
+        "path": "qtw-pr63-toolbar-local/multi-1-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4931,7 +4931,7 @@
         "slug": "multi-1",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-1-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/multi-1-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4946,7 +4946,7 @@
         "slug": "multi-3",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-3-390-0.png",
+        "path": "qtw-pr63-toolbar-local/multi-3-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4961,7 +4961,7 @@
         "slug": "multi-3",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-3-390-1.png",
+        "path": "qtw-pr63-toolbar-local/multi-3-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4976,7 +4976,7 @@
         "slug": "multi-3",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-3-390-2.png",
+        "path": "qtw-pr63-toolbar-local/multi-3-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -4991,7 +4991,7 @@
         "slug": "multi-3",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-3-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/multi-3-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -5006,7 +5006,7 @@
         "slug": "multi-3",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-3-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/multi-3-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -5021,7 +5021,7 @@
         "slug": "multi-3",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-3-1440-2.png",
+        "path": "qtw-pr63-toolbar-local/multi-3-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -5036,7 +5036,7 @@
         "slug": "multi-7",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-390-0.png",
+        "path": "qtw-pr63-toolbar-local/multi-7-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -5051,7 +5051,7 @@
         "slug": "multi-7",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-390-1.png",
+        "path": "qtw-pr63-toolbar-local/multi-7-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -5066,7 +5066,7 @@
         "slug": "multi-7",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-390-2.png",
+        "path": "qtw-pr63-toolbar-local/multi-7-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -5081,7 +5081,7 @@
         "slug": "multi-7",
         "width": 390,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-390-3.png",
+        "path": "qtw-pr63-toolbar-local/multi-7-390-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -5096,7 +5096,7 @@
         "slug": "multi-7",
         "width": 390,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-390-4.png",
+        "path": "qtw-pr63-toolbar-local/multi-7-390-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -5111,7 +5111,7 @@
         "slug": "multi-7",
         "width": 390,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-390-5.png",
+        "path": "qtw-pr63-toolbar-local/multi-7-390-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -5126,7 +5126,7 @@
         "slug": "multi-7",
         "width": 390,
         "index": 6,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-390-6.png",
+        "path": "qtw-pr63-toolbar-local/multi-7-390-6.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -5141,7 +5141,7 @@
         "slug": "multi-7",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-1440-0.png",
+        "path": "qtw-pr63-toolbar-local/multi-7-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -5156,7 +5156,7 @@
         "slug": "multi-7",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-1440-1.png",
+        "path": "qtw-pr63-toolbar-local/multi-7-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -5171,7 +5171,7 @@
         "slug": "multi-7",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-1440-2.png",
+        "path": "qtw-pr63-toolbar-local/multi-7-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -5186,7 +5186,7 @@
         "slug": "multi-7",
         "width": 1440,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-1440-3.png",
+        "path": "qtw-pr63-toolbar-local/multi-7-1440-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -5201,7 +5201,7 @@
         "slug": "multi-7",
         "width": 1440,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-1440-4.png",
+        "path": "qtw-pr63-toolbar-local/multi-7-1440-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -5216,7 +5216,7 @@
         "slug": "multi-7",
         "width": 1440,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-1440-5.png",
+        "path": "qtw-pr63-toolbar-local/multi-7-1440-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -5231,7 +5231,7 @@
         "slug": "multi-7",
         "width": 1440,
         "index": 6,
-        "path": "/tmp/qtw-pr63-toolbar-local/multi-7-1440-6.png",
+        "path": "qtw-pr63-toolbar-local/multi-7-1440-6.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7358,7 +7358,7 @@
         "slug": "",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/index-390-0.png",
+        "path": "qtw-pr63-toolbar-public/index-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7373,7 +7373,7 @@
         "slug": "",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/index-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/index-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7388,7 +7388,7 @@
         "slug": "qni_intro",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/qni_intro-390-0.png",
+        "path": "qtw-pr63-toolbar-public/qni_intro-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7403,7 +7403,7 @@
         "slug": "qni_intro",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/qni_intro-390-1.png",
+        "path": "qtw-pr63-toolbar-public/qni_intro-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7418,7 +7418,7 @@
         "slug": "qni_intro",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/qni_intro-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/qni_intro-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7433,7 +7433,7 @@
         "slug": "qni_intro",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/qni_intro-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/qni_intro-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7448,7 +7448,7 @@
         "slug": "qubit",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/qubit-390-0.png",
+        "path": "qtw-pr63-toolbar-public/qubit-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7463,7 +7463,7 @@
         "slug": "qubit",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/qubit-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/qubit-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7478,7 +7478,7 @@
         "slug": "phase",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/phase-390-0.png",
+        "path": "qtw-pr63-toolbar-public/phase-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7493,7 +7493,7 @@
         "slug": "phase",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/phase-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/phase-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7508,7 +7508,7 @@
         "slug": "x_gate",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/x_gate-390-0.png",
+        "path": "qtw-pr63-toolbar-public/x_gate-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7523,7 +7523,7 @@
         "slug": "x_gate",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/x_gate-390-1.png",
+        "path": "qtw-pr63-toolbar-public/x_gate-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7538,7 +7538,7 @@
         "slug": "x_gate",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/x_gate-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/x_gate-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7553,7 +7553,7 @@
         "slug": "x_gate",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/x_gate-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/x_gate-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7568,7 +7568,7 @@
         "slug": "h_gate",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/h_gate-390-0.png",
+        "path": "qtw-pr63-toolbar-public/h_gate-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7583,7 +7583,7 @@
         "slug": "h_gate",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/h_gate-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/h_gate-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7598,7 +7598,7 @@
         "slug": "phase_gate",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/phase_gate-390-0.png",
+        "path": "qtw-pr63-toolbar-public/phase_gate-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7613,7 +7613,7 @@
         "slug": "phase_gate",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/phase_gate-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/phase_gate-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7628,7 +7628,7 @@
         "slug": "write_operation",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/write_operation-390-0.png",
+        "path": "qtw-pr63-toolbar-public/write_operation-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7643,7 +7643,7 @@
         "slug": "write_operation",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/write_operation-390-1.png",
+        "path": "qtw-pr63-toolbar-public/write_operation-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7658,7 +7658,7 @@
         "slug": "write_operation",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/write_operation-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/write_operation-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7673,7 +7673,7 @@
         "slug": "write_operation",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/write_operation-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/write_operation-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7688,7 +7688,7 @@
         "slug": "measurement_operation",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/measurement_operation-390-0.png",
+        "path": "qtw-pr63-toolbar-public/measurement_operation-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7703,7 +7703,7 @@
         "slug": "measurement_operation",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/measurement_operation-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/measurement_operation-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7718,7 +7718,7 @@
         "slug": "gate_combination",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/gate_combination-390-0.png",
+        "path": "qtw-pr63-toolbar-public/gate_combination-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7733,7 +7733,7 @@
         "slug": "gate_combination",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/gate_combination-390-1.png",
+        "path": "qtw-pr63-toolbar-public/gate_combination-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7748,7 +7748,7 @@
         "slug": "gate_combination",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/gate_combination-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/gate_combination-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7763,7 +7763,7 @@
         "slug": "gate_combination",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/gate_combination-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/gate_combination-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7778,7 +7778,7 @@
         "slug": "bb84_circuit",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/bb84_circuit-390-0.png",
+        "path": "qtw-pr63-toolbar-public/bb84_circuit-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7793,7 +7793,7 @@
         "slug": "bb84_circuit",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/bb84_circuit-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/bb84_circuit-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7808,7 +7808,7 @@
         "slug": "multi_qubit_superposition",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi_qubit_superposition-390-0.png",
+        "path": "qtw-pr63-toolbar-public/multi_qubit_superposition-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7823,7 +7823,7 @@
         "slug": "multi_qubit_superposition",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi_qubit_superposition-390-1.png",
+        "path": "qtw-pr63-toolbar-public/multi_qubit_superposition-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7838,7 +7838,7 @@
         "slug": "multi_qubit_superposition",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi_qubit_superposition-390-2.png",
+        "path": "qtw-pr63-toolbar-public/multi_qubit_superposition-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7853,7 +7853,7 @@
         "slug": "multi_qubit_superposition",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi_qubit_superposition-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/multi_qubit_superposition-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7868,7 +7868,7 @@
         "slug": "multi_qubit_superposition",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi_qubit_superposition-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/multi_qubit_superposition-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7883,7 +7883,7 @@
         "slug": "multi_qubit_superposition",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi_qubit_superposition-1440-2.png",
+        "path": "qtw-pr63-toolbar-public/multi_qubit_superposition-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7898,7 +7898,7 @@
         "slug": "multi_qubit_operation",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi_qubit_operation-390-0.png",
+        "path": "qtw-pr63-toolbar-public/multi_qubit_operation-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7913,7 +7913,7 @@
         "slug": "multi_qubit_operation",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi_qubit_operation-390-1.png",
+        "path": "qtw-pr63-toolbar-public/multi_qubit_operation-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7928,7 +7928,7 @@
         "slug": "multi_qubit_operation",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi_qubit_operation-390-2.png",
+        "path": "qtw-pr63-toolbar-public/multi_qubit_operation-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7943,7 +7943,7 @@
         "slug": "multi_qubit_operation",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi_qubit_operation-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/multi_qubit_operation-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7958,7 +7958,7 @@
         "slug": "multi_qubit_operation",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi_qubit_operation-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/multi_qubit_operation-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7973,7 +7973,7 @@
         "slug": "multi_qubit_operation",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi_qubit_operation-1440-2.png",
+        "path": "qtw-pr63-toolbar-public/multi_qubit_operation-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -7988,7 +7988,7 @@
         "slug": "random_byte_generator",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/random_byte_generator-390-0.png",
+        "path": "qtw-pr63-toolbar-public/random_byte_generator-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8003,7 +8003,7 @@
         "slug": "random_byte_generator",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/random_byte_generator-390-1.png",
+        "path": "qtw-pr63-toolbar-public/random_byte_generator-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8018,7 +8018,7 @@
         "slug": "random_byte_generator",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/random_byte_generator-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/random_byte_generator-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8033,7 +8033,7 @@
         "slug": "random_byte_generator",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/random_byte_generator-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/random_byte_generator-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8048,7 +8048,7 @@
         "slug": "multi_qubit_phase_gate",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi_qubit_phase_gate-390-0.png",
+        "path": "qtw-pr63-toolbar-public/multi_qubit_phase_gate-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8063,7 +8063,7 @@
         "slug": "multi_qubit_phase_gate",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi_qubit_phase_gate-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/multi_qubit_phase_gate-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8078,7 +8078,7 @@
         "slug": "swap_gate",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/swap_gate-390-0.png",
+        "path": "qtw-pr63-toolbar-public/swap_gate-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8093,7 +8093,7 @@
         "slug": "swap_gate",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/swap_gate-390-1.png",
+        "path": "qtw-pr63-toolbar-public/swap_gate-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8108,7 +8108,7 @@
         "slug": "swap_gate",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/swap_gate-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/swap_gate-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8123,7 +8123,7 @@
         "slug": "swap_gate",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/swap_gate-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/swap_gate-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8138,7 +8138,7 @@
         "slug": "cnot_gate",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/cnot_gate-390-0.png",
+        "path": "qtw-pr63-toolbar-public/cnot_gate-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8153,7 +8153,7 @@
         "slug": "cnot_gate",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/cnot_gate-390-1.png",
+        "path": "qtw-pr63-toolbar-public/cnot_gate-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8168,7 +8168,7 @@
         "slug": "cnot_gate",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/cnot_gate-390-2.png",
+        "path": "qtw-pr63-toolbar-public/cnot_gate-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8183,7 +8183,7 @@
         "slug": "cnot_gate",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/cnot_gate-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/cnot_gate-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8198,7 +8198,7 @@
         "slug": "cnot_gate",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/cnot_gate-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/cnot_gate-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8213,7 +8213,7 @@
         "slug": "cnot_gate",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/cnot_gate-1440-2.png",
+        "path": "qtw-pr63-toolbar-public/cnot_gate-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8228,7 +8228,7 @@
         "slug": "swap_from_cnots",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/swap_from_cnots-390-0.png",
+        "path": "qtw-pr63-toolbar-public/swap_from_cnots-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8243,7 +8243,7 @@
         "slug": "swap_from_cnots",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/swap_from_cnots-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/swap_from_cnots-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8258,7 +8258,7 @@
         "slug": "cphase",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/cphase-390-0.png",
+        "path": "qtw-pr63-toolbar-public/cphase-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8273,7 +8273,7 @@
         "slug": "cphase",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/cphase-390-1.png",
+        "path": "qtw-pr63-toolbar-public/cphase-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8288,7 +8288,7 @@
         "slug": "cphase",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/cphase-390-2.png",
+        "path": "qtw-pr63-toolbar-public/cphase-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8303,7 +8303,7 @@
         "slug": "cphase",
         "width": 390,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-public/cphase-390-3.png",
+        "path": "qtw-pr63-toolbar-public/cphase-390-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8318,7 +8318,7 @@
         "slug": "cphase",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/cphase-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/cphase-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8333,7 +8333,7 @@
         "slug": "cphase",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/cphase-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/cphase-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8348,7 +8348,7 @@
         "slug": "cphase",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/cphase-1440-2.png",
+        "path": "qtw-pr63-toolbar-public/cphase-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8363,7 +8363,7 @@
         "slug": "cphase",
         "width": 1440,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-public/cphase-1440-3.png",
+        "path": "qtw-pr63-toolbar-public/cphase-1440-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8378,7 +8378,7 @@
         "slug": "entanglement",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/entanglement-390-0.png",
+        "path": "qtw-pr63-toolbar-public/entanglement-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8393,7 +8393,7 @@
         "slug": "entanglement",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/entanglement-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/entanglement-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8408,7 +8408,7 @@
         "slug": "disentangle",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/disentangle-390-0.png",
+        "path": "qtw-pr63-toolbar-public/disentangle-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8423,7 +8423,7 @@
         "slug": "disentangle",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/disentangle-390-1.png",
+        "path": "qtw-pr63-toolbar-public/disentangle-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8438,7 +8438,7 @@
         "slug": "disentangle",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/disentangle-390-2.png",
+        "path": "qtw-pr63-toolbar-public/disentangle-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8453,7 +8453,7 @@
         "slug": "disentangle",
         "width": 390,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-public/disentangle-390-3.png",
+        "path": "qtw-pr63-toolbar-public/disentangle-390-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8468,7 +8468,7 @@
         "slug": "disentangle",
         "width": 390,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-public/disentangle-390-4.png",
+        "path": "qtw-pr63-toolbar-public/disentangle-390-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8483,7 +8483,7 @@
         "slug": "disentangle",
         "width": 390,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-public/disentangle-390-5.png",
+        "path": "qtw-pr63-toolbar-public/disentangle-390-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8498,7 +8498,7 @@
         "slug": "disentangle",
         "width": 390,
         "index": 6,
-        "path": "/tmp/qtw-pr63-toolbar-public/disentangle-390-6.png",
+        "path": "qtw-pr63-toolbar-public/disentangle-390-6.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8513,7 +8513,7 @@
         "slug": "disentangle",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/disentangle-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/disentangle-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8528,7 +8528,7 @@
         "slug": "disentangle",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/disentangle-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/disentangle-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8543,7 +8543,7 @@
         "slug": "disentangle",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/disentangle-1440-2.png",
+        "path": "qtw-pr63-toolbar-public/disentangle-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8558,7 +8558,7 @@
         "slug": "disentangle",
         "width": 1440,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-public/disentangle-1440-3.png",
+        "path": "qtw-pr63-toolbar-public/disentangle-1440-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8573,7 +8573,7 @@
         "slug": "disentangle",
         "width": 1440,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-public/disentangle-1440-4.png",
+        "path": "qtw-pr63-toolbar-public/disentangle-1440-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8588,7 +8588,7 @@
         "slug": "disentangle",
         "width": 1440,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-public/disentangle-1440-5.png",
+        "path": "qtw-pr63-toolbar-public/disentangle-1440-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8603,7 +8603,7 @@
         "slug": "disentangle",
         "width": 1440,
         "index": 6,
-        "path": "/tmp/qtw-pr63-toolbar-public/disentangle-1440-6.png",
+        "path": "qtw-pr63-toolbar-public/disentangle-1440-6.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8618,7 +8618,7 @@
         "slug": "entanglement_operation",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/entanglement_operation-390-0.png",
+        "path": "qtw-pr63-toolbar-public/entanglement_operation-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8633,7 +8633,7 @@
         "slug": "entanglement_operation",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/entanglement_operation-390-1.png",
+        "path": "qtw-pr63-toolbar-public/entanglement_operation-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8648,7 +8648,7 @@
         "slug": "entanglement_operation",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/entanglement_operation-390-2.png",
+        "path": "qtw-pr63-toolbar-public/entanglement_operation-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8663,7 +8663,7 @@
         "slug": "entanglement_operation",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/entanglement_operation-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/entanglement_operation-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8678,7 +8678,7 @@
         "slug": "entanglement_operation",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/entanglement_operation-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/entanglement_operation-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8693,7 +8693,7 @@
         "slug": "entanglement_operation",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/entanglement_operation-1440-2.png",
+        "path": "qtw-pr63-toolbar-public/entanglement_operation-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8708,7 +8708,7 @@
         "slug": "superdense_coding_circuit",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/superdense_coding_circuit-390-0.png",
+        "path": "qtw-pr63-toolbar-public/superdense_coding_circuit-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8723,7 +8723,7 @@
         "slug": "superdense_coding_circuit",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/superdense_coding_circuit-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/superdense_coding_circuit-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8738,7 +8738,7 @@
         "slug": "teleportation_circuit",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/teleportation_circuit-390-0.png",
+        "path": "qtw-pr63-toolbar-public/teleportation_circuit-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8753,7 +8753,7 @@
         "slug": "teleportation_circuit",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/teleportation_circuit-390-1.png",
+        "path": "qtw-pr63-toolbar-public/teleportation_circuit-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8768,7 +8768,7 @@
         "slug": "teleportation_circuit",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/teleportation_circuit-390-2.png",
+        "path": "qtw-pr63-toolbar-public/teleportation_circuit-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8783,7 +8783,7 @@
         "slug": "teleportation_circuit",
         "width": 390,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-public/teleportation_circuit-390-3.png",
+        "path": "qtw-pr63-toolbar-public/teleportation_circuit-390-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8798,7 +8798,7 @@
         "slug": "teleportation_circuit",
         "width": 390,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-public/teleportation_circuit-390-4.png",
+        "path": "qtw-pr63-toolbar-public/teleportation_circuit-390-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8813,7 +8813,7 @@
         "slug": "teleportation_circuit",
         "width": 390,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-public/teleportation_circuit-390-5.png",
+        "path": "qtw-pr63-toolbar-public/teleportation_circuit-390-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8828,7 +8828,7 @@
         "slug": "teleportation_circuit",
         "width": 390,
         "index": 6,
-        "path": "/tmp/qtw-pr63-toolbar-public/teleportation_circuit-390-6.png",
+        "path": "qtw-pr63-toolbar-public/teleportation_circuit-390-6.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8843,7 +8843,7 @@
         "slug": "teleportation_circuit",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/teleportation_circuit-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/teleportation_circuit-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8858,7 +8858,7 @@
         "slug": "teleportation_circuit",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/teleportation_circuit-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/teleportation_circuit-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8873,7 +8873,7 @@
         "slug": "teleportation_circuit",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/teleportation_circuit-1440-2.png",
+        "path": "qtw-pr63-toolbar-public/teleportation_circuit-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8888,7 +8888,7 @@
         "slug": "teleportation_circuit",
         "width": 1440,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-public/teleportation_circuit-1440-3.png",
+        "path": "qtw-pr63-toolbar-public/teleportation_circuit-1440-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8903,7 +8903,7 @@
         "slug": "teleportation_circuit",
         "width": 1440,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-public/teleportation_circuit-1440-4.png",
+        "path": "qtw-pr63-toolbar-public/teleportation_circuit-1440-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8918,7 +8918,7 @@
         "slug": "teleportation_circuit",
         "width": 1440,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-public/teleportation_circuit-1440-5.png",
+        "path": "qtw-pr63-toolbar-public/teleportation_circuit-1440-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8933,7 +8933,7 @@
         "slug": "teleportation_circuit",
         "width": 1440,
         "index": 6,
-        "path": "/tmp/qtw-pr63-toolbar-public/teleportation_circuit-1440-6.png",
+        "path": "qtw-pr63-toolbar-public/teleportation_circuit-1440-6.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8948,7 +8948,7 @@
         "slug": "cascading_teleportation",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/cascading_teleportation-390-0.png",
+        "path": "qtw-pr63-toolbar-public/cascading_teleportation-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8963,7 +8963,7 @@
         "slug": "cascading_teleportation",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/cascading_teleportation-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/cascading_teleportation-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8978,7 +8978,7 @@
         "slug": "long_distance_entanglement",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/long_distance_entanglement-390-0.png",
+        "path": "qtw-pr63-toolbar-public/long_distance_entanglement-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -8993,7 +8993,7 @@
         "slug": "long_distance_entanglement",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/long_distance_entanglement-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/long_distance_entanglement-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9008,7 +9008,7 @@
         "slug": "increment_circuit",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/increment_circuit-390-0.png",
+        "path": "qtw-pr63-toolbar-public/increment_circuit-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9023,7 +9023,7 @@
         "slug": "increment_circuit",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/increment_circuit-390-1.png",
+        "path": "qtw-pr63-toolbar-public/increment_circuit-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9038,7 +9038,7 @@
         "slug": "increment_circuit",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/increment_circuit-390-2.png",
+        "path": "qtw-pr63-toolbar-public/increment_circuit-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9053,7 +9053,7 @@
         "slug": "increment_circuit",
         "width": 390,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-public/increment_circuit-390-3.png",
+        "path": "qtw-pr63-toolbar-public/increment_circuit-390-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9068,7 +9068,7 @@
         "slug": "increment_circuit",
         "width": 390,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-public/increment_circuit-390-4.png",
+        "path": "qtw-pr63-toolbar-public/increment_circuit-390-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9083,7 +9083,7 @@
         "slug": "increment_circuit",
         "width": 390,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-public/increment_circuit-390-5.png",
+        "path": "qtw-pr63-toolbar-public/increment_circuit-390-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9098,7 +9098,7 @@
         "slug": "increment_circuit",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/increment_circuit-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/increment_circuit-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9113,7 +9113,7 @@
         "slug": "increment_circuit",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/increment_circuit-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/increment_circuit-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9128,7 +9128,7 @@
         "slug": "increment_circuit",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/increment_circuit-1440-2.png",
+        "path": "qtw-pr63-toolbar-public/increment_circuit-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9143,7 +9143,7 @@
         "slug": "increment_circuit",
         "width": 1440,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-public/increment_circuit-1440-3.png",
+        "path": "qtw-pr63-toolbar-public/increment_circuit-1440-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9158,7 +9158,7 @@
         "slug": "increment_circuit",
         "width": 1440,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-public/increment_circuit-1440-4.png",
+        "path": "qtw-pr63-toolbar-public/increment_circuit-1440-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9173,7 +9173,7 @@
         "slug": "increment_circuit",
         "width": 1440,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-public/increment_circuit-1440-5.png",
+        "path": "qtw-pr63-toolbar-public/increment_circuit-1440-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9188,7 +9188,7 @@
         "slug": "decrement_circuit",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/decrement_circuit-390-0.png",
+        "path": "qtw-pr63-toolbar-public/decrement_circuit-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9203,7 +9203,7 @@
         "slug": "decrement_circuit",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/decrement_circuit-390-1.png",
+        "path": "qtw-pr63-toolbar-public/decrement_circuit-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9218,7 +9218,7 @@
         "slug": "decrement_circuit",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/decrement_circuit-390-2.png",
+        "path": "qtw-pr63-toolbar-public/decrement_circuit-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9233,7 +9233,7 @@
         "slug": "decrement_circuit",
         "width": 390,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-public/decrement_circuit-390-3.png",
+        "path": "qtw-pr63-toolbar-public/decrement_circuit-390-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9248,7 +9248,7 @@
         "slug": "decrement_circuit",
         "width": 390,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-public/decrement_circuit-390-4.png",
+        "path": "qtw-pr63-toolbar-public/decrement_circuit-390-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9263,7 +9263,7 @@
         "slug": "decrement_circuit",
         "width": 390,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-public/decrement_circuit-390-5.png",
+        "path": "qtw-pr63-toolbar-public/decrement_circuit-390-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9278,7 +9278,7 @@
         "slug": "decrement_circuit",
         "width": 390,
         "index": 6,
-        "path": "/tmp/qtw-pr63-toolbar-public/decrement_circuit-390-6.png",
+        "path": "qtw-pr63-toolbar-public/decrement_circuit-390-6.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9293,7 +9293,7 @@
         "slug": "decrement_circuit",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/decrement_circuit-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/decrement_circuit-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9308,7 +9308,7 @@
         "slug": "decrement_circuit",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/decrement_circuit-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/decrement_circuit-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9323,7 +9323,7 @@
         "slug": "decrement_circuit",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/decrement_circuit-1440-2.png",
+        "path": "qtw-pr63-toolbar-public/decrement_circuit-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9338,7 +9338,7 @@
         "slug": "decrement_circuit",
         "width": 1440,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-public/decrement_circuit-1440-3.png",
+        "path": "qtw-pr63-toolbar-public/decrement_circuit-1440-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9353,7 +9353,7 @@
         "slug": "decrement_circuit",
         "width": 1440,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-public/decrement_circuit-1440-4.png",
+        "path": "qtw-pr63-toolbar-public/decrement_circuit-1440-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9368,7 +9368,7 @@
         "slug": "decrement_circuit",
         "width": 1440,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-public/decrement_circuit-1440-5.png",
+        "path": "qtw-pr63-toolbar-public/decrement_circuit-1440-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9383,7 +9383,7 @@
         "slug": "decrement_circuit",
         "width": 1440,
         "index": 6,
-        "path": "/tmp/qtw-pr63-toolbar-public/decrement_circuit-1440-6.png",
+        "path": "qtw-pr63-toolbar-public/decrement_circuit-1440-6.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9398,7 +9398,7 @@
         "slug": "addition_circuit",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/addition_circuit-390-0.png",
+        "path": "qtw-pr63-toolbar-public/addition_circuit-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9413,7 +9413,7 @@
         "slug": "addition_circuit",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/addition_circuit-390-1.png",
+        "path": "qtw-pr63-toolbar-public/addition_circuit-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9428,7 +9428,7 @@
         "slug": "addition_circuit",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/addition_circuit-390-2.png",
+        "path": "qtw-pr63-toolbar-public/addition_circuit-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9443,7 +9443,7 @@
         "slug": "addition_circuit",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/addition_circuit-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/addition_circuit-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9458,7 +9458,7 @@
         "slug": "addition_circuit",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/addition_circuit-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/addition_circuit-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9473,7 +9473,7 @@
         "slug": "addition_circuit",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/addition_circuit-1440-2.png",
+        "path": "qtw-pr63-toolbar-public/addition_circuit-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9488,7 +9488,7 @@
         "slug": "subtraction_circuit",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/subtraction_circuit-390-0.png",
+        "path": "qtw-pr63-toolbar-public/subtraction_circuit-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9503,7 +9503,7 @@
         "slug": "subtraction_circuit",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/subtraction_circuit-390-1.png",
+        "path": "qtw-pr63-toolbar-public/subtraction_circuit-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9518,7 +9518,7 @@
         "slug": "subtraction_circuit",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/subtraction_circuit-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/subtraction_circuit-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9533,7 +9533,7 @@
         "slug": "subtraction_circuit",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/subtraction_circuit-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/subtraction_circuit-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9548,7 +9548,7 @@
         "slug": "multiplication_circuit",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/multiplication_circuit-390-0.png",
+        "path": "qtw-pr63-toolbar-public/multiplication_circuit-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9563,7 +9563,7 @@
         "slug": "multiplication_circuit",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/multiplication_circuit-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/multiplication_circuit-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9578,7 +9578,7 @@
         "slug": "quantum_logic",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/quantum_logic-390-0.png",
+        "path": "qtw-pr63-toolbar-public/quantum_logic-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9593,7 +9593,7 @@
         "slug": "quantum_logic",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/quantum_logic-390-1.png",
+        "path": "qtw-pr63-toolbar-public/quantum_logic-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9608,7 +9608,7 @@
         "slug": "quantum_logic",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/quantum_logic-390-2.png",
+        "path": "qtw-pr63-toolbar-public/quantum_logic-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9623,7 +9623,7 @@
         "slug": "quantum_logic",
         "width": 390,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-public/quantum_logic-390-3.png",
+        "path": "qtw-pr63-toolbar-public/quantum_logic-390-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9638,7 +9638,7 @@
         "slug": "quantum_logic",
         "width": 390,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-public/quantum_logic-390-4.png",
+        "path": "qtw-pr63-toolbar-public/quantum_logic-390-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9653,7 +9653,7 @@
         "slug": "quantum_logic",
         "width": 390,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-public/quantum_logic-390-5.png",
+        "path": "qtw-pr63-toolbar-public/quantum_logic-390-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9668,7 +9668,7 @@
         "slug": "quantum_logic",
         "width": 390,
         "index": 6,
-        "path": "/tmp/qtw-pr63-toolbar-public/quantum_logic-390-6.png",
+        "path": "qtw-pr63-toolbar-public/quantum_logic-390-6.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9683,7 +9683,7 @@
         "slug": "quantum_logic",
         "width": 390,
         "index": 7,
-        "path": "/tmp/qtw-pr63-toolbar-public/quantum_logic-390-7.png",
+        "path": "qtw-pr63-toolbar-public/quantum_logic-390-7.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9698,7 +9698,7 @@
         "slug": "quantum_logic",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/quantum_logic-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/quantum_logic-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9713,7 +9713,7 @@
         "slug": "quantum_logic",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/quantum_logic-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/quantum_logic-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9728,7 +9728,7 @@
         "slug": "quantum_logic",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/quantum_logic-1440-2.png",
+        "path": "qtw-pr63-toolbar-public/quantum_logic-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9743,7 +9743,7 @@
         "slug": "quantum_logic",
         "width": 1440,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-public/quantum_logic-1440-3.png",
+        "path": "qtw-pr63-toolbar-public/quantum_logic-1440-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9758,7 +9758,7 @@
         "slug": "quantum_logic",
         "width": 1440,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-public/quantum_logic-1440-4.png",
+        "path": "qtw-pr63-toolbar-public/quantum_logic-1440-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9773,7 +9773,7 @@
         "slug": "quantum_logic",
         "width": 1440,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-public/quantum_logic-1440-5.png",
+        "path": "qtw-pr63-toolbar-public/quantum_logic-1440-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9788,7 +9788,7 @@
         "slug": "quantum_logic",
         "width": 1440,
         "index": 6,
-        "path": "/tmp/qtw-pr63-toolbar-public/quantum_logic-1440-6.png",
+        "path": "qtw-pr63-toolbar-public/quantum_logic-1440-6.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9803,7 +9803,7 @@
         "slug": "quantum_logic",
         "width": 1440,
         "index": 7,
-        "path": "/tmp/qtw-pr63-toolbar-public/quantum_logic-1440-7.png",
+        "path": "qtw-pr63-toolbar-public/quantum_logic-1440-7.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9818,7 +9818,7 @@
         "slug": "superposition_quantum_logic",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/superposition_quantum_logic-390-0.png",
+        "path": "qtw-pr63-toolbar-public/superposition_quantum_logic-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9833,7 +9833,7 @@
         "slug": "superposition_quantum_logic",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/superposition_quantum_logic-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/superposition_quantum_logic-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9848,7 +9848,7 @@
         "slug": "phase_logic",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/phase_logic-390-0.png",
+        "path": "qtw-pr63-toolbar-public/phase_logic-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9863,7 +9863,7 @@
         "slug": "phase_logic",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/phase_logic-390-1.png",
+        "path": "qtw-pr63-toolbar-public/phase_logic-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9878,7 +9878,7 @@
         "slug": "phase_logic",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/phase_logic-390-2.png",
+        "path": "qtw-pr63-toolbar-public/phase_logic-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9893,7 +9893,7 @@
         "slug": "phase_logic",
         "width": 390,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-public/phase_logic-390-3.png",
+        "path": "qtw-pr63-toolbar-public/phase_logic-390-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9908,7 +9908,7 @@
         "slug": "phase_logic",
         "width": 390,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-public/phase_logic-390-4.png",
+        "path": "qtw-pr63-toolbar-public/phase_logic-390-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9923,7 +9923,7 @@
         "slug": "phase_logic",
         "width": 390,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-public/phase_logic-390-5.png",
+        "path": "qtw-pr63-toolbar-public/phase_logic-390-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9938,7 +9938,7 @@
         "slug": "phase_logic",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/phase_logic-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/phase_logic-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9953,7 +9953,7 @@
         "slug": "phase_logic",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/phase_logic-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/phase_logic-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9968,7 +9968,7 @@
         "slug": "phase_logic",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/phase_logic-1440-2.png",
+        "path": "qtw-pr63-toolbar-public/phase_logic-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9983,7 +9983,7 @@
         "slug": "phase_logic",
         "width": 1440,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-public/phase_logic-1440-3.png",
+        "path": "qtw-pr63-toolbar-public/phase_logic-1440-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -9998,7 +9998,7 @@
         "slug": "phase_logic",
         "width": 1440,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-public/phase_logic-1440-4.png",
+        "path": "qtw-pr63-toolbar-public/phase_logic-1440-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10013,7 +10013,7 @@
         "slug": "phase_logic",
         "width": 1440,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-public/phase_logic-1440-5.png",
+        "path": "qtw-pr63-toolbar-public/phase_logic-1440-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10028,7 +10028,7 @@
         "slug": "phase_logic_combination",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/phase_logic_combination-390-0.png",
+        "path": "qtw-pr63-toolbar-public/phase_logic_combination-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10043,7 +10043,7 @@
         "slug": "phase_logic_combination",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/phase_logic_combination-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/phase_logic_combination-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10058,7 +10058,7 @@
         "slug": "sat",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/sat-390-0.png",
+        "path": "qtw-pr63-toolbar-public/sat-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10073,7 +10073,7 @@
         "slug": "sat",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/sat-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/sat-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10088,7 +10088,7 @@
         "slug": "grover_iam",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/grover_iam-390-0.png",
+        "path": "qtw-pr63-toolbar-public/grover_iam-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10103,7 +10103,7 @@
         "slug": "grover_iam",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/grover_iam-390-1.png",
+        "path": "qtw-pr63-toolbar-public/grover_iam-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10118,7 +10118,7 @@
         "slug": "grover_iam",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/grover_iam-390-2.png",
+        "path": "qtw-pr63-toolbar-public/grover_iam-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10133,7 +10133,7 @@
         "slug": "grover_iam",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/grover_iam-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/grover_iam-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10148,7 +10148,7 @@
         "slug": "grover_iam",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/grover_iam-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/grover_iam-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10163,7 +10163,7 @@
         "slug": "grover_iam",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/grover_iam-1440-2.png",
+        "path": "qtw-pr63-toolbar-public/grover_iam-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10178,7 +10178,7 @@
         "slug": "multi-1",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-1-390-0.png",
+        "path": "qtw-pr63-toolbar-public/multi-1-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10193,7 +10193,7 @@
         "slug": "multi-1",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-1-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/multi-1-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10208,7 +10208,7 @@
         "slug": "multi-3",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-3-390-0.png",
+        "path": "qtw-pr63-toolbar-public/multi-3-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10223,7 +10223,7 @@
         "slug": "multi-3",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-3-390-1.png",
+        "path": "qtw-pr63-toolbar-public/multi-3-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10238,7 +10238,7 @@
         "slug": "multi-3",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-3-390-2.png",
+        "path": "qtw-pr63-toolbar-public/multi-3-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10253,7 +10253,7 @@
         "slug": "multi-3",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-3-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/multi-3-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10268,7 +10268,7 @@
         "slug": "multi-3",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-3-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/multi-3-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10283,7 +10283,7 @@
         "slug": "multi-3",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-3-1440-2.png",
+        "path": "qtw-pr63-toolbar-public/multi-3-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10298,7 +10298,7 @@
         "slug": "multi-7",
         "width": 390,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-7-390-0.png",
+        "path": "qtw-pr63-toolbar-public/multi-7-390-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10313,7 +10313,7 @@
         "slug": "multi-7",
         "width": 390,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-7-390-1.png",
+        "path": "qtw-pr63-toolbar-public/multi-7-390-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10328,7 +10328,7 @@
         "slug": "multi-7",
         "width": 390,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-7-390-2.png",
+        "path": "qtw-pr63-toolbar-public/multi-7-390-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10343,7 +10343,7 @@
         "slug": "multi-7",
         "width": 390,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-7-390-3.png",
+        "path": "qtw-pr63-toolbar-public/multi-7-390-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10358,7 +10358,7 @@
         "slug": "multi-7",
         "width": 390,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-7-390-4.png",
+        "path": "qtw-pr63-toolbar-public/multi-7-390-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10373,7 +10373,7 @@
         "slug": "multi-7",
         "width": 390,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-7-390-5.png",
+        "path": "qtw-pr63-toolbar-public/multi-7-390-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10388,7 +10388,7 @@
         "slug": "multi-7",
         "width": 390,
         "index": 6,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-7-390-6.png",
+        "path": "qtw-pr63-toolbar-public/multi-7-390-6.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10403,7 +10403,7 @@
         "slug": "multi-7",
         "width": 1440,
         "index": 0,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-7-1440-0.png",
+        "path": "qtw-pr63-toolbar-public/multi-7-1440-0.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10418,7 +10418,7 @@
         "slug": "multi-7",
         "width": 1440,
         "index": 1,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-7-1440-1.png",
+        "path": "qtw-pr63-toolbar-public/multi-7-1440-1.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10433,7 +10433,7 @@
         "slug": "multi-7",
         "width": 1440,
         "index": 2,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-7-1440-2.png",
+        "path": "qtw-pr63-toolbar-public/multi-7-1440-2.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10448,7 +10448,7 @@
         "slug": "multi-7",
         "width": 1440,
         "index": 3,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-7-1440-3.png",
+        "path": "qtw-pr63-toolbar-public/multi-7-1440-3.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10463,7 +10463,7 @@
         "slug": "multi-7",
         "width": 1440,
         "index": 4,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-7-1440-4.png",
+        "path": "qtw-pr63-toolbar-public/multi-7-1440-4.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10478,7 +10478,7 @@
         "slug": "multi-7",
         "width": 1440,
         "index": 5,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-7-1440-5.png",
+        "path": "qtw-pr63-toolbar-public/multi-7-1440-5.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
@@ -10493,7 +10493,7 @@
         "slug": "multi-7",
         "width": 1440,
         "index": 6,
-        "path": "/tmp/qtw-pr63-toolbar-public/multi-7-1440-6.png",
+        "path": "qtw-pr63-toolbar-public/multi-7-1440-6.png",
         "unchanged": true,
         "errors": [],
         "iconPixels": [
