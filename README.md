@@ -4,7 +4,7 @@ An Astro static-site experiment replacing old Qni Tutorial components with Qni W
 
 Published URL: https://qniapp.github.io/qni-tutorial-webgpu/
 
-「Qni で開く」 links target `https://qniapp.github.io/qni-webgpu/#` + `encodeURIComponent(circuitJson)` (publication pending). They open the current committed circuit in the browser-local app. See [the URL contract](docs/open-in-qni-webgpu.md). The tutorial's `/app/` build is retained for tests and diagnostics.
+「Qni で開く」 links target `https://qniapp.github.io/qni-webgpu/#` + `encodeURIComponent(circuitJson)` on the live qni-webgpu Pages build. They open the current committed circuit in the browser-local app. See [the URL contract](docs/open-in-qni-webgpu.md). The tutorial's `/app/` build is retained for tests and diagnostics.
 
 ## Local development
 
