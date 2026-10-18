@@ -76,7 +76,7 @@ for (const fixture of [qpu, faster, pbit, superposition, qubit, phase, notation,
     await expect(page.locator('main qni-webgpu-circuit')).toHaveCount(fixture.slug==='write_operation' ? 2 : 'circuits' in fixture ? fixture.circuits.length : 0)
     if ('circuits' in fixture && fixture.slug!=='write_operation') {
       const expected = structuredClone(fixture.circuits)
-      // Takamiya authorized exactly the sixth circuit's final string slot to become numeric.
+      // The maintainer approved exactly the sixth circuit's final string slot to become numeric.
       if (fixture.slug === 'increment_circuit') expected[5].cols[expected[5].cols.length - 1] = [1]
       if (fixture.slug === 'sat') expected[0] = satFixed
       if (fixture.slug === 'grover_iam') expected[2] = groverIamFixed[2]

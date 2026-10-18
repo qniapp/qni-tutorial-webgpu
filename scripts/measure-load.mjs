@@ -1,7 +1,9 @@
 import { chromium } from '@playwright/test'
 import { writeFile } from 'node:fs/promises'
+import os from 'node:os'
+import path from 'node:path'
 
-const [url, output = '/tmp/qtw-measure.json', count = '5'] = process.argv.slice(2)
+const [url, output = path.join(os.tmpdir(), 'qtw-measure.json'), count = '5'] = process.argv.slice(2)
 if (!url || !Number.isInteger(Number(count)) || Number(count) < 1) {
   throw new Error('Usage: node scripts/measure-load.mjs URL OUTPUT [RUNS]')
 }

@@ -1,4 +1,6 @@
 import {expect,test} from '@playwright/test'
+import os from 'node:os'
+import path from 'node:path'
 import fixed from './fixtures/phase_kickback-fixed.json' with {type:'json'}
 const slug='phase_kickback'
 for(const width of [390,1440])for(const dpr of [1,2])test(`${slug} non-GPU content/layout ${width} DPR${dpr}`,async({browser})=>{
@@ -19,6 +21,6 @@ for(const width of [390,1440])for(const dpr of [1,2])test(`${slug} non-GPU conte
  expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
  expect(await page.locator('.content-with-margin').evaluate(root=>{const roots:Element[]=[document.body,root,...root.querySelectorAll('*')];for(const e of root.querySelectorAll('qni-webgpu-circuit'))roots.push(...e.shadowRoot!.querySelectorAll('*'));return roots.filter(e=>{const s=getComputedStyle(e);return (['scroll','auto'].includes(s.overflowX)&&e.scrollWidth>e.clientWidth)||(['scroll','auto'].includes(s.overflowY)&&e.scrollHeight>e.clientHeight)}).length})).toBe(0)
  expect(errors).toEqual([])
- await page.screenshot({path:`/tmp/qtw-${slug}-${width}-dpr${dpr}.png`,fullPage:true})
+ await page.screenshot({path:path.join(os.tmpdir(), `qtw-${slug}-${width}-dpr${dpr}.png`),fullPage:true})
  }finally{await context.close()}
 })

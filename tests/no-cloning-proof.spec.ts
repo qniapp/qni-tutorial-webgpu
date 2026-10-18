@@ -1,4 +1,6 @@
 import {expect,test} from '@playwright/test'
+import os from 'node:os'
+import path from 'node:path'
 import fixed from './fixtures/no_cloning_theorem_proof-fixed.json' with {type:'json'}
 for(const width of [390,1440])for(const dpr of [1,2])test(`No-cloning B1-B3 MathJax/emoji ${width} DPR${dpr}`,async({browser})=>{
  const context=await browser.newContext({viewport:{width,height:1100},deviceScaleFactor:dpr}),page=await context.newPage(),errors:string[]=[]
@@ -21,6 +23,6 @@ for(const width of [390,1440])for(const dpr of [1,2])test(`No-cloning B1-B3 Math
  expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
  expect(await root.evaluate(root=>[document.body,root,...root.querySelectorAll('*')].filter(e=>{const s=getComputedStyle(e);return (['scroll','auto'].includes(s.overflowX)&&e.scrollWidth>e.clientWidth)||(['scroll','auto'].includes(s.overflowY)&&e.scrollHeight>e.clientHeight)}).length)).toBe(0)
  expect(await root.locator('mjx-container').evaluateAll(es=>es.every(e=>{const r=e.getBoundingClientRect();return r.left>=0&&r.right<=document.documentElement.clientWidth+.5&&r.height>0}))).toBe(true)
- expect(errors).toEqual([]);await page.screenshot({path:`/tmp/qtw-no-cloning-proof-${width}-dpr${dpr}.png`,fullPage:true})
+ expect(errors).toEqual([]);await page.screenshot({path:path.join(os.tmpdir(), `qtw-no-cloning-proof-${width}-dpr${dpr}.png`),fullPage:true})
  }finally{await context.close()}
 })

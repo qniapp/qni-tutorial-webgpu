@@ -1,4 +1,6 @@
 import {expect,test} from '@playwright/test'
+import os from 'node:os'
+import path from 'node:path'
 import original from './fixtures/grover-indetail-text.json' with {type:'json'}
 for(const width of [390,1440])test(`reflection explanation keeps original prose and TeX at ${width}`,async({page})=>{
  await page.setViewportSize({width,height:1100});await page.goto('/qni-tutorial-webgpu/grover_iam_indetail/')
@@ -23,7 +25,7 @@ for(const width of [390,1440])for(const dpr of [1,2])test(`five exact reflection
  expect(await values()).toEqual(before)
  expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
  expect(await page.locator('.content-with-margin').evaluate(e=>[e,...e.querySelectorAll('*')].filter(e=>{const s=getComputedStyle(e);return ['scroll','auto'].includes(s.overflowX)&&e.scrollWidth>e.clientWidth+1}).length)).toBe(0)
- for(let i=0;i<5;i++)await figures.nth(i).screenshot({path:`/tmp/qtw-grover-indetail-figure-${width}-dpr${dpr}-${i}.png`})
+ for(let i=0;i<5;i++)await figures.nth(i).screenshot({path:path.join(os.tmpdir(), `qtw-grover-indetail-figure-${width}-dpr${dpr}-${i}.png`)})
  expect(errors).toEqual([])
  }finally{await context.close()}
 })
