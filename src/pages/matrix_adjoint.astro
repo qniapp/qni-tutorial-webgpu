@@ -117,14 +117,14 @@ const base = import.meta.env.BASE_URL
     Qni で試してみましょう! 下の回路は <Ket label="0" /> から始め、H、S、S†、H の順に適用します。
     最後はどうなるでしょうか? S と S† が打ち消し合った後に、H が 2 回分残ると予想してみてください。
     初期表示では最後の H の直後を選んであります。
-    Amps1 は振幅、Probability は確率を表示し、測定はしません。重ならないように間を 1 列空けています。
+    Amps1 は振幅、Probability は確率を表示し、測定はしません。
   </p>
   <qni-webgpu-circuit
     max-wire-count="1"
     selected-step="4"
     show-state-panel="true"
     palette={'["H","S","S†","Amps1","Probability"]'}
-    circuit={'{"cols":[["|0>"],["H"],["S"],["S†"],["H"],["Amps1"],[1],["Probability"]]}'}
+    circuit={'{"cols":[["|0>"],["H"],["S"],["S†"],["H"],["Amps1"],["Probability"]]}'}
   ></qni-webgpu-circuit>
   <ol>
     <li>まずは編集せずに、最終状態の振幅が上は 1、下は 0、確率が 0 に対して 100% になっていることを確認しましょう。</li>
