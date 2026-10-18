@@ -22,7 +22,7 @@ pAND/pOR/pNAND/pNOR/pXORの2-qubit重ね合わせ図5組は、入力4状態も�
 - 虚部: 全0、norm **0.999999880790714**、page errors0
 - 3だけ位相反転する本文・回路の論理は正しいが、原図の振幅約0.70711とは異なる
 
-証拠 `/tmp/qtw-phase-logic-original-repro.{mjs,json,log}`、`/tmp/qtw-phase-logic-original-gpu.png`、診断JSON `/tmp/qtw-phase-pAND-diagnostic.json`。原liveの5図・各8振幅も保存。診断用browserは終了済み。
+証拠 一時ディレクトリの `qtw-phase-logic-original-repro.{mjs,json,log}`、`qtw-phase-logic-original-gpu.png`、診断JSON `qtw-phase-pAND-diagnostic.json`。原liveの5図・各8振幅も保存。診断用browserは終了済み。
 
 ## 高宮さんへの質問
 

@@ -21,7 +21,7 @@ Orbit は withorbit.com の iframe 内で描画するので、サイト相対 UR
 
 ## 検証
 
-- `QNI_WEBGPU_SOURCE=/workspace/qni/qni-webgpu pnpm run build`、`pnpm run typecheck` 成功。
+- `QNI_WEBGPU_SOURCE="<qni-webgpu checkout>" pnpm run build`、`pnpm run typecheck` 成功。
 - Playwright（ported-pages, original-content, sidenote, circuit-display, inline-glyphs, bb84-text-source, h-gate-page-fixes, real-gpu, restart）: 194 passed、7 failed。失敗は origin/main（977bd2f）でも同じ 7 件で、この変更とは無関係:
   - ported-pages の sat / grover_iam（1440・390）: #4 で回路を変えたが fixture が元の回路のまま。
   - real-gpu の H-gate ランナー、restart の Enter / Space: この環境の headless Chromium（SwiftShader）でランナーの canvas が表示されず `running` にならない。

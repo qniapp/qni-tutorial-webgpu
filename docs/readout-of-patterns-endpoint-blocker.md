@@ -71,4 +71,4 @@ N=16、入力は a_j=(1/4)exp(iπj/4)=(1/4)exp(2πi·2j/16)。
 - 移植後の本文diff/390・1440/DPR/scroll/step0/toolbar等は未検証。
 - inverse_qft以降も停止。
 
-資料 `/tmp/qtw-next-readout_of_patterns.html`、`/tmp/qtw-readout-pattern-{circuits.json,gpu.mjs,gpu-results.json,gpu.log}`、`/tmp/qtw-readout-pattern-original-{prose.json,prose.log,phase.png}`。永続 `tests/fixtures/readout-pattern-gpu-verification.json`。
+資料 一時ディレクトリの `qtw-next-readout_of_patterns.html`、`qtw-readout-pattern-{circuits.json,gpu.mjs,gpu-results.json,gpu.log}`、`qtw-readout-pattern-original-{prose.json,prose.log,phase.png}`。永続 `tests/fixtures/readout-pattern-gpu-verification.json`。

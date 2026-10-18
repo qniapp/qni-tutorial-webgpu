@@ -37,8 +37,10 @@ All internal links and assets use Astro's `BASE_URL`. `qni-webgpu-circuit` creat
 
 ## Load measurement
 
+Run from the repo root:
+
 ```sh
-node /path/to/qni-tutorial-webgpu/scripts/measure-load.mjs https://qniapp.github.io/qni-tutorial-webgpu/h_gate/ /tmp/qtw-live.json 5
+node scripts/measure-load.mjs https://qniapp.github.io/qni-tutorial-webgpu/h_gate/ qtw-live.json 5
 ```
 
 The same command accepts a local preview URL. Each run uses a fresh browser context for cold load and a reload for warm load. Defaults use system `/usr/bin/chromium` with hardware Vulkan WebGPU; `QTW_HEADED=1` enables headed mode and `QTW_SWIFTSHADER=1` explicitly selects SwiftShader when hardware is unavailable. Use the same flags before and after. JSON includes Resource Timing sizes, startup phases, adapter info, and medians. First-frame timing is a submit/animation-frame proxy, not an exact display timestamp. See [the measurements and build comparisons](docs/load-performance.md) for results, caveats, and check outcomes.

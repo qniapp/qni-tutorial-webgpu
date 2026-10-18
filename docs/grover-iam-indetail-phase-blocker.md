@@ -60,4 +60,4 @@ open PR全件を確認した。該当ページを変更するPRなし。openはq
 - 390/1440の移植後本文diff/scroll/step0/toolbar検証は未実施。検証回路だけのGPU4件は実施した。
 - 次のreadout_of_patterns以降も停止。
 
-資料: `/tmp/qtw-next-grover_iam_indetail.html`、`/tmp/qtw-grover_iam_*.png` (透明背景のラベルは白背景合成版で確認)、`/tmp/qtw-grover-indetail-phase-{circuits.json,gpu.mjs,gpu-results.json,gpu.log}`。永続実GPU結果は `tests/fixtures/grover-iam-indetail-phase-verification.json`。
+資料: 一時ディレクトリの `qtw-next-grover_iam_indetail.html`、`qtw-grover_iam_*.png` (透明背景のラベルは白背景合成版で確認)、`qtw-grover-indetail-phase-{circuits.json,gpu.mjs,gpu-results.json,gpu.log}`。永続実GPU結果は `tests/fixtures/grover-iam-indetail-phase-verification.json`。

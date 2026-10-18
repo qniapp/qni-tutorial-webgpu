@@ -22,4 +22,4 @@
 
 原因箇所は上流 `apps/web/src/url_circuit/parser.rs` の `parse_cols`。`cols` 配列の直後に `}` を要求し、root の `title` を受け付けない。元の JSON の受理とメタデータの保持・現在回路リンクの round-trip は上流側で対応が必要。チュートリアル側では本文・原 JSON の改変や CPU fallback を行わない。
 
-作業時の再現資料: `/tmp/qtw-superdense-title-repro.json`、`/tmp/qtw-superdense-start-blocker.png`。保留 draft は `/tmp/qtw-blocked-superdense/`。
+作業時の再現資料: 一時ディレクトリの `qtw-superdense-title-repro.json`、`qtw-superdense-start-blocker.png`。保留 draft は `qtw-blocked-superdense/`。

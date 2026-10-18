@@ -18,13 +18,13 @@ true変数を **A0,B0,B1,C0だけ**、残りをfalseにすると:
 
 これはCond2単独の反例で、パズル全ヒントも満たすという主張ではない。原HTMLの式を直接評価し、論理式の数値やconnectiveを変更して再現したものではない。
 
-証拠 `/tmp/qtw-sat-original-constraints.{mjs,json,log}`、原liveのCond2 screenshot `/tmp/qtw-sat-cond2-original.png`。原式・30項・成立項0/20・代入値を保存した。
+証拠 一時ディレクトリの `qtw-sat-original-constraints.{mjs,json,log}`、原liveのCond2 screenshot `qtw-sat-cond2-original.png`。原式・30項・成立項0/20・代入値を保存した。
 
 ## 原量子回路のGPU確認
 
 別に、原125列/14-wire JSONを公開standaloneの実Chromium/AMD WebGPU (pin ef652682c23d89427f6f39bb6bee1ec6fae9bb1e) で無変更で実行した。起動成功、page errors0、norm **0.9999997615814351**。状態0〜15が各約1/16、8だけ実振幅 **-0.2499999701976776**、他は正、補助wireは0。A1/A4/B1=0、B4=1の位相反転は本文の最終答042と整合する。
 
-最終回路が一致することだけで、途中のSAT定式化の不一致を容認しない。原回路を変更してCond2に合わせる回避策は使わない。資料 `/tmp/qtw-sat-original-gpu.{mjs,json,log}`。診断browserは終了済み。
+最終回路が一致することだけで、途中のSAT定式化の不一致を容認しない。原回路を変更してCond2に合わせる回避策は使わない。資料 一時ディレクトリの `qtw-sat-original-gpu.{mjs,json,log}`。診断browserは終了済み。
 
 ## 高宮さんへの質問
 

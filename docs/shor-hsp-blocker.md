@@ -6,8 +6,10 @@
 
 `docs/shor-hsp-original-source.html` に原全文を保存。Pythonの証拠は `tests/fixtures/shor-hsp-blocker-analysis.json`。数学・古典算術の検査だけであり、量子回路CPU simulatorでもGPU検証でもない。
 
+一時ディレクトリに保存する解析結果も、コマンドでは相対ファイル名を指定する。
+
 ```sh
-python3 scripts/analyze-shor-hsp-source.py ../qni/apps/tutorial/shor_hsp.html --output /tmp/shor-hsp-analysis.json
+python3 scripts/analyze-shor-hsp-source.py ../qni/apps/tutorial/shor_hsp.html --output shor-hsp-analysis.json
 ```
 
 ## 確認できた正しい数値

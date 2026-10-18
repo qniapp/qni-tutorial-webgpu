@@ -7,8 +7,8 @@
 - 実Chromium152/Vulkan WebGPUで、sidebarの移植済み25ページを1ページずつ390/1440で検査した。
 - before: 50ケース中14ケース、13ページ22箇所に内側scrollあり。ベクトル数式1箇所は両幅で縦scrollしたため、幅別の検出は23件。
 - 判定: 可視の本文要素とopen shadow DOMを再帰探索。`scrollWidth > clientWidth` / `scrollHeight > clientHeight` かつ該当軸のcomputed overflowがauto/scrollなら失敗。document overflow、console/page errors、全embed runningも検査。
-- `node /tmp/qtw-scroll-audit.mjs before`: red。回帰test `tests/content-overflow.spec.ts` も390でredを確認後、修正して390/1440の2test green。
-- local-after: 全50ケースscrollbars0/document overflow0/errors0、全native embed running。`/tmp/qtw-scroll-after-local.json`。
+- 一時ディレクトリ内で `node qtw-scroll-audit.mjs before`: red。回帰test `tests/content-overflow.spec.ts` も390でredを確認後、修正して390/1440の2test green。
+- local-after: 全50ケースscrollbars0/document overflow0/errors0、全native embed running。`qtw-scroll-after-local.json`。
 - raw寸法超過も別途記録する。ただしMathJaxの画面外assistive MathML、circleの余白内ketラベル、desktopの予約済み右欄sidenoteは内側scrollではない。accessibilityを削除・clipして判定を偽装しない。
 - MathJax/分割不可能な矢印図には `fit-content` を使い、自然幅が収まらない場合のみCSS zoomで縮小。ResizeObserverでtypeset/font/viewport変更に追従し、高さは内容に合わせる。native canvasには適用しない。
 - 6/8circle列は390で4列gridに折り返す。順番・amplitude・tooltip・ketは不変。
@@ -16,7 +16,7 @@
 
 ## 修正箇所と画像
 
-各行の画像stemは `/tmp/qtw-scroll-` の後に続く。before画像は `before-<stem>.png`、local-afterは `after-local-<stem>.png`、公開afterは `after-<stem>.png`。例えば `/tmp/qtw-scroll-before-qni_intro-390-scroll-audit-0.png` / `/tmp/qtw-scroll-after-qni_intro-390-scroll-audit-0.png`。
+一時ディレクトリ内の画像は、ファイル名のprefix `qtw-scroll-` の後に各行の画像stemが続く。before画像は `before-<stem>.png`、local-afterは `after-local-<stem>.png`、公開afterは `after-<stem>.png`。例えば `qtw-scroll-before-qni_intro-390-scroll-audit-0.png` / `qtw-scroll-after-qni_intro-390-scroll-audit-0.png`。
 
 | page | element / 原因 | fix | screenshot stem |
 |---|---|---|---|
@@ -43,6 +43,6 @@
 | random_byte_generator | 2bit目Hのbefore/after列468px | 同上 | random_byte_generator-390-scroll-audit-1 |
 | random_byte_generator | 3bit目Hのbefore/after列468px | 同上 | random_byte_generator-390-scroll-audit-2 |
 
-主要before `/tmp/qtw-noscroll-before.png`、after `/tmp/qtw-noscroll-after.png`。全ページfull-page screenshotsは `/tmp/qtw-scroll-{before,after}-<slug>-{390,1440}.png` (indexはindex)。本文内scrollと、interactive native editor内のstate-grid pan/zoomは別の機構である。nativeはその機能・表示を削除しない。
+主要before 一時ディレクトリの `qtw-noscroll-before.png`、after `qtw-noscroll-after.png`。全ページfull-page screenshotsは `qtw-scroll-{before,after}-<slug>-{390,1440}.png` (indexはindex)。本文内scrollと、interactive native editor内のstate-grid pan/zoomは別の機構である。nativeはその機能・表示を削除しない。
 
-PR #54対象の390px screenshotは `/tmp/qtw-pr54-{before,after}-<slug>-<embed index>-390.png`。対象はphase(1)、index(1)、qubit(1)、qni_intro(2)、x_gate(2)の計7embed。公開commit `5ee202e90ed7c064f52727c15c107612d11a1553`、Pages **38039509444 success**。公開afterも全50ケースinner scroll0/document overflow0/errors0。7embedのpalette/gate/panelを目視しclipなし、全7件GPU norm1/one-hot初期状態。全144test green、typecheck/build成功。公開JSON `/tmp/qtw-scroll-after.json` / `/tmp/qtw-pr54-after.json`、native比較contact `/tmp/qtw-pr54-before-after-contact.png`。checkpointはdocs/porting.md。
+PR #54対象の390px screenshotは 一時ディレクトリの `qtw-pr54-{before,after}-<slug>-<embed index>-390.png`。対象はphase(1)、index(1)、qubit(1)、qni_intro(2)、x_gate(2)の計7embed。公開commit `5ee202e90ed7c064f52727c15c107612d11a1553`、Pages **38039509444 success**。公開afterも全50ケースinner scroll0/document overflow0/errors0。7embedのpalette/gate/panelを目視しclipなし、全7件GPU norm1/one-hot初期状態。全144test green、typecheck/build成功。公開JSON `qtw-scroll-after.json` / `qtw-pr54-after.json`、native比較contact `qtw-pr54-before-after-contact.png`。checkpointはdocs/porting.md。

@@ -49,4 +49,4 @@ TeXなら `x^{a}\operatorname{mod}N` → `a^{x}\operatorname{mod}N`。制御bit�
 
 原JSON1（8wire）・palette[[]]・max-wire-count[1]・run1は変更0。画像置換0/credits削除0、原768円の配列/振幅/ketラベルは変更0（U3の承認は保持）。Vedral scholarly引用は維持する。4枚はいずれも数理/回路図で旧Qni UIではないが、I1未承認のためowned置換前にSTOPした。
 
-route未作成なので本文/TeX/3901440/DPR/scroll/typecheck/build/公開検査はまだできていない。新しいshor_u GPU commandも未作成（架空auditを提示しない）。既存4nativeページと4旧layout失敗は `pending-real-machine-checks.md` のcommandsで**実機確認待ち**、gmktecへのSSH/GPU実行は行わない。
+route未作成なので本文/TeX/3901440/DPR/scroll/typecheck/build/公開検査はまだできていない。新しいshor_u GPU commandも未作成（架空auditを提示しない）。既存4nativeページと4旧layout失敗は `pending-real-machine-checks.md` のcommandsで**実機確認待ち**、手元 Linux 実機（AMD GPU）へのSSH/GPU実行は行わない。

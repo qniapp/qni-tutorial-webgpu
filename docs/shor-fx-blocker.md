@@ -6,8 +6,10 @@
 
 原全文は `docs/shor-fx-original-source.html`、数値と原JSON/metadataは `tests/fixtures/shor-fx-blocker-analysis.json`。qniapp/qni open PRは19:42に全0件、同ページPRなし。latest origin/mainと取得済みsourceがbyte一致した。
 
+一時ディレクトリに保存する解析結果も、コマンドでは相対ファイル名を指定する。
+
 ```sh
-python3 scripts/analyze-shor-fx-source.py ../qni/apps/tutorial/shor_fx.html --output /tmp/shor-fx-analysis.json
+python3 scripts/analyze-shor-fx-source.py ../qni/apps/tutorial/shor_fx.html --output shor-fx-analysis.json
 ```
 
 ## 確認できた数値・metadata

@@ -28,7 +28,7 @@ a += b のブロック (左から 3 番目)
 a += b のブロック (左から 4 番目)
 ```
 
-原回路のblockを移動したり、a/bの初期化blockを結合したりしない。原写真 `/tmp/qtw-qft-adder-original-1440-1.png` (390も取得)。長い原回路は原親の水平scrollがあるため、写真右側は親viewport外では白になるが、原liveのdata-jsonにも同じ5ラベルが含まれ、最初の3ラベルと4番目の開始位置が画像で確認できる。
+原回路のblockを移動したり、a/bの初期化blockを結合したりしない。原写真 一時ディレクトリの `qtw-qft-adder-original-1440-1.png` (390も取得)。長い原回路は原親の水平scrollがあるため、写真右側は親viewport外では白になるが、原liveのdata-jsonにも同じ5ラベルが含まれ、最初の3ラベルと4番目の開始位置が画像で確認できる。
 
 ## 2. 前ページlabelとhrefが一致しない
 
@@ -59,7 +59,7 @@ prev_url: ./inverse_qft.html
 prev_url: ./inside_the_qft.html
 ```
 
-資料 `/tmp/qtw-qft-adder-original-prev-{390,1440}.png`、`/tmp/qtw-qft-adder-prev-link-results.json`。
+資料 一時ディレクトリの `qtw-qft-adder-original-prev-{390,1440}.png`、`qtw-qft-adder-prev-link-results.json`。
 
 ## 数値と回路
 
@@ -82,4 +82,4 @@ qniapp/qniのopen PRは#579 (inside_the_qft、head9019a7927c550d885d765cf8dec4b7
 
 このページは画像0/置換0/credits削除0/sidenote1/Orbit0。**未公開、route/移植fixture未作成、本文/URL/JSON無変更。** 移植後のtext/TeX/scroll/DPR/toolbar/step0は未検証。2訂正のみを承認するか質問済み。その他の本文・角度・数値・回路は変えず、eigenphases以降も停止する。
 
-資料 `/tmp/qtw-next-qft_adder.html`、`/tmp/qtw-qft-adder-original-*`、`/tmp/qtw-qft-adder-prev-link-*`、`/tmp/qtw-qft-adder-stage-*`。
+資料 一時ディレクトリの `qtw-next-qft_adder.html`、`qtw-qft-adder-original-*`、`qtw-qft-adder-prev-link-*`、`qtw-qft-adder-stage-*`。

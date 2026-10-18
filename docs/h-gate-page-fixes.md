@@ -2,9 +2,9 @@
 
 ## 開始 / 公開版での再現 (2026-10-10 09:08 JST)
 
-28 分の時間制限、24 分前後で終了処理。作業は独立した `/home/yasuhito/Work/qni-tutorial-webgpu-worktrees/feat/h-gate-page-fixes`、分岐元 `b0508ff`。旧 Qni/WebGPU の作業ツリーは fetch と git show だけ。
+28 分の時間制限、24 分前後で終了処理。作業は教材の独立した作業ツリー、分岐元 `b0508ff`。旧 Qni/WebGPU の作業ツリーは fetch と git show だけ。
 
-公開ページの実機 Chromium で、H アイコンは 1 個、SVG background は #FFFCF0、最初の図の background は #F2F0E5、追加された H|0⟩ の数式あり、と再現した。再現用 `/tmp/qtw-hfix-before.mjs`、記録 `/tmp/qtw-hfix-before.json`。
+公開ページの実機 Chromium で、H アイコンは 1 個、SVG background は #FFFCF0、最初の図の background は #F2F0E5、追加された H|0⟩ の数式あり、と再現した。再現用 一時ディレクトリの `qtw-hfix-before.mjs`、記録 `qtw-hfix-before.json`。
 
 ## 原文の集計と描画の調査
 
@@ -39,7 +39,7 @@ Node 22 の型チェック、Astro build、対象 **9/9 テスト成功**。1440
 
 ## 公開 / 実機比較の中間記録 (09:26 JST)
 
-初回実装 `379c90efb6b07624f8e7629cbd17a1bc8f353457`、[Pages 38008471882](https://github.com/qniapp/qni-tutorial-webgpu/actions/runs/38008471882) 成功。実機 gmktec / Chromium 152 / AMD rdna-3 で原文と移植版を 1440px・390px にて撮影した。双方の本文/図のタグ数は19、移植版の console/page error は0、外側の角の画素は8個すべてページ背景 #FFFCF0 と一致。
+初回実装 `379c90efb6b07624f8e7629cbd17a1bc8f353457`、[Pages 38008471882](https://github.com/qniapp/qni-tutorial-webgpu/actions/runs/38008471882) 成功。AMD GPU を積んだ手元の Linux 実機 / Chromium 152 / AMD rdna-3 で原文と移植版を 1440px・390px にて撮影した。双方の本文/図のタグ数は19、移植版の console/page error は0、外側の角の画素は8個すべてページ背景 #FFFCF0 と一致。
 
 比較画像を吟味して図の左寄せと H のサイズ差を修正した。原文の直書き H は実測 **24px** (本文 Liquid H は16px)。通常の図は本文列の中央、circle 間隔は原文の8px、逆演算の長い図だけ左から図内スクロールを維持する。背景/形状/個数を検証した9テストにサイズ・中央寄せの回帰検証を加えた。
 
@@ -51,7 +51,7 @@ Node 22 の型チェック、Astro build、対象 **9/9 テスト成功**。1440
 
 最終撮影の四つのケースは **console error 0 / page error 0**。移植版は AMD rdna-3 の実機 GPU を確認。Chromium152.0.7977.82、`--enable-unsafe-webgpu --enable-features=Vulkan --use-angle=vulkan --force-device-scale-factor=1`。以前観測した旧サイト root favicon の404は文書と JSON に識別情報を残した。
 
-成果物: `/tmp/qtw-hfix.json`、`/tmp/qtw-hfix-compare-1440.png`、`/tmp/qtw-hfix-compare-390.png`。原文/移植版個別の section PNG も `/tmp/qtw-hfix-original-{1440,390}.png`、`/tmp/qtw-hfix-ours-{1440,390}.png` に保持。検証スクリプト `/tmp/qtw-hfix-verify.mjs`。比較画像は依頼どおり保持し、再現/画素検査用の中間画像を削除。開始したブラウザーと対象テストのサーバーは終了した。型チェック、Astro build、9対象テストが成功。各 push 前に fetch/rebase を行い、約24分に達する前に最終文書を push して終了する。
+成果物: 一時ディレクトリの `qtw-hfix.json`、`qtw-hfix-compare-1440.png`、`qtw-hfix-compare-390.png`。原文/移植版個別の section PNG も `qtw-hfix-original-{1440,390}.png`、`qtw-hfix-ours-{1440,390}.png` に保持。検証スクリプト `qtw-hfix-verify.mjs`。比較画像は依頼どおり保持し、再現/画素検査用の中間画像を削除。開始したブラウザーと対象テストのサーバーは終了した。型チェック、Astro build、9対象テストが成功。各 push 前に fetch/rebase を行い、約24分に達する前に最終文書を push して終了する。
 
 ## Ket 表記
 
@@ -83,11 +83,11 @@ Node 22 の型チェック、Astro build、対象 **9/9 テスト成功**。1440
 
 実装 `8480f853f71cf50a1e6bb75db8b4bb5b65141060`、Pages **38010652084** 成功。実機で font の native line metrics がゼロで bbox が2pxになることを検出し、CSS に CHTML 相当の上下 padding を追加。修正 `18e89384b0c6e6985f54a40f34039676ae1b479d`、Pages **38011139595** 成功 (build 2分26秒 / deploy 11秒)。公開 font license は `fonts/MathJax-OFL.txt`。修正後 build と関連 **11/11 tests** を再実行して成功。
 
-最終 gmktec Chromium 152 / AMD rdna-3 の1440px・390px比較で、両ページとも ket=12、原文と移植後の H=19、circles=24。原文 ket bbox=22.296875×21px、移植後=22.3125×21.09375px、同じ19.12px font と glyph。自然な文字列の subpixel advance と CHTML の個別 glyph padding による差は幅0.015625px。目視で glyph、間隔、括弧を比較した。移植後は両幅で overflow なし、MathJax JS なし、実際の mouse hover で shared tooltip の +0.70711 / +50.0000% / +0.00° を確認。
+手元 Linux 実機（AMD GPU）の最終 Chromium 152 / AMD rdna-3 の1440px・390px比較で、両ページとも ket=12、原文と移植後の H=19、circles=24。原文 ket bbox=22.296875×21px、移植後=22.3125×21.09375px、同じ19.12px font と glyph。自然な文字列の subpixel advance と CHTML の個別 glyph padding による差は幅0.015625px。目視で glyph、間隔、括弧を比較した。移植後は両幅で overflow なし、MathJax JS なし、実際の mouse hover で shared tooltip の +0.70711 / +50.0000% / +0.00° を確認。
 
 最終4比較ケースは **console/page errors 0**。ただし冷起動の原文には既知の `https://qniapp.github.io/favicon.ico` 404 がある。これを修正したとは主張せず、cold baseline の error を JSON に残し、同じ browser context を温めた後の再比較が0であることを記録した。移植後の cold/warm はともに0。404を隠す route/mock は使用していない。
 
-保存: `/tmp/qtw-ket-compare-1440.png`、`/tmp/qtw-ket-compare-390.png`、`/tmp/qtw-ket.json`。拡大 crop は `/tmp/qtw-ket-crops-{1440,390}.png`、個別 crop は `/tmp/qtw-ket-crop-{original,ours}-{1440,390}.png`。最初の診断は `/tmp/qtw-ket-first.json`。開始した browser は finally で停止、test server も終了。ピン f4cd605 は変更していない。文書の最終 push 後の docs-only deploy は時間制限のため待たず終了する。
+保存: 一時ディレクトリの `qtw-ket-compare-1440.png`、`qtw-ket-compare-390.png`、`qtw-ket.json`。拡大 crop は `qtw-ket-crops-{1440,390}.png`、個別 crop は `qtw-ket-crop-{original,ours}-{1440,390}.png`。最初の診断は `qtw-ket-first.json`。開始した browser は finally で停止、test server も終了。ピン f4cd605 は変更していない。文書の最終 push 後の docs-only deploy は時間制限のため待たず終了する。
 
 ### 実 MathJax への移行 (2026-10-10)
 
@@ -97,15 +97,15 @@ Node 22 の型チェック、Astro build、対象 **9/9 テスト成功**。1440
 
 既存の `p h-gate` / `.qc-operation h-gate` の本文・図の区別を共有 component CSS で使い、本文12個の glyph のみ #FFFFFF にした。bare なタグにも自動で適用され、新しい属性は不要。図7個 (24px) と非本文の他サイズは #FFFCF0 のまま、body #3AA99F、SVG、寸法、pin は変更しない。図を p 内に置いた場合も `.qc-operation` が優先する。型チェック、Astro build、本文/図の色・動的 bare tag・32px 非本文サイズ等の関連6/6 tests が成功。公開前の DPR1/2 crops と採色用 JSON を保存済み。公開後に実 Chromium で再撮影・pixel 採色する。
 
-実装 **01fc5537d7c0212c1e61ff16a2ee869498d1a5b0**、Pages **38013641012** 成功 (build2分10秒 / deploy10秒)。gmktec Chromium152 / Vulkan / unsafe WebGPUで、context DPRと `--force-device-scale-factor` を両方1/2に揃えて公開再検証した。DPR2の本文glyph coreは **#FFFFFF (29 pixels)**、図は **#FFFCF0 (64 pixels)**。DPR1はantialiasingがかかるため本文の最明glyph pixelは **RGB181,223,219 (#B5DFDB)**、opaque white pixelは0。図DPR1の最明pixelはRGB230,242,230。bodyは両DPRとも実pixel **#3AA99F**。
+実装 **01fc5537d7c0212c1e61ff16a2ee869498d1a5b0**、Pages **38013641012** 成功 (build2分10秒 / deploy10秒)。手元 Linux 実機（AMD GPU）の Chromium152 / Vulkan / unsafe WebGPUで、context DPRと `--force-device-scale-factor` を両方1/2に揃えて公開再検証した。DPR2の本文glyph coreは **#FFFFFF (29 pixels)**、図は **#FFFCF0 (64 pixels)**。DPR1はantialiasingがかかるため本文の最明glyph pixelは **RGB181,223,219 (#B5DFDB)**、opaque white pixelは0。図DPR1の最明pixelはRGB230,242,230。bodyは両DPRとも実pixel **#3AA99F**。
 
-公開前の同じDPRのfigure cropとのraw pixel差分は **DPR1=0 / DPR2=0**。本文は36/96 pixelsだけ変化し、変更されたpixelsをglyph採色に使ってpage cornerを除外した。16/24px寸法、背景色、pinは不変。両browserともconsole/page errors0。保存: `/tmp/qtw-hwhite-{inline,figure}-dpr{1,2}.png`、`/tmp/qtw-hwhite.json`、比較元 `/tmp/qtw-hwhite-before-{inline,figure}-dpr{1,2}.png`。cropを目視確認済み。起動browserはfinallyで停止、test serverも終了。最終文書push後のdocs-only deployは待たず終了する。
+公開前の同じDPRのfigure cropとのraw pixel差分は **DPR1=0 / DPR2=0**。本文は36/96 pixelsだけ変化し、変更されたpixelsをglyph採色に使ってpage cornerを除外した。16/24px寸法、背景色、pinは不変。両browserともconsole/page errors0。保存: 一時ディレクトリの `qtw-hwhite-{inline,figure}-dpr{1,2}.png`、`qtw-hwhite.json`、比較元 `qtw-hwhite-before-{inline,figure}-dpr{1,2}.png`。cropを目視確認済み。起動browserはfinallyで停止、test serverも終了。最終文書push後のdocs-only deployは待たず終了する。
 
 ## 原文との一致 (追加物の削除)
 
 ### 範囲 / 削除一覧 (2026-10-10 10:55 JST)
 
-独立した feat/ket-notation / origin/main ad39e16 から開始。更新2の期限は28分。qni origin/main acf87bfa の h_gate.html をgit showで読み、live rendered text/elementと照合。beforeのraw HTML/blocksは `/tmp/qtw-strip-before.json`。比較では語や句読点を変えず、HTML/Liquidの改行とMathJax分割nodeの空白のみ除去する。
+独立した feat/ket-notation / origin/main ad39e16 から開始。更新2の期限は28分。qni origin/main acf87bfa の h_gate.html をgit showで読み、live rendered text/elementと照合。beforeのraw HTML/blocksは 一時ディレクトリの `qtw-strip-before.json`。比較では語や句読点を変えず、HTML/Liquidの改行とMathJax分割nodeの空白のみ除去する。
 
 | 何を / 場所 | 原文にない理由 / 処置 |
 | --- | --- |
@@ -143,11 +143,11 @@ aria/alt/meta/loading/no-WebGPU/error/device-lost stringsも監査したが、�
 
 手書きh_gate旧embedにlinkはないため、許可された追加linkの外観はphase_gateの原文mini_qniに合わせる。一次資料 `_plugins/mini_qni_filter.rb:97-104`、`css/mini_qni.css:1-8`。frame border2px #0EA5E9/padding32px/corners6,6,6,0/bg#FAFAFA、tab #0EA5E9/padding8px16px/bottom corners6px、anchor white/16px/500/28px、span margin-right8px、24×24 external-link SVG。pathは原文そのまま。tabはframe左下にgap0で接続。rel=noopener/current-circuit exportと/app/先は維持。
 
-before `/tmp/qtw-btn-before-{1440,390}.png` と原文phaseのcomputed stylesを取得済み。typecheck/build成功、本文snapshot/元Orbit/branding/button/Canvas resize/link export等の関連30/30 tests成功。公開後の比較を追記する。
+before 一時ディレクトリの `qtw-btn-before-{1440,390}.png` と原文phaseのcomputed stylesを取得済み。typecheck/build成功、本文snapshot/元Orbit/branding/button/Canvas resize/link export等の関連30/30 tests成功。公開後の比較を追記する。
 
 ### 公開検証 / 完了 (11:03 JST)
 
-実装 **04e344da36f656b7ebaf14ee3557ffcc83f420e5**、Pages **38015071471** 成功 (build2分40秒 / deploy9秒)。gmktec実 Chromium152 / AMD Vulkan / unsafe WebGPU / DPR1、1440/390pxで再比較。normalized本文diffは両幅とも **delete「Xゲート(量子NOT)PHASEゲート」だけ**。原文footerを除けば全文一致。本文top-level element順も一致し、唯一許可されたembedの div→qni-webgpu-circuit 置換だけ違う。19 H /24 circles /12 kets /7 Orbit prompts維持。原文4ケースの最終console/page errors0、移植h_gate/index/multi-3のbody.innerTextに「Qni WebGPU」0。
+実装 **04e344da36f656b7ebaf14ee3557ffcc83f420e5**、Pages **38015071471** 成功 (build2分40秒 / deploy9秒)。手元 Linux 実機（AMD GPU）の Chromium152 / AMD Vulkan / unsafe WebGPU / DPR1、1440/390pxで再比較。normalized本文diffは両幅とも **delete「Xゲート(量子NOT)PHASEゲート」だけ**。原文footerを除けば全文一致。本文top-level element順も一致し、唯一許可されたembedの div→qni-webgpu-circuit 置換だけ違う。19 H /24 circles /12 kets /7 Orbit prompts維持。原文4ケースの最終console/page errors0、移植h_gate/index/multi-3のbody.innerTextに「Qni WebGPU」0。
 
 原文phaseと現在h_gateのanchor/tab/frame各10 style項目の差分 **0**、tabとframeのgap=0、leftOffset=0 (両幅)。原文と同じSVG path、文字、padding、color、radius、font size/weightを確認し、before/after/compareを目視した。Native UI/高さは許可されたembed置換の差である。390pxのnative palette/state windowが横に切れる既存制約はbefore screenshotにもあり、原文のH/XだけのUIとは異なる。上流qni-webgpuを変更できない今回の範囲ではresponsive backendは未修正として記録する。
 
@@ -155,7 +155,7 @@ GPU診断readbackで初期[1,0,0,0]、H後[0.7071067690849304,0,0.70710676908493
 
 原文cold warm-upの既知favicon404はcoldOriginalErrorsに記録。最初の比較ではharnessがlegacy custom elementsをcloneNodeしてconstructorのnotNull assertionを誘発したので、DOMをcloneせずrendered textからfooterを引く方法に修正して再実行した。原文/製品bugを隠すroute/mockは使用していない。
 
-保存: `/tmp/qtw-strip-compare-{1440,390}.png`、`/tmp/qtw-strip.json` (raw/normalized全文、textDiffs、element順、runtime branding audit)。ボタンは `/tmp/qtw-btn-before-{1440,390}.png`、`/tmp/qtw-btn-after-{1440,390}.png`、`/tmp/qtw-btn-compare-{1440,390}.png`、`/tmp/qtw-btn.json` (computed style comparisons)。30/30関連tests、typecheck/build成功。browser/server終了、pin不変、通常push後にmain/worktreeをcleanにして終了する。最終docs-only deployは待たない。
+保存: 一時ディレクトリの `qtw-strip-compare-{1440,390}.png`、`qtw-strip.json` (raw/normalized全文、textDiffs、element順、runtime branding audit)。ボタンは `qtw-btn-before-{1440,390}.png`、`qtw-btn-after-{1440,390}.png`、`qtw-btn-compare-{1440,390}.png`、`qtw-btn.json` (computed style comparisons)。30/30関連tests、typecheck/build成功。browser/server終了、pin不変、通常push後にmain/worktreeをcleanにして終了する。最終docs-only deployは待たない。
 
 ### Inline H を paper / Geist Bold に戻す (2026-10-10 11:09 JST)
 
@@ -173,7 +173,7 @@ DPR1/2の公開before raw cropsを先に保存。typecheck/buildと関連6/6 tes
 
 #### 3項目の最終公開検証 (11:28 JST)
 
-コミット: Bold **4c7500347cf6c91adfe5cfe94a6435f8faefd279**、frame **ba49972e0d3cd8053f6c38c20d4ffb02a0e41845**、divider **b9d81b095e8dd4ef414d284ceb42575e21ec222c**。最終実装Pages **38016650187** 成功 (build2分41秒 / deploy10秒)。このdeploy後にまとめてgmktec Chromium152/Vulkan/unsafe WebGPUで検証し、DPRはcontextとforce-device-scale-factorを両方1/2にした。最終sourceの関連 **31/31 tests**、typecheck/build成功。
+コミット: Bold **4c7500347cf6c91adfe5cfe94a6435f8faefd279**、frame **ba49972e0d3cd8053f6c38c20d4ffb02a0e41845**、divider **b9d81b095e8dd4ef414d284ceb42575e21ec222c**。最終実装Pages **38016650187** 成功 (build2分41秒 / deploy10秒)。このdeploy後にまとめて手元 Linux 実機（AMD GPU）の Chromium152/Vulkan/unsafe WebGPUで検証し、DPRはcontextとforce-device-scale-factorを両方1/2にした。最終sourceの関連 **31/31 tests**、typecheck/build成功。
 
 | DPR | glyph before→after 最明RGB | glyph mean RGB before→after | effective coverage before→after |
 | --- | --- | --- | --- |
@@ -186,4 +186,4 @@ frameは1440/390px×DPR1/2の4ケースすべてcanvas-inner edgeのleft/right/t
 
 dividerは原文/移植×1440/390の4ケースでbottom border1px solid RGB228,228,231、margin-top0/margin-bottom40/padding-bottom40、H1→line73px /line→paragraph41px。実装を原文同様border-bottomにしたため、border-topは双方0px solid (colorは同色)。widthはdesktop原文1120 /移植1072px、mobile双方358pxで、どちらもcontent全幅。header/footerは変更しない。原文cold favicon404は別記録、最終比較のconsole/page errorsは0。移植Bold/frameのcold検証も0。
 
-保存: `/tmp/qtw-hbold-inline-dpr{1,2}-{before,after}.png` (8x)、`/tmp/qtw-hbold-compare.png`、`/tmp/qtw-hbold-figure-dpr{1,2}.png`、`/tmp/qtw-hbold.json`。frameは `/tmp/qtw-frame-{before,after}-{1440,390}.png` と `/tmp/qtw-frame.json` (DPR2追加写真も保存)。dividerは `/tmp/qtw-hr-compare-{1440,390}.png` と `/tmp/qtw-hr.json`。最初のdivider cropはstartup focus後のscrollとclip座標が食い違ったharness問題で、document座標/fullPage撮影に直して再取得・目視確認した。browserはfinallyで停止、test serverも終了。通常push後にcleanで終了し、docs-only deployは待たない。
+保存: 一時ディレクトリの `qtw-hbold-inline-dpr{1,2}-{before,after}.png` (8x)、`qtw-hbold-compare.png`、`qtw-hbold-figure-dpr{1,2}.png`、`qtw-hbold.json`。frameは `qtw-frame-{before,after}-{1440,390}.png` と `qtw-frame.json` (DPR2追加写真も保存)。dividerは `qtw-hr-compare-{1440,390}.png` と `qtw-hr.json`。最初のdivider cropはstartup focus後のscrollとclip座標が食い違ったharness問題で、document座標/fullPage撮影に直して再取得・目視確認した。browserはfinallyで停止、test serverも終了。通常push後にcleanで終了し、docs-only deployは待たない。

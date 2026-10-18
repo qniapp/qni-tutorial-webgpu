@@ -8,8 +8,10 @@
 
 ## Pythonの数学検算（GPU/CPU量子simulatorではない）
 
+一時ディレクトリに保存する解析結果も、コマンドでは相対ファイル名を指定する。
+
 ```sh
-python3 scripts/analyze-shor-qft-source.py docs/shor-qft-original-source.html --output /tmp/shor-qft-analysis.json
+python3 scripts/analyze-shor-qft-source.py docs/shor-qft-original-source.html --output shor-qft-analysis.json
 ```
 
 `tests/fixtures/shor-qft-blocker-analysis.json`:

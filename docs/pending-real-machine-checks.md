@@ -2,7 +2,7 @@
 
 no-cloning証明ふろくまで移植・公開済み。Math-only appendixは回路/画像/credits0、GPU診断は該当なし。残る未完了は下記のnativeGPU監査全件と既存4layout失敗の実機切り分け。『全pages完了』は実機検証済みを意味しない。
 
-gmktecはこのboxから到達不可・SSHなし。以下は**未実行**。新ページの純粋な数学/非GPU DOM/layout検査はnative GPU検査の代わりにならない。GPU desktopへrepo/dependenciesを用意して実行する。
+手元 Linux 実機（AMD GPU）はこの作業環境から到達不可・SSHなし。以下は**未実行**。新ページの純粋な数学/非GPU DOM/layout検査はnative GPU検査の代わりにならない。GPU desktopへrepo/dependenciesを用意して実行する。
 
 ## Published native pages: 全件引き継ぎ
 
@@ -61,13 +61,13 @@ pnpm exec playwright test tests/ket.spec.ts tests/content-overflow.spec.ts
 - `tests/ket.spec.ts`: 390/1440各1件。期待font19.12px/22.296875×21px、このbox実19.424px/22.640625×27px。
 - `tests/content-overflow.spec.ts`: 390/1440各1件。変更していない旧ページwrapperが内側scroll判定。
 
-これは非GPUの4layout guardだが、gmktecと同じfonts/Chromiumで再現するまで実機確認待ちとして保持する。Chromium152とbox153/Noto Sansの差が原因とはまだ断定しない。期待値緩和・共有CSS変更・安易なretryで隠さない。native GPU監査をこれらの成功で代用しない。詳細 `new-machine-layout-blocker.md`。
+これは非GPUの4layout guardだが、手元 Linux 実機（AMD GPU）と同じfonts/Chromiumで再現するまで実機確認待ちとして保持する。Chromium152とbox153/Noto Sansの差が原因とはまだ断定しない。期待値緩和・共有CSS変更・安易なretryで隠さない。native GPU監査をこれらの成功で代用しない。詳細 `new-machine-layout-blocker.md`。
 
 ## 進捗 2026-10-12
 
-gmktec real AMD (rdna-3)、HEAD `6ba43ef` のheadless実機監査: 390/1440 × DPR1/2の全4組合せで eigenphases / phase_kickback / shor_fx / shor_u はPASS。quantum_phase_estimation_circuit / shor_qft は toolbarAudit の waitJSON (`circuitJSONEqual`) のみFAIL。このcommitは残る2件の原因である全identity列の除去とsquare block markerのbrace再エンコードを比較時に正規化する。修正後の実機再確認は未実行。
+手元 Linux 実機の AMD GPU (rdna-3)、HEAD `6ba43ef` のheadless実機監査: 390/1440 × DPR1/2の全4組合せで eigenphases / phase_kickback / shor_fx / shor_u はPASS。quantum_phase_estimation_circuit / shor_qft は toolbarAudit の waitJSON (`circuitJSONEqual`) のみFAIL。このcommitは残る2件の原因である全identity列の除去とsquare block markerのbrace再エンコードを比較時に正規化する。修正後の実機再確認は未実行。
 
-### 実機再確認 2026-10-12（HEAD `6dcd88f`、gmktec real AMD rdna-3、headless、ローカルbuild qni-webgpu `0ef550d`）
+### 実機再確認 2026-10-12（HEAD `6dcd88f`、手元 Linux 実機の AMD GPU rdna-3、headless、ローカルbuild qni-webgpu `0ef550d`）
 
 | page | 390/DPR1 | 390/DPR2 | 1440/DPR1 | 1440/DPR2 |
 |---|---|---|---|---|

@@ -4,8 +4,10 @@ Measured on 2026-10-09. Initial local measurements were completed before pushing
 
 ## Method
 
+Run from the repository root; the command writes `results.json` in the current directory.
+
 ```sh
-node /path/to/qni-tutorial-webgpu/scripts/measure-load.mjs URL /tmp/results.json 5
+node scripts/measure-load.mjs URL results.json 5
 ```
 
 Each of five runs creates a fresh Chromium context (empty HTTP cache), navigates once for cold results, then reloads in the same context for warm results. One browser process is shared, so OS/driver and engine caches are not reset. Browser: `/usr/bin/chromium`, headless, flags `--enable-unsafe-webgpu --enable-features=Vulkan --use-angle=vulkan`. Hardware adapter info: vendor `amd`, architecture `rdna-3`; device and description were empty. PCI reports AMD Strix Halo Radeon 8050S/8060S graphics. No SwiftShader was used for measurements.
@@ -28,15 +30,15 @@ Local runs used the same temporary static server rooted at `dist/`, under `/qni-
 
 Instrumentation was committed before the baseline: upstream `e33ee46`, tutorial `31a867f`. Local baseline retains the original release build and existing `wasm-opt -Oz`, with no optimization changes.
 
-- `/tmp/qtw-perf-before.json`: local raw baseline.
-- `/tmp/qtw-perf-before-gzip.json`: local gzip baseline.
-- `/tmp/qtw-perf-before-live.json`: pre-optimization Pages deployment.
-- `/tmp/qtw-perf-after-live.json`: deployed optimized Pages results, five cold/warm pairs.
-- `/tmp/qtw-perf-after-local.json`: final local raw results.
-- `/tmp/qtw-perf-after-local-gzip.json`: final local gzip results.
-- `/tmp/qtw-perf-O3-webgpu-only-local.json`: final feature graph with `-O3`.
-- `/tmp/qtw-size-report.json`: exact compressed-size comparisons.
-- `/tmp/qtw-twiggy-top.txt`, `/tmp/qtw-twiggy-symbols.txt`: size attribution.
+- `qtw-perf-before.json` in a temporary directory: local raw baseline.
+- `qtw-perf-before-gzip.json`: local gzip baseline.
+- `qtw-perf-before-live.json`: pre-optimization Pages deployment.
+- `qtw-perf-after-live.json`: deployed optimized Pages results, five cold/warm pairs.
+- `qtw-perf-after-local.json`: final local raw results.
+- `qtw-perf-after-local-gzip.json`: final local gzip results.
+- `qtw-perf-O3-webgpu-only-local.json`: final feature graph with `-O3`.
+- `qtw-size-report.json`: exact compressed-size comparisons.
+- `qtw-twiggy-top.txt`, `qtw-twiggy-symbols.txt`: size attribution.
 
 ## Baseline Pages compression
 
@@ -131,6 +133,6 @@ Sizes and phases are medians, with the overlap/proxy caveats from the method sec
 
 Every measured load had one wasm resource entry and one streaming instantiation. A separate live verification collected **zero console/page errors and no Table.grow error**, then changed the real GPU amplitudes from `[1,0,0,0]` to `[0.7071067690849304,0,0.7071067690849304,0]` using H. The H/restart check also reused one wasm download. Readback was test-only.
 
-CI verbose logs confirm Binaryen **123** at `/home/runner/.cache/trunk/wasm-opt-version_123/bin/wasm-opt`, using `-Oz --enable-bulk-memory --enable-nontrapping-float-to-int`, and wasm-bindgen **0.2.129** at `/home/runner/.cache/trunk/wasm-bindgen-0.2.129/wasm-bindgen`. Bindgen uses `--target=web --no-typescript`; no explicit reference-types/weak-refs options are added. Tool provenance, #4228 evidence, native feature preservation, and the old-PATH rejection probe are detailed in [perf-notes.md](perf-notes.md).
+CI verbose logs confirm Binaryen **123** at `wasm-opt-version_123/bin/wasm-opt`, using `-Oz --enable-bulk-memory --enable-nontrapping-float-to-int`, and wasm-bindgen **0.2.129** at `wasm-bindgen-0.2.129/wasm-bindgen`, both in the CI runner's Trunk cache directory. Bindgen uses `--target=web --no-typescript`; no explicit reference-types/weak-refs options are added. Tool provenance, #4228 evidence, native feature preservation, and the old-PATH rejection probe are detailed in [perf-notes.md](perf-notes.md).
 
-Evidence: `/tmp/qtw-perf-after-live.json`, `/tmp/qtw-after-live-headers.txt`, `/tmp/qtw-pages-ci.log`, `/tmp/qtw-live-verification.json`. The final measurement update is docs-only and does not change the upstream pin.
+Evidence: `qtw-perf-after-live.json` in a temporary directory, `qtw-after-live-headers.txt`, `qtw-pages-ci.log`, `qtw-live-verification.json`. The final measurement update is docs-only and does not change the upstream pin.
