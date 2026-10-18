@@ -21,8 +21,14 @@ for (const { width, dpr } of [{ width: 1440, dpr: 1 }, { width: 390, dpr: 2 }]) 
       { slug: 'matrix_adjoint', embeds: [
         { cols: [['|0>'], ['H'], ['S'], ['S†'], ['H'], ['Amps1'], ['Probability']], step: '4' },
       ] },
+      { slug: 'tensor_product_state', embeds: [
+        { cols: [['Ry(π/3)', 'Ry(π/2)'], ['Amps2'], ['Probability2']], step: '0' },
+      ] },
+      { slug: 'entangled_state', embeds: [
+        { cols: [['|0>', '|0>'], ['H'], ['•', 'X'], ['Amps2'], ['Probability', 'Probability'], ['Bloch', 'Bloch'], ['Density', 'Density']], step: '2' },
+      ] },
     ]) {
-      test(`${slug} embeds have adjacent Amps1 and Probability instructions`, async ({ page }) => {
+      test(`${slug} embeds have adjacent Amps and Probability instructions`, async ({ page }) => {
         await page.goto(`/qni-tutorial-webgpu/${slug}/`)
         const circuits = page.locator('qni-webgpu-circuit')
         await expect(circuits).toHaveCount(embeds.length)
@@ -34,7 +40,7 @@ for (const { width, dpr } of [{ width: 1440, dpr: 1 }, { width: 390, dpr: 2 }]) 
         for (const embed of await circuits.all()) {
           const cols: (string | number)[][] = JSON.parse((await embed.getAttribute('circuit'))!).cols
           for (const [index, col] of cols.entries()) {
-            if (col.length === 1 && col[0] === 'Amps1') {
+            if (col.length === 1 && typeof col[0] === 'string' && /^Amps\d+$/.test(col[0])) {
               expect(cols[index + 1]).not.toEqual([1])
             }
           }

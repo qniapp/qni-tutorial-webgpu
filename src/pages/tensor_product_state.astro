@@ -108,7 +108,6 @@ const base = import.meta.env.BASE_URL
     上の q0 に Ry(π/3)、下の q1 に Ry(π/2) を置いてあります。両方とも <Ket label="0" /> から始まります。
     Amps2 は 2 ワイヤにまたがって 4 個の振幅を表示します。
     Probability2 も 2 ワイヤ分で、4 通りの確率を表示します。どちらも測定はしません。
-    表示が重ならないように、間に 1 列空けてあります。
     下の状態パネルは、最初の Ry の列を適用した直後を選んでいます。
   </p>
   <qni-webgpu-circuit
@@ -116,7 +115,7 @@ const base = import.meta.env.BASE_URL
     selected-step="0"
     show-state-panel="true"
     palette={'["Ry(π/3)","Ry(π/2)","H","X","Swap"]'}
-    circuit={'{"cols":[["Ry(π/3)","Ry(π/2)"],["Amps2"],[1],["Probability2"]]}'}
+    circuit={'{"cols":[["Ry(π/3)","Ry(π/2)"],["Amps2"],["Probability2"]]}'}
   ></qni-webgpu-circuit>
   <ol>
     <li>編集する前に、振幅が順に約 0.612、0.354、0.612、0.354、確率が 37.5%、12.5%、37.5%、12.5% になることを確認しましょう。最初の図も初期値に戻し、4 個の円を見比べてください。</li>
