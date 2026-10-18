@@ -89,7 +89,6 @@ const base = import.meta.env.BASE_URL
     最初の <Ket label="0" /> に Ry ゲートを適用して、先ほどの 75% と 25% の状態を作ってあります。
     Ry ゲートの詳しい仕組みは、今は気にしなくてかまいません。
     Amps1 は 1 量子ビットの振幅、Probability は確率を表示する命令で、どちらも測定はしません。
-    Amps1 と Probability の間は、表示が重ならないように 1 列空けてあります。
     回路の下の状態ベクトル表示でも、2 個の円を見比べられます。
     編集後は、最後の表示命令の少し下をクリックして、その位置の状態を確認しましょう。
   </p>
@@ -98,7 +97,7 @@ const base = import.meta.env.BASE_URL
     selected-step="1"
     show-state-panel="true"
     palette={'["H","X","P(π/2)","Ry(π/3)","Amps1","Probability"]'}
-    circuit={'{"cols":[["|0>"],["Ry(π/3)"],["Amps1"],[1],["Probability"]]}'}
+    circuit={'{"cols":[["|0>"],["Ry(π/3)"],["Amps1"],["Probability"]]}'}
   ></qni-webgpu-circuit>
   <ol>
     <li>

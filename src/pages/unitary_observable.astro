@@ -150,13 +150,12 @@ const base = import.meta.env.BASE_URL
   <p>
     Qni で、Probability の値から期待値を読みましょう。
     最初の回路は Ry(π/3) で状態を準備しています。Amps1 は振幅、Probability は 0/1 の確率を表示し、どちらも測定はしません。
-    表示の重なりを避けるため、Amps1 の後には 1 列空けてあります。
     下の状態パネルは、最初は Ry の直後を選んでいます。編集した後は、最後の表示命令の少し下をクリックして、その位置の状態を確認してください。
   </p>
   <qni-webgpu-circuit
     max-wire-count="1" selected-step="1" show-state-panel="true"
     palette={'["Ry(π/3)","Ry(π/2)","Ry(π)","H","Z","Amps1","Probability"]'}
-    circuit={'{"cols":[["|0>"],["Ry(π/3)"],["Amps1"],[1],["Probability"]]}'}
+    circuit={'{"cols":[["|0>"],["Ry(π/3)"],["Amps1"],["Probability"]]}'}
   ></qni-webgpu-circuit>
   <ol>
     <li>編集する前に、Z の期待値を予想しましょう。Probability の 0 と 1 の値を読み、小数に直して引いてください。（ヒント: 0.75 − 0.25 = 0.5 です）</li>
@@ -171,7 +170,7 @@ const base = import.meta.env.BASE_URL
   <qni-webgpu-circuit
     max-wire-count="1" selected-step="2" show-state-panel="true"
     palette={'["Ry(π/3)","Ry(π/2)","H","Z","Amps1","Probability"]'}
-    circuit={'{"cols":[["|0>"],["Ry(π/3)"],["H"],["Amps1"],[1],["Probability"]]}'}
+    circuit={'{"cols":[["|0>"],["Ry(π/3)"],["H"],["Amps1"],["Probability"]]}'}
   ></qni-webgpu-circuit>
   <ol>
     <li>Probability は約 93.3% と 6.7% になります。差は約 0.866 で、これが元の状態の X の期待値です。表示の丸めによって末尾が少し違う場合があります。</li>
