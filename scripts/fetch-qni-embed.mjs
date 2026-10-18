@@ -1,11 +1,34 @@
 import { createHash } from 'node:crypto'
+import { execFile } from 'node:child_process'
+import { promisify } from 'node:util'
 import { mkdir, mkdtemp, readFile, rename, rm, writeFile } from 'node:fs/promises'
 import { basename, dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 export class PinnedEmbed {
+  static assets = [
+    ['qni-web.js', 'text/javascript'],
+    ['qni-web_bg.wasm', 'application/wasm'],
+    ['qni-embed.mjs', 'text/javascript'],
+    ['qni-embed-error.mjs', 'text/javascript'],
+    ['h.svg', 'image/svg+xml'],
+    ['design-system.css', 'text/css'],
+    ['h-gate.js', 'text/javascript'],
+    ['LICENSE', 'text/plain'],
+  ]
+
   static digest(bytes) {
     return createHash('sha256').update(bytes).digest('hex')
+  }
+
+  static runGh = promisify(execFile)
+
+  static async verifyAttestation(filename, sha) {
+    await this.runGh('gh', [
+      'attestation', 'verify', filename, '-R', 'qniapp/qni-webgpu',
+      '--signer-workflow', 'qniapp/qni-webgpu/.github/workflows/embed-release.yml',
+      '--source-ref', 'refs/heads/master', '--source-digest', sha,
+    ], { timeout: 60_000 })
   }
 
   static async download(url) {
@@ -17,9 +40,8 @@ export class PinnedEmbed {
   static validateManifest(manifest, sha) {
     if (!manifest || manifest.schema_version !== 1) throw new Error('Pinned embed: unsupported schema_version')
     if (manifest.source_commit !== sha) throw new Error('Pinned embed: source_commit does not match qni-webgpu.ref')
-    if (!(typeof manifest.embed_api_version === 'string' && manifest.embed_api_version.trim())
-      && !(Number.isSafeInteger(manifest.embed_api_version) && manifest.embed_api_version > 0)) {
-      throw new Error('Pinned embed: invalid embed_api_version')
+    if (manifest.embed_api_version !== 1) {
+      throw new Error('Pinned embed: unsupported embed_api_version (expected 1)')
     }
     if (typeof manifest.built_at !== 'string'
       || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/.test(manifest.built_at)
@@ -27,7 +49,7 @@ export class PinnedEmbed {
       || new Date(manifest.built_at).toISOString().slice(0, 19) !== manifest.built_at.slice(0, 19)) {
       throw new Error('Pinned embed: built_at must be valid UTC')
     }
-    for (const key of ['rustc', 'wasm-bindgen', 'wasm-opt', 'trunk']) {
+    for (const key of ['rustc', 'wasm-bindgen', 'wasm-opt', 'trunk', 'node', 'pnpm']) {
       if (typeof manifest.toolchain?.[key] !== 'string' || !manifest.toolchain[key].trim()) {
         throw new Error(`Pinned embed: missing toolchain ${key}`)
       }
@@ -43,24 +65,24 @@ export class PinnedEmbed {
         throw new Error('Pinned embed: unsafe or duplicate asset name')
       }
       names.add(file.name)
+      const expected = this.assets.find(([name]) => name === file.name)
+      if (!expected) throw new Error(`Pinned embed: unexpected asset ${file.name}`)
+      if (file.content_type !== expected[1]) throw new Error(`Pinned embed: wrong content_type for ${file.name} (expected ${expected[1]})`)
       if (typeof file.sha256 !== 'string' || !/^[a-f0-9]{64}$/.test(file.sha256)
         || !Number.isSafeInteger(file.size) || file.size < 0
         || typeof file.content_type !== 'string' || !file.content_type.trim()) {
         throw new Error(`Pinned embed: invalid metadata for ${file.name}`)
       }
     }
-    for (const name of ['qni-web.js', 'qni-web_bg.wasm', 'qni-embed.mjs', 'qni-embed-error.mjs', 'h.svg', 'design-system.css', 'LICENSE']) {
+    for (const [name] of this.assets) {
       if (!names.has(name)) throw new Error(`Pinned embed: missing required asset ${name}`)
     }
-    // Upstream component filenames are not fixed. Require an additional JS module,
-    // rather than prescribing a particular gate component's name.
-    if (![...names].some(name => /\.(?:mjs|js)$/.test(name)
-      && !['qni-web.js', 'qni-embed.mjs', 'qni-embed-error.mjs'].includes(name))) {
-      throw new Error('Pinned embed: missing gate component module')
+    if (manifest.files.some((file, index) => file.name !== this.assets[index][0])) {
+      throw new Error('Pinned embed: manifest asset order mismatch')
     }
   }
 
-  static async fetch({ refFile = 'qni-webgpu.ref', outputDir, baseUrl = process.env.QNI_EMBED_RELEASE_BASE_URL ?? 'https://github.com/qniapp/qni-webgpu/releases/download' } = {}) {
+  static async fetch({ refFile = 'qni-webgpu.ref', outputDir, verifyAttestation = this.verifyAttestation.bind(this), baseUrl = process.env.QNI_EMBED_RELEASE_BASE_URL ?? 'https://github.com/qniapp/qni-webgpu/releases/download' } = {}) {
     const sha = (await readFile(refFile, 'utf8')).trim()
     if (!/^[a-f0-9]{40}$/.test(sha)) throw new Error('Pinned embed: invalid qni-webgpu.ref (expected full 40-character SHA)')
     const release = `${baseUrl.replace(/\/+$/, '')}/embed-${sha}/`
@@ -71,15 +93,6 @@ export class PinnedEmbed {
     if (!match) throw new Error('Pinned embed: malformed manifest checksum')
     const bytes = await this.download(`${release}manifest.json`)
     if (this.digest(bytes) !== match[1]) throw new Error('Pinned embed: manifest checksum mismatch')
-    const manifest = JSON.parse(bytes.toString('utf8'))
-    this.validateManifest(manifest, sha)
-    const assets = []
-    for (const file of manifest.files) {
-      const data = await this.download(`${release}${file.name}`)
-      if (data.length !== file.size) throw new Error(`Pinned embed: size mismatch for ${file.name}`)
-      if (this.digest(data) !== file.sha256) throw new Error(`Pinned embed: sha256 mismatch for ${file.name}`)
-      assets.push([file.name, data])
-    }
     const target = resolve(outputDir ?? `public/qni-webgpu-prebuilt/embed-${sha}`)
     // Stage on the destination filesystem, but never within a public directory.
     let stageRoot = dirname(target)
@@ -92,9 +105,27 @@ export class PinnedEmbed {
     const backup = `${stage}-previous`
     let hadPrevious = false
     try {
-      for (const [name, data] of assets) await writeFile(join(stage, name), data)
+      const attest = async name => {
+        try {
+          await verifyAttestation(join(stage, name), sha)
+        } catch (error) {
+          const detail = error.code === 'ENOENT' ? 'gh is missing; install GitHub CLI' : (error.code ? `gh error (${error.code})` : 'verifier rejected artifact')
+          throw new Error(`Pinned embed: attestation verification failed for ${name}: ${detail}`, { cause: error })
+        }
+      }
       await writeFile(join(stage, 'manifest.json'), bytes)
+      await attest('manifest.json')
+      const manifest = JSON.parse(bytes.toString('utf8'))
+      this.validateManifest(manifest, sha)
       await writeFile(join(stage, 'manifest.json.sha256'), checksum)
+      await attest('manifest.json.sha256')
+      for (const file of manifest.files) {
+        const data = await this.download(`${release}${file.name}`)
+        if (data.length !== file.size) throw new Error(`Pinned embed: size mismatch for ${file.name}`)
+        if (this.digest(data) !== file.sha256) throw new Error(`Pinned embed: sha256 mismatch for ${file.name}`)
+        await writeFile(join(stage, file.name), data)
+        await attest(file.name)
+      }
       await mkdir(dirname(target), { recursive: true })
       try {
         await rename(target, backup)

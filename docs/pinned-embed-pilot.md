@@ -16,16 +16,60 @@ using `qni-webgpu.ref`. `pnpm fetch:embed` can explicitly fetch the same release
 the fetcher appends `/embed-<SHA>/<asset>`.
 
 The release manifest uses `schema_version: 1`, the exact `source_commit`,
-`embed_api_version`, UTC `built_at`, `toolchain` versions (`rustc`, `wasm-bindgen`,
-`wasm-opt`, `trunk`), and `files` entries with `name`, `sha256`, `size`, and
-`content_type`. Assets use flat filenames: the four runtime files, `h.svg`,
-`design-system.css`, gate component files, and `LICENSE`. Every listed file is
-verified, including auxiliary assets not currently loaded by the pilot.
+`embed_api_version: 1` (all other values are rejected), UTC `built_at`, and
+`toolchain` versions in release order: `rustc`, `wasm-bindgen`, `wasm-opt`, `trunk`,
+`node`, `pnpm`. Manifest fields are emitted in this order: `schema_version`,
+`source_commit`, `embed_api_version`, `built_at`, `toolchain`, `files`.
+The `files` array must contain exactly these flat filenames in release order:
+
+| Name | `content_type` |
+| --- | --- |
+| `qni-web.js` | `text/javascript` |
+| `qni-web_bg.wasm` | `application/wasm` |
+| `qni-embed.mjs` | `text/javascript` |
+| `qni-embed-error.mjs` | `text/javascript` |
+| `h.svg` | `image/svg+xml` |
+| `design-system.css` | `text/css` |
+| `h-gate.js` | `text/javascript` |
+| `LICENSE` | `text/plain` |
+
+Each entry has `name`, `sha256`, `size`, and `content_type` in that order.
+Missing, extra, duplicate, reordered, or incorrectly typed entries are rejected.
+The complete published set is these eight assets plus `manifest.json` and
+`manifest.json.sha256`; neither manifest file appears in `files`. Every listed
+file is verified, including auxiliary assets not currently loaded by the pilot.
+The release serializes the manifest as two-space-indented JSON with a trailing
+newline. Unit and mobile fixtures share one builder that mirrors this output.
 `manifest.json.sha256` is required and fetched first. It must contain exactly
-one sha256sum line: `<64 lowercase hex>  manifest.json` (optional final newline).
+one sha256sum line: `<64 lowercase hex>  manifest.json` followed by a newline in
+the real release and shared fixtures. The fetcher also accepts an absent final
+newline as a compatibility allowance.
 Missing, malformed, or mismatched checksums fail before the manifest is parsed
-or trusted. This checks integrity, not a cryptographic signature or independent
-proof of provenance.
+or trusted. Checksums alone do not prove provenance. After checking the manifest
+checksum, the fetcher verifies its GitHub artifact attestation before parsing it.
+It validates the manifest, attests the checksum file, then downloads each asset,
+checks its size and SHA-256 against the manifest's validated `content_type`
+metadata, and verifies its attestation. All ten release files are attested:
+`manifest.json`, `manifest.json.sha256`, and all eight assets above.
+
+Each verification runs GitHub CLI with this policy (substitute the file and the
+full SHA from `qni-webgpu.ref`):
+
+```sh
+gh attestation verify <file> -R qniapp/qni-webgpu \
+  --signer-workflow qniapp/qni-webgpu/.github/workflows/embed-release.yml \
+  --source-ref refs/heads/master --source-digest <full-SHA>
+```
+
+Missing `gh`, CLI/authentication/network errors, and rejected attestations all
+fail closed. No downloaded code is executed, and nothing is installed until
+all checks pass; a failed update leaves any previously installed release intact.
+GitHub runners already include `gh`. The CI build step that performs the opt-in
+fetch receives `GH_TOKEN: ${{ github.token }}` only when
+`QNI_H_GATE_PREBUILT` is `1`; it remains off here. Public upstream attestations
+do not require an additional `attestations: read` permission; existing
+`contents: read` suffices. Unit fixtures inject the verifier rather than contact
+GitHub.
 
 Upstream qni-webgpu is MIT licensed; the verified release retains its `LICENSE`.
 The pilot keeps the tutorial's guarded `<h-gate>` component and pinned icon.
@@ -43,7 +87,10 @@ The Rust/Trunk build and source checkout are intentionally not removed.
 Run the lightweight fixture tests with `pnpm test:unit` (one worker, no browser).
 Run `pnpm test:pinned-embed-mobile` after building the bundled artifacts and
 preparing the pinned source checkout. This dedicated phone acceptance test uses
-real locally built embed artifacts, not a mocked runner. CI runs it after the
+real locally built embed artifacts, not a mocked runner. Its isolated child build
+substitutes a fixture CLI that checks exact fixture bytes and verification policy
+arguments; locally repackaged fixtures do not claim upstream attestations. This
+is not a production provenance bypass. CI runs it after the
 default site build, using a separate temporary output and a 390px touch/mobile
 Chromium viewport with SwiftShader. It requires a running circuit and no page
 horizontal overflow; it does not work around upstream swipe behavior. Readback

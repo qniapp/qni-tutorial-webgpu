@@ -76,6 +76,10 @@ jobs:
         run: bash scripts/fetch-qni-webgpu.sh "$GITHUB_WORKSPACE/.qni-webgpu-source"
       - name: Build Astro and upload Pages artifact
         uses: withastro/action@v6
+        # gh is preinstalled. Supply its token only when this build fetches
+        # the opt-in release; the pilot remains off in this PR.
+        env:
+          GH_TOKEN: ${{ env.QNI_H_GATE_PREBUILT == '1' && github.token || '' }}
         with:
           node-version: 24
           build-cmd: pnpm run typecheck && pnpm run build

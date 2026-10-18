@@ -7,7 +7,7 @@ test('pinned H-gate embed runs real GPU code and fits a touch phone', async ({ p
   const failures: string[] = []
   page.on('request', request => {
     const path = new URL(request.url()).pathname
-    if (path.startsWith('/qni-tutorial-webgpu/qni-webgpu-prebuilt/') && /\/h-gate\.(?:js|mjs)$/.test(path)) {
+    if (path.startsWith('/qni-tutorial-webgpu/qni-webgpu-prebuilt/') && /\/h-gate\.js$/.test(path)) {
       upstreamGateRequests.push(path)
     }
     if (/\/qni-(?:embed(?:-error)?\.mjs|web\.js|web_bg\.wasm)(?:\?|$)/.test(request.url())) {
