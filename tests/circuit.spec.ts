@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
+import { readFileSync } from 'node:fs'
 import { QNI_APP_BASE_URL } from '../src/components/qni-webgpu-app-url'
 
 type MockState = {
@@ -25,7 +26,10 @@ declare global {
   }
 }
 
-const embedPath = '/qni-tutorial-webgpu/qni-webgpu/qni-embed.mjs'
+const bundledEmbedPath = '/qni-tutorial-webgpu/qni-webgpu/qni-embed.mjs'
+const releasePin = readFileSync(new URL('../qni-embed.ref', import.meta.url), 'utf8').trim()
+// boot() defaults to h_gate, whose runtime is selected by the release pin.
+const embedPath = `/qni-tutorial-webgpu/qni-webgpu-prebuilt/embed-${releasePin}/qni-embed.mjs`
 const mockModule = `
   export async function startEmbed(canvas, circuit, settings) {
     const mock = window.__qniMock;
@@ -50,7 +54,7 @@ const mockModule = `
   }
 `
 
-async function boot(page: Page, options: { gpu?: boolean; adapterAvailable?: boolean; held?: boolean; importFails?: boolean } = {}) {
+async function boot(page: Page, options: { gpu?: boolean; adapterAvailable?: boolean; held?: boolean; importFails?: boolean; slug?: 'h_gate' | 'phase_gate' } = {}) {
   const requests: string[] = []
   await page.addInitScript(({ gpu, adapterAvailable, held }) => {
     window.__qniAdapterAvailable = adapterAvailable
@@ -61,7 +65,8 @@ async function boot(page: Page, options: { gpu?: boolean; adapterAvailable?: boo
     window.__qniHeld = held
     window.__qniFail = false
   }, { gpu: options.gpu !== false, adapterAvailable: options.adapterAvailable !== false, held: options.held ?? false })
-  // Only the app entry is mocked; qni-embed-error.mjs is served from dist.
+  // Intercept either runtime directory; exact request/call assertions below
+  // independently verify the page selected the correct one. Errors come from dist.
   await page.route('**/qni-embed.mjs', async route => {
     requests.push(new URL(route.request().url()).pathname)
     await route.fulfill({
@@ -70,7 +75,7 @@ async function boot(page: Page, options: { gpu?: boolean; adapterAvailable?: boo
       body: options.importFails ? '' : mockModule,
     })
   })
-  await page.goto('/qni-tutorial-webgpu/h_gate/')
+  await page.goto(`/qni-tutorial-webgpu/${options.slug ?? 'h_gate'}/`)
   await page.waitForFunction(() => customElements.get('qni-webgpu-circuit'))
   return requests
 }
@@ -110,6 +115,15 @@ test('uses the deployed base URL and exposes an accessible canvas', async ({ pag
     calls: [{ circuit: '{"cols":[["|0>"]]}', showStatePanel: true, url: embedPath }],
     destroyed: [], live: 1, maxLive: 1,
     accessibility: { open: 'open', focusable: 0, label: '量子回路シミュレーター', role: 'status', live: 'polite' },
+  })
+})
+
+test('non-pilot page keeps the exact bundled runtime URL', async ({ page }) => {
+  const requests = await boot(page, { slug: 'phase_gate' })
+  await running(page)
+  const state = await snapshot(page)
+  expect({ requests, state: state.state, urls: state.calls.map(call => call.url) }).toEqual({
+    requests: [bundledEmbedPath], state: 'running', urls: [bundledEmbedPath],
   })
 })
 
