@@ -12,6 +12,8 @@
   ],
   "images": [
     "images/bit_capacitor_vs_quantum.svg",
+    "images/quantum_search_vs_linear.svg",
+    "images/quantum_factoring.svg",
     "images/introduction/qni_screenshot_grover.png"
   ],
   "orbitPrompts": 9,
