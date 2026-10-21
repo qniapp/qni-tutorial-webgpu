@@ -145,7 +145,9 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isPorte
   .page-title-block .lede { margin-top: 5px; margin-bottom: 0; }
   .static-diagram { max-width: 76ch; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-2); padding: 16px 24px; margin: 24px 0; }
   .static-diagram p { margin: 8px 0; }
-  qni-webgpu-circuit { clear: both; margin: 24px 0; }
+  qni-webgpu-circuit { clear: both; }
+  /* Flex-centered legacy wrappers otherwise shrink around the custom element. */
+  .content-with-margin > :has(qni-webgpu-circuit:not([width])) :has(qni-webgpu-circuit:not([width])) { width: 100%; }
   fit-content { display: block; width: 100%; min-width: 0; }
   fit-content > .fitted-content { display: block; width: max-content; max-width: none; padding: 2px 12px 24px 0; }
   @media (max-width: 639.98px) {
@@ -160,7 +162,8 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isPorte
       width: 100%; min-width: 0;
     }
   }
-  figure { max-width: 640px; margin: 24px 0; }
+  figure, qni-webgpu-circuit { margin: 24px 0; }
+  figure, qni-webgpu-circuit:not([width]) { max-width: 640px; }
   figure img { display: block; width: 100%; height: auto; }
   figcaption { color: var(--muted); font-size: 14px; line-height: 20px; }
   /* Orbit's shadow iframe is 100% wide; size its host like the prose,
@@ -190,6 +193,9 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isPorte
     .content-with-margin > p,
     .content-with-margin > ul,
     .content-with-margin > figure,
+    .content-with-margin > qni-webgpu-circuit:not([width]),
+    /* A few legacy embeds are wrapped; size the wrapper to the same column. */
+    .content-with-margin > :has(qni-webgpu-circuit:not([width])),
     .content-with-margin > .static-diagram,
     .content-with-margin > details,
     .content-with-margin > orbit-reviewarea { width: 58.333333%; margin-right: auto; }
