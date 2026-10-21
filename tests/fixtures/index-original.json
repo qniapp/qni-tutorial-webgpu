@@ -11,6 +11,7 @@
     "qni-github"
   ],
   "images": [
+    "images/bit_capacitor_vs_quantum.svg",
     "images/introduction/qni_screenshot_grover.png"
   ],
   "orbitPrompts": 9,
