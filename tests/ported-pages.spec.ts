@@ -9,7 +9,8 @@ import phase from './fixtures/phase-original.json' with { type: 'json' }
 import notation from './fixtures/circle_notation-original.json' with { type: 'json' }
 import cpu from './fixtures/cpu_vs_qpu_operations-original.json' with { type: 'json' }
 import write from './fixtures/write_operation-original.json' with { type: 'json' }
-// Intro fixture includes the added figure comparing capacitor and spin bits (Figma frame 6:2).
+// Intro fixture includes the added figures: capacitor vs spin bits (Figma frame 6:2),
+// quantum vs linear search (23:2) and quantum factoring (23:66).
 import intro from './fixtures/index-original.json' with { type: 'json' }
 import x from './fixtures/x_gate-original.json' with { type: 'json' }
 import phaseGate from './fixtures/phase_gate-original.json' with { type: 'json' }
