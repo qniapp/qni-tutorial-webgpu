@@ -18,7 +18,8 @@ function expectedChapters() {
     for (const [chapterTitle, after, page] of added) {
       if (chapterTitle === chapter.title) pages.splice(pages.findIndex(p => p.slug === after) + 1, 0, page)
     }
-    return { title: chapter.title, pages }
+    const title = chapter.title.replaceAll('グローヴァー', 'グローバー').replaceAll('グロヴァー', 'グローバー')
+    return { title, pages: pages.map(page => ({ ...page, title: page.title.replaceAll('グローヴァー', 'グローバー').replaceAll('グロヴァー', 'グローバー') })) }
   })
 }
 
