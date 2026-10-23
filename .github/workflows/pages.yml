@@ -17,6 +17,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      QNI_H_GATE_PREBUILT: '1'
     steps:
       - uses: actions/checkout@v7
       - name: Read pinned WebGPU commit
@@ -39,6 +41,10 @@ jobs:
           cache-dependency-path: |
             pnpm-lock.yaml
             .qni-webgpu-source/apps/web/pnpm-lock.yaml
+      - name: Install tutorial dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Test pinned embed release verification
+        run: pnpm run test:unit
       - name: Install upstream Rust toolchain and wasm target
         run: |
           env -C .qni-webgpu-source rustup show active-toolchain
@@ -72,9 +78,28 @@ jobs:
         run: bash scripts/fetch-qni-webgpu.sh "$GITHUB_WORKSPACE/.qni-webgpu-source"
       - name: Build Astro and upload Pages artifact
         uses: withastro/action@v6
+        # gh is preinstalled; public release verification needs no write permission.
+        # Pass its token only to builds that fetch the pinned release.
+        env:
+          GH_TOKEN: ${{ env.QNI_H_GATE_PREBUILT == '1' && github.token || '' }}
         with:
           node-version: 24
           build-cmd: pnpm run typecheck && pnpm run build
+      # Exercise the same attested release in an isolated acceptance build.
+      - name: Install mobile acceptance Chromium
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Run isolated pinned embed mobile acceptance
+        env:
+          GH_TOKEN: ${{ env.QNI_H_GATE_PREBUILT == '1' && github.token || '' }}
+        run: node scripts/test-pinned-embed-mobile.mjs
+      - name: Upload mobile acceptance results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pinned-embed-mobile-results
+          path: test-results/pinned-embed-mobile
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Upload built site for Playwright
         uses: actions/upload-artifact@v4
         with:

@@ -27,9 +27,26 @@ pnpm -C /path/to/qni-tutorial-webgpu test
 
 Stop any manual server on port 4322 before testing. Playwright starts and stops its own preview server. Tests cover element lifecycle with mocks and the real pinned WebGPU bundle. The real GPU test explicitly skips if no adapter is available; Linux may require `xvfb-run -a`. Test launch flags use SwiftShader WebGPU, not a production CPU fallback.
 
+## Isolated pinned-embed mobile acceptance
+
+After building the real `public/qni-webgpu/` assets as above, keep the clean pinned upstream checkout at `.qni-webgpu-source/` (or set `QNI_WEBGPU_SOURCE`):
+
+```sh
+pnpm exec playwright install --with-deps chromium
+node scripts/test-pinned-embed-mobile.mjs
+```
+
+The runner fetches the actual release selected by `qni-embed.ref` and verifies all GitHub attestations during an isolated Astro build. Install `gh` and authenticate it with `GH_TOKEN` for the build. No fixture verifier or relabeled bundled runtime is used. Preview sets `QNI_H_GATE_PREBUILT=0` only to avoid fetching again: it serves the already-built release-backed page, not a rebuilt bundled page. Temporary output is cleaned even on failure; the verified public cache is retained and reverified on each build.
+
+`playwright.pinned-embed-mobile.config.ts` inherits the ordinary bundled Chromium/SwiftShader launch flags but uses one worker and a 390px touch/mobile viewport. Its only test requires artifact runtime requests, a running real circuit, finite `readStateVector()` GPU output, viewport-fitting circuit bounds, and no document horizontal overflow. Missing WebGPU fails this acceptance gate rather than skipping. It does not dismiss or swipe through the tutorial. This checks mobile emulation with software WebGPU, not physical phone GPU compatibility.
+
+The ordinary Playwright config excludes this dedicated test. CI runs the runner in the **build** job after the normal Astro build/upload, with a separate temporary output. Both builds use the real release for `h_gate`; all other pages keep the bundled runtime.
+
 ## Pin and deployment
 
-`qni-webgpu.ref` is the sole source of the upstream commit SHA. To update it, put the desired full SHA in that file, prepare a clean checkout at that commit, rebuild the bundle, and rerun the build/typecheck/browser tests. Do not commit `public/qni-webgpu/` or `dist/`.
+The `h_gate` release pilot is on by default; set `QNI_H_GATE_PREBUILT=0` for a bundled-only build. See [verification policy](docs/pinned-embed-pilot.md).
+
+`qni-webgpu.ref` pins the bundled Rust/Trunk source checkout. The release fetcher uses the separate `qni-embed.ref`, currently `33366e270556c69201da901612cb522b4e18e2ee`. To update the bundle pin, prepare a clean checkout at its SHA, rebuild the bundle, and rerun the build/typecheck/browser tests. Do not commit `public/qni-webgpu/` or `dist/`.
 
 The Pages workflow checks out that SHA, uses upstream `rust-toolchain.toml`, installs the wasm32 target, restores the Cargo cache, and downloads a cached, checksum-verified Trunk binary and caches Trunk's helper tools. It builds the embed into `public/qni-webgpu/`, then uses the official `withastro/action` to build/upload the site and `actions/deploy-pages` to deploy. Set repository Pages source to **GitHub Actions**. The workflow itself has not yet run remotely.
 

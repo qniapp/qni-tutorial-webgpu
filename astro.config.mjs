@@ -2,6 +2,17 @@ import { defineConfig } from 'astro/config'
 import { execFileSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
+import { PinnedEmbed } from './scripts/fetch-qni-embed.mjs'
+
+// The H-page release pilot is on by default; 0 explicitly selects the bundled path.
+// Preview only serves completed output; it must not need gh or rebuild selection.
+const hGatePrebuilt = process.env.QNI_H_GATE_PREBUILT !== '0' && !process.argv.includes('preview')
+let hGateEmbedDirectory = null
+if (hGatePrebuilt) {
+  await PinnedEmbed.fetch()
+  const sha = readFileSync(resolve('qni-embed.ref'), 'utf8').trim()
+  hGateEmbedDirectory = `qni-webgpu-prebuilt/embed-${sha}/`
+}
 
 export default defineConfig({
   site: 'https://qniapp.github.io',
@@ -10,6 +21,12 @@ export default defineConfig({
   trailingSlash: 'always',
   vite: {
     plugins: [{
+      name: 'h-gate-embed-pilot',
+      resolveId(id) { if (id === 'virtual:h-gate-embed-pilot') return '\0virtual:h-gate-embed-pilot' },
+      load(id) {
+        if (id === '\0virtual:h-gate-embed-pilot') return `export const embedDirectory = ${JSON.stringify(hGateEmbedDirectory)};`
+      },
+    }, {
       name: 'pinned-h-gate-icon',
       resolveId(id) { if (id === 'virtual:h-gate-icon') return '\0virtual:h-gate-icon' },
       load(id) {

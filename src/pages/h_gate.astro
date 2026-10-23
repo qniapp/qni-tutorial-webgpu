@@ -4,10 +4,13 @@ import TutorialLayout from '../layouts/TutorialLayout.astro'
 import Sidenote from '../components/Sidenote.astro'
 import Ket from '../components/Ket.astro'
 import transitionArrow from '../assets/qubit-transition-arrow.svg?raw'
+import { embedDirectory } from 'virtual:h-gate-embed-pilot'
+import HGateEmbed from '../components/HGateEmbed.astro'
 const equal = Math.SQRT1_2
 const base = import.meta.env.BASE_URL
 ---
-<TutorialLayout title="H ゲート" description="シンプルな重ね合わせ状態を作る" section="QPU 命令その 1" hasCircuit hasMath>
+<TutorialLayout title="H ゲート" description="シンプルな重ね合わせ状態を作る" section="QPU 命令その 1" hasMath>
+  <HGateEmbed slot="head" directory={embedDirectory} />
   <p>
     H ゲート <h-gate></h-gate> はフランスの数学者、ジャック・サロモン・アダマール (Jacques Salomon
     Hadamard, 1865 - 1963) の名前を冠したゲートで、別名アダマールゲートとも呼びます<Sidenote id="h-gate" numbered>英語では「ハダマードゲート (Hadamard gate)」と言います。日本語の「アダマールゲート」は、フランス語の元々の発音 (Hadamard の最初の h と最後の d を発音しない) に近いカタカナ表記です。</Sidenote>。

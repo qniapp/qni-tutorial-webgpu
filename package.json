@@ -12,6 +12,9 @@
     "build": "node scripts/copy-mathjax.mjs && astro build",
     "preview": "astro preview",
     "typecheck": "tsc --noEmit",
+    "fetch:embed": "node scripts/fetch-qni-embed.mjs",
+    "test:unit": "node --experimental-strip-types --test tests/qni-app-url.unit.mjs && playwright test --config playwright.unit.config.ts",
+    "test:pinned-embed-mobile": "node scripts/test-pinned-embed-mobile.mjs",
     "test": "playwright test"
   },
   "dependencies": {

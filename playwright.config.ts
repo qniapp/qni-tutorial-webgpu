@@ -2,6 +2,7 @@ import { chromium, defineConfig } from '@playwright/test'
 
 export default defineConfig({
   testDir: './tests',
+  testIgnore: '**/pinned-embed-mobile.spec.ts',
   workers: 1,
   timeout: 60_000,
   use: {

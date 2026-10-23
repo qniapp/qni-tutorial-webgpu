@@ -42,6 +42,7 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isPorte
       </script>
       <script is:inline id="MathJax-script" defer src={`${base}mathjax/tex-chtml.js`}></script>
     </Fragment>}
+    <slot name="head" />
     {hasCircuit && <script is:inline define:vars={{ qniEmbedBase: `${base}qni-webgpu/` }}>
       if (typeof navigator.gpu?.requestAdapter === 'function') {
         for (const file of ['qni-embed.mjs', 'qni-web.js', 'qni-web_bg.wasm']) {
