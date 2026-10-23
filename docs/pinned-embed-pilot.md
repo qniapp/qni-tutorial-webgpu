@@ -1,13 +1,21 @@
 # Pinned embed pilot
 
-The verified prebuilt release pilot is enabled by default for `h_gate`. Set
-`QNI_H_GATE_PREBUILT=0` to use the bundled Rust/Trunk artifacts instead. The
-Pages build job explicitly sets the switch to `1`, so its conditional token
-wiring supplies `GH_TOKEN` to the release-verifying builds.
-Only `h_gate.astro` passes the selected release directory to `HGateEmbed.astro`,
-through the layout's generic head slot. Other pages and the standalone app
-continue to use bundled artifacts. The shared circuit component, standalone-link
-helper, and layout client script remain identical to `origin/main`.
+The verified prebuilt release is enabled by default for the T2 pages listed in
+`scripts/tutorial-embed.mjs` (including the original `h_gate` pilot). Pages sets
+`QNI_EMBED_PREBUILT=1`; `GH_TOKEN` is supplied to release-verifying builds.
+
+`TutorialEmbed` owns page selection and fetches the release once per build.
+`QNI_EMBED_PREBUILT=0` selects the old compiled path for all pages. Each page
+can override that default with `QNI_<SLUG>_PREBUILT`: uppercase, hyphens changed
+to underscores, and `INDEX` for the root page. For example,
+`QNI_INSIDE_THE_QFT_PREBUILT=0` or `QNI_MULTI_7_PREBUILT=off`. Explicit `0`,
+`false`, and `off` (case-insensitive) select the bundled path. The existing
+`QNI_H_GATE_PREBUILT` override remains supported. Unset switches default on,
+including in CI; pages outside the allowlist always stay bundled.
+
+The layout selects `PinnedEmbed.astro` only for release-backed pages. The
+shared circuit component, standalone-link helper and layout client script
+remain unchanged; the standalone app still uses its compiled artifacts.
 
 ## Independent pins
 
@@ -85,14 +93,15 @@ The Open in Qni link retains `origin/main`'s official external destination;
 the tutorial-hosted standalone app remains available for diagnostics. Neither
 the Rust/Trunk build nor source checkout is removed.
 
-`HGateEmbed.astro` compiles an inline, page-local copy of the unchanged circuit
+`PinnedEmbed.astro` compiles an inline, page-local copy of the unchanged circuit
 component at build time, changing only its runtime/error-module asset base.
 It registers synchronously in the head, before the shared deferred script's
 guarded registration. Keeping this copy outside Vite's shared client graph
 avoids common-chunk extraction that would change other pages' script hashes.
 The shared component already exposes per-runner `readStateVector()`; no test-only
 shipped-code change is needed. Non-H page output is checked byte-for-byte
-against a fresh `origin/main` build, except its existing inner-product UUID.
+against a fresh base build. The T2 acceptance compares `phase_gate`, `x_gate`
+and `multi-1` byte-for-byte, including their referenced shared script assets.
 
 Run lightweight fixture tests with `pnpm test:unit` (one worker, no browser).
 Unit fixtures inject the verifier and do not claim real provenance.
@@ -104,8 +113,28 @@ and previews that output with fetching disabled, without changing the release
 selection already baked into the page. It removes temporary output but retains
 the verified public cache; subsequent builds download and verify again.
 
-The dedicated Chromium/SwiftShader test requires a running circuit, per-runner
-`readStateVector()` GPU output, release-only runtime requests, and no phone
-horizontal overflow. Missing WebGPU fails rather than skips. It does not patch
-or work around upstream swipe behavior, nor claim physical-phone compatibility.
-See the README for setup.
+The dedicated Chromium/SwiftShader tests require running circuits, per-runner
+`readStateVector()` GPU output, release-only runtime requests, no phone horizontal
+overflow, horizontal swipe, gate drag, and native vertical article scrolling.
+Missing WebGPU fails rather than skips. These tests do not patch upstream input
+handling or claim physical-phone compatibility. `tests/pinned-embed-t2.spec.ts`
+checks release requests across the migrated routes, independent QFT runners,
+multi-7, selected steps, sampling and restart. See the README for setup.
+
+## T2 scope and T3 boundary
+
+T2 includes the root page, `qni_intro`, `measurement_operation`,
+`multi_qubit_superposition`, `random_byte_generator`, `cnot_gate`, `swap_gate`,
+`entanglement`, `entanglement_operation`, `teleportation_circuit`,
+`cascading_teleportation`, `long_distance_entanglement`, `increment_circuit`,
+`quantum_logic`, `quantum_phase_estimation_circuit`, `shor_qft`, `bb84_circuit`,
+`superdense_coding_circuit`, `amplitude_probability`, `basis_inner_product`,
+`global_relative_phase`, `matrix_adjoint`, `tensor_product_state`,
+`entangled_state`, `unitary_observable`, `multi-3`, `multi-7`, and
+`inside_the_qft`, plus the retained `h_gate` pilot. Measurement scope is based
+on executable circuit JSON, not prose or decorative measurement glyphs.
+
+T3 still owns remaining pages (including `multi-1`), removing Rust/Trunk and
+its caches/source checkout, retiring switches and compiled fallback, arranging
+standalone-app tests and auxiliary SVG/font assets, and pin-update operations.
+None of those paths is removed in T2.

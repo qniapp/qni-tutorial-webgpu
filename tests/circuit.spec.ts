@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import { readFileSync } from 'node:fs'
+import { TutorialEmbed } from '../scripts/tutorial-embed.mjs'
 import { QNI_APP_BASE_URL } from '../src/components/qni-webgpu-app-url'
 
 type MockState = {
@@ -29,7 +30,7 @@ declare global {
 const bundledEmbedPath = '/qni-tutorial-webgpu/qni-webgpu/qni-embed.mjs'
 const releasePin = readFileSync(new URL('../qni-embed.ref', import.meta.url), 'utf8').trim()
 // boot() defaults to h_gate. Match the default-on build flag with one exact URL.
-const embedPath = process.env.QNI_H_GATE_PREBUILT !== '0'
+const embedPath = TutorialEmbed.enabled('h_gate')
   ? `/qni-tutorial-webgpu/qni-webgpu-prebuilt/embed-${releasePin}/qni-embed.mjs`
   : bundledEmbedPath
 const mockModule = `

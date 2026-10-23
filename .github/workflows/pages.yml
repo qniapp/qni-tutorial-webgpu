@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      QNI_H_GATE_PREBUILT: '1'
+      QNI_EMBED_PREBUILT: '1'
     steps:
       - uses: actions/checkout@v7
       - name: Read pinned WebGPU commit
@@ -81,7 +81,7 @@ jobs:
         # gh is preinstalled; public release verification needs no write permission.
         # Pass its token only to builds that fetch the pinned release.
         env:
-          GH_TOKEN: ${{ env.QNI_H_GATE_PREBUILT == '1' && github.token || '' }}
+          GH_TOKEN: ${{ env.QNI_EMBED_PREBUILT == '1' && github.token || '' }}
         with:
           node-version: 24
           build-cmd: pnpm run typecheck && pnpm run build
@@ -90,7 +90,7 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium
       - name: Run isolated pinned embed mobile acceptance
         env:
-          GH_TOKEN: ${{ env.QNI_H_GATE_PREBUILT == '1' && github.token || '' }}
+          GH_TOKEN: ${{ env.QNI_EMBED_PREBUILT == '1' && github.token || '' }}
         run: node scripts/test-pinned-embed-mobile.mjs
       - name: Upload mobile acceptance results
         if: always()
