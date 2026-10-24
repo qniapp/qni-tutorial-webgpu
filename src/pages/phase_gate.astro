@@ -138,7 +138,7 @@ const base = import.meta.env.BASE_URL
 
 <qni-webgpu-circuit max-wire-count="2" palette={"[\"P(π/2)\"]"} circuit={"{\"cols\":[[\"{重ね合わせ\"],[\"|0>\"],[\"H\"],[\"}\"]]}"}></qni-webgpu-circuit>
 
-<orbit-reviewarea color="blue" class="mt-5">
+<orbit-reviewarea color="brown" class="mt-5">
   <orbit-prompt
     cloze="PHASE ゲートは重ね合わせ状態にある量子ビットの {|1⟩} の{位相}を{回転}させる"
   ></orbit-prompt>
@@ -185,5 +185,5 @@ const base = import.meta.env.BASE_URL
   th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
   td { padding:8px; border-bottom:1px solid #DAD8CE; }
   th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
-  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:var(--prose-width); margin-right:auto; } }
 </style>

@@ -26,13 +26,14 @@ test('wide notes occupy the right margin and share the superscript counter', asy
   expect(geometry.fontSize).toBe('14px')
   expect(geometry.lineHeight).toBe('20px')
   expect(geometry.noteCounter).toBe('counter(margin-note-counter)')
-  expect(geometry.labelCounter).toBe(geometry.noteCounter)
+  // A word joiner keeps the marker on the line of the preceding word.
+  expect(geometry.labelCounter).toBe('"\u2060" counter(margin-note-counter)')
   expect(geometry.counterIncrement).toBe('margin-note-counter 1')
   // Replaced H rotation image has no credit; retained quantum-circuit image does.
   await expect(page.locator('figure .margin-note a')).toHaveCount(0)
   await page.goto('/qni-tutorial-webgpu/quantum_circuit/')
   const credit = page.locator('figure .margin-note a')
-  await expect(credit).toHaveCSS('color', 'rgb(113, 113, 122)')
+  await expect(credit).toHaveCSS('color', 'rgb(87, 86, 83)')
   await expect(credit).toHaveCSS('text-decoration-line', 'none')
 })
 

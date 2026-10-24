@@ -22,7 +22,7 @@ const base = import.meta.env.BASE_URL
   一方で量子コンピュータは原子や電子、光子といった量子をビットとして使います。
 </p>
 
-<figure>
+<figure class="figure-wide">
   <img
     src={`${base}images/bit_capacitor_vs_quantum.svg`}
     alt="従来のコンピュータと量子コンピュータのビットの比較図。左は従来のコンピュータのビットであるコンデンサで、電荷なしが 0、電荷ありが 1 を表す。右は量子コンピュータのビットである電子スピンで、磁場 B の中でスピンが上向きなら |0⟩、下向きなら |1⟩、そのどちらでもない向きなら重ね合わせ α|0⟩ + β|1⟩ を表す。"
@@ -60,7 +60,7 @@ const base = import.meta.env.BASE_URL
   このように、量子探索アルゴリズムは巨大なリストの中から特定のアイテムを効率的に検索できます。
 </p>
 
-<figure>
+<figure class="figure-wide">
   <img
     src={`${base}images/quantum_search_vs_linear.svg`}
     alt="線形探索と量子探索の比較図。どちらも絵文字が書かれた 100 万枚のカードから、見つけたい星のカードを探す。左の線形探索では、カードを 1 列に並べ、1 枚目から 1 枚ずつ順に見る。星のカードは最後の 100 万枚目にあり、最悪 100 万枚すべてを見る。右の量子探索では、100 万枚のカードを 1 つの山に重ね、約 1,000 回の検索で星のカードが山の中からひとりでに浮かび上がる。"
@@ -73,7 +73,7 @@ const base = import.meta.env.BASE_URL
   量子アルゴリズムは、最もよく知られた古典的なアルゴリズムよりも指数関数的に速くこのタスクを実行できるため、現代の暗号のいくつかの形式は、暗号解読者を阻止できません。
 </p>
 
-<figure>
+<figure class="figure-wide">
   <img
     src={`${base}images/quantum_factoring.svg`}
     alt="量子因数分解の説明図。左は公開鍵暗号が頼る数百桁の数の因数分解で、300 桁の数を、まだ分からない 2 つの数 ? × ? に分ける。右は因数分解にかかる計算時間のグラフで、横軸は数の桁数、縦軸は計算時間。最もよく知られた古典的なアルゴリズムの曲線は数百桁に届く前に急に立ち上がり、事実上解けない。量子アルゴリズムの曲線は数百桁でも低いままである。"
@@ -143,7 +143,7 @@ const base = import.meta.env.BASE_URL
   もちろん、クイズに答えずにこのチュートリアルを読み進めることもできますが、ぜひ試してみてください。
 </p>
 
-<orbit-reviewarea color="blue">
+<orbit-reviewarea color="brown">
   <orbit-prompt
     question="**量子コンピュータ**の名前の由来は?"
     answer="動作原理が量子力学に基づくことから名付けられた"
@@ -184,9 +184,7 @@ const base = import.meta.env.BASE_URL
 <ul>
   <li>
     <a href="https://github.com/qniapp/qni/issues?q=is%3Aissue+is%3Aopen+label%3Atutorial"
-      >質問する</a
-    >
-    ─ 読んでも分からなかったことは、お気軽に GitHub まで
+      >質問する</a> ─ 読んでも分からなかったことは、お気軽に GitHub まで
   </li>
   <li>
     <a href="https://github.com/qniapp/qni/labels/tutorial%20typo">問題を報告する</a> ─ typo
@@ -230,5 +228,5 @@ const base = import.meta.env.BASE_URL
   th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
   td { padding:8px; border-bottom:1px solid #DAD8CE; }
   th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
-  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:var(--prose-width); margin-right:auto; } }
 </style>
