@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import expectedPrompts from './fixtures/cphase-orbit.json' with { type: 'json' }
 
 test('CPHASE review prompts cover notation, action, and CZ', async ({ page }) => {
   await page.goto('/qni-tutorial-webgpu/cphase/')
@@ -7,9 +8,9 @@ test('CPHASE review prompts cover notation, action, and CZ', async ({ page }) =>
   await expect(areas).toHaveCount(3)
   const prompts = page.locator('orbit-reviewarea orbit-prompt')
   await expect(prompts).toHaveCount(7)
-  for (const prompt of await prompts.all()) {
-    await expect(prompt).toHaveAttribute('question', /\S/)
-    await expect(prompt).toHaveAttribute('answer', /\S/)
+  for (const [index, { question, answer }] of expectedPrompts.entries()) {
+    await expect(prompts.nth(index)).toHaveAttribute('question', question)
+    await expect(prompts.nth(index)).toHaveAttribute('answer', answer)
   }
   await expect(prompts.nth(0)).toHaveAttribute('answer', 'コントロールビットとターゲットビットが両方 1 の成分です。')
   await expect(prompts.nth(2)).toHaveAttribute('answer', '両方とも π/4 にします。')

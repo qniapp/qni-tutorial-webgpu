@@ -37,7 +37,10 @@ import bellStates from './fixtures/discriminating_bell_states-original.json' wit
 import teleportation from './fixtures/teleportation_circuit-original.json' with { type: 'json' }
 import cascading from './fixtures/cascading_teleportation-original.json' with { type: 'json' }
 import longDistance from './fixtures/long_distance_entanglement-original.json' with { type: 'json' }
-import cphase from './fixtures/cphase-original.json' with { type: 'json' }
+import cphaseOriginal from './fixtures/cphase-original.json' with { type: 'json' }
+import cphaseOrbit from './fixtures/cphase-orbit.json' with { type: 'json' }
+// Keep the original page fixture intact; only the new review prompts differ.
+const cphase = { ...cphaseOriginal, orbitPrompts: cphaseOrbit.length, orbit: cphaseOrbit }
 import increment from './fixtures/increment_circuit-original.json' with { type: 'json' }
 import decrement from './fixtures/decrement_circuit-original.json' with { type: 'json' }
 import addition from './fixtures/addition_circuit-original.json' with { type: 'json' }
