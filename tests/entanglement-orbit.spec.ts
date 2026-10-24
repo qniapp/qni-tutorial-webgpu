@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import expectedPrompts from './fixtures/entanglement-orbit.json' with { type: 'json' }
 
 for (const width of [390, 1440]) {
   test(`entanglement review content and placement at ${width}`, async ({ page }) => {
@@ -11,14 +12,9 @@ for (const width of [390, 1440]) {
     await expect(review).toHaveAttribute('color', 'blue')
     const prompts = review.locator('orbit-prompt')
     await expect(prompts).toHaveCount(4)
-    for (const [index, answer] of [
-      'CNOT ゲートです。',
-      '50% です。',
-      '|1⟩ です。',
-      '結果が異なる |01⟩ と |10⟩ の振幅がともに 0 だからです。',
-    ].entries()) {
+    for (const [index, { question, answer }] of expectedPrompts.entries()) {
       await expect(prompts.nth(index)).toHaveAttribute('answer', answer)
-      await expect(prompts.nth(index)).toHaveAttribute('question', /ベル状態 \(\|00⟩ \+ \|11⟩\)\/√2/)
+      await expect(prompts.nth(index)).toHaveAttribute('question', question)
     }
     await expect(page.locator('script[src="https://js.withorbit.com/orbit-web-component.js"]')).toHaveCount(1)
     expect(await review.evaluate(element => {

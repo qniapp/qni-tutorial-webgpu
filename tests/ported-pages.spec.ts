@@ -30,7 +30,10 @@ import partial from './fixtures/partial_measurement-original.json' with { type: 
 import swap from './fixtures/swap_gate-original.json' with { type: 'json' }
 import cnot from './fixtures/cnot_gate-original.json' with { type: 'json' }
 import swapPuzzle from './fixtures/swap_from_cnots-original.json' with { type: 'json' }
-import entanglement from './fixtures/entanglement-original.json' with { type: 'json' }
+import entanglementOriginal from './fixtures/entanglement-original.json' with { type: 'json' }
+import entanglementOrbit from './fixtures/entanglement-orbit.json' with { type: 'json' }
+// Keep the original page fixture intact; only the new review prompts differ.
+const entanglement = { ...entanglementOriginal, orbitPrompts: entanglementOrbit.length, orbit: entanglementOrbit }
 import disentangle from './fixtures/disentangle-original.json' with { type: 'json' }
 import entanglementOperation from './fixtures/entanglement_operation-original.json' with { type: 'json' }
 import bellStates from './fixtures/discriminating_bell_states-original.json' with { type: 'json' }
