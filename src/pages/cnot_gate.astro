@@ -118,6 +118,35 @@ const base = import.meta.env.BASE_URL
 <qni-webgpu-circuit palette={"[]"} circuit={"{\"cols\":[[\"|1>\",\"|0>\"],[\"•\",\"X\"],[\"•\",\"X\"],[\"Measure\",\"Measure\"]]}"} max-wire-count="1"></qni-webgpu-circuit>
 
 
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="CNOT は、計算基底で見たコントロールビットの値に応じて、ターゲットにどんな操作をしますか?"
+    answer="1 のときは X ゲートで反転し、0 のときは何もしません。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="2 ビットの状態を |ターゲット コントロール⟩ の順で書きます。CNOT を |10⟩ に適用すると、出力状態は?"
+    answer="|10⟩ のままです。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="2 ビットの状態を |ビット 2 ビット 1⟩ の順で書きます。ビット 1 をコントロール、ビット 2 をターゲットとする CNOT は、どの演算ペアの振幅を交換しますか?"
+    answer="|01⟩ と |11⟩ のペアです。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="2 ビットの状態を |ターゲット コントロール⟩ の順で書きます。状態 (|00⟩ + |01⟩)/√2 に CNOT を適用した後の状態は?"
+    answer="(|00⟩ + |11⟩)/√2 です。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="CNOT を 1 回適用した未知の 2 量子ビット状態を、測定せず元に戻すには、どのゲートをどう適用しますか?"
+    answer="コントロールとターゲットを変えず、CNOT をもう 1 回適用します。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="同じコントロールとターゲットの CNOT を 2 回続けると元に戻るのはなぜですか?"
+    answer="発動条件が変わらず、X が 2 回作用すると反転が打ち消されるからです。"
+  ></orbit-prompt>
+</orbit-reviewarea>
+
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+
 </TutorialLayout>
 <style>
   .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
