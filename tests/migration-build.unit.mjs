@@ -16,6 +16,10 @@ test('opt-in introduction uses the retained tutorial URLs and assets', async () 
       stdio: 'pipe',
     })
     const html = await readFile(join(output, 'index.html'), 'utf8')
+    const header = html.match(/<header\b[^>]*>([\s\S]*?)<\/header>/)?.[1] ?? ''
+    assert.match(header, /aria-label="Qni Tutorial ホーム"/)
+    assert.match(header, /href="https:\/\/github.com\/qniapp\/qni" aria-label="GitHub で Qni を見る"/)
+    assert.doesNotMatch(header, /実験版/)
     assert.match(html, /href="\/qni\/qpu\.html"/)
     assert.match(html, /class="page-footer-link page-footer-next" href="\/qni\/qpu\.html"/)
     assert.match(html, /href="\/qni\/" aria-current="page"/)
@@ -43,6 +47,10 @@ test('opt-in introduction uses the retained tutorial URLs and assets', async () 
     assert.match(ordinary, /href="\/qni-tutorial-webgpu\/amplitude_probability\/"/)
     assert.match(ordinary, /src="\/qni-tutorial-webgpu\/_astro\//)
     assert.doesNotMatch(ordinary, /href="\/qni\//)
+    const ordinaryHeader = ordinary.match(/<header\b[^>]*>([\s\S]*?)<\/header>/)?.[1] ?? ''
+    assert.match(ordinaryHeader, />Qni Tutorial<\/a>/)
+    assert.match(ordinaryHeader, />実験版<\/span>/)
+    assert.doesNotMatch(ordinaryHeader, /GitHub で Qni を見る|brand-logo/)
   } finally {
     await rm(output, { recursive: true, force: true })
   }
@@ -82,6 +90,31 @@ async function checkBrowser(output) {
         assert.equal(await page.locator('.page-footer-next').getAttribute('href'), '/qni/qpu.html')
         assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true)
       }
+      const home = page.getByRole('link', { name: 'Qni Tutorial ホーム', exact: true })
+      const github = page.getByRole('link', { name: 'GitHub で Qni を見る', exact: true })
+      assert.equal(await home.getAttribute('href'), '/qni/')
+      assert.equal(await github.getAttribute('href'), 'https://github.com/qniapp/qni')
+      assert.equal(await home.locator('img').count(), 0)
+      assert.equal(await home.locator('.brand-qni').textContent(), 'Qni')
+      assert.equal(await home.locator('.brand-tutorial').textContent(), 'Tutorial')
+      assert.equal(await home.locator('.brand-qni').evaluate(el => getComputedStyle(el).color), 'rgb(24, 24, 27)')
+      assert.equal(await home.locator('.brand-tutorial').evaluate(el => getComputedStyle(el).color), 'rgb(56, 189, 248)')
+      for (const link of [home, github]) {
+        await link.focus()
+        assert.equal(await link.evaluate(el => getComputedStyle(el).outlineStyle), 'solid')
+      }
+      assert.equal(await home.evaluate(el => {
+        const range = document.createRange()
+        range.selectNodeContents(el)
+        const selection = getSelection()
+        selection.removeAllRanges()
+        selection.addRange(range)
+        const text = selection.toString()
+        selection.removeAllRanges()
+        return text.includes('Qni') && text.toLowerCase().includes('tutorial')
+      }), true)
+      await github.evaluate(el => el.blur())
+      await page.screenshot({ path: `test-results/migration/header-${width}.png` })
       if (width === 390) await page.getByRole('button', { name: '目次を開く', exact: true }).click()
       const nav = page.locator(width === 390 ? '.toc-drawer nav' : '.sidebar nav')
       await nav.locator('details').nth(1).locator('summary').click()
