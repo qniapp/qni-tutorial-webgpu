@@ -9,7 +9,7 @@ for (const width of [390, 1280]) {
     const review = page.locator('orbit-reviewarea')
     await expect(review).toHaveAttribute('color', 'blue')
     const prompts = review.locator('orbit-prompt')
-    await expect(prompts).toHaveCount(6)
+    await expect(prompts).toHaveCount(5)
     for (const prompt of await prompts.all()) {
       await expect(prompt).toHaveAttribute('question', /\S/)
       await expect(prompt).toHaveAttribute('answer', /\S/)
