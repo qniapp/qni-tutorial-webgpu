@@ -64,6 +64,31 @@ const base = import.meta.env.BASE_URL
 
 <qni-webgpu-circuit palette="[]" circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\"],[\"{重ね合わせ状態の生成\"],[\"H\",\"H\",\"H\"],[\"P(π_4)\",\"P(π_2)\",\"P(π)\"],[\"Rx(π_2)\"],[\"}\"],[\"Measure\",\"Measure\",\"Measure\"]]}"} max-wire-count="1"></qni-webgpu-circuit>
 
+<h2>確認してみよう</h2>
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="複数量子ビットの純粋状態が、計算基底での重ね合わせ状態であるかを振幅から判断するには、どんな条件を確かめますか?"
+    answer="0 でない振幅を持つ計算基底状態が 2 つ以上あることです。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="3 量子ビットの正規化された状態で、|6⟩ の振幅が 0.5 のとき、全ビットを計算基底で測定して 6 が出る確率は?"
+    answer="25% です。（理由: 振幅の大きさを 2 乗すると 0.5² = 0.25 です。）"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="3 量子ビットが |0⟩、|2⟩、|4⟩、|6⟩ の等しい重ね合わせにあるとき、全ビットを計算基底で 1 回測定すると、得られる 3 ビットの値は何個ですか?"
+    answer="1 個です。（補足: 4 通りの候補のうち、いずれか 1 つが得られます。）"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="正規化された 3 量子ビットの状態を全ビット計算基底で測定するとき、0 から 7 の各結果の確率をすべて足すといくつになりますか?"
+    answer="1（100%）です。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="複数量子ビットの各計算基底状態の振幅について、大きさを保って位相だけを変えても、直後の計算基底での測定確率が変わらないのはなぜですか?"
+    answer="測定確率は振幅の大きさの 2 乗で決まるからです。"
+  ></orbit-prompt>
+</orbit-reviewarea>
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+
 </TutorialLayout>
 <style>
  .my-5 { margin-block:20px; } .flex { display:flex; } .flex-row { flex-direction:row; }
