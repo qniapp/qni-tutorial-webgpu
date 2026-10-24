@@ -28,6 +28,7 @@ import bb84Circuit from './fixtures/bb84_circuit-original.json' with { type: 'js
 import multiPhase from './fixtures/multi_qubit_phase_gate-original.json' with { type: 'json' }
 import partial from './fixtures/partial_measurement-original.json' with { type: 'json' }
 import swap from './fixtures/swap_gate-original.json' with { type: 'json' }
+import swapOrbit from './fixtures/swap-gate-orbit.json' with { type: 'json' }
 import cnot from './fixtures/cnot_gate-original.json' with { type: 'json' }
 import swapPuzzle from './fixtures/swap_from_cnots-original.json' with { type: 'json' }
 import entanglement from './fixtures/entanglement-original.json' with { type: 'json' }
@@ -72,9 +73,11 @@ for (const fixture of [qpu, faster, pbit, superposition, qubit, phase, notation,
     const images = fixture.images.filter(image => !replaced.has(image.split('/').at(-1)!))
     await expect(page.locator('main img')).toHaveCount(images.length)
     for (const image of images) await expect(page.locator(`main img[src="/qni-tutorial-webgpu/${image}"]`)).toHaveCount(1)
-    await expect(page.locator('main orbit-prompt')).toHaveCount(fixture.orbitPrompts)
+    // Keep the original fixture unchanged; only SWAP's new review prompts differ.
+    const expectedOrbit = fixture.slug === 'swap_gate' ? swapOrbit : fixture.orbit
+    await expect(page.locator('main orbit-prompt')).toHaveCount(fixture.slug === 'swap_gate' ? swapOrbit.length : fixture.orbitPrompts)
     const prompts = await page.locator('main orbit-prompt').evaluateAll(es => es.map(e => Object.fromEntries([...e.attributes].filter(a => !a.name.startsWith('data-astro-')).map(a => [a.name, a.value.replace(/\s+/g, '')]))))
-    expect(prompts).toEqual(fixture.orbit.map(p => Object.fromEntries(Object.entries(p).map(([k,v]) => [k,v.replace(/\s+/g, '')]))))
+    expect(prompts).toEqual(expectedOrbit.map(p => Object.fromEntries(Object.entries(p).map(([k,v]) => [k,v.replace(/\s+/g, '')]))))
     await expect(page.locator('main qni-webgpu-circuit')).toHaveCount(fixture.slug==='write_operation' ? 2 : 'circuits' in fixture ? fixture.circuits.length : 0)
     if ('circuits' in fixture && fixture.slug!=='write_operation') {
       const expected = structuredClone(fixture.circuits)
