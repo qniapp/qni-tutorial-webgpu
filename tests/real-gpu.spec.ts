@@ -1,4 +1,8 @@
 import { expect, test } from '@playwright/test'
+import { readFileSync } from 'node:fs'
+
+const pin = readFileSync(new URL('../qni-embed.ref', import.meta.url), 'utf8').trim()
+const embedPath = `/qni-tutorial-webgpu/qni-webgpu-prebuilt/embed-${pin}/qni-embed.mjs`
 
 // This test exercises the real pinned bundle, unlike the lifecycle mocks.
 test('built H-gate page loads the real WebGPU runner under the Pages base path', async ({ page }, testInfo) => {
@@ -47,7 +51,7 @@ test('built H-gate page loads the real WebGPU runner under the Pages base path',
 })
 
 test('index links and local assets respect the Pages base path', async ({ page }) => {
-  await page.route('**/qni-embed.mjs', route => route.fulfill({
+  await page.route(`**${embedPath}`, route => route.fulfill({
     contentType: 'text/javascript',
     body: 'export async function startEmbed() { return {destroy(){}} }',
   }))

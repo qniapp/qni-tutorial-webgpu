@@ -4,36 +4,39 @@ import { TutorialEmbed } from '../scripts/tutorial-embed.mjs'
 import { PinnedEmbed } from '../scripts/fetch-qni-embed.mjs'
 import { readFileSync } from 'node:fs'
 
-for (const page of TutorialEmbed.pages) {
-  test(`${page || 'index'} defaults on and accepts explicit per-page off`, () => {
-    assert.equal(TutorialEmbed.enabled(page, {}), true)
-    const key = `QNI_${(page || 'index').replaceAll('-', '_').toUpperCase()}_PREBUILT`
-    for (const value of ['0', 'false', 'OFF', ' off ']) {
-      assert.equal(TutorialEmbed.enabled(page, { [key]: value }), false)
-    }
-    assert.equal(TutorialEmbed.enabled(page, { QNI_EMBED_PREBUILT: '0' }), false)
-    assert.equal(TutorialEmbed.enabled(page, { QNI_EMBED_PREBUILT: '0', [key]: '  ' }), false)
-    assert.equal(TutorialEmbed.enabled(page, { QNI_EMBED_PREBUILT: '0', [key]: '1' }), true)
-  })
-}
+const sha = readFileSync('qni-embed.ref', 'utf8').trim()
+const directory = `qni-webgpu-prebuilt/embed-${sha}/`
 
-test('selection fetches once and gives every page the same release directory', async () => {
+test('all tutorials use one pinned directory, independent of legacy switches', async () => {
   const fetch = PinnedEmbed.fetch
+  const keys = ['QNI_EMBED_PREBUILT', ...['', 'h_gate', 'measurement_operation', 'phase_gate', 'sat', 'multi-7'].map(page =>
+    `QNI_${(page || 'index').replaceAll('-', '_').toUpperCase()}_PREBUILT`)]
+  const previous = keys.map(key => process.env[key])
   let calls = 0
   PinnedEmbed.fetch = async () => { calls++ }
   try {
-    const directories = await TutorialEmbed.directories({}, false)
-    assert.deepEqual(Object.keys(directories), TutorialEmbed.pages)
-    const sha = readFileSync('qni-embed.ref', 'utf8').trim()
-    assert.deepEqual([...new Set(Object.values(directories))], [`qni-webgpu-prebuilt/embed-${sha}/`])
+    assert.equal(await TutorialEmbed.directory(false), directory)
     assert.equal(calls, 1)
-    const mixed = await TutorialEmbed.directories({ QNI_MEASUREMENT_OPERATION_PREBUILT: '0' }, false)
-    assert.equal(mixed.measurement_operation, undefined)
-    assert.equal(mixed.inside_the_qft, directories.inside_the_qft)
-    assert.equal(mixed['multi-1'], undefined)
-    assert.equal(mixed.phase_gate, undefined)
-    assert.deepEqual(await TutorialEmbed.directories({ QNI_EMBED_PREBUILT: '0' }, false), {})
-    assert.deepEqual(await TutorialEmbed.directories({}, true), {})
-    assert.equal(calls, 2)
+    for (const value of ['0', 'false', 'OFF', ' off ', '1']) {
+      for (const key of keys) process.env[key] = value
+      assert.equal(await TutorialEmbed.directory(false), directory)
+    }
+    assert.equal(calls, 6)
+    assert.equal(TutorialEmbed.enabled, undefined)
+    assert.equal(TutorialEmbed.directories, undefined)
+  } finally {
+    PinnedEmbed.fetch = fetch
+    keys.forEach((key, i) => {
+      if (previous[i] === undefined) delete process.env[key]
+      else process.env[key] = previous[i]
+    })
+  }
+})
+
+test('preview computes the identical pinned directory without fetching', async () => {
+  const fetch = PinnedEmbed.fetch
+  PinnedEmbed.fetch = async () => { throw new Error('Preview must not fetch') }
+  try {
+    assert.equal(await TutorialEmbed.directory(true), directory)
   } finally { PinnedEmbed.fetch = fetch }
 })

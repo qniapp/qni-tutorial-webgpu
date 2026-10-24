@@ -1,6 +1,14 @@
 import { expect, test, type Locator, type Page } from '@playwright/test'
-import { readFileSync } from 'node:fs'
-import { TutorialEmbed } from '../scripts/tutorial-embed.mjs'
+import { readdirSync, readFileSync } from 'node:fs'
+
+const pagesDirectory = new URL('../src/pages/', import.meta.url)
+const pages = readdirSync(pagesDirectory).filter(file =>
+  file.endsWith('.astro') && readFileSync(new URL(file, pagesDirectory), 'utf8').includes('<qni-webgpu-circuit'),
+).flatMap(file => {
+  const slug = file.slice(0, -'.astro'.length)
+  if (slug === 'multi-[count]') return ['multi-1', 'multi-3', 'multi-7']
+  return [slug === 'index' ? '' : slug]
+})
 
 const base = '/qni-tutorial-webgpu/'
 const pin = readFileSync(new URL('../qni-embed.ref', import.meta.url), 'utf8').trim()
@@ -57,11 +65,10 @@ async function running(page: Page, count?: number) {
   return embeds
 }
 
-for (const slug of TutorialEmbed.pages as string[]) {
-  test(`selected runtime assets and real GPU startup: ${slug || 'index'}`, async ({ page }) => {
+for (const slug of pages) {
+  test(`universal pinned runtime assets and real GPU startup: ${slug || 'index'}`, async ({ page }) => {
     test.setTimeout(120_000)
-    const prebuilt = TutorialEmbed.enabled(slug)
-    const directory = prebuilt ? release : `${base}qni-webgpu/`
+    const directory = release
     const requests: string[] = []
     const responses: string[] = []
     const failures: string[] = []
@@ -82,8 +89,7 @@ for (const slug of TutorialEmbed.pages as string[]) {
     })
     page.on('pageerror', error => failures.push(error.message))
     await page.goto(`${base}${slug ? `${slug}/` : ''}`)
-    if (prebuilt) await expect(page.locator('html')).toHaveAttribute('data-qni-embed-base', release)
-    else await expect(page.locator('html')).not.toHaveAttribute('data-qni-embed-base')
+    await expect(page.locator('html')).toHaveAttribute('data-qni-embed-base', release)
     const embeds = await running(page)
     for (const embed of await embeds.all()) {
       await expect(async () => {

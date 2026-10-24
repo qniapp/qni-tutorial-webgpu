@@ -1,5 +1,8 @@
+import { embedDirectory } from 'virtual:tutorial-embed'
 import { buildQniAppUrl } from './qni-webgpu-app-url'
 import { estimateEmbedHeight } from './qni-embed-height'
+
+const embedBase = `${import.meta.env.BASE_URL}${embedDirectory}`
 
 type EmbedHandle = { destroy(): void; circuitJSON(): string; preferredHeight(widthCssPx: number): number; readStateVector(): Promise<Float32Array>; selectStep(n: number): void; selectedStep(): number | null; stepCount(): number }
 type LoadProgress = { stage: string; loaded: number; total: number | null }
@@ -23,7 +26,7 @@ type ErrorModule = {
 let errorModulePromise: Promise<ErrorModule> | undefined
 function loadErrorModule() {
   return errorModulePromise ??= (import(
-    /* @vite-ignore */ `${import.meta.env.BASE_URL}qni-webgpu/qni-embed-error.mjs`
+    /* @vite-ignore */ `${embedBase}qni-embed-error.mjs`
   ) as Promise<ErrorModule>).catch(error => {
     errorModulePromise = undefined
     throw error
@@ -317,7 +320,7 @@ class QniWebgpuCircuit extends HTMLElement {
         },
       }
       const module = await import(
-        /* @vite-ignore */ `${import.meta.env.BASE_URL}qni-webgpu/qni-embed.mjs`
+        /* @vite-ignore */ `${embedBase}qni-embed.mjs`
       ) as EmbedModule
       if (!current()) return
       const runner = await module.startEmbed(this.canvas, circuit, settings)

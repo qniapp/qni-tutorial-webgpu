@@ -1,4 +1,8 @@
 import { expect, test } from '@playwright/test'
+import { readFileSync } from 'node:fs'
+
+const pin = readFileSync(new URL('../qni-embed.ref', import.meta.url), 'utf8').trim()
+const embedPath = `/qni-tutorial-webgpu/qni-webgpu-prebuilt/embed-${pin}/qni-embed.mjs`
 import pages from './fixtures/auto-height-pages.json' with { type: 'json' }
 
 for (const width of [390, 1440]) {
@@ -12,7 +16,7 @@ for (const width of [390, 1440]) {
     test.skip(!adapter, 'WebGPU adapter unavailable; startup geometry is covered separately')
     await page.setViewportSize({ width, height: 1000 })
     // Keep the production module and GPU path; expose only layout metadata to the test.
-    await page.route('**/qni-embed.mjs', async route => {
+    await page.route(`**${embedPath}`, async route => {
       const response = await route.fetch()
       const body = (await response.text()).replace('export async function startEmbed(', 'async function startOriginalEmbed(')
         + '\nexport async function startEmbed(canvas, circuit, settings) { const runner = await startOriginalEmbed(canvas, circuit, settings); canvas.preferredHeightForTest = width => runner.preferredHeight(width); return runner; }\n'
