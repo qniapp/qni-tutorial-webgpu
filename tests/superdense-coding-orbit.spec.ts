@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test'
+import expectedPrompts from './fixtures/superdense-coding-orbit.json' with { type: 'json' }
 
-for (const width of [390, 1280]) {
+for (const width of [390, 1280, 1440]) {
   test(`superdense coding review content and layout at ${width}px`, async ({ page }) => {
     // Verify the host markup without depending on the external Orbit service.
     await page.route('https://js.withorbit.com/**', route => route.abort())
@@ -21,8 +22,9 @@ for (const width of [390, 1280]) {
       '1 個です。',
       '受け取った量子ビットと手元の量子ビットの組をベル測定します。',
     ])
-    for (const prompt of await prompts.all()) {
-      await expect(prompt).toHaveAttribute('question', /超密度符号化/)
+    for (const [index, { question, answer }] of expectedPrompts.entries()) {
+      await expect(prompts.nth(index)).toHaveAttribute('question', question)
+      await expect(prompts.nth(index)).toHaveAttribute('answer', answer)
     }
     await expect(page.locator('script[src="https://js.withorbit.com/orbit-web-component.js"]')).toHaveCount(1)
     const prose = await page.locator('.content-with-margin > p').last().boundingBox()
