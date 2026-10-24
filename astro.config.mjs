@@ -16,10 +16,13 @@ if (hGatePrebuilt) {
 
 export default defineConfig({
   site: 'https://qniapp.github.io',
-  base: '/qni-tutorial-webgpu',
+  base: process.env.QNI_TUTORIAL_MIGRATION === '1' ? '/qni' : '/qni-tutorial-webgpu',
   output: 'static',
   trailingSlash: 'always',
   vite: {
+    define: {
+      'import.meta.env.PUBLIC_QNI_TUTORIAL_MIGRATION': JSON.stringify(process.env.QNI_TUTORIAL_MIGRATION === '1'),
+    },
     plugins: [{
       name: 'h-gate-embed-pilot',
       resolveId(id) { if (id === 'virtual:h-gate-embed-pilot') return '\0virtual:h-gate-embed-pilot' },

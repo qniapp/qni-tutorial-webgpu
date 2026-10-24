@@ -1,6 +1,7 @@
 ---
 import Sidebar from '../components/Sidebar.astro'
-import { isPorted, toc } from '../data/toc'
+import { toc } from '../data/toc'
+import { href, isAvailable } from '../data/navigation'
 
 interface Props {
   title: string
@@ -11,12 +12,11 @@ interface Props {
 }
 const { title, description, section, hasCircuit = false, hasMath = false } = Astro.props
 const base = import.meta.env.BASE_URL
-const href = (slug: string) => (slug === '' ? base : `${base}${slug}/`)
 // Original prev/next follow the sidebar order; unported pages are skipped.
 const pages = toc.flatMap(chapter => chapter.pages)
 const index = pages.findIndex(page => href(page.slug) === Astro.url.pathname)
-const prev = index < 0 ? undefined : pages.slice(0, index).findLast(page => isPorted(page.slug))
-const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isPorted(page.slug))
+const prev = index < 0 ? undefined : pages.slice(0, index).findLast(page => isAvailable(page.slug))
+const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isAvailable(page.slug))
 ---
 <!doctype html>
 <html lang="ja">
