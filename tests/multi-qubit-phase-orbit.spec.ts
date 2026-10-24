@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import phaseOrbit from './fixtures/multi-qubit-phase-orbit.json' with { type: 'json' }
 
 for (const width of [390, 1280]) {
   test(`multi-qubit PHASE review markup and layout at ${width}px`, async ({ page }) => {
@@ -10,14 +11,18 @@ for (const width of [390, 1280]) {
     await expect(review).toHaveAttribute('color', 'blue')
     const prompts = review.locator('orbit-prompt')
     await expect(prompts).toHaveCount(5)
-    for (const prompt of await prompts.all()) {
+    for (const [index, prompt] of (await prompts.all()).entries()) {
+      await expect(prompt).toHaveAttribute('question', phaseOrbit[index].question)
+      await expect(prompt).toHaveAttribute('answer', phaseOrbit[index].answer)
       await expect(prompt).toHaveAttribute('question', /\S/)
       await expect(prompt).toHaveAttribute('answer', /\S/)
       expect(await prompt.evaluate(el => el.getAttributeNames().filter(name => !name.startsWith('data-astro-')).sort())).toEqual(['answer', 'question'])
       expect(await prompt.getAttribute('question')).not.toMatch(/[\u2460-\u2473]/u)
       expect(await prompt.getAttribute('answer')).not.toMatch(/[\u2460-\u2473]/u)
     }
-    await expect(page.locator('script[src="https://js.withorbit.com/orbit-web-component.js"]')).toHaveCount(1)
+    const orbitScript = page.locator('script[src="https://js.withorbit.com/orbit-web-component.js"]')
+    await expect(orbitScript).toHaveCount(1)
+    await expect(orbitScript).toHaveAttribute('type', 'module')
     const prose = await page.locator('.content-with-margin > p').last().boundingBox()
     const box = await review.boundingBox()
     expect(prose).not.toBeNull()
