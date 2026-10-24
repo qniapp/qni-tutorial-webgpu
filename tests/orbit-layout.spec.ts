@@ -8,7 +8,7 @@ for (const width of [390, 639, 640, 767, 768, 1280, 1920]) {
     // The host owns the column width, even when the third-party embed is offline.
     await page.route('https://js.withorbit.com/**', route => route.abort())
     await page.setViewportSize({ width, height: 900 })
-    for (const slug of ['h_gate', 'superposition', 'cpu_vs_qpu_operations']) {
+    for (const slug of ['h_gate', 'superposition', 'cpu_vs_qpu_operations', 'quantum_key_distribution']) {
       await page.goto(`/qni-tutorial-webgpu/${slug}/`)
       const prose = await page.locator('.content-with-margin > p').last().boundingBox()
       const review = await page.locator('orbit-reviewarea').boundingBox()
