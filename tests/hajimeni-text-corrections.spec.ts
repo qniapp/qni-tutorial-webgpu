@@ -21,7 +21,11 @@ for (const width of [390, 1440]) {
     const text = paragraphs.join('\n').replace(/\s+/g, ' ')
     for (const expected of [
       '量子コンピュータのアイデア',
-      '電磁気学に基づいた基本素子',
+      '電磁気学に基づいたトランジスタなどの電子回路',
+      '原子や電子、光子の量子的な状態をビットとして使います',
+      '1,000 回ほどの検索で見つかります',
+      '桁違いに速く',
+      '十分な規模の誤り耐性量子コンピュータが実現すれば、現在広く使われている公開鍵暗号は破られてしまいます',
       'あってもいいのではないでしょうか?',
       'ラブ・グローバー',
       '特定の数学問題 (長さ数百桁の数の因数分解など) を',
@@ -35,7 +39,12 @@ for (const width of [390, 1440]) {
       'Quantum Computer',
       'Python や JavaScript',
     ]) expect(text).toContain(expected)
-    expect(text).not.toMatch(/シミューレータ|基いた|アイディア|ロブ・グローバー|1 問 1 答形式|オープンソースな/)
+    expect(text).not.toMatch(/シミューレータ|基いた|アイディア|ロブ・グローバー|1 問 1 答形式|オープンソースな|株価の下落|指数関数的に速く|約 1,000 回|暗号解読者を阻止できません/)
+    const feynmanNote = page.locator('#margin-note-feynman + .margin-note')
+    await expect(feynmanNote).toContainText('International Journal of Theoretical Physics 21, 467–488 (1982), p. 486（意訳）')
+    await expect(feynmanNote.locator('a')).toHaveAttribute('href', 'https://doi.org/10.1007/BF02650179')
+    await expect(page.locator('img[src$="bit_capacitor_vs_quantum.svg"]')).toHaveAttribute('alt', /ビットの実装例であるコンデンサ/)
+    await expect(page.locator('img[src$="quantum_search_vs_linear.svg"]')).toHaveAttribute('alt', /1,000 回ほどの検索/)
     // A floated note is a separate passage: do not concatenate its final
     // sentence with the surrounding paragraph when checking sentence spacing.
     const passages = await page.locator('main p, main .margin-note').evaluateAll(elements => elements.map(element => {
