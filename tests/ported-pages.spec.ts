@@ -22,7 +22,10 @@ import bb84 from './fixtures/bb84_protocol-original.json' with { type: 'json' }
 import multiCircle from './fixtures/multi_qubit_circle_notation-original.json' with { type: 'json' }
 import multiSuperposition from './fixtures/multi_qubit_superposition-original.json' with { type: 'json' }
 import multiOperation from './fixtures/multi_qubit_operation-original.json' with { type: 'json' }
-import pairs from './fixtures/operator_pair-original.json' with { type: 'json' }
+import pairsOriginal from './fixtures/operator_pair-original.json' with { type: 'json' }
+import pairsOrbit from './fixtures/operator-pair-orbit.json' with { type: 'json' }
+// Keep the original page fixture intact; only the new review prompts differ.
+const pairs = { ...pairsOriginal, orbitPrompts: pairsOrbit.length, orbit: pairsOrbit }
 import randomByte from './fixtures/random_byte_generator-original.json' with { type: 'json' }
 import bb84Circuit from './fixtures/bb84_circuit-original.json' with { type: 'json' }
 import multiPhase from './fixtures/multi_qubit_phase_gate-original.json' with { type: 'json' }

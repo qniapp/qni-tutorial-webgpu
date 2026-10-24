@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import expectedPrompts from './fixtures/operator-pair-orbit.json' with { type: 'json' }
 
 for (const width of [390, 1440]) {
   test(`operator pair review markup and column at ${width}px`, async ({ page }) => {
@@ -10,18 +11,13 @@ for (const width of [390, 1440]) {
     await expect(review).toHaveAttribute('color', 'blue')
     const prompts = review.locator('orbit-prompt')
     await expect(prompts).toHaveCount(4)
-    const answers = [
-      '右から n ビット目だけを反転し、ほかの桁はそのままにします。',
-      '異なるのは n ビット目だけで、その桁の重みが $2^{n-1}$ だからです。',
-      '100 です。',
-      '対象外の右から 3 ビット目も異なるからです。',
-    ]
-    for (const [index, answer] of answers.entries()) {
+    for (const [index, { question, answer }] of expectedPrompts.entries()) {
       await expect(prompts.nth(index)).toHaveAttribute('answer', answer)
-      await expect(prompts.nth(index)).toHaveAttribute('question', /\S/)
+      await expect(prompts.nth(index)).toHaveAttribute('question', question)
     }
-    await expect(page.locator('script[src="https://js.withorbit.com/orbit-web-component.js"]'))
-      .toHaveCount(1)
+    const script = page.locator('script[src="https://js.withorbit.com/orbit-web-component.js"]')
+    await expect(script).toHaveCount(1)
+    await expect(script).toHaveAttribute('type', 'module')
     const proseBox = await page.locator('.content-with-margin > p').last().boundingBox()
     const reviewBox = await review.boundingBox()
     expect(proseBox).not.toBeNull()
