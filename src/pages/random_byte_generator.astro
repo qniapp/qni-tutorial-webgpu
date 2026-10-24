@@ -156,6 +156,30 @@ const base = import.meta.env.BASE_URL
   ゲートで作ります。 非常によく使うパターンですので覚えておきましょう。
 </p>
 
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="このチュートリアルのランダムバイト生成回路では、すべて 0 に初期化した 8 量子ビットを均一な重ね合わせにするため、各ビットにどのゲートを 1 回ずつ適用しますか?"
+    answer="H ゲートです。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="ランダムバイト生成回路で、全ビットへの H ゲートの後に行う測定は、何を取り出すための操作ですか?"
+    answer="重ね合わせの中から、1 個の 8 ビットの値を乱数として取り出すためです。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="すべて 0 に初期化した 8 量子ビットの各ビットに H ゲートを 1 回ずつ適用し、0/1 基底で全ビットを測定します。特定の値（たとえば 42）が出る確率は?"
+    answer="1/256 です。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="000 に初期化した 3 量子ビットに H を 1 ビット目から順に適用します。3 ビット目への H で、測定可能な値が 4 通りから 8 通りに増えるのはなぜですか?"
+    answer="確率を持つ各状態が、3 ビット目だけ異なる 2 状態への等しい重ね合わせになるからです。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="ランダムバイト生成回路で、異なるビットの H ゲートを同じ列に並べても結果が変わらないのはなぜですか?"
+    answer="それぞれ別のビットだけに作用し、適用順序を入れ替えても全体への作用が同じだからです。"
+  ></orbit-prompt>
+</orbit-reviewarea>
+
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
 </TutorialLayout>
 <style>
   .my-5 { margin-block:20px; } .flex { display:flex; } .flex-row { flex-direction:row; } .flex-col { flex-direction:column; }
