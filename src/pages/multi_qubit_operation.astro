@@ -146,12 +146,23 @@ const base = import.meta.env.BASE_URL
 </ul>
 
 <p>
-  演算ペアの決めかたは一般に、\(n\) 番目のビットにゲートを置くと \((n - 1)^2\)
-  離れた円同士がペアとなります。 たとえば 3 ビット目にゲートを置いた場合、\((3 - 1)^2 = 4\) なので 4
+  演算ペアの決めかたは一般に、\(n\) 番目のビットにゲートを置くと \(2^&#123;n - 1&#125;\)
+  離れた円同士がペアとなります。 たとえば 3 ビット目にゲートを置いた場合、\(2^&#123;3 - 1&#125; = 4\) なので 4
   つ離れた円同士のペアを考えれば OK です。
 </p>
 
 <p>なぜこのようになるかは、次項で詳しく説明します。</p>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt question="Qni の複数量子ビットの状態ベクトルで、1 量子ビットゲートの演算ペアを決めるのは、回路上の何ですか?" answer="ゲートを置くワイヤの位置（ビット番号）です。"></orbit-prompt>
+  <orbit-prompt question="Qni の 3 量子ビット回路で、一番上のワイヤに X ゲートを置くと、|6⟩ の振幅はどの状態の振幅と入れ替わりますか? 状態ラベルは十進数です。" answer="|7⟩ の振幅です。"></orbit-prompt>
+  <orbit-prompt question="Qni の 3 量子ビット回路で、上から 2 番目のワイヤに X ゲートを置くと、|1⟩ の振幅はどの状態の振幅と入れ替わりますか? 状態ラベルは十進数です。" answer="|3⟩ の振幅です。"></orbit-prompt>
+  <orbit-prompt question="Qni の 3 量子ビット回路で、上から 3 番目のワイヤに X ゲートを置くと、|6⟩ の振幅はどの状態の振幅と入れ替わりますか? 状態ラベルは十進数です。" answer="|2⟩ の振幅です。"></orbit-prompt>
+  <orbit-prompt question="Qni の状態ベクトルの円を十進数ラベルの昇順に並べたとき、上から n 番目のワイヤに置いた 1 量子ビットゲートの演算ペアでは、ラベルの差はいくつですか? ワイヤは 1 番目から数えます。" answer="$2^{n-1}$ です。"></orbit-prompt>
+  <orbit-prompt question="複数量子ビットの状態ベクトルに X ゲートを適用します。演算ペアを決めた後、各ペアの 2 つの振幅にどの操作を行いますか?" answer="2 つの振幅を入れ替えます。"></orbit-prompt>
+</orbit-reviewarea>
+
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
 
 </TutorialLayout>
 <style>
