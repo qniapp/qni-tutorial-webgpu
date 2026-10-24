@@ -1,6 +1,6 @@
 # Introduction migration build (phase 1 of qniapp/qni #637)
 
-`QNI_TUTORIAL_MIGRATION=1` opts into `/qni/` assets and navigation. Without it, the experimental `/qni-tutorial-webgpu/` site and default-on prebuilt H-gate pilot are unchanged. Only introduction is intended for integration; do not copy the entire Astro output over the old site.
+`QNI_TUTORIAL_MIGRATION=1` opts into `/qni/` assets and navigation. Without it, the experimental `/qni-tutorial-webgpu/` site and upstream default-on per-page prebuilt embeds are unchanged. Only introduction is intended for integration; do not copy the entire Astro output over the old site.
 
 ## Reproduce
 
@@ -18,12 +18,12 @@ pnpm run test:unit
 pnpm run build
 pnpm test
 mkdir -p .astro/migration-dist
-QNI_TUTORIAL_MIGRATION=1 QNI_H_GATE_PREBUILT=0 pnpm run build --outDir .astro/migration-dist
+QNI_TUTORIAL_MIGRATION=1 QNI_EMBED_PREBUILT=0 QNI_H_GATE_PREBUILT=0 pnpm run build --outDir .astro/migration-dist
 ```
 
-Use a same-filesystem output directory: Astro's asset rename fails with EXDEV when `/tmp` is a different filesystem. `QNI_H_GATE_PREBUILT=0` avoids the unrelated H-page release fetch for migration builds. The ordinary build still fetches and verifies the default release through `gh`.
+Use a same-filesystem output directory: Astro's asset rename fails with EXDEV when `/tmp` is a different filesystem. `QNI_EMBED_PREBUILT=0` selects the bundled runtime globally; `QNI_H_GATE_PREBUILT=0` also preserves the explicit H-page override used before reconciliation. Upstream #36 enables prebuilt introduction and other pages by default, so disabling only H no longer avoids the release fetch. Per-page overrides remain supported and unmodified. The ordinary build still fetches and verifies the default release through `gh`.
 
-Pins: bundled source `4f4a7f597791868149e9bc3fd8740699190bd54a` (`qni-webgpu.ref`); default H-page release `33366e270556c69201da901612cb522b4e18e2ee` (`qni-embed.ref`). Dependencies are locked by `pnpm-lock.yaml`: Astro 7.3.8, Playwright 1.63.0, TypeScript 6.0.3, MathJax 3.2.2. Local evidence used Node 26.12.0, pnpm 9.15.9, Rust 1.94.1 and Trunk 0.21.14; upstream's toolchain selects `stable`, not an exact Rust version.
+Pins: bundled source `4f4a7f597791868149e9bc3fd8740699190bd54a` (`qni-webgpu.ref`); default per-page release `33366e270556c69201da901612cb522b4e18e2ee` (`qni-embed.ref`). Dependencies are locked by `pnpm-lock.yaml`: Astro 7.3.8, Playwright 1.63.0, TypeScript 6.0.3, MathJax 3.2.2. Local evidence used Node 26.12.0, pnpm 9.15.9, Rust 1.94.1 and Trunk 0.21.14; upstream's toolchain selects `stable`, not an exact Rust version.
 
 ## Parent integration handoff
 
@@ -37,12 +37,24 @@ Both `/qni/` and `/qni/index.html` serve this index. Home points to `/qni/`, Nex
 - `pnpm run test:migration` passed: produced HTML asset URLs/files, legacy Next and home URLs, seven inert entries, desktop 1280px and mobile 390px entry points, no horizontal overflow, browser Next destination and history Back, and default-build URLs/new-only links.
 - This standalone browser test intentionally observes a 404 at the legacy destination. It does not fabricate an old page. Actual old `qpu.html` and its backlink require the phase 2 composed preview. Its screenshot checks are static, not GPU validation.
 - Screenshots: `test-results/migration/sidebar-1280.png` and `sidebar-390.png` after the targeted test. This session also retained copies in `.astro/migration-evidence/` before the full suite cleared test-results. Mobile screenshot inspected: unavailable entries remain legible and do not overflow.
-- `pnpm run typecheck`, `pnpm run test:unit`, normal `pnpm run build`, and final `pnpm test` passed (638 browser tests). Real GPU evidence on the default build: adapter present, runner started, amplitudes `[1,0,0,0]`, no reported console errors, page errors or 404s. This is headless Chromium/SwiftShader, not physical mobile GPU acceptance or composed migration GPU acceptance.
+- Before reconciliation, `pnpm run typecheck`, `pnpm run test:unit`, normal `pnpm run build`, and `pnpm test` passed on base `a34f38a` (638 browser tests). Real GPU evidence on the default build: adapter present, runner started, amplitudes `[1,0,0,0]`, no reported console errors, page errors or 404s. This is headless Chromium/SwiftShader, not physical mobile GPU acceptance or composed migration GPU acceptance.
 - An initial full-suite invocation timed out and left its preview process, which was stopped. The next run had 636 passes and two failures because a bundled-only build was paired with default prebuilt test expectations. A normal prebuilt build followed by the final full suite passed all 638 tests; no test expectations were weakened.
 - No lint script is configured. `git diff --check` passed. No publication or workflow changes, old checkout edits, deployment, or composed preview were performed.
 
-## Baseline blocker
+## Baseline reconciliation
 
-The worker was explicitly fast-forwarded from `1b54f90ae56a1ceecaeb7158ec94ad3c33b0c13c` to `a34f38ab00d58c0a9079f1618a13d92eb944825c` before implementation, adding upstream #30 (pinned embed fetcher and H-gate switch). Local main was not changed. All above tests apply to that base.
+The worker was explicitly fast-forwarded from `1b54f90ae56a1ceecaeb7158ec94ad3c33b0c13c` to `a34f38ab00d58c0a9079f1618a13d92eb944825c` before implementation, adding upstream #30 (pinned embed fetcher and H-gate switch). Local main was not changed. The original 638-test result applies to that base.
 
-The final remote check found main advanced to `e8c59d5e63e702b92bc64f98bf5f3ed3c6f6371d`, merging #36 / `53181c9` (per-page embed switches and T2 acceptance). It overlaps config, layout and package files. No merge/rebase or main reconciliation was attempted. Reconciliation and retesting against that new baseline need direction before this branch can be declared ready. This is not completion of #637.
+The first final remote check found main advanced to `e8c59d5e63e702b92bc64f98bf5f3ed3c6f6371d`, merging #36 / `53181c9` (per-page embed switches and T2 acceptance). Implementation commit `b5da2078f09117fff69457a50c13aabfc90d63b7` was preserved and the worker initially reported blocked.
+
+The supervisor then explicitly instructed merging that observed upstream commit on the worker branch, not rebasing/resetting. Config auto-merged; package/layout conflicts were resolved by retaining upstream embed selection/imports and unit coverage alongside the migration navigation helper and test command. No product policy changed. Focused migration checks now explicitly disable all prebuilt pages via upstream's global switch; ordinary builds retain the upstream default policy.
+
+Post-reconciliation commands all exited 0:
+
+- `pnpm run typecheck`
+- `pnpm run test:migration` (build-output and static browser checks described above)
+- `pnpm run test:unit` (Node URL/policy tests and 46 pinned-embed Playwright tests)
+- `pnpm run build` (normal default-on release-backed build)
+- `pnpm test`: **680 passed**, including upstream T2 runtime, measurement/selected-step, multi-circuit and real GPU coverage. This supersedes the earlier 638 count for the merged result.
+
+The generated migration output and screenshots were refreshed after reconciliation. A screenshot-copy attempt immediately after unit tests found that Playwright had cleared test-results; rerunning the focused migration test refreshed the evidence. No test failure was hidden by that copy operation. Final remote main remained `e8c59d5` and is an ancestor of the merged worker result. Local main and siblings remain untouched. No push, deployment or landing occurred. This is phase 1 only, not completion of #637.

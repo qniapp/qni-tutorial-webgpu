@@ -12,7 +12,7 @@ test('opt-in introduction uses the retained tutorial URLs and assets', async () 
   const output = await mkdtemp(join(process.cwd(), '.astro/migration-'))
   try {
     execFileSync('pnpm', ['run', 'build', '--outDir', output], {
-      env: { ...process.env, QNI_TUTORIAL_MIGRATION: '1', QNI_H_GATE_PREBUILT: '0' },
+      env: { ...process.env, QNI_TUTORIAL_MIGRATION: '1', QNI_EMBED_PREBUILT: '0', QNI_H_GATE_PREBUILT: '0' },
       stdio: 'pipe',
     })
     const html = await readFile(join(output, 'index.html'), 'utf8')
@@ -36,7 +36,7 @@ test('opt-in introduction uses the retained tutorial URLs and assets', async () 
     }
     await checkBrowser(output)
     execFileSync('pnpm', ['run', 'build', '--outDir', output], {
-      env: { ...process.env, QNI_TUTORIAL_MIGRATION: '0', QNI_H_GATE_PREBUILT: '0' }, stdio: 'pipe',
+      env: { ...process.env, QNI_TUTORIAL_MIGRATION: '0', QNI_EMBED_PREBUILT: '0', QNI_H_GATE_PREBUILT: '0' }, stdio: 'pipe',
     })
     const ordinary = await readFile(join(output, 'index.html'), 'utf8')
     assert.match(ordinary, /href="\/qni-tutorial-webgpu\/qpu\/"/)

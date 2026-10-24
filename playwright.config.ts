@@ -1,12 +1,14 @@
 import { chromium, defineConfig } from '@playwright/test'
 
+const port = Number(process.env.QNI_TEST_PORT ?? 4322)
+
 export default defineConfig({
   testDir: './tests',
   testIgnore: '**/pinned-embed-mobile.spec.ts',
   workers: 1,
   timeout: 60_000,
   use: {
-    baseURL: 'http://127.0.0.1:4322',
+    baseURL: `http://127.0.0.1:${port}`,
     viewport: { width: 1280, height: 900 },
     headless: true,
     launchOptions: {
@@ -25,8 +27,8 @@ export default defineConfig({
     },
   },
   webServer: {
-    command: 'pnpm run preview --host 127.0.0.1 --port 4322 --ignore-lock',
-    url: 'http://127.0.0.1:4322/qni-tutorial-webgpu/',
+    command: `pnpm run preview --host 127.0.0.1 --port ${port} --ignore-lock`,
+    url: `http://127.0.0.1:${port}/qni-tutorial-webgpu/`,
     reuseExistingServer: false,
   },
 })
