@@ -1,5 +1,7 @@
 ---
 import Sidebar from '../components/Sidebar.astro'
+import PinnedEmbed from '../components/PinnedEmbed.astro'
+import { embedDirectories } from 'virtual:tutorial-embed'
 import { isPorted, toc } from '../data/toc'
 
 interface Props {
@@ -11,6 +13,8 @@ interface Props {
 }
 const { title, description, section, hasCircuit = false, hasMath = false } = Astro.props
 const base = import.meta.env.BASE_URL
+const slug = Astro.url.pathname.slice(base.length).replace(/\/$/, '')
+const embedDirectory = hasCircuit ? embedDirectories[slug] : undefined
 const href = (slug: string) => (slug === '' ? base : `${base}${slug}/`)
 // Original prev/next follow the sidebar order; unported pages are skipped.
 const pages = toc.flatMap(chapter => chapter.pages)
@@ -43,7 +47,8 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isPorte
       <script is:inline id="MathJax-script" defer src={`${base}mathjax/tex-chtml.js`}></script>
     </Fragment>}
     <slot name="head" />
-    {hasCircuit && <script is:inline define:vars={{ qniEmbedBase: `${base}qni-webgpu/` }}>
+    {embedDirectory && <PinnedEmbed directory={embedDirectory} />}
+    {hasCircuit && !embedDirectory && <script is:inline define:vars={{ qniEmbedBase: `${base}qni-webgpu/` }}>
       if (typeof navigator.gpu?.requestAdapter === 'function') {
         for (const file of ['qni-embed.mjs', 'qni-web.js', 'qni-web_bg.wasm']) {
           const link = document.createElement('link')

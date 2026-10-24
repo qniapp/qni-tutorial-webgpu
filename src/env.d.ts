@@ -1,6 +1,6 @@
 /// <reference types="astro/client" />
-declare module 'virtual:h-gate-embed-pilot' {
-  export const embedDirectory: string | null
+declare module 'virtual:tutorial-embed' {
+  export const embedDirectories: Record<string, string>
 }
 declare module 'virtual:h-gate-icon' {
   export const svg: string
