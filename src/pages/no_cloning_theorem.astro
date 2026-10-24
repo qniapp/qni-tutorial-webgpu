@@ -52,4 +52,11 @@ const base = import.meta.env.BASE_URL
   そんな夢のようなニュース、聞いたことありませんよね?
 </p>
 
+  <orbit-reviewarea color="blue">
+    <orbit-prompt question="クローン禁止定理が禁じる、未知の量子状態に対する操作は何ですか?" answer="任意の未知の状態を、同じ装置で常に完全に複製する操作です。"></orbit-prompt>
+    <orbit-prompt question="量子ビットを計算基底（0/1）で測定し、その結果を別の量子ビットに WRITE しても、測定前の未知の状態の複製にならないのはなぜですか?" answer="測定結果の 0/1 だけでは、測定前の振幅の大きさや位相を再現できないからです。"></orbit-prompt>
+    <orbit-prompt question="同じ状態に準備された多数の量子ビットを計算基底（0/1）で測定したとき、0 が出る確率を測定回数からどう推定しますか?" answer="0 が出た回数を、測定の総回数で割ります。"></orbit-prompt>
+    <orbit-prompt question="もし未知の量子ビットを好きなだけ完全に複製できたら、振幅の大きさの 2 乗に符号化したデータを読み出せてしまうのはなぜですか?" answer="多数の複製を測定すれば、その確率を任意の精度で推定できるからです。"></orbit-prompt>
+  </orbit-reviewarea>
+  <script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
 </TutorialLayout>
