@@ -142,7 +142,7 @@ const base = import.meta.env.BASE_URL
     S† の右の列は何になるでしょうか? また、実数だけの Ry では、随伴を作る 2 段階のうちどちらで数が変わるでしょうか?
     予想してから、上の図の「ゲート」スライダーで S† を、下の図の「調べるユニタリ行列 U」スライダーで Ry(π/3) を選び、「随伴を作る手順」スライダーで変化を確かめましょう。
   </p>
-  <orbit-reviewarea color="blue">
+  <orbit-reviewarea color="brown">
     <orbit-prompt question="0/1 基底で書いた 1 量子ビットのゲート行列の左の列は何を表す?" answer="入力が |0⟩ のときの出力の振幅ベクトルです。"></orbit-prompt>
     <orbit-prompt cloze="行列の随伴は、転置してから各成分の{複素共役}を取って作ります。"></orbit-prompt>
     <orbit-prompt question="S† の右の列は?" answer="上が 0、下が −i です。"></orbit-prompt>
@@ -164,5 +164,5 @@ const base = import.meta.env.BASE_URL
   @media (max-width:420px) { .math-display { font-size:0.85rem; } }
   ol { max-width:76ch; padding-left:24px; }
   li + li { margin-top:16px; }
-  @media (min-width:640px) { ol { width:58.333333%; margin-right:auto; } }
+  @media (min-width:640px) { ol { width:var(--prose-width); margin-right:auto; } }
 </style>

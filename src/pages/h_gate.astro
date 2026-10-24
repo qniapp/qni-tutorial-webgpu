@@ -45,7 +45,7 @@ const base = import.meta.env.BASE_URL
   </div>
   <p>これを頭の中だけで想像するのは大変なので、さしあたっては Qni に計算をおまかせして OK です。実は、円の図だけでおおまかな変化を導き出すこともできるのですが、そのためには H ゲートを行列で表したもの (ゲートの行列表現) の知識が必要になります。詳しい方法はのちほど紹介します。</p>
 
-  <orbit-reviewarea color="blue">
+  <orbit-reviewarea color="brown">
     <orbit-prompt question="重ね合わせ状態を作る量子ゲートの名前は?" answer="H ゲート"></orbit-prompt>
     <orbit-prompt question="H ゲートの作用は?" answer="重ね合わせ状態を作る"></orbit-prompt>
     <orbit-prompt question="H ゲートの別名は?" answer="アダマールゲート"></orbit-prompt>
@@ -65,7 +65,7 @@ const base = import.meta.env.BASE_URL
   .qc-transition :global(qubit-circle) { margin-right: 0; }
   .qc-figure-scroll { overflow-x: auto; }
   .qc-figure-scroll .qc-transition { justify-content: flex-start; }
-  @media (min-width: 640px) { .qc-figure:not(.qc-figure-scroll) { width: 58.333333%; } }
+  @media (min-width: 640px) { .qc-figure:not(.qc-figure-scroll) { width: var(--prose-width); } }
   .qc-operation { position: relative; width: 64px; height: 32px; justify-content: center; color: #DAD8CE; }
   .qc-operation > :global(svg) { position: absolute; width: 64px; height: 13px; }
   .qc-operation :global(h-gate) { font-size: 24px; z-index: 1; }
