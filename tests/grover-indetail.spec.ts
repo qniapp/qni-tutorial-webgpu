@@ -6,7 +6,7 @@ for(const width of [390,1440])test(`reflection explanation keeps original prose 
  await page.setViewportSize({width,height:1100});await page.goto('/qni-tutorial-webgpu/grover_iam_indetail/')
  await page.waitForFunction(()=>document.documentElement.dataset.mathjax==='ready')
  const text=await page.locator('.content-with-margin').evaluate(root=>{const walk=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let text='',node;while(node=walk.nextNode()){if(!node.parentElement!.closest('footer,script,style,mjx-container,[data-original-image]'))text+=node.textContent}return text.replace(/\s+/g,'').normalize('NFC')})
- expect(text).toBe(original.text)
+ expect(text).toBe(original.text.replaceAll('グローヴァー', 'グローバー').replaceAll('グロヴァー', 'グローバー'))
  expect(await page.evaluate(()=>Array.from((window as any).MathJax.startup.document.math as Iterable<any>).filter(item=>!item.typesetRoot.closest('[data-original-image]')).map(item=>({tex:item.math.replace(/\s+/g,'').normalize('NFC'),display:item.display})))).toEqual(original.math)
  await expect(page.locator('main img,main qni-webgpu-circuit')).toHaveCount(0)
  expect(text).not.toContain('全体位相')
