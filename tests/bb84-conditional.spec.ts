@@ -1,4 +1,11 @@
 import { expect, test } from '@playwright/test'
+import { readFileSync } from 'node:fs'
+
+const pin = readFileSync(new URL('../qni-embed.ref', import.meta.url), 'utf8').trim()
+const embedPath = `/qni-tutorial-webgpu/qni-webgpu-prebuilt/embed-${pin}/qni-embed.mjs`
+
+type Runner = { readStateVector(): Promise<Float32Array>; selectStep(step: number): void }
+declare global { interface Window { __conditionalRunner: Runner } }
 import original from './fixtures/bb84_circuit-original.json' with { type: 'json' }
 
 for (const width of [390, 1440]) {
@@ -30,18 +37,24 @@ for (const [name, input, expected] of [
   ['unset', { cols: [['|0>', '|0>'], [1, 'X<b']] }, [1, 0, 0, 0, 0, 0, 0, 0]],
 ] as const) {
   test(`real GPU conditional gate is ${name}`, async ({ page }) => {
-    await page.goto(`/qni-tutorial-webgpu/app/#${encodeURIComponent(JSON.stringify(input))}`)
-    // qni-webgpu 992eb80 opens the standalone app at step 0, like the original Qni.
-    // Click above the wires to the right of the circuit to select its final step.
-    await expect.poll(async () => {
-      await page.mouse.click(900, 225)
-      return page.evaluate(async () => {
-        try {
-          const modulePath = '/qni-tutorial-webgpu/app/qni-web.js'
-          const module = await import(modulePath) as { read_state_vector(): Promise<Float32Array> }
-          return Array.from(await module.read_state_vector()).map(value => Math.round(value * 1e5) / 1e5)
-        } catch { return [] }
-      })
-    }, { timeout: 20_000 }).toEqual(expected)
+    // Isolate the real pinned runner from tutorial-owned canvases and preloads.
+    await page.route('**/qni-tutorial-webgpu/conditional-runner/', route => route.fulfill({
+      contentType: 'text/html',
+      body: '<!doctype html><canvas width="1000" height="700" style="width:1000px;height:700px"></canvas>',
+    }))
+    await page.goto('/qni-tutorial-webgpu/conditional-runner/')
+    await page.evaluate(async ({ embedPath, circuit }) => {
+      const module = await import(embedPath) as {
+        startEmbed(canvas: HTMLCanvasElement, circuit: string, settings: { showStatePanel: boolean }): Promise<Runner>
+      }
+      const runner = await module.startEmbed(document.querySelector('canvas')!, circuit, { showStatePanel: true })
+      window.__conditionalRunner = runner
+      runner.selectStep(JSON.parse(circuit).cols.length - 1)
+    }, { embedPath, circuit: JSON.stringify(input) })
+    await expect.poll(() => page.evaluate(async () => {
+      try {
+        return Array.from(await window.__conditionalRunner.readStateVector()).map(value => Math.round(value * 1e5) / 1e5)
+      } catch { return [] }
+    }), { timeout: 20_000 }).toEqual(expected)
   })
 }

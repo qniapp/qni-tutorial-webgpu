@@ -1,6 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
 import { readFileSync } from 'node:fs'
-import { TutorialEmbed } from '../scripts/tutorial-embed.mjs'
 import { QNI_APP_BASE_URL } from '../src/components/qni-webgpu-app-url'
 
 type MockState = {
@@ -27,12 +26,8 @@ declare global {
   }
 }
 
-const bundledEmbedPath = '/qni-tutorial-webgpu/qni-webgpu/qni-embed.mjs'
 const releasePin = readFileSync(new URL('../qni-embed.ref', import.meta.url), 'utf8').trim()
-// boot() defaults to h_gate. Match the default-on build flag with one exact URL.
-const embedPath = TutorialEmbed.enabled('h_gate')
-  ? `/qni-tutorial-webgpu/qni-webgpu-prebuilt/embed-${releasePin}/qni-embed.mjs`
-  : bundledEmbedPath
+const embedPath = `/qni-tutorial-webgpu/qni-webgpu-prebuilt/embed-${releasePin}/qni-embed.mjs`
 const mockModule = `
   export async function startEmbed(canvas, circuit, settings) {
     const mock = window.__qniMock;
@@ -68,9 +63,8 @@ async function boot(page: Page, options: { gpu?: boolean; adapterAvailable?: boo
     window.__qniHeld = held
     window.__qniFail = false
   }, { gpu: options.gpu !== false, adapterAvailable: options.adapterAvailable !== false, held: options.held ?? false })
-  // Intercept either runtime directory; exact request/call assertions below
-  // independently verify the page selected the correct one. Errors come from dist.
-  await page.route('**/qni-embed.mjs', async route => {
+  // Intercept only the pinned runtime. Errors come from the actual release.
+  await page.route(`**${embedPath}`, async route => {
     requests.push(new URL(route.request().url()).pathname)
     await route.fulfill({
       status: options.importFails ? 500 : 200,
@@ -121,12 +115,12 @@ test('uses the deployed base URL and exposes an accessible canvas', async ({ pag
   })
 })
 
-test('non-pilot page keeps the exact bundled runtime URL', async ({ page }) => {
+test('every page uses the exact pinned runtime URL', async ({ page }) => {
   const requests = await boot(page, { slug: 'phase_gate' })
   await running(page)
   const state = await snapshot(page)
   expect({ requests, state: state.state, urls: state.calls.map(call => call.url) }).toEqual({
-    requests: [bundledEmbedPath], state: 'running', urls: [bundledEmbedPath],
+    requests: [embedPath], state: 'running', urls: [embedPath],
   })
 })
 

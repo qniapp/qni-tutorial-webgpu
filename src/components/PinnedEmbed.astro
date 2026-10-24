@@ -1,24 +1,9 @@
 ---
-import { readFileSync } from 'node:fs'
-import ts from 'typescript'
-
-// Compile a page-local copy outside Vite's shared client graph. Importing a second
-// client entry would extract common chunks and change every tutorial script URL.
-// The ordinary component and its per-runner readStateVector stay unchanged.
-const { directory } = Astro.props as { directory: string | null }
-const embedBase = `${import.meta.env.BASE_URL}${directory ?? 'qni-webgpu/'}`
-const source = (name: string) => readFileSync(`src/components/${name}.ts`, 'utf8')
-const component = source('qni-webgpu-circuit')
-  .replace(/^import .*$/gm, '')
-  .replaceAll('${import.meta.env.BASE_URL}qni-webgpu/', '${embedBase}')
-  .replace('export {}', '')
-const helpers = ['qni-webgpu-app-url', 'qni-embed-height'].map(name => source(name).replace(/^export /gm, '')).join('\n')
-const script = ts.transpileModule(`(() => {\nconst embedBase = ${JSON.stringify(embedBase)};\ndocument.documentElement.dataset.qniEmbedBase = embedBase;\n${helpers}\n${component}\n})();`, {
-  compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.None },
-}).outputText
+import { embedDirectory } from 'virtual:tutorial-embed'
+const embedBase = `${import.meta.env.BASE_URL}${embedDirectory}`
 ---
-<script is:inline set:html={script} />
 <script is:inline define:vars={{ qniEmbedBase: embedBase }}>
+  document.documentElement.dataset.qniEmbedBase = qniEmbedBase
   if (typeof navigator.gpu?.requestAdapter === 'function') {
     for (const file of ['qni-embed.mjs', 'qni-web.js', 'qni-web_bg.wasm']) {
       const link = document.createElement('link')

@@ -5,7 +5,7 @@ import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
-const temporary = await mkdtemp(join(tmpdir(), 'qni-mobile-'))
+const temporary = await mkdtemp(join(process.env.TMPDIR ?? tmpdir(), 'qni-mobile-'))
 const outDir = join(temporary, 'site')
 let child
 const stop = () => child?.kill('SIGTERM')
@@ -29,13 +29,9 @@ try {
   await symlink(join(root, 'node_modules'), join(temporary, 'node_modules'), 'dir')
   // Fetch and verify the actual release again: never relabel bundled bytes or
   // substitute a fixture verifier in this GPU acceptance path.
-  await run(['run', 'build', '--outDir', outDir], {
-    ...process.env,
-    QNI_EMBED_PREBUILT: '1',
-    QNI_H_GATE_PREBUILT: '1',
-  })
+  await run(['run', 'build', '--outDir', outDir], { ...process.env })
   // Preview serves the completed build without triggering another fetch.
-  const previewEnv = { ...process.env, QNI_MOBILE_OUT_DIR: outDir, QNI_EMBED_PREBUILT: '0', QNI_H_GATE_PREBUILT: '0' }
+  const previewEnv = { ...process.env, QNI_MOBILE_OUT_DIR: outDir }
   delete previewEnv.GH_TOKEN
   await run(['exec', 'playwright', 'test', '--config', 'playwright.pinned-embed-mobile.config.ts'], previewEnv)
 } finally {

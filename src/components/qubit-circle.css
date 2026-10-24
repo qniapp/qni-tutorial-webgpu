@@ -1,4 +1,6 @@
-qubit-circle { display: inline-block; position: relative; width: var(--qc-box, 34px); height: var(--qc-box, 34px); margin: 4px 14px 4px 0; vertical-align: middle; }
+/* Reserve the ket label's font descent below its positioned line box so
+   overflow-auto diagram wrappers do not gain a one-pixel vertical scrollbar. */
+qubit-circle { display: inline-block; position: relative; width: var(--qc-box, 34px); height: var(--qc-box, 34px); margin: 4px 14px 6px 0; vertical-align: middle; }
 qubit-circle > svg { display: block; width: 100%; height: 100%; }
 qubit-circle [data-part="surface"] { fill: #FFFCF0; }
 qubit-circle [data-part="disc"] { fill: #92BFDB; }
