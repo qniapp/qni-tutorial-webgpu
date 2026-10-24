@@ -5,6 +5,10 @@ import { mkdir, mkdtemp, readFile, rm } from 'node:fs/promises'
 import { createServer } from 'node:http'
 import { chromium } from '@playwright/test'
 import { join } from 'node:path'
+import { createHash } from 'node:crypto'
+
+// Exact legacy apps/www/public/favicon.ico, also matching the tutorial's Qni mark.
+const legacyIconDigest = 'f2c4bad949b0ec8860fd84b540c014d8745479889f42f67ecdd8e09b4c114ef9'
 
 // Public build-output boundary. Real pinned public assets must be generated first.
 test('opt-in introduction uses the retained tutorial URLs and assets', async () => {
@@ -16,6 +20,8 @@ test('opt-in introduction uses the retained tutorial URLs and assets', async () 
       stdio: 'pipe',
     })
     const html = await readFile(join(output, 'index.html'), 'utf8')
+    assert.match(html, /rel="icon" href="\/qni\/qni-favicon\.ico" type="image\/x-icon"/)
+    assert.equal(createHash('sha256').update(await readFile(join(output, 'qni-favicon.ico'))).digest('hex'), legacyIconDigest)
     const header = html.match(/<header\b[^>]*>([\s\S]*?)<\/header>/)?.[1] ?? ''
     assert.match(header, /aria-label="Qni Tutorial ホーム"/)
     assert.match(header, /href="https:\/\/github.com\/qniapp\/qni" aria-label="GitHub で Qni を見る"/)
@@ -47,6 +53,8 @@ test('opt-in introduction uses the retained tutorial URLs and assets', async () 
     assert.match(ordinary, /href="\/qni-tutorial-webgpu\/amplitude_probability\/"/)
     assert.match(ordinary, /src="\/qni-tutorial-webgpu\/_astro\//)
     assert.doesNotMatch(ordinary, /href="\/qni\//)
+    assert.match(ordinary, /rel="icon" href="\/qni-tutorial-webgpu\/favicon\.svg" type="image\/svg\+xml"/)
+    assert.equal(createHash('sha256').update(await readFile(join(output, 'favicon.svg'))).digest('hex'), '16a45d2804b59caac4728c8d2cd78661bbbb25f2c39bd83a2a2962fec876fc9e')
     const ordinaryHeader = ordinary.match(/<header\b[^>]*>([\s\S]*?)<\/header>/)?.[1] ?? ''
     assert.match(ordinaryHeader, />Qni Tutorial<\/a>/)
     assert.match(ordinaryHeader, />実験版<\/span>/)
@@ -66,7 +74,7 @@ async function checkBrowser(output) {
       return
     }
     const file = pathname.slice('/qni/'.length) || 'index.html'
-    const mime = { html: 'text/html', js: 'text/javascript', mjs: 'text/javascript', wasm: 'application/wasm', css: 'text/css', svg: 'image/svg+xml', png: 'image/png' }
+    const mime = { html: 'text/html', js: 'text/javascript', mjs: 'text/javascript', wasm: 'application/wasm', css: 'text/css', svg: 'image/svg+xml', png: 'image/png', ico: 'image/x-icon' }
     try {
       const body = await readFile(join(output, file))
       response.setHeader('Content-Type', mime[file.split('.').pop()] ?? 'application/octet-stream')
@@ -157,6 +165,16 @@ async function checkBrowser(output) {
       await page.goBack()
       assert.equal(await page.locator('h1').textContent(), 'はじめに')
     }
+    const iconHref = await page.locator('link[rel="icon"]').getAttribute('href')
+    assert.equal(iconHref, '/qni/qni-favicon.ico')
+    const iconResponse = await page.request.get(origin + iconHref)
+    assert.equal(iconResponse.status(), 200)
+    assert.equal(iconResponse.headers()['content-type'], 'image/x-icon')
+    assert.equal(createHash('sha256').update(await iconResponse.body()).digest('hex'), legacyIconDigest)
+    // Headless page screenshots exclude tab chrome; record the browser-rendered
+    // exact icon response instead of claiming to have photographed a tab.
+    await page.goto(origin + iconHref)
+    await page.locator('img').screenshot({ path: 'test-results/migration/qni-favicon.png' })
     // Expected here: Astro alone does not contain the old tutorial.
     assert.deepEqual([...new Set(missing)], [`${origin}/qni/qpu.html`])
   } finally {

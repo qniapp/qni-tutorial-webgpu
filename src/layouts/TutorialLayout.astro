@@ -29,7 +29,7 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isAvail
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+    <link rel="icon" href={`${base}${migration ? 'qni-favicon.ico' : 'favicon.svg'}`} type={migration ? 'image/x-icon' : 'image/svg+xml'} />
     <title>{title} | Qni Tutorial</title>
     {hasMath && <Fragment>
       <script is:inline>
