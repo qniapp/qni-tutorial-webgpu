@@ -1,7 +1,10 @@
 import { expect, test } from '@playwright/test'
+import expectedPrompts from './fixtures/entanglement-operation-orbit.json' with { type: 'json' }
 
 for (const width of [390, 1440]) {
   test(`entanglement operation review preserves standalone prompts at ${width}`, async ({ page }) => {
+    // Keep the markup regression independent of Orbit availability.
+    await page.route('https://js.withorbit.com/**', route => route.abort())
     await page.setViewportSize({ width, height: 1000 })
     await page.goto('/qni-tutorial-webgpu/entanglement_operation/')
     const review = page.locator('orbit-reviewarea')
@@ -17,6 +20,10 @@ for (const width of [390, 1440]) {
       '逆ベル回路です。',
       'Z ゲートです。',
     ])
+    for (const [index, { question, answer }] of expectedPrompts.entries()) {
+      await expect(prompts.nth(index)).toHaveAttribute('question', question)
+      await expect(prompts.nth(index)).toHaveAttribute('answer', answer)
+    }
     for (const index of [1, 2, 3]) {
       await expect(prompts.nth(index)).toHaveAttribute('question', /左がビット 2、右がビット 1/)
       await expect(prompts.nth(index)).toHaveAttribute('question', /CNOT（制御: ビット 1、標的: ビット 2）、ビット 1 の H/)
