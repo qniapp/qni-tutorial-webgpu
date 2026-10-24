@@ -17,6 +17,7 @@ import phaseGate from './fixtures/phase_gate-original.json' with { type: 'json' 
 import measurement from './fixtures/measurement_operation-original.json' with { type: 'json' }
 import noCloning from './fixtures/no_cloning_theorem-original.json' with { type: 'json' }
 import combinations from './fixtures/gate_combination-original.json' with { type: 'json' }
+// QKD fixture includes the three review prompts added for qni issue #613; prose is unchanged.
 import qkd from './fixtures/quantum_key_distribution-original.json' with { type: 'json' }
 import bb84 from './fixtures/bb84_protocol-original.json' with { type: 'json' }
 import multiCircle from './fixtures/multi_qubit_circle_notation-original.json' with { type: 'json' }
