@@ -6,15 +6,16 @@ import { TutorialEmbed } from './scripts/tutorial-embed.mjs'
 
 // Preview serves the choice baked into the completed build without fetching.
 const embedDirectories = await TutorialEmbed.directories()
+const migration = process.env.QNI_TUTORIAL_MIGRATION === '1'
 
 export default defineConfig({
   site: 'https://qniapp.github.io',
-  base: process.env.QNI_TUTORIAL_MIGRATION === '1' ? '/qni' : '/qni-tutorial-webgpu',
+  base: migration ? '/qni' : '/qni-tutorial-webgpu',
   output: 'static',
   trailingSlash: 'always',
   vite: {
     define: {
-      'import.meta.env.PUBLIC_QNI_TUTORIAL_MIGRATION': JSON.stringify(process.env.QNI_TUTORIAL_MIGRATION === '1'),
+      'import.meta.env.PUBLIC_QNI_TUTORIAL_MIGRATION': JSON.stringify(migration),
     },
     plugins: [{
       name: 'tutorial-embed',

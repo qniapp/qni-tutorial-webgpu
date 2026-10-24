@@ -34,12 +34,18 @@ Both `/qni/` and `/qni/index.html` serve this index. Home points to `/qni/`, Nex
 ## Evidence and limitations
 
 - Initial build-output assertion failed on the missing `/qni/qpu.html` link before implementation, then passed.
-- `pnpm run test:migration` passed: produced HTML asset URLs/files, legacy Next and home URLs, seven inert entries, desktop 1280px and mobile 390px entry points, no horizontal overflow, browser Next destination and history Back, and default-build URLs/new-only links.
+- `pnpm run test:migration` passed: produced HTML asset URLs/files, legacy Next and home URLs, seven inert entries, desktop 1280px and mobile 390px entry points, no horizontal overflow, browser Next destination and history Back, and ordinary experimental-site URLs/new-only links. That ordinary-site assertion explicitly disables prebuilt embeds, so it tests navigation isolation, not the default-on release policy. The separate normal build and full upstream suite cover default-on prebuilt behavior.
 - This standalone browser test intentionally observes a 404 at the legacy destination. It does not fabricate an old page. Actual old `qpu.html` and its backlink require the phase 2 composed preview. Its screenshot checks are static, not GPU validation.
 - Screenshots: `test-results/migration/sidebar-1280.png` and `sidebar-390.png` after the targeted test. This session also retained copies in `.astro/migration-evidence/` before the full suite cleared test-results. Mobile screenshot inspected: unavailable entries remain legible and do not overflow.
 - Before reconciliation, `pnpm run typecheck`, `pnpm run test:unit`, normal `pnpm run build`, and `pnpm test` passed on base `a34f38a` (638 browser tests). Real GPU evidence on the default build: adapter present, runner started, amplitudes `[1,0,0,0]`, no reported console errors, page errors or 404s. This is headless Chromium/SwiftShader, not physical mobile GPU acceptance or composed migration GPU acceptance.
 - An initial full-suite invocation timed out and left its preview process, which was stopped. The next run had 636 passes and two failures because a bundled-only build was paired with default prebuilt test expectations. A normal prebuilt build followed by the final full suite passed all 638 tests; no test expectations were weakened.
-- No lint script is configured. `git diff --check` passed. No publication or workflow changes, old checkout edits, deployment, or composed preview were performed.
+- No lint script is configured. `git diff --check` passed. No publication, old checkout edits, deployment, or composed preview were performed. The existing workflow now runs migration regression checks as described below; its publication triggers are unchanged.
+
+## CI regression gate
+
+The existing `build` job in `.github/workflows/pages.yml` now runs `pnpm run test:migration` after the real pinned public assets are generated and Chromium is installed, after the isolated mobile acceptance results are uploaded. It uploads migration screenshots separately, then uploads the unchanged default `dist` for the upstream Playwright job. Main-push publication triggers, deploy dependencies, all upstream tests and the job's default-on `QNI_EMBED_PREBUILT=1` environment remain unchanged. The migration test explicitly overrides that environment for its temporary bundled builds and does not need a release-fetch token.
+
+After this CI follow-up, these checks exited 0: typecheck; default build with `QNI_EMBED_PREBUILT=1`; focused migration regression with the same parent environment; unit tests; `actionlint .github/workflows/pages.yml`; and seven default footer/navigation/real-GPU browser tests. File-list and SHA-256 manifests of every `dist` file were identical before and after the migration regression. Parsed workflow checks confirmed prerequisite ordering, retained upstream build steps, and unchanged triggers/deploy job. Remote Actions execution has not been performed. The full 680-test run below was before this small CI/flag-expression follow-up, not a newly repeated full run.
 
 ## Baseline reconciliation
 
