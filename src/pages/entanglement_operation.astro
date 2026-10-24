@@ -260,7 +260,18 @@ const base = import.meta.env.BASE_URL
   </table>
 </div>
 
+<orbit-reviewarea color="blue">
+  <orbit-prompt question="ベル状態 (|00⟩ + |11⟩)/√2 のビット 1（右の桁）だけに X を適用すると、逆ベル回路に通す前の状態は?" answer="(|01⟩ + |10⟩)/√2 です。"></orbit-prompt>
+  <orbit-prompt question="ベル状態 (|00⟩ + |11⟩)/√2 のビット 1 だけに X を適用します。CNOT（制御: ビット 1、標的: ビット 2）、ビット 1 の H の順でほどき、0/1 測定した結果は?（左がビット 2、右がビット 1）" answer="10 です（確率 100%）。"></orbit-prompt>
+  <orbit-prompt question="ベル状態 (|00⟩ + |11⟩)/√2 のビット 1 だけに PHASE(π) を適用します。CNOT（制御: ビット 1、標的: ビット 2）、ビット 1 の H の順でほどき、0/1 測定した結果は?（左がビット 2、右がビット 1）" answer="01 です（確率 100%）。"></orbit-prompt>
+  <orbit-prompt question="ベル状態 (|00⟩ + |11⟩)/√2 のビット 1 だけに X、PHASE(π) の順で適用します。CNOT（制御: ビット 1、標的: ビット 2）、ビット 1 の H の順でほどき、0/1 測定した結果は?（左がビット 2、右がビット 1）" answer="11 です（確率 100%）。"></orbit-prompt>
+  <orbit-prompt question="4 つのベル状態を 0/1 の測定結果から区別したいとき、測定の直前に通す回路は?" answer="逆ベル回路です。"></orbit-prompt>
+  <orbit-prompt question="PHASE(π) と同じ作用をする、パウリゲートの名前は?" answer="Z ゲートです。"></orbit-prompt>
+</orbit-reviewarea>
+
 <p>次では、この仕組みを使った超密度符号化というかっこいい名前のアルゴリズムを紹介します。</p>
+
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
 
 
 </TutorialLayout>
