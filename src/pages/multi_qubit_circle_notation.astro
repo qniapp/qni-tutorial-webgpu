@@ -81,6 +81,16 @@ const base = import.meta.env.BASE_URL
   量子ビットの場合と同じく重ね合わせ状態を持つことができるという大きな違いがあります。
 </p>
 
+<h2>確認してみよう</h2>
+<orbit-reviewarea color="blue">
+  <orbit-prompt question="Qni の 2 量子ビットの状態ベクトル表示で、1 個の円は何に対応しますか?" answer="2 ビット全体の値の組合わせ 1 通りに対応します。"></orbit-prompt>
+  <orbit-prompt question={String.raw`2 量子ビットの状態ラベル $|10\rangle$ を、Qni の 10 進数ラベルで書くと?`} answer={String.raw`$|2\rangle$ です。`}></orbit-prompt>
+  <orbit-prompt question="Qni で 3 量子ビット全体の状態ベクトルを表示すると、円は何個必要ですか?" answer="8 個です。"></orbit-prompt>
+  <orbit-prompt question="状態ベクトル表示の円の数が、量子ビットを 1 個増やすごとに 2 倍になるのはなぜですか?" answer="元の各組合わせに、新しいビットが 0 の場合と 1 の場合ができるからです。"></orbit-prompt>
+  <orbit-prompt question="複数量子ビットでは、古典ビットのように値の組合わせが 1 通りに定まった状態以外に、どんな状態を持てますか?" answer="異なる組合わせの重ね合わせ状態を作れます。"></orbit-prompt>
+</orbit-reviewarea>
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+
 </TutorialLayout>
 <style>
  .my-5 { margin-block:20px; } .flex { display:flex; } .flex-row { flex-direction:row; }

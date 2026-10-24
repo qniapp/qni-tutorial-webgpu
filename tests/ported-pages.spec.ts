@@ -19,7 +19,10 @@ import noCloning from './fixtures/no_cloning_theorem-original.json' with { type:
 import combinations from './fixtures/gate_combination-original.json' with { type: 'json' }
 import qkd from './fixtures/quantum_key_distribution-original.json' with { type: 'json' }
 import bb84 from './fixtures/bb84_protocol-original.json' with { type: 'json' }
-import multiCircle from './fixtures/multi_qubit_circle_notation-original.json' with { type: 'json' }
+import multiCircleOriginal from './fixtures/multi_qubit_circle_notation-original.json' with { type: 'json' }
+import multiCircleOrbit from './fixtures/multi-qubit-circle-orbit.json' with { type: 'json' }
+// Keep the original page fixture intact; only the new review prompts differ.
+const multiCircle = { ...multiCircleOriginal, orbitPrompts: multiCircleOrbit.length, orbit: multiCircleOrbit }
 import multiSuperposition from './fixtures/multi_qubit_superposition-original.json' with { type: 'json' }
 import multiOperation from './fixtures/multi_qubit_operation-original.json' with { type: 'json' }
 import pairs from './fixtures/operator_pair-original.json' with { type: 'json' }
@@ -72,6 +75,10 @@ for (const fixture of [qpu, faster, pbit, superposition, qubit, phase, notation,
     const images = fixture.images.filter(image => !replaced.has(image.split('/').at(-1)!))
     await expect(page.locator('main img')).toHaveCount(images.length)
     for (const image of images) await expect(page.locator(`main img[src="/qni-tutorial-webgpu/${image}"]`)).toHaveCount(1)
+    if (fixture.slug === 'multi_qubit_circle_notation') {
+      await expect(page.locator('main orbit-reviewarea[color="blue"] orbit-prompt')).toHaveCount(5)
+      await expect(page.locator('main script[src="https://js.withorbit.com/orbit-web-component.js"]')).toHaveAttribute('type', 'module')
+    }
     await expect(page.locator('main orbit-prompt')).toHaveCount(fixture.orbitPrompts)
     const prompts = await page.locator('main orbit-prompt').evaluateAll(es => es.map(e => Object.fromEntries([...e.attributes].filter(a => !a.name.startsWith('data-astro-')).map(a => [a.name, a.value.replace(/\s+/g, '')]))))
     expect(prompts).toEqual(fixture.orbit.map(p => Object.fromEntries(Object.entries(p).map(([k,v]) => [k,v.replace(/\s+/g, '')]))))
