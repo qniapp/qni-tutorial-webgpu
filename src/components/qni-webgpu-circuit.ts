@@ -109,14 +109,18 @@ class QniWebgpuCircuit extends HTMLElement {
   }
 
   /**
-   * The runner cancels wheel and touch events on its canvas, so a reader
-   * scrolling past the embed would get stuck on it. Until the embed is
+   * The runner cancels wheel and trackpad gesture events on its canvas, so a
+   * reader scrolling past the embed would get stuck on it. Until the embed is
    * activated by a click, tap, or keyboard focus, those events are stopped
    * above the canvas and the page scrolls normally. Clicking outside or
    * moving focus elsewhere releases the embed again.
+   *
+   * Touch input is not gated: the runner already leaves vertical swipes to
+   * the page, and taps, horizontal swipes, and gate drags must reach it on
+   * the first touch.
    */
   private installScrollGate(shadow: ShadowRoot) {
-    const gated = ['wheel', 'touchstart', 'touchmove', 'touchend', 'touchcancel', 'gesturestart', 'gesturechange', 'gestureend']
+    const gated = ['wheel', 'gesturestart', 'gesturechange', 'gestureend']
     for (const type of gated) {
       shadow.addEventListener(type, event => {
         if (this.active) return
@@ -125,10 +129,8 @@ class QniWebgpuCircuit extends HTMLElement {
       }, { capture: true, passive: true })
     }
     shadow.addEventListener('pointerdown', event => {
-      if (this.active) return
       // A touch may start a page scroll, so only a completed tap (click) activates.
-      if ((event as PointerEvent).pointerType === 'touch') event.stopPropagation()
-      else this.setActive(true)
+      if ((event as PointerEvent).pointerType !== 'touch') this.setActive(true)
     }, { capture: true })
     shadow.addEventListener('click', () => this.setActive(true), { capture: true })
     shadow.addEventListener('focusin', () => this.setActive(true))
