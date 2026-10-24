@@ -11,7 +11,7 @@ for (const width of [390, 1440]) {
     const prompts = review.locator('orbit-prompt')
     await expect(prompts).toHaveCount(4)
     const answers = [
-      '右から n ビット目だけが異なり、ほかの桁はすべて同じです。',
+      '右から n ビット目だけを反転し、ほかの桁はそのままにします。',
       '異なるのは n ビット目だけで、その桁の重みが $2^{n-1}$ だからです。',
       '100 です。',
       '対象外の右から 3 ビット目も異なるからです。',
