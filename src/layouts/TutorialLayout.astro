@@ -24,7 +24,7 @@ const prev = index < 0 ? undefined : pages.slice(0, index).findLast(page => isAv
 const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isAvailable(page.slug))
 ---
 <!doctype html>
-<html lang="ja">
+<html lang="ja" class:list={{ 'migration-page': migration }}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -152,6 +152,9 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isAvail
   .site-header, main { max-width: 1120px; margin-inline: auto; padding: 24px; }
   .site-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
   .site-header a { font-weight: 600; text-decoration: none; }
+  /* Keep prose scroll targets below the migration header (79px plus clearance). */
+  .migration-page { scroll-padding-top: 96px; }
+  .site-header-migration { position: sticky; top: 0; z-index: 10; background: var(--bg); }
   /* Legacy SVG palette; lettering stays selectable rather than outlined paths. */
   .site-header-migration .brand-logo { display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; }
   .site-header-migration .brand-wordmark { display: inline-flex; align-items: baseline; white-space: nowrap; }

@@ -57,6 +57,14 @@ New output assertions failed before implementation, then passed. Browser asserti
 
 Browser evidence in this worktree: `.astro/branding-evidence/old-live-{1280,390}.png`, `before-{1280,390}.png`, and `header-{1280,390}.png` (after). After screenshots were visually inspected at both widths. Targeted tests also write `test-results/migration/header-{1280,390}.png`; retained copies survive the full suite clearing test-results. The updated bundled migration handoff remains `.astro/migration-dist/`.
 
+## Migration header scroll behavior
+
+Human feedback requested the original always-visible header behavior. Browser reproduction at a 1200px scroll found the migrated header at `y=-1200` at both 1280px and 390px, while the old live header's GitHub control remained at the viewport top. The old `_layouts/page.html` uses a sticky top header. The migration-only correction therefore uses `position: sticky`, `top: 0`, an opaque page-colored background and `z-index: 10`. Native modal dialog top-layer behavior remains above the bar. The header retains its normal-flow space, so initial content does not shift underneath it. Migration root scroll padding of 96px clears the 79px header plus a small gap when the browser scrolls to prose targets.
+
+The scroll-boundary regression failed before the correction and passed afterward at desktop/mobile widths. It verifies a substantial scroll, the visible header bounds, unobscured home/GitHub hit targets, mobile drawer open/close, prose scrolling below the header, and Home navigation resetting to the unobscured page title. Default output has no migration root/header classes; a separate real browser check confirms its header still scrolls to `y=-1200` at both widths. Existing experimental behavior is unchanged.
+
+Typecheck, focused migration checks, unit tests, the normal default-on build and a fresh full suite all exited 0 after this correction; **680 browser tests passed**. `actionlint` and `git diff --check` also passed. Updated bundled output is `.astro/migration-dist/`. Screenshots inspected before/after: `.astro/sticky-evidence/{old-live,before}-{1280,390}.png`, `scrolled-header-{1280,390}.png`, and `scrolled-drawer-390.png`. `default-unchanged-{1280,390}.png` records the experimental-site check. These are local artifacts, not composed-site or physical-device acceptance.
+
 ## Baseline reconciliation
 
 The worker was explicitly fast-forwarded from `1b54f90ae56a1ceecaeb7158ec94ad3c33b0c13c` to `a34f38ab00d58c0a9079f1618a13d92eb944825c` before implementation, adding upstream #30 (pinned embed fetcher and H-gate switch). Local main was not changed. The original 638-test result applies to that base.

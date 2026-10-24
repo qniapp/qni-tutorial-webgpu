@@ -51,6 +51,7 @@ test('opt-in introduction uses the retained tutorial URLs and assets', async () 
     assert.match(ordinaryHeader, />Qni Tutorial<\/a>/)
     assert.match(ordinaryHeader, />実験版<\/span>/)
     assert.doesNotMatch(ordinaryHeader, /GitHub で Qni を見る|brand-logo/)
+    assert.doesNotMatch(ordinary, /class="migration-page"|class="site-header site-header-migration"/)
   } finally {
     await rm(output, { recursive: true, force: true })
   }
@@ -115,6 +116,35 @@ async function checkBrowser(output) {
       }), true)
       await github.evaluate(el => el.blur())
       await page.screenshot({ path: `test-results/migration/header-${width}.png` })
+      await page.evaluate(() => scrollTo(0, 1200))
+      const header = page.locator('.site-header')
+      const headerBox = await header.boundingBox()
+      assert.ok(headerBox && headerBox.y >= 0 && headerBox.y + headerBox.height < 900)
+      assert.ok(await page.evaluate(() => scrollY) >= 1000)
+      for (const link of [home, github]) {
+        assert.equal(await link.evaluate(el => {
+          const box = el.getBoundingClientRect()
+          return el.contains(document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2))
+        }), true)
+      }
+      await page.screenshot({ path: `test-results/migration/scrolled-header-${width}.png` })
+      if (width === 390) {
+        await page.getByRole('button', { name: '目次を開く', exact: true }).click()
+        assert.equal(await page.getByRole('dialog', { name: '目次', exact: true }).isVisible(), true)
+        await page.screenshot({ path: 'test-results/migration/scrolled-drawer-390.png' })
+        await page.getByRole('button', { name: '目次を閉じる', exact: true }).click()
+        assert.equal(await page.getByRole('dialog', { name: '目次', exact: true }).isVisible(), false)
+      }
+      // Browser scrolling to a prose target must leave it below the sticky bar.
+      const paragraph = page.locator('main .content-with-margin > p').nth(5)
+      await paragraph.evaluate(el => el.scrollIntoView({ block: 'start' }))
+      const paragraphBox = await paragraph.boundingBox()
+      assert.ok(paragraphBox && paragraphBox.y >= headerBox.y + headerBox.height)
+      await home.click()
+      assert.equal(new URL(page.url()).pathname, '/qni/')
+      assert.equal(await page.evaluate(() => scrollY), 0)
+      const titleBox = await page.locator('h1').boundingBox()
+      assert.ok(titleBox && titleBox.y > headerBox.y + headerBox.height)
       if (width === 390) await page.getByRole('button', { name: '目次を開く', exact: true }).click()
       const nav = page.locator(width === 390 ? '.toc-drawer nav' : '.sidebar nav')
       await nav.locator('details').nth(1).locator('summary').click()
