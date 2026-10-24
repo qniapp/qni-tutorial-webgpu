@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import expectedPrompts from './fixtures/disentangle-orbit.json' with { type: 'json' }
 
 for (const width of [390, 1440]) {
   test(`disentangle review preserves the inverse Bell learning targets at ${width}`, async ({ page }) => {
@@ -17,8 +18,9 @@ for (const width of [390, 1440]) {
       'q0 = 0、q1 = 0 です。',
       '逆ベル回路です。',
     ])
-    for (const prompt of await prompts.all()) {
-      await expect(prompt).toHaveAttribute('question', /\S+\?$/)
+    for (const [index, { question, answer }] of expectedPrompts.entries()) {
+      await expect(prompts.nth(index)).toHaveAttribute('question', question)
+      await expect(prompts.nth(index)).toHaveAttribute('answer', answer)
     }
     await expect(page.locator('script[src="https://js.withorbit.com/orbit-web-component.js"]')).toHaveCount(1)
     await expect(page.locator('qni-webgpu-circuit')).toHaveCount(7)
