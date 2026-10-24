@@ -56,6 +56,39 @@ const base = import.meta.env.BASE_URL
 </p>
 
 
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="超密度符号化で、送信者と受信者が符号化前に共有しておく量子状態は?"
+    answer="ベルペアです。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="Qni チュートリアルの超密度符号化の規約で、00 を送るとき、送信者は自分のベルペアの片方にどんな操作をしますか?"
+    answer="何もしません。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="Qni チュートリアルの超密度符号化の規約で、01 を送るとき、送信者は自分のベルペアの片方にどのゲートを適用しますか?"
+    answer="Z ゲートです。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="Qni チュートリアルの超密度符号化の規約で、10 を送るとき、送信者は自分のベルペアの片方にどのゲートを適用しますか?"
+    answer="X ゲートです。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="Qni チュートリアルの超密度符号化の規約で、11 を送るとき、送信者は自分のベルペアの片方にどんなゲート操作をしますか?"
+    answer="X ゲートと Z ゲートを両方適用します。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="ベルペアを事前に共有した超密度符号化で、古典の 2 ビットを伝えるために、符号化後に送信者から受信者へ送る量子ビットは何個ですか?"
+    answer="1 個です。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="超密度符号化で、送信者の量子ビットを受け取った受信者は、古典の 2 ビットを読み出すために何を測定しますか?"
+    answer="受け取った量子ビットと手元の量子ビットの組をベル測定します。"
+  ></orbit-prompt>
+</orbit-reviewarea>
+
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+
 </TutorialLayout>
 <style>
   .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
