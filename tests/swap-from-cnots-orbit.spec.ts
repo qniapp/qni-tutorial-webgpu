@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import expectedPrompts from './fixtures/swap-from-cnots-orbit.json' with { type: 'json' }
 
 for (const width of [390, 1440]) {
   test(`SWAP puzzle keeps the exercise before its solution and review at ${width}px`, async ({ page }) => {
@@ -18,9 +19,9 @@ for (const width of [390, 1440]) {
     const review = page.locator('orbit-reviewarea[color="blue"]')
     const prompts = review.locator('orbit-prompt')
     await expect(prompts).toHaveCount(3)
-    for (const prompt of await prompts.all()) {
-      await expect(prompt).toHaveAttribute('question', /\S/)
-      await expect(prompt).toHaveAttribute('answer', /\S/)
+    for (const [index, { question, answer }] of expectedPrompts.entries()) {
+      await expect(prompts.nth(index)).toHaveAttribute('question', question)
+      await expect(prompts.nth(index)).toHaveAttribute('answer', answer)
     }
     await expect(prompts.nth(0)).toHaveAttribute('answer', 'A→B、B→A、A→B です。（B→A、A→B、B→A でも同じ働きです）')
     await expect(prompts.nth(1)).toHaveAttribute('answer', /b XOR \(a XOR b\)/)
