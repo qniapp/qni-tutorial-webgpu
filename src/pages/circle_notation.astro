@@ -114,7 +114,7 @@ const base = import.meta.env.BASE_URL
   </table>
 </div>
 
-<orbit-reviewarea color="blue">
+<orbit-reviewarea color="brown">
   <orbit-prompt cloze="量子コンピュータが持つ量子ビット全体の状態を{状態ベクトル}と呼ぶ">
   </orbit-prompt>
   <orbit-prompt cloze="Qni では{円}を並べることで状態ベクトルを表現する"> </orbit-prompt>
@@ -155,5 +155,5 @@ const base = import.meta.env.BASE_URL
   th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
   td { padding:8px; border-bottom:1px solid #DAD8CE; }
   th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
-  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:var(--prose-width); margin-right:auto; } }
 </style>

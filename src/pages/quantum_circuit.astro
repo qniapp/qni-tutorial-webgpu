@@ -48,7 +48,7 @@ const base = import.meta.env.BASE_URL
   ワイヤ上に置かれた QPU 命令が各量子ビットに対して演算を行います。
 </p>
 
-<orbit-reviewarea color="blue">
+<orbit-reviewarea color="brown">
   <orbit-prompt
     question="現在のコンピュータと比べ、量子コンピュータのプログラミングには抽象度の面でどんな違いがあるか?"
     answer="量子コンピュータではビットレベルの低水準プログラミングが必要"
@@ -240,5 +240,5 @@ const base = import.meta.env.BASE_URL
   :global(main .gate-reference td.align-middle) { vertical-align: middle; }
   :global(main .gate-reference td > h-gate), :global(main .gate-reference td > x-gate), :global(main .gate-reference td > phase-gate), :global(main .gate-reference td > measurement-gate), :global(main .gate-reference write-gate) { font-size: 32px; margin: 0; }
   :global(main .gate-reference .flex) { display: flex; gap: 8px; }
-  @media (min-width:768px) { :global(main .gate-reference) { width: 58.333333%; margin-right: auto; } }
+  @media (min-width:768px) { :global(main .gate-reference) { width: var(--prose-width); margin-right: auto; } }
 </style>

@@ -114,8 +114,8 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isAvail
       </div>
       <div class="content-with-margin"><slot /><footer class="page-footer">
         <div class="page-footer-nav">
-          {prev && <a class="page-footer-link" href={href(prev.slug)}><svg class="page-footer-chevron page-footer-chevron-left" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.84182 3.13514C9.04327 3.32401 9.05348 3.64042 8.86462 3.84188L5.43521 7.49991L8.86462 11.1579C9.05348 11.3594 9.04327 11.6758 8.84182 11.8647C8.64036 12.0535 8.32394 12.0433 8.13508 11.8419L4.38508 7.84188C4.20477 7.64955 4.20477 7.35027 4.38508 7.15794L8.13508 3.15794C8.32394 2.95648 8.64036 2.94628 8.84182 3.13514Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>{prev.title}</a>}
-          {next && <a class="page-footer-link page-footer-next" href={href(next.slug)}>{next.title}<svg class="page-footer-chevron page-footer-chevron-right" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></a>}
+          {prev && <a class="page-footer-link page-footer-prev" href={href(prev.slug)} rel="prev"><svg class="page-footer-chevron" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M8.84182 3.13514C9.04327 3.32401 9.05348 3.64042 8.86462 3.84188L5.43521 7.49991L8.86462 11.1579C9.05348 11.3594 9.04327 11.6758 8.84182 11.8647C8.64036 12.0535 8.32394 12.0433 8.13508 11.8419L4.38508 7.84188C4.20477 7.64955 4.20477 7.35027 4.38508 7.15794L8.13508 3.15794C8.32394 2.95648 8.64036 2.94628 8.84182 3.13514Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg><span class="page-footer-text"><span class="page-footer-label">前へ</span><span class="page-footer-title">{prev.title}</span></span></a>}
+          {next && <a class="page-footer-link page-footer-next" href={href(next.slug)} rel="next"><span class="page-footer-text"><span class="page-footer-label">次へ</span><span class="page-footer-title">{next.title}</span></span><svg class="page-footer-chevron" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></a>}
         </div>
       </footer></div>
     </main>
@@ -178,7 +178,12 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isAvail
   .page-title-block .lede { margin-top: 5px; margin-bottom: 0; }
   .static-diagram { max-width: 76ch; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-2); padding: 16px 24px; margin: 24px 0; }
   .static-diagram p { margin: 8px 0; }
+  /* Clear notes only when the embed is wider than the prose column; a
+     column-width embed sits beside them (else a note leaves a blank gap). */
   qni-webgpu-circuit { clear: both; }
+  @media (min-width: 640px) {
+    .content-with-margin qni-webgpu-circuit:not([width]) { clear: none; }
+  }
   /* Flex-centered legacy wrappers otherwise shrink around the custom element. */
   .content-with-margin > :has(qni-webgpu-circuit:not([width])) :has(qni-webgpu-circuit:not([width])) { width: 100%; }
   fit-content { display: block; width: 100%; min-width: 0; }
@@ -198,31 +203,60 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isAvail
   figure, qni-webgpu-circuit { margin: 24px 0; }
   figure, qni-webgpu-circuit:not([width]) { max-width: 640px; }
   figure img { display: block; width: 100%; height: auto; }
+  /* Diagrams with small labels span the note column too, up to their 960px design size. */
+  .content-with-margin > figure.figure-wide { clear: both; width: 100%; max-width: 960px; }
   figcaption { color: var(--muted); font-size: 14px; line-height: 20px; }
   /* Orbit's shadow iframe is 100% wide; size its host like the prose,
      not the full content area that also reserves space for margin notes. */
   orbit-reviewarea { display: block; max-width: 76ch; }
+  /* Orbit's card is a cross-origin iframe in a closed shadow root: its
+     English strings and font cannot be changed from here, and its palette
+     only through the color presets (pages use the warm "brown"). Frame it
+     in the site palette with a Japanese title and a key to its buttons. */
+  orbit-reviewarea {
+    margin: 32px 0; padding: 12px 12px 0; border: 1px solid var(--border);
+    border-radius: 12px; background: var(--bg-2);
+  }
+  orbit-reviewarea::before {
+    content: '確認クイズ'; display: block; margin: 0 4px 8px;
+    font-size: 16px; font-weight: 600; line-height: 24px;
+  }
+  orbit-reviewarea::after {
+    content: 'Show Answer で答えを表示し、思い出せたら Remembered、忘れていたら Forgotten を選びます。Skip で次の問題へ進みます (Orbit の画面は英語のみ)。';
+    display: block; margin: -4px 4px 12px; color: var(--muted); font-size: 14px; line-height: 20px;
+  }
   details { max-width: 76ch; border-bottom: 1px solid var(--border); padding: 16px 0; }
   summary { cursor: pointer; line-height: 28px; }
-  /* Original _includes/footer.html: footer mt-12 text-sm leading-6;
-     div mb-10 flex items-center font-semibold text-slate-700;
-     a group flex items-center no-underline hover:text-slate-900 (next: ml-auto);
-     svg mr-3/ml-3 h-4 w-auto overflow-visible text-slate-400 group-hover:text-slate-600. */
-  .page-footer { margin-top: 48px; font-size: 14px; line-height: 24px; }
-  .page-footer-nav { display: flex; align-items: center; margin-bottom: 40px; font-weight: 600; color: #334155; }
-  .page-footer-link { display: flex; align-items: center; color: inherit; text-decoration: none; }
-  .page-footer-link:hover { color: #0f172a; }
-  .page-footer-next { margin-left: auto; }
-  .page-footer-chevron { height: 16px; width: auto; overflow: visible; color: #94a3b8; }
-  .page-footer-chevron-left { margin-right: 12px; }
-  .page-footer-chevron-right { margin-left: 12px; }
-  .page-footer-link:hover .page-footer-chevron { color: #475569; }
-  @media (min-width: 768px) {
-    .content-with-margin > footer { width: 58.333333%; margin-right: auto; }
+  /* Previous/next cards; the next card stays on the right even alone. */
+  .page-footer { margin-top: 64px; margin-bottom: 40px; }
+  .page-footer-nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .page-footer-link {
+    display: flex; align-items: center; gap: 12px; min-height: 72px; padding: 12px 16px;
+    border: 1px solid var(--border); border-radius: 12px; background: var(--bg-2);
+    color: var(--text); text-decoration: none; transition: border-color 150ms, background-color 150ms;
+  }
+  .page-footer-link:hover { border-color: var(--link); background: #e6e4d9; }
+  .page-footer-next { grid-column: 2; justify-content: flex-end; text-align: right; }
+  .page-footer-text { display: flex; flex-direction: column; min-width: 0; }
+  .page-footer-label { color: var(--muted); font-size: 14px; line-height: 20px; }
+  .page-footer-title { color: var(--link); font-size: 18px; font-weight: 600; line-height: 26px; }
+  .page-footer-chevron { flex: none; width: 20px; height: 20px; color: var(--muted); }
+  .page-footer-link:hover .page-footer-chevron { color: var(--link); }
+  @media (max-width: 479.98px) {
+    .page-footer-nav { grid-template-columns: minmax(0, 1fr); }
+    .page-footer-next { grid-column: 1; }
   }
   /* Reserve a right margin for notes. Start at the note breakpoint so the
-     original's 640-767px negative margin cannot cause horizontal overflow. */
+     original's 640-767px negative margin cannot cause horizontal overflow.
+     The prose column holds about 35 Japanese characters (560px at 16px)
+     and leaves the notes at least 240px. The container is main, whose
+     content box is this content area: cqw are its percentages. Container
+     queries imply style containment, which hides counters reset outside
+     main, so the note counter starts inside it. */
+  main { container-type: inline-size; }
+  .content-with-margin { counter-reset: margin-note-counter; --prose-width: 100%; }
   @media (min-width: 640px) {
+    .content-with-margin { --prose-width: min(560px, max(58.333333cqw, 100cqw - 240px)); }
     .content-with-margin > p,
     .content-with-margin > ul,
     .content-with-margin > figure,
@@ -231,7 +265,8 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isAvail
     .content-with-margin > :has(qni-webgpu-circuit:not([width])),
     .content-with-margin > .static-diagram,
     .content-with-margin > details,
-    .content-with-margin > orbit-reviewarea { width: 58.333333%; margin-right: auto; }
+    .content-with-margin > orbit-reviewarea,
+    .content-with-margin > footer { width: var(--prose-width); margin-right: auto; }
   }
   /* Original page.html: md (768px) fixed w-64 sidebar; below it a menu
      button opens an off-canvas drawer (here a modal <dialog>). */

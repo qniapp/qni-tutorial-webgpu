@@ -26,7 +26,7 @@ const base = import.meta.env.BASE_URL
   量子力学の原理でコンピュータを作るとはどういうことでしょうか?量子コンピュータと従来のコンピュータの大きな違いは、情報の単位であるビットの実装方式にあります。ノートパソコンやスマホから最新のゲーム機、世界最速のスパコンといった従来のコンピュータの内部構造は、古典物理学、より正確には電磁気学で説明できます。これは、ビットが電磁気学に基づいたトランジスタなどの電子回路として実装されているからです。一方で量子コンピュータは原子や電子、光子の量子的な状態をビットとして使います。
 </p>
 
-<figure>
+<figure class="figure-wide">
   <img
     src={`${base}images/bit_capacitor_vs_quantum.svg`}
     alt="従来のコンピュータと量子コンピュータのビットの比較図。左は従来のコンピュータのビットの実装例であるコンデンサで、電荷なしが 0、電荷ありが 1 を表す。右は量子コンピュータのビットである電子スピンで、磁場 B の中でスピンが上向きなら |0⟩、下向きなら |1⟩、そのどちらでもない向きなら重ね合わせ α|0⟩ + β|1⟩ を表す。"
@@ -60,7 +60,7 @@ const base = import.meta.env.BASE_URL
   枚を探すことを考えてみましょう。カードにはそれぞれ絵文字が書かれていて、その中から見つけたい絵文字のカードを探します。ふつうの探し方では 1 枚ずつ順に見ていくので、最悪の場合は 100 万枚すべてを見なければなりません。一方、量子探索アルゴリズムなら、1,000 回ほどの検索で見つかります。このように、量子探索アルゴリズムは巨大なリストの中から特定のアイテムを効率的に検索できます。
 </p>
 
-<figure>
+<figure class="figure-wide">
   <img
     src={`${base}images/quantum_search_vs_linear.svg`}
     alt="線形探索と量子探索の比較図。どちらも絵文字が書かれた 100 万枚のカードから、見つけたい星のカードを探す。左の線形探索では、カードを 1 列に並べ、1 枚目から 1 枚ずつ順に見る。星のカードは最後の 100 万枚目にあり、最悪 100 万枚すべてを見る。右の量子探索では、100 万枚のカードを 1 つの山に重ね、1,000 回ほどの検索で星のカードが山の中からひとりでに浮かび上がる。"
@@ -71,7 +71,7 @@ const base = import.meta.env.BASE_URL
   量子因数分解アルゴリズムは、セキュリティに対して脅威をもたらすものです。というのも、インターネット・セキュリティの最も一般的な方式である公開鍵暗号は、特定の数学問題 (長さ数百桁の数の因数分解など) を事実上解くことが不可能であることに依存しているためです。量子アルゴリズムは、最もよく知られた古典的なアルゴリズムよりも桁違いに速くこのタスクを実行できるため、十分な規模の誤り耐性量子コンピュータが実現すれば、現在広く使われている公開鍵暗号は破られてしまいます。
 </p>
 
-<figure>
+<figure class="figure-wide">
   <img
     src={`${base}images/quantum_factoring.svg`}
     alt="量子因数分解の説明図。左は公開鍵暗号が頼る数百桁の数の因数分解で、300 桁の数を、まだ分からない 2 つの数 ? × ? に分ける。右は因数分解にかかる計算時間のグラフで、横軸は数の桁数、縦軸は計算時間。最もよく知られた古典的なアルゴリズムの曲線は数百桁に届く前に急に立ち上がり、事実上解けない。量子アルゴリズムの曲線は数百桁でも低いままである。"
@@ -134,7 +134,7 @@ const base = import.meta.env.BASE_URL
   で復習クイズとして再び出題されます。これによって、読者は比較的少ない労力で学んだことを深く内面化できる仕組みになっています。もちろん、クイズに答えずにこのチュートリアルを読み進めることもできますが、ぜひ試してみてください。
 </p>
 
-<orbit-reviewarea color="blue">
+<orbit-reviewarea color="brown">
   <orbit-prompt
     question="**量子コンピュータ**の名前の由来は?"
     answer="動作原理が量子力学に基づくことから名付けられた"
@@ -177,9 +177,7 @@ const base = import.meta.env.BASE_URL
 <ul>
   <li>
     <a href="https://github.com/qniapp/qni/issues?q=is%3Aissue+is%3Aopen+label%3Atutorial"
-      >質問する</a
-    >
-    ─ 読んでも分からなかったことは、お気軽に GitHub まで
+      >質問する</a> ─ 読んでも分からなかったことは、お気軽に GitHub まで
   </li>
   <li>
     <a href="https://github.com/qniapp/qni/labels/tutorial%20typo">問題を報告する</a> ─ typo
@@ -223,5 +221,5 @@ const base = import.meta.env.BASE_URL
   th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
   td { padding:8px; border-bottom:1px solid #DAD8CE; }
   th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
-  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:var(--prose-width); margin-right:auto; } }
 </style>
