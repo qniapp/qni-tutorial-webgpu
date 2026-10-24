@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import expectedPrompts from './fixtures/cnot-orbit.json' with { type: 'json' }
 
 for (const width of [390, 1280]) {
   test(`CNOT review markup and column at ${width}px`, async ({ page }) => {
@@ -10,9 +11,10 @@ for (const width of [390, 1280]) {
     await expect(review).toHaveAttribute('color', 'blue')
     const prompts = review.locator('orbit-prompt')
     await expect(prompts).toHaveCount(6)
-    for (const prompt of await prompts.all()) {
-      expect(await prompt.getAttribute('question')).toBeTruthy()
-      expect(await prompt.getAttribute('answer')).toBeTruthy()
+    for (const [index, { question, answer }] of expectedPrompts.entries()) {
+      const prompt = prompts.nth(index)
+      await expect(prompt).toHaveAttribute('question', question)
+      await expect(prompt).toHaveAttribute('answer', answer)
       expect(await prompt.getAttribute('question')).not.toMatch(/[\u2460-\u2473]/)
     }
     await expect(prompts.nth(2)).toHaveAttribute('answer', '|01⟩ と |11⟩ のペアです。')
