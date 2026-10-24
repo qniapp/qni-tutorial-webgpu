@@ -45,6 +45,24 @@ for (const width of [390, 1440]) {
     await expect(feynmanNote.locator('a')).toHaveAttribute('href', 'https://doi.org/10.1007/BF02650179')
     await expect(page.locator('img[src$="bit_capacitor_vs_quantum.svg"]')).toHaveAttribute('alt', /ビットの実装例であるコンデンサ/)
     await expect(page.locator('img[src$="quantum_search_vs_linear.svg"]')).toHaveAttribute('alt', /1,000 回ほどの検索/)
+    await expect(page.locator('.page-title-block .lede')).toHaveText('実践で学ぶ量子コンピュータプログラミング')
+    await expect(page.locator('main h2')).toHaveText([
+      '量子コンピュータとは',
+      'なぜ難しいと思われているか',
+      'このチュートリアルの特長',
+      'フィードバックを歓迎します',
+    ])
+    await expect(page.locator('main h3')).toHaveText([
+      '複雑な数学なしで学べる', 'Qni で実験できる', 'クイズで定着する',
+    ])
+    const lead = page.locator('.content-with-margin > p').first()
+    await expect(lead).toHaveText('複雑な数学なしで、量子コンピュータプログラミングを学びましょう。Qni で実験しながら動きを確かめ、クイズで学んだことを定着させます。')
+    expect(await lead.evaluate(element => {
+      const heading = element.parentElement?.querySelector('h2')
+      return !!heading && !!(element.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING)
+    })).toBe(true)
+    expect(text).toContain('電卓がわりにも使えます')
+    expect(text).not.toContain('電卓がわりとしてちょっとした計算にも役立ちます')
     // A floated note is a separate passage: do not concatenate its final
     // sentence with the surrounding paragraph when checking sentence spacing.
     const passages = await page.locator('main p, main .margin-note').evaluateAll(elements => elements.map(element => {
