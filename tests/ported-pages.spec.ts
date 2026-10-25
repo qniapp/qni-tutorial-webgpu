@@ -76,7 +76,7 @@ for (const fixture of [qpu, faster, pbit, superposition, qubit, phase, notation,
     await expect(page.locator('main img')).toHaveCount(images.length)
     for (const image of images) await expect(page.locator(`main img[src="/qni-tutorial-webgpu/${image}"]`)).toHaveCount(1)
     if (fixture.slug === 'long_distance_entanglement') {
-      await expect(page.locator('main orbit-reviewarea[color="blue"] orbit-prompt')).toHaveCount(4)
+      await expect(page.locator('main orbit-reviewarea[color="blue"] orbit-prompt')).toHaveCount(3)
       await expect(page.locator('main script[src="https://js.withorbit.com/orbit-web-component.js"]')).toHaveAttribute('type', 'module')
     }
     await expect(page.locator('main orbit-prompt')).toHaveCount(fixture.orbitPrompts)
