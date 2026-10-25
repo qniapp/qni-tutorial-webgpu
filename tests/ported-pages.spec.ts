@@ -35,6 +35,7 @@ import disentangle from './fixtures/disentangle-original.json' with { type: 'jso
 import entanglementOperation from './fixtures/entanglement_operation-original.json' with { type: 'json' }
 import bellStates from './fixtures/discriminating_bell_states-original.json' with { type: 'json' }
 import teleportation from './fixtures/teleportation_circuit-original.json' with { type: 'json' }
+import teleportationOrbit from './fixtures/teleportation-circuit-orbit.json' with { type: 'json' }
 import cascading from './fixtures/cascading_teleportation-original.json' with { type: 'json' }
 import longDistance from './fixtures/long_distance_entanglement-original.json' with { type: 'json' }
 import cphase from './fixtures/cphase-original.json' with { type: 'json' }
@@ -72,9 +73,10 @@ for (const fixture of [qpu, faster, pbit, superposition, qubit, phase, notation,
     const images = fixture.images.filter(image => !replaced.has(image.split('/').at(-1)!))
     await expect(page.locator('main img')).toHaveCount(images.length)
     for (const image of images) await expect(page.locator(`main img[src="/qni-tutorial-webgpu/${image}"]`)).toHaveCount(1)
-    await expect(page.locator('main orbit-prompt')).toHaveCount(fixture.orbitPrompts)
+    // Keep the original fixture intact; only this page gains seven review prompts.
+    await expect(page.locator('main orbit-prompt')).toHaveCount(fixture.slug === 'teleportation_circuit' ? 7 : fixture.orbitPrompts)
     const prompts = await page.locator('main orbit-prompt').evaluateAll(es => es.map(e => Object.fromEntries([...e.attributes].filter(a => !a.name.startsWith('data-astro-')).map(a => [a.name, a.value.replace(/\s+/g, '')]))))
-    expect(prompts).toEqual(fixture.orbit.map(p => Object.fromEntries(Object.entries(p).map(([k,v]) => [k,v.replace(/\s+/g, '')]))))
+    expect(prompts).toEqual((fixture.slug === 'teleportation_circuit' ? teleportationOrbit : fixture.orbit).map(p => Object.fromEntries(Object.entries(p).map(([k,v]) => [k,v.replace(/\s+/g, '')]))))
     await expect(page.locator('main qni-webgpu-circuit')).toHaveCount(fixture.slug==='write_operation' ? 2 : 'circuits' in fixture ? fixture.circuits.length : 0)
     if ('circuits' in fixture && fixture.slug!=='write_operation') {
       const expected = structuredClone(fixture.circuits)
