@@ -82,6 +82,11 @@ for (const fixture of [qpu, faster, pbit, superposition, qubit, phase, notation,
     await expect(page.locator('main orbit-prompt')).toHaveCount(fixture.orbitPrompts)
     const prompts = await page.locator('main orbit-prompt').evaluateAll(es => es.map(e => Object.fromEntries([...e.attributes].filter(a => !a.name.startsWith('data-astro-')).map(a => [a.name, a.value.replace(/\s+/g, '')]))))
     expect(prompts).toEqual(fixture.orbit.map(p => Object.fromEntries(Object.entries(p).map(([k,v]) => [k,v.replace(/\s+/g, '')]))))
+    if (fixture.slug === 'long_distance_entanglement') {
+      for (const prompt of prompts) {
+        expect(`${prompt.question}${prompt.answer}`).not.toMatch(/[\u2460-\u2473\u24f5-\u24fe\u2776-\u277f]/u)
+      }
+    }
     await expect(page.locator('main qni-webgpu-circuit')).toHaveCount(fixture.slug==='write_operation' ? 2 : 'circuits' in fixture ? fixture.circuits.length : 0)
     if ('circuits' in fixture && fixture.slug!=='write_operation') {
       const expected = structuredClone(fixture.circuits)
