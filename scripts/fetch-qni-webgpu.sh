@@ -17,7 +17,7 @@ fi
 env -C "$checkout" rustup show active-toolchain
 env -C "$checkout" rustup target add wasm32-unknown-unknown
 pnpm -C "$checkout/apps/web" install --frozen-lockfile
-bash "$checkout/apps/web/scripts/build-embed.sh" "$root/public/qni-webgpu"
+QNI_SOURCE_COMMIT="$ref" bash "$checkout/apps/web/scripts/build-embed.sh" "$root/public/qni-webgpu"
 
 # Retain the tutorial-hosted standalone build for integration tests and diagnostics.
 # Its asset path is independent of the external Open in Qni link destination.
