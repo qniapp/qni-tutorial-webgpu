@@ -52,6 +52,14 @@ const base = import.meta.env.BASE_URL
 </p>
 
 
+<orbit-reviewarea color="blue">
+  <orbit-prompt question="もつれた量子ビットを遠くまで物理的に運ぶ方法で、長距離の量子もつれを共有しにくいのはなぜですか?" answer="運ぶ途中でもつれが壊れやすいからです。"></orbit-prompt>
+  <orbit-prompt question="ボブとアリス、アリスとキャロルがそれぞれもつれたペアを共有しています。ボブとキャロルをもつれさせるには、ボブとのペアのアリス側の量子ビットをどうしますか?" answer="アリスとキャロルのペアを使い、キャロルへ量子テレポーテーションします。"></orbit-prompt>
+  <orbit-prompt question="ビット 1 と 2 がもつれたペアです。ビット 3 と 4 のもつれを使って、ビット 2 の状態をビット 4 へテレポーテーションし、測定結果に応じた補正を終えると、どのビット同士がもつれますか?" answer="ビット 1 と 4 です。"></orbit-prompt>
+  <orbit-prompt question="中継点のアリスを介してボブとキャロルの長距離もつれを 1 組作る方法では、もとになる近距離のもつれたペアを何組使いますか?" answer="2 組です。"></orbit-prompt>
+</orbit-reviewarea>
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+
 </TutorialLayout>
 <style>
   .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
