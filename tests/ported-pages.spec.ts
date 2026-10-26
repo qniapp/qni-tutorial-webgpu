@@ -44,7 +44,10 @@ import addition from './fixtures/addition_circuit-original.json' with { type: 'j
 import subtraction from './fixtures/subtraction_circuit-original.json' with { type: 'json' }
 import multiplication from './fixtures/multiplication_circuit-original.json' with { type: 'json' }
 import logic from './fixtures/quantum_logic-original.json' with { type: 'json' }
-import superdense from './fixtures/superdense_coding_circuit-original.json' with { type: 'json' }
+import superdenseOriginal from './fixtures/superdense_coding_circuit-original.json' with { type: 'json' }
+import superdenseOrbit from './fixtures/superdense-coding-orbit.json' with { type: 'json' }
+// Keep the original page fixture intact; only the new review prompts differ.
+const superdense = { ...superdenseOriginal, orbitPrompts: superdenseOrbit.length, orbit: superdenseOrbit }
 import superLogic from './fixtures/superposition_quantum_logic-original.json' with { type: 'json' }
 import phaseLogic from './fixtures/phase_logic-original.json' with { type: 'json' }
 import phaseCombination from './fixtures/phase_logic_combination-original.json' with { type: 'json' }
