@@ -42,8 +42,9 @@ test('opt-in introduction uses the retained tutorial URLs and assets', async () 
       if (match[1].endsWith('.html')) continue // Parent integration supplies legacy pages.
       await readFile(join(output, match[1].slice('/qni/'.length)))
     }
+    const pin = (await readFile('qni-embed.ref', 'utf8')).trim()
     for (const file of ['qni-embed.mjs', 'qni-embed-error.mjs', 'qni-web.js', 'qni-web_bg.wasm']) {
-      assert.ok((await readFile(join(output, 'qni-webgpu', file))).length > 0, file)
+      assert.ok((await readFile(join(output, 'qni-webgpu-prebuilt', `embed-${pin}`, file))).length > 0, file)
     }
     await checkBrowser(output)
     execFileSync('pnpm', ['run', 'build', '--outDir', output], {

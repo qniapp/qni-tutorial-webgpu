@@ -58,6 +58,9 @@ jobs:
       # Requires the real pinned public assets and Chromium installed above.
       # Its temporary outDir builds must not replace the default dist artifact.
       - name: Test introduction migration build
+        # Both temporary builds re-fetch and verify the pinned release with gh.
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: pnpm run test:migration
       - name: Upload migration test results
         if: always()
