@@ -134,7 +134,9 @@ const base = import.meta.env.BASE_URL
   で復習クイズとして再び出題されます。これによって、読者は比較的少ない労力で学んだことを深く内面化できる仕組みになっています。もちろん、クイズに答えずにこのチュートリアルを読み進めることもできますが、ぜひ試してみてください。
 </p>
 
-<orbit-reviewarea color="brown">
+<h2>クイズ</h2>
+
+<orbit-reviewarea class="quiz-plain" color="brown">
   <orbit-prompt
     question="**量子コンピュータ**の名前の由来は?"
     answer="動作原理が量子力学に基づくことから名付けられた"
@@ -166,6 +168,14 @@ const base = import.meta.env.BASE_URL
     answer="キューニ"
   ></orbit-prompt>
 </orbit-reviewarea>
+
+<p>
+  Show Answer で答えを表示し、思い出せたら Remembered、忘れていたら Forgotten を選びます。
+</p>
+
+<p>
+  Skip で次の問題へ進みます。
+</p>
 
 <h2>フィードバックを歓迎します</h2>
 

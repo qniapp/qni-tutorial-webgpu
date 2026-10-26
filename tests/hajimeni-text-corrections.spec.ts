@@ -52,6 +52,7 @@ for (const width of [390, 1440]) {
       '量子コンピュータとは',
       'なぜ難しいと思われているか',
       'このチュートリアルの特長',
+      'クイズ',
       'フィードバックを歓迎します',
     ])
     await expect(page.locator('main h3')).toHaveText([
