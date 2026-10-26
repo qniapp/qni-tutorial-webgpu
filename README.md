@@ -4,51 +4,50 @@ An Astro static-site experiment replacing old Qni Tutorial components with Qni W
 
 Published URL: https://qniapp.github.io/qni-tutorial-webgpu/
 
-「Qni で開く」 links target `https://qniapp.github.io/qni-webgpu/#` + `encodeURIComponent(circuitJson)` on the live qni-webgpu Pages build. They open the current committed circuit in the browser-local app. See [the URL contract](docs/open-in-qni-webgpu.md). The tutorial's `/app/` build is retained for tests and diagnostics.
+「Qni で開く」 links target `https://qniapp.github.io/qni-webgpu/#` + `encodeURIComponent(circuitJson)` on the live qni-webgpu Pages build. They open the current committed circuit in the browser-local app. See [the URL contract](docs/open-in-qni-webgpu.md). Tests use the pinned embed directly; no standalone app is bundled.
 
 ## Local development
 
-Use Node.js 22.12+ and pnpm 9.15.9. Building the embed also requires Rust/rustup, Trunk 0.21.14, and GNU coreutils (`env -C`, `realpath`). Use a clean qni-webgpu checkout at the commit in `qni-webgpu.ref`; the script verifies it and does not switch or fetch that checkout.
+Use Node.js 22.12+, pnpm 9.15.9 and authenticated GitHub CLI (`gh`). Every dev/build fetches and verifies the immutable release in `qni-embed.ref`. Rust, Trunk and an upstream source checkout are not required.
 
 ```sh
-pnpm -C /path/to/qni-tutorial-webgpu install --frozen-lockfile
-bash /path/to/qni-tutorial-webgpu/scripts/fetch-qni-webgpu.sh /path/to/qni-webgpu-checkout
-pnpm -C /path/to/qni-tutorial-webgpu run build
-pnpm -C /path/to/qni-tutorial-webgpu run preview --host 127.0.0.1 --port 4322 --ignore-lock
+pnpm install --frozen-lockfile
+pnpm run build
+pnpm run preview --host 127.0.0.1 --port 4322 --ignore-lock
 ```
 
-Open `http://127.0.0.1:4322/qni-tutorial-webgpu/h_gate/`. For development, use `pnpm -C /path/to/qni-tutorial-webgpu run dev --ignore-lock` instead of preview. The `--ignore-lock` flag keeps Astro in the foreground in agent environments. Stop foreground servers with Ctrl-C.
+Open `http://127.0.0.1:4322/qni-tutorial-webgpu/h_gate/`. For development, use `pnpm run dev --ignore-lock` instead of preview. The `--ignore-lock` flag keeps Astro in the foreground in agent environments. Stop foreground servers with Ctrl-C.
 
 ```sh
-pnpm -C /path/to/qni-tutorial-webgpu run typecheck
-pnpm -C /path/to/qni-tutorial-webgpu exec playwright install chromium
-pnpm -C /path/to/qni-tutorial-webgpu test
+pnpm run typecheck
+pnpm exec playwright install chromium
+pnpm test --workers=1
 ```
 
 Stop any manual server on port 4322 before testing. Playwright starts and stops its own preview server. Tests cover element lifecycle with mocks and the real pinned WebGPU bundle. The real GPU test explicitly skips if no adapter is available; Linux may require `xvfb-run -a`. Test launch flags use SwiftShader WebGPU, not a production CPU fallback.
 
 ## Isolated pinned-embed mobile acceptance
 
-After building the real `public/qni-webgpu/` assets as above, keep the clean pinned upstream checkout at `.qni-webgpu-source/` (or set `QNI_WEBGPU_SOURCE`):
+Run the release-backed isolated acceptance build:
 
 ```sh
 pnpm exec playwright install --with-deps chromium
 node scripts/test-pinned-embed-mobile.mjs
 ```
 
-The runner fetches the actual release selected by `qni-embed.ref` and verifies all GitHub attestations during an isolated Astro build. Install `gh` and authenticate it with `GH_TOKEN` for the build. No fixture verifier or relabeled bundled runtime is used. Preview sets `QNI_EMBED_PREBUILT=0` only to avoid fetching again: it serves the already-built release-backed page, not a rebuilt bundled page. Temporary output is cleaned even on failure; the verified public cache is retained and reverified on each build.
+The runner fetches the actual release selected by `qni-embed.ref` and verifies all GitHub attestations during an isolated Astro build. Install `gh` and authenticate it with `GH_TOKEN` for the build. No fixture verifier or relabeled bundled runtime is used. Preview serves the already-built release-backed pages without fetching again. Temporary output is cleaned even on failure; the verified public cache is retained and reverified on each build.
 
 `playwright.pinned-embed-mobile.config.ts` inherits the ordinary bundled Chromium/SwiftShader launch flags but uses one worker and a 390px touch/mobile viewport. Its tests require artifact runtime requests, running real circuits, finite per-runner `readStateVector()` output, viewport-fitting circuit bounds, no horizontal overflow, touch swipe, gate drag and native vertical article scrolling. Missing WebGPU fails rather than skips. This checks mobile emulation with software WebGPU, not physical phone GPU compatibility.
 
-The ordinary Playwright config excludes this dedicated test. CI runs the runner in the **build** job after the normal Astro build/upload, with a separate temporary output. Both builds use the real release for the T2 allowlist; other pages keep the bundled runtime.
+The ordinary Playwright config excludes this dedicated test. CI runs the runner in the **build** job after the normal Astro build/upload, with a separate temporary output. Both builds use the same real release for every circuit page.
 
 ## Pin and deployment
 
-The T2 release allowlist is on by default. Set `QNI_EMBED_PREBUILT=0` for a bundled-only build, or `QNI_<SLUG>_PREBUILT=0` to fall back one page (for example `QNI_INSIDE_THE_QFT_PREBUILT=0`). The root uses `QNI_INDEX_PREBUILT`; hyphens become underscores. `QNI_H_GATE_PREBUILT` remains supported. See [scope, switches and verification policy](docs/pinned-embed-pilot.md).
+All pages use one immutable module directory selected by `qni-embed.ref`. There is no migration switch or source-built fallback. Update that full SHA only in a dedicated PR after the upstream release is published; rerun release verification, typecheck, unit/browser/GPU and mobile acceptance tests and review screenshots before merging. Roll back by reverting the pin. See [T3 migration and asset policy](docs/pinned-embed-t3.md).
 
-`qni-webgpu.ref` pins the bundled Rust/Trunk source checkout. The release fetcher uses the separate `qni-embed.ref`, currently `33366e270556c69201da901612cb522b4e18e2ee`. To update the bundle pin, prepare a clean checkout at its SHA, rebuild the bundle, and rerun the build/typecheck/browser tests. Do not commit `public/qni-webgpu/` or `dist/`.
+The Pages workflow verifies the release's checksums and GitHub attestations, builds Astro and runs browser acceptance before deployment. Deployment requires both build and test success. No Rust/Trunk installation, cache or compilation remains. Do not commit downloaded release assets or `dist/`. Set repository Pages source to **GitHub Actions**.
 
-The Pages workflow checks out that SHA, uses upstream `rust-toolchain.toml`, installs the wasm32 target, restores the Cargo cache, and downloads a cached, checksum-verified Trunk binary and caches Trunk's helper tools. It builds the embed into `public/qni-webgpu/`, then uses the official `withastro/action` to build/upload the site and `actions/deploy-pages` to deploy. Set repository Pages source to **GitHub Actions**. The workflow itself has not yet run remotely.
+`qni-webgpu.ref` remains solely for optional glyph regeneration. Run `bash scripts/fetch-glyph-source.sh`, install Python `fonttools`, then run `python3 scripts/extract-inline-h.py --glyph h`, `python3 scripts/extract-inline-h.py --glyph plus` and `python3 scripts/extract-inline-glyphs.py`. The scripts read the pinned recipe/fonts without modifying upstream source; generated SVGs remain checked in. Normal builds use the verified release's H SVG and preserve its CSS/gate component assets for PR #21.
 
 All internal links and assets use Astro's `BASE_URL`. `qni-webgpu-circuit` creates a shadow-DOM canvas and destroys its runner on disconnect. Circuit pages preload the modules/wasm and start streaming compilation and an adapter warm-up in the head; element connection reuses that initialization. Japanese loading progress shows percentages only for known uncompressed totals, otherwise downloaded MB and initialization stages. Attributes: `circuit` (JSON), `width`/`height` (pixels), and `show-state-panel="false"`. Height is automatic by default: a circuit-based estimate is used before startup, then the runner's `preferredHeight(canvasCssWidth)` is queried on width changes and every 250ms while running to follow edits. The host adds 48px for its border and attached link. `height` remains an explicit pixel override; CSS can size the host or use `--qni-webgpu-circuit-width` and `--qni-webgpu-circuit-height` when the corresponding attributes are absent. The qni_intro and h_gate pages use automatic height; the multi-embed stress route retains its explicit height.
 

@@ -18,9 +18,9 @@ At the tutorial's pinned source, the standalone app reads the hash first, percen
 
 URL compatibility does not imply support for every circuit: the pinned parser accepts `cols` and optional `title`, not arbitrary root keys. Local execution requires WebGPU and supports up to 16 qubits; larger circuits select external GPU mode, which a static-only deployment cannot serve. No upstream URL-parser or history change is needed for supported local circuits.
 
-## Retained tutorial standalone build
+## Tutorial runtime
 
-The tutorial still builds the pinned standalone app at `/qni-tutorial-webgpu/app/` for integration tests and diagnostics, alongside the embed bundle. Its asset base is independent of the external link destination. Removing that build is deliberately deferred; `tests/bb84-conditional.spec.ts` still uses it directly.
+No standalone app is bundled with the tutorial. `tests/bb84-conditional.spec.ts` exercises the pinned embed directly, selecting its final step and reading that runner's GPU state. The external link destination remains independent of the tutorial's immutable embed release.
 
 ## Targeted verification
 

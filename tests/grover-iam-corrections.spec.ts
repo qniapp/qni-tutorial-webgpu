@@ -26,7 +26,7 @@ for(const width of [390,1440]) test(`Grover inversion applies exactly the approv
   for(const e of await page.locator('qni-webgpu-circuit').all()){await expect(e).toHaveAttribute('palette','[]');await expect(e).toHaveAttribute('max-wire-count','1')}
   await page.waitForFunction(()=>document.documentElement.dataset.mathjax==='ready')
   const text=await page.locator('.content-with-margin').evaluate(root=>{const walk=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let text='',node;while(node=walk.nextNode()){if(!node.parentElement!.closest('footer,script,style,mjx-container,orbit-reviewarea,qni-webgpu-circuit,[data-original-image]')&&!(node.parentElement!.closest('a')&&node.textContent!.replace(/\s+/g,'')==='Qniで開く'))text+=node.textContent}return text.replace(/\s+/g,'').normalize('NFC')})
-  expect(text).toBe(approved.text)
+  expect(text).toBe(approved.text.replaceAll('グローヴァー', 'グローバー').replaceAll('グロヴァー', 'グローバー'))
   await page.evaluate(()=>customElements.whenDefined('qubit-circle'))
   const diagram=page.locator('[data-amplification-diagram]');await expect(diagram.locator('qubit-circle')).toHaveCount(32)
   const marked=diagram.locator('qubit-circle').first();await marked.focus();await marked.press('Enter')

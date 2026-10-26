@@ -1,5 +1,8 @@
+import { embedDirectory } from 'virtual:tutorial-embed'
 import { buildQniAppUrl } from './qni-webgpu-app-url'
 import { estimateEmbedHeight } from './qni-embed-height'
+
+const embedBase = `${import.meta.env.BASE_URL}${embedDirectory}`
 
 type EmbedHandle = { destroy(): void; circuitJSON(): string; preferredHeight(widthCssPx: number): number; readStateVector(): Promise<Float32Array>; selectStep(n: number): void; selectedStep(): number | null; stepCount(): number }
 type LoadProgress = { stage: string; loaded: number; total: number | null }
@@ -23,7 +26,7 @@ type ErrorModule = {
 let errorModulePromise: Promise<ErrorModule> | undefined
 function loadErrorModule() {
   return errorModulePromise ??= (import(
-    /* @vite-ignore */ `${import.meta.env.BASE_URL}qni-webgpu/qni-embed-error.mjs`
+    /* @vite-ignore */ `${embedBase}qni-embed-error.mjs`
   ) as Promise<ErrorModule>).catch(error => {
     errorModulePromise = undefined
     throw error
@@ -44,6 +47,9 @@ class QniWebgpuCircuit extends HTMLElement {
   private pending: Promise<void> = Promise.resolve()
   private resizeObserver: ResizeObserver
   private heightTimer?: ReturnType<typeof setInterval>
+  private active = false
+  private activationHint: HTMLDivElement
+  private activationHintTimer?: ReturnType<typeof setTimeout>
 
   constructor() {
     super()
@@ -71,6 +77,11 @@ class QniWebgpuCircuit extends HTMLElement {
         .open-link:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
         canvas:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
         [role="status"] { position: absolute; inset: 1rem; pointer-events: none; }
+        .activation-hint { position: absolute; top: 8px; right: 8px; padding: 4px 12px;
+          border-radius: 9999px; background: rgb(16 15 15 / 0.8); color: #FFFCF0;
+          font-size: 14px; line-height: 20px; pointer-events: none;
+          opacity: 0; transition: opacity 150ms; }
+        .activation-hint.visible { opacity: 1; }
         .error-slot { position: absolute; inset: 0; overflow: auto; }
         [hidden] { display: none; }
       </style>
@@ -78,6 +89,7 @@ class QniWebgpuCircuit extends HTMLElement {
         <canvas tabindex="0" aria-label="量子回路シミュレーター"></canvas>
         <div role="status" aria-live="polite" aria-atomic="true"></div>
         <div class="error-slot" hidden></div>
+        <div class="activation-hint" aria-hidden="true">クリックすると操作できます</div>
       </div>
       <div class="open-tab"><a class="open-link" target="_blank" rel="noopener"><span>Qniで開く</span><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 9L21 3M21 3H15M21 3L13 11M10 5H7.8C6.11984 5 5.27976 5 4.63803 5.32698C4.07354 5.6146 3.6146 6.07354 3.32698 6.63803C3 7.27976 3 8.11984 3 9.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21H14.2C15.8802 21 16.7202 21 17.362 20.673C17.9265 20.3854 18.3854 19.9265 18.673 19.362C19 18.7202 19 17.8802 19 16.2V14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
     `
@@ -95,6 +107,57 @@ class QniWebgpuCircuit extends HTMLElement {
       this.updateAutoHeight()
       this.resizeCanvas()
     })
+    this.activationHint = shadow.querySelector('.activation-hint')!
+    this.installScrollGate(shadow)
+  }
+
+  /**
+   * The runner cancels wheel and trackpad gesture events on its canvas, so a
+   * reader scrolling past the embed would get stuck on it. Until the embed is
+   * activated by a click, tap, or keyboard focus, those events are stopped
+   * above the canvas and the page scrolls normally. Clicking outside or
+   * moving focus elsewhere releases the embed again.
+   *
+   * Touch input is not gated: the runner already leaves vertical swipes to
+   * the page, and taps, horizontal swipes, and gate drags must reach it on
+   * the first touch.
+   */
+  private installScrollGate(shadow: ShadowRoot) {
+    const gated = ['wheel', 'gesturestart', 'gesturechange', 'gestureend']
+    for (const type of gated) {
+      shadow.addEventListener(type, event => {
+        if (this.active) return
+        event.stopPropagation()
+        if (type === 'wheel') this.showActivationHint()
+      }, { capture: true, passive: true })
+    }
+    shadow.addEventListener('pointerdown', event => {
+      // A touch may start a page scroll, so only a completed tap (click) activates.
+      if ((event as PointerEvent).pointerType !== 'touch') this.setActive(true)
+    }, { capture: true })
+    shadow.addEventListener('click', () => this.setActive(true), { capture: true })
+    shadow.addEventListener('focusin', () => this.setActive(true))
+    shadow.addEventListener('focusout', () => {
+      // The runner briefly blurs and refocuses its text input while typing.
+      setTimeout(() => { if (!shadow.activeElement) this.setActive(false) })
+    })
+  }
+
+  private onDocumentPointerDown = (event: PointerEvent) => {
+    if (this.active && !event.composedPath().includes(this)) this.setActive(false)
+  }
+
+  private setActive(active: boolean) {
+    if (this.active === active) return
+    this.active = active
+    this.toggleAttribute('data-active', active)
+    if (active) this.activationHint.classList.remove('visible')
+  }
+
+  private showActivationHint() {
+    this.activationHint.classList.add('visible')
+    clearTimeout(this.activationHintTimer)
+    this.activationHintTimer = setTimeout(() => this.activationHint.classList.remove('visible'), 1500)
   }
 
   /** Test-only on-demand GPU readback scoped to this element. */
@@ -107,6 +170,7 @@ class QniWebgpuCircuit extends HTMLElement {
     this.updateSize()
     this.updateOpenLink()
     this.resizeObserver.observe(this)
+    document.addEventListener('pointerdown', this.onDocumentPointerDown, { capture: true })
     // Metadata-only query also follows edits and state-panel resizing.
     this.heightTimer = setInterval(() => { if (this.runner) this.updateAutoHeight() }, 250)
     this.restart()
@@ -115,6 +179,8 @@ class QniWebgpuCircuit extends HTMLElement {
   disconnectedCallback() {
     ++this.generation
     this.resizeObserver.disconnect()
+    document.removeEventListener('pointerdown', this.onDocumentPointerDown, { capture: true })
+    this.setActive(false)
     clearInterval(this.heightTimer)
     this.preservedCircuit = undefined
     this.destroyRunner()
@@ -317,7 +383,7 @@ class QniWebgpuCircuit extends HTMLElement {
         },
       }
       const module = await import(
-        /* @vite-ignore */ `${import.meta.env.BASE_URL}qni-webgpu/qni-embed.mjs`
+        /* @vite-ignore */ `${embedBase}qni-embed.mjs`
       ) as EmbedModule
       if (!current()) return
       const runner = await module.startEmbed(this.canvas, circuit, settings)

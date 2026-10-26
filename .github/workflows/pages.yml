@@ -5,7 +5,7 @@ on:
     branches: [main]
   workflow_dispatch:
   pull_request:
-    branches: [main, feat/restart-in-status-bar]
+    branches: [main, feat/restart-in-status-bar, feat/pinned-embed-t2]
 
 permissions:
   contents: read
@@ -17,20 +17,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      QNI_EMBED_PREBUILT: '1'
     steps:
       - uses: actions/checkout@v7
-      - name: Read pinned WebGPU commit
-        id: webgpu
-        shell: bash
-        run: echo "ref=$(tr -d '\r\n' < qni-webgpu.ref)" >> "$GITHUB_OUTPUT"
-      - name: Check out WebGPU source
-        uses: actions/checkout@v7
-        with:
-          repository: qniapp/qni-webgpu
-          ref: ${{ steps.webgpu.outputs.ref }}
-          path: .qni-webgpu-source
       - uses: pnpm/action-setup@v6
         with:
           version: 9.15.9
@@ -38,50 +26,17 @@ jobs:
         with:
           node-version: 24
           cache: pnpm
-          cache-dependency-path: |
-            pnpm-lock.yaml
-            .qni-webgpu-source/apps/web/pnpm-lock.yaml
+          cache-dependency-path: pnpm-lock.yaml
       - name: Install tutorial dependencies
         run: pnpm install --frozen-lockfile
       - name: Test pinned embed release verification
         run: pnpm run test:unit
-      - name: Install upstream Rust toolchain and wasm target
-        run: |
-          env -C .qni-webgpu-source rustup show active-toolchain
-          env -C .qni-webgpu-source rustup target add wasm32-unknown-unknown
-      - uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: .qni-webgpu-source/apps/web -> target
-      - name: Cache prebuilt Trunk
-        id: trunk-cache
-        uses: actions/cache@v5
-        with:
-          path: |
-            ~/.local/bin/trunk
-            ~/.cache/trunk
-          key: trunk-${{ runner.os }}-${{ runner.arch }}-0.21.14-${{ hashFiles('.qni-webgpu-source/apps/web/Cargo.lock', '.qni-webgpu-source/apps/web/Trunk.toml') }}
-      - name: Install prebuilt Trunk
-        if: steps.trunk-cache.outputs.cache-hit != 'true'
-        env:
-          TRUNK_VERSION: 0.21.14
-        run: |
-          archive=trunk-x86_64-unknown-linux-gnu.tar.gz
-          release="https://github.com/trunk-rs/trunk/releases/download/v${TRUNK_VERSION}"
-          curl -fsSL "$release/$archive" -o "$RUNNER_TEMP/$archive"
-          digest=$(curl -fsSL "$release/$archive.sha256" | awk '{print $1}')
-          echo "$digest  $RUNNER_TEMP/$archive" | sha256sum --check
-          mkdir -p "$HOME/.local/bin"
-          tar -xzf "$RUNNER_TEMP/$archive" -C "$HOME/.local/bin" trunk
-      - name: Add Trunk to PATH
-        run: echo "$HOME/.local/bin" >> "$GITHUB_PATH"
-      - name: Build pinned WebGPU embed and standalone app
-        run: bash scripts/fetch-qni-webgpu.sh "$GITHUB_WORKSPACE/.qni-webgpu-source"
       - name: Build Astro and upload Pages artifact
         uses: withastro/action@v6
         # gh is preinstalled; public release verification needs no write permission.
         # Pass its token only to builds that fetch the pinned release.
         env:
-          GH_TOKEN: ${{ env.QNI_EMBED_PREBUILT == '1' && github.token || '' }}
+          GH_TOKEN: ${{ github.token }}
         with:
           node-version: 24
           build-cmd: pnpm run typecheck && pnpm run build
@@ -90,7 +45,7 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium
       - name: Run isolated pinned embed mobile acceptance
         env:
-          GH_TOKEN: ${{ env.QNI_EMBED_PREBUILT == '1' && github.token || '' }}
+          GH_TOKEN: ${{ github.token }}
         run: node scripts/test-pinned-embed-mobile.mjs
       - name: Upload mobile acceptance results
         if: always()
@@ -98,6 +53,21 @@ jobs:
         with:
           name: pinned-embed-mobile-results
           path: test-results/pinned-embed-mobile
+          if-no-files-found: ignore
+          retention-days: 14
+      # Requires the real pinned public assets and Chromium installed above.
+      # Its temporary outDir builds must not replace the default dist artifact.
+      - name: Test introduction migration build
+        # Both temporary builds re-fetch and verify the pinned release with gh.
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: pnpm run test:migration
+      - name: Upload migration test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: introduction-migration-results
+          path: test-results/migration
           if-no-files-found: ignore
           retention-days: 14
       - name: Upload built site for Playwright
@@ -125,7 +95,7 @@ jobs:
           name: site-dist
           path: dist
       - name: Run Playwright
-        run: pnpm exec playwright test
+        run: pnpm exec playwright test --workers=1
       - name: Upload Playwright results
         if: always()
         uses: actions/upload-artifact@v4
@@ -139,7 +109,7 @@ jobs:
 
   deploy:
     if: github.event_name != 'pull_request'
-    needs: build
+    needs: [build, test]
     runs-on: ubuntu-latest
     permissions:
       pages: write

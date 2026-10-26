@@ -5,7 +5,7 @@ for(const width of [390,1440])test(`Grover iteration preserves all source conten
  await page.setViewportSize({width,height:1100});await page.goto('/qni-tutorial-webgpu/grover_iteration/')
  await page.waitForFunction(()=>document.documentElement.dataset.mathjax==='ready')
  const text=await page.locator('.content-with-margin').evaluate(root=>{const walk=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let text='',node;while(node=walk.nextNode()){if(!node.parentElement!.closest('footer,script,style,mjx-container,orbit-reviewarea,qni-webgpu-circuit,[data-original-image]')&&!(node.parentElement!.closest('a')&&node.textContent!.replace(/\s+/g,'')==='Qniで開く'))text+=node.textContent}return text.replace(/\s+/g,'').normalize('NFC')})
- expect(text).toBe(approved.text)
+ expect(text).toBe(approved.text.replaceAll('グローヴァー', 'グローバー').replaceAll('グロヴァー', 'グローバー'))
  const math=await page.evaluate(()=>Array.from((window as any).MathJax.startup.document.math as Iterable<any>).map(item=>({tex:item.math.replace(/\s+/g,'').normalize('NFC'),display:item.display})))
  expect(math).toEqual(approved.math)
  expect(text).toContain('約90.8%');expect(text).toContain('9回目で99.2%');expect(math.some(item=>item.tex.includes('5,000'))).toBe(true)

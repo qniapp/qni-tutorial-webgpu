@@ -188,7 +188,7 @@ const base = import.meta.env.BASE_URL
     予想してから「入力の角度 t」スライダーを 90 度へ動かし、二乗和を確認して答えましょう。
     また、Probability が 0 に 35%、1 に 65% を示したとき、Z の期待値はどうなるでしょうか? 符号にも注意して計算してください。
   </p>
-  <orbit-reviewarea color="blue">
+  <orbit-reviewarea color="brown">
     <orbit-prompt question="すべての入力で状態の長さを保つ、ユニタリ行列の条件は?" answer="U†U = I です。"></orbit-prompt>
     <orbit-prompt question="観測量を表すエルミート行列 A の条件は?" answer="A† = A です。"></orbit-prompt>
     <orbit-prompt question="P(0) = 35%、P(1) = 65% のとき、Z の期待値は?" answer="0.35 − 0.65 = −0.30 です。"></orbit-prompt>
@@ -208,5 +208,5 @@ const base = import.meta.env.BASE_URL
 <style>
   ol { max-width:76ch; padding-left:24px; }
   li + li { margin-top:16px; }
-  @media (min-width:640px) { ol { width:58.333333%; margin-right:auto; } }
+  @media (min-width:640px) { ol { width:var(--prose-width); margin-right:auto; } }
 </style>

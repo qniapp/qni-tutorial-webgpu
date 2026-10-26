@@ -86,5 +86,5 @@ const base = import.meta.env.BASE_URL
  .my-5 { margin-block:20px; } .flex { display:flex; } .flex-row { flex-direction:row; }
  .flex-col { flex-direction:column; } .justify-center { justify-content:center; } .space-x-2 { gap:8px; }
  .overflow-x-auto { overflow-x:auto; } .flex :global(qubit-circle) { flex:none; margin-right:0; }
- @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+ @media(min-width:768px) { [class~='md:w-7/12'] { width:var(--prose-width); margin-right:auto; } }
 </style>
