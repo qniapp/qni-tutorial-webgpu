@@ -213,16 +213,17 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isAvail
      English strings and font cannot be changed from here, and its palette
      only through the color presets (pages use the warm "brown"). Frame it
      in the site palette with a Japanese title and a key to its buttons. */
-  orbit-reviewarea {
+  orbit-reviewarea.quiz-plain { margin: 32px 0; }
+  orbit-reviewarea:not(.quiz-plain) {
     margin: 32px 0; padding: 12px 12px 0; border: 1px solid var(--border);
     border-radius: 12px; background: var(--bg-2);
   }
-  orbit-reviewarea::before {
+  orbit-reviewarea:not(.quiz-plain)::before {
     content: '確認クイズ'; display: block; margin: 0 4px 8px;
     font-size: 16px; font-weight: 600; line-height: 24px;
   }
-  orbit-reviewarea::after {
-    content: 'Show Answer で答えを表示し、思い出せたら Remembered、忘れていたら Forgotten を選びます。Skip で次の問題へ進みます (Orbit の画面は英語のみ)。';
+  orbit-reviewarea:not(.quiz-plain)::after {
+    content: 'Show Answer で答えを表示し、思い出せたら Remembered、忘れていたら Forgotten を選びます。Skip で次の問題へ進みます。';
     display: block; margin: -4px 4px 12px; color: var(--muted); font-size: 14px; line-height: 20px;
   }
   details { max-width: 76ch; border-bottom: 1px solid var(--border); padding: 16px 0; }
