@@ -1,12 +1,13 @@
-import { expect, test, type Locator, type Page } from '@playwright/test'
+import { chromium, expect, test, type Locator, type Page } from '@playwright/test'
 import { readFileSync } from 'node:fs'
 
 test.use({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, hasTouch: true, isMobile: true })
 
 const releasePin = readFileSync(new URL('../qni-embed.ref', import.meta.url), 'utf8').trim()
 
-test('pinned H-gate embed runs real GPU code and fits a touch phone', async ({ page }) => {
-  let artifactBase = '/qni-tutorial-webgpu/qni-webgpu-prebuilt/'
+test('pinned H-gate embed runs real GPU code and fits a touch phone', async ({ page }, testInfo) => {
+  const sourceBuild = testInfo.project.metadata.sourceEmbed === true
+  let artifactBase = sourceBuild ? '/qni-tutorial-webgpu/qni-webgpu/' : '/qni-tutorial-webgpu/qni-webgpu-prebuilt/'
   const runtimeRequests: string[] = []
   const upstreamGateRequests: string[] = []
   const failures: string[] = []
@@ -26,9 +27,19 @@ test('pinned H-gate embed runs real GPU code and fits a touch phone', async ({ p
     }
   })
   await page.goto('/qni-tutorial-webgpu/h_gate/')
-  await expect(page.locator('html')).toHaveAttribute('data-qni-embed-base', /^\/qni-tutorial-webgpu\/qni-webgpu-prebuilt\/embed-[a-f0-9]{40}\/$/)
-  artifactBase = (await page.locator('html').getAttribute('data-qni-embed-base'))!
-  expect(artifactBase).toBe(`/qni-tutorial-webgpu/qni-webgpu-prebuilt/embed-${releasePin}/`)
+  if (sourceBuild) {
+    await expect(page.locator('html')).not.toHaveAttribute('data-qni-embed-base')
+    const pin = readFileSync(new URL('../qni-webgpu.ref', import.meta.url), 'utf8').trim()
+    const provenance = await page.evaluate(async base => {
+      const runtime = await import(/* @vite-ignore */ `${base}qni-embed.mjs`)
+      return { source: runtime.SOURCE_COMMIT, api: runtime.EMBED_API_VERSION }
+    }, artifactBase)
+    expect(provenance).toEqual({ source: pin, api: 1 })
+  } else {
+    await expect(page.locator('html')).toHaveAttribute('data-qni-embed-base', /^\/qni-tutorial-webgpu\/qni-webgpu-prebuilt\/embed-[a-f0-9]{40}\/$/)
+    artifactBase = (await page.locator('html').getAttribute('data-qni-embed-base'))!
+    expect(artifactBase).toBe(`/qni-tutorial-webgpu/qni-webgpu-prebuilt/embed-${releasePin}/`)
+  }
   expect(await page.evaluate(() => ({ width: innerWidth, touch: navigator.maxTouchPoints > 0 })))
     .toEqual({ width: 390, touch: true })
 
@@ -55,7 +66,7 @@ test('pinned H-gate embed runs real GPU code and fits a touch phone', async ({ p
         && Math.abs(state[2] - Math.SQRT1_2) < 0.0001
         && Math.abs(state[3]) < 0.0001
     } catch { return false }
-  }), { timeout: 10_000, message: 'release runner computes H on zero, interleaved real/imaginary' }).toBe(true)
+  }), { timeout: 10_000, message: 'runner computes H on zero, interleaved real/imaginary' }).toBe(true)
   expect(upstreamGateRequests).toEqual([])
   expect(await page.evaluate(() => !!customElements.get('h-gate'))).toBe(true)
 
@@ -164,6 +175,42 @@ async function swipe(page: Page, from: { x: number; y: number }, to: { x: number
   }
   await page.waitForTimeout(200)
 }
+
+test('authored introduction permits an empty-space vertical touch swipe', async ({ page }) => {
+  await page.goto('/qni-tutorial-webgpu/')
+  const circuit = page.locator('qni-webgpu-circuit')
+  await circuit.scrollIntoViewIfNeeded()
+  await expect(circuit).toHaveAttribute('data-state', 'running', { timeout: 45_000 })
+  await circuit.locator('canvas').evaluate(element => {
+    scrollBy(0, element.getBoundingClientRect().top - 120)
+  })
+  const before = await page.evaluate(() => scrollY)
+  const authored = await circuit.evaluate(element => (element as CircuitElement).runner.circuitJSON())
+  const box = (await circuit.locator('canvas').boundingBox())!
+  await swipe(page, await canvasPoint(circuit, box.width - 40, 380), await canvasPoint(circuit, box.width - 40, 160))
+  await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(before + 50)
+  expect(await circuit.evaluate(element => (element as CircuitElement).runner.circuitJSON())).toBe(authored)
+  await expectNoHorizontalOverflow(page, circuit)
+})
+
+test('real runtime renders its unavailable-adapter error on a touch phone', async ({ baseURL }) => {
+  const browser = await chromium.launch({ args: ['--no-sandbox', '--disable-gpu'] })
+  try {
+    const page = await browser.newPage({ baseURL, viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true })
+    await page.goto('/qni-tutorial-webgpu/h_gate/')
+    const circuit = page.locator('qni-webgpu-circuit')
+    await circuit.scrollIntoViewIfNeeded()
+    await expect(circuit).toHaveAttribute('data-state', 'error', { timeout: 45_000 })
+    await expect(circuit).toHaveAttribute('data-error-code', 'gpu-adapter-unavailable')
+    await expect(circuit.locator('.error-slot').getByRole('heading')).toBeVisible()
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390)
+    const box = (await circuit.boundingBox())!
+    expect(box.x).toBeGreaterThanOrEqual(0)
+    expect(box.x + box.width).toBeLessThanOrEqual(390)
+  } finally {
+    await browser.close()
+  }
+})
 
 test('migrated measurement embed swipes to later steps on a 390px GPU phone', async ({ page }) => {
   const circuit = await startMeasurement(page)

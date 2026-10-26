@@ -16,7 +16,8 @@ const inputId = `margin-note-${id}`
     position: relative;
     font-size: 14px;
     line-height: 20px;
-    color: #71717a;
+    /* Flexoki base-700: about 7:1 on the cream background. */
+    color: #575653;
     display: none;
     vertical-align: baseline;
     float: left;
@@ -40,9 +41,10 @@ const inputId = `margin-note-${id}`
     background: #e0f2fe;
     top: -8px;
     vertical-align: baseline;
-    content: '…';
+    /* The word joiner keeps the marker on the line of the preceding word. */
+    content: '\2060…';
   }
-  label.margin-note--numbered::after { content: counter(margin-note-counter); }
+  label.margin-note--numbered::after { content: '\2060' counter(margin-note-counter); }
   label.margin-note--numbered + input + .margin-note::before {
     position: relative;
     top: -8px;
@@ -55,9 +57,10 @@ const inputId = `margin-note-${id}`
       vertical-align: middle;
       float: right;
       clear: right;
-      margin: 0 -50% 20px 0;
-      padding-left: 48px;
-      width: 50%;
+      /* Fill the content area right of the prose column (see TutorialLayout). */
+      margin: 0 calc(var(--prose-width) - 100cqw) 12px 0;
+      padding-left: 32px;
+      width: calc(100cqw - var(--prose-width));
     }
     label.margin-note__toggle::after { padding-inline: 0; background: transparent; }
     label.margin-note__toggle--unnumbered::after { display: none; }

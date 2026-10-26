@@ -1,7 +1,8 @@
 ---
 import Sidebar from '../components/Sidebar.astro'
 import PinnedEmbed from '../components/PinnedEmbed.astro'
-import { isPorted, toc } from '../data/toc'
+import { toc } from '../data/toc'
+import { href, isAvailable } from '../data/navigation'
 
 interface Props {
   title: string
@@ -12,20 +13,20 @@ interface Props {
 }
 const { title, description, section, hasCircuit = false, hasMath = false } = Astro.props
 const base = import.meta.env.BASE_URL
-const href = (slug: string) => (slug === '' ? base : `${base}${slug}/`)
+const migration = import.meta.env.PUBLIC_QNI_TUTORIAL_MIGRATION
 // Original prev/next follow the sidebar order; unported pages are skipped.
 const pages = toc.flatMap(chapter => chapter.pages)
 const index = pages.findIndex(page => href(page.slug) === Astro.url.pathname)
-const prev = index < 0 ? undefined : pages.slice(0, index).findLast(page => isPorted(page.slug))
-const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isPorted(page.slug))
+const prev = index < 0 ? undefined : pages.slice(0, index).findLast(page => isAvailable(page.slug))
+const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isAvailable(page.slug))
 ---
 <!doctype html>
-<html lang="ja">
+<html lang="ja" class:list={{ 'migration-page': migration }}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+    <link rel="icon" href={`${base}${migration ? 'qni-favicon.ico' : 'favicon.svg'}`} type={migration ? 'image/x-icon' : 'image/svg+xml'} />
     <title>{title} | Qni Tutorial</title>
     {hasMath && <Fragment>
       <script is:inline>
@@ -60,12 +61,28 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isPorte
       </div>
     </dialog>
     <div class="page-column">
-    <header class="site-header">
+    <header class:list={['site-header', { 'site-header-migration': migration }]}>
       <button type="button" class="toc-open" aria-label="目次を開く" aria-controls="toc-drawer" aria-expanded="false">
         <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
       </button>
-      <a href={base}>Qni Tutorial</a>
-      <span>実験版</span>
+      {migration ? <>
+        <a class="brand-logo" href={base} aria-label="Qni Tutorial ホーム">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true" focusable="false">
+            <circle cx="14" cy="14" r="10" fill="#0EA5E9" />
+            <path d="M14 14L22 22" stroke="#0F172A" stroke-width="2" stroke-linecap="round" />
+            <circle cx="14" cy="14" r="13" stroke="#64748B" stroke-width="2" />
+          </svg>
+          <span class="brand-wordmark"><span class="brand-qni">Qni</span><span class="brand-tutorial">Tutorial</span></span>
+        </a>
+        <a class="github-link" href="https://github.com/qniapp/qni" aria-label="GitHub で Qni を見る">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+            <path d="M9 19C4 20.5 4 16.5 2 16M16 22V18.13C16.0375 17.6532 15.9731 17.1738 15.811 16.7238C15.6489 16.2738 15.3929 15.8634 15.06 15.52C18.2 15.17 21.5 13.98 21.5 8.52C21.4997 7.12383 20.9627 5.7812 20 4.77C20.4559 3.54851 20.4236 2.19835 19.91 1C19.91 1 18.73 0.65 16 2.48C13.708 1.85882 11.292 1.85882 9 2.48C6.27 0.65 5.09 1 5.09 1C4.57638 2.19835 4.54414 3.54851 5 4.77C4.03013 5.7887 3.49252 7.14346 3.5 8.55C3.5 13.97 6.8 15.16 9.94 15.55C9.611 15.89 9.35726 16.2954 9.19531 16.7399C9.03335 17.1844 8.96681 17.6581 9 18.13V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </> : <>
+        <a href={base}>Qni Tutorial</a>
+        <span>実験版</span>
+      </>}
     </header>
     <main>
       <div class="page-title-block">
@@ -75,8 +92,8 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isPorte
       </div>
       <div class="content-with-margin"><slot /><footer class="page-footer">
         <div class="page-footer-nav">
-          {prev && <a class="page-footer-link" href={href(prev.slug)}><svg class="page-footer-chevron page-footer-chevron-left" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.84182 3.13514C9.04327 3.32401 9.05348 3.64042 8.86462 3.84188L5.43521 7.49991L8.86462 11.1579C9.05348 11.3594 9.04327 11.6758 8.84182 11.8647C8.64036 12.0535 8.32394 12.0433 8.13508 11.8419L4.38508 7.84188C4.20477 7.64955 4.20477 7.35027 4.38508 7.15794L8.13508 3.15794C8.32394 2.95648 8.64036 2.94628 8.84182 3.13514Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>{prev.title}</a>}
-          {next && <a class="page-footer-link page-footer-next" href={href(next.slug)}>{next.title}<svg class="page-footer-chevron page-footer-chevron-right" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></a>}
+          {prev && <a class="page-footer-link page-footer-prev" href={href(prev.slug)} rel="prev"><svg class="page-footer-chevron" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M8.84182 3.13514C9.04327 3.32401 9.05348 3.64042 8.86462 3.84188L5.43521 7.49991L8.86462 11.1579C9.05348 11.3594 9.04327 11.6758 8.84182 11.8647C8.64036 12.0535 8.32394 12.0433 8.13508 11.8419L4.38508 7.84188C4.20477 7.64955 4.20477 7.35027 4.38508 7.15794L8.13508 3.15794C8.32394 2.95648 8.64036 2.94628 8.84182 3.13514Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg><span class="page-footer-text"><span class="page-footer-label">前へ</span><span class="page-footer-title">{prev.title}</span></span></a>}
+          {next && <a class="page-footer-link page-footer-next" href={href(next.slug)} rel="next"><span class="page-footer-text"><span class="page-footer-label">次へ</span><span class="page-footer-title">{next.title}</span></span><svg class="page-footer-chevron" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></a>}
         </div>
       </footer></div>
     </main>
@@ -113,6 +130,16 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isPorte
   .site-header, main { max-width: 1120px; margin-inline: auto; padding: 24px; }
   .site-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
   .site-header a { font-weight: 600; text-decoration: none; }
+  /* Keep prose scroll targets below the migration header (79px plus clearance). */
+  .migration-page { scroll-padding-top: 96px; }
+  .site-header-migration { position: sticky; top: 0; z-index: 10; background: var(--bg); }
+  /* Legacy SVG palette; lettering stays selectable rather than outlined paths. */
+  .site-header-migration .brand-logo { display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .site-header-migration .brand-wordmark { display: inline-flex; align-items: baseline; white-space: nowrap; }
+  .site-header-migration .brand-qni { color: #18181B; font-size: 20px; line-height: 28px; font-weight: 800; letter-spacing: -0.6px; }
+  .site-header-migration .brand-tutorial { color: #38BDF8; font-family: Arial, sans-serif; font-size: 16px; line-height: 28px; font-weight: 700; text-transform: uppercase; }
+  .site-header-migration .github-link { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; flex: none; margin: -8px -8px -8px 8px; color: #a1a1aa; border-radius: 6px; }
+  .site-header-migration .github-link:hover { color: #71717a; }
   .site-header span, .section-label { color: var(--muted); font-size: 14px; line-height: 20px; }
   main { padding-block: 48px; }
   h1 { margin: 8px 0 16px; font-size: 36px; line-height: 40px; }
@@ -129,7 +156,12 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isPorte
   .page-title-block .lede { margin-top: 5px; margin-bottom: 0; }
   .static-diagram { max-width: 76ch; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-2); padding: 16px 24px; margin: 24px 0; }
   .static-diagram p { margin: 8px 0; }
+  /* Clear notes only when the embed is wider than the prose column; a
+     column-width embed sits beside them (else a note leaves a blank gap). */
   qni-webgpu-circuit { clear: both; }
+  @media (min-width: 640px) {
+    .content-with-margin qni-webgpu-circuit:not([width]) { clear: none; }
+  }
   /* Flex-centered legacy wrappers otherwise shrink around the custom element. */
   .content-with-margin > :has(qni-webgpu-circuit:not([width])) :has(qni-webgpu-circuit:not([width])) { width: 100%; }
   fit-content { display: block; width: 100%; min-width: 0; }
@@ -149,31 +181,60 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isPorte
   figure, qni-webgpu-circuit { margin: 24px 0; }
   figure, qni-webgpu-circuit:not([width]) { max-width: 640px; }
   figure img { display: block; width: 100%; height: auto; }
+  /* Diagrams with small labels span the note column too, up to their 960px design size. */
+  .content-with-margin > figure.figure-wide { clear: both; width: 100%; max-width: 960px; }
   figcaption { color: var(--muted); font-size: 14px; line-height: 20px; }
   /* Orbit's shadow iframe is 100% wide; size its host like the prose,
      not the full content area that also reserves space for margin notes. */
   orbit-reviewarea { display: block; max-width: 76ch; }
+  /* Orbit's card is a cross-origin iframe in a closed shadow root: its
+     English strings and font cannot be changed from here, and its palette
+     only through the color presets (pages use the warm "brown"). Frame it
+     in the site palette with a Japanese title and a key to its buttons. */
+  orbit-reviewarea {
+    margin: 32px 0; padding: 12px 12px 0; border: 1px solid var(--border);
+    border-radius: 12px; background: var(--bg-2);
+  }
+  orbit-reviewarea::before {
+    content: '確認クイズ'; display: block; margin: 0 4px 8px;
+    font-size: 16px; font-weight: 600; line-height: 24px;
+  }
+  orbit-reviewarea::after {
+    content: 'Show Answer で答えを表示し、思い出せたら Remembered、忘れていたら Forgotten を選びます。Skip で次の問題へ進みます (Orbit の画面は英語のみ)。';
+    display: block; margin: -4px 4px 12px; color: var(--muted); font-size: 14px; line-height: 20px;
+  }
   details { max-width: 76ch; border-bottom: 1px solid var(--border); padding: 16px 0; }
   summary { cursor: pointer; line-height: 28px; }
-  /* Original _includes/footer.html: footer mt-12 text-sm leading-6;
-     div mb-10 flex items-center font-semibold text-slate-700;
-     a group flex items-center no-underline hover:text-slate-900 (next: ml-auto);
-     svg mr-3/ml-3 h-4 w-auto overflow-visible text-slate-400 group-hover:text-slate-600. */
-  .page-footer { margin-top: 48px; font-size: 14px; line-height: 24px; }
-  .page-footer-nav { display: flex; align-items: center; margin-bottom: 40px; font-weight: 600; color: #334155; }
-  .page-footer-link { display: flex; align-items: center; color: inherit; text-decoration: none; }
-  .page-footer-link:hover { color: #0f172a; }
-  .page-footer-next { margin-left: auto; }
-  .page-footer-chevron { height: 16px; width: auto; overflow: visible; color: #94a3b8; }
-  .page-footer-chevron-left { margin-right: 12px; }
-  .page-footer-chevron-right { margin-left: 12px; }
-  .page-footer-link:hover .page-footer-chevron { color: #475569; }
-  @media (min-width: 768px) {
-    .content-with-margin > footer { width: 58.333333%; margin-right: auto; }
+  /* Previous/next cards; the next card stays on the right even alone. */
+  .page-footer { margin-top: 64px; margin-bottom: 40px; }
+  .page-footer-nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .page-footer-link {
+    display: flex; align-items: center; gap: 12px; min-height: 72px; padding: 12px 16px;
+    border: 1px solid var(--border); border-radius: 12px; background: var(--bg-2);
+    color: var(--text); text-decoration: none; transition: border-color 150ms, background-color 150ms;
+  }
+  .page-footer-link:hover { border-color: var(--link); background: #e6e4d9; }
+  .page-footer-next { grid-column: 2; justify-content: flex-end; text-align: right; }
+  .page-footer-text { display: flex; flex-direction: column; min-width: 0; }
+  .page-footer-label { color: var(--muted); font-size: 14px; line-height: 20px; }
+  .page-footer-title { color: var(--link); font-size: 18px; font-weight: 600; line-height: 26px; }
+  .page-footer-chevron { flex: none; width: 20px; height: 20px; color: var(--muted); }
+  .page-footer-link:hover .page-footer-chevron { color: var(--link); }
+  @media (max-width: 479.98px) {
+    .page-footer-nav { grid-template-columns: minmax(0, 1fr); }
+    .page-footer-next { grid-column: 1; }
   }
   /* Reserve a right margin for notes. Start at the note breakpoint so the
-     original's 640-767px negative margin cannot cause horizontal overflow. */
+     original's 640-767px negative margin cannot cause horizontal overflow.
+     The prose column holds about 35 Japanese characters (560px at 16px)
+     and leaves the notes at least 240px. The container is main, whose
+     content box is this content area: cqw are its percentages. Container
+     queries imply style containment, which hides counters reset outside
+     main, so the note counter starts inside it. */
+  main { container-type: inline-size; }
+  .content-with-margin { counter-reset: margin-note-counter; --prose-width: 100%; }
   @media (min-width: 640px) {
+    .content-with-margin { --prose-width: min(560px, max(58.333333cqw, 100cqw - 240px)); }
     .content-with-margin > p,
     .content-with-margin > ul,
     .content-with-margin > figure,
@@ -182,7 +243,8 @@ const next = index < 0 ? undefined : pages.slice(index + 1).find(page => isPorte
     .content-with-margin > :has(qni-webgpu-circuit:not([width])),
     .content-with-margin > .static-diagram,
     .content-with-margin > details,
-    .content-with-margin > orbit-reviewarea { width: 58.333333%; margin-right: auto; }
+    .content-with-margin > orbit-reviewarea,
+    .content-with-margin > footer { width: var(--prose-width); margin-right: auto; }
   }
   /* Original page.html: md (768px) fixed w-64 sidebar; below it a menu
      button opens an off-canvas drawer (here a modal <dialog>). */

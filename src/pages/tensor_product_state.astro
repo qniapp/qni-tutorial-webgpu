@@ -133,7 +133,7 @@ const base = import.meta.env.BASE_URL
     2 番目の図で <Ket label="11" /> の振幅と確率はどうなるでしょうか?
     どの因子を選ぶか考えてから「振幅セル」スライダーを |11⟩ に合わせ、振幅が 0.48、確率が 23.04% になることを確認しましょう。
   </p>
-  <orbit-reviewarea color="blue">
+  <orbit-reviewarea color="brown">
     <orbit-prompt question="Qni の 2 量子ビットの状態ラベルは、ワイヤ名を使うと左からどの順に並びますか?" answer="q1 q0 の順です。"></orbit-prompt>
     <orbit-prompt question="積状態で q1 の 1 の振幅が 0.6、q0 の 0 の振幅が 0.6 なら、|10⟩ の振幅は?" answer="0.36。行の因子と列の因子を掛けます。"></orbit-prompt>
     <orbit-prompt question="2 量子ビットの振幅表から q0 が 1 の確率を求めるには?" answer="|01⟩ と |11⟩ の確率を足します。振幅ではなく、大きさを 2 乗した値を足します。"></orbit-prompt>
@@ -151,5 +151,5 @@ const base = import.meta.env.BASE_URL
 <style>
   ol { max-width: 76ch; padding-left: 24px; }
   li + li { margin-top: 16px; }
-  @media (min-width: 640px) { ol { width: 58.333333%; margin-right: auto; } }
+  @media (min-width: 640px) { ol { width: var(--prose-width); margin-right: auto; } }
 </style>
