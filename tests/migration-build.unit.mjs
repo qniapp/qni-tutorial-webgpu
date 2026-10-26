@@ -20,6 +20,7 @@ test('opt-in introduction uses the retained tutorial URLs and assets', async () 
       stdio: 'pipe',
     })
     const html = await readFile(join(output, 'index.html'), 'utf8')
+    assert.match(html, /<qni-webgpu-circuit selected-step="2"/)
     assert.match(html, /rel="icon" href="\/qni\/qni-favicon\.ico" type="image\/x-icon"/)
     assert.equal(createHash('sha256').update(await readFile(join(output, 'qni-favicon.ico'))).digest('hex'), legacyIconDigest)
     const header = html.match(/<header\b[^>]*>([\s\S]*?)<\/header>/)?.[1] ?? ''
@@ -49,6 +50,7 @@ test('opt-in introduction uses the retained tutorial URLs and assets', async () 
       env: { ...process.env, QNI_TUTORIAL_MIGRATION: '0', QNI_EMBED_PREBUILT: '0', QNI_H_GATE_PREBUILT: '0' }, stdio: 'pipe',
     })
     const ordinary = await readFile(join(output, 'index.html'), 'utf8')
+    assert.match(ordinary, /<qni-webgpu-circuit selected-step="2"/)
     assert.match(ordinary, /href="\/qni-tutorial-webgpu\/qpu\/"/)
     assert.match(ordinary, /href="\/qni-tutorial-webgpu\/amplitude_probability\/"/)
     assert.match(ordinary, /src="\/qni-tutorial-webgpu\/_astro\//)
