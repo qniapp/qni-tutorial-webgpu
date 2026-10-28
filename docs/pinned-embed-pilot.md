@@ -71,8 +71,20 @@ Each verification runs GitHub CLI with this policy (use the full SHA from
 ```sh
 gh attestation verify <file> -R qniapp/qni-webgpu \
   --signer-workflow qniapp/qni-webgpu/.github/workflows/embed-release.yml \
-  --source-ref refs/heads/master --source-digest <full-SHA>
+  --source-ref refs/heads/master --source-digest <full-SHA> --limit 1000
 ```
+
+The explicit lookup bound is GitHub CLI 2.103.2's supported maximum (1 through
+1000; API pages contain at most 100 entries). Unchanged asset bytes can have
+attestations from many builds. At diagnosis, the error-module digest had 91
+mixed bundles, and its pinned-source provenance was outside the default
+30-record lookup. Fetching more candidates does not relax any identity check.
+All ten pinned files were verified with the bound and every existing constraint.
+The bound is finite: if future attestations push the matching provenance beyond
+1000 candidates, verification still fails closed. This is an availability limit,
+not permission to change source pins, retry with weaker policy, accept a different
+source, or fetch unbounded pages. CLI/network errors and nonzero verification
+results remain fatal; there is no fallback or retry.
 
 Missing `gh`, CLI/authentication/network errors, and rejected attestations all
 fail closed. No downloaded code is executed. Only a fully verified release is

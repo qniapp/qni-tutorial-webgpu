@@ -27,7 +27,9 @@ export function estimateEmbedHeight(circuit: string, palette: string | null, max
   } catch { /* Keep the full-palette estimate. */ }
   const outset = blocks ? 58 : 0
   const lastLine = 8 - shift + outset + 256 + 56 * (wires - 1)
-  const bottom = lastLine + 28 + outset
+  // Native preferred_height reserves STEP_OUTSET_Y (20px gate half-height
+  // plus 32px step padding), or the larger circuit-block/wire outset.
+  const bottom = lastLine + Math.max(52, 28 + outset)
   return Math.ceil(Math.max(lastLine + 40 + 16 + outset,
     bottom + (showStatePanel ? 16 + 32 + 160 + 64 : 16)) + 8)
 }
