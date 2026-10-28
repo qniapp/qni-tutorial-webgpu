@@ -7,7 +7,7 @@ import Sidenote from '../components/Sidenote.astro'
 import Ket from '../components/Ket.astro'
 const base = import.meta.env.BASE_URL
 ---
-<TutorialLayout title="折り返し変換" description="位相を大きさに変換する" section="グローヴァー探索" hasMath hasCircuit>
+<TutorialLayout title="折り返し変換" description="位相を大きさに変換する" section="グローバー探索" hasMath hasCircuit>
 
 
 <p>
@@ -27,7 +27,7 @@ const base = import.meta.env.BASE_URL
     >折り返し変換の仕組み</a
   >で説明します。</Sidenote>。
   論理位相演算によって反転した位相を折り返し変換にかけることで、位相反転でマークした振幅の確率を増幅させることができます。
-  この「位相反転→折り返し変換」を<strong>振幅増幅</strong>と呼び、量子探索であるグローヴァーのアルゴリズムの中心部分を担っています。
+  この「位相反転→折り返し変換」を<strong>振幅増幅</strong>と呼び、量子探索であるグローバーのアルゴリズムの中心部分を担っています。
 </p>
 
 <figure>
@@ -151,5 +151,5 @@ const base = import.meta.env.BASE_URL
   th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
   td { padding:8px; border-bottom:1px solid #DAD8CE; }
   th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
-  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:var(--prose-width); margin-right:auto; } }
 </style>

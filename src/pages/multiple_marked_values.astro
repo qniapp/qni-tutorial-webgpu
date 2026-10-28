@@ -6,13 +6,13 @@ import Sidenote from '../components/Sidenote.astro'
 import Ket from '../components/Ket.astro'
 const base = import.meta.env.BASE_URL
 ---
-<TutorialLayout title="複数の位相反転" description="複数の位相が反転している場合のグローヴァー反復" section="グローヴァー探索" hasMath hasCircuit>
+<TutorialLayout title="複数の位相反転" description="複数の位相が反転している場合のグローバー反復" section="グローバー探索" hasMath hasCircuit>
 
 
 <p>
-  反転した位相が複数ある場合のグローヴァー探索はどうなるでしょうか? 今までは答が 1
+  反転した位相が複数ある場合のグローバー探索はどうなるでしょうか? 今までは答が 1
   つ、つまり反転した位相が 1 つの場合を見てきました。
-  しかしグローヴァー探索の使い途の一つである充足可能性問題では、条件を満たす答が 2
+  しかしグローバー探索の使い途の一つである充足可能性問題では、条件を満たす答が 2
   つ以上になる場合もあります。 そこで試しに、以下のように <Ket label="0111" /> と <Ket label="1111" /> の 2
   つを反転させ、折り返し変換を 1 回適用した結果を見てみます。
 </p>
@@ -20,10 +20,10 @@ const base = import.meta.env.BASE_URL
 <qni-webgpu-circuit max-wire-count="1" palette={"[]"} circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\",\"|0>\"],[\"{|0111>と|1111>を反転\"],[\"H\",\"H\",\"H\",\"H\"],[\"•\",\"•\",\"•\"],[\"}\"],[1],[\"{折り返し変換\"],[\"H\",\"H\",\"H\",\"H\"],[\"X\",\"X\",\"X\",\"X\"],[\"•\",\"•\",\"•\",\"•\"],[\"X\",\"X\",\"X\",\"X\"],[\"H\",\"H\",\"H\",\"H\"],[\"}\"],[1]]}"}></qni-webgpu-circuit>
 
 <p>
-  実行すると、反転した位相が複数ある場合でもグローヴァー探索はうまく動作することが分かります。
+  実行すると、反転した位相が複数ある場合でもグローバー探索はうまく動作することが分かります。
   折り返し変換を 1 回実行すると、<Ket label="0111" /> と <Ket label="1111" /> の確率が約 39%
   まで増幅され、それ以外は 約 1.6% まで減衰します。 このように、答が複数ある場合でも振幅増幅
-  (グローヴァー反復) 回路の形は変わらず、位相反転が 1 個の場合とまったく同様に実行できます。
+  (グローバー反復) 回路の形は変わらず、位相反転が 1 個の場合とまったく同様に実行できます。
 </p>
 
 <h2>位相反転が複数ある場合の最適な反復回数</h2>
@@ -87,5 +87,5 @@ const base = import.meta.env.BASE_URL
   th { text-align:left; padding:0 8px 8px; border-bottom:1px solid #DAD8CE; }
   td { padding:8px; border-bottom:1px solid #DAD8CE; }
   th:first-child,td:first-child { padding-left:0; } td.align-middle { vertical-align:middle; }
-  @media(min-width:768px) { [class~='md:w-7/12'] { width:58.333333%; margin-right:auto; } }
+  @media(min-width:768px) { [class~='md:w-7/12'] { width:var(--prose-width); margin-right:auto; } }
 </style>

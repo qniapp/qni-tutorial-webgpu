@@ -132,10 +132,10 @@ export const toc: TocChapter[] = [
     ],
   },
   {
-    title: 'グローヴァー探索',
+    title: 'グローバー探索',
     pages: [
       { title: '折り返し変換', slug: 'grover_iam' },
-      { title: 'グロヴァー反復', slug: 'grover_iteration' },
+      { title: 'グローバー反復', slug: 'grover_iteration' },
       { title: '複数の振幅を増幅', slug: 'multiple_marked_values' },
       { title: '折り返しの仕組み', slug: 'grover_iam_indetail' },
     ],
