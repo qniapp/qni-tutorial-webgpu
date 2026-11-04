@@ -167,9 +167,70 @@ test('default attestation verifier pins repository, workflow, branch and source 
       'attestation', 'verify', 'manifest.json', '-R', 'qniapp/qni-webgpu',
       '--signer-workflow', 'qniapp/qni-webgpu/.github/workflows/embed-release.yml',
       '--source-ref', 'refs/heads/master', '--source-digest', sha,
+      '--limit', '1000',
     ], { timeout: 60_000 }]])
   } finally { PinnedEmbed.runGh = originalRunGh }
 })
+
+// Model the external CLI's bounded lookup and certificate-policy selection,
+// not cryptographic trust. Real signed release verification is a separate gate.
+for (const [name, position, claims, accepted] of [
+  ['pinned provenance beyond default 30', 90, {}, true],
+  ['pinned provenance at the finite bound', 1000, {}, true],
+  ['wrong source', 90, { source: 'b'.repeat(40) }, false],
+  ['missing source', 90, { source: undefined }, false],
+  ['wrong repository', 90, { repository: 'other/repo' }, false],
+  ['wrong workflow', 90, { workflow: 'qniapp/qni-webgpu/.github/workflows/other.yml' }, false],
+  ['wrong ref', 90, { ref: 'refs/heads/other' }, false],
+  ['wrong subject bytes', 90, { digest: '0'.repeat(64) }, false],
+  ['lookup exhausted before pinned provenance', 1001, {}, false],
+]) {
+  test(`bounded strict attestation lookup ${accepted ? 'finds' : 'rejects'} ${name}`, async () => {
+    const fixture = await FixtureRelease.create()
+    const originalRunGh = PinnedEmbed.runGh
+    const calls = []
+    try {
+      PinnedEmbed.runGh = async (command, args) => {
+        calls.push(args)
+        expect(command).toBe('gh')
+        expect(args.slice(0, 2)).toEqual(['attestation', 'verify'])
+        const policy = new Map()
+        for (let i = 3; i < args.length; i += 2) policy.set(args[i], args[i + 1])
+        // All identity constraints are mandatory even when more records are fetched.
+        expect(policy.get('-R')).toBe('qniapp/qni-webgpu')
+        expect(policy.get('--signer-workflow')).toBe('qniapp/qni-webgpu/.github/workflows/embed-release.yml')
+        expect(policy.get('--source-ref')).toBe('refs/heads/master')
+        expect(policy.get('--source-digest')).toBe(fixture.sha)
+        const limit = Number(policy.get('--limit') ?? 30)
+        expect(limit).toBeGreaterThan(0)
+        expect(limit).toBeLessThanOrEqual(1000)
+        const expected = {
+          repository: 'qniapp/qni-webgpu', workflow: 'qniapp/qni-webgpu/.github/workflows/embed-release.yml',
+          ref: 'refs/heads/master', source: fixture.sha,
+          digest: PinnedEmbed.digest(await readFile(args[2])),
+        }
+        const records = Array.from({ length: position }, () => ({ ...expected, source: 'b'.repeat(40) }))
+        records[position - 1] = { ...expected, ...claims }
+        if (!records.slice(0, limit).some(record => Object.entries(expected).every(([key, value]) => record[key] === value))) {
+          throw Object.assign(new Error('no matching provenance within lookup limit'), { code: 1 })
+        }
+      }
+      fixture.options.verifyAttestation = (filename, sha) => PinnedEmbed.verifyAttestation(filename, sha)
+      if (accepted) {
+        await PinnedEmbed.fetch(fixture.options)
+        expect(calls).toHaveLength(10)
+        for (const [file, bytes] of fixture.files) expect(await readFile(join(fixture.options.outputDir, file))).toEqual(bytes)
+      } else {
+        await expect(PinnedEmbed.fetch(fixture.options)).rejects.toThrow(/attestation verification failed for manifest.json: gh error \(1\)/)
+        expect(calls).toHaveLength(1) // No retries or fallback acceptance.
+        expect(await readdir(fixture.root)).toEqual(['qni-embed.ref'])
+      }
+    } finally {
+      PinnedEmbed.runGh = originalRunGh
+      await fixture.close()
+    }
+  })
+}
 
 test('default attestation verifier reports missing gh and gh errors', async () => {
   const originalRunGh = PinnedEmbed.runGh

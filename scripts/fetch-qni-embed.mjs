@@ -28,6 +28,8 @@ export class PinnedEmbed {
       'attestation', 'verify', filename, '-R', 'qniapp/qni-webgpu',
       '--signer-workflow', 'qniapp/qni-webgpu/.github/workflows/embed-release.yml',
       '--source-ref', 'refs/heads/master', '--source-digest', sha,
+      // Unchanged bytes can have many build attestations; keep lookup finite.
+      '--limit', '1000',
     ], { timeout: 60_000 })
   }
 

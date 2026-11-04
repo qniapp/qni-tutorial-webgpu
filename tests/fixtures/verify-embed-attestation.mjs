@@ -14,5 +14,6 @@ assert.deepEqual(policy, [
   '-R', 'qniapp/qni-webgpu',
   '--signer-workflow', 'qniapp/qni-webgpu/.github/workflows/embed-release.yml',
   '--source-ref', 'refs/heads/master', '--source-digest', sha,
+  '--limit', '1000',
 ])
 assert.deepEqual(await readFile(filename), await readFile(join(process.env.QNI_MOBILE_FIXTURE_RELEASE, basename(filename))))

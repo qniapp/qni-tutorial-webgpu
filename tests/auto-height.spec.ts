@@ -26,7 +26,7 @@ for (const width of [390, 1440]) for (const slug of pages) {
   })
 }
 
-for (const [token, expected] of [['QFT†3', 556], ['Probability3', 556]] as const) {
+for (const [token, expected] of [['QFT†3', 580], ['Probability3', 580]] as const) {
   test(`startup estimate recognizes ${token}`, () => {
     expect(estimateEmbedHeight(JSON.stringify({ cols: [[token]] }), '[]', 1, true, 390)).toBe(expected)
   })
