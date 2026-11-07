@@ -23,6 +23,7 @@ import multiCircle from './fixtures/multi_qubit_circle_notation-original.json' w
 import multiSuperposition from './fixtures/multi_qubit_superposition-original.json' with { type: 'json' }
 import multiOperation from './fixtures/multi_qubit_operation-original.json' with { type: 'json' }
 import pairs from './fixtures/operator_pair-original.json' with { type: 'json' }
+// Random-byte fixture preserves original content and adds the Orbit prompts for qni issue #620.
 import randomByte from './fixtures/random_byte_generator-original.json' with { type: 'json' }
 import bb84Circuit from './fixtures/bb84_circuit-original.json' with { type: 'json' }
 import multiPhase from './fixtures/multi_qubit_phase_gate-original.json' with { type: 'json' }
