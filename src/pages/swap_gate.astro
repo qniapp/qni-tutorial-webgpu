@@ -26,6 +26,13 @@ const base = import.meta.env.BASE_URL
 <qni-webgpu-circuit palette={"[]"} circuit={"{\"cols\":[[\"|0>\",\"|1>\"],[\"Swap\",1],[1,\"Swap\"],[\"Measure\",\"Measure\"]]}"} max-wire-count="1"></qni-webgpu-circuit>
 
 
+<orbit-reviewarea color="blue">
+  <orbit-prompt question="Qni の SWAP ゲートで 1 回の交換を行うには、1 列に SWAP 記号を何個置きますか?" answer="2 個です。"></orbit-prompt>
+  <orbit-prompt question="q0 が |0⟩、q1 が |1⟩ のとき、q0 と q1 に SWAP ゲートを適用した直後の q0 の状態は?" answer="|1⟩ です。"></orbit-prompt>
+  <orbit-prompt question="Qni で、異なるワイヤ上の SWAP 記号が 1 個ずつ別々の列にあり、動作しません。交換を行うには、この 2 個をどう配置し直しますか?" answer="異なるワイヤ上のまま、同じ列にそろえます。"></orbit-prompt>
+</orbit-reviewarea>
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+
 </TutorialLayout>
 <style>
   .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
