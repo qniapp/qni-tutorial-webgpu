@@ -36,4 +36,20 @@ const base = import.meta.env.BASE_URL
   プロトコルを動かしてみることで、量子暗号の仕組みを理解しましょう。
 </p>
 
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="量子鍵配送で共有した暗号鍵は、その後の通信で何に使いますか?"
+    answer="通信データの暗号化・復号に使います。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="量子鍵配送では、暗号鍵を共有する際のどのような脅威を検出できるようにしますか?"
+    answer="第三者による鍵の盗聴です。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="量子コンピュータの計算速度が上がるだけでは、量子鍵配送の盗聴検出の原理が破られないのはなぜですか?"
+    answer="盗聴検出は、計算の難しさではなく量子力学の原理に基づくからです。"
+  ></orbit-prompt>
+</orbit-reviewarea>
+
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
 </TutorialLayout>
