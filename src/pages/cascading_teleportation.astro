@@ -43,6 +43,24 @@ const base = import.meta.env.BASE_URL
   リソースがなくなると計算できないので、量子アルゴリズムには「必要な量子もつれを作る」というステップが必ず存在します。
 </p>
 
+<h2>確認してみよう</h2>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="1 量子ビットの状態をボブからアリス、アリスからキャロルへ順にテレポーテーションすると、もつれた量子ビット対は合計何組消費されますか?"
+    answer="2 組です。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="量子テレポーテーションで使ったもつれた量子ビット対を、次のテレポーテーションに再利用できないのはなぜですか?"
+    answer="測定によって、その対の量子もつれが失われるからです。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="1 量子ビットの量子テレポーテーションで、受信側の補正のために送る古典ビットは何個ですか?"
+    answer="2 ビット分です。"
+  ></orbit-prompt>
+</orbit-reviewarea>
+
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
 
 </TutorialLayout>
 <style>
