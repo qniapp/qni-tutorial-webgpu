@@ -140,6 +140,29 @@ const base = import.meta.env.BASE_URL
 <qni-webgpu-circuit max-wire-count="1" palette={"[\"P(π/4)\"]"} circuit={"{\"cols\":[[\"{重ね合わせ状態の準備\"],[\"|0>\",\"|0>\",\"|0>\"],[\"H\",\"H\",\"H\"],[\"}\"]]}"}></qni-webgpu-circuit>
 
 
+<orbit-reviewarea color="blue" class="mt-5">
+  <orbit-prompt
+    question="3 量子ビットで、右端を 1 ビット目と数えます。2 ビット目に PHASE ゲートを置いたとき、|1⟩ と演算ペアになる状態は、十進数ラベルで何ですか?"
+    answer="|3⟩ です。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="3 量子ビットで、右端を 1 ビット目と数えます。|3⟩ の振幅の位相が π/4 のとき、3 ビット目に PHASE(π/4) を適用すると、その位相はいくつになりますか?"
+    answer="π/4 のままです。（理由: |3⟩ = |011⟩ の 3 ビット目は 0 だからです。）"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="3 量子ビットで、演算ペア |0⟩・|4⟩ のうち |4⟩ 側に PHASE(π/4) を作用させるには、ゲートを右端から数えて何ビット目に置きますか?"
+    answer="3 ビット目です。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="複数量子ビットの状態ベクトル表示で、1 個の PHASE(π/4) が位相を回転させる対象が、すべての円のうち半分だけになるのはなぜですか?"
+    answer="各演算ペアのうち、対象ビットが 1 の側だけに位相回転が作用するからです。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="複数量子ビットに PHASE ゲートを適用しても、状態ベクトル表示の円の大きさが変わらないのはなぜですか?"
+    answer="振幅に掛ける位相因子の絶対値が 1 だからです。"
+  ></orbit-prompt>
+</orbit-reviewarea>
+
 <script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
 </TutorialLayout>
 <style>

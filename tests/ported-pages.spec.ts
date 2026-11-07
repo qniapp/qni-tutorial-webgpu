@@ -25,7 +25,10 @@ import multiOperation from './fixtures/multi_qubit_operation-original.json' with
 import pairs from './fixtures/operator_pair-original.json' with { type: 'json' }
 import randomByte from './fixtures/random_byte_generator-original.json' with { type: 'json' }
 import bb84Circuit from './fixtures/bb84_circuit-original.json' with { type: 'json' }
-import multiPhase from './fixtures/multi_qubit_phase_gate-original.json' with { type: 'json' }
+import multiPhaseOriginal from './fixtures/multi_qubit_phase_gate-original.json' with { type: 'json' }
+import multiPhaseOrbit from './fixtures/multi-qubit-phase-orbit.json' with { type: 'json' }
+// Keep the original page fixture intact; only the new review prompts differ.
+const multiPhase = { ...multiPhaseOriginal, orbitPrompts: multiPhaseOrbit.length, orbit: multiPhaseOrbit }
 import partial from './fixtures/partial_measurement-original.json' with { type: 'json' }
 import swap from './fixtures/swap_gate-original.json' with { type: 'json' }
 import cnot from './fixtures/cnot_gate-original.json' with { type: 'json' }
