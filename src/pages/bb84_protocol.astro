@@ -203,6 +203,14 @@ const base = import.meta.env.BASE_URL
   そこで、これを秘密の暗号鍵として使うことができます。
 </p>
 
+<orbit-reviewarea color="blue">
+  <orbit-prompt question="盗聴も通信ノイズもない BB84 で、アリスとボブが両方とも H を適用すると、元のビットを読み出せるのはなぜ?" answer="H を 2 回適用すると打ち消し合い、元の 0 または 1 の状態に戻るからです。"></orbit-prompt>
+  <orbit-prompt question="盗聴も通信ノイズもない BB84 で、アリスが 0 の状態に H を適用して送り、ボブが H を適用せず 0/1 で測定すると、1 が出る確率は?" answer="50% です。"></orbit-prompt>
+  <orbit-prompt question="BB84 で、鍵の候補として残すビットは、アリスとボブの H の適用についてどんな条件を満たすもの?" answer="H を適用したかどうかが、二人で一致したものです。"></orbit-prompt>
+  <orbit-prompt question="BB84 で、残すビットの位置を選ぶために、アリスとボブが公開して照合するのは何の通し番号?" answer="それぞれが H を適用した量子ビットの通し番号です。"></orbit-prompt>
+  <orbit-prompt question="BB84 の最後の答えあわせで公開したビットを、秘密の鍵から除くのはなぜ?" answer="公開した値は第三者にも知られてしまうからです。"></orbit-prompt>
+</orbit-reviewarea>
+
 <h2>イブの盗聴を検出する</h2>
 
 <p>
@@ -232,6 +240,12 @@ const base = import.meta.env.BASE_URL
   こうなるとアリスとボブは別の通信方法を採るしかありませんが、イブによる暗号鍵ハッキングは未然に防げることになります。
 </p>
 
+<orbit-reviewarea color="blue">
+  <orbit-prompt question="BB84 で、アリスが H を適用した量子ビットをイブが 0/1 で測定すると、盗聴がない場合と比べてボブの結果が乱れる原因は?" answer="測定で重ね合わせが 0 または 1 の状態に変わり、アリスの用意した状態が失われることです。"></orbit-prompt>
+  <orbit-prompt question="通信ノイズのない BB84 で、イブが全量子ビットを 0/1 で測定し、得た状態をそのままボブに送り直すと、H の適用が二人で一致したビットの不一致率は平均で何%?" answer="25% です。（理由: 半分は両者が H を適用したビットで、その半分が不一致になるためです。）"></orbit-prompt>
+  <orbit-prompt question="通信ノイズを考えない BB84 の例で、最後の答えあわせに不一致が見つかったとき、鍵候補のビット列をどう扱う?" answer="秘密の鍵として使わず、破棄します。"></orbit-prompt>
+</orbit-reviewarea>
+
 <h2>まとめ</h2>
 
 <p>
@@ -241,6 +255,7 @@ const base = import.meta.env.BASE_URL
   命令だけで量子暗号を実現できるので、汎用の量子コンピュータよりも早く商業化できることが期待されています。
 </p>
 
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
 </TutorialLayout>
 <style>
   .my-5 { margin-block:20px; }
