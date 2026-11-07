@@ -29,7 +29,10 @@ import multiPhase from './fixtures/multi_qubit_phase_gate-original.json' with { 
 import partial from './fixtures/partial_measurement-original.json' with { type: 'json' }
 import swap from './fixtures/swap_gate-original.json' with { type: 'json' }
 import cnot from './fixtures/cnot_gate-original.json' with { type: 'json' }
-import swapPuzzle from './fixtures/swap_from_cnots-original.json' with { type: 'json' }
+import swapPuzzleOriginal from './fixtures/swap_from_cnots-original.json' with { type: 'json' }
+import swapPuzzleOrbit from './fixtures/swap-from-cnots-orbit.json' with { type: 'json' }
+// Keep the original page fixture intact; only the new review prompts differ.
+const swapPuzzle = { ...swapPuzzleOriginal, orbitPrompts: swapPuzzleOrbit.length, orbit: swapPuzzleOrbit }
 import entanglement from './fixtures/entanglement-original.json' with { type: 'json' }
 import disentangle from './fixtures/disentangle-original.json' with { type: 'json' }
 import entanglementOperation from './fixtures/entanglement_operation-original.json' with { type: 'json' }

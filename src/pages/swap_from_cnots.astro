@@ -37,6 +37,44 @@ const base = import.meta.env.BASE_URL
 <qni-webgpu-circuit max-wire-count="1" palette={"[\"X\", \"•\", \"Measure\"]"} circuit={"{\"cols\":[[\"|0>\",\"|1>\"]]}"}></qni-webgpu-circuit>
 
 
+<details>
+  <summary>解答例: CNOT の向きを変える</summary>
+  <p>
+    2 本のワイヤを A、B とし、A→B は A を制御、B を標的とする CNOT を表します。
+    A→B、B→A、A→B の順に適用すると、SWAP と同じ働きになります。
+  </p>
+  <p>
+    入力のビット値を A = a、B = b とすると、最初の CNOT の後は A = a、B = a XOR b、
+    2 個目の後は A = b、B = a XOR b です。最後の CNOT で B は b XOR (a XOR b) = a
+    となり、A = b、B = a に入れ替わります。XOR は、同じ値を 2 回加えると打ち消し合います。
+    入力を A = 0、B = 1 にしてからこの回路を実行し、最後に両方を測定すると、A = 1、B = 0
+    が得られます。入力が A = 0、B = 0 だけでは、何もしない回路でも同じ測定結果になるため、
+    入れ替わったことの確認には不十分です。
+  </p>
+  <p>
+    CNOT は各基底状態の振幅をそのまま移す線形な操作です。4 つの基底状態すべてでビットが
+    入れ替わるので、その重ね合わせでも振幅を保って入れ替わり、一般の量子状態でも SWAP
+    と同じ働きになります。
+  </p>
+</details>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="2 本のワイヤ A、B の状態を CNOT 3 個で交換するには、制御→標的をどの順に並べますか?"
+    answer="A→B、B→A、A→B です。（B→A、A→B、B→A でも同じ働きです）"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="CNOT で SWAP を作る途中、入力ビット A = a、B = b が A = b、B = a XOR b になりました。最後に A 制御・B 標的の CNOT をかけると、B が a になるのはなぜ?"
+    answer="b XOR (a XOR b) では、b が 2 回現れて打ち消し合うからです。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="CNOT で作った SWAP の動作確認で、入力 A = 0、B = 0 を最後に 0/1 で測定しました。両方 0 が得られただけでは、入れ替わったことの確認に不十分なのはなぜ?"
+    answer="何もしない回路でも、同じ測定結果になるからです。"
+  ></orbit-prompt>
+</orbit-reviewarea>
+
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+
 </TutorialLayout>
 <style>
   .my-5, .mt-5 { margin-top:20px; } .my-5 { margin-bottom:20px; } .mb-8 { margin-bottom:32px; }
