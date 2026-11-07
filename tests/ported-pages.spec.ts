@@ -31,7 +31,10 @@ import swap from './fixtures/swap_gate-original.json' with { type: 'json' }
 import cnot from './fixtures/cnot_gate-original.json' with { type: 'json' }
 import swapPuzzle from './fixtures/swap_from_cnots-original.json' with { type: 'json' }
 import entanglement from './fixtures/entanglement-original.json' with { type: 'json' }
-import disentangle from './fixtures/disentangle-original.json' with { type: 'json' }
+import disentangleOriginal from './fixtures/disentangle-original.json' with { type: 'json' }
+import disentangleOrbit from './fixtures/disentangle-orbit.json' with { type: 'json' }
+// Keep the original page fixture intact; only the new review prompts differ.
+const disentangle = { ...disentangleOriginal, orbitPrompts: disentangleOrbit.length, orbit: disentangleOrbit }
 import entanglementOperation from './fixtures/entanglement_operation-original.json' with { type: 'json' }
 import bellStates from './fixtures/discriminating_bell_states-original.json' with { type: 'json' }
 import teleportation from './fixtures/teleportation_circuit-original.json' with { type: 'json' }
