@@ -28,7 +28,10 @@ import bb84Circuit from './fixtures/bb84_circuit-original.json' with { type: 'js
 import multiPhase from './fixtures/multi_qubit_phase_gate-original.json' with { type: 'json' }
 import partial from './fixtures/partial_measurement-original.json' with { type: 'json' }
 import swap from './fixtures/swap_gate-original.json' with { type: 'json' }
-import cnot from './fixtures/cnot_gate-original.json' with { type: 'json' }
+import cnotOriginal from './fixtures/cnot_gate-original.json' with { type: 'json' }
+import cnotOrbit from './fixtures/cnot-orbit.json' with { type: 'json' }
+// Keep the original page fixture intact; only the new review prompts differ.
+const cnot = { ...cnotOriginal, orbitPrompts: cnotOrbit.length, orbit: cnotOrbit }
 import swapPuzzle from './fixtures/swap_from_cnots-original.json' with { type: 'json' }
 import entanglement from './fixtures/entanglement-original.json' with { type: 'json' }
 import disentangle from './fixtures/disentangle-original.json' with { type: 'json' }
