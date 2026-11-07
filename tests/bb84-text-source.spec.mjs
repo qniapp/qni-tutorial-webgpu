@@ -10,6 +10,10 @@ for (const fixture of corrections.pages) {
       expect(source.split(edit.after)).toHaveLength(2)
       source = source.replace(edit.after, edit.before)
     }
+    // The review block is additive; the original prose and circuit must remain unchanged.
+    if (fixture.slug === 'bb84_circuit') {
+      source = source.replace(/<orbit-reviewarea color="blue">[\s\S]*?<\/orbit-reviewarea>\n\n/, '')
+    }
     expect(createHash('sha256').update(source).digest('hex')).toBe(fixture.baselineSourceSha256)
   })
 }
