@@ -100,6 +100,21 @@ const base = import.meta.env.BASE_URL
 
 <p>Qni では CPHASE をコントロールゲートありと PHASE ゲート 2 個の両方で書くことができます。</p>
 
+<orbit-reviewarea color="blue" class="mt-5">
+  <orbit-prompt
+    question="CPHASE(θ) は、計算基底のどの成分の振幅を角度 θ だけ位相回転しますか? コントロールビットとターゲットビットの値で答えてください。"
+    answer="コントロールビットとターゲットビットが両方 1 の成分です。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="CPHASE でコントロールビットとターゲットビットを入れ替えても動作が変わらないのはなぜですか?"
+    answer="位相回転の条件が、どちらのビットも 1 であることだからです。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="Qni で CPHASE(π/4) を、コントロールゲートを使わずに接続した 2 個の PHASE ゲートで表すとき、各 PHASE ゲートの角度をどう設定しますか?"
+    answer="両方とも π/4 にします。"
+  ></orbit-prompt>
+</orbit-reviewarea>
+
 <h2>CPHASE ゲートの作用</h2>
 
 <p>
@@ -228,6 +243,17 @@ const base = import.meta.env.BASE_URL
 
 <qni-webgpu-circuit max-wire-count="1" palette={"[\"P(π/4)\",\"•\"]"} circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\"],[\"{重ね合わせ\"],[\"H\",\"H\",\"H\"],[\"}\"],[\"•\",1,\"P(π/4)\"]]}"}></qni-webgpu-circuit>
 
+<orbit-reviewarea color="blue" class="mt-5">
+  <orbit-prompt
+    question="3 量子ビットの CPHASE(π/4) で、状態ラベルの右端をビット 1 として、コントロールをビット 1、ターゲットをビット 3 に置きます。計算基底の |101⟩ 成分の振幅の位相は、何ラジアン変化しますか?"
+    answer="π/4 ラジアンです。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="CPHASE に、まだ使っていない量子ビットのコントロールゲートを 1 個追加すると、位相回転の対象となる計算基底の成分数が半分になるのはなぜですか?"
+    answer="それまでの対象のうち、追加したコントロールビットも 1 の成分だけが残るからです。"
+  ></orbit-prompt>
+</orbit-reviewarea>
+
 <h2>CZ ゲート</h2>
 
 <p>角度が π の場合の CPHASE(π) は、次のようにコントロールゲートのみで書くことができます。</p>
@@ -350,6 +376,19 @@ const base = import.meta.env.BASE_URL
 
 <qni-webgpu-circuit max-wire-count="1" palette={"[\"P(π)\",\"Z\",\"•\"]"} circuit={"{\"cols\":[[\"|0>\",\"|0>\",\"|0>\"],[\"{重ね合わせ\"],[\"H\",\"H\",\"H\"],[\"}\"],[\"•\",1,\"P(π)\"]]}"}></qni-webgpu-circuit>
 
+
+<orbit-reviewarea color="blue" class="mt-5">
+  <orbit-prompt
+    question="CZ ゲートを CPHASE ゲートで表すと、角度は何ラジアンですか?"
+    answer="π ラジアンです。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="2 量子ビットに CZ ゲートを適用すると、計算基底の |11⟩ 成分の振幅には、どの数が掛かりますか?"
+    answer="−1 です。"
+  ></orbit-prompt>
+</orbit-reviewarea>
+
+<script is:inline type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
 
 </TutorialLayout>
 <style>
