@@ -33,7 +33,10 @@ import swapPuzzle from './fixtures/swap_from_cnots-original.json' with { type: '
 import entanglement from './fixtures/entanglement-original.json' with { type: 'json' }
 import disentangle from './fixtures/disentangle-original.json' with { type: 'json' }
 import entanglementOperation from './fixtures/entanglement_operation-original.json' with { type: 'json' }
-import bellStates from './fixtures/discriminating_bell_states-original.json' with { type: 'json' }
+import bellStatesOriginal from './fixtures/discriminating_bell_states-original.json' with { type: 'json' }
+import bellStatesOrbit from './fixtures/discriminating-bell-states-orbit.json' with { type: 'json' }
+// Preserve the original structure fixture, allowing only the reviewed Orbit addition.
+const bellStates = { ...bellStatesOriginal, orbitPrompts: bellStatesOrbit.length, orbit: bellStatesOrbit }
 import teleportation from './fixtures/teleportation_circuit-original.json' with { type: 'json' }
 import cascading from './fixtures/cascading_teleportation-original.json' with { type: 'json' }
 import longDistance from './fixtures/long_distance_entanglement-original.json' with { type: 'json' }
